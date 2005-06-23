@@ -1,7 +1,7 @@
 TEMPLATE	= app
 LANGUAGE	= C++
 
-CONFIG += warn_off release qt
+CONFIG	+= warn_off release qt
 
 INCLUDEPATH	+= . ../../../../../olena ../../../../../metalic ../../../../../integre
 

@@ -1,3 +1,9 @@
+2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/appli/astro/graphical_interface/interface.pro: Modify interface appareance.
+	* oln/appli/astro/graphical_interface/visualization_window.ui: likewise.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: likewise.
+
 2005-06-22  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/tree_coherance_checks.hh: Update doc.

@@ -62,7 +62,6 @@ public:
     mt_.set_level(value_level->value());
     mt_.set_height(value_height->value());
     mt_.set_circle(value_circle->value() / 100);
-    mt_.set_center_point(value_center_point->value() / 100);
     mt_.set_tower(value_tower->value() / 100);
 
     std::string out = "attributes value changed.";//  area("
@@ -172,15 +171,9 @@ public:
   virtual void Attribute_center_point()
   {
     if (this->active_center_point->isChecked())
-      {
-	this->value_center_point->setEnabled(true);
-	mt_.center_p_tag_ = true;
-      }
+      mt_.center_p_tag_ = true;
     else
-      {
-	mt_.center_p_tag_ = false;
-	this->value_center_point->setEnabled(false);
-      }
+      mt_.center_p_tag_ = false;
   }
 
   virtual void Attribute_tower()
