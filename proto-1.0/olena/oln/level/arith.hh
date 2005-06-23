@@ -35,6 +35,7 @@
 # include <oln/core/apply.hh>
 
 # include <oln/ops/arith.hh>
+# include <oln/convert/conversion.hh>
 # include <oln/utils/clone.hh>
 
 
@@ -164,6 +165,39 @@ namespace oln
 
       oln_arith_output(minus,I1,I2) output("output");
       output = clone( input1 - input2 );
+
+      exiting("level::minus");
+      return output;
+    }
+
+    // Variant taking a conversion function in parameter.
+    template <typename C, typename B, typename I1, typename I2>
+    typename ch_value_type<I1, typename convoutput<C, B, typename arith_output<f_::minus_, I1, I2>::T>::ret>::ret
+    minus (const convert::abstract::conversion<C, B>& conv,
+	   const abstract::image<I1>& input1,
+	   const abstract::image<I2>& input2)
+    {
+      mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
+
+      entering("level::minus");
+      registering(input1, "input1");
+      registering(input2, "input2");
+
+      precondition(input1.size() == input2.size());
+
+      typedef oln_type_of(I1, value) T1;
+      typedef oln_type_of(I2, value) T2;
+
+      // The return type, if there were no conversion.
+      typedef typename arith_output<f_::minus_, I1, I2>::T oper_output_type;
+      // The actual return type.
+      typedef typename
+	ch_value_type<I1,
+	              typename convoutput<C, B, oper_output_type>::ret>::ret
+	output_type;
+      output_type output("output");
+      output = apply2(convert::compconv2(conv, f_::minus_<T1, T2>()),
+		      input1, input2);
 
       exiting("level::minus");
       return output;

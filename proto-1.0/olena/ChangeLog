@@ -1,5 +1,15 @@
 2005-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add level::minus taking a conversion function.
+
+	* oln/level/arith.hh
+	(minus (const convert::abstract::conversion<C, B>&,
+	const abstract::image<I1>&, const abstract::image<I2>& input2)):
+	New.
+	* tests/level/tests/arith_and_conversion: New test.
+
+2005-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add conversion abstractions.
 
 	* oln/convert/abstract/conversion.hh, oln/convert/conversion.hh:

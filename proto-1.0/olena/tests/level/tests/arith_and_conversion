@@ -1,0 +1,55 @@
+							// -*- C++ -*-
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/convert/force.hh>
+#include <oln/level/arith.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+
+using namespace oln;
+
+
+// FIXME: Not safe, nor generic.  Re-introduce static initialization
+// in Olena and use it instead.
+template<typename T>
+image2d<T>
+image_from_array(coord_t nrows, coord_t ncols, T values[])
+{
+  image2d<T> output(nrows, ncols);
+  unsigned i = 0;
+  oln_type_of(image2d<T>, fwd_piter) p(output.size());
+  for_all_p (p)
+    {
+      output[p] = values[i];
+      ++i;
+    }
+  return output;
+}
+
+
+bool check()
+{
+  typedef ntg::int_u8 value_type;
+
+  value_type ima1_values[] = { 2, 8, 2,
+			       3, 4, 5,
+			       6, 7, 8 };
+  image2d<value_type> ima1 = image_from_array<value_type>(3, 3, ima1_values);
+
+  image2d<value_type> ima2(3, 3);
+  level::fill(ima2, 2);
+
+  // Checking level::minus, with convert::force conversion.
+  {
+    image2d<value_type> diff =
+      level::minus(convert::force<value_type>(), ima1, ima2);
+    value_type diff_ref[] = { 0, 6, 0,
+			      1, 2, 3,
+			      4, 5, 6 };
+    if (not level::is_equal(diff,
+			    image_from_array<value_type>(3, 3, diff_ref)))
+      return true;
+  }
+
+  return false;
+}
