@@ -1,3 +1,8 @@
+2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Set the default
+	values at the beginning.
+
 2005-06-23  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* oln/appli/astro/clean.hh: Fix clean.hh for new interface.

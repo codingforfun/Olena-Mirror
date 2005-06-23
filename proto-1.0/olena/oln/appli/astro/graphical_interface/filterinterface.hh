@@ -51,9 +51,24 @@ public:
     sprintf(tmp_, "/tmp/olni.XXXXXX");
     mkstemp(tmp_);
     sprintf(tmp_ + 16, ".pgm");
+
+    Attribute_area();
+    Attribute_level();
+    Attribute_height();
+    Attribute_tower();
+    Attribute_tower();
+    Attribute_center_point();
+    Attribute_circle();
+    Attribute_height();
+    Attribute_level();
+    Attribute_area();
+    UpdateValues();
   }
 
-  ~FilterVisualizationWindow() {}
+  ~FilterVisualizationWindow()
+  {
+    unlink(tmp_);
+  }
 
   virtual void UpdateValues()
   {
@@ -82,8 +97,6 @@ public:
     this->redraw_button->setEnabled(true);
     this->save_result_button->setEnabled(true);
     this->text_state->setText("Tree computed, please choose attributes'values to draw the result.");
-
-    UpdateValues();
   }
   
   virtual void DisplayImage()
