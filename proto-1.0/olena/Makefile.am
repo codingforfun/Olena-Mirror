@@ -3,3 +3,4 @@
 # OLN_SRC_SUBDIRS is set when "configure" is run.
 SUBDIRS = img oln $(OLN_SRC_SUBDIRS)
 
+EXTRA_DIST = TODO

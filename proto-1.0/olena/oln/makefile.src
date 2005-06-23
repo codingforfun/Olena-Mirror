@@ -22,6 +22,9 @@ OLN_DEP =					\
   config/pconf.hh				\
   config/system.hh				\
 						\
+  convert/abstract/conversion.hh		\
+  convert/conversion.hh				\
+  convert/force.hh				\
   convert/value_to_point.hh			\
 						\
   core/1d/array1d.hh				\
@@ -166,6 +169,7 @@ OLN_DEP =					\
   morpho/erosion.hh				\
   morpho/geodesic_dilation.hh			\
   morpho/geodesic_erosion.hh			\
+  morpho/gradient.hh				\
   morpho/lower_completion.hh			\
   morpho/opening.hh				\
   morpho/reconstruction_by_dilation.hh		\

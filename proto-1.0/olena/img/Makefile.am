@@ -13,6 +13,7 @@ SOURCE_IMGS =					\
   $(srcdir)/lena.pgm.gz				\
   $(srcdir)/lena.ppm				\
   $(srcdir)/lena.ppm.gz				\
+  $(srcdir)/lena-small.pgm			\
   $(srcdir)/marker.pbm				\
   $(srcdir)/mask.pbm				\
   $(srcdir)/object.pbm				\

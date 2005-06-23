@@ -1,5 +1,17 @@
 2005-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add morphological gradients.
+
+	* oln/morpho/gradient.hh: New file.
+	* tests/morpho/tests/gradient: New test.
+	* img/lena-small.pgm: New image.
+	* img/Makefile.am (SOURCE_IMGS): Add $(srcdir)/lena-small.pgm.
+	* oln/makefile.src (OLN_DEP): Add convert/abstract/conversion.hh,
+	convert/conversion.hh, convert/force.hh and morpho/gradient.hh.
+	* Makefile.am (EXTRA_DIST): Add TODO.
+
+2005-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add level::minus taking a conversion function.
 
 	* oln/level/arith.hh
