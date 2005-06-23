@@ -1,16 +1,21 @@
 2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
 
-	* oln/appli/astro/graphical_interface/interface.pro: Modify interface appareance.
-	* oln/appli/astro/graphical_interface/visualization_window.ui: likewise.
-	* oln/appli/astro/graphical_interface/filterinterface.hh: likewise.
+	* oln/appli/astro/graphical_interface/interface.pro: Modify
+	interface appearance.
+	* oln/appli/astro/graphical_interface/visualization_window.ui:
+	Likewise.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Likewise.
 
 2005-06-22  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/tree_coherance_checks.hh: Update doc.
 	* oln/appli/astro/tree_statistics.hh: Add count of local root.
-	* oln/appli/astro/graphical_interface/interface.pro: Qmake options to compile without -w -Wall.
-	* oln/appli/astro/graphical_interface/visualization_window.ui: Add options in interface.
-	* oln/appli/astro/graphical_interface/filterinterface.hh: Handle these options.
+	* oln/appli/astro/graphical_interface/interface.pro: Qmake options
+	to compile without -w -Wall.
+	* oln/appli/astro/graphical_interface/visualization_window.ui: Add
+	options in interface.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Handle
+	these options.
 
 2005-06-22  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
@@ -49,13 +54,13 @@
 
 2005-06-19  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
-	* oln/core/abstract/image.hh: patch for adding method call.
-	* oln/core/abstract/image_constness.hh: add method call for
+	* oln/core/abstract/image.hh: Patch for adding method call.
+	* oln/core/abstract/image_constness.hh: Add method call for
 	readwrite images.
-	* oln/core/abstract/image_with_data.hh: likewise.
-	* oln/core/2d/array2d.hh: likewise.
-	* oln/core/box.hh: likewise.
-	* oln/makefile.src: add files.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/box.hh: Likewise.
+	* oln/makefile.src: Add files.
 
 2005-06-13  Damien Thivolle  <damien@lrde.epita.fr>
 
