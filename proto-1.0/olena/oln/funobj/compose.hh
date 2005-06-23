@@ -48,6 +48,11 @@ namespace oln
     typedef oln_fun1_type_of(F2, arg) arg_type;
   };
 
+
+  /*-----------------------------------.
+  | Composition of two unary functor.  |
+  `-----------------------------------*/
+
   namespace f_
   {
 
@@ -86,6 +91,46 @@ namespace oln
   {
     return f_::compose_uu_<UF1, UF2>(f1, f2);
   }
+
+
+  /*-------------------.
+  | Identity functor.  |
+  `-------------------*/
+
+  namespace f_ {
+    template <typename T> struct identity_;
+  } // end of namespace oln::f_
+
+  template <typename T>
+  struct set_super_type < f_::identity_<T> > { typedef f_::abstract::unary< f_::identity_<T> > ret; };
+
+  template <typename T>
+  struct set_props < category::fun1, f_::identity_<T> >
+  {
+    typedef T res_type;
+    typedef T arg_type;
+  };
+
+  namespace f_
+  {
+
+  /*! \class f_identity
+  **
+  ** This functor returns its argument.
+  */
+  template<class T>
+  struct identity_ : public oln_super_of_(f_::identity_<T>)
+  {
+    const T impl_unop(const T& t) const
+    {
+      return t;
+    }
+  };
+
+  typedef f_::unary_meta<f_::identity_> f_identity_type;
+  static f_identity_type f_identity;
+
+  } // end of namespace oln::f_
 
 } // end of namespace oln
 

@@ -44,7 +44,8 @@ namespace oln {
   | Unary.  |
   `--------*/
 
-  /*! \brief Standard unary \a apply procedure.
+  /*! \brief Standard unary \a apply procedure of an
+  **  mlc:abstract::unary_function<F>
   **
   ** Apply a function \a f to each element of \a input, the function
   ** is passed as a type and is instantiated.
@@ -69,8 +70,12 @@ namespace oln {
     return output;
   }
 
-  // version with  oln::f_::abstract::unary<F>
-
+  /*! \brief Standard unary \a apply procedure of an
+  **  oln::f_::abstract::unary
+  **
+  ** Apply a function \a f to each element of \a input, the function
+  ** is passed as a type and is instantiated.
+  */
   template <typename F, typename I>
   typename ch_value_type<I, oln_fun1_type_of(F, res)>::ret
   apply(const oln::f_::abstract::unary<F>& f,
@@ -96,7 +101,8 @@ namespace oln {
   | Binary.  |
   `---------*/
 
-  /*! \brief Standard binary \a apply procedure.
+  /*! \brief Standard binary \a apply procedure of a
+  **  mlc:abstract::binary_function<F>
   **
   ** Apply a function \a f to each pair of elements of
   ** \a input1 x \a input2.
@@ -128,8 +134,12 @@ namespace oln {
   }
 
 
-  // version with  oln::f_::abstract::binary<F>
-
+  /*! \brief Standard binary \a apply procedure of a
+  **  oln::f_::abstract::binary<F>
+  **
+  ** Apply a function \a f to each pair of elements of
+  ** \a input1 x \a input2.
+  */
   template <typename F, typename I1, typename I2>
   typename ch_value_type<I1, oln_fun2_type_of(F, res)>::ret
   apply2(const oln::f_::abstract::binary<F>& f,
@@ -157,8 +167,12 @@ namespace oln {
   }
 
 
-  // version with  oln::f_::abstract::mbinary<F>
-
+  /*! \brief Standard binary \a apply procedure of a
+  **  oln::f_::abstract::mbinary<F>
+  **
+  ** Apply a function \a f to each pair of elements of
+  ** \a input1 x \a input2.
+  */
   template <typename F, typename I1, typename I2>
   typename ch_value_type<I1, typename f_::mbinary_result<F,
 							 oln_type_of(I1, value),

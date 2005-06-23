@@ -1,0 +1,22 @@
+							// -*- C++ -*-
+#include <ntg/int.hh>
+#include <oln/funobj/arith.hh>
+#include <oln/convert/conversion.hh>
+#include <oln/convert/force.hh>
+
+using namespace oln;
+
+bool check()
+{
+  typedef ntg::int_u8 value_type;
+  f_::plus_<value_type, value_type> f_plus;
+  oln::convert::force<value_type> f_force;
+
+  value_type a = 1;
+  value_type b = 2;
+  value_type c = convert::compconv2(f_force, f_plus)(a, b);
+  if (c != 3)
+    return true;
+
+  return false;
+}

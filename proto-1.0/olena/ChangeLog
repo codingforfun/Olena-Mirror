@@ -1,3 +1,19 @@
+2005-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add conversion abstractions.
+
+	* oln/convert/abstract/conversion.hh, oln/convert/conversion.hh:
+	New files.
+
+	Add convert::force operator.
+
+	* oln/convert/force.hh: New file.
+	* tests/convert/tests/force: New test.
+
+	* oln/funobj/compose.hh (f_::identity_): New functor.
+	* oln/core/apply.hh: Update doxygen comments.
+	* TODO: New file.
+
 2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/graphical_interface/interface.pro: Modify

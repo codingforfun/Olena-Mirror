@@ -1,0 +1,17 @@
+* Possibly dead code
+
+** oln/core/compose.hh
+Seems to be used nowhere.  Morever, redundant with the new
+oln/funobj/compose.hh, which deals with oln/funobj functors (whereas
+the former handles functors à la STL).
+
+
+* Lack of consistency in file naming
+
+** oln/level/compare.hh vs oln/ops/cmp.hh 
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
