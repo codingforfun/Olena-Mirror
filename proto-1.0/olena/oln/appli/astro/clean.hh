@@ -110,9 +110,24 @@ namespace oln {
 	typedef oln_type_of(I, point) point_type;
 
 	// specific methods
-	void set_area(unsigned nb)
+	void set_area_min(unsigned nb)
 	{
-	  area_ = nb;
+	  area_min_ = nb;
+	}
+
+	void set_tower(float nb)
+	{
+	  tour_ = nb;
+	}
+
+	void set_circle(float nb)
+	{
+	  circle_ = nb;
+	}
+
+	void set_area_max(unsigned nb)
+	{
+	  area_max_ = nb;
 	}
 
 	void set_level(unsigned nb)
@@ -138,7 +153,8 @@ namespace oln {
 	bool area_attr(const point_type& p)
 	{
 	  if (area_tag_)
-	    if (not (this->aux_data_[p].call(&T1::area_get) >= area_))
+	    if (not ((get_aux_data(p, area) >= area_min_) &&
+		     (get_aux_data(p, area) <= area_max_)))
 	      return false;
 	  return true;
 	}
@@ -152,8 +168,8 @@ namespace oln {
 	      float theoretic_area = 3.14f * ((h + w) / 4.0) * ((h + w) / 4.0);
 	      if (not (((theoretic_area - sqrt(get_aux_data(p, area)) < get_aux_data(p, area)) &&
 			(theoretic_area + sqrt(get_aux_data(p, area)) > get_aux_data(p, area))) &&
-		       (get_aux_data(p, area) > (0.9 * 0.9 * w * h)) &&
-		       (get_aux_data(p, area) < (1.1 * 0.9 * w * h))))
+		       (get_aux_data(p, area) > (0.9 * circle_ * w * h)) &&
+		       (get_aux_data(p, area) < (1.1 * circle_ * w * h))))
 		return false;
 	    }
 	  return true;
@@ -162,9 +178,14 @@ namespace oln {
 	bool tour_attr(const point_type& p)
 	{
 	  if (tour_tag_)
-	    if (not (get_aux_data(p, int_volume) <=
-		     get_aux_data(p, ext_volume) / 2))
-	      return false;
+	    {
+	      float tmp = (float)(get_aux_data(p, int_volume)) /
+		(float)(get_aux_data(p, ext_volume));
+	      if (not (tmp >= tour_))
+		// 	    if (not (get_aux_data(p, int_volume) <=
+		// 		     get_aux_data(p, ext_volume) / 2))
+		return false;
+	    }
 	  return true;
 	}
 
@@ -303,7 +324,10 @@ namespace oln {
 	clean(const abstract::image_with_nbh<I>& input) :
 	  super_type(input)
 	{
-	  area_ = 0;
+	  area_max_ = 0;
+	  area_min_ = 0;
+	  circle_ = 0.0;
+	  tour_ = 0.0;
 	  level_ = 0;
 	  height_ = 0;
 
@@ -329,7 +353,13 @@ namespace oln {
 	// Attributes.
 	oln_type_of(I, value) level_;
 	oln_type_of(I, value) height_;
-	unsigned area_;
+
+	// 0 a 1 : 0.9 au debut
+	float circle_;
+	unsigned area_min_;
+	unsigned area_max_;
+	// 0 a 1 : 0.5 au debut
+	float tour_;
       };
 
   } // end of namespace oln::appli::astro
