@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
 # define OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
 
+# include <mlc/is_a.hh>
 # include <oln/core/gen/image_with_nbh.hh>
 # include <oln/core/gen/regular_niter.hh>
 
@@ -49,9 +50,10 @@ namespace oln {
     typedef abstract::regular_niter<G, self_type> super_type;
 
     template <typename I>
-    regular_fwd_niter(const abstract::image_with_nbh<I>& image) :
-      super_type(image.nbh_get())
+    regular_fwd_niter(const abstract::image<I>& image) :
+      super_type(image.exact().nbh_get()) // FIXME: should be in ctor body
     {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
     }
 
     friend class abstract::iter<self_type>;

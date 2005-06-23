@@ -28,15 +28,17 @@
 #ifndef OLENA_MORPHO_GEODESIC_EROSION_HH
 # define OLENA_MORPHO_GEODESIC_EROSION_HH
 
-# include <mlc/cmp.hh>
-# include <mlc/contract.hh>
+# include <mlc/is_a.hh>
 
+# include <oln/basics.hh>
 # include <oln/utils/record.hh>
 # include <oln/ops/cmp.hh>
-# include <oln/core/gen/image_with_nbh.hh>
+# include <oln/level/arith.hh>
+# include <oln/level/logic.hh>
 # include <oln/morpho/elementary_erosion.hh>
 
 
+// Soille 2nd ed. (6.1.2, p.185)
 
 
 namespace oln {
@@ -44,52 +46,91 @@ namespace oln {
   namespace morpho {
 
 
+    // Fwd decl of the facade for geodesic erosion of size n (default is n = 1).
 
-    /// Generic geodesic erosion.
+    template <typename I, typename II>
+    oln_type_of(I, concrete)
+    geodesic_erosion(const abstract::image<I>&  marker,
+		     const abstract::image<II>& mask,
+		     unsigned n);
 
-    template<typename K, typename I, typename II>
-    oln_type_of(I, concrete) geodesic_erosion(const tag::kind<K>& kind,
-					      const abstract::image_with_nbh<I>& marker,
-					      const abstract::image<II>& mask)
+
+
+    namespace impl {
+
+
+      // On sets.
+
+      template <typename I, typename II>
+      oln_type_of(I, concrete)
+      geodesic_erosion_(const abstract::binary_image<I>&  marker,
+			const abstract::binary_image<II>& mask,
+			unsigned n)
+      {
+	oln_type_of(I, concrete) ero("ero"), work("work"), output("output");
+
+	work = marker;
+	for (unsigned i = 0; i < n; ++i)
+	  {
+	    ero = elementary_erosion(work);
+	    work = level::f_or(ero, mask); // FIXME: should be as simple as "ero or mask"...
+	  }
+	output = work;
+
+	return output;
+      }
+
+      // On functions.
+
+      template <typename I, typename II>
+      oln_type_of(I, concrete)
+      geodesic_erosion_(const abstract::not_binary_image<I>&  marker,
+			const abstract::not_binary_image<II>& mask,
+			unsigned n)
+      {
+	oln_type_of(I, concrete) ero("ero"), work("work"), output("output");
+
+	work = marker;
+	for (unsigned i = 0; i < n; ++i)
+	  {
+	    ero = elementary_erosion(work);
+	    work = level::sup(ero, mask);
+	  }
+	output = work;
+
+	return output;
+      }
+
+
+    } // end of namespace oln::morpho::impl
+
+
+
+    // Facade for geodesic erosion of size n (default is 1).
+
+
+    template <typename I, typename II>
+    oln_type_of(I, concrete)
+    geodesic_erosion(const abstract::image<I>&  marker,
+		     const abstract::image<II>& mask,
+		     unsigned n = 1)
     {
-      // FIXME: later, test the short code:
-      // FIXME: return max(elementary_erosion(kind, marker), mask)
-
-      // FIXME: and even later:
-      // FIXME: return elementary_erosion(kind, marker) _max_ mask
-
       mlc::eq<oln_type_of(I, grid), oln_type_of(II, grid)>::ensure();
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
 
       entering("morpho::geodesic_erosion");
-
       registering(marker, "marker");
       registering(mask,   "mask");
+
       precondition(marker.size() == mask.size()
 		   and marker >= mask);
+      precondition(n >= 1);
 
-      oln_type_of(I, concrete)
-	ero("ero"),
-	output(marker.size(), "output");
-
-      ero = elementary_erosion(kind, marker);
-
-      // FIXME: replace code below by a pw::max...
-      oln_type_of(I, fwd_piter) p(marker.size());
-      for_all_p (p)
-	output[p] = max(ero[p], mask[p]);
-
+      oln_type_of(I, concrete) output;
+      output = impl::geodesic_erosion_(marker.exact(), mask.exact(), n);
+      
       exiting("morpho::geodesic_erosion");
       return output;
-    }
-
-
-    /// Generic classical geodesic erosion.
-
-    template<typename I, typename II>
-    oln_type_of(I, concrete) geodesic_erosion(const abstract::image_with_nbh<I>& marker,
-					      const abstract::image<II>& mask)
-    {
-      return geodesic_erosion(tag::classical, marker, mask);
     }
 
 

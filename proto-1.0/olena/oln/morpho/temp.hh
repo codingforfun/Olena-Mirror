@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,53 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_MORPHO_TEMP_HH
+# define OLENA_MORPHO_TEMP_HH
 
-# include <oln/funobj/cmp.hh>
-# include <oln/core/pw/macros.hh>
-
-
-namespace oln {
-
-  namespace pw {
-
-    oln_pw_decl_binary(      eq, == );
-    oln_pw_decl_binary(     neq, != );
-    oln_pw_decl_binary(    less, <  );
-    oln_pw_decl_binary(     leq, <= );
-    oln_pw_decl_binary( greater, >  );
-    oln_pw_decl_binary(     geq, >= );
-
-  } // end of namespace oln::pw
-
-} // end of namespace oln
-
-
-# define oln_pw_decl_cmp_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
-oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
-oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
-oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
-oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+# include <oln/basics.hh>
+# include <oln/utils/record.hh>
+# include <oln/core/ch_value_type.hh>
 
 
 namespace oln {
 
-  namespace pw {
+  namespace morpho {
 
-    oln_pw_decl_cmp_lit(int);
-    oln_pw_decl_cmp_lit(float);
-    oln_pw_decl_cmp_lit(double);
+    // FIXME: this is definitely temporay
 
-  } // end of namespace oln::pw
+    template <typename T, typename I>
+    typename ch_value_type<I,T>::ret
+    force_value_type_to(const abstract::image<I>& input)
+    {
+      entering("force_value_type_to");
+      registering(input, "input");
+
+      typedef typename ch_value_type<I,T>::ret output_type;
+      output_type output(input.size(), "output");
+
+      oln_type_of(I, fwd_piter) p(input.size());
+      for_all_p (p)
+	output[p] = T(input[p]);
+
+      exiting("force_value_type_to");
+      return output;
+    }
+
+
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-
-#endif // ! OLENA_CORE_PW_CMP_HH
+#endif // OLENA_MORPHO_TEMP_HH

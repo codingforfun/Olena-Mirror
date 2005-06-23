@@ -33,64 +33,70 @@
 # include <oln/core/pw/check.hh>
 
 
-/// Operator '==' between 2 images.
-
-template <typename L, typename R>
-bool operator == (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) == oln::pw_value(rhs));
-}
+namespace oln {
 
 
-/// Operator '!=' between 2 images.
+  /// Operator '==' between 2 images.
 
-template <typename L, typename R>
-bool operator != (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) != oln::pw_value(rhs));
-}
-
-
-/// Operator '<'  between 2 images.
-
-template <typename L, typename R>
-bool operator <  (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) <  oln::pw_value(rhs));
-}
+  template <typename L, typename R>
+  bool operator == (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) == oln::pw_value(rhs));
+  }
 
 
-/// Operator '<=' between 2 images.
+  /// Operator '!=' between 2 images.
 
-template <typename L, typename R>
-bool operator <= (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) <= oln::pw_value(rhs));
-}
-
-
-/// Operator '>'  between 2 images.
-
-template <typename L, typename R>
-bool operator >  (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) >  oln::pw_value(rhs));
-}
+  template <typename L, typename R>
+  bool operator != (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) != oln::pw_value(rhs));
+  }
 
 
-/// Operator '>=' between 2 images.
+  /// Operator '<'  between 2 images.
 
-template <typename L, typename R>
-bool operator >= (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::pw_value(lhs) >= oln::pw_value(rhs));
-}
+  template <typename L, typename R>
+  bool operator <  (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) <  oln::pw_value(rhs));
+  }
+
+
+  /// Operator '<=' between 2 images.
+
+  template <typename L, typename R>
+  bool operator <= (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) <= oln::pw_value(rhs));
+  }
+
+
+  /// Operator '>'  between 2 images.
+
+  template <typename L, typename R>
+  bool operator >  (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) >  oln::pw_value(rhs));
+  }
+
+
+  /// Operator '>=' between 2 images.
+
+  template <typename L, typename R>
+  bool operator >= (const oln::abstract::image<L>& lhs,
+		    const oln::abstract::image<R>& rhs)
+  {
+    return oln::pw::check(oln::pw_value(lhs) >= oln::pw_value(rhs));
+  }
+
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_OPS_CMP_HH

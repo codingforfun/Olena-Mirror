@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/cmp.hh>
 # include <oln/basics.hh>
+# include <oln/funobj/infsup.hh>
 
 # include <oln/morpho/stat.hh> // FIXME: rename!!!
 
@@ -99,6 +100,10 @@ namespace oln {
 
       struct classical_type : public kind< classical_type >
       {
+
+	// FIXME: beginning of (soon) obsolete code
+	// ........................................
+
 	// min value in input on a window centered at p
 	template <typename I, typename W>
 	oln_type_of(I, value)
@@ -137,6 +142,14 @@ namespace oln {
 	  return morpho::local_max_nbh(input, p);
 	}
 
+	// FIXME: end of (soon) obsolete code
+	// ........................................
+
+	typedef f_inf_type inf_type;
+	inf_type inf;
+
+	typedef f_sup_type sup_type;
+	inf_type sup;
       };
 
       const classical_type classical = classical_type();

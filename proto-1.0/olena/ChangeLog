@@ -1,3 +1,18 @@
+2005-06-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/pw/apply.hh (p_apply): Rename as...
+	(pw_apply): ...this.
+	* oln/morpho/elementary_dilation.hh: Rewrite. 
+	* oln/morpho/gradient.hh: Rewrite.
+	* oln/morpho/closing.hh: Rewrite.
+	* oln/morpho/opening.hh: Rewrite.
+	* oln/morpho/dilation.hh: Rewrite.
+	* oln/morpho/elementary_erosion.hh: Rewrite.
+	* oln/morpho/geodesic_dilation.hh: Rewrite.
+	* oln/morpho/erosion.hh: Rewrite.
+	* oln/morpho/geodesic_erosion.hh: Rewrite.
+	* oln/makefile.src: Update.
+
 2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/graphical_interface/filterinterface.hh: Set the default
@@ -52,6 +67,30 @@
 	* oln/appli/astro/graphical_interface/visualization_window.ui:
 	Likewise.
 	* oln/appli/astro/graphical_interface/filterinterface.hh: Likewise.
+
+2005-06-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/funobj/infsup.hh: New file.
+	* oln/morpho/local.hh: New file (replace stat.hh).
+	* oln/makefile.src: Update.
+	* oln/funobj/accum.hh (accum_with_init, accum): New object functions
+	based on a function.
+	* oln/core/abstract/niter.hh (nbh_): Change from POD to reference. 
+	* oln/core/pw/arith.hh (inf, sup): New procedures.
+	* oln/core/pw/cmp.hh: Move operators into oln namespace to avoid
+	ambiguities and rely on Koenig lookup.
+	* oln/ops/arith.hh: Likewise.
+	* oln/ops/cmp.hh: Likewise.
+	* oln/core/gen/regular_fwd_niter.hh (ctor): Weaken signature to be more
+	general; add argument static check.
+	* oln/morpho/elementary_dilation.hh: Rewrite.
+	* oln/morpho/tags.hh (inf_type, inf, sup_type, sup): New.
+	* oln/morpho/elementary_erosion.hh: Rewrite.
+	* oln/morpho/geodesic_dilation.hh: Rewrite.
+	* oln/morpho/geodesic_erosion.hh: Rewrite.
+	* oln/level/arith.hh (inf, sup): New procedures.
+	* tests/morpho/tests/geodesic_erosion: Remove obsolete proc::.
+	* tests/morpho/tests/geodesic_dilation: Likewise.
 
 2005-06-22  Christophe Berger  <christophe@lrde.epita.fr>
 

@@ -29,11 +29,14 @@
 # define OLENA_CORE_PW_ARITH_HH
 
 # include <oln/funobj/arith.hh>
+# include <oln/funobj/infsup.hh>
 # include <oln/core/pw/macros.hh>
 
 
 namespace oln
 {
+
+  // min max
 
   template <typename L, typename R>
   pw::binary_op< f_min_type, L, R >
@@ -50,6 +53,26 @@ namespace oln
        const pw::abstract::function<R>& rhs)
   {
     pw::binary_op< f_max_type, L, R > tmp(lhs, rhs);
+    return tmp;
+  }
+
+  // inf sup
+
+  template <typename L, typename R>
+  pw::binary_op< f_inf_type, L, R >
+  inf (const pw::abstract::function<L>& lhs,
+       const pw::abstract::function<R>& rhs)
+  {
+    pw::binary_op< f_inf_type, L, R > tmp(lhs, rhs);
+    return tmp;
+  }
+
+  template <typename L, typename R>
+  pw::binary_op< f_sup_type, L, R >
+  sup (const pw::abstract::function<L>& lhs,
+       const pw::abstract::function<R>& rhs)
+  {
+    pw::binary_op< f_sup_type, L, R > tmp(lhs, rhs);
     return tmp;
   }
 

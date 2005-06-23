@@ -34,6 +34,94 @@
 namespace oln
 {
 
+  namespace f_ {
+
+
+    /// Generic accumulator.
+
+    template <typename F, typename T>
+    struct accum_with_init
+    {
+      accum_with_init(const F& fun, const T& init_value) :
+	fun_(fun),
+	value_(init_value)
+      {}
+      
+      accum_with_init(const T& init_value) :
+	fun_(),
+	value_(init_value)
+      {}
+      
+      void operator()(const T& t)
+      {
+	value_ = fun_(value_, t);
+      }
+      
+      operator T() const
+      {
+	return value_;
+      }
+      
+    private:
+
+      T value_;
+      F fun_;
+    };
+
+
+    template <typename F, typename T>
+    struct accum
+    {
+      accum(const F& fun) :
+	ok_(false),
+	fun_(fun)
+      {}
+      
+      accum() :
+	ok_(false),
+	fun_()
+      {}
+      
+      void operator()(const T& t)
+      {
+	if (not ok_)
+	  {
+	    ok_ = true;
+	    value_ = t;
+	    return;
+	  }
+	value_ = fun_(value_, t);
+      }
+      
+      operator T() const
+      {
+	precondition(ok_);
+	return value_;
+      }
+
+      void reset()
+      {
+	ok_ = false;
+      }
+      
+      bool is_ok() const
+      {
+	return ok_;
+      }
+
+    private:
+
+      bool ok_;
+      T value_;
+      F fun_;
+    };
+
+
+  } // end of namespace oln::f_
+
+
+
+
   namespace funobj
   {
 

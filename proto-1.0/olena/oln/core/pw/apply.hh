@@ -157,8 +157,8 @@ namespace oln {
 
 template <typename F, typename T>
 oln::pw::apply1<F, T>
-p_apply (const mlc::abstract::unary_function<F>& f,
-	 const oln::pw::abstract::function<T>& x)
+pw_apply (const mlc::abstract::unary_function<F>& f,
+	  const oln::pw::abstract::function<T>& x)
 {
   oln::pw::apply1<F, T> tmp(f, x);
   return tmp;
@@ -166,9 +166,9 @@ p_apply (const mlc::abstract::unary_function<F>& f,
 
 template <typename F, typename T1, typename T2>
 oln::pw::apply2<F, T1, T2>
-p_apply (const mlc::abstract::binary_function<F>& f,
-	 const oln::pw::abstract::function<T1>& x,
-	 const oln::pw::abstract::function<T2>& y)
+pw_apply (const mlc::abstract::binary_function<F>& f,
+	  const oln::pw::abstract::function<T1>& x,
+	  const oln::pw::abstract::function<T2>& y)
 {
   oln::pw::apply2<F, T1, T2> tmp(f, x, y);
   return tmp;

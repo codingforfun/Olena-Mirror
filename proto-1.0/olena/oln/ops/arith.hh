@@ -59,73 +59,96 @@ namespace oln
     return image_for_all_p( oln::max(pw_value(lhs), pw_value(rhs)) );
   }
 
+  /// Operator-like "inf" and "sup" between 2 images.
+
+  template <typename L, typename R>
+  image_from_pwf< pw::binary_op< f_inf_type,
+				 pw::value<L>,
+				 pw::value<R> > >
+  inf (const abstract::image<L>& lhs,
+       const abstract::image<R>& rhs)
+  {
+    return image_for_all_p( oln::inf(pw_value(lhs), pw_value(rhs)) );
+  }
+
+  template <typename L, typename R>
+  image_from_pwf< pw::binary_op< f_sup_type,
+				 pw::value<L>,
+				 pw::value<R> > >
+  sup (const abstract::image<L>& lhs,
+       const abstract::image<R>& rhs)
+  {
+    return image_for_all_p( oln::sup(pw_value(lhs), pw_value(rhs)) );
+  }
+
+
+
+  /// Operator '+' between 2 images.
+
+  template <typename L, typename R>
+  oln::image_from_pwf< oln::pw::binary_op< oln::f_plus_type,
+					   oln::pw::value<L>,
+					   oln::pw::value<R> > >
+  operator + (const oln::abstract::image<L>& lhs,
+	      const oln::abstract::image<R>& rhs)
+  {
+    return oln::image_for_all_p(oln::pw_value(lhs) + oln::pw_value(rhs));
+  }
+
+
+  /// Operator '-' between 2 images.
+
+  template <typename L, typename R>
+  oln::image_from_pwf< oln::pw::binary_op< oln::f_minus_type,
+					   oln::pw::value<L>,
+					   oln::pw::value<R> > >
+  operator - (const oln::abstract::image<L>& lhs,
+	      const oln::abstract::image<R>& rhs)
+  {
+    return oln::image_for_all_p(oln::pw_value(lhs) - oln::pw_value(rhs));
+  }
+
+
+  /// Operator '*' between 2 images.
+
+  template <typename L, typename R>
+  oln::image_from_pwf< oln::pw::binary_op< oln::f_times_type,
+					   oln::pw::value<L>,
+					   oln::pw::value<R> > >
+  operator * (const oln::abstract::image<L>& lhs,
+	      const oln::abstract::image<R>& rhs)
+  {
+    return oln::image_for_all_p(oln::pw_value(lhs) * oln::pw_value(rhs));
+  }
+
+
+  /// Operator '/' between 2 images.
+
+  template <typename L, typename R>
+  oln::image_from_pwf< oln::pw::binary_op< oln::f_div_type,
+					   oln::pw::value<L>,
+					   oln::pw::value<R> > >
+  operator / (const oln::abstract::image<L>& lhs,
+	      const oln::abstract::image<R>& rhs)
+  {
+    return oln::image_for_all_p(oln::pw_value(lhs) / oln::pw_value(rhs));
+  }
+
+
+  /// Operator '%' between 2 images.
+
+  template <typename L, typename R>
+  oln::image_from_pwf< oln::pw::binary_op< oln::f_mod_type,
+					   oln::pw::value<L>,
+					   oln::pw::value<R> > >
+  operator % (const oln::abstract::image<L>& lhs,
+	      const oln::abstract::image<R>& rhs)
+  {
+    return oln::image_for_all_p(oln::pw_value(lhs) % oln::pw_value(rhs));
+  }
+
+
 } // end of namespace oln
-
-
-/// Operator '+' between 2 images.
-
-template <typename L, typename R>
-oln::image_from_pwf< oln::pw::binary_op< oln::f_plus_type,
-					 oln::pw::value<L>,
-					 oln::pw::value<R> > >
-operator + (const oln::abstract::image<L>& lhs,
-	    const oln::abstract::image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) + oln::pw_value(rhs));
-}
-
-
-/// Operator '-' between 2 images.
-
-template <typename L, typename R>
-oln::image_from_pwf< oln::pw::binary_op< oln::f_minus_type,
-					 oln::pw::value<L>,
-					 oln::pw::value<R> > >
-operator - (const oln::abstract::image<L>& lhs,
-	    const oln::abstract::image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) - oln::pw_value(rhs));
-}
-
-
-/// Operator '*' between 2 images.
-
-template <typename L, typename R>
-oln::image_from_pwf< oln::pw::binary_op< oln::f_times_type,
-					 oln::pw::value<L>,
-					 oln::pw::value<R> > >
-operator * (const oln::abstract::image<L>& lhs,
-	    const oln::abstract::image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) * oln::pw_value(rhs));
-}
-
-
-/// Operator '/' between 2 images.
-
-template <typename L, typename R>
-oln::image_from_pwf< oln::pw::binary_op< oln::f_div_type,
-					 oln::pw::value<L>,
-					 oln::pw::value<R> > >
-operator / (const oln::abstract::image<L>& lhs,
-	    const oln::abstract::image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) / oln::pw_value(rhs));
-}
-
-
-/// Operator '%' between 2 images.
-
-template <typename L, typename R>
-oln::image_from_pwf< oln::pw::binary_op< oln::f_mod_type,
-					 oln::pw::value<L>,
-					 oln::pw::value<R> > >
-operator % (const oln::abstract::image<L>& lhs,
-	    const oln::abstract::image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) % oln::pw_value(rhs));
-}
-
 
 
 

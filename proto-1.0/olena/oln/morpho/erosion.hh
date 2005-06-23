@@ -29,13 +29,10 @@
 # define OLENA_MORPHO_EROSION_HH
 
 # include <mlc/cmp.hh>
-# include <mlc/is_a.hh>
-# include <mlc/implies.hh>
 
 # include <oln/utils/record.hh>
 # include <oln/basics.hh>
 # include <oln/core/2d/window2d.hh>
-# include <oln/morpho/tags.hh>
 
 
 namespace oln {
@@ -44,52 +41,62 @@ namespace oln {
 
 
 
-    // Fwd decl of erosion's facade.
-
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) erosion(const tag::kind<K>& kind,
-				     const abstract::image<I>& input,
-				     const abstract::window<W>& win);
-
-    // Facade for classical erosion.
+    // Fwd decl of erosion facade.
 
     template<typename I, typename W>
     oln_type_of(I, concrete) erosion(const abstract::image<I>& input,
-				     const abstract::window<W>& win)
-    {
-      return erosion(tag::classical, input, win);
-    }
+				     const abstract::window<W>& win);
 
 
     namespace impl {
 
-      // generic
 
-      template<typename K, typename I, typename W>
-      oln_type_of(I, concrete) erosion_(const tag::kind<K>& kind,
-					const abstract::image<I>& input,
-					const abstract::window<W>& win)
+      // Generic on set.
+
+      template<typename I, typename W>
+      oln_type_of(I, concrete)
+      erosion_(const abstract::binary_image<I>& input,
+	       const abstract::window<W>& win)
       {
-	entering("->generic");
+	entering("->generic_on_set");
 	registering(input, "input");
 
 	oln_type_of(I, concrete) output(input.size(), "output");
 
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all_p (p)
-	  output[p] = kind.min(input, p, win);
+	  output[p] = win_and_value(input, p, win);
 
-	exiting("->generic");
+	exiting("->generic_on_set");
 	return output;
       }
 
 
+      // Generic on function.
 
-      // win is a 2D rectangle
+      template<typename I, typename W>
+      oln_type_of(I, concrete)
+      erosion_(const abstract::not_binary_image<I>& input,
+	       const abstract::window<W>& win)
+      {
+	entering("->generic_on_function");
+	registering(input, "input");
 
-      template<typename K, typename I>
-      oln_type_of(I, concrete) erosion_(const tag::kind<K>& kind,
-					const abstract::image2d<I>& input,
+	oln_type_of(I, concrete) output(input.size(), "output");
+
+	oln_type_of(I, fwd_piter) p(input.size());
+	for_all_p (p)
+	  output[p] = win_inf_value(input, p, win);
+
+	exiting("->generic_on_function");
+	return output;
+      }
+
+
+      // win is a 2D rectangle.
+
+      template<typename I>
+      oln_type_of(I, concrete) erosion_(const abstract::image2d<I>& input,
 					const win_rectangle2d& win)
       {
 	entering("->(image2d,win_rectangle2d)");
@@ -100,8 +107,8 @@ namespace oln {
 	win_hline2d hline(win.width); // FIXME: Cf. Soille, use L(i,dp)
 	win_vline2d vline(win.height);
 
-	temp = erosion(kind, input, hline);
-	output = erosion(kind, temp, vline);
+	temp = erosion(input, hline);
+	output = erosion(temp, vline);
 
 	exiting("->(image2d,win_rectangle2d)");
 	return output;
@@ -118,24 +125,19 @@ namespace oln {
 
     /// Generic erosion (facade).
 
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) erosion(const tag::kind<K>& kind,
-				     const abstract::image<I>& input,
+    template<typename I, typename W>
+    oln_type_of(I, concrete) erosion(const abstract::image<I>& input,
 				     const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
-      mlc::implies< mlc_is_a(I, abstract::binary_image),
-	            mlc_eq(K, tag::classical_type) >::ensure();
       entering("morpho::erosion");
 
       oln_type_of(I, concrete) output("output");
-      output = impl::erosion_(kind, input.exact(), win.exact());
+      output = impl::erosion_(input.exact(), win.exact());
       
       exiting("morpho::erosion");
       return output;
     }
-
-
 
 
   } // end of namespace oln::morpho

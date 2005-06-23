@@ -141,6 +141,7 @@ OLN_DEP =					\
   funobj/accum.hh				\
   funobj/arith.hh				\
   funobj/cmp.hh					\
+  funobj/infsup.hh				\
   funobj/invert.hh				\
   funobj/logic.hh				\
 						\
@@ -170,6 +171,7 @@ OLN_DEP =					\
   morpho/geodesic_dilation.hh			\
   morpho/geodesic_erosion.hh			\
   morpho/gradient.hh				\
+  morpho/local.hh				\
   morpho/lower_completion.hh			\
   morpho/opening.hh				\
   morpho/reconstruction_by_dilation.hh		\
@@ -179,6 +181,8 @@ OLN_DEP =					\
   morpho/shortest_path_watershed.hh		\
   morpho/stat.hh				\
   morpho/tags.hh				\
+  morpho/temp.hh				\
+  morpho/thick_gradient.hh			\
 						\
   ops/arith.hh					\
   ops/cmp.hh					\

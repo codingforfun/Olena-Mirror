@@ -28,13 +28,11 @@
 #ifndef OLENA_MORPHO_ELEMENTARY_EROSION_HH
 # define OLENA_MORPHO_ELEMENTARY_EROSION_HH
 
-# include <mlc/cmp.hh>
 # include <mlc/is_a.hh>
-# include <mlc/implies.hh>
 
+# include <oln/basics.hh>
 # include <oln/utils/record.hh>
-# include <oln/core/gen/image_with_nbh.hh>
-# include <oln/morpho/tags.hh>
+# include <oln/morpho/local.hh>
 
 
 namespace oln {
@@ -42,73 +40,83 @@ namespace oln {
   namespace morpho {
 
 
+    // Fwd decl of elementary erosion facade.
 
-    // Fwd decl of elementary erosion's facade.
+    template <typename I>
+    oln_type_of(I, concrete) elementary_erosion(const abstract::image<I>& input);
 
-    template<typename K, typename I>
-    oln_type_of(I, concrete) elementary_erosion(const tag::kind<K>& kind,
-						const abstract::image_with_nbh<I>& input);
-
-    // Facade for classical elementary erosion.
-
-    template<typename I>
-    oln_type_of(I, concrete) elementary_erosion(const abstract::image_with_nbh<I>& input)
-    {
-      return elementary_erosion(tag::classical, input);
-    }
 
 
 
     namespace impl {
 
 
-      // generic
+      // On sets.
+      // --------
 
-      template<typename K, typename I>
-      oln_type_of(I, concrete) elementary_erosion_(const tag::kind<K>& kind,
-						   const abstract::image_with_nbh<I>& input)
+      // Generic version.
+
+      template <typename I>
+      oln_type_of(I, concrete)
+      elementary_erosion_(const abstract::binary_image<I>& input)
       {
-	entering("->generic");
+	entering("->generic_on_set");
 	registering(input, "input");
 
 	oln_type_of(I, concrete) output(input.size(), "output");
 
         oln_type_of(I, piter) p(input.size());
         for_all_p (p)
-	  output[p] = kind.min_nbh(input, p);
+	  output[p] = local_and_value(input, p);
 
-	exiting("->generic");
+	exiting("->generic_on_set");
 	return output;
       }
 
 
-      // add some other impls here...
+      // On functions.
+      // -------------
 
-      
+      // Generic version.
+
+      template <typename I>
+      oln_type_of(I, concrete)
+      elementary_erosion_(const abstract::not_binary_image<I>& input)
+      {
+	entering("->generic_on_function");
+	registering(input, "input");
+
+	oln_type_of(I, concrete) output(input.size(), "output");
+
+        oln_type_of(I, piter) p(input.size());
+        for_all_p (p)
+	  output[p] = local_inf_value(input, p);
+
+	exiting("->generic_on_function");
+	return output;
+      }
+
+
     } // end of namespace oln::morpho::impl
 
 
 
+    // Elementary erosion (facade).
 
-    /// Generic elementary_erosion (facade).
-
-    template<typename K, typename I>
-    oln_type_of(I, concrete) elementary_erosion(const tag::kind<K>& kind,
-						const abstract::image_with_nbh<I>& input)
+    template <typename I>
+    oln_type_of(I, concrete) elementary_erosion(const abstract::image<I>& input)
     {
-      mlc::implies< mlc_is_a(I, abstract::binary_image),
-	            mlc_eq(K, tag::classical_type) >::ensure();
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+
       entering("morpho::elementary_erosion");
       registering(input, "input");
 
       oln_type_of(I, concrete) output("output");
-      output = impl::elementary_erosion_(kind, input.exact());
+      output = impl::elementary_erosion_(input.exact());
 
       exiting("morpho::elementary_erosion");
       return output;
     }
-
-
 
 
   } // end of namespace oln::morpho

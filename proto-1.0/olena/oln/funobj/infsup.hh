@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,53 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_CORE_FUNOBJ_INFSUP_HH
+# define OLENA_CORE_FUNOBJ_INFSUP_HH
 
-# include <oln/funobj/cmp.hh>
-# include <oln/core/pw/macros.hh>
+# include <oln/funobj/arith.hh>
+# include <oln/funobj/logic.hh>
 
 
-namespace oln {
+namespace oln
+{
 
-  namespace pw {
+  namespace f_
+  {
 
-    oln_pw_decl_binary(      eq, == );
-    oln_pw_decl_binary(     neq, != );
-    oln_pw_decl_binary(    less, <  );
-    oln_pw_decl_binary(     leq, <= );
-    oln_pw_decl_binary( greater, >  );
-    oln_pw_decl_binary(     geq, >= );
+    // Default for inf/sup is min/max.
 
-  } // end of namespace oln::pw
+    template <typename T>
+    struct inf_ : public min_<T>
+    {
+    };
+
+    template <typename T>
+    struct sup_ : public max_<T>
+    {
+    };
+
+  } // end of namespace oln::f_
+
+
+  typedef f_::binary1_meta<f_::inf_> f_inf_type;
+  static f_inf_type f_inf;
+
+  typedef f_::binary1_meta<f_::sup_> f_sup_type;
+  static f_sup_type f_sup;
+
 
 } // end of namespace oln
 
 
-# define oln_pw_decl_cmp_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
-oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
-oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
-oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
-oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-namespace oln {
-
-  namespace pw {
-
-    oln_pw_decl_cmp_lit(int);
-    oln_pw_decl_cmp_lit(float);
-    oln_pw_decl_cmp_lit(double);
-
-  } // end of namespace oln::pw
-
-} // end of namespace oln
-
-
-
-#endif // ! OLENA_CORE_PW_CMP_HH
+#endif // ! OLENA_CORE_FUNOBJ_INFSUP_HH

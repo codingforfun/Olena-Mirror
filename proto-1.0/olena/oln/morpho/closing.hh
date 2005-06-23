@@ -29,8 +29,6 @@
 # define OLENA_MORPHO_CLOSING_HH
 
 # include <mlc/cmp.hh>
-# include <mlc/to_string.hh>
-
 # include <oln/morpho/erosion.hh>
 # include <oln/morpho/dilation.hh>
 
@@ -41,58 +39,10 @@ namespace oln {
 
 
 
-    // Fwd decl of closing's facade.
-
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) closing(const tag::kind<K>& kind,
-				     const abstract::image<I>& input,
-				     const abstract::window<W>& win);
-
-    // Facade for classical closing.
+    /// Closing.
 
     template<typename I, typename W>
     oln_type_of(I, concrete) closing(const abstract::image<I>& input,
-				     const abstract::window<W>& win)
-    {
-      return closing(tag::classical, input, win);
-    }
-
-
-
-    namespace impl {
-
-
-      // generic
-
-      template<typename K, typename I, typename W>
-      oln_type_of(I, concrete) closing_(const tag::kind<K>& kind,
-					const abstract::image<I>& input,
-					const abstract::window<W>& win)
-      {
-	entering("->generic");
-	registering(input, "input");
-
-	oln_type_of(I, concrete) output("output");
-	output = erosion(kind, dilation(kind, input, win), -win);
-
-	exiting("->generic");
-	return output;
-      }
-
-
-      // add some other impls here...
-
-      
-    } // end of namespace oln::morpho::impl
-
-
-
-
-    /// Generic closing (facade).
-
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) closing(const tag::kind<K>& kind,
-				     const abstract::image<I>& input,
 				     const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
@@ -101,12 +51,11 @@ namespace oln {
       registering(input, "input");
 
       oln_type_of(I, concrete) output("output");
-      output = impl::closing_(kind, input.exact(), win.exact());
+      output = erosion(dilation(input, win), -win);
 
       exiting("morpho::closing");
       return output;
     }
-
 
 
 

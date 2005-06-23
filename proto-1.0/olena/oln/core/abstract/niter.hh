@@ -126,7 +126,7 @@ namespace oln {
 
     protected:
 
-      const neighb_type nbh_; // copy is safe
+      const neighb_type& nbh_; // copy is safe but not copying is lighter
       point_type p_;
 
       niter(const neighb_type& nbh) :

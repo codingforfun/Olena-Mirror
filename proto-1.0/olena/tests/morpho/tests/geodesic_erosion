@@ -30,12 +30,6 @@ bool check()
   mask = io::read(rdata("object.pbm"));
   marker = morpho::closing(mask, win_c4p()).exact();
 
-  // Classical procedure.
-  if (utils::md5(morpho::proc::geodesic_erosion(join(marker, nbh),
-						mask).exact()) != key)
-    return true;
-
-  // Facade to object-algorithm.
   if (utils::md5(morpho::geodesic_erosion(join(marker, nbh),
 					  mask).exact()) != key)
     return true;

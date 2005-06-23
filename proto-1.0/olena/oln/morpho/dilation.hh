@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,10 @@
 # define OLENA_MORPHO_DILATION_HH
 
 # include <mlc/cmp.hh>
-# include <mlc/is_a.hh>
-# include <mlc/implies.hh>
 
 # include <oln/utils/record.hh>
 # include <oln/basics.hh>
 # include <oln/core/2d/window2d.hh>
-# include <oln/morpho/tags.hh>
 
 
 namespace oln {
@@ -44,52 +41,62 @@ namespace oln {
 
 
 
-    // Fwd decl of dilation's facade.
-
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) dilation(const tag::kind<K>& kind,
-				      const abstract::image<I>& input,
-				      const abstract::window<W>& win);
-
-    // Facade for classical dilation.
+    // Fwd decl of dilation facade.
 
     template<typename I, typename W>
     oln_type_of(I, concrete) dilation(const abstract::image<I>& input,
-				      const abstract::window<W>& win)
-    {
-      return dilation(tag::classical, input, win);
-    }
+				      const abstract::window<W>& win);
 
 
     namespace impl {
 
-      // generic
 
-      template<typename K, typename I, typename W>
-      oln_type_of(I, concrete) dilation_(const tag::kind<K>& kind,
-					 const abstract::image<I>& input,
-					 const abstract::window<W>& win)
+      // Generic on set.
+
+      template<typename I, typename W>
+      oln_type_of(I, concrete)
+      dilation_(const abstract::binary_image<I>& input,
+		const abstract::window<W>& win)
       {
-	entering("->generic");
+	entering("->generic_on_set");
 	registering(input, "input");
 
 	oln_type_of(I, concrete) output(input.size(), "output");
 
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all_p (p)
-	  output[p] = kind.max(input, p, win);
+	  output[p] = win_or_value(input, p, win);
 
-	exiting("->generic");
+	exiting("->generic_on_set");
 	return output;
       }
 
 
+      // Generic on function.
 
-      // win is a 2D rectangle
+      template<typename I, typename W>
+      oln_type_of(I, concrete)
+      dilation_(const abstract::not_binary_image<I>& input,
+		const abstract::window<W>& win)
+      {
+	entering("->generic_on_function");
+	registering(input, "input");
 
-      template<typename K, typename I>
-      oln_type_of(I, concrete) dilation_(const tag::kind<K>& kind,
-					 const abstract::image2d<I>& input,
+	oln_type_of(I, concrete) output(input.size(), "output");
+
+	oln_type_of(I, fwd_piter) p(input.size());
+	for_all_p (p)
+	  output[p] = win_sup_value(input, p, win);
+
+	exiting("->generic_on_function");
+	return output;
+      }
+
+
+      // win is a 2D rectangle.
+
+      template<typename I>
+      oln_type_of(I, concrete) dilation_(const abstract::image2d<I>& input,
 					 const win_rectangle2d& win)
       {
 	entering("->(image2d,win_rectangle2d)");
@@ -100,8 +107,8 @@ namespace oln {
 	win_hline2d hline(win.width); // FIXME: Cf. Soille, use L(i,dp)
 	win_vline2d vline(win.height);
 
-	temp = dilation(kind, input, hline);
-	output = dilation(kind, temp, vline);
+	temp = dilation(input, hline);
+	output = dilation(temp, vline);
 
 	exiting("->(image2d,win_rectangle2d)");
 	return output;
@@ -118,24 +125,19 @@ namespace oln {
 
     /// Generic dilation (facade).
 
-    template<typename K, typename I, typename W>
-    oln_type_of(I, concrete) dilation(const tag::kind<K>& kind,
-				      const abstract::image<I>& input,
+    template<typename I, typename W>
+    oln_type_of(I, concrete) dilation(const abstract::image<I>& input,
 				      const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
-      mlc::implies< mlc_is_a(I, abstract::binary_image),
-	            mlc_eq(K, tag::classical_type) >::ensure();
       entering("morpho::dilation");
 
       oln_type_of(I, concrete) output("output");
-      output = impl::dilation_(kind, input.exact(), win.exact());
+      output = impl::dilation_(input.exact(), win.exact());
       
       exiting("morpho::dilation");
       return output;
     }
-
-
 
 
   } // end of namespace oln::morpho

@@ -98,6 +98,54 @@ namespace oln
     }
 
 
+    // inf
+
+    template <typename I1, typename I2>
+    oln_type_of(I1, concrete)
+    inf (const abstract::image<I1>& input1,
+	 const abstract::image<I2>& input2)
+    {
+      mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
+      mlc::eq<oln_type_of(I1, value), oln_type_of(I2, value)>::ensure();
+
+      entering("level::inf");
+      registering(input1, "input1");
+      registering(input2, "input2");
+
+      precondition(input1.size() == input2.size());
+
+      oln_type_of(I1, concrete) output("output");
+      output = clone( oln::inf(input1, input2) );
+
+      exiting("level::inf");
+      return output;
+    }
+
+
+    // sup
+
+    template <typename I1, typename I2>
+    oln_type_of(I1, concrete)
+    sup (const abstract::image<I1>& input1,
+	 const abstract::image<I2>& input2)
+    {
+      mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
+      mlc::eq<oln_type_of(I1, value), oln_type_of(I2, value)>::ensure();
+
+      entering("level::sup");
+      registering(input1, "input1");
+      registering(input2, "input2");
+
+      precondition(input1.size() == input2.size());
+
+      oln_type_of(I1, concrete) output("output");
+      output = clone( oln::sup(input1, input2) );
+
+      exiting("level::sup");
+      return output;
+    }
+
+
     // arith output
 
     template <template <typename, typename> class F,

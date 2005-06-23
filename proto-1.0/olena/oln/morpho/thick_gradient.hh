@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHO_GRADIENT_HH
-# define OLENA_MORPHO_GRADIENT_HH
+#ifndef OLENA_MORPHO_THICK_GRADIENT_HH
+# define OLENA_MORPHO_THICK_GRADIENT_HH
 
 # include <oln/morpho/dilation.hh>
 # include <oln/morpho/erosion.hh>
@@ -40,60 +40,63 @@ namespace oln {
   namespace morpho {
 
 
-    /// Beucher gradient.
+    /// Beucher thick gradient.
 
-    template<typename I>
-    oln_type_of(I, concrete) gradient_beucher(const abstract::image<I>& input)
+    template<typename I, typename W>
+    oln_type_of(I, concrete) gradient_beucher(const abstract::image<I>& input,
+					      const abstract::window<W>& win)
     {
-      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-      entering("morpho::gradient_beucher");
+      entering("morpho::thick_gradient_beucher");
       registering(input, "input");
       oln_type_of(I, concrete) dil("dil"), ero("ero"), output("output");
 
-      dil = elementary_dilation(input);
-      ero = elementary_erosion(input);
+      dil = dilation(input, win);
+      ero = erosion(input, win);
       output = force_value_type_to<oln_type_of(I, value)>( dil - ero );
 
-      exiting("morpho::gradient_beucher");
+      exiting("morpho::thick_gradient_beucher");
       return output;
     }
 
 
-    /// Internal gradient.
+    /// Internal thick gradient.
 
-    template<typename I>
-    oln_type_of(I, concrete) gradient_internal(const abstract::image<I>& input)
+    template<typename I, typename W>
+    oln_type_of(I, concrete) thick_gradient_internal(const abstract::image<I>& input,
+						     const abstract::window<W>& win)
     {
-      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-      entering("morpho::gradient_internal");
+      entering("morpho::thick_gradient_internal");
       registering(input, "input");
       oln_type_of(I, concrete) ero("ero"), output("output");
 
-      ero = elementary_erosion(input);
+      ero = erosion(input, win);
       output = force_value_type_to<oln_type_of(I, value)>( input - ero );
 
-      exiting("morpho::gradient_internal");
+      exiting("morpho::thick_gradient_internal");
       return output;
     }
 
 
-    /// External gradient.
+    /// External thick gradient.
 
-    template<typename I>
-    oln_type_of(I, concrete) gradient_external(const abstract::image<I>& input)
+    template<typename I, typename W>
+    oln_type_of(I, concrete) thick_gradient_external(const abstract::image<I>& input,
+						     const abstract::window<W>& win)
     {
-      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-      entering("morpho::gradient_external");
+      entering("morpho::thick_gradient_external");
       registering(input, "input");
       oln_type_of(I, concrete) dil("dil"), output("output");
 
-      dil = elementary_dilation(input);
+      dil = dilation(input, win);
       output = force_value_type_to<oln_type_of(I, value)>( dil - input );
 
-      exiting("morpho::gradient_external");
+      exiting("morpho::thick_gradient_external");
       return output;
     }
 
@@ -103,4 +106,4 @@ namespace oln {
 
 } // end of namespace oln
 
-#endif // OLENA_MORPHO_GRADIENT_HH
+#endif // OLENA_MORPHO_THICK_GRADIENT_HH
