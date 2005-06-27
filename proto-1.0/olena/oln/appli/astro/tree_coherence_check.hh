@@ -345,7 +345,7 @@ namespace oln {
       }
 
 
-    } // end of namespace coherance_check
+    } // end of namespace coherence_check
 
   } // end of namespace maxtree
 

@@ -1,5 +1,10 @@
 2005-06-27  Christophe Berger  <christophe@lrde.epita.fr>
 
+	* oln/appli/astro/tree_coherance_checks.hh: Remove.
+	* oln/appli/astro/tree_coherence_check.hh: New.
+
+2005-06-27  Christophe Berger  <christophe@lrde.epita.fr>
+
 	* oln/makefile.src: Add astro files.
 	* oln/appli/astro/tree_coherance_checks.hh: Fix typo.
 	* oln/appli/astro/tree_statistics.hh: Fix typo.
