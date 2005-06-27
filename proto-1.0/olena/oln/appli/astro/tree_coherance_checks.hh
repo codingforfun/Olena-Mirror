@@ -44,7 +44,7 @@ namespace oln {
 
   namespace maxtree {
 
-    namespace coherance_check {
+    namespace coherence_check {
 
       /**
        ** Check if tree starts from an unique root point.
@@ -146,7 +146,7 @@ namespace oln {
        **     search for parent (par) of p
        **     ensure (p) is contained in children of (par)
        **   else
-       **     // nothing, root parent of hiself
+       **     // nothing, root parent of hitself
        **
        ** \endcode
        **
@@ -189,7 +189,7 @@ namespace oln {
        **
        ** \arg tree maxtree structure to check.
        **
-       ** A node cannot be children of hiself, this check if this
+       ** A node cannot be children of hitelf, this check if this
        ** property is satisfied.
        **
        ** \warning Maxtree should have already been computed.
@@ -236,7 +236,7 @@ namespace oln {
        **
        ** \arg tree maxtree structure to check.
        **
-       ** The maxtree structure is based on Tarjan's union find
+       ** The maxtree structure is based on Tarjan's Union-Find
        ** algorithm which works on decreasing point levels.
        ** This property guarantees that leafs are seen first in
        ** first pass order. The check exists to ensure this.
@@ -303,12 +303,12 @@ namespace oln {
        ** Algorithm used :
        **
        ** Tree is traversed using breadth-first traversal with a queue.
-       ** Every points are marked, at the end all the points must
+       ** Every point is marked, at the end all the points must
        ** have been marked.
        **
        ** \endcode
        **
-       ** \return True if all points where marked.
+       ** \return True if all points were marked.
        **
        */
       template<typename I>

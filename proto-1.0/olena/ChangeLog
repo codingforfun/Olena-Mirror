@@ -1,3 +1,9 @@
+2005-06-27  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/makefile.src: Add astro files.
+	* oln/appli/astro/tree_coherance_checks.hh: Fix typo.
+	* oln/appli/astro/tree_statistics.hh: Fix typo.
+
 2005-06-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/pw/apply.hh (p_apply): Rename as...

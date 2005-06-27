@@ -157,7 +157,7 @@ namespace oln {
 
 
       /**
-       ** Makes the children per node average.
+       ** Compute the children per node average.
        **
        ** \param I Type of maxtree's image.
        **
@@ -178,7 +178,7 @@ namespace oln {
        **
        */
       template<typename I>
-      float children_average(oln::appli::astro::clean<I>& tree)
+      double children_average(oln::appli::astro::clean<I>& tree)
       {
 	typedef oln_type_of(I, point) point_type;
 	std::queue<point_type> q;
@@ -212,7 +212,7 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** This algorith is not the best way to compute max depth!
+       ** This algorithm is not the best way to compute max depth!
        **
        **
        ** \return Maximal depth of tree.
@@ -257,7 +257,8 @@ namespace oln {
        **
        */
       template<typename I>
-      void dotty_output(oln::appli::astro::clean<I>& tree, const std::string& filename)
+      void dotty_output(oln::appli::astro::clean<I>& tree,
+			const std::string& filename)
       {
 	typedef oln_type_of(I, point) point_type;
 	std::queue<point_type> q;
