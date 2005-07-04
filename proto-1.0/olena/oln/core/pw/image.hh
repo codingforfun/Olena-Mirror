@@ -74,7 +74,7 @@ namespace oln {
     template <typename U>
     struct ch_value_type
     {
-      typedef concrete_type<U> ret;
+      typedef image2d<U> ret;
     };
   };
 

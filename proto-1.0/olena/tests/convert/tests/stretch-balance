@@ -1,0 +1,27 @@
+							// -*- C++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include <ntg/int.hh>
+#include <oln/io/read_image.hh>
+#include <oln/convert/stretch.hh>
+
+using namespace oln;
+
+bool check()
+{
+  utils::key::value_type data_key[16] =
+    {0x17, 0x33, 0x35, 0x20, 0x34, 0xf, 0x21, 0x14,
+     0xb1, 0x8f, 0xe5, 0x78, 0xee, 0x7d, 0xb5, 0x83};
+  utils::key key(data_key);
+
+  image2d<ntg::int_u8> input;
+  input = io::read(rdata("16x16.pgm"));
+  image2d<ntg::int_u8> output =
+    convert::stretch_balance<ntg::int_u8>(input);
+
+  if (utils::md5(output) != key)
+    return true;
+
+  return false;
+}

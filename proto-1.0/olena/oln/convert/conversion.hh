@@ -34,6 +34,9 @@
 # include <oln/funobj/abstract/binary.hh>
 # include <oln/convert/abstract/conversion.hh>
 
+# include <oln/funobj/compose.hh>
+# include <oln/core/apply.hh>
+
 namespace oln {
   /*!
   ** \brief Conversion implementation (for example cast, color, or
@@ -161,6 +164,24 @@ namespace oln {
     compconv2(const abstract::conversion<C, B>& conv, const BF &func)
     {
       return internal::compconv2_<C, BF>(conv.exact(), func);
+    }
+
+
+    // FIXME: Should't abstract::conversion be an Olena (or Metalic)
+    // functor, and use the standard apply() instead?
+
+    /// Apply procedure of an abstract conversion on an image.
+    template<class C, class B, class I>
+    typename ch_value_type<I, typename convoutput<C, B, oln_type_of(I, value)>::ret>::ret
+    apply(const abstract::conversion<C, B>& conv,
+	  const oln::abstract::image<I>& input)
+    {
+      /* CONV can now be wrapped as an Adaptable Unary Function
+	 because we know the input type.  Composing CONV with the
+	 identity for the input type will cause such wrapping to
+	 happen.  */
+      return apply(compconv1(conv, f_::identity_<oln_type_of(I, value)>()),
+		   input);
     }
 
   } // end of namespace oln::convert

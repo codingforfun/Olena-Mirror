@@ -10,7 +10,7 @@ bool check()
 {
   typedef ntg::int_u8 value_type;
   f_::plus_<value_type, value_type> f_plus;
-  oln::convert::force<value_type> f_force;
+  convert::force<value_type> f_force;
 
   value_type a = 1;
   value_type b = 2;

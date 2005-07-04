@@ -1,5 +1,17 @@
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add tests on stretch conversions.
+
+	* oln/convert/conversion.hh (apply): New.
+	* tests/convert/tests/stretch,
+	* tests/convert/tests/stretch-balance: New tests.
+
+	* oln/core/pw/image.hh
+	(set_props <category::image, image_from_pwf<F> >::ch_value_type):
+	Fix definition.
+
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add stretch conversions.
 
 	* oln/convert/stretch.hh: New file.
