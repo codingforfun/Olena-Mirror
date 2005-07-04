@@ -1,5 +1,15 @@
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Allow the user to run the shortest path watershed transform
+	without the lower completion step (at her own risks!).
+
+	* oln/morpho/shortest_path_watershed.hh
+	(morpho::shortest_path_watershed): Rename as...
+	(morpho::internal::shortest_path_watershed_): ...this.
+	(morpho::shortest_path_watershed): New facade.
+
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix operators on oln::value_box<>.
 
 	* oln/core/gen/internal/value_box.hh (value_box<I>::operator==)

@@ -101,103 +101,134 @@ namespace oln {
 	  return (ls_p + ls_q) / 2;
       }
 
-    } // End of namespace internal.
+
+      /// Shortest path watershed transform implementation.
+      template <typename DestValue, typename I>
+      typename ch_value_type<I, DestValue>::ret
+      shortest_path_watershed_(const abstract::image_with_nbh<I>& input)
+      {
+	mlc_is_a(I, abstract::scalar_valued_image)::ensure();
+
+	const DestValue wshed = ntg_min_val(DestValue);
+
+	// We keep a track of already processed points.
+	typename ch_value_type<I, bool>::ret processed (input.size(),
+							input.nbh_get());
+	level::fill (processed, false);
+
+	// Initialise output with the minima components.
+	typename ch_value_type<I, DestValue>::ret output =
+	  level::minima_components<DestValue>(input);
+
+	// Distance.
+	typedef ntg_cumul_type(DestValue) cumul_type;
+	typedef typename ch_value_type<I, cumul_type>::ret dist_type;
+	dist_type dist (input.size(), input.nbh_get());
+	level::fill(dist, ntg_max_val(DestValue));
+	// Initialize distance with values of minima, and mark these
+	// points as processed (remember that points of INPUT who have
+	// a value greater than ntg_min_val(DestValue) belongs to a
+	// minimum).
+	oln_type_of(I, piter) p(input.size());
+	for_all_p (p)
+	  if (output[p] > ntg_min_val(DestValue))
+	    dist[p] = input[p];
+
+	// Ordered queue.
+	typedef oln_type_of(I, point) point_type;
+	typedef
+	  std::priority_queue<point_type,
+	  std::vector<point_type>,
+	  internal::greater_point_type<dist_type> >
+	  ordered_queue_type;
+	ordered_queue_type q(internal::greater_point(dist));
+	// Fill the ordered queue with the points of the border of the
+	// minima of the (lower complete) input.
+	for_all_p (p)
+	  if (output[p] > ntg_min_val(DestValue))
+	    {
+	      bool border_p = false;
+	      oln_type_of(I, niter) n(input);
+	      for_all_n_of_p (n, p)
+		if (input.hold(n) and
+		    output[n] == ntg_min_val(DestValue))
+		  {
+		    // P is both in a minima and adjacent to a non minima:
+		    // it's on the border of a minima.
+		    border_p = true;
+		    break;
+		  };
+	      if (border_p)
+		q.push(p);
+	      else
+		// Inner points of minima have already been processed.
+		processed[p] = true;
+	    }
+
+	while (!q.empty())
+	  {
+	    point_type p = q.top();
+	    q.pop();
+	    if (processed[p])
+	      continue;
+	    processed[p] = true;
+
+	    oln_type_of(I, niter) n(input);
+	    for_all_n_of_p (n, p)
+	      {
+		if (input.hold(n))
+		  if (dist[p] + internal::cost(input, p, n) < dist[n])
+		    {
+		      dist[n] = dist[p] + internal::cost(input, p, n);
+		      output[n] = output[p];
+		      q.push(n);
+
+		    }
+		  else if (output[n] != wshed and
+			   dist[p] + internal::cost(input, p, n) == dist[n] and
+			   output[n] != output[p])
+		    {
+		      output[n] = wshed;
+		      q.push(n);
+		    }
+	      }
+	  }
+
+	return output;
+      }
+
+    } // End of namespace oln::morpho::internal.
 
 
+    /*! Watershed transform w.r.t. topographical distance based on
+	image integration via the Dijkstra-Moore shortest path
+	algorithm.
+
+	This facade lets the user should whether the lower completion
+	pass shoud be done before actually computing the watershed
+	transform.  Unless you really what you're doing, you probably
+	want to proceed to this lower completion.
+
+	\param input              input image
+	\param lower_completion_p whether \a input should be turned into a
+				  lower complete image  */
     template <typename DestValue, typename I>
     typename ch_value_type<I, DestValue>::ret
-    shortest_path_watershed(const abstract::image_with_nbh<I>& input)
+    shortest_path_watershed(const abstract::image_with_nbh<I>& input,
+			    bool lower_completion_p = true)
     {
       mlc_is_a(I, abstract::scalar_valued_image)::ensure();
 
-      const DestValue wshed = ntg_min_val(DestValue);
-
-      // Get a lower complete image of the input.
-      typename ch_value_type<I, unsigned>::ret lc =
-	lower_completion<unsigned>(input);
-
-      // We keep a track of already processed points.
-      typename ch_value_type<I, bool>::ret processed (lc.size(),
-						      lc.nbh_get());
-      level::fill (processed, false);
-
-      // Initialise output with the minima components.
-      typename ch_value_type<I, DestValue>::ret output =
-	level::minima_components<DestValue>(lc);
-
-      // Distance.
-      typedef typename ch_value_type<I, unsigned>::ret dist_type;
-      dist_type dist (lc.size(), lc.nbh_get());
-      level::fill(dist, ntg_max_val(DestValue));
-      // Initialize distance with values of minima, and mark these
-      // points as processed (remember that points of LC who have a
-      // value greater than ntg_min_val(DestValue) belongs to a
-      // minimum).
-      oln_type_of(I, piter) p(lc.size());
-      for_all_p (p)
-	if (output[p].value() > ntg_min_val(DestValue))
-	  dist[p] = lc[p];
-
-      // Ordered queue.
-      typedef oln_type_of(I, point) point_type;
-      typedef
-	std::priority_queue<point_type,
-			    std::vector<point_type>,
-			    internal::greater_point_type<dist_type> >
-	ordered_queue_type;
-      ordered_queue_type q(internal::greater_point(dist));
-      // Fill the ordered queue with the points of the border of the
-      // minima of the (lower complete) input.
-      for_all_p (p)
-	if (output[p].value() > ntg_min_val(DestValue))
-	  {
-	    bool border_p = false;
-	    oln_type_of(I, niter) n(lc);
-	    for_all_n_of_p (n, p)
-	      if (lc.hold(n) and output[n].value() == ntg_min_val(DestValue))
-		{
-		  // P is both in a minima and adjacent to a non minima:
-		  // it's on the border of a minima.
-		  border_p = true;
-		  break;
-		};
-	    if (border_p)
-	      q.push(p);
-	    else
-	      // Inner points of minima have already been processed.
-	      processed[p] = true;
-	  }
-
-      while (!q.empty())
+      if (lower_completion_p)
 	{
-	  point_type p = q.top();
-	  q.pop();
-	  if (processed[p])
-	    continue;
-	  processed[p] = true;
-
-	  oln_type_of(I, niter) n(lc);
-	  for_all_n_of_p (n, p)
-	    {
-	      if (lc.hold(n))
-		if (dist[p] + internal::cost(lc, p, n) < dist[n])
-		  {
-		    dist[n] = dist[p] + internal::cost(lc, p, n);
-		    output[n] = output[p];
-		    q.push(n);
-
-		  }
-		else if (output[n] != wshed and
-			 dist[p] + internal::cost(lc, p, n) == dist[n] and
-			 output[n] != output[p])
-		  {
-		    output[n] = wshed;
-		    q.push(n);
-		  }
-	    }
+	  // Get a lower complete image of the input.
+	  typedef ntg_cumul_type(DestValue) cumul_type;
+	  typename ch_value_type<I, cumul_type>::ret lc =
+	    lower_completion<cumul_type>(input);
+	  return internal::shortest_path_watershed_<DestValue>(lc);
 	}
-
-      return output;
+      else
+	return internal::shortest_path_watershed_<DestValue>(input);
     }
 
   } // end of namespace oln::morpho
