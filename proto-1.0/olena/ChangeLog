@@ -69,7 +69,7 @@
 
 	Add 'rawness' characteristic (ability to reference data at p)
 	to images.  Add corresponding attribute access object mechanism.
-	
+
 	* oln/funobj/decl_attr.hh: New file.
 	* oln/funobj/abstract/accessor.hh: New file.
 	* oln/core/abstract/image_rawness.hh: New file.
@@ -129,8 +129,8 @@
 
 2005-06-23  Christophe Berger  <christophe@lrde.epita.fr>
 
-	* oln/appli/astro/graphical_interface/filterinterface.hh: Set the default
-	values at the beginning.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Set the
+	default values at the beginning.
 
 2005-06-23  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
@@ -1441,19 +1441,25 @@
 
 2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
-	* oln/core/abstract/niter.hh: New. Abstract neighborhood iterator class.
-	* oln/core/abstract/regular_niter.hh: New. Abstract neighborhood iterator for windows.
-	* oln/core/2d/fwd_regular_niter2d.hh: New. Concrete 2d neighborhood class
+	* oln/core/abstract/niter.hh: New. Abstract neighborhood iterator
+	class.
+	* oln/core/abstract/regular_niter.hh: New. Abstract neighborhood
+	iterator for windows.
+	* oln/core/2d/fwd_regular_niter2d.hh: New. Concrete 2d
+	neighborhood class
 
 2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
-	* oln/core/properties.hh: Change properties for neighborhood hierarchy.
+	* oln/core/properties.hh: Change properties for neighborhood
+	hierarchy.
 	* oln/core/abstract/image.hh: Add neigbh_type property.
 	* oln/core/abstract/image_neighbness.hh: New. Add neighborhood
 	hierarchy.
 	* oln/core/abstract/entry.hh: Add image_neighbness into hierarchy.
-	* oln/core/abstract/image_with_extension.hh: New. Add image with extension hierarchy.
-	* oln/core/gen/image_with_nbh.hh: New. Concrete image and neighborhood class.
+	* oln/core/abstract/image_with_extension.hh: New. Add image with
+	extension hierarchy.
+	* oln/core/gen/image_with_nbh.hh: New. Concrete image and
+	neighborhood class.
 
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
