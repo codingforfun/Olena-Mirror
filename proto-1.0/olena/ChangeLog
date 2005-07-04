@@ -1,5 +1,12 @@
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add stretch conversions.
+
+	* oln/convert/stretch.hh: New file.
+	* oln/makefile.src (OLN_DEP): Add convert/stretch.hh.
+
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow the user to run the shortest path watershed transform
 	without the lower completion step (at her own risks!).
 

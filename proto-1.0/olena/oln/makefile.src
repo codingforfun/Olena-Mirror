@@ -27,6 +27,7 @@ OLN_DEP =					\
   convert/abstract/conversion.hh		\
   convert/conversion.hh				\
   convert/force.hh				\
+  convert/stretch.hh				\
   convert/value_to_point.hh			\
 						\
   core/1d/array1d.hh				\
