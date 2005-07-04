@@ -76,8 +76,6 @@ namespace oln
     return tmp;
   }
 
-} // end of namespace oln
-
 
 oln_pw_decl_binary(  plus, + );
 oln_pw_decl_binary( minus, - );
@@ -102,6 +100,9 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 oln_pw_decl_arith_lit(int);
 oln_pw_decl_arith_lit(float);
 oln_pw_decl_arith_lit(double);
+
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_CORE_PW_ARITH_HH

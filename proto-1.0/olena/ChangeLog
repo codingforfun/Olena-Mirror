@@ -1,5 +1,33 @@
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix operators on oln::value_box<>.
+
+	* oln/core/gen/internal/value_box.hh (value_box<I>::operator==)
+	(value_box<I>::operator!=, value_box<I>::operator<)
+	(value_box<I>::operator>, value_box<const I>::operator==)
+	(value_box<const I>::operator!=, value_box<const I>::operator<):
+	Remove operators.
+	(oln_decl_comp_binop_all, oln_decl_comp_binop_with_builtin)
+	(oln_decl_comp_binop_builtin_vb, oln_decl_comp_binop_vb_builtin)
+	(oln_decl_comp_binop_with_ntgval, oln_decl_comp_binop_ntgval_vb)
+	(oln_decl_comp_binop_vb_ntgval, oln_decl_comp_binop_vb_vb)
+	(oln_decl_arith_binop_all)
+	(oln_decl_arith_binop_all_but_builtin_float)
+	(oln_decl_arith_binop_with_builtin_float)
+	(oln_decl_arith_binop_with_builtin_int)
+	(oln_decl_arith_binop_with_builtin)
+	(oln_decl_arith_binop_builtin_vb, oln_decl_arith_binop_vb_builtin)
+	(oln_decl_arith_binop_with_ntgval, oln_decl_arith_binop_ntgval_vb)
+	(oln_decl_arith_binop_vb_ntgval, oln_decl_arith_binop_vb_vb):
+	New macros.  Use them to implement operators whose (at least) one
+	operand is an oln::value_box.
+	* oln/morpho/lower_completion.hh (lower_completion): Adjust.
+	* oln/core/pw/arith.hh: Move all operators on point-wise
+	functions to...
+	(oln): ...this namespace.
+
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with changes in morphological gradients.
 
 	* oln/morpho/temp.hh (force_value_type_to): Take the whole output

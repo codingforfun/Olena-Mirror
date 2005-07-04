@@ -54,9 +54,10 @@ namespace oln {
 						     input.nbh_get ());
       level::fill (processed, false);
 
-      typename ch_value_type<I, unsigned>::ret distance(input.size(),
-							input.nbh_get());
-      unsigned cur_dist = 1;
+      typedef ntg_cumul_type(DestValue) cumul_type;
+      typename ch_value_type<I, cumul_type>::ret distance(input.size(),
+							  input.nbh_get());
+      cumul_type cur_dist = 1;
 
       oln_type_of(I, piter) p(input.size());
       for_all_p (p)
@@ -114,9 +115,19 @@ namespace oln {
 						       input.nbh_get());
       for_all_p (p)
 	if (distance[p] == ntg_zero_val(DestValue))
-	  output[p] = cur_dist * input[p].value();
+	  output[p] = input[p] * cur_dist;
 	else
-	  output[p] = cur_dist * input[p].value() + distance[p].value() - 1;
+	  /* Careful, the order of the operations matters here.  If we had
+	     written is as
+
+	       input[p] * cur_dist + distance[p] - 1
+
+	     the compiler would have complained about the expression
+	     « input[p] * cur_dist » not having an Integre property.  This
+	     is because the resolution of operator+ would have taken place
+	     inside the ntg namespace, as its first operand would be
+	     an Integre value.  */
+	  output[p] = distance[p] - 1 + input[p] * cur_dist;
 
       return output;
     }
