@@ -55,6 +55,7 @@ namespace oln {
   {
     // intrusive property:
     typedef is_a<abstract::readwrite_image> image_constness_type;
+    typedef is_a<abstract::raw_image>       image_rawness_type;
     typedef E concrete_type;
   };
 
@@ -84,6 +85,7 @@ namespace oln {
       typedef oln_type_of(E, size)  size_type;
       typedef oln_type_of(E, point) point_type;
       typedef oln_type_of(E, value) value_type;
+      typedef oln_type_of(E, value_storage) value_storage_type;
       typedef oln_type_of(E, storage) storage_type;
 
 
@@ -190,6 +192,15 @@ namespace oln {
 	(const_cast<storage_type&>(*this->data_)).resize_border(new_border, copy_border);
       }
 
+      value_storage_type& impl_at(const point_type& p)
+      {
+ 	return this->data_->at(p);
+      }
+       
+      const value_storage_type& impl_at(const point_type& p) const
+      {
+ 	return this->data_->at(p);
+      }
 
     protected:
 

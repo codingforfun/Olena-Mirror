@@ -61,6 +61,8 @@ namespace oln {
 
     // FIXME: EXTREMELY AWFUL!!! we do not know if it is 2d...
     typedef is_a<abstract::image2d> image_dimension_type;
+    typedef is_a<abstract::readonly_image> image_constness_type;
+    typedef is_a<abstract::not_raw_image>  image_rawness_type;
 
     typedef grid2d      grid_type;
     typedef fwd_piter2d piter_type;

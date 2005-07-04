@@ -32,6 +32,7 @@
 
 # include <oln/utils/record.hh>
 # include <oln/basics.hh>
+# include <oln/morpho/local.hh>
 # include <oln/core/2d/window2d.hh>
 
 
@@ -62,6 +63,8 @@ namespace oln {
 	registering(input, "input");
 
 	oln_type_of(I, concrete) output(input.size(), "output");
+	// FIXME: the use of .info() instead of .size() above would allow to create
+	// output with the proper neighborhood if input is an image_with_nbh...
 
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all_p (p)

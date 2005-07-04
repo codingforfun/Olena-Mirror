@@ -140,7 +140,7 @@ namespace oln {
 	return this->exact().impl_hold(p);
       }
 
-      const data_type get(const point_type& p) const
+      const data_type get(const point_type& p) const // FIXME: remove (obsolete)
       {
 	precondition(this->has_data());
 	precondition(this->hold_large(p));
@@ -150,7 +150,7 @@ namespace oln {
 	return this->exact().impl_get(p);
       }
 
-      void set(const point_type& p, const data_type& v)
+      void set(const point_type& p, const data_type& v) // FIXME: remove (obsolete)
       {
 	precondition(this->has_data());
 	precondition(this->hold_large(p));
@@ -160,14 +160,25 @@ namespace oln {
 	this->exact().impl_set(p, v);
       }
 
+      const data_type& at(const point_type& p) const
+      {
+ 	precondition(this->has_data());
+ 	precondition(this->hold_large(p));
+# ifdef OLNTRACE
+  	inc_ncalls("data_get", *this);
+# endif // ! OLNTRACE
+ 	return this->exact().impl_at(p);
+      }
 
-      // FIXME: commented below cause unused...
-//       void set_data(const data_type& v)
-//       {
-// 	precondition(this->has_data());
-// 	this->exact().impl_set_data(v);
-//       }
-
+      data_type& at(const point_type& p)
+      {
+ 	precondition(this->has_data());
+ 	precondition(this->hold_large(p));
+# ifdef OLNTRACE
+  	inc_ncalls("data_set", *this);
+# endif // ! OLNTRACE
+ 	return this->exact().impl_at(p);
+      }
 
       // polymorphic method with default
 
@@ -198,7 +209,8 @@ namespace oln {
         mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);
 	mlc_check_method_impl(E, bool,             hold,       const point_type&, const);
 	mlc_check_method_impl(E, const data_type,  get,        const point_type&, const);
-	mlc_check_method_impl(E, void,             set_data,   const data_type&,       );
+	mlc_check_method_impl(E, const data_type&, at,         const point_type&, const);
+	mlc_check_method_impl(E, data_type&,       at,         const point_type&,      );
 	mlc_check_method_impl(E, bool,             hold_large, const point_type&, const);
 	mlc_check_method_impl_2(E, void, resize_border, size_t,            bool,             );
 	mlc_check_method_impl_2(E, void, set,           const point_type&, const data_type&, );

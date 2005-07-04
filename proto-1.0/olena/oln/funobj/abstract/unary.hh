@@ -30,8 +30,17 @@
 
 # include <mlc/any.hh>
 # include <mlc/contract.hh>
+# include <mlc/if.hh>
+# include <mlc/is_a.hh>
 # include <ntg/all.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/gen/internal/value_box.hh>
+# include <oln/core/pw/abstract/function.hh>
+
+// FIXME: break cycling dependance due to...
+// FIXME: ...the recursive classes oln::pw::unary_op and oln::f_::abstract::munary
+
+// # include <oln/core/pw/unary_op.hh>
 
 
 // Macros.
@@ -112,23 +121,116 @@ namespace oln
 	}
       };
 
+
       // munary
+
+      namespace internal {
+
+	// FIXME: move to internal/?
+
+	struct arg_is_a_value_box;
+	struct arg_is_a_point_wise_function;
+	struct arg_is_an_image;
+	struct arg_is_a_value;
+
+	template <typename E, typename Arg, typename arg_kind>
+	struct munary_on;
+
+	// on a value box
+	template <typename E, typename I>
+	struct munary_on <E, oln::value_box<I>, arg_is_a_value_box>
+	{
+	  typedef typename munary_result<E, oln_type_of(I, value)>::ret ret;
+	  static const ret exec(const E& target, const oln::value_box<I>& arg)
+	  {
+	    return target.impl_unop(arg.value());
+	  }
+	};
+
+	// on a point-wise function
+// 	template <typename E, typename F>
+// 	struct munary_on <E, oln::pw::abstract::function<F>, arg_is_a_point_wise_function>
+// 	{
+// 	  typedef oln::pw::unary_op<E,F> ret;
+// 	  static const ret exec(const E& target, const oln::pw::abstract::function<F>& arg)
+// 	  {
+// 	    oln::pw::unary_op<E,F> tmp(arg);
+// 	    return tmp;
+// 	  }
+// 	};
+
+	// on a (regular) value
+	template <typename E, typename T>
+	struct munary_on <E, T, arg_is_a_value>
+	{
+	  typedef typename munary_result<E, T>::ret ret;
+	  static const ret exec(const E& target, const T& arg)
+	  {
+	    return target.impl_unop(arg);
+	  }
+	};
+
+	// on an image
+	template <typename E, typename I>
+	struct munary_on <E, oln::abstract::image<I>, arg_is_an_image>
+	{
+	  // FIXME: fake code here
+	  typedef int ret;
+	  static const ret exec(const E& target, const oln::abstract::image<I>& arg)
+	  {
+	    return 0;
+	  }	  
+	};
+
+	template <typename E, typename Arg>
+	struct munary_helper
+	{
+	  // arg_kind
+	  typedef typename
+	  mlc::if_< mlc_is_a(Arg, oln::value_box),
+		    arg_is_a_value_box, typename
+		    mlc::if_< mlc_is_a(Arg, oln::pw::abstract::function),
+			      arg_is_a_point_wise_function, typename
+			      mlc::if_< mlc_is_a(Arg, oln::abstract::image),
+					arg_is_an_image,
+					arg_is_a_value
+				      >::ret
+	                    >::ret
+	           >::ret
+	  arg_kind;
+	  // ret
+	  typedef typename munary_on<E, Arg, arg_kind>::ret ret;
+	  // exec
+	  static const ret exec(const E& target, const Arg& arg)
+	  {
+	    return munary_on<E, Arg, arg_kind>::exec(target, arg);
+	  }	  
+	};
+
+      } // end of namespace oln::f_::abstract::internal
+
 
       template <typename E>
       struct munary : public mlc::any<E>
       {
 	template <typename T>
-	const typename munary_result<E,T>::ret
+	struct helper : public internal::munary_helper<E,T>
+	{
+	  // using internal::munary_helper<E,T>::ret;
+	  // using internal::munary_helper<E,T>::exec;
+	};
+	template <typename T>
+	const typename helper<T>::ret
 	operator()(const T& arg) const
 	{
-	  return this->exact().impl_unop(arg);
+	  return helper<T>::exec(this->exact(), arg);
 	}
       protected:
 	munary() {}
       };
 
 
-    } // end of namespace oln::abstract
+    } // end of namespace oln::f_::abstract
 
   
 
@@ -157,6 +259,7 @@ namespace oln
 	static F<T> f;
 	return f(arg);
       }
+
     };
 
 

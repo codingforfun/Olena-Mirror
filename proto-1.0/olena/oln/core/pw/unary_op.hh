@@ -68,7 +68,8 @@ namespace oln {
 	super_type(arg),
 	fun()
       {
-	mlc_is_a(F, f_::unary_meta)::ensure();
+	mlc_is_a(F, f_::abstract::munary)::ensure();
+// 	mlc_is_a(F, f_::unary_meta)::ensure();
       }
 
       typedef oln_pw_type_of(self_type, point) point_type;

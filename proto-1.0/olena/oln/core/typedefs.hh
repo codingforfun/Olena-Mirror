@@ -101,6 +101,7 @@ namespace oln
   mlc_decl_typedef(image_dimension_type);
   mlc_decl_typedef(image_typeness_type);
   mlc_decl_typedef(image_valuedness_type);
+  mlc_decl_typedef(image_rawness_type);
 
   // extension in image_operators
   mlc_decl_typedef(output_type);

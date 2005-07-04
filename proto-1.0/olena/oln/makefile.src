@@ -79,6 +79,7 @@ OLN_DEP =					\
   core/abstract/image_like_.hh			\
   core/abstract/image_neighbness.hh		\
   core/abstract/image_operator.hh		\
+  core/abstract/image_rawness.hh		\
   core/abstract/image_typeness.hh		\
   core/abstract/image_valuedness.hh		\
   core/abstract/image_with_data.hh		\
@@ -105,9 +106,11 @@ OLN_DEP =					\
   core/compose.hh				\
   core/coord.hh					\
 						\
+  core/gen/attr.hh				\
   core/gen/identity.hh				\
   core/gen/image_with_nbh.hh			\
   core/gen/internal/value_box.hh		\
+  core/gen/mfun.hh				\
   core/gen/regular_bkd_niter.hh			\
   core/gen/regular_bkd_qiter.hh			\
   core/gen/regular_fwd_niter.hh			\
@@ -138,11 +141,13 @@ OLN_DEP =					\
   fancy/iota.hh					\
   fancy/print.hh				\
 						\
+  funobj/abstract/accessor.hh			\
   funobj/abstract/binary.hh			\
   funobj/abstract/unary.hh			\
   funobj/accum.hh				\
   funobj/arith.hh				\
   funobj/cmp.hh					\
+  funobj/decl_attr.hh				\
   funobj/infsup.hh				\
   funobj/invert.hh				\
   funobj/logic.hh				\

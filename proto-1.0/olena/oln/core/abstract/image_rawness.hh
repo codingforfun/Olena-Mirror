@@ -25,15 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_RAWNESS_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_RAWNESS_HH
 
 # include <oln/core/abstract/image.hh>
+
+
+//              image
+//
+//                ^
+//                |                
+//         ---------------
+//        |               |
+//
+//    raw_image          ...
+
+
 
 /*! \namespace oln
 ** \brief oln namespace.
 */
 namespace oln {
+
 
   /*! \namespace oln::abstract
   ** \brief oln::abstract namespace.
@@ -41,58 +54,84 @@ namespace oln {
   namespace abstract {
 
 
+
+
+    /*! \class abstract::raw_image<E>
+    **
+    ** Class of images whose data are read-only.
+    */
+
+
     template <typename E>
-    struct image_with_nbh : public virtual image<E>,
-			    public internal::get_image_impl < image_with_nbh<E>, E >
+    struct raw_image : public virtual image<E>,
+		       public internal::get_image_impl < raw_image<E>, E >
     {
     public:
 
-      typedef oln_type_of(E, neighb) neighb_type;
-
-      const neighb_type& nbh_get() const // FIXME: rename
+      typedef oln_type_of(E, point) point_type;
+      typedef oln_type_of(E, value_storage) value_storage_type;
+      
+      value_storage_type& at(const point_type& p)
       {
-	return this->exact().impl_nbh_get();
+# ifdef OLNTRACE
+ 	inc_ncalls("set", *this);
+# endif // ! OLNTRACE
+	return this->exact().impl_at(p);
+      }
+      
+      const value_storage_type& at(const point_type& p) const
+      {
+# ifdef OLNTRACE
+ 	inc_ncalls("get", *this);
+# endif // ! OLNTRACE
+	return this->exact().impl_at(p);
       }
 
     protected:
 
-      image_with_nbh() {}
-
-      ~image_with_nbh()
-      {
-// 	mlc_check_method_impl(E, const neighb_type&, nbh, , const);
-      }
+      /*! \brief Constructor (protected, empty).
+      */
+      raw_image() {}
     };
 
 
     template <typename E>
-    struct image_without_nbh : public virtual image<E>
+    struct not_raw_image : public virtual image<E>
     {
     protected:
-      image_without_nbh() {}
+      not_raw_image() {}
     };
 
 
- 
+
     namespace internal {
- 
+
       template <typename E>
-      struct set_image_impl < image_with_nbh<E>, E> : public virtual image_impl<E>
+      struct set_image_impl < raw_image<E>, E> : public virtual image_impl<E>
       {
- 	typedef typename image_impl<E>::D D;
- 	typedef oln_type_of(D, neighb) neighb_type;
-	
- 	const neighb_type& impl_nbh_get() const
- 	{
- 	  return this->exact().delegate().nbh_get();
- 	}
+	/// typedefs
+	typedef typename image_impl<E>::D D;
+	typedef oln_type_of(D, point) point_type;
+	typedef oln_type_of(D, value_storage) value_storage_type;
+
+	value_storage_type& at(const point_type& p)
+	{
+	  return this->delegate().at(p);
+	}
+      
+	const value_storage_type& at(const point_type& p) const
+	{
+	  return this->delegate().at(p);
+	}
       };
- 
+
     } // end of namespace oln::abstract::internal
- 
+
+
 
   } // end of namespace oln::abstract
 
 } // end of namespace oln
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_RAWNESS_HH

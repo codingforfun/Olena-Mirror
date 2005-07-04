@@ -48,8 +48,8 @@ namespace oln {
   {
     template <typename I> class image_without_nbh;
     template <typename I> class readonly_image;
+    template <typename I> class raw_image;
   }
-
 
   namespace category
   {
@@ -81,6 +81,7 @@ namespace oln {
 
     typedef is_a<abstract::image_without_nbh> image_neighbness_type;
     typedef is_a<abstract::readonly_image> image_constness_type;
+    typedef mlc::undefined_type image_rawness_type;
     typedef mlc::undefined_type image_dimension_type;
 
     //...
@@ -112,6 +113,7 @@ namespace oln {
 
     typedef oln_type_of(I, image_neighbness) image_neighbness_type;
     typedef oln_type_of(I, image_constness) image_constness_type;
+    typedef oln_type_of(I, image_rawness)   image_rawness_type;
     typedef oln_type_of(I, image_dimension) image_dimension_type;
 
     //...
@@ -139,6 +141,7 @@ namespace oln {
 
 	   << "\t image_neighbness_type = " << mlc_to_string(image_neighbness_type)  << std::endl
 	   << "\t image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
+	   << "\t image_rawness_type = " << mlc_to_string(image_rawness_type) << std::endl
 	   << "\t image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
 
 	   << "}" << std::endl;
@@ -162,6 +165,7 @@ namespace oln {
 
       mlc::is_ok< image_neighbness_type >::ensure();
       mlc::is_ok< image_constness_type >::ensure();
+      mlc::is_ok< image_rawness_type >::ensure();
       mlc::is_ok< image_dimension_type >::ensure();
     }
   };

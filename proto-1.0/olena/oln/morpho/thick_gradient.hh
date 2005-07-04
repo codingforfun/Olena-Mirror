@@ -30,8 +30,6 @@
 
 # include <oln/morpho/dilation.hh>
 # include <oln/morpho/erosion.hh>
-# include <oln/morpho/elementary_dilation.hh>
-# include <oln/morpho/elementary_erosion.hh>
 # include <oln/morpho/temp.hh>
 
 
@@ -43,8 +41,8 @@ namespace oln {
     /// Beucher thick gradient.
 
     template<typename I, typename W>
-    oln_type_of(I, concrete) gradient_beucher(const abstract::image<I>& input,
-					      const abstract::window<W>& win)
+    oln_type_of(I, concrete) thick_gradient_beucher(const abstract::image<I>& input,
+						    const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 

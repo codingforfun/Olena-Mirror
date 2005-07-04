@@ -1,3 +1,39 @@
+2005-07-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add 'rawness' characteristic (ability to reference data at p)
+	to images.  Add corresponding attribute access object mechanism.
+	
+	* oln/funobj/decl_attr.hh: New file.
+	* oln/funobj/abstract/accessor.hh: New file.
+	* oln/core/abstract/image_rawness.hh: New file.
+	* oln/core/gen/mfun.hh: New file.
+	* oln/core/gen/attr.hh: New file.
+	* oln/makefile.src: Update.
+	* oln/core/typedefs.hh: Update.
+	* oln/core/abstract/image.hh: Update.
+	* oln/core/abstract/image_entry.hh: Update.
+	* oln/core/pw/image.hh: Update.
+
+	* oln/funobj/abstract/unary.hh:
+	(munary::operator()): Make it more general.
+	* oln/core/abstract/image_neighbness.hh (impl_nbh_get()): Move
+	from class body to default impl.
+	* oln/core/abstract/data_storage.hh (at): New methods.
+	* oln/core/abstract/image_with_data.hh (impl_at): Likewise.
+	* oln/core/abstract/image_by_delegation.hh
+	(set_props): Add image_constness_type.
+	(ctors): Accept a box as input.
+	* oln/core/2d/array2d.hh (impl_at): New methods.
+	(impl_set, impl_get): Add fixme.
+	* oln/core/pw/unary_op.hh (ctor): Relax static check.
+	* oln/core/gen/image_with_nbh.hh: Add fixme.
+	* oln/core/gen/internal/value_box.hh: Add fixme.
+	* oln/morpho/dilation.hh (local): Add include.
+	* oln/morpho/erosion.hh (local): Add include.
+	(impl::erosion_): Add fixme.
+	* oln/morpho/thick_gradient.hh (gradient_beucher): Rename as...
+	(thick_gradient_beucher): ...This.
+
 2005-06-27  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/tree_coherance_checks.hh: Remove.

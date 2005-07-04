@@ -33,6 +33,7 @@
 # include <oln/core/abstract/image.hh>
 
 
+// FIXME: not coherent cause in internal/ but not internal::
 
 
 /*! \namespace oln

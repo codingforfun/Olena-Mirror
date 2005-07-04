@@ -149,6 +149,9 @@ namespace oln {
     return tmp;
   }
 
+  // FIXME: add the 'const' version...
+
+
 } // end of namespace oln
 
 

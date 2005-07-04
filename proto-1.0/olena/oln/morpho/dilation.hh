@@ -32,6 +32,7 @@
 
 # include <oln/utils/record.hh>
 # include <oln/basics.hh>
+# include <oln/morpho/local.hh>
 # include <oln/core/2d/window2d.hh>
 
 

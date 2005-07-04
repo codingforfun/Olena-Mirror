@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2004, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,52 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
+#ifndef OLENA_CORE_FUNOBJ_ACCESSOR_HH
+# define OLENA_CORE_FUNOBJ_ACCESSOR_HH
 
-# include <oln/core/abstract/image_constness.hh>
-# include <oln/core/abstract/image_dimension.hh>
-# include <oln/core/abstract/image_neighbness.hh>
-# include <oln/core/abstract/image_typeness.hh>
-# include <oln/core/abstract/image_valuedness.hh>
-# include <oln/core/abstract/image_rawness.hh>
-
-
+# include <mlc/any.hh>
 
 
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct image_entry;
-  }
+  namespace f_ {
 
-  // entry => no super type but a category
+    namespace abstract {
 
-  template <typename E>
-  struct set_category < abstract::image_entry<E> > { typedef category::image ret; };
+      /// Accessor.
 
+      template <typename A>
+      struct accessor : public mlc::any<A>
+      {
+      protected:
+	accessor() {}
+      };
 
-  namespace abstract {
+    } // end of namespace oln::f_::abstract
 
-    template <typename E>
-    struct image_entry :
-      // intrusive:
-      public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_neighbness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_rawness) ::template instantiated_with<E>::ret,
-      // ...
-      public typeness::inheritance_switch<E>,
-      public valuedness::inheritance_switch<E>
-    {
-    protected:
-      image_entry() {}
-    };
-
-  }
+  } // end of namespace oln::f_
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
+#endif // ! OLENA_CORE_FUNOBJ_ACCESSOR_HH

@@ -54,6 +54,7 @@ namespace oln {
     : public get_props< category::image, I >
   {
     typedef I delegated_type;
+    // FIXME: what about storage_type?
   };
 
   template <typename I, typename E>
@@ -61,6 +62,8 @@ namespace oln {
     : public get_props< category::image, I >
   {
     typedef I delegated_type;
+    typedef is_a<abstract::readonly_image> image_constness_type;
+    // FIXME: what about storage_type?
   };
 
 
@@ -80,8 +83,16 @@ namespace oln {
  	this->exact_ptr = (E*)(void*)(this);
       }
 
+      // FIXME: this ctor should be removed.
       image_by_delegation(abstract::image<I>& image) :
 	image_(image.exact())
+      {
+	this->exact_ptr = (E*)(void*)(this);
+      }
+
+      /// Ctor with an image (in a box).
+      image_by_delegation(box<I> image) :
+	image_(image)
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
@@ -122,8 +133,16 @@ namespace oln {
 	this->exact_ptr = (E*)(void*)(this);
       }
 
+      // FIXME: this ctor should be removed.
       image_by_delegation(const abstract::image<I>& ima) :
 	image_(ima.exact())
+      {
+	this->exact_ptr = (E*)(void*)(this);
+      }
+
+      /// Ctor with an image (in a box).
+      image_by_delegation(box<const I> image) :
+	image_(image)
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
