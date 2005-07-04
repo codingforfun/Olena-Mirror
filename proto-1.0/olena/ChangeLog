@@ -1,5 +1,12 @@
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/morpho/tests/gradient: Catch up with changes on
+	morphological gradients.
+	Rename as...
+	* tests/morpho/tests/thick_gradient: ...this.
+
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add tests on stretch conversions.
 
 	* oln/convert/conversion.hh (apply): New.

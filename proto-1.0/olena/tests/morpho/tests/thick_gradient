@@ -7,7 +7,7 @@
 #include <oln/core/gen/image_with_nbh.hh>
 #include <oln/io/read_image.hh>
 #include <oln/io/write_image.hh>
-#include <oln/morpho/gradient.hh>
+#include <oln/morpho/thick_gradient.hh>
 
 using namespace oln;
 
@@ -22,7 +22,7 @@ bool check()
     {0x89, 0xaa, 0x5b, 0xca, 0x8, 0xec, 0xb3, 0xe7,
      0x86, 0xfb, 0x4b, 0x59, 0xf0, 0x8, 0xf5, 0x59};
   utils::key bg_key(bg_data_key);
-  ima_type bg = morpho::beucher_gradient(input, win_c8p());
+  ima_type bg = morpho::thick_gradient_beucher(input, win_c8p());
   if (utils::md5(bg) != bg_key)
     return true;
 
@@ -31,7 +31,7 @@ bool check()
     {0xe7, 0xff, 0x90, 0x2a, 0x50, 0x44, 0x30, 0x65,
      0xeb, 0xe3, 0xf2, 0xc4, 0x6f, 0xfe, 0x65, 0x84};
   utils::key ig_key(ig_data_key);
-  ima_type ig = morpho::internal_gradient(input, win_c8p());
+  ima_type ig = morpho::thick_gradient_internal(input, win_c8p());
   if (utils::md5(ig) != ig_key)
     return true;
 
@@ -40,7 +40,7 @@ bool check()
     {0xf7, 0xb7, 0x9e, 0x74, 0xe0, 0xd1, 0xe7, 0xd8,
      0x5b, 0x0, 0xe8, 0x37, 0x57, 0xdc, 0x2c, 0x27};
   utils::key eg_key(eg_data_key);
-  ima_type eg = morpho::external_gradient(input, win_c8p());
+  ima_type eg = morpho::thick_gradient_external(input, win_c8p());
   if (utils::md5(eg) != eg_key)
     return true;
 
