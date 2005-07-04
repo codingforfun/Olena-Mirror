@@ -50,7 +50,8 @@ namespace oln {
 	Cmp cmp;
 
 	// Compute level components.
-	typedef unsigned comp_type;
+	typedef ntg_cumul_type(DestValue) cumul_type;
+	typedef cumul_type comp_type;
 	typename ch_value_type<I, comp_type>::ret comps =
 	  level_components<comp_type>(input);
 	std::set<comp_type> extrema;
@@ -68,7 +69,7 @@ namespace oln {
 
 		oln_type_of(I, niter) n(input);
 		for_all_n_of_p (n, p)
-		  if (input.hold(n) && cmp(input[n], input[p]))
+		  if (input.hold(n) and cmp(input[n], input[p]))
 		    {
 		      extrema.erase(comp);
 		      non_extrema.insert(comp);

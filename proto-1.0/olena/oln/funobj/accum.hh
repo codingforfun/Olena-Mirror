@@ -64,8 +64,8 @@ namespace oln
       
     private:
 
-      T value_;
       F fun_;
+      T value_;
     };
 
 

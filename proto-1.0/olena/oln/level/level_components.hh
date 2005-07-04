@@ -57,7 +57,7 @@ namespace oln {
       oln_type_of(I, piter) p(input.size());
       for_all_p (p)
 	if (!processed[p])
-	  {	    
+	  {
 	    labels[p] = cur_label;
 	    processed[p] = true;
 	    q.push(p);
@@ -67,7 +67,7 @@ namespace oln {
 		q.pop();
 		oln_type_of(I, niter) n(input);
 		for_all_n_of_p (n, s)
-		  if (input.hold(n) && !processed[n] && input[n] == input[s])
+		  if (input.hold(n) and !processed[n] and input[n] == input[s])
 		    {
 		      labels[n] = cur_label;
 		      processed[n] = true;

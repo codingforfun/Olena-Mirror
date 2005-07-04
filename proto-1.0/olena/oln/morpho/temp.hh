@@ -31,6 +31,7 @@
 # include <oln/basics.hh>
 # include <oln/utils/record.hh>
 # include <oln/core/ch_value_type.hh>
+# include <ntg/utils/cast.hh>
 
 
 namespace oln {
@@ -39,19 +40,20 @@ namespace oln {
 
     // FIXME: this is definitely temporay
 
-    template <typename T, typename I>
-    typename ch_value_type<I,T>::ret
+    template <typename O, typename I>
+    O
     force_value_type_to(const abstract::image<I>& input)
     {
       entering("force_value_type_to");
       registering(input, "input");
 
-      typedef typename ch_value_type<I,T>::ret output_type;
-      output_type output(input.size(), "output");
+      typedef oln_type_of(O, value) output_value_type;
 
-      oln_type_of(I, fwd_piter) p(input.size());
+      O output(input.size(), "output");
+
+      oln_type_of(I, piter) p(input.size());
       for_all_p (p)
-	output[p] = T(input[p]);
+	output[p] = ntg::cast::force<output_value_type> (input[p].value());
 
       exiting("force_value_type_to");
       return output;

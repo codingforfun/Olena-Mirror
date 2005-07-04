@@ -1,3 +1,25 @@
+2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with changes in morphological gradients.
+
+	* oln/morpho/temp.hh (force_value_type_to): Take the whole output
+	image type as first parameter, not just its value type (which is
+	deduced from the former).
+	Use ntg::cast::force<> to perform the conversion.
+	* oln/core/pw/image.hh
+	(set_props <category::image, image_from_pwf<F> >::ch_value_type):
+	New.
+	* oln/morpho/gradient.hh, oln/morpho/thick_gradient.hh: Adjust.
+	* oln/funobj/accum.hh (accum_with_init::fun_)
+	(accum_with_init::value_): Switch the order of these declarations
+	to match the order of their initializations in ctors.
+
+	* oln/convert/force.hh, oln/level/level_components.hh: Aesthetic
+	changes.
+	* oln/level/extrema_components.hh: Likewise.
+	(extrema_components): Use ntg_cumul_type(DestValue) to store the
+	components labels.
+
 2005-07-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add 'rawness' characteristic (ability to reference data at p)
@@ -49,7 +71,7 @@
 
 	* oln/core/pw/apply.hh (p_apply): Rename as...
 	(pw_apply): ...this.
-	* oln/morpho/elementary_dilation.hh: Rewrite. 
+	* oln/morpho/elementary_dilation.hh: Rewrite.
 	* oln/morpho/gradient.hh: Rewrite.
 	* oln/morpho/closing.hh: Rewrite.
 	* oln/morpho/opening.hh: Rewrite.
@@ -122,7 +144,7 @@
 	* oln/makefile.src: Update.
 	* oln/funobj/accum.hh (accum_with_init, accum): New object functions
 	based on a function.
-	* oln/core/abstract/niter.hh (nbh_): Change from POD to reference. 
+	* oln/core/abstract/niter.hh (nbh_): Change from POD to reference.
 	* oln/core/pw/arith.hh (inf, sup): New procedures.
 	* oln/core/pw/cmp.hh: Move operators into oln namespace to avoid
 	ambiguities and rely on Koenig lookup.

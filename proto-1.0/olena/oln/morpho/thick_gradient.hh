@@ -31,6 +31,7 @@
 # include <oln/morpho/dilation.hh>
 # include <oln/morpho/erosion.hh>
 # include <oln/morpho/temp.hh>
+# include <oln/ops/arith.hh>
 
 
 namespace oln {
@@ -52,7 +53,7 @@ namespace oln {
 
       dil = dilation(input, win);
       ero = erosion(input, win);
-      output = force_value_type_to<oln_type_of(I, value)>( dil - ero );
+      output = force_value_type_to<oln_type_of(I, concrete)>( dil - ero );
 
       exiting("morpho::thick_gradient_beucher");
       return output;
@@ -72,7 +73,7 @@ namespace oln {
       oln_type_of(I, concrete) ero("ero"), output("output");
 
       ero = erosion(input, win);
-      output = force_value_type_to<oln_type_of(I, value)>( input - ero );
+      output = force_value_type_to<oln_type_of(I, concrete)>( input - ero );
 
       exiting("morpho::thick_gradient_internal");
       return output;
@@ -92,7 +93,7 @@ namespace oln {
       oln_type_of(I, concrete) dil("dil"), output("output");
 
       dil = dilation(input, win);
-      output = force_value_type_to<oln_type_of(I, value)>( dil - input );
+      output = force_value_type_to<oln_type_of(I, concrete)>( dil - input );
 
       exiting("morpho::thick_gradient_external");
       return output;

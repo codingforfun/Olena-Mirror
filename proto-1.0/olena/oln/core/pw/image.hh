@@ -69,6 +69,13 @@ namespace oln {
     typedef fwd_piter2d fwd_piter_type;
     typedef bkd_piter2d bkd_piter_type;
     typedef image2d<value_type> concrete_type;
+
+    // FIXME: Is this ``cast'' right?
+    template <typename U>
+    struct ch_value_type
+    {
+      typedef concrete_type<U> ret;
+    };
   };
 
 

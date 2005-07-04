@@ -53,7 +53,7 @@ namespace oln {
 
       dil = elementary_dilation(input);
       ero = elementary_erosion(input);
-      output = force_value_type_to<oln_type_of(I, value)>( dil - ero );
+      output = force_value_type_to<oln_type_of(I, concrete)>( dil - ero );
 
       exiting("morpho::gradient_beucher");
       return output;
@@ -72,7 +72,7 @@ namespace oln {
       oln_type_of(I, concrete) ero("ero"), output("output");
 
       ero = elementary_erosion(input);
-      output = force_value_type_to<oln_type_of(I, value)>( input - ero );
+      output = force_value_type_to<oln_type_of(I, concrete)>( input - ero );
 
       exiting("morpho::gradient_internal");
       return output;
@@ -91,7 +91,7 @@ namespace oln {
       oln_type_of(I, concrete) dil("dil"), output("output");
 
       dil = elementary_dilation(input);
-      output = force_value_type_to<oln_type_of(I, value)>( dil - input );
+      output = force_value_type_to<oln_type_of(I, concrete)>( dil - input );
 
       exiting("morpho::gradient_external");
       return output;

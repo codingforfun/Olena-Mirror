@@ -40,7 +40,7 @@ namespace oln {
     template<class Output>
     struct force : public abstract::conversion_to_type< Output, force<Output> >
     {
-      template< class Input >
+      template <class Input>
       Output
       doit(const Input& v) const
       {
@@ -51,8 +51,9 @@ namespace oln {
       name()
       {
 	// FIXME: Exact is not an integre type !
-	return std::string("force<")
-	  + ntg_name(Output) + ">";
+	// return std::string("force<") + ntg_name(Output) + ", " +
+	//   Exact::name() + ">";
+	return std::string("force<") + ntg_name(Output) + ">";
       }
     };
 
