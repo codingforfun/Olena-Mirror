@@ -1,3 +1,27 @@
+2005-07-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix operators on oln::value_box (cont.).  These can now work on
+	any type of operands.
+
+	* oln/core/gen/internal/value_box.hh
+	(overloaded_arith_op_operand): New helper.
+	(oln_decl_comp_binop_vb_whatever, oln_decl_comp_binop_ntgval_vb)
+	(oln_decl_arith_binop_vb_whatever, oln_decl_arith_binop_ntgval_vb):
+	New macros.
+	(oln_decl_comp_binop_all, oln_decl_arith_binop_all): Adjust.
+	(oln_decl_comp_binop_with_builtin)
+	(oln_decl_comp_binop_builtin_vb, oln_decl_comp_binop_vb_builtin)
+	(oln_decl_comp_binop_with_ntgval, oln_decl_comp_binop_ntgval_vb)
+	(oln_decl_comp_binop_vb_ntgval, oln_decl_comp_binop_vb_vb)
+	(oln_decl_arith_binop_all_but_builtin_float)
+	(oln_decl_arith_binop_with_builtin_float)
+	(oln_decl_arith_binop_with_builtin_int)
+	(oln_decl_arith_binop_with_builtin)
+	(oln_decl_arith_binop_builtin_vb, oln_decl_arith_binop_vb_builtin)
+	(oln_decl_arith_binop_with_ntgval, oln_decl_arith_binop_ntgval_vb)
+	(oln_decl_arith_binop_vb_ntgval, oln_decl_arith_binop_vb_vb):
+	Remove macros.
+
 2005-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/morpho/tests/gradient: Catch up with changes on

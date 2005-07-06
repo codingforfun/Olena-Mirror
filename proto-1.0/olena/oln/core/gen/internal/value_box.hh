@@ -350,38 +350,17 @@ namespace oln {
 | Comparison operators.  |
 `-----------------------*/
 
-// FIXME: Should we equip Integre to support oln::value_box<> values instead?
-
-// ------------------------- //
-// value_box and value_box.  //
-// ------------------------- //
-
-// oln::value_box<I> OpSymbol oln::value_box<II>
-# define oln_decl_comp_binop_vb_vb(OpSymbol)		\
-   template <typename I, typename II>			\
-   bool							\
-   operator OpSymbol (const oln::value_box<I>& lhs,	\
-		      const oln::value_box<II>& rhs)	\
-   {							\
-     return lhs.value() OpSymbol rhs.value();		\
-   }
-
-
-// ------------------------------ //
-// value_box and Integre values.  //
-// ------------------------------ //
-
-// oln::value_box<I> OpSymbol ntg::value<V>
-# define oln_decl_comp_binop_vb_ntgval(OpSymbol)	\
+// oln::value_box<I> and whatever.
+# define oln_decl_comp_binop_vb_whatever(OpSymbol)	\
    template <typename I, typename V>			\
    bool							\
    operator OpSymbol (const oln::value_box<I>& lhs,	\
-		      const ntg::value<V>& rhs)		\
+		      const V& rhs)			\
    {							\
-     return lhs.value() OpSymbol rhs.exact ();		\
+     return lhs.value() OpSymbol rhs;			\
    }
 
-// ntg::value<V> OpSymbol oln::value_box<I> 
+// ntg::value<V> and oln::value_box<I>.
 # define oln_decl_comp_binop_ntgval_vb(OpSymbol)	\
    template <typename I, typename V>			\
    bool							\
@@ -391,137 +370,78 @@ namespace oln {
      return lhs.exact() OpSymbol rhs.value();		\
    }
 
-# define oln_decl_comp_binop_with_ntgval(OpSymbol)	\
-   oln_decl_comp_binop_vb_ntgval(OpSymbol)		\
+// Shortcuts.
+# define oln_decl_comp_binop_all(OpSymbol)	\
+   oln_decl_comp_binop_vb_whatever(OpSymbol)	\
    oln_decl_comp_binop_ntgval_vb(OpSymbol)
-
-
-// -------------------------------------------- //
-// value_box and C++ builtin arithmetic types.  //
-// -------------------------------------------- //
-
-// oln::value_box<I> OpSymbol Builtin
-# define oln_decl_comp_binop_vb_builtin(OpSymbol, Builtin)	\
-   template <typename I>					\
-   bool								\
-   operator OpSymbol (const oln::value_box<I>& lhs,		\
-		      Builtin rhs)				\
-   {								\
-     return lhs.value() OpSymbol rhs;				\
-   }
-
-// Builtin OpSymbol oln::value_box<I>
-# define oln_decl_comp_binop_builtin_vb(OpSymbol, Builtin)	\
-   template <typename I>					\
-   bool								\
-   operator OpSymbol (Builtin lhs,				\
-		      const oln::value_box<I>& rhs)		\
-   {								\
-     return lhs OpSymbol rhs.value();				\
-   }
-
-# define oln_decl_comp_binop_with_builtin(OpSymbol, Builtin)	\
-   oln_decl_comp_binop_vb_builtin(OpSymbol, Builtin)		\
-   oln_decl_comp_binop_builtin_vb(OpSymbol, Builtin)
-
-
-// ----------- //
-// Shortcuts.  //
-// ----------- //
-
-# define oln_decl_comp_binop_all(OpSymbol)			\
-								\
-   oln_decl_comp_binop_vb_vb(OpSymbol)				\
-								\
-   oln_decl_comp_binop_with_ntgval(OpSymbol)			\
-								\
-   oln_decl_comp_binop_with_builtin(OpSymbol, signed   long)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, unsigned long)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, signed   int)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, unsigned int)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, signed   short)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, unsigned short)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, char)		\
-   oln_decl_comp_binop_with_builtin(OpSymbol, signed   char)	\
-   oln_decl_comp_binop_with_builtin(OpSymbol, unsigned char)	\
-								\
-   oln_decl_comp_binop_with_builtin(OpSymbol, bool)		\
-								\
-   oln_decl_comp_binop_with_builtin(OpSymbol, float)		\
-   oln_decl_comp_binop_with_builtin(OpSymbol, double)
-
-
-// ------------------------------------ //
-// ``Instantiation'' of the operators.  //
-// ------------------------------------ //
 
 namespace oln
 {
 
-// ``Instantiation'' of the operators.
-oln_decl_comp_binop_all(==)
-oln_decl_comp_binop_all(!=)
-oln_decl_comp_binop_all(<)
-oln_decl_comp_binop_all(<=)
-oln_decl_comp_binop_all(>)
-oln_decl_comp_binop_all(>=)
+  // ``Instantiation'' of the operators.
+  oln_decl_comp_binop_all(==)
+  oln_decl_comp_binop_all(!=)
+  oln_decl_comp_binop_all(<)
+  oln_decl_comp_binop_all(<=)
+  oln_decl_comp_binop_all(>)
+  oln_decl_comp_binop_all(>=)
 
 } // end of namespace oln
 
 
-# undef oln_decl_comp_binop_vb_vb
-# undef oln_decl_comp_binop_vb_ntgval
+# undef oln_decl_comp_binop_vb_whatever
 # undef oln_decl_comp_binop_ntgval_vb
-# undef oln_decl_comp_binop_with_ntgval
-# undef oln_decl_comp_binop_vb_builtin
-# undef oln_decl_comp_binop_builtin_vb
-# undef oln_decl_comp_binop_with_builtin
-# undef oln_decl_comp_binop
-
+# undef oln_decl_comp_binop_all
 
 
 /*-------------------------.
 | Arithmetical operators.  |
 `-------------------------*/
 
-// FIXME: Should we equip Integre to support oln::value_box<> values instead?
+// Helper used in the resolution of right operand of an arithmetical
+// operator having a value_box as left operand.
+// FIXME: To be replaced by the upcoming oln::utils::overload mechanism.
+namespace oln
+{
 
-// ------------------------- //
-// value_box and value_box.  //
-// ------------------------- //
+  template <typename T>
+  struct overloaded_arith_op_operand
+  {
+    typedef T ret;
+    static ret value (const T& t)
+    {
+      return t;
+    }
+  };
 
-// oln::value_box<I> OpSymbol oln::value_box<II>
-# define oln_decl_arith_binop_vb_vb(OpSymbol, OpName)		\
-   template <typename I, typename II>				\
-   ntg_return_type(OpName,					\
-		   typename oln::value_box<I>::value_type,	\
-		   typename oln::value_box<II>::value_type)	\
-   operator OpSymbol (const oln::value_box<I>& lhs,		\
-		      const oln::value_box<II>& rhs)		\
-   {								\
-     return lhs.value() OpSymbol rhs.value();			\
+  template <typename I>
+  struct overloaded_arith_op_operand<oln::value_box<I> >
+  {
+    typedef typename oln::value_box<I>::value_type ret;
+    static ret value (const oln::value_box<I>& vb)
+    {
+      return vb.value();
+    }    
+  };
+
+} // end of namespace oln
+
+// oln::value_box<I> and whatever.
+# define oln_decl_arith_binop_vb_whatever(OpSymbol, OpName)		     \
+   template <typename I, typename V>					     \
+   ntg_return_type(OpName,						     \
+		   typename oln::value_box<I>::value_type,		     \
+		   typename oln::overloaded_arith_op_operand<V>::ret)	     \
+   operator OpSymbol (const oln::value_box<I>& lhs,			     \
+                      const V& rhs)					     \
+   {									     \
+     return								     \
+       lhs.value() OpSymbol oln::overloaded_arith_op_operand<V>::value(rhs); \
    }
 
-
-// ------------------------------ //
-// value_box and Integre values.  //
-// ------------------------------ //
-
-// oln::value_box<I> OpSymbol ntg::value<V>
-# define oln_decl_arith_binop_vb_ntgval(OpSymbol, OpName)	\
-   template <typename I, typename V>				\
-   ntg_return_type(OpName,					\
-		   typename oln::value_box<I>::value_type,	\
-		   V)						\
-   operator OpSymbol (const oln::value_box<I>& lhs,		\
-		      const ntg::value<V>& rhs)			\
-   {								\
-     return lhs.value() OpSymbol rhs.exact ();			\
-   }
-
-// ntg::value<V> OpSymbol oln::value_box<I> 
+// ntg::value<V> and oln::value_box<I>.
 # define oln_decl_arith_binop_ntgval_vb(OpSymbol, OpName)	\
-   template <typename I, typename V>				\
+   template <typename V, typename I>				\
    ntg_return_type(OpName,					\
 		   V,						\
 		   typename oln::value_box<I>::value_type)	\
@@ -531,99 +451,26 @@ oln_decl_comp_binop_all(>=)
      return lhs.exact() OpSymbol rhs.value();			\
    }
 
-# define oln_decl_arith_binop_with_ntgval(OpSymbol, OpName)	\
-   oln_decl_arith_binop_vb_ntgval(OpSymbol, OpName)		\
+// Shortcuts.
+# define oln_decl_arith_binop_all(OpSymbol, OpName)	\
+   oln_decl_arith_binop_vb_whatever(OpSymbol, OpName)	\
    oln_decl_arith_binop_ntgval_vb(OpSymbol, OpName)
-
-
-// -------------------------------------------- //
-// value_box and C++ builtin arithmetic types.  //
-// -------------------------------------------- //
-
-// oln::value_box<I> OpSymbol Builtin
-# define oln_decl_arith_binop_vb_builtin(OpSymbol, OpName, Builtin)	\
-   template <typename I>						\
-   ntg_return_type(OpName,						\
-		   typename oln::value_box<I>::value_type,		\
-		   Builtin)						\
-   operator OpSymbol (const oln::value_box<I>& lhs,			\
-		      Builtin rhs)					\
-   {									\
-     return lhs.value() OpSymbol rhs;					\
-   }
-
-// Builtin OpSymbol oln::value_box<I>
-# define oln_decl_arith_binop_builtin_vb(OpSymbol, OpName, Builtin)	\
-   template <typename I>						\
-   ntg_return_type(OpName,						\
-		   Builtin,						\
-		   typename oln::value_box<I>::value_type)		\
-   operator OpSymbol (Builtin lhs,					\
-		      const oln::value_box<I>& rhs)			\
-   {									\
-     return lhs OpSymbol rhs.value();					\
-   }
-
-# define oln_decl_arith_binop_with_builtin(OpSymbol, OpName, Builtin)	\
-   oln_decl_arith_binop_vb_builtin(OpSymbol, OpName, Builtin)		\
-   oln_decl_arith_binop_builtin_vb(OpSymbol, OpName, Builtin)
-
-# define oln_decl_arith_binop_with_builtin_int(OpSymbol, OpName)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, signed   long)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, unsigned long)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, signed   int)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, unsigned int)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, signed   short)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, unsigned short)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, char)		\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, signed   char)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, unsigned char)
-
-# define oln_decl_arith_binop_with_builtin_float(OpSymbol, OpName)	\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, float)		\
-   oln_decl_arith_binop_with_builtin(OpSymbol, OpName, double)
-
-
-// ----------- //
-// Shortcuts.  //
-// ----------- //
-
-# define oln_decl_arith_binop_all_but_builtin_float(OpSymbol, OpName)	\
-   oln_decl_arith_binop_vb_vb(OpSymbol, OpName)				\
-   oln_decl_arith_binop_with_ntgval(OpSymbol, OpName)			\
-   oln_decl_arith_binop_with_builtin_int(OpSymbol, OpName)
-
-# define oln_decl_arith_binop_all(OpSymbol, OpName)			\
-   oln_decl_arith_binop_all_but_builtin_float(OpSymbol, OpName)		\
-   oln_decl_arith_binop_with_builtin_float(OpSymbol, OpName)
-
-
-// ------------------------------------ //
-// ``Instantiation'' of the operators.  //
-// ------------------------------------ //
 
 namespace oln
 {
  
-oln_decl_arith_binop_all(+, plus)
-oln_decl_arith_binop_all(-, minus)
-oln_decl_arith_binop_all(*, times)
-oln_decl_arith_binop_all(/, div)
-oln_decl_arith_binop_all_but_builtin_float(%, mod)
+  // ``Instantiation'' of the operators.
+  oln_decl_arith_binop_all(+, plus)
+  oln_decl_arith_binop_all(-, minus)
+  oln_decl_arith_binop_all(*, times)
+  oln_decl_arith_binop_all(/, div)
+  oln_decl_arith_binop_all(%, mod)
 
 } // end of namespace oln
 
 
-# undef oln_decl_arith_binop_vb_vb
-# undef oln_decl_arith_binop_vb_ntgval
+# undef oln_decl_arith_binop_vb_whatever
 # undef oln_decl_arith_binop_ntgval_vb
-# undef oln_decl_arith_binop_with_ntgval
-# undef oln_decl_arith_binop_vb_builtin
-# undef oln_decl_arith_binop_builtin_vb
-# undef oln_decl_arith_binop_with_builtin
-# undef oln_decl_arith_binop_with_builtin_int
-# undef oln_decl_arith_binop_with_builtin_float
-# undef oln_decl_arith_binop_all_but_builtin_float
 # undef oln_decl_arith_binop_all
 
 
@@ -634,6 +481,5 @@ std::ostream& operator<<(std::ostream& ostr, const oln::value_box<I>& vb)
 {
   return ostr << vb.value();
 }
-
 
 #endif // ! OLENA_CORE_GEN_INTERNAL_VALUE_BOX_HH
