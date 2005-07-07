@@ -181,25 +181,16 @@ namespace oln {
 	p.index() < size_.nindices() + size_.border();
     }
 
-    const T impl_get(const point1d& p) const
+    const T& impl_at(const point1d& p) const
     {
       invariant_();
       return buffer_[p.index()];
     }
 
-    void impl_set(const point1d& p, const T& v)
+    T& impl_at(const point1d& p)
     {
       invariant_();
-      buffer_[p.index()] = v;
-    }
-
-    void impl_set_data(const T& v)
-    {
-      invariant_();
-      const size_t len = size_.nindices() + 2 * size_.border();
-      T* p = buffer_;
-      for (size_t i = 0; i < len; ++i)
-	*p++ = v;
+      return buffer_[p.index()];
     }
 
   private:

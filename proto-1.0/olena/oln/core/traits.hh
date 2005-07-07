@@ -25,63 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_UTILS_CLONE_HH
-# define OLN_UTILS_CLONE_HH
+#ifndef OLENA_CORE_TRAITS_HH
+# define OLENA_CORE_TRAITS_HH
 
-# include <oln/core/abstract/image.hh>
-# include <oln/utils/record.hh>
+# include <ntg/core/type_traits.hh>
+# include <oln/core/typedefs.hh>
 
 
 namespace oln
 {
 
-  // Fwd decl of clone's facade.
 
-  template <typename I>
-  oln_type_of(I, concrete) clone(const abstract::image<I>& input);
-
-
-  namespace impl {
-
-    // generic
-
-    template <typename I>
-    oln_type_of(I, concrete) clone_(const abstract::image<I>& input)
-    {
-      entering("->generic");
-      registering(input, "input");
-
-      oln_type_of(I, concrete) output(input.size(), "output");
-      oln_type_of(I, fwd_piter) p(input.size());
-      for_all_p (p)
-	output[p] = input[p];
-
-      exiting("->generic");
-      return output;
-    }
-
-    // add some other impls here...
-
-  } // end of namespace oln::impl
-
-
-  /// Generic clone (facade).
-
-  template <typename I>
-  oln_type_of(I, concrete) clone(const abstract::image<I>& input)
+  namespace traits
   {
-    entering("clone");
-    registering(input, "input");
+    
+    template <typename T>
+    struct storage_type
+    {
+      typedef T ret;
+    };
 
-    oln_type_of(I, concrete) output("output");
-    output = impl::clone_(input.exact());
+    namespace internal {
 
-    exiting("clone");
-    return output;
-  }
+      template <typename T,
+		typename is_an_ntg_type>
+      struct storage_type_helper
+      {
+	typedef typename ntg::type_traits<T>::storage_type ret;
+      };
+
+      template <typename T>
+      struct storage_type_helper <T,
+				  mlc::internal::not_found>
+      // so when it is not an ntg type, use client traits
+      {
+	typedef typename traits::storage_type<T>::ret ret;
+      };
+
+    } // end of namespace oln::traits::internal
+    
+  } // end of namespace oln::traits
+
+
+  template <typename T>
+  struct f_storage_type
+  {
+    typedef typename
+    traits::internal::storage_type_helper< T,
+					   mlc_typedef_of(ntg::type_traits<T>,
+							  storage_type )
+      >::ret
+    ret;
+  };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_UTILS_CLONE_HH
+# define oln_storage_type(T) typename oln::f_storage_type<T>::ret
+
+
+#endif // ! OLENA_CORE_TRAITS_HH

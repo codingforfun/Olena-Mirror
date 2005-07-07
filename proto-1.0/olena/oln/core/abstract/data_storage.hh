@@ -31,7 +31,6 @@
 # include <mlc/any.hh>
 # include <mlc/to_string.hh>
 # include <oln/core/typedefs.hh>
-# include <oln/utils/record.hh>
 
 
 # define oln_ds_type_of(DataStorageType, Alias) \
@@ -134,39 +133,13 @@ namespace oln {
       {
 	if (! this->has_data())
 	  return false;
-# ifdef OLNTRACE
- 	inc_ncalls("data_hold", *this);
-# endif // ! OLNTRACE
 	return this->exact().impl_hold(p);
-      }
-
-      const data_type get(const point_type& p) const // FIXME: remove (obsolete)
-      {
-	precondition(this->has_data());
-	precondition(this->hold_large(p));
-# ifdef OLNTRACE
- 	inc_ncalls("data_get", *this);
-# endif // ! OLNTRACE
-	return this->exact().impl_get(p);
-      }
-
-      void set(const point_type& p, const data_type& v) // FIXME: remove (obsolete)
-      {
-	precondition(this->has_data());
-	precondition(this->hold_large(p));
-# ifdef OLNTRACE
- 	inc_ncalls("data_set", *this);
-# endif // ! OLNTRACE
-	this->exact().impl_set(p, v);
       }
 
       const data_type& at(const point_type& p) const
       {
  	precondition(this->has_data());
  	precondition(this->hold_large(p));
-# ifdef OLNTRACE
-  	inc_ncalls("data_get", *this);
-# endif // ! OLNTRACE
  	return this->exact().impl_at(p);
       }
 
@@ -174,9 +147,6 @@ namespace oln {
       {
  	precondition(this->has_data());
  	precondition(this->hold_large(p));
-# ifdef OLNTRACE
-  	inc_ncalls("data_set", *this);
-# endif // ! OLNTRACE
  	return this->exact().impl_at(p);
       }
 
@@ -208,12 +178,10 @@ namespace oln {
         mlc_check_method_impl(E, void,             resize,     const size_type&,       );
         mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);
 	mlc_check_method_impl(E, bool,             hold,       const point_type&, const);
-	mlc_check_method_impl(E, const data_type,  get,        const point_type&, const);
 	mlc_check_method_impl(E, const data_type&, at,         const point_type&, const);
 	mlc_check_method_impl(E, data_type&,       at,         const point_type&,      );
 	mlc_check_method_impl(E, bool,             hold_large, const point_type&, const);
 	mlc_check_method_impl_2(E, void, resize_border, size_t,            bool,             );
-	mlc_check_method_impl_2(E, void, set,           const point_type&, const data_type&, );
       }
     };
 

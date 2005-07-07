@@ -30,9 +30,11 @@
 
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/abstract/image_like_.hh>
+# include <oln/core/traits.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/niter2d.hh>
 # include <oln/utils/record.hh>
+
 
 
 /*! \namespace oln
@@ -82,8 +84,7 @@ namespace oln {
 
     // please note that value_storage_type means data_type
     // since image2d is an image_with_data
-    typedef T value_storage_type;
-//     typedef mlc_encoding_type(T) value_storage_type;
+    typedef oln_storage_type(T) value_storage_type;
 
     // please note that value_container_type means
     // data_container_type (or value_storage_container_type)
@@ -155,7 +156,7 @@ namespace oln {
     {
       this->exact_ptr = this;
       registering(*this, name);
-   }
+    }
 
     image2d(image2d& rhs) :
       super_type(rhs)
@@ -163,29 +164,11 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-
-    image2d& operator=(image2d rhs)
+    image2d& operator=(image2d rhs) // no '&' here is fine!
     {
-      // FIXME: check that both objects are *really* different
-      super_type::operator=(rhs);
+      this->super_type::operator=(rhs);
       return *this;
     };
-
-//     image2d& operator=(box<image2d> rhs)
-//     {
-//       std::cout << "hop(box)" << std::endl;
-//       if (&(rhs->unbox()) == this)
-// 	return *this;
-//       super_type::operator=(rhs.unbox());
-//       return *this;
-//     };
-
-//     template <typename I, typename E>
-//     image2d& operator=(abstract::image_like_<I, E> rhs)
-//     {
-//       *this = rhs.real();
-//       return *this;
-//     }
 
     image2d& operator=(const io::filename& rhs)
     {

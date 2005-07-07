@@ -201,18 +201,6 @@ namespace oln {
 	p.col() < size_.ncols() + size_.border();
     }
 
-    const T impl_get(const point2d& p) const // FIXME: remove (obsolete)
-    {
-      invariant_();
-      return array_[p.row()][p.col()];
-    }
-
-    void impl_set(const point2d& p, const T& v) // FIXME: remove (obsolete)
-    {
-      invariant_();
-      array_[p.row()][p.col()] = v;
-    }
-
     const T& impl_at(const point2d& p) const
     {
       invariant_();

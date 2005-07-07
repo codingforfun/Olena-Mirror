@@ -149,23 +149,7 @@ namespace oln {
       const value_type impl_get(const point_type& p) const
       {
 	precondition(this->has_data());
-	return this->data_->get(p);
-      }
-
-
-      template <typename R, typename T>
-      R impl_call(const point_type& p,
-		  R (T::*method)() const) const
-      {
- 	return (this->data_->get(p).*method)();
-      }
-
-      template <typename T, typename A, typename V>
-      void impl_call(const point_type& p,
-		     void (T::*method)(A),
-		     V arg)
-      {
- 	this->data_->call(p, method, arg);
+	return this->data_->at(p);
       }
 
 
@@ -177,8 +161,27 @@ namespace oln {
       void impl_set(const point_type& p, const V& v)
       {
 	precondition(this->has_data());
-	this->data_->set(p, v);
+	this->data_->at(p) = v;
       }
+
+
+      /// Calls.
+
+      template <typename R, typename T>
+      R impl_call(const point_type& p,
+		  R (T::*method)() const) const
+      {
+ 	return (this->data_->at(p).*method)();
+      }
+
+      template <typename T, typename A, typename V>
+      void impl_call(const point_type& p,
+		     void (T::*method)(A),
+		     V arg)
+      {
+ 	this->data_->call(p, method, arg);
+      }
+
 
       /*! \brief True if the image contains data.
       */
@@ -194,11 +197,13 @@ namespace oln {
 
       value_storage_type& impl_at(const point_type& p)
       {
+	precondition(this->has_data());
  	return this->data_->at(p);
       }
        
       const value_storage_type& impl_at(const point_type& p) const
       {
+	precondition(this->has_data());
  	return this->data_->at(p);
       }
 

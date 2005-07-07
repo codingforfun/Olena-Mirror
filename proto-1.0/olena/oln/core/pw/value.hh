@@ -58,7 +58,7 @@ namespace oln {
   namespace pw { // means "point-wise"
 
     template <typename I>
-    struct value : public abstract::function < value<I> >
+    struct value : public pw::abstract::function < value<I> >
     {
       oln::box<const I> ima;
 

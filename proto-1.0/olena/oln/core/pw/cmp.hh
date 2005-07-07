@@ -36,6 +36,13 @@ namespace oln {
 
   namespace pw {
 
+//     oln_pw_decl_binary_explicit(      eq, == );
+//     oln_pw_decl_binary_explicit(     neq, != );
+//     oln_pw_decl_binary_explicit(    less, <  );
+// //     oln_pw_decl_binary_explicit(     leq, <= );
+//     oln_pw_decl_binary_explicit( greater, >  );
+//     oln_pw_decl_binary_explicit(     geq, >= );
+
     oln_pw_decl_binary(      eq, == );
     oln_pw_decl_binary(     neq, != );
     oln_pw_decl_binary(    less, <  );
@@ -52,12 +59,14 @@ namespace oln {
 							\
 oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
 oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
+oln_pw_decl_binary_with_lit(     leq, <=, LiteralType); \
 oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
 oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
 oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
 							\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
 
 
 namespace oln {

@@ -52,6 +52,8 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
+
+
 # define oln_pw_decl_binary_with_lit(OperatorName, OperatorSymbol, LiteralType)	\
 										\
 template <typename L>								\
@@ -62,7 +64,7 @@ operator OperatorSymbol (const oln::pw::abstract::function<L>& lhs,		\
 {										\
   oln::pw::literal<LiteralType> rhs_(rhs);					\
   oln::pw::binary_op< oln::f_##OperatorName##_type,				\
-                       L, oln::pw::literal<LiteralType> > tmp(lhs, rhs_);	\
+                      L, oln::pw::literal<LiteralType> > tmp(lhs, rhs_);	\
   return tmp;									\
 }										\
 										\
@@ -74,13 +76,63 @@ operator OperatorSymbol (const LiteralType& lhs,				\
 {										\
   oln::pw::literal<LiteralType> lhs_(lhs);					\
   oln::pw::binary_op< oln::f_##OperatorName##_type,				\
-                       oln::pw::literal<LiteralType>, R > tmp(lhs_, rhs);	\
+                      oln::pw::literal<LiteralType>, R > tmp(lhs_, rhs);	\
   return tmp;									\
 }										\
 										\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
+
+
+/// Explicit versions of macros.
+
+
+# define oln_pw_decl_binary_explicit(OperatorName, OperatorSymbol)	\
+									\
+template <typename L, typename R>					\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,			\
+                           L, R >					\
+OperatorName (const oln::pw::abstract::function<L>& lhs,		\
+	      const oln::pw::abstract::function<R>& rhs)		\
+{									\
+  precondition(lhs.size() == rhs.size());				\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,			\
+                       L, R > tmp(lhs, rhs);				\
+  return tmp;								\
+}									\
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+# define oln_pw_decl_binary_with_lit_explicit(OperatorName, OperatorSymbol, LiteralType)	\
+												\
+template <typename L>										\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,						\
+			   L, oln::pw::literal<LiteralType> >					\
+OperatorName (const oln::pw::abstract::function<L>& lhs,					\
+	      const LiteralType& rhs)								\
+{												\
+  oln::pw::literal<LiteralType> rhs_(rhs);							\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,						\
+                      L, oln::pw::literal<LiteralType> > tmp(lhs, rhs_);			\
+  return tmp;											\
+}												\
+												\
+template <typename R>										\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,						\
+			   oln::pw::literal<LiteralType>, R >					\
+OperatorName (const LiteralType& lhs,								\
+	      const oln::pw::abstract::function<R>& rhs)					\
+{												\
+  oln::pw::literal<LiteralType> lhs_(lhs);							\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,						\
+                      oln::pw::literal<LiteralType>, R > tmp(lhs_, rhs);			\
+  return tmp;											\
+}												\
+												\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 

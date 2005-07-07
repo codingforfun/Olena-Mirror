@@ -261,7 +261,7 @@ namespace oln {
     image<E>::hold(const oln_type_of(E, point)& p) const
     {
 # ifdef OLNTRACE
- 	inc_ncalls("hold", *this);
+ 	inc_ncalls("image::hold", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_hold(p);
     }
@@ -274,7 +274,7 @@ namespace oln {
     image<E>::get(const oln_type_of(E, point)& p) const
     {
 # ifdef OLNTRACE
- 	inc_ncalls("get", *this);
+ 	inc_ncalls("image::get", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_get(p);
     }
@@ -289,7 +289,7 @@ namespace oln {
 			    R (T::*method)() const) const
     {
 # ifdef OLNTRACE
-      inc_ncalls("call", *this);
+      inc_ncalls("image::call", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_call(p, method);
     }
@@ -303,7 +303,7 @@ namespace oln {
 			     R (T::*method)() const) const
     {
 # ifdef OLNTRACE
-      inc_ncalls("call", *this);
+      inc_ncalls("image::call", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_call(p, method);
     }
@@ -317,7 +317,7 @@ namespace oln {
 			     V arg)
     {
 # ifdef OLNTRACE
-      inc_ncalls("call", *this);
+      inc_ncalls("image::call", *this);
 # endif // ! OLNTRACE
       this->exact().impl_call(p, method, arg);
     }
@@ -331,7 +331,7 @@ namespace oln {
 			    const oln_type_of(E, value)& v)
     {
 # ifdef OLNTRACE
-      inc_ncalls("set", *this);
+      inc_ncalls("image::set", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_set(p, v);
     }

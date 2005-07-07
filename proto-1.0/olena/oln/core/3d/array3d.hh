@@ -231,28 +231,16 @@ namespace oln {
 	p.col() < size_.ncols() + size_.border();
     }
 
-    const T impl_get(const point3d& p) const
+    const T& impl_at(const point3d& p) const
     {
       invariant_();
       return array_[p.slice()][p.row()][p.col()];
     }
 
-    void impl_set(const point3d& p, const T& v)
+    T& impl_at(const point3d& p)
     {
       invariant_();
-      array_[p.slice()][p.row()][p.col()] = v;
-    }
-
-    void impl_set_data(const T& v)
-    {
-      invariant_();
-      const size_t nslices_eff = size_.nslices() + 2 * size_.border();
-      const size_t nrows_eff = size_.nrows() + 2 * size_.border();
-      const size_t ncols_eff = size_.ncols() + 2 * size_.border();
-      const size_t len = nslices_eff * nrows_eff * ncols_eff;
-      T* p = buffer_;
-      for (size_t i = 0; i < len; ++i)
-	*p++ = v;
+      return array_[p.slice()][p.row()][p.col()];
     }
 
   private:

@@ -129,6 +129,12 @@ namespace oln {
       this->exact_ptr = this;
     }
 
+    image1d& operator=(image1d rhs) // no '&' here is fine!
+    {
+      this->super_type::operator=(rhs);
+      return *this;
+    };
+
   public:
 
     /*! Return a reference to the value stored at coordinate \a index

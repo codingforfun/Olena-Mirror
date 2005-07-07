@@ -28,10 +28,9 @@ bool check()
   im_type mask;
 
   mask = io::read(rdata("object.pbm"));
-  marker = morpho::opening(mask, win_c4p()).exact();
+  marker = morpho::opening(mask, win_c4p());
 
-  if (utils::md5(morpho::geodesic_dilation(join(marker, nbh),
-					   mask).exact()) != key)
+  if (utils::md5(morpho::geodesic_dilation(join(marker, nbh), mask)) != key)
     return true;
 
   return false;

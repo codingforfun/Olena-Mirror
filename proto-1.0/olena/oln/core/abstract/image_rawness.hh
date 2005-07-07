@@ -74,7 +74,7 @@ namespace oln {
       value_storage_type& at(const point_type& p)
       {
 # ifdef OLNTRACE
- 	inc_ncalls("set", *this);
+ 	inc_ncalls("image::set_at", *this);
 # endif // ! OLNTRACE
 	return this->exact().impl_at(p);
       }
@@ -82,7 +82,7 @@ namespace oln {
       const value_storage_type& at(const point_type& p) const
       {
 # ifdef OLNTRACE
- 	inc_ncalls("get", *this);
+ 	inc_ncalls("image::get_at", *this);
 # endif // ! OLNTRACE
 	return this->exact().impl_at(p);
       }
@@ -114,12 +114,12 @@ namespace oln {
 	typedef oln_type_of(D, point) point_type;
 	typedef oln_type_of(D, value_storage) value_storage_type;
 
-	value_storage_type& at(const point_type& p)
+	value_storage_type& impl_at(const point_type& p)
 	{
 	  return this->delegate().at(p);
 	}
       
-	const value_storage_type& at(const point_type& p) const
+	const value_storage_type& impl_at(const point_type& p) const
 	{
 	  return this->delegate().at(p);
 	}

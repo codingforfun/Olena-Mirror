@@ -1,3 +1,51 @@
+2005-07-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	'set' and 'get' are now only for images; 'at' is for data storage.
+	
+	* oln/core/abstract/image_rawness.hh (at): Rename default impl as...
+	(impl_at): ...this.
+	* oln/core/abstract/data_storage.hh (set,get): Remove methods cause
+	they were obsolete since 'at' has been introduced.
+	(OLNTRACE): Remove tracing since it is performed in image classes.
+	* oln/core/abstract/image_with_data.hh (set,get): Replace by 'at'.
+	(impl_set): Move to a better place.
+	(impl_at): Add precondition.
+	* oln/core/apply.hh (record.hh): Add include.
+	* oln/core/1d/array1d.hh (impl_set,impl_set): Replace by...
+	(impl_at): ...this.
+	(impl_set_data): Remove cause useless.
+	* oln/core/2d/array2d.hh (impl_set,impl_set): Remove.
+	* oln/core/3d/array3d.hh (impl_set,impl_set): Remove.
+	(impl_set_data): Remove cause useless.
+
+	Factor data storage instanciations.
+	
+	* oln/core/traits.hh: New file.
+	* oln/core/2d/image2d.hh: Remove dead code.
+	(value_storage_type): Rely on storage type traits.
+
+	Preparing a better overloading for classic operators.
+	
+	* oln/utils/overload.hh: New file.
+	* oln/core/pw/macros.hh: Add explicit versions of macros where
+	operators are procedures.
+	* oln/core/pw/value.hh (value): Qualify explicitly inheritance to
+	prevent name conflicts.
+	* oln/core/pw/cmp.hh: Add room for explicit instanciation of
+	procedures.
+
+	Bug fixes.
+	
+	* tests/morpho/tests/geodesic_erosion (exact): Remove.
+	* tests/morpho/tests/geodesic_dilation (exact): Remove.
+	* oln/core/box.hh (inc_ncalls): Qualify method names in strings.
+	* oln/core/1d/image1d.hh (operator=): New method.
+	* oln/core/3d/image3d.hh (operator=): New method.
+	* oln/utils/clone.hh: Fix end of namespace comment.
+	* oln/morpho/geodesic_erosion.hh (n): Fix default value definition.
+	(work): Fix first assignment in bodies.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	
 2005-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add hit-or-miss transform.

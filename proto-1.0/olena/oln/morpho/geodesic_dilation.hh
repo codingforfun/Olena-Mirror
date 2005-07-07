@@ -31,6 +31,7 @@
 # include <mlc/is_a.hh>
 
 # include <oln/basics.hh>
+# include <oln/utils/clone.hh>
 # include <oln/utils/record.hh>
 # include <oln/ops/cmp.hh>
 # include <oln/level/arith.hh>
@@ -52,7 +53,7 @@ namespace oln {
     oln_type_of(I, concrete)
     geodesic_dilation(const abstract::image<I>&  marker,
 		      const abstract::image<II>& mask,
-		      unsigned n);
+		      unsigned n = 1);
 
 
 
@@ -69,7 +70,7 @@ namespace oln {
       {
 	oln_type_of(I, concrete) dil("dil"), work("work"), output("output");
 
-	work = marker;
+	work = clone(marker);
 	for (unsigned i = 0; i < n; ++i)
 	  {
 	    dil = elementary_dilation(work);
@@ -90,7 +91,7 @@ namespace oln {
       {
 	oln_type_of(I, concrete) dil("dil"), work("work"), output("output");
 
-	work = marker;
+	work = clone(marker);
 	for (unsigned i = 0; i < n; ++i)
 	  {
 	    dil = elementary_dilation(work);
@@ -112,7 +113,7 @@ namespace oln {
     oln_type_of(I, concrete)
     geodesic_dilation(const abstract::image<I>&  marker,
 		      const abstract::image<II>& mask,
-		      unsigned n = 1)
+		      unsigned n)
     {
       mlc::eq<oln_type_of(I, grid), oln_type_of(II, grid)>::ensure();
       mlc_is_a(I, abstract::image_with_nbh)::ensure();
@@ -122,7 +123,7 @@ namespace oln {
       registering(mask,   "mask");
 
       precondition(marker.size() == mask.size()
-		   and marker <= mask);
+		   and mask <= marker);
       precondition(n >= 1);
 
       oln_type_of(I, concrete) output;

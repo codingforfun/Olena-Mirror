@@ -36,6 +36,8 @@
 # include <oln/funobj/abstract/binary.hh>
 # include <oln/core/ch_value_type.hh>
 
+# include <oln/utils/record.hh>
+
 
 namespace oln {
 
