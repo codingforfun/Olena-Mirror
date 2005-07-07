@@ -168,6 +168,7 @@ OLN_DEP =					\
   level/compare.hh				\
   level/extrema_components.hh			\
   level/fill.hh					\
+  level/invert.hh				\
   level/level_components.hh			\
   level/logic.hh				\
 						\
@@ -179,6 +180,7 @@ OLN_DEP =					\
   morpho/geodesic_dilation.hh			\
   morpho/geodesic_erosion.hh			\
   morpho/gradient.hh				\
+  morpho/hit_or_miss.hh				\
   morpho/local.hh				\
   morpho/lower_completion.hh			\
   morpho/opening.hh				\

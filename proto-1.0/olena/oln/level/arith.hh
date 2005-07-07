@@ -218,7 +218,8 @@ namespace oln
       return output;
     }
 
-    // Variant taking a conversion function in parameter.
+    // FIXME: Should we keep this?
+    /// Variant taking a conversion function in parameter.
     template <typename C, typename B, typename I1, typename I2>
     typename ch_value_type<I1, typename convoutput<C, B, typename arith_output<f_::minus_, I1, I2>::T>::ret>::ret
     minus (const convert::abstract::conversion<C, B>& conv,

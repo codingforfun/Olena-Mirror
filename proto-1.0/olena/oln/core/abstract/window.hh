@@ -98,24 +98,35 @@ namespace oln {
     struct window : public mlc::any<W>
     {
     public:
+      typedef oln_wn_type_of(W, dpoint) dpoint_type;
 
       const W operator-() const
       {
 	return this->exact().impl_op_minus();
       }
 
-    protected:
+      unsigned card() const
+      {
+	return this->exact().impl_card();
+      }
 
+      bool has (const dpoint_type& dp) const
+      {
+	return this->exact().impl_has(dp);
+      }
+
+    protected:
       window()
       {}
 
       ~window()
       {
 	get_props<category::window, W>::ensure();
-	mlc_check_method_impl(W, const W, op_minus, , const);
+	mlc_check_method_impl(W, const W,  op_minus,               , const);
+	mlc_check_method_impl(W, unsigned, card,                   , const);
+	mlc_check_method_impl(W, bool,     has, const dpoint_type& , const);
       }
     };
-
 
   } // end of namespace oln::abstract
 

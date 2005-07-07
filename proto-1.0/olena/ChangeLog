@@ -1,5 +1,35 @@
 2005-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add hit-or-miss transform.
+
+	* oln/morpho/hit_or_miss.hh: New file.
+	* oln/core/2d/window1d.hh
+	(window1d::add(const dpoint1d&)): Remove method.
+	(window1d::add(coord_t)): New method.
+	* oln/core/2d/window2d.hh
+	(window2d::add(const dpoint2d&)): Remove method.
+	(window2d::add(coord_t, coord_t)): New method.
+	* oln/core/3d/window2d.hh
+	(window3d::add(const dpoint3d&)): Remove method.
+	(window3d::add(coord_t, coord_t, coord_t)): New method.
+	* oln/core/abstract/window.hh (window::card, window::has): New
+	abstract methods.
+	* oln/core/gen/regular_window.hh (regular_window::card): Rename
+	as...
+	(regular_window::impl_card): ...this.
+	(regular_window::impl_has, regular_window::add): New methods.
+	(inter, uni): New functions.
+	* tests/morpho/tests/hit_or_miss: New test.
+
+	* oln/level/invert.hh: New file.
+	* oln/funobj/invert.hh (invert::operator()(const value_box<V>&):
+	New operator.
+	* oln/morpho/thick_gradient.hh: Re-indent.
+	* oln/makefile.src (OLN_DEP): Add level/invert.hh and
+	morpho/hit_or_miss.hh.
+
+2005-07-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix PBM (binary) image writing.
 
 	* oln/io/write_image_pnm_2d.hh (write_pnm_bin::extra_work): Rename

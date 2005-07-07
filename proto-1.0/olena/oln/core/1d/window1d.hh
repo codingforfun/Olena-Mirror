@@ -56,9 +56,12 @@ namespace oln {
       super_type(n, crd)
     {}
 
-    window1d& add(const dpoint1d& dp)
+    // Don't hide the add() method from the super class.
+    using super_type::add;
+
+    window1d& add(coord_t index)
     {
-      this->add_(dp);
+      this->add_(dpoint1d(index));
       return *this;
     }
 

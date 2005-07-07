@@ -25,67 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_FUNOBJ_INVERT_HH
-# define OLENA_FUNOBJ_INVERT_HH
+#ifndef OLENA_LEVEL_INVERT_HH
+# define OLENA_LEVEL_INVERT_HH
 
-# include <mlc/contract.hh>
+# include <oln/funobj/invert.hh>
 
-# include <ntg/all.hh>
+namespace oln
+{
 
-namespace oln {
+  namespace level
+  {
 
-  namespace funobj {
-
-    // FIXME: funobj::invert should be turned into a f_::invert
-    // functor.
-   struct invert
+    /// Invert the values of an image.
+    template <typename I>
+    oln_type_of(I, concrete) invert (const abstract::image<I>& input)
     {
-      template <typename V>
-      V operator()(const ntg::vect_value<V>& v) const
-      {
-	V ret;
+      entering("level::invert");
+      registering(input, "input");
 
-	for (unsigned i = 0; i < ntg_nb_comp(V); i++)
-	  ret[i] = ntg_max_val(ntg_comp_type(V)) - v[i];
-	return ret;
-      }
+      // FIXME: funobj::invert should be turned into a f_::invert
+      // functor, and we should use apply() here.
+      funobj::invert f_invert;
+      oln_type_of(I, concrete) output(input.size(), "output");
+      oln_type_of(I, piter) p(input.size());
+      for_all_p (p)
+	output[p] = f_invert(input[p]);
 
-      template <typename V>
-      V operator()(const ntg::real_value<V>& v) const
-      {
-	V ret;
+      exiting("level::invert");
+      return output;
+    }
 
-	ret = ntg_max_val(V) - v;
-	return ret;
-      }
-
-      template <typename V>
-      V operator()(const ntg::enum_value<V>& v) const
-      {
-	V ret;
-	ntg_integer_type(V) max_val = ntg_max_val(V);
-	ntg_integer_type(V) value = v.exact();
-
-	ret = max_val - value;
-	return ret;
-      }
-
-      template <typename I>
-      typename value_box<I>::value_type
-      operator()(const value_box<I>& v) const
-      {
-	return operator()(v.value());
-      }
-
-      invert() {}
-
-    };
-
-  } // end of namespace funobj
+  } // end of namespace oln::level
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_FUNOBJ_INVERT_HH
-
-
+#endif // ! OLENA_LEVEL_INVERT_HH

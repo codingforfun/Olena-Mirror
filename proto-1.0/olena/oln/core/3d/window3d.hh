@@ -56,9 +56,12 @@ namespace oln {
       super_type(n, crd)
     {}
 
-    window3d& add(const dpoint3d& dp)
+    // Don't hide the add() method from the super class.
+    using super_type::add;
+
+    window3d& add(coord_t slice, coord_t row, coord_t col)
     {
-      this->add_(dp);
+      this->add_(dpoint3d(slice, row, col));
       return *this;
     }
 

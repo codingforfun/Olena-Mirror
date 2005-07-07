@@ -86,7 +86,7 @@ namespace oln {
 	return this->delta_;
       }
 
-      unsigned card() const
+      unsigned impl_card() const
       {
 	return this->dp_.size();
       }
@@ -101,6 +101,17 @@ namespace oln {
       {
 	precondition(i < this->card());
 	return this->dp_[i];
+      }
+
+      E& add(const dpoint_type& dp)
+      {
+	add_(dp);
+	return this->exact();
+      }
+
+      bool impl_has (const dpoint_type& dp) const
+      {
+	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
       }
 
       const E impl_op_minus() const
@@ -268,8 +279,41 @@ namespace oln {
 
   } // end of namespace oln::abstract
 
-} // end of namespace oln
 
+  /// Compute intersection between two regular windows.
+  template <typename G, typename E>
+  inline
+  E
+  inter(const abstract::regular_window<G, E>& lhs,
+	const abstract::regular_window<G, E>& rhs)
+  {
+    E win;
+    for (unsigned i = 0; i < lhs.card(); ++i)
+      if (rhs.has(lhs.dp(i)))
+	win.add(lhs.dp(i));
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
+	win.add(rhs.dp(j));
+    return win;
+  }
+
+  /// Compute union between two regular windows.
+  template <typename G, typename E>
+  inline
+  E
+  uni(const abstract::regular_window<G, E>& lhs,
+      const abstract::regular_window<G, E>& rhs)
+  {
+    E win;
+    for (unsigned i = 0; i < lhs.card(); ++i)
+      win.add(lhs.dp(i));
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (! win.has(rhs.dp(j)))
+	win.add(rhs.dp(j));
+    return win;
+  }
+
+} // end of namespace oln
 
 
 template<typename G, typename E>

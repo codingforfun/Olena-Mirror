@@ -42,8 +42,9 @@ namespace oln {
     /// Beucher thick gradient.
 
     template<typename I, typename W>
-    oln_type_of(I, concrete) thick_gradient_beucher(const abstract::image<I>& input,
-						    const abstract::window<W>& win)
+    oln_type_of(I, concrete)
+    thick_gradient_beucher(const abstract::image<I>& input,
+			   const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
@@ -63,8 +64,9 @@ namespace oln {
     /// Internal thick gradient.
 
     template<typename I, typename W>
-    oln_type_of(I, concrete) thick_gradient_internal(const abstract::image<I>& input,
-						     const abstract::window<W>& win)
+    oln_type_of(I, concrete)
+    thick_gradient_internal(const abstract::image<I>& input,
+			    const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
@@ -83,8 +85,9 @@ namespace oln {
     /// External thick gradient.
 
     template<typename I, typename W>
-    oln_type_of(I, concrete) thick_gradient_external(const abstract::image<I>& input,
-						     const abstract::window<W>& win)
+    oln_type_of(I, concrete)
+    thick_gradient_external(const abstract::image<I>& input,
+			    const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
