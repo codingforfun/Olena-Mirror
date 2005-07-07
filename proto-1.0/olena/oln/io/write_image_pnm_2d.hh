@@ -107,7 +107,7 @@ namespace oln {
 	int offset;
 	char v;
 
-	void extra_work()
+	void impl_extra_work()
 	{
 	  if (offset != 7)
 	    {
@@ -125,7 +125,7 @@ namespace oln {
 	      offset = 7;
 	      v = 0;
 	    }
-	  if (this->input[this->p] == value_type(1))
+	  if (this->input[this->p] == value_type(0))
 	    v |= 1 << offset;
 	  offset--;
 	}

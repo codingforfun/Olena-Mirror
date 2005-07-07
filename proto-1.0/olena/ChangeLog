@@ -1,3 +1,13 @@
+2005-07-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix PBM (binary) image writing.
+
+	* oln/io/write_image_pnm_2d.hh (write_pnm_bin::extra_work): Rename
+	as...
+	(write_pnm_bin::impl_extra_work): ...this.
+	(write_pnm_bin::impl_write_point): Swap written value, as
+	specified in the PBM specification (1 for black, 0 for white).
+
 2005-07-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix operators on oln::value_box (cont.).  These can now work on
