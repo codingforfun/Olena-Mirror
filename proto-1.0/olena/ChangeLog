@@ -1,5 +1,16 @@
 2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add hit-or-miss opening/closing and hit-or-miss opening/closing of
+	the background.
+
+	* oln/morpho/hit_or_miss.hh: More documentation.
+	(hit_or_miss_opening, hit_or_miss_opening_bg)
+	(hit_or_miss_closing, hit_or_miss_closing_bg): New.
+	* tests/morpho/tests/hit_or_miss_opening,
+	* tests/morpho/tests/hit_or_miss_closing: New tests.
+
+2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix PBM (binary) image reading.
 
 	* oln/io/read_image_pnm_2d.hh:

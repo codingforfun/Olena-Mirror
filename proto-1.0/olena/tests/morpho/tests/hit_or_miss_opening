@@ -1,0 +1,43 @@
+							// -*- C++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include <ntg/bin.hh>
+#include <oln/io/read_image.hh>
+#include <oln/basics2d.hh>
+#include <oln/morpho/hit_or_miss.hh>
+
+using namespace oln;
+
+bool check()
+{
+  utils::key::value_type data_key_hom_opening[16] =
+    { 0x90, 0xda, 0x98, 0x5a, 0xef, 0x2e, 0x8d, 0x54,
+      0xa5, 0x6, 0xd, 0x7a, 0x6f, 0x63, 0x55, 0x7 };
+  utils::key key_hom_opening(data_key_hom_opening);
+
+  utils::key::value_type data_key_hom_opening_bg[16] =
+    { 0xd6, 0x45, 0x11, 0xed, 0xdd, 0xf, 0x42, 0x59,
+      0x95, 0x57, 0x4, 0x66, 0x59, 0x97, 0x6c, 0x8d };
+  utils::key key_hom_opening_bg(data_key_hom_opening_bg);
+
+  image2d<ntg::bin> ima;
+  ima = io::read(rdata("object.pbm"));
+
+  oln::window2d win1;
+  win1
+    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+    .add(-2,-1).add(-2,0).add(-2,1)
+    .add(-1,0);
+  oln::window2d win2 = -win1;
+
+  if (utils::md5(morpho::hit_or_miss_opening(ima, win1, win2)) !=
+      key_hom_opening)
+    return true;
+
+  if (utils::md5(morpho::hit_or_miss_opening_bg(ima, win1, win2)) !=
+      key_hom_opening_bg)
+    return true;
+
+  return false;
+}
