@@ -1,0 +1,55 @@
+							// -*- C++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include <ntg/int.hh>
+#include <oln/io/read_image.hh>
+#include <oln/basics2d.hh>
+#include <oln/morpho/top_hat.hh>
+
+using namespace oln;
+
+bool check()
+{
+  image2d<ntg::int_u8> ima;
+  ima = io::read(rdata("lena-small.pgm"));
+
+  // White top-hat.
+  utils::key::value_type data_key_wth[16] =
+    { 0x59, 0x93, 0x51, 0xde, 0x4, 0x43, 0xb8, 0x7e,
+      0xf8, 0xf4, 0xd1, 0x7, 0x6c, 0x81, 0x2b, 0xb4 };
+  utils::key key_wth(data_key_wth);
+
+  if (utils::md5(morpho::white_top_hat(ima, win_c8p())) != key_wth)
+    return true;
+
+  // Black top-hat.
+  utils::key::value_type data_key_bth[16] =
+    {0x8e, 0xe6, 0x26, 0x8e, 0x80, 0x8d, 0xcc, 0x9e,
+     0x35, 0x1e, 0xe5, 0x2b, 0x41, 0xb1, 0xde, 0x53 };
+  utils::key key_bth(data_key_bth);
+
+  if (utils::md5(morpho::black_top_hat(ima, win_c8p())) != key_bth)
+    return true;
+
+  // Self-complementary top-hat.
+  utils::key::value_type data_key_scth[16] =
+    { 0x50, 0xec, 0xca, 0x22, 0xce, 0xa4, 0x45, 0x32,
+      0x52, 0x7b, 0x47, 0x4a, 0x4a, 0xe4, 0x8, 0x45 };
+  utils::key key_scth(data_key_scth);
+
+  if (utils::md5(morpho::self_complementary_top_hat(ima, win_c8p())) !=
+      key_scth)
+    return true;
+
+  // Top-hat contrast operator.
+  utils::key::value_type data_key_thco[16] =
+    { 0x6d, 0x4, 0x75, 0xf5, 0xb0, 0x79, 0xba, 0xe8,
+      0x8e, 0x81, 0x69, 0x37, 0xf4, 0xbe, 0x27, 0x2d };
+  utils::key key_thco(data_key_thco);
+
+  if (utils::md5(morpho::top_hat_contrast_op(ima, win_c8p())) != key_thco)
+    return true;
+
+  return false;
+}

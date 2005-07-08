@@ -117,7 +117,7 @@ namespace oln {
 
     /*! \brief Perform an hit-or-miss opening.
 
-        Compute the hit-or-miss opening of input by the composite
+        Compute the hit-or-miss opening of \a input by the composite
 	structuring element (win1, win2).
     
 	REF: Soille, 2nd ed., p.149.
@@ -153,7 +153,7 @@ namespace oln {
 
     /*! \brief Perform an hit-or-miss opening of background.
 
-        Compute the hit-or-miss opening of the background of input by
+        Compute the hit-or-miss opening of the background of \a input by
 	the composite structuring element (win1, win2).
 
 	REF: Soille, 2nd ed., p.149.
@@ -189,7 +189,7 @@ namespace oln {
 
     /*! \brief Perform an hit-or-miss closing.
 
-        Compute the hit-or-miss closing of input by the composite
+        Compute the hit-or-miss closing of \a input by the composite
 	structuring element (win1, win2).  This is the dual
 	transformation of hit-or-miss opening with respect to set
 	complementation.
@@ -229,10 +229,10 @@ namespace oln {
 
     /*! \brief Perform an hit-or-miss closing of the background.
 
-        Compute the hit-or-miss closing of the background of input by
-	the composite structuring element (win1, win2).  This is the
-	dual transformation of hit-or-miss opening of the background
-	with respect to set complementation.
+        Compute the hit-or-miss closing of the background of \a input
+	by the composite structuring element (win1, win2).  This is
+	the dual transformation of hit-or-miss opening of the
+	background with respect to set complementation.
 
 	REF: Soille, 2nd ed., p.149.
 

@@ -1,5 +1,15 @@
 2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add top-hat operators.
+
+	* oln/morpho/top_hat.hh: New file.
+	* tests/morpho/tests/top_hat: New test.
+
+	* olena/oln/morpho/hit_or_miss.hh: Add missing Doxygen tags in
+	comments.
+
+2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add hit-or-miss opening/closing and hit-or-miss opening/closing of
 	the background.
 
