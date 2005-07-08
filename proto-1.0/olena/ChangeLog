@@ -1,3 +1,11 @@
+2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix PBM (binary) image reading.
+
+	* oln/io/read_image_pnm_2d.hh:
+	(read_pnm_bin::impl_read_point): Swap read value, as specified in
+	the PBM specification (1 for black, 0 for white).
+
 2005-07-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	'set' and 'get' are now only for images; 'at' is for data storage.

@@ -134,9 +134,9 @@ namespace oln {
 	      offset = 7;
 	    }
 	  if ((int)(v & (1<<offset--)) == 0)
-	    this->output[this->p] = 0;
-	  else
 	    this->output[this->p] = 1;
+	  else
+	    this->output[this->p] = 0;
 	}
 
 	void impl_preconditions()
