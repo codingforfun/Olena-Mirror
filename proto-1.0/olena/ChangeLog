@@ -1,3 +1,10 @@
+2005-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix hit-or-miss closings.
+
+	* oln/morpho/hit_or_miss.hh (hit_or_miss_closing),
+	(hit_or_miss_closing_bg): Invert the result.
+
 2005-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add top-hat operators.

@@ -221,7 +221,8 @@ namespace oln {
       oln_type_of(I, concrete) output("output");
       // FIXME: Is this correct?  Soille doesn't detail the definition
       // of the hit-or-miss closing in his book.
-      output = hit_or_miss_opening(level::invert(input), win1, win2);
+      output =
+	level::invert(hit_or_miss_opening(level::invert(input), win1, win2));
 
       exiting("morpho::hit_or_miss_closing");
       return output;
@@ -251,8 +252,8 @@ namespace oln {
     template<class I, class W1, class W2>
     oln_type_of(I, concrete)
     hit_or_miss_closing_bg(const abstract::image<I>& input,
-			const abstract::window<W1>& win1,
-			const abstract::window<W2>& win2)
+			   const abstract::window<W1>& win1,
+			   const abstract::window<W2>& win2)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W1, grid)>::ensure();
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W2, grid)>::ensure();
@@ -261,7 +262,9 @@ namespace oln {
       oln_type_of(I, concrete) output("output");
       // FIXME: Is this correct?  Soille doesn't detail the definition
       // of the hit-or-miss closing of the background in his book.
-      output = hit_or_miss_opening_bg(level::invert(input), win1, win2);
+      output =
+	level::invert(hit_or_miss_opening_bg(level::invert(input),
+					     win1, win2));
 
       exiting("morpho::hit_or_miss_closing_bg");
       return output;
