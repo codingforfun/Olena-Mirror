@@ -7,7 +7,7 @@ OLN_DEP =					\
   all.hh					\
 						\
   appli/astro/clean.hh				\
-  appli/astro/tree_coherance_check.hh		\
+  appli/astro/tree_coherence_check.hh		\
   appli/astro/tree_statistics.hh		\
 						\
   basics1d.hh					\
