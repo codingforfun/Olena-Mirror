@@ -7,7 +7,7 @@ INCLUDEPATH	+= . ../../../../../olena ../../../../../metalic ../../../../../inte
 
 SOURCES	+= main.cc
 
-HEADERS	+= filterinterface.hh image_viewer.hh qtincludes.hh utils.hh ../../../canvas/tree.hh ../../../canvas/maxtree.hh
+HEADERS	+= filterinterface.hh image_viewer.hh qtincludes.hh utils.hh ../../../canvas/tree.hh ../../../canvas/maxtree.hh ../clean.hh
 
 FORMS	= visualization_window.ui
 

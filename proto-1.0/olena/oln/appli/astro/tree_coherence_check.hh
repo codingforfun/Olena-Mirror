@@ -146,7 +146,7 @@ namespace oln {
        **     search for parent (par) of p
        **     ensure (p) is contained in children of (par)
        **   else
-       **     // nothing, root parent of hitself
+       **     // nothing, root parent of itself
        **
        ** \endcode
        **

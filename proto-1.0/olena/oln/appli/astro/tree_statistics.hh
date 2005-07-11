@@ -131,7 +131,8 @@ namespace oln {
        **
        ** count <- 0
        ** for all points of input
-       **   if p is global root or if p has a different value than his parent's value in input image
+       **   if p is global root or if p has a different value 
+       **              than his parent's value in input image
        **     then increment count (p is a local root)
        ** at the end, return the count
        **

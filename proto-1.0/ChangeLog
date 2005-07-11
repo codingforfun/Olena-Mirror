@@ -1,3 +1,10 @@
+2005-07-11  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* olena/oln/core/gen/regular_window.hh: Make it compile.
+	* olena/oln/appli/astro/tree_coherence_check.hh: Fix type in comments.
+	* olena/oln/appli/astro/tree_statistics.hh: Fix typo in comments.
+	* olena/oln/appli/astro/graphical_interface/interface.pro: Add a dependency.
+
 2005-06-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* config/oln.m4: Add AC_WITH_CXX_FITSIO2 macro.
