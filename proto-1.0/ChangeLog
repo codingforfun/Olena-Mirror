@@ -1,5 +1,9 @@
 2005-07-11  Christophe Berger  <christophe@lrde.epita.fr>
 
+	* olena/oln/makefile.src: Fix typo.
+
+2005-07-11  Christophe Berger  <christophe@lrde.epita.fr>
+
 	* olena/oln/core/gen/regular_window.hh: Make it compile.
 	* olena/oln/appli/astro/tree_coherence_check.hh: Fix type in comments.
 	* olena/oln/appli/astro/tree_statistics.hh: Fix typo in comments.
