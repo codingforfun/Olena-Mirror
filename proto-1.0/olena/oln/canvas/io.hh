@@ -42,23 +42,10 @@ namespace oln {
   namespace canvas {
 
 
-    template <typename I, typename E>
-    struct write : public mlc::any<E>
+    template <typename I, typename F, typename E>
+    struct write_from_oln : public mlc::any<E>
     {
-
-      void impl_extra_work()
-      {
-      }
-
-      void work()
-      {
-	this->exact().impl_work();
-      }
-
-      void extra_work()
-      {
-	this->exact().impl_extra_work();
-      }
+      typedef oln_type_of(I, value) value_type;
 
       void write_point()
       {
@@ -67,172 +54,132 @@ namespace oln {
 
       void run()
       {
-	for (p.row() = 0; p.row() < input.size().nrows(); ++p.row())
+	unsigned npoints = input.size().npoints();
+
+	writer.set_size(input.size());
+	if (writer.write_header() == false)
 	  {
-	    work();
-	    extra_work();
+	    std::cerr << "io error: data type too large" << std::endl;
+	    return;
+	  }
+
+	for (unsigned i = 0; i < npoints; ++i)
+	  {
+	    write_point();
+	    writer.next_point();
 	  }
       }
 
+      write_from_oln(const abstract::image<I>& input, F& writer) :
+	writer(writer),
+	input(input)      {}
 
-    protected:
-
-      write(const oln::abstract::image<I>& input,
-	    std::ostream& ostr) :
-	input(input.exact()),
-	ostr(ostr)
-      {}
-
+      F& writer;
       box<const I> input;
-      std::ostream& ostr;
-      oln_type_of(I, point) p;
+    };
+
+
+    template <typename T, typename G, typename E>
+    struct write_to_file : public mlc::any<E>
+    {
+
+      typedef oln_grd_type_of(G, size) size_type;
+      typedef oln_grd_type_of(G, point) point_type;
+
+
+      bool write_header()
+      {
+	return this->exact().impl_write_header();
+      }
+
+      void set_size(const size_type& size)
+      {
+	this->exact().impl_set_size(size);
+      }
+
+      void write_value(T v)
+      {
+	this->exact().impl_write_value(v);
+      }
+
+      void next_point()
+      {
+	this->exact().impl_next_point();
+      }
+
+      const point_type& point()
+      {
+	return this->exact().impl_point();
+      }
 
     };
 
 
-
-    template <typename I, typename E>
-    struct write_2d: public write<I, E>
+    template <typename I, typename F, typename E>
+    struct read_to_oln : public mlc::any<E>
     {
-
-      void impl_work()
-      {
-	for (this->p.col() = 0;
-	     this->p.col() < this->input.size().ncols();
-	     ++this->p.col())
-	  this->write_point();
-      }
-
-    protected:
-      typedef write<I, E> super_type;
-
-      write_2d(const abstract::image<I>& input,
-	       std::ostream& ostr) :
-	super_type(input, ostr)
-      {}
-
-    };
-
-    template <typename I, typename E>
-    struct write_1d: public write<I, E>
-    {
-
-      void impl_work()
-      {
-	this->write_point();
-      }
-
-    protected:
-      typedef write<I, E> super_type;
-
-      write_1d(const abstract::image<I>& input,
-	       std::ostream& ostr) :
-	super_type(input, ostr)
-      {}
-
-    };
-
-
-    template <typename I, typename E>
-    struct read : public mlc::any<E>
-    {
-
-      void impl_extra_work() {}
-
-      void extra_work()
-      {
-	this->exact().impl_extra_work();
-      }
+      typedef oln_type_of(I, value) value_type;
 
       void read_point()
       {
 	this->exact().impl_read_point();
       }
 
-      void preconditions()
-      {
-	this->exact().impl_preconditions();
-      }
-
-      void work()
-      {
-	this->exact().impl_work();
-      }
-
-      void get_output(I& ima)
-      {
-	ima = output.unbox();
-      }
-
       void run()
       {
-	preconditions();
-
-	I tmp(hdr.rows, hdr.cols);
-
+	I tmp(reader.size());
 	output = tmp;
+	unsigned npoints = reader.npoints();
 
-	for (p.row() = 0; p.row() < hdr.rows && !istr.eof(); ++p.row())
+	for (unsigned i = 0; i < npoints; ++i)
 	  {
-	    extra_work();
-	    work();
+	    read_point();
+	    reader.next_point();
 	  }
       }
 
-    protected:
+      void assign(abstract::image<I>& ima)
+      {
+	ima.exact() = output.unbox();
+      }
 
-      read(std::istream& istr,
-	   const io::internal::pnm_header& hdr) :
-	istr(istr),
-	hdr(hdr)
-      {}
+      read_to_oln(F& reader) : reader(reader) {}
 
+      F& reader;
       box<I> output;
-      std::istream& istr;
-      const io::internal::pnm_header& hdr;
-      oln_type_of(I, point) p;
-
     };
 
-    template <typename I, typename E>
-    struct read_2d: public read<I, E>
+    template <typename T, typename G, typename E>
+    struct read_from_file : public mlc::any<E>
     {
 
-      void impl_work()
+      typedef oln_grd_type_of(G, size) size_type;
+      typedef oln_grd_type_of(G, point) point_type;
+
+      size_type size()
       {
-	for (this->p.col() = 0;
-	     this->p.col() < this->hdr.cols && !this->istr.eof();
-	     ++this->p.col())
-	  this->read_point();
+	return this->exact().impl_size();
       }
 
-    protected:
-      typedef read<I, E> super_type;
-
-      read_2d(std::istream& istr,
-	      const io::internal::pnm_header& hdr) :
-	super_type(istr, hdr)
-      {}
-
-    };
-
-
-    template <typename I, typename E>
-    struct read_1d: public read<I, E>
-    {
-
-      void impl_work()
+      T read_value()
       {
-	this->read_point();
+	return this->exact().impl_read_value();
       }
 
-    protected:
-      typedef read<I, E> super_type;
+      void next_point()
+      {
+	this->exact().impl_next_point();
+      }
 
-      read_1d(std::istream& istr,
-	      const io::internal::pnm_header& hdr) :
-	super_type(istr, hdr)
-      {}
+      unsigned npoints()
+      {
+	return this->exact().impl_npoints();
+      }
+
+      const point_type& point()
+      {
+	return this->exact().impl_point();
+      }
 
     };
 

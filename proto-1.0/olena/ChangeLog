@@ -1,3 +1,10 @@
+2005-07-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/canvas/io.hh: Contain New I/O Canvas. Two hierarchies are now
+	handling I/O. The first one fills the image. The second one is
+	dedicated to reading specific file formats. Two classes of those
+	hierarchies communicate to fill an image from a file.
+
 2005-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix hit-or-miss closings.
