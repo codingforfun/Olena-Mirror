@@ -34,10 +34,12 @@
 # include <mlc/box.hh>
 
 # include <ntg/core/macros.hh>
+# include <oln/core/abstract/image.hh>
 
-# include <oln/io/read_image_pnm.hh>
+# include <oln/io/pnm_read.hh>
 # include <oln/io/utils.hh>
 # include <oln/io/gz_stream.hh>
+
 
 namespace oln {
 
@@ -71,7 +73,7 @@ namespace oln {
     {
       if (ext == "pgm" || ext == "pbm" || ext == "ppm" ||
 	  ext == "pnm")
-	read_pnm(ima, istr, ext);
+	pnm::read(ima, istr, ext);
       else
 	std::cout << "io error: format not supported."
 		  << std::endl;

@@ -1,4 +1,4 @@
-  // Copyright (C) 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -15,7 +15,7 @@
 // the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
 // MA 02111-1307, USA.
 //
-// As a special exception, you may use this file as part of a free
+// As a special exception, you may use this filek as part of a free
 // software library without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
 // file, or you compile this file and link it with other files to
@@ -25,8 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_IO_READ_IMAGE_PNM_DECL_HH
-# define OLN_IO_READ_IMAGE_PNM_DECL_HH
+#ifndef OLENA_IO_SCALAR_HH
+# define OLENA_IO_SCALAR_HH
+
+# include <oln/core/abstract/image.hh>
+# include <oln/canvas/io.hh>
 
 namespace oln {
 
@@ -34,24 +37,42 @@ namespace oln {
   namespace io {
 
 
-    namespace impl {
+    template <typename I, typename F>
+    struct read_scalar : public canvas::read_to_oln<I, F, read_scalar<I, F> >
+    {
+      typedef oln_type_of(I, value) value_type;
+      typedef canvas::read_to_oln<I, F, read_scalar<I, F> > super_type;
 
+      void impl_read_point()
+      {
+	this->output[this->reader.point()] =
+	  (ntg_storage_type(value_type))this->reader.read_value();
+      }
 
-      template <typename I, typename S>
-      struct read_pnm_vect {};
+      read_scalar(F& reader) :
+	super_type(reader) {}
 
-      template <typename I, typename S>
-      struct read_pnm_real {};
+    };
 
-      template <typename I, typename S>
-      struct read_pnm_bin {};
+    template <typename I, typename F>
+    struct write_scalar :
+      public canvas::write_from_oln<I, F, write_scalar<I, F> >
+    {
+      typedef canvas::write_from_oln<I, F, write_scalar<I, F> > super_type;
 
-    }
+      void impl_write_point()
+      {
+	this->writer.write_value(this->input[this->writer.point()]);
+      }
 
+      write_scalar(const abstract::image<I>& input, F& writer) :
+	super_type(input, writer) {}
+
+    };
 
   }
 
 
 }
 
-#endif // ! OLN_IO_READ_IMAGE_PNM_DECL_HH
+#endif // ! OLENA_IO_SCALAR_HH

@@ -1,5 +1,29 @@
 2005-07-12  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/io/pnm_bin.hh: New. I/O functions for writing and reading a
+	binary PNM file.
+	* oln/io/pnm_read.hh: New. Facade to PNM input methods.
+	* oln/io/read_image_pnm.hh: Remove.
+	* oln/io/vectorial.hh: New. Read to and write from vectorial images.
+	* oln/io/write_image_pnm_2d.hh: Remove.
+	* oln/io/write_image.hh: Adapt to the new I/O modeling.
+	* oln/io/write_image_pnm_decl.hh: Remove.
+	* oln/io/pnm_real.hh: New. I/O functions for writing and reading a grey
+	scale PNM file.
+	* oln/io/utils.hh: Move pnm functions and structures to pnm_header.hh.
+	* oln/io/pnm_header.hh: New. Contain functions and structures to read
+	and write a PNM header.
+	* oln/io/pnm_write.hh: New. Facade to PNM output methods.
+	* oln/io/scalar.hh: New. Read to and write from scalar images.
+	* oln/io/write_image_pnm.hh: Remove.
+	* oln/io/pnm_vect.hh: New. I/O functions for writing and reading a rgb
+	PNM file.
+	* oln/io/read_image_pnm_2d.hh: Remove.
+	* oln/io/read_image.hh: Adapt to the new I/O modeling.
+	* oln/io/read_image_pnm_decl.hh: Remove.
+
+2005-07-12  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/canvas/io.hh: Contain New I/O Canvas. Two hierarchies are now
 	handling I/O. The first one fills the image. The second one is
 	dedicated to reading specific file formats. Two classes of those

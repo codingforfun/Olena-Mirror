@@ -31,8 +31,7 @@
 # include <string>
 
 # include <oln/io/gz_stream.hh>
-# include <oln/io/utils.hh>
-# include <oln/io/write_image_pnm.hh>
+# include <oln/io/pnm_write.hh>
 
 namespace oln {
 
@@ -45,7 +44,7 @@ namespace oln {
     {
       if (ext == "pgm" || ext == "pbm" || ext == "ppm" ||
 	  ext == "pnm")
-	write_pnm(ima, ostr, ext);
+	pnm::write(ima, ostr, ext);
       else
 	std::cout << "io error: format not supported."
 		  << std::endl;
