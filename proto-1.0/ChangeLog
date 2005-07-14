@@ -1,3 +1,7 @@
+2005-07-14  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* olena/oln/makefile.src: Remove deleted files.
+
 2005-07-11  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* olena/oln/makefile.src: Fix typo.

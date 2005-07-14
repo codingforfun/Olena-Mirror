@@ -154,14 +154,8 @@ OLN_DEP =					\
   funobj/logic.hh				\
 						\
   io/gz_stream.hh				\
-  io/read_image_pnm_2d.hh			\
-  io/read_image_pnm_decl.hh			\
-  io/read_image_pnm.hh				\
   io/read_image.hh				\
   io/utils.hh					\
-  io/write_image_pnm_2d.hh			\
-  io/write_image_pnm_decl.hh			\
-  io/write_image_pnm.hh				\
   io/write_image.hh				\
 						\
   level/arith.hh				\
