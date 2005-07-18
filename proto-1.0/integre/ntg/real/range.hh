@@ -101,6 +101,7 @@ namespace ntg {
       ntg_is_a(U, real)::ensure();
       this->val_ = optraits_type::check(u);
     }
+
     template <class U>
     self&
     operator=(const U& u)
@@ -111,6 +112,9 @@ namespace ntg {
 
     template <class U>
     operator U() const { return this->val_; }
+
+    // this precise operator helps the compiler (!):
+    operator T() const { return this->val_; }
   };
 
   template<class T, class interval, class behavior>

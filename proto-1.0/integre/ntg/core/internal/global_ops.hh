@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -127,28 +127,41 @@ namespace ntg
 
     template <class T1, class T2> inline
     bool
-    operator!=(const T1& lhs, const T2& rhs)
-    { return !(lhs == rhs); }
+    operator!=(const value<T1>& lhs, const T2& rhs)
+    {
+      return ! (lhs == rhs);
+    }
+
 
     // >, >= and <= operators are defined using <. They are not
     // implicitely defined so we have to do so by hand.
 
     GLOBAL_CMP_OP(operator<, cmp_lt)
 
-    template <class T1, class T2> inline
-    bool
-    operator>(const T1& lhs, const T2& rhs)
-    { return rhs < lhs; }
+    GLOBAL_DEDUCED_CMP_OPS()
 
     template <class T1, class T2> inline
     bool
-    operator>=(const T1& lhs, const T2& rhs)
-    { return !(lhs < rhs); }
+    operator>=(const value<T1>& lhs, const T2& rhs)
+    {
+      return ! (lhs < rhs);
+    }
 
     template <class T1, class T2> inline
     bool
-    operator<=(const T1& lhs, const T2& rhs)
-    { return !(rhs < lhs); }
+    operator>(const value<T1>& lhs, const T2& rhs)
+    {
+      return rhs < lhs.exact();
+    }
+
+    template <class T1, class T2> inline
+    bool
+    operator<=(const value<T1>& lhs, const T2& rhs)
+    {
+      return ! (rhs < lhs.exact());
+    }
+
+
 
     /*-----------------------------.
     | Arithmetical unary operators |
@@ -158,25 +171,25 @@ namespace ntg
 
     template <class T> inline
     const T&
-    operator+(const T& val)
+    operator+(const ntg::value<T>& val)
     {
-      return val;
+      return val.exact();
     }
 
     template<class T> inline
     const T&
-    operator++(T& val)
+    operator++(ntg::value<T>& val)
     {
-      val += ntg_unit_val(T);
-      return val;
+      val.exact() += ntg_unit_val(T);
+      return val.exact();
     }
 
     template<class T> inline
     T
-    operator++(T& val, int)
+    operator++(ntg::value<T>& val, int)
     {
-      T tmp(val);
-      val += ntg_unit_val(T);
+      T tmp(val.exact());
+      val.exact() += ntg_unit_val(T);
       return tmp;
     }
 
@@ -184,24 +197,24 @@ namespace ntg
 
     template <class T> inline
     const ntg_signed_type(T)
-    operator-(const T& val)
+    operator-(const ntg::value<T>& val)
     {
       typedef ntg_signed_type(T) signed_type;
-      return static_cast<signed_type>(ntg_zero_val(T)) - val;
+      return static_cast<signed_type>(ntg_zero_val(T)) - val.exact();
     }
 
     template<class T> inline
-    const T& operator--(T& val)
+    const T& operator--(ntg::value<T>& val)
     {
-      val -= ntg_unit_val(T);
-      return val;
+      val.exact() -= ntg_unit_val(T);
+      return val.exact();
     }
 
     template<class T> inline
-    T operator--(T& val, int)
+    T operator--(ntg::value<T>& val, int)
     {
-      T tmp(val);
-      val -= ntg_unit_val(T);
+      T tmp(val.exact());
+      val.exact() -= ntg_unit_val(T);
       return tmp;
     }
 
@@ -216,18 +229,18 @@ namespace ntg
 
     template <class T1, class T2> inline
     ntg_return_type(min, T1, T2)
-    min (const T1& lhs, const T2& rhs)
+    min (const ntg::value<T1>& lhs, const ntg::value<T2>& rhs)
     {
       typedef ntg_return_type(max, T1, T2) result_type;
-      return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
+      return (lhs.exact() < rhs.exact()) ? result_type(lhs.exact()) : result_type(rhs.exact());
     }
 
     template <class T1, class T2> inline
     ntg_return_type(max, T1, T2)
-    max (const T1& lhs, const T2& rhs)
+    max (const ntg::value<T1>& lhs, const ntg::value<T2>& rhs)
     {
       typedef ntg_return_type(max, T1, T2) result_type;
-      return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
+      return (lhs.exact() > rhs.exact()) ? result_type(lhs.exact()) : result_type(rhs.exact());
     }
 
   } // end of internal.

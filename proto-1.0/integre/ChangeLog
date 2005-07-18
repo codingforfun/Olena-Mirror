@@ -1,3 +1,24 @@
+2005-07-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	The main changes are the removals of deduced operators
+	the arguments of which were not strongly typed.
+	
+	* ntg/real/range.hh (operator T): New.
+	* ntg/core/internal/global_ops.hh
+	(operator!=, operator>=, operator>, operator<=): Strengthen
+	signatures.
+	(GLOBAL_DEDUCED_CMP_OPS): Call value-builtin versions of
+	above operators.
+	(operator+, operator++, operator-, operator--): Strengthen
+	signatures.
+	(min, max): Likewise.
+	* ntg/core/internal/global_ops_defs.hh
+	(GLOBAL_DEDUCED_CMP_OPS_BUILTIN): New macro.
+	(GLOBAL_DEDUCED_CMP_OPS): New macro.
+	* ntg/vect/vect_value.hh (nb_comp): Turn to an int.
+	* ntg/vect/vec.hh (nb_comp): Likewise.
+	* ntg/color/color.hh (nb_comp): Likewise.
+
 2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* ntg/decls.hh: New file.

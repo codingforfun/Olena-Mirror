@@ -56,7 +56,7 @@ namespace ntg {
 	      template <unsigned> class color_system>
     struct typetraits<color<ncomps, qbits, color_system> >
     {
-      enum { nb_comp = ncomps };
+      static const unsigned nb_comp = ncomps;
 
       typedef color<ncomps, qbits, color_system>	self;
       typedef self					ntg_type;

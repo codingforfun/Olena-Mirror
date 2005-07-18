@@ -90,7 +90,7 @@ namespace ntg {
     template <unsigned N, class T, class Self>
     struct typetraits<vec<N, T, Self> > : public typetraits<vect_value<vec<N, T, Self> > >
     {
-      enum { nb_comp = N };
+      static const unsigned nb_comp = N;
 
       typedef vec<N, T, Self>	self;
       typedef vectorial		abstract_type;

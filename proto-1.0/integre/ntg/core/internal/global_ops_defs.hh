@@ -240,6 +240,7 @@ Op(const Builtin& lhs, const value<T2>& rhs)				\
 			      static_cast<rhs_type>(rhs.exact()));	\
 }
 
+
 /*------------------------------------------------------------.
 | Global comparison operators for both ntg_types and builtins |
 `------------------------------------------------------------*/
@@ -270,5 +271,52 @@ GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char)			\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, float)				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, double)				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, bool)
+
+
+# define GLOBAL_DEDUCED_CMP_OPS_BUILTIN(Builtin)	\
+							\
+template <class T2> inline				\
+bool							\
+operator!=(const Builtin& lhs, const value<T2>& rhs)	\
+{							\
+  return ! (rhs == lhs);				\
+}							\
+							\
+template <class T2> inline				\
+bool							\
+operator>(const Builtin& lhs, const value<T2>& rhs)	\
+{							\
+  return rhs < lhs;					\
+}							\
+							\
+template <class T2> inline				\
+bool							\
+operator>=(const Builtin& lhs, const value<T2>& rhs)	\
+{							\
+  return ! (lhs < rhs);					\
+}							\
+							\
+template <class T2> inline				\
+bool							\
+operator<=(const Builtin& lhs, const value<T2>& rhs)	\
+{							\
+  return ! (rhs < lhs);					\
+}
+
+
+# define GLOBAL_DEDUCED_CMP_OPS()		\
+						\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(signed   long)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(unsigned long)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(signed   int)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(unsigned int)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(signed   short)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(unsigned short)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(signed   char)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(unsigned char)	\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(float)		\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(double)		\
+GLOBAL_DEDUCED_CMP_OPS_BUILTIN(bool)
+
 
 #endif // !NTG_CORE_INTERNAL_GLOBAL_OPS_DEFS_HH

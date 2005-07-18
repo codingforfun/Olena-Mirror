@@ -41,7 +41,7 @@ namespace ntg
   class vect_value : public value<E>
   {
     typedef typename internal::typetraits<E>::comp_type comp_type;
-    enum { nb_comp = internal::typetraits<E>::nb_comp };
+    static const unsigned nb_comp = internal::typetraits<E>::nb_comp;
 
   public:
     // accessor
