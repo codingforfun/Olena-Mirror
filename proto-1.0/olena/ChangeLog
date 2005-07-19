@@ -1,5 +1,13 @@
 2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix PBM (binary) image reading and writing (cont.).
+
+	* oln/io/pnm_bin.hh (read_bin<oln::grid2d>::impl_read_value)
+	(write_bin<oln::grid2d>::impl_write_value): Swap read value, as
+	specified in the PBM specification (1 for black, 0 for white).
+
+2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix PBM (binary) image reading.
 
 	* oln/core/abstract/grid.hh (oln_grd_type_of_): New macro.

@@ -80,9 +80,9 @@ namespace oln {
 	      offset = 7;
 	    }
 	  if ((int)(v & (1<<offset--)) == 0)
-	    return false;
-	  else
 	    return true;
+	  else
+	    return false;
 	}
 
 	void impl_next_point()
@@ -154,7 +154,7 @@ namespace oln {
 	      offset = 7;
 	      v = 0;
 	    }
-	  if (b == true)
+	  if (b == false)
 	    v |= 1 << offset;
 	  offset--;
 	}
