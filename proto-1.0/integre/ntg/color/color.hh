@@ -267,6 +267,27 @@ namespace ntg {
       typedef color<ncomps, qbits, color_system> self;
       typedef typename typetraits<self>::storage_type storage_type;
 
+      /* FIXME: Copied and pasted from optraits<vec>.  There are
+         obvious lacks in these traits; Maybe we could inherit from
+	 optraits<vect_value> or something like that?  */
+    public:
+      template <class T1, class T2>
+      inline static bool
+      cmp_eq (const T1& lhs, const T2& rhs)
+      {
+	ntg_is_a(T1, ntg::vectorial)::ensure();
+	ntg_is_a(T2, ntg::vectorial)::ensure();
+	ntg_assert(lhs.size() == rhs.size());
+
+	typedef ntg_return_type(cmp, T1, T2) tmp_type;
+
+	unsigned s = lhs.size();
+	for (unsigned i = 0; i < s; ++i)
+	  if (lhs[i] != rhs[i])
+	    return false;
+	return true;
+      }
+
     public:
       static unsigned max_print_width ()
       {
@@ -282,6 +303,21 @@ namespace ntg {
 	return out.str();
       }
     };
+
+    template<unsigned ncomps1, unsigned qbits1,
+	     template <unsigned> class color_system1,
+	     unsigned ncomps2, unsigned qbits2,
+	     template <unsigned> class color_system2>
+    struct operator_traits<operator_cmp,
+			   color<ncomps1, qbits1, color_system1>,
+			   color<ncomps2, qbits2, color_system2> >
+    {
+      enum { commutative = true };
+      typedef color<ncomps1, qbits1, color_system1> ret;
+      typedef color<ncomps1, qbits1, color_system1> impl;
+    };
+
+    // FIXME: Add missing operator_traits for color.
 
 
     template <typename T> struct default_less;

@@ -323,11 +323,10 @@ namespace ntg {
       return cplx<rect, T>(-this->val_[0], -this->val_[1]);
     }
 
+    // Declaration of to_polar (definition is given after
+    // cplx<polar, T> definition.
     const cplx<polar, float_d>
-    to_polar() const
-    {
-      return cplx<polar, float_d>(magn(), angle());
-    }
+    to_polar() const;
 
   };
 
@@ -421,6 +420,14 @@ namespace ntg {
     }
 
   };
+
+  /// Definition of cplx<rect, T>::to_polar.
+  template <class T>
+  const cplx<polar, float_d>
+  cplx<rect, T>::to_polar() const
+  {
+    return cplx<polar, float_d>(magn(), angle());
+  }
 
   template<class T>
   inline std::ostream&

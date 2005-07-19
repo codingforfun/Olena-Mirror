@@ -1,3 +1,18 @@
+2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add (some) missing traits in color.
+
+	* ntg/color/color.hh
+	(optraits<color<ncomps, qbits, color_system> >::cmp_eq): New.
+	(operator_traits<operator_cmp,
+	color<ncomps1, qbits1, color_system1>,
+        color<ncomps2, qbits2, color_system2> >): New traits.
+	* ntg/vect/cplx.hh (cplx<rect, T>::to_polar): Move definition of
+	this method outside the class, after the definition of
+	cplx<polar, T>, in order to pacify G++ 4.0 (which requires the
+	complete definition of cplx<polar, T> to instantiate
+	cplx<rect, T>::to_polar.
+
 2005-07-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	The main changes are the removals of deduced operators

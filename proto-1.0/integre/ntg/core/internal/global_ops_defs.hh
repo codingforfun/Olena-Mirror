@@ -245,31 +245,31 @@ Op(const Builtin& lhs, const value<T2>& rhs)				\
 | Global comparison operators for both ntg_types and builtins |
 `------------------------------------------------------------*/
 
-# define GLOBAL_CMP_OP(Op, Name)				\
-template <class T1, class T2> inline				\
-bool								\
-Op(const value<T1>& lhs, const T2& rhs)				\
-{								\
-  typedef ntg_deduced_traits_type(cmp, T1, T2) deduced_type;	\
-								\
-  typedef typename deduced_type::impl impl;			\
-  typedef typename deduced_type::lhs_type lhs_type;		\
-  typedef typename deduced_type::rhs_type rhs_type;		\
-								\
+# define GLOBAL_CMP_OP(Op, Name)					\
+template <class T1, class T2> inline					\
+bool									\
+Op(const value<T1>& lhs, const T2& rhs)					\
+{									\
+  typedef ntg_deduced_traits_type(cmp, T1, T2) deduced_type;		\
+									\
+  typedef typename deduced_type::impl impl;				\
+  typedef typename deduced_type::lhs_type lhs_type;			\
+  typedef typename deduced_type::rhs_type rhs_type;			\
+									\
  return optraits<impl>::Name(static_cast<lhs_type>(lhs.exact()),	\
-			      static_cast<rhs_type>(rhs));	\
-}								\
-								\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char)			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, float)				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, double)				\
+			     static_cast<rhs_type>(rhs));		\
+}									\
+									\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, float)					\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, double)					\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, bool)
 
 
