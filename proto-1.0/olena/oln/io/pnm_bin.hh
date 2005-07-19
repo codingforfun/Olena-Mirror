@@ -33,7 +33,8 @@
 # include <oln/canvas/io.hh>
 # include <oln/io/pnm_header.hh>
 # include <oln/core/2d/grid2d.hh>
-
+# include <oln/core/2d/point2d.hh>
+# include <oln/core/2d/size2d.hh>
 
 
 namespace oln {
@@ -53,13 +54,8 @@ namespace oln {
       struct read_bin<oln::grid2d>
 	: public canvas::read_from_file<bool, grid2d, read_bin<grid2d> >
       {
-
-	// FIXME: these macros should work
-// 	typedef oln_grd_type_of(grid2d, size) size_type;
-// 	typedef oln_grd_type_of(grid2d, point) point_type;
-
-	typedef size2d size_type;
-	typedef point2d point_type;
+	typedef oln_grd_type_of_(grid2d, size) size_type;
+	typedef oln_grd_type_of_(grid2d, point) point_type;
 
 	unsigned impl_npoints()
 	{
@@ -109,6 +105,7 @@ namespace oln {
 	read_bin(std::istream& istr, const header& hdr) :
 	  istr(istr),
 	  hdr(hdr),
+	  v(0),
 	  offset(-1)
 	{
 	  p.col() = 0;
@@ -130,12 +127,8 @@ namespace oln {
       struct write_bin<oln::grid2d>
 	: public canvas::write_to_file<bool, grid2d, write_bin<grid2d> >
       {
-	// FIXME: these macros should work
-// 	typedef oln_grd_type_of(grid2d, size) size_type;
-// 	typedef oln_grd_type_of(grid2d, point) point_type;
-
-	typedef size2d size_type;
-	typedef point2d point_type;
+	typedef oln_grd_type_of_(grid2d, size) size_type;
+	typedef oln_grd_type_of_(grid2d, point) point_type;
 
 	void set_size(const size_type& size)
 	{
@@ -189,11 +182,12 @@ namespace oln {
 	}
 
 	write_bin(std::ostream& ostr) :
-	  ostr(ostr)
+	  ostr(ostr),
+	  offset(7),
+	  v(0)
 	{
 	  p.col() = 0;
 	  p.row() = 0;
-	  offset = 7;
 	}
 
 	std::ostream& ostr;

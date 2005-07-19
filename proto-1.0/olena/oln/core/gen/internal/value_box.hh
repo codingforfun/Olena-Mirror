@@ -350,14 +350,42 @@ namespace oln {
 | Comparison operators.  |
 `-----------------------*/
 
+// Helper used in the resolution of right operand of a comparison
+// operator having a value_box as left operand.
+// FIXME: To be replaced by the oln::utils::overload mechanism.
+namespace oln
+{
+
+  template <typename T>
+  struct overloaded_cmp_op_operand
+  {
+    static T value(const T& t)
+    {
+      return t;
+    }
+  };
+
+  template <typename I>
+  struct overloaded_cmp_op_operand<oln::value_box<I> >
+  {
+    static typename oln::value_box<I>::value_type
+    value(const oln::value_box<I>& vb)
+    {
+      return vb.value();
+    }    
+  };
+
+} // end of namespace oln
+
 // oln::value_box<I> and whatever.
-# define oln_decl_comp_binop_vb_whatever(OpSymbol)	\
-   template <typename I, typename V>			\
-   bool							\
-   operator OpSymbol (const oln::value_box<I>& lhs,	\
-		      const V& rhs)			\
-   {							\
-     return lhs.value() OpSymbol rhs;			\
+# define oln_decl_comp_binop_vb_whatever(OpSymbol)			   \
+   template <typename I, typename V>					   \
+   bool									   \
+   operator OpSymbol (const oln::value_box<I>& lhs,			   \
+		      const V& rhs)					   \
+   {									   \
+     return								   \
+       lhs.value() OpSymbol oln::overloaded_cmp_op_operand<V>::value(rhs); \
    }
 
 // ntg::value<V> and oln::value_box<I>.
@@ -400,7 +428,7 @@ namespace oln
 
 // Helper used in the resolution of right operand of an arithmetical
 // operator having a value_box as left operand.
-// FIXME: To be replaced by the upcoming oln::utils::overload mechanism.
+// FIXME: To be replaced by the oln::utils::overload mechanism.
 namespace oln
 {
 
@@ -408,7 +436,7 @@ namespace oln
   struct overloaded_arith_op_operand
   {
     typedef T ret;
-    static ret value (const T& t)
+    static ret value(const T& t)
     {
       return t;
     }
@@ -418,10 +446,10 @@ namespace oln
   struct overloaded_arith_op_operand<oln::value_box<I> >
   {
     typedef typename oln::value_box<I>::value_type ret;
-    static ret value (const oln::value_box<I>& vb)
+    static ret value(const oln::value_box<I>& vb)
     {
       return vb.value();
-    }    
+    }
   };
 
 } // end of namespace oln

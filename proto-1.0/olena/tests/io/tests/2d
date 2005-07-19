@@ -29,6 +29,8 @@
 
 #include "loadsave.hh"
 
+#include <oln/core/2d/image2d.hh>
+
 bool
 check(void)
 {

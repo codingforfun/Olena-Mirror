@@ -30,7 +30,6 @@
 
 # include <oln/core/typedefs.hh>
 
-
 # define oln_type_of_(ImageType, Alias) \
 mlc_type_of_(oln, oln::category::image, ImageType, Alias)
 
@@ -42,6 +41,9 @@ mlc_type_of(oln, oln::category::image, ImageType, Alias)
 
 namespace oln {
 
+  // fwd decl
+  template <typename I>
+  class value_box;
 
   // fwd decls
   namespace abstract

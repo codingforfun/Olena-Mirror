@@ -28,6 +28,7 @@
 #ifndef OLENA_LEVEL_INVERT_HH
 # define OLENA_LEVEL_INVERT_HH
 
+# include <oln/utils/record.hh>
 # include <oln/funobj/invert.hh>
 
 namespace oln

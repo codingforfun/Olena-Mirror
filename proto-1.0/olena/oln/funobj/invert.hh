@@ -32,6 +32,8 @@
 
 # include <ntg/all.hh>
 
+# include <oln/core/gen/internal/value_box.hh>
+
 namespace oln {
 
   namespace funobj {

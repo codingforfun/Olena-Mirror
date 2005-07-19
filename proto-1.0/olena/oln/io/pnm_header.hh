@@ -28,6 +28,9 @@
 #ifndef OLN_IO_PNM_HEADER_HH
 # define OLN_IO_PNM_HEADER_HH
 
+# include <iostream>
+# include <string>
+
 namespace oln {
 
 

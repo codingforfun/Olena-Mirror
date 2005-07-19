@@ -297,7 +297,13 @@ namespace oln {
 
       };
 
-      ///Define an interface for compressed file stream manipulation.
+      // Forward declarations.
+      class zifstream;
+      class zofstream;
+      zofstream& setcompressionlevel(zofstream&, int);
+      zofstream& setcompressionstrategy(zofstream&, int);
+
+      /// Define an interface for compressed file stream manipulation.
       class zfilestream_common : virtual public std::ios
       {
 	friend class zifstream;

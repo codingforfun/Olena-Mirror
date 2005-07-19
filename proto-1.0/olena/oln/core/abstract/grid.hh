@@ -35,6 +35,8 @@
 # define oln_grd_type_of(GridType, Alias) \
 mlc_type_of(oln, oln::category::grid, GridType, Alias)
 
+# define oln_grd_type_of_(GridType, Alias) \
+mlc_type_of_(oln, oln::category::grid, GridType, Alias)
 
 
 namespace oln {

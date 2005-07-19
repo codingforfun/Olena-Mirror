@@ -1,3 +1,32 @@
+2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix PBM (binary) image reading.
+
+	* oln/core/abstract/grid.hh (oln_grd_type_of_): New macro.
+	* oln/io/pnm_bin (read_bin<oln::grid2d>::size_type)
+	(read_bin<oln::grid2d>::point_type)
+	(write_bin<oln::grid2d>::size_type)
+	(write_bin<oln::grid2d>::point_type): Define these typedefs using
+	oln_grd_type_of_.
+	(read_bin<oln::grid2d>::read_bin): Initialize v to 0.
+	(write_bin<oln::grid2d>::write_bin): Initialize offset and v.
+
+
+	Fix io/2d test.
+
+	* oln/io/pnm_header.hh (iostream, string): Include these files.
+	* oln/io/pnm_bin.hh, oln/io/pnm_real.hh, oln/io/pnm_vect.hh
+	(oln/core/2d/point2d.hh, oln/core/2d/size2d.hh): Likewise.
+	* oln/funobj/invert.hh (oln/core/gen/internal/value_box.hh):
+	Likewise.
+	* oln/core/abstract/image.hh: Add forward declaration of
+	oln::value_box.
+	* oln/core/gen/internal/value_box.hh
+	(oln/overloaded_cmp_op_operand): New helper.
+	(oln_decl_comp_binop_vb_whatever): Use it.
+	* oln/io/gz_stream.hh: Add forward declarations to please G++ 4.0.
+	* tests/io/tests/2d (oln/core/2d/image2d.hh): Include this file.
+
 2005-07-12  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/io/pnm_bin.hh: New. I/O functions for writing and reading a
