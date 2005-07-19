@@ -1,5 +1,18 @@
 2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix some Olena tests.
+
+	* tests/core/tests/setget
+	(oln::set_props<category::image, dummy_image>::image_rawness_type):
+	New typedef.
+	* tests/morpho/tests/elementary_dilation,
+	* tests/morpho/tests/elementary_erosion,
+	* tests/morpho/tests/dilation, tests/morpho/tests/erosion,
+	* tests/morpho/tests/closing, tests/morpho/tests/opening:
+	* tests/morpho/tests/hit_or_miss_closing: Update MD5 sums.
+
+2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix elementary dilation.
 
 	* oln/morpho/elementary_dilation.hh

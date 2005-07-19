@@ -17,6 +17,7 @@ namespace oln {
   {
     typedef mlc::no_type grid_type;
     typedef mlc::no_type concrete_type;
+    typedef mlc::no_type image_rawness_type;
     typedef mlc::no_type image_dimension_type;
 
     typedef int size_type;
