@@ -66,7 +66,7 @@ namespace oln {
 
         oln_type_of(I, piter) p(input.size());
         for_all_p (p)
-	  output[p] = local_and_value(input, p);
+	  output[p] = local_or_value(input, p);
 
 	exiting("->generic_on_set");
 	return output;
@@ -89,7 +89,7 @@ namespace oln {
 
         oln_type_of(I, piter) p(input.size());
         for_all_p (p)
-	  output[p] = local_inf_value(input, p);
+	  output[p] = local_sup_value(input, p);
 
 	exiting("->generic_on_function");
 	return output;

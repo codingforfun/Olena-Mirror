@@ -1,5 +1,14 @@
 2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix elementary dilation.
+
+	* oln/morpho/elementary_dilation.hh
+	(elementary_dilation_(const abstract::binary_image<I>&))
+	(elementary_dilation_(const abstract::not_binary_image<I>&)): Fix
+	elementary dilation definition.
+
+2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix PBM (binary) image reading and writing (cont.).
 
 	* oln/io/pnm_bin.hh (read_bin<oln::grid2d>::impl_read_value)
