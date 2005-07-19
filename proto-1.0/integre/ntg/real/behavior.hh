@@ -87,28 +87,23 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus (T1 lhs, T2 rhs)
-      {	return lhs + rhs; }
+      check_plus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_minus (T1 lhs, T2 rhs)
-      {	return lhs - rhs; }
+      check_minus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_times (T1 lhs, T2 rhs)
-      {	return lhs * rhs; }
+      check_times (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_div (T1 lhs, T2 rhs)
-      {	return lhs / rhs; }
+      check_div (T1 lhs, T2 rhs);
 
       template <class P>
       static storage_type
-      check (const P& p)
-      { return storage_type(p); }
+      check (const P& p);
     };
 
     static std::string
@@ -144,28 +139,23 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus (T1 lhs, T2 rhs)
-      {	return cast::force<T>(lhs + rhs); }
+      check_plus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_minus (T1 lhs, T2 rhs)
-      {	return cast::force<T>(lhs - rhs); }
+      check_minus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_times (T1 lhs, T2 rhs)
-      {	return cast::force<T>(lhs * rhs); }
+      check_times (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_div (T1 lhs, T2 rhs)
-      {	return cast::force<T>(lhs / rhs); }
+      check_div (T1 lhs, T2 rhs);
 
       template <class P>
       static storage_type
-      check (const P& p)
-      { return cast::force<T>(p); }
+      check (const P& p);
     };
 
     static std::string
@@ -194,53 +184,24 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus (T1 lhs, T2 rhs)
-      {
-	T ret = lhs + rhs;
-	if (rhs > 0)
-	  ntg_assert(ntg_cast(ret) > lhs);
-	else
-	  ntg_assert(ntg_cast(ret) <= lhs);
-	return ret;
-      }
+      check_plus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_minus (T1 lhs, T2 rhs)
-      {
-	T ret = lhs - rhs;
-	if (rhs > 0)
-	  ntg_assert(ntg_cast(ret) < lhs);
-	else
-	  ntg_assert(ntg_cast(ret) >= lhs);
-	return ret;
-      }
+      check_minus (T1 lhs, T2 rhs);
 
       // FIXME: this check is very slow! Find another solution.
       template <class T1, class T2>
       static T
-      check_times (T1 lhs, T2 rhs)
-      {
-	T ret = lhs * rhs;
-	if (rhs != 0)
-	  ntg_assert((ret / rhs) == lhs);
-	return ret;
-      }
+      check_times (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_div (T1 lhs, T2 rhs)
-      {	return lhs / rhs; }
+      check_div (T1 lhs, T2 rhs);
 
       template <class P>
       static storage_type
-      check (const P& p)
-      {
-	ntg_assert(ntg_cast(p) <= ntg_max_val(T));
-	ntg_assert(ntg_cast(p) >= ntg_min_val(T));
-
-	return static_cast<storage_type>(p);
-      }
+      check (const P& p);
     };
 
     static std::string
@@ -261,68 +222,24 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus (T1 lhs, T2 rhs)
-      {
-	T ret = lhs + rhs;
-	if (rhs > 0)
-	  {
-	    if (ntg_cast(ret) <= lhs)
-	      ret = ntg_max_val(T);
-	  }
-	else if (ntg_cast(ret) > lhs)
-	  ret = ntg_min_val(T);
-	return ret;
-      }
+      check_plus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_minus (T1 lhs, T2 rhs)
-      {
-	T ret = lhs - rhs;
-	if (rhs > 0)
-	  {
-	    if (ntg_cast(ret) > lhs)
-	      ret = ntg_min_val(T);
-	  }
-	else if (rhs != 0 && ntg_cast(ret) <= lhs)
-	  ret = ntg_max_val(T);
-	return ret;
-      }
+      check_minus (T1 lhs, T2 rhs);
 
       // FIXME: this check is very slow ! find another solution ...
       template <class T1, class T2>
       static T
-      check_times (T1 lhs, T2 rhs)
-      {
-	T ret = lhs * rhs;
-	if ((ret / rhs) != lhs)
-	  {
-	    // if lhs and rhs signs are equal, we wanted to grow
-	    if ((lhs > 0 && rhs > 0) || (-lhs > 0 && -rhs > 0))
-	      ret = ntg_max_val(T);
-	    else
-	      ret = ntg_min_val(T);
-	  }
-	return ret;
-      }
+      check_times (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
       static T
-      check_div (T1 lhs, T2 rhs)
-      {	return lhs / rhs; }
+      check_div (T1 lhs, T2 rhs);
 
       template <class P>
       static storage_type
-      check (const P& p)
-      {
-	if (ntg_cast(p) > ntg_max_val(T))
-	  return ntg_max_val(T);
-
-	if (ntg_cast(p) < ntg_min_val(T))
-	  return ntg_min_val(T);
-
-	return static_cast<storage_type>(p);
-      }
+      check (const P& p);
     };
 
     static std::string
@@ -350,65 +267,33 @@ namespace ntg
       // FIXME: calculate real values!
 
       template <class T1, class T2>
-      static T check_plus (T1 lhs, T2 rhs)
-      {	return lhs + rhs; }
+      static T check_plus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
-      static T check_minus (T1 lhs, T2 rhs)
-      {	return lhs - rhs; }
+      static T check_minus (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
-      static T check_times (T1 lhs, T2 rhs)
-      {	return lhs * rhs; }
+      static T check_times (T1 lhs, T2 rhs);
 
       template <class T1, class T2>
-      static T check_div (T1 lhs, T2 rhs)
-      {	return lhs / rhs; }
+      static T check_div (T1 lhs, T2 rhs);
 
       // float modulus
-      struct cycle_fmod
-      {
-	static double
-	exec(double lhs, double rhs)
-	{ return fmod(lhs, rhs); }
-      };
+      struct cycle_fmod;
 
       // integer modulus
-      struct cycle_mod
-      {
-	template <class T1, class T2>
-	static T1
-	exec(const T1& lhs, const T2& rhs)
-	{ return lhs % rhs; }
-      };
+      struct cycle_mod;
 
       // FIXME: optimize!
       template <class P>
       static storage_type
-      check (const P& rhs)
-      {
-	typedef typename mlc::if_< ntg_is_a(P, decimal),
-	  cycle_fmod,
-	  cycle_mod>::ret cycle_op;
-
-	ntg_type(P) tmp = cycle_op::exec(std::abs(ntg_signed_cast(rhs)),
-					 ntg_max_val(T) - ntg_min_val(T));
-
-	if (to_ntg(rhs) < 0)
-	  tmp = -tmp;
-
-	if (tmp < ntg_min_val(T))
-	  return ntg_max_val(T) - ntg_min_val(T) + tmp;
-	else if (tmp >= ntg_max_val(T))
-	  return ntg_min_val(T) - ntg_max_val(T) + tmp;
-
-	return tmp;
-      }
+      check (const P& rhs);
     };
 
     static std::string
     name() { return "cycle_behavior"; }
   };
+
 
   namespace internal {
 

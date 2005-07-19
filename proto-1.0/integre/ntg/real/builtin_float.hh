@@ -424,4 +424,6 @@ namespace ntg {
 
 } // end of ntg.
 
+# include <ntg/real/behavior2.hh>
+
 #endif // !NTG_REAL_BUILTIN_FLOAT_HH

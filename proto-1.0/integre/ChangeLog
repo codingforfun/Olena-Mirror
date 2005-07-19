@@ -1,3 +1,14 @@
+2005-07-19  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Force ntg to use its proper operators when a third part also
+	defines similar operators.
+	
+	* ntg/real/behavior.hh (get<T>): Move method impls to...
+	* ntg/real/behavior2.hh: ...this new file.
+	* ntg/makefile.src: Update.
+	* ntg/real/optraits_builtin_int.hh: Include new file.
+	* ntg/real/builtin_float.hh: Likewise.
+
 2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add (some) missing traits in color.

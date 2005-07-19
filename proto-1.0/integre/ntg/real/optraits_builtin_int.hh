@@ -89,4 +89,6 @@ namespace ntg {
 
 } // end of ntg.
 
+# include <ntg/real/behavior2.hh>
+
 #endif // !NTG_REAL_OPTRAITS_BUILTIN_INT_HH
