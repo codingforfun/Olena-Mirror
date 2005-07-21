@@ -1,4 +1,4 @@
-# -*- Makefile -*-
+## -*- Makefile -*-
 
 AM_CXXFLAGS =					\
   $(CXXFLAGS_DEBUG) 				\

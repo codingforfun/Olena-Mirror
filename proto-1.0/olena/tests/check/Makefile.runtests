@@ -1,3 +1,4 @@
+## -*- Makefile -*-
 include ../check/Makefile.flags
 
 EXTRA_DIST = tests
@@ -15,7 +16,7 @@ check-runtests:
 	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
 	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
 	LDADD="$(LDADD_RUNTESTS)" \
-	  $(SHELL) $(top_srcdir)/contrib/runtests
+	  $(SHELL) $(top_srcdir)/contrib/runtests $(TESTS)
 
 distclean-runtests:
 	rm -rf runs

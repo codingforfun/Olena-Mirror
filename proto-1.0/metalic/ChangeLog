@@ -1,3 +1,8 @@
+2005-07-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/check/Makefile.runtests (check-runtests): Pass $(TEST) as
+	argument to contrib/runtest.
+
 2005-04-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/cmp.hh (mlc_eq, mlc_neq): Remove parenthesis.
