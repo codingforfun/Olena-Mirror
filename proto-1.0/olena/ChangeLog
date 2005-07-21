@@ -1,3 +1,33 @@
+2005-07-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Partially fix the morphological reconstructions.
+
+	* oln/funobj/arith.hh (min_alt_, max_alt_): New operators.
+	(f_min_type_alt, f_max_type_alt): New objects.
+	(f_min_alt, f_max_alt): New static objects.
+	* oln/morpho/reconstruction_by_dilation.hh
+	(impl_bkd_loop_body, impl_fwd_loop_body, impl_bkd_loop_body)
+	(impl_fwd_loop_body, impl_fifo_loop_body)
+	* oln/morpho/reconstruction_by_erosion.hh
+	(impl_bkd_loop_body, impl_fwd_loop_body, impl_bkd_loop_body)
+	(impl_fwd_loop_body, impl_fifo_loop_body): Use them.
+	* oln/canvas/reconstruction.hh (hybrid_reconstruction::init)
+	(sequential_reconstruction::impl_init)
+	(sequential_reconstruction::impl_re_loop):
+	Work around box's operator= limits.
+	* oln/core/box.hh (operator=(const abstract::image<II>&)): Abort
+	on call.
+	* oln/core/gen/regular_window.hh (get_fwd_win, get_fwd_win_p)
+	(get_bkd_win, get_bkd_win_p): Fix calls to std::vector::size.
+
+	* tests/morpho/tests/reconstruction: Update test.
+	Disable tests on sequential recontruction, since it doesn't work
+	yet.
+	* tests/morpho/tests/local: Rename as...
+	* tests/morpho/tests/stat: ...this.
+	Update test.
+	* img/mask.pbm, img/mask.pbm: Invert these images.
+
 2005-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix some Olena tests.

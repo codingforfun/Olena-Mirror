@@ -165,6 +165,70 @@ namespace oln
   typedef f_::binary1_meta<f_::max_> f_max_type;
   static f_max_type f_max;
 
+
+
+
+  /*--------------------------------------------------------------.
+  | Min and max operators allowing arguments of different types.  |
+  `--------------------------------------------------------------*/
+
+  namespace f_ {
+    template <typename L, typename R> struct min_alt_;
+    template <typename L, typename R> struct max_alt_;
+  } // end of namespace oln::f_
+
+  template <typename L, typename R>
+  struct set_super_type < f_::min_alt_<L, R> > { typedef f_::abstract::binary< f_::min_alt_<L, R> > ret; };
+
+  template <typename L, typename R>
+  struct set_super_type < f_::max_alt_<L, R> > { typedef f_::abstract::binary< f_::max_alt_<L, R> > ret; };
+
+  template <typename L, typename R>
+  struct set_props < category::fun2, f_::min_alt_<L, R> >
+  {
+    typedef L res_type;
+    typedef L left_type;
+    typedef R right_type;
+  };
+
+  template <typename L, typename R>
+  struct set_props < category::fun2, f_::max_alt_<L, R> >
+  {
+    typedef L res_type;
+    typedef L left_type;
+    typedef R right_type;
+  };
+
+
+  namespace f_
+  {
+
+    template <typename L, typename R>
+    struct min_alt_ : public oln_super2_of_(f_::min_alt_<L, R>)
+    {
+      const L impl_binop(const L& left, const R& right) const
+	{
+	  return left < right ? left : L (right);
+	}
+    };
+
+    template <typename L, typename R>
+    struct max_alt_ : public oln_super2_of_(f_::max_alt_<L, R>)
+    {
+      const L impl_binop(const L& left, const R& right) const
+	{
+	  return right < left ? left : L (right);
+	}
+    };
+
+  } // end of namespace oln::f_
+
+  typedef f_::binary_meta<f_::min_alt_> f_min_type_alt;
+  static f_min_type_alt f_min_alt;
+
+  typedef f_::binary_meta<f_::max_alt_> f_max_type_alt;
+  static f_max_type_alt f_max_alt;
+
 } // end of namespace oln
 
 

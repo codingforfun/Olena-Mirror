@@ -86,10 +86,13 @@ namespace oln {
 
       void init()
       {
-	output_type tmp(marker.size());
-
-	output = tmp;
-	work = clone(marker);
+	output_type output_tmp(marker.size());
+	output = output_tmp;
+	// FIXME: We can't use `work = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type work_tmp(clone(marker));
+	work = work_tmp;
 
 	win_plus = marker.nbh_get().get_win().get_fwd_win_p();
 	win_minus = marker.nbh_get().get_win().get_bkd_win_p();
@@ -175,11 +178,20 @@ namespace oln {
       typedef back_and_forth_until_convergence<I1, E> super_type;
       typedef oln_type_of(I1, neighb) nbh_type;
       typedef oln_nbh_type_of(nbh_type, window) window_type;
+      typedef oln_type_of(I1, concrete) output_type;
 
       void impl_init()
       {
-	output = clone(marker);
-	work = clone(marker);
+	// FIXME: We can't use `output = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type output_tmp(clone(marker));
+	output = output_tmp;
+	// FIXME: We can't use `work = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type work_tmp(clone(marker));
+	work = work_tmp;
 
 	win_plus = marker.nbh_get().get_win().get_fwd_win_p();
 	win_minus = marker.nbh_get().get_win().get_bkd_win_p();
@@ -192,7 +204,11 @@ namespace oln {
 
       void impl_re_loop()
       {
-	work = clone(output);
+	// FIXME: We can't use `output = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type work_tmp(clone(marker));
+	work = work_tmp;
       }
 
       oln_type_of(I1, concrete) get_output()

@@ -137,7 +137,7 @@ namespace oln {
       {
 	E out;
 
-	for (unsigned i = 0; i < this->dp_.card(); ++i)
+	for (unsigned i = 0; i < this->dp_.size(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -159,7 +159,7 @@ namespace oln {
 	E out;
 
 
-	for (unsigned i = 0; i < this->dp_.card(); ++i)
+	for (unsigned i = 0; i < this->dp_.size(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -186,7 +186,7 @@ namespace oln {
       {
 	E out;
 
-	for (unsigned i = 0; i < this->dp_.card(); ++i)
+	for (unsigned i = 0; i < this->dp_.size(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -207,7 +207,7 @@ namespace oln {
       {
 	E out;
 
-	for (unsigned i = 0; i < this->dp_.card(); ++i)
+	for (unsigned i = 0; i < this->dp_.size(); ++i)
 	  {
 	    const dpoint_type& dp = get_dp()[i];
 

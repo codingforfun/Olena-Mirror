@@ -30,6 +30,7 @@
 
 # include <oln/canvas/reconstruction.hh>
 # include <oln/morpho/tags.hh>
+# include <oln/funobj/arith.hh>
 
 namespace oln {
 
@@ -63,16 +64,18 @@ namespace oln {
 
 	void impl_bkd_loop_body()
 	{
-
-	  //FIXME: Shouldn't be .value()
-	  output[bkd_p] = ntg::min(local_max(output, bkd_p, win_minus),
-				   mask[bkd_p].value());
+	  // FIXME: The call to value_box<>::value is needed to have
+	  // f_min_alt compile.  Try to get rid of it.
+	  output[bkd_p] = f_min_alt(mask[bkd_p].value(),
+				    local_max(output, bkd_p, win_minus));
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  output[fwd_p] = ntg::min(local_max(output, fwd_p, win_plus),
-				   mask[fwd_p].value());
+	  // FIXME: The call to value_box<>::value is needed to have
+	  // f_min_alt compile.  Try to get rid of it.
+	  output[fwd_p] = f_min_alt(mask[fwd_p].value(),
+				    local_max(output, fwd_p, win_plus));
 	}
 
 	// FIXME: unused...
@@ -118,21 +121,27 @@ namespace oln {
 
 	void impl_bkd_loop_body()
 	{
-	  output[bkd_p] = min(local_max(work, bkd_p, win_minus),
-			      mask[bkd_p].value());
+	  // FIXME: The call to value_box<>::value is needed to have
+	  // f_min_alt compile.  Try to get rid of it.
+	  output[bkd_p] = f_min_alt(mask[bkd_p].value(),
+				    local_max(work, bkd_p, win_minus));
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  output[fwd_p] = min(local_max(work, fwd_p, win_plus),
-			      mask[fwd_p].value());
+	  // FIXME: The call to value_box<>::value is needed to have
+	  // f_min_alt compile.  Try to get rid of it.
+	  output[fwd_p] = f_min_alt(mask[fwd_p].value(),
+				    local_max(work, fwd_p, win_plus));
 	}
 
 	void impl_fifo_loop_body()
 	{
 	  if ((output[q] < output[p]) && (mask[q] != output[q]))
 	    {
-	      output[q] = min(output[p].value(), mask[q].value());
+	      // FIXME: The calls to value_box<>::value are needed to
+	      // have f_min_alt compile.  Try to get rid of it.
+	      output[q] = f_min_alt(output[p].value(), mask[q].value());
 	      fifo.push(q);
 	    }
 	}

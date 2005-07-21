@@ -29,6 +29,8 @@
 #ifndef OLENA_CORE_BOX_HH
 # define OLENA_CORE_BOX_HH
 
+# include <cstdlib>
+
 # include <mlc/bool.hh>
 # include <oln/core/abstract/image_entry.hh>
 
@@ -132,7 +134,8 @@ namespace oln {
     void operator=(const abstract::image<II>& rhs)
     {
       // FIXME: Does not work with g++-3.4.
-//       mlc::false_type::ensure();
+      //       mlc::false_type::ensure();
+      abort();
     }
 
     // FIXME: add versions for I2 (neq I) to produce explicit errors
