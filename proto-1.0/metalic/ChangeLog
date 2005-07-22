@@ -1,3 +1,13 @@
+2005-07-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Prepare overloading mechanism and introduction of function
+	objects in mlc.
+	
+	* mlc/fcmp.hh: New file.
+	* mlc/afun.hh: New file.
+	* mlc/overload.hh: New file.
+	* mlc/traits.hh: Remove dead contents.
+
 2005-07-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests (check-runtests): Pass $(TEST) as

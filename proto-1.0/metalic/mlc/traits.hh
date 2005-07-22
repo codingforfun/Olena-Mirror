@@ -29,19 +29,8 @@
 # define METALIC_TRAITS_HH
 
 
-
-namespace mlc {
-
-  template <typename T>
-  struct traits
-  {
-  };
-
-} // end of namespace mlc
-
-
-# define mlc_encoding_type(T) typename mlc::traits<T>::encoding_type
-# define mlc_encoding_type_(T) mlc::traits<T>::encoding_type
+// FIXME: this file contents seemed useless so it has been removed!
+// FIXME: remove also this file?
 
 
 
