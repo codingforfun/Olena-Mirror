@@ -30,7 +30,7 @@
 
 # include <oln/morpho/reconstruction_by_dilation.hh>
 # include <oln/morpho/reconstruction_by_erosion.hh>
-# include <oln/morpho/reconstruction_selfdual.hh>
+// # include <oln/morpho/reconstruction_selfdual.hh>
 
 namespace oln {
 
@@ -49,7 +49,9 @@ namespace oln {
       {
 	reconstruction<I1, I2, A, Op> tmp(marker, mask);
 	// tmp.entering(); FIXME: something like that ?
+
 	tmp.run();
+
 	// tmp.exiting(); FIXME: something like that ?
 	return tmp.get_output();
       }
@@ -81,16 +83,16 @@ namespace oln {
 
     // self dual
 
-    template <typename I1, typename I2>
-    oln_type_of(I1, concrete)
-    reconstruction_selfdual(const abstract::image_with_nbh<I1>& marker,
-			    const abstract::image<I2>&		 mask)
-    {
-      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
-      precondition(marker.size() == mask.size());
+//     template <typename I1, typename I2>
+//     oln_type_of(I1, concrete)
+//     reconstruction_selfdual(const abstract::image_with_nbh<I1>& marker,
+// 			    const abstract::image<I2>&		 mask)
+//     {
+//       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+//       precondition(marker.size() == mask.size());
 
-      return reconstruction(marker, mask, tag::selfdual(), tag::none());
-    }
+//       return reconstruction(marker, mask, tag::selfdual(), tag::none());
+//     }
 
     // by dilation
 

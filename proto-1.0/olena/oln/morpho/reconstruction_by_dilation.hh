@@ -30,6 +30,7 @@
 
 # include <oln/canvas/reconstruction.hh>
 # include <oln/morpho/tags.hh>
+# include <oln/morpho/local.hh>
 # include <oln/funobj/arith.hh>
 
 namespace oln {
@@ -38,47 +39,74 @@ namespace oln {
 
     namespace impl {
 
-      // Sequential version
-      template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
-	: public canvas::sequential_reconstruction<I1, I2,
-	    reconstruction<I1, I2, tag::sequential_type, tag::by_dilation_type> >
-      {
-	typedef reconstruction<I1, I2, tag::sequential_type,
-			       tag::by_dilation_type> self_type;
-	typedef canvas::sequential_reconstruction<I1, I2, self_type> super_type;
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+      template <typename I1, typename I2, typename A, typename E>
+      struct reconstruction_by_dilation
+	: public canvas::reconstruction<I1, I2, A, E>
+      {
+	typedef canvas::reconstruction<I1, I2, A, E> super_type;
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::output;
+	using super_type::bkd_p;
+	using super_type::fwd_p;
+	using super_type::n;
+	using super_type::p;
+
+
+	reconstruction_by_dilation(const abstract::image_with_nbh<I1>& marker,
+				  const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
 
-	using super_type::marker;
-	using super_type::mask;
-	using super_type::output;
-	using super_type::fwd_p;
-	using super_type::bkd_p;
-	using super_type::win_plus;
-	using super_type::win_minus;
+
+	/// Local image "or-value" for dilation on sets
+	/// (based on the point and its backward neighborhood).
+
+	oln_type_of(I1, value) bkd_or()
+	{
+	  if (output[bkd_p])
+	    return true;
+	  p = bkd_p;
+	  for_all_n_of_p(n, p)
+	    if (p.bkd_less(n) and output.hold(n) and output[n])
+	      return true;
+
+	  return false;
+	}
+
+
+	/// Local image "or-value" for dilation on sets
+	/// (based on the point and its forward neighborhood).
+
+	oln_type_of(I1, value) fwd_or()
+	{
+	  if (output[fwd_p])
+	    return true;
+	  p = fwd_p;
+	  for_all_n_of_p(n, p)
+	    if (p.fwd_less(n) and output.hold(n) and output[n])
+	      return true;
+
+	  return false;
+	}
 
 	void impl_bkd_loop_body()
 	{
 	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_min_alt compile.  Try to get rid of it.
-	  output[bkd_p] = f_min_alt(mask[bkd_p].value(),
-				    local_max(output, bkd_p, win_minus));
+	  // f_max_alt compile.  Try to get rid of it.
+	  output[bkd_p] = f_min_alt(mask[bkd_p].value(), bkd_or());
 	}
 
 	void impl_fwd_loop_body()
 	{
 	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_min_alt compile.  Try to get rid of it.
-	  output[fwd_p] = f_min_alt(mask[fwd_p].value(),
-				    local_max(output, fwd_p, win_plus));
+	  // f_max_alt compile.  Try to get rid of it.
+	  output[fwd_p] = f_min_alt(mask[fwd_p].value(), fwd_or());
 	}
 
-	// FIXME: unused...
 	void impl_preconditions()
 	{
 	  precondition(level::is_greater_or_equal(mask, marker));
@@ -86,30 +114,38 @@ namespace oln {
 
       };
 
+      // Sequential version
+
+      template<typename I1, typename I2>
+      struct reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
+	: public reconstruction_by_dilation<I1, I2, tag::sequential_type,
+					   reconstruction<I1, I2, tag::sequential_type,
+							  tag::by_dilation_type> >
+      {
+	typedef reconstruction<I1, I2, tag::sequential_type,
+			       tag::by_dilation_type> self_type;
+	typedef reconstruction_by_dilation<I1, I2, tag::sequential_type,
+					  self_type> super_type;
+
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	}
+      };
+
 
       // Hybrid version
 
       template<typename I1, typename I2>
       struct reconstruction <I1, I2, tag::hybrid_type, tag::by_dilation_type>
-	: public canvas::hybrid_reconstruction<I1, I2,
-	    reconstruction<I1, I2,  tag::hybrid_type, tag::by_dilation_type> >
+	: public reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+	    reconstruction<I1, I2, tag::hybrid_type, tag::by_dilation_type> >
       {
 	typedef reconstruction<I1, I2, tag::hybrid_type,
 			       tag::by_dilation_type> self_type;
-	typedef canvas::hybrid_reconstruction<I1, I2,
-					      self_type> super_type;
-
-	using super_type::mask;
-	using super_type::marker;
-	using super_type::work;
-	using super_type::output;
-	using super_type::fwd_p;
-	using super_type::bkd_p;
-	using super_type::win_plus;
-	using super_type::win_minus;
-	using super_type::p;
-	using super_type::q;
-	using super_type::fifo;
+	typedef reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+					  self_type> super_type;
 
 	reconstruction(const abstract::image_with_nbh<I1>& marker,
 		       const abstract::image<I2>& mask) :
@@ -117,44 +153,28 @@ namespace oln {
 	{
 	}
 
+	using super_type::mask;
+	using super_type::output;
+	using super_type::bkd_p;
+	using super_type::n;
+	using super_type::p;
+	using super_type::fifo;
 
-
-	void impl_bkd_loop_body()
-	{
-	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_min_alt compile.  Try to get rid of it.
-	  output[bkd_p] = f_min_alt(mask[bkd_p].value(),
-				    local_max(work, bkd_p, win_minus));
-	}
-
-	void impl_fwd_loop_body()
-	{
-	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_min_alt compile.  Try to get rid of it.
-	  output[fwd_p] = f_min_alt(mask[fwd_p].value(),
-				    local_max(work, fwd_p, win_plus));
-	}
 
 	void impl_fifo_loop_body()
 	{
-	  if ((output[q] < output[p]) && (mask[q] != output[q]))
+	  if ((output[n] < output[p]) and (mask[n] != output[n]))
 	    {
 	      // FIXME: The calls to value_box<>::value are needed to
 	      // have f_min_alt compile.  Try to get rid of it.
-	      output[q] = f_min_alt(output[p].value(), mask[q].value());
-	      fifo.push(q);
+	      output[n] = f_max_alt(output[p].value(), mask[n].value());
+	      fifo.push(n);
 	    }
 	}
 
-	bool impl_exist_init()
+	bool impl_test_fifo_push()
 	{
-	  return output.hold(q) && (output[q] < output[bkd_p]) &&
-	    (output[q] < mask[q]);
-	}
-
-	void impl_preconditions()
-	{
-	  precondition(level::is_greater_or_equal(mask, marker));
+	  return output[n] < output[bkd_p] and output[n] < mask[n];
 	}
 
       };

@@ -1,3 +1,17 @@
+2005-07-22  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/reconstruction: Re-enable reconstruction tests.
+	* oln/core/abstract/point.hh: Fix omitted parenthesis.
+	* oln/morpho/reconstruction_canvas.inctrash: Remove.
+	* oln/morpho/reconstruction.trash: Remove.
+	* oln/morpho/reconstruction_by_dilation.hh: Replace windows by
+	neighborhoods.
+	* oln/canvas/reconstruction.hh: Likewise.
+	* oln/morpho/reconstruction_by_erosion.hh: Likewise.
+	* oln/morpho/reconstruction.hh: Disable self-dual reconstruction for
+	now.
+	* oln/morpho/reconstruction_selfdual.hh: Add a reminder.
+
 2005-07-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests (check-runtests): Pass $(TEST) as
