@@ -35,6 +35,12 @@
 
 
 
+// FIXME: most code here should move to metalic!
+
+// FIXME: some piece of code should move to oln/core?
+
+
+
 
 //   // Sample use:
 
@@ -75,17 +81,20 @@
 
 // fwd decls
 
-
 namespace ntg
 {
   template <typename E> struct value;
 
 } // end of namespace ntg
 
-
 namespace oln
 {
-  template <typename I> struct value_box;
+
+  namespace internal
+  {
+    template <typename I> struct value_box;
+
+  } // end of namespace oln::internal
 
   namespace abstract
   {
@@ -93,10 +102,21 @@ namespace oln
 
   } // end of namespace oln::abstract
 
+  namespace pw
+  {
+    namespace abstract
+    {
+      template <typename F> struct function;
+
+    } // end of namespace oln::pw::abstract
+
+  } // end of namespace oln::pw
+
 } // end of namespace oln
 
 
 // end of fwd decls
+
 
 
 
@@ -126,10 +146,31 @@ namespace oln
     typedef mlc::undefined_type ret;
   };
 
-  template <typename what_is_overloaded, typename where_clause_1, typename where_clause_2>
+  template <typename what_is_overloaded,
+	    typename where_clause_1, typename where_clause_2>
   struct set_overload_2
   {
     typedef mlc::undefined_type ret;
+  };
+
+
+  /// Make 'whatever' be the 'default' overload.
+
+  template <typename W, typename T1, typename T2>
+  struct set_overload_2 < W, where<T1,whatever>, where<T2,whatever> >
+  {
+    typedef mlc::undefined_type ret;
+  };
+
+  template <typename W,
+	    typename T1, template <class> class A1,
+	    typename T2, template <class> class A2>
+  struct set_overload_2     < W, where<T1,A1>,       where<T2,A2>       >
+    : public set_overload_2 < W, where<T1,whatever>, where<T2,whatever> >
+  {
+    typedef set_overload_2<W, where<T1,whatever>, where<T2,whatever> > super_type;
+    using super_type::ret;
+    using super_type::exec;
   };
 
 
@@ -145,17 +186,19 @@ namespace oln
       typedef typename
       mlc::if_< mlc_is_a(T, ntg::value),
 		where<T, ntg::value>, typename 
-		mlc::if_< mlc_is_a(T, abstract::image),
-			  where<T, abstract::image>, typename 
-			  mlc::if_< mlc_is_a(T, value_box),
-				    where<T, value_box>,
-				    where<T>
+		mlc::if_< mlc_is_a(T, oln::abstract::image),
+			  where<T, oln::abstract::image>, typename 
+			  mlc::if_< mlc_is_a(T, oln::internal::value_box),
+				    where<T, oln::internal::value_box>, typename 
+				    mlc::if_< mlc_is_a(T, oln::pw::abstract::function),
+					      where<T, oln::pw::abstract::function>,
+					      where<T>
+                                             >::ret
                                    >::ret
                          >::ret
               >::ret
       ret;
-    // FIXME: to be continued...
-  };
+    };
 
 
 
@@ -193,6 +236,192 @@ namespace oln
     }
     // FIXME: insert a static check that exec is defined in set_overload
   };
+
+} // end of namespace oln
+
+
+
+
+# include <ntg/core/internal/global_ops.hh>
+
+
+
+# define oln_decl_binary_op(OperatorName, OperatorSymbol)		\
+									\
+  template <typename T1, typename T2>					\
+  struct set_overload_2 < tag::op_##OperatorName,			\
+			  where<T1, whatever>,				\
+			  where<T2, whatever> >				\
+  {									\
+    typedef bool ret;							\
+    static ret exec(const T1& lhs, const T2& rhs)			\
+    {									\
+      return oln::internal::operator_##OperatorName(lhs, rhs);		\
+    }									\
+  };									\
+									\
+  template <typename T1, typename T2>					\
+  struct set_overload_2 < tag::op_##OperatorName,			\
+			  where<T1, ntg::value>,			\
+			  where<T2, whatever> >				\
+  {									\
+    typedef bool ret;							\
+    static ret exec(const T1& lhs, const T2& rhs)			\
+    {									\
+      return ntg::internal::operator OperatorSymbol (lhs, rhs);		\
+    }									\
+  };									\
+									\
+  template <typename T1, typename T2>					\
+  struct set_overload_2 < tag::op_##OperatorName,			\
+			  where<T1, whatever>,				\
+			  where<T2, ntg::value> >			\
+  {									\
+    typedef bool ret;							\
+    static ret exec(const T1& lhs, const T2& rhs)			\
+    {									\
+      return ntg::internal::operator OperatorSymbol (lhs, rhs);		\
+    }									\
+  };									\
+									\
+  template <typename T1, typename T2>					\
+  struct set_overload_2 < tag::op_##OperatorName,			\
+			  where<T1, ntg::value>,			\
+			  where<T2, ntg::value> >			\
+  {									\
+    typedef bool ret;							\
+    static ret exec(const T1& lhs, const T2& rhs)			\
+    {									\
+      return ntg::internal::operator OperatorSymbol (lhs, rhs);		\
+    }									\
+  };									\
+									\
+  template <typename T1, typename T2>					\
+  typename overload_2<tag::op_##OperatorName, T1, T2>::ret		\
+  operator OperatorSymbol (const T1& lhs, const T2& rhs)		\
+  {									\
+    return overload_2<tag::op_##OperatorName, T1, T2>::exec(lhs, rhs);	\
+  }									\
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+
+namespace oln
+{
+
+  /// Tags for operators.
+
+  namespace tag
+  {
+
+    // Cmp tags.
+
+    struct op_eq;
+    struct op_neq;
+    struct op_less;
+    struct op_leq;
+    struct op_greater;
+    struct op_geq;
+
+    // Logic tags.
+
+    struct op_not;
+    struct op_and;
+    struct op_nand;
+    struct op_or;
+    struct op_nor;
+    struct op_xor;
+    struct op_xnor;
+
+    // Arith tags.
+
+    struct op_plus;
+    struct op_minus;
+    struct op_uminus;
+    struct op_times;
+    struct op_div;
+    struct op_mod;
+  
+  } // end of namespace tag
+
+
+
+  // Cmp operators.
+
+
+  namespace internal
+  {
+
+    // Empty fwd decl for canonical cmp operators:
+    // operator_eq and operator_less.
+    // Both operands should exactly have the same type (T).
+
+    template <typename T>
+    bool operator_eq(const T&, const T&);
+
+    template <typename T>
+    bool operator_less(const T&, const T&);
+
+
+    // Default impl for oln::internal::operator_*'s.
+
+    // Warning: an important assumption of default impls is that
+    // the return type is bool.
+
+    // FIXME: should they call operator_* or the facade?
+    // e.g., should we replace "not operator_eq(lhs, rhs)" by
+    // "not (lhs == rhs)"?
+
+    template <typename T1, typename T2>
+    bool operator_neq(const T1& lhs, const T2& rhs)
+    {
+      // "lhs != rhs"  is  "not (lhs == rhs)"
+      return not oln::internal::operator_eq(lhs, rhs);
+    }
+
+    template <typename T1, typename T2>
+    bool operator_leq(const T1& lhs, const T2& rhs)
+    {
+      // "lhs <= rhs"  is  "not (rhs < lhs)"
+      return not oln::internal::operator_less(rhs, lhs);
+    }
+
+    template <typename T1, typename T2>
+    bool operator_greater(const T1& lhs, const T2& rhs)
+    {
+      // "lhs > rhs"  is  "rhs < lhs"
+      return oln::internal::operator_less(rhs, lhs);
+    }
+
+    template <typename T1, typename T2>
+    bool operator_geq(const T1& lhs, const T2& rhs)
+    {
+      // "lhs >= rhs"  is  "not (lhs < rhs)"
+      return not oln::internal::operator_less(lhs, rhs);
+    }
+
+  } // end of namespace oln::internal
+
+
+
+  // Section dedicated to ntg types
+  // ------------------------------
+  // When such a type is involved in an "oln::operator something(lhs, rhs)"
+  // call, the default behavior is to turn to ntg to solve this call.
+  // One could think that since we presently *are* in oln, FIXME
+  // 
+
+
+  oln_decl_binary_op(      eq, == );
+  oln_decl_binary_op(     neq, != );
+  oln_decl_binary_op(    less, <  );
+  oln_decl_binary_op(     leq, <= );
+  oln_decl_binary_op( greater, >  );
+  oln_decl_binary_op(     geq, >= );
+
+
 
 } // end of namespace oln
 

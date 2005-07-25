@@ -32,42 +32,6 @@
 # include <oln/core/pw/macros.hh>
 
 
-oln_pw_decl_binary(and, and);
-oln_pw_decl_binary(or,  or);
-oln_pw_decl_binary(xor, xor);
-
-// FIXME: not?
-
-
-# define oln_pw_decl_logic_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(and, and, LiteralType);	\
-oln_pw_decl_binary_with_lit(or,  or,  LiteralType);	\
-oln_pw_decl_binary_with_lit(xor, xor, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-
-namespace ntg {
-  struct bin;
-}
-
-oln_pw_decl_logic_lit(bool);
-oln_pw_decl_logic_lit(ntg::bin);
-
-
-
-
-//       template <typename E>
-//       not_<E>
-//       function<E>::operator!() const
-//       {
-// 	mlc::eq< oln_typeness_of(oln_pw_type_of(E, value)), typeness::binary_tag >::ensure();
-// 	not_<E> tmp(this->exact());
-// 	return tmp;
-//       }
-
 
 
 #endif // ! OLENA_CORE_PW_LOGIC_HH

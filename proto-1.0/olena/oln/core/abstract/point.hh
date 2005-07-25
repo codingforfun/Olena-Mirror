@@ -202,6 +202,22 @@ namespace oln {
 
   } // end of namespace abstract
 
+
+  // FIXME: read FIXME in oln/core/abstract/size.hh ...
+
+//   namespace internal
+//   {
+
+//     template <typename P>
+//     bool operator_eq(const oln::abstract::point<P>& lhs,
+// 		     const oln::abstract::point<P>& rhs)
+//     {
+//       return lhs.operator==(rhs); // FIXME: rename 'point::operator==' into 'point::eq'
+//     }
+
+//   } // end of namespace oln::internal
+
+
 } // end of namespace oln
 
 

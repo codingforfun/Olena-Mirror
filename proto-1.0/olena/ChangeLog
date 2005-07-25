@@ -1,3 +1,41 @@
+2005-07-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Fix many "include"s and update basic operator overloading.
+	
+	* oln/ops/macro.hh: New file.
+	* oln/funobj/invert.hh (oln/basics.hh): Fix to pass make check.
+	(FIXME): New negative commentary about this file.
+	* oln/core/abstract/point.hh (operator_eq): Add commented code
+	that will be later useful.
+	* oln/core/abstract/size.hh (operator_eq): Likewise. 
+	* oln/core/coord.hh (operator==): Replace by...
+	(operator_eq): ...this.
+	* oln/core/2d/dpoint2d.hh (operator+): Replace by...
+	(operator_plus): ...this.
+	* oln/core/2d/point2d.hh (operator_eq): New proc.
+	* oln/core/2d/size2d.hh (operator_eq): Likewise.
+	* oln/core/pw/macros.hh (oln_pw_decl_binary): Update to rely
+	on static overloading.
+	(oln_pw_decl_binary_with_lit): Remove because obsolete.
+	(oln_pw_decl_binary_explicit): Likewise.
+	(oln_pw_decl_binary_with_lit_explicit): Likewise.
+	* oln/core/pw/arith.hh: Update.
+	* oln/core/pw/logic.hh: Update.
+	* oln/core/pw/cmp.hh: Update.
+	* oln/core/gen/regular_window.hh (get_fwd_win): Fix call to card().
+	(get_fwd_win_p, get_bkd_win, get_bkd_win_p): Likewise.
+	* oln/utils/buffer.hxx (ntg): Remove dependance.
+	* oln/utils/buffer.hh (ntg): Likewise.
+	* oln/utils/overload.hh: Update.
+	* oln/ops/cmp.hh: Update.
+	* oln/makefile.src: Update.
+	* oln/morpho/lower_completion.hh: Fix include.
+	* oln/appli/astro/graphical_interface/utils.hh (std): Add
+	namespace qualification.
+	(FIXME): New comment!
+	* oln/io/pnm_bin.hh: Fix include.
+	* oln/level/arith.hh: Fix include.
+
 2005-07-22  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/morpho/tests/reconstruction: Re-enable reconstruction tests.

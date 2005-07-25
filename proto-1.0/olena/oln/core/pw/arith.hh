@@ -36,6 +36,13 @@
 namespace oln
 {
 
+  oln_pw_decl_binary(plus);
+  oln_pw_decl_binary(minus);
+  oln_pw_decl_binary(times);
+  oln_pw_decl_binary(div);
+  oln_pw_decl_binary(mod);
+
+
   // min max
 
   template <typename L, typename R>
@@ -75,31 +82,6 @@ namespace oln
     pw::binary_op< f_sup_type, L, R > tmp(lhs, rhs);
     return tmp;
   }
-
-
-oln_pw_decl_binary(  plus, + );
-oln_pw_decl_binary( minus, - );
-oln_pw_decl_binary( times, * );
-oln_pw_decl_binary(   div, / );
-oln_pw_decl_binary(   mod, % );
-
-// FIXME: uminus?
-
-
-# define oln_pw_decl_arith_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(  plus, +, LiteralType);	\
-oln_pw_decl_binary_with_lit( minus, -, LiteralType);	\
-oln_pw_decl_binary_with_lit( times, +, LiteralType);	\
-oln_pw_decl_binary_with_lit(   div, /, LiteralType);	\
-oln_pw_decl_binary_with_lit(   mod, %, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-oln_pw_decl_arith_lit(int);
-oln_pw_decl_arith_lit(float);
-oln_pw_decl_arith_lit(double);
 
 
 } // end of namespace oln

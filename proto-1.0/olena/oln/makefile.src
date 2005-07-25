@@ -154,8 +154,16 @@ OLN_DEP =					\
   funobj/logic.hh				\
 						\
   io/gz_stream.hh				\
+  io/pnm_bin.hh					\
+  io/pnm_header.hh				\
+  io/pnm_read.hh				\
+  io/pnm_real.hh				\
+  io/pnm_vect.hh				\
+  io/pnm_write.hh				\
   io/read_image.hh				\
+  io/scalar.hh					\
   io/utils.hh					\
+  io/vectorial.hh				\
   io/write_image.hh				\
 						\
   level/arith.hh				\
@@ -191,6 +199,7 @@ OLN_DEP =					\
   ops/arith.hh					\
   ops/cmp.hh					\
   ops/logic.hh					\
+  ops/macro.hh					\
 						\
   utils/buffer.hh				\
   utils/clone.hh				\

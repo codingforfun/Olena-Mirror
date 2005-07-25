@@ -28,73 +28,19 @@
 #ifndef OLENA_OPS_CMP_HH
 # define OLENA_OPS_CMP_HH
 
-# include <oln/core/abstract/image.hh>
+# include <oln/ops/macro.hh>
 # include <oln/core/pw/cmp.hh>
-# include <oln/core/pw/check.hh>
+
 
 
 namespace oln {
 
-
-  /// Operator '==' between 2 images.
-
-  template <typename L, typename R>
-  bool operator == (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) == oln::pw_value(rhs));
-  }
-
-
-  /// Operator '!=' between 2 images.
-
-  template <typename L, typename R>
-  bool operator != (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) != oln::pw_value(rhs));
-  }
-
-
-  /// Operator '<'  between 2 images.
-
-  template <typename L, typename R>
-  bool operator <  (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) <  oln::pw_value(rhs));
-  }
-
-
-  /// Operator '<=' between 2 images.
-
-  template <typename L, typename R>
-  bool operator <= (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) <= oln::pw_value(rhs));
-  }
-
-
-  /// Operator '>'  between 2 images.
-
-  template <typename L, typename R>
-  bool operator >  (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) >  oln::pw_value(rhs));
-  }
-
-
-  /// Operator '>=' between 2 images.
-
-  template <typename L, typename R>
-  bool operator >= (const oln::abstract::image<L>& lhs,
-		    const oln::abstract::image<R>& rhs)
-  {
-    return oln::pw::check(oln::pw_value(lhs) >= oln::pw_value(rhs));
-  }
-
+  oln_decl_image_binary_op(eq);
+  oln_decl_image_binary_op(neq);
+  oln_decl_image_binary_op(less);
+  oln_decl_image_binary_op(leq);
+  oln_decl_image_binary_op(greater);
+  oln_decl_image_binary_op(geq);
 
 } // end of namespace oln
 

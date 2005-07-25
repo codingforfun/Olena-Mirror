@@ -28,19 +28,21 @@
 #ifndef _UTILS_HH_
 # define _UTILS_HH_
 
+// FIXME: #include something here!
+
 namespace Utils {
   std::string int2string(int inum)
   {
-    using namespace std;
-    ostringstream oss;
+    //using namespace std;
+    std::ostringstream oss;
     oss << inum;
-    string snum(oss.str());
+    std::string snum(oss.str());
     return snum;
   }
   int string2int(std::string snum)
   {
-    using namespace std;
-    istringstream iss(snum);
+    //using namespace std;
+    std::istringstream iss(snum);
     int inum;
     iss >> inum;
     return inum;

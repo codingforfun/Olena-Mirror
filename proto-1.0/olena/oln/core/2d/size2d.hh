@@ -106,6 +106,17 @@ namespace oln {
   };
 
 
+  namespace internal
+  {
+
+    bool operator_eq(const size2d& lhs, const size2d& rhs)
+    {
+      return lhs.operator==(rhs);
+    }
+
+  } // end of namespace oln::internal
+
+
 } // end of namespace oln
 
 

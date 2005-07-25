@@ -25,71 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_FUNOBJ_INVERT_HH
-# define OLENA_FUNOBJ_INVERT_HH
+#ifndef OLENA_OPS_MACRO_HH
+# define OLENA_OPS_MACRO_HH
 
-# include <mlc/contract.hh>
-# include <ntg/all.hh>
-# include <oln/basics.hh>
-# include <oln/core/gen/internal/value_box.hh>
-
-namespace oln {
-
-  namespace funobj {
-
-    // FIXME: funobj::invert should be turned into a f_::invert
-    // functor.
-
-    // FIXME: funobj::invert should have a SINGLE meaning!
-    // (not: either -x or 1/x or min<->max or?)
-   struct invert
-    {
-      template <typename V>
-      V operator()(const ntg::vect_value<V>& v) const
-      {
-	V ret;
-
-	for (unsigned i = 0; i < ntg_nb_comp(V); i++)
-	  ret[i] = ntg_max_val(ntg_comp_type(V)) - v[i];
-	return ret;
-      }
-
-      template <typename V>
-      V operator()(const ntg::real_value<V>& v) const
-      {
-	V ret;
-
-	ret = ntg_max_val(V) - v;
-	return ret;
-      }
-
-      template <typename V>
-      V operator()(const ntg::enum_value<V>& v) const
-      {
-	V ret;
-	ntg_integer_type(V) max_val = ntg_max_val(V);
-	ntg_integer_type(V) value = v.exact();
-
-	ret = max_val - value;
-	return ret;
-      }
-
-      template <typename I>
-      typename value_box<I>::value_type
-      operator()(const value_box<I>& v) const
-      {
-	return this->operator()(v.value());
-      }
-
-      invert() {}
-
-    };
-
-  } // end of namespace funobj
-
-} // end of namespace oln
+# include <oln/core/abstract/image.hh>
+# include <oln/core/pw/value.hh>
+# include <oln/core/pw/check.hh>
 
 
-#endif // ! OLENA_FUNOBJ_INVERT_HH
+# define oln_decl_image_binary_op(OperatorName)				\
+									\
+  template <typename F1, typename F2>					\
+  struct set_overload_2 < tag::op_##OperatorName,			\
+			  where<F1, oln::abstract::image>,		\
+			  where<F2, oln::abstract::image> >		\
+  {									\
+    typedef bool ret;							\
+    static ret exec(const F1& lhs, const F2& rhs)			\
+    {									\
+      return oln::pw::check(oln::pw_value(lhs) == oln::pw_value(rhs));	\
+    }									\
+  };									\
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
+#endif // ! OLENA_OPS_MACRO_HH

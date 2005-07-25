@@ -40,7 +40,7 @@ namespace oln {
     class buffer
     {
     public:
-      typedef ntg::int_u32		value_type; ///< Used data type.
+      typedef unsigned/*ntg::int_u32*/		value_type; ///< Used data type.
 
       /*!
       ** \brief Initialization of data.
@@ -70,7 +70,7 @@ namespace oln {
       /*!
       ** \brief Return the nth word.
       */
-      ntg::int_u32 operator[] (unsigned n) const;
+      unsigned/*ntg::int_u32*/ operator[] (unsigned n) const;
 
       /*!
       ** \brief Append padding bits.

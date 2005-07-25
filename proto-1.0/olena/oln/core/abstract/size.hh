@@ -90,6 +90,20 @@ namespace oln {
 
   } // end of namespace abstract
 
+//   // FIXME: this op is better than the corresponding collection of
+//   // op for subclasses
+//   namespace internal
+//   {
+
+//     template <typename S>
+//     bool operator_eq(const oln::abstract::size<S>& lhs,
+// 		     const oln::abstract::size<S>& rhs)
+//     {
+//       return lhs.operator==(rhs);
+//     }
+
+//   } // end of namespace oln::internal
+
 } // end of namespace oln
 
 

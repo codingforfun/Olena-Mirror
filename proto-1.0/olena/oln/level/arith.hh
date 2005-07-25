@@ -29,6 +29,7 @@
 # define OLENA_LEVEL_ARITH_HH
 
 # include <mlc/cmp.hh>
+# include <oln/core/abstract/size.hh>
 # include <oln/core/ch_value_type.hh>
 
 # include <oln/funobj/arith.hh>

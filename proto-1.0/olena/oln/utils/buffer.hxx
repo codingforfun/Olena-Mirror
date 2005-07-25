@@ -46,7 +46,7 @@ template <class E>
 inline
 void buffer::add(const E &e, bool count)
 {
-  ntg_storage_type(E)	mask = 1 << (ntg_nbits(E) - 1);
+  ntg_storage_type(E)	mask = 1 << (sizeof(unsigned)*8/*ntg_nbits(E)*/ - 1);
   ntg_storage_type(E) e_cast = e;
 
   while (mask)
@@ -104,7 +104,7 @@ buffer::value_type buffer::reorder(value_type x) const
 
 // [] operator implementation
 inline
-ntg::int_u32 buffer::operator[] (unsigned n) const
+unsigned/*ntg::int_u32*/ buffer::operator[] (unsigned n) const
 {
   precondition(n < data_.size());
 

@@ -30,9 +30,9 @@
 
 # include <iostream>
 
+# include <oln/basics2d.hh>
 # include <oln/canvas/io.hh>
 # include <oln/io/pnm_header.hh>
-# include <oln/core/2d/grid2d.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/size2d.hh>
 

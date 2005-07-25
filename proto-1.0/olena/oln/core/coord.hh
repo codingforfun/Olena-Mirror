@@ -33,7 +33,7 @@
 # include <mlc/contract.hh>
 
 
-// FIXME: doc
+// FIXME: this file should be in oln/utils/
 
 
 namespace oln {
@@ -67,22 +67,6 @@ namespace oln {
     {
       precondition(this->is_defined());
       return value_;
-    }
-
-    bool operator==(value_type rhs) const
-    {
-      if (! this->is_defined())
-	{
-	  std::cerr << "oops" << std::endl;
-	}
-      precondition(this->is_defined());
-      return value_ == rhs;
-    }
-
-    bool operator!=(value_type rhs) const
-    {
-      precondition(this->is_defined());
-      return value_ != rhs;
     }
 
     const coord_t operator+(value_type rhs) const
@@ -168,6 +152,24 @@ namespace oln {
     }
 
   };
+
+
+  namespace internal
+  {
+
+    bool operator_eq(const coord_t& lhs, const coord_t& rhs)
+    {
+      precondition(lhs.is_defined() and rhs.is_defined());
+      return coord_t::value_type(lhs) == coord_t::value_type(rhs);
+    }
+
+    bool operator_less(const coord_t& lhs, const coord_t& rhs)
+    {
+      precondition(lhs.is_defined() and rhs.is_defined());
+      return coord_t::value_type(lhs) < coord_t::value_type(rhs);
+    }
+
+  } // end of namespace oln::internal
 
 
 } // end of namespace oln

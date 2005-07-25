@@ -136,8 +136,7 @@ namespace oln {
       E get_fwd_win() const
       {
 	E out;
-
-	for (unsigned i = 0; i < this->dp_.size(); ++i)
+	for (unsigned i = 0; i < this->card(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -157,9 +156,7 @@ namespace oln {
       E get_fwd_win_p() const // abstract::window<W>& win)
       {
 	E out;
-
-
-	for (unsigned i = 0; i < this->dp_.size(); ++i)
+	for (unsigned i = 0; i < this->card(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -185,8 +182,7 @@ namespace oln {
       E get_bkd_win() const
       {
 	E out;
-
-	for (unsigned i = 0; i < this->dp_.size(); ++i)
+	for (unsigned i = 0; i < this->card(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -206,8 +202,7 @@ namespace oln {
       E get_bkd_win_p() const
       {
 	E out;
-
-	for (unsigned i = 0; i < this->dp_.size(); ++i)
+	for (unsigned i = 0; i < this->card(); ++i)
 	  {
 	    const dpoint_type& dp = get_dp()[i];
 
