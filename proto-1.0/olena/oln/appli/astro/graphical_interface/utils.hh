@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef _UTILS_HH_
-# define _UTILS_HH_
+#ifdef _COMPILE_WITH_QT
+# ifndef _UTILS_HH_
+#  define _UTILS_HH_
+#  include <string>
 
 // FIXME: #include something here!
 
@@ -49,4 +51,5 @@ namespace Utils {
   }
 }
 
-#endif // !_UTILS_HH_
+# endif // !_UTILS_HH_
+#endif // !_COMPILE_WITH_QT

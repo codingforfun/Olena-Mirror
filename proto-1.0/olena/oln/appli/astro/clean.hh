@@ -41,8 +41,6 @@
 
 # include <vector>
 
-
-
 #define get_aux_data(IT1ER, AT1T1R) this->aux_data_[IT1ER].call(&T1::AT1T1R##_get)
 #define set_aux_data(IT1ER, AT1T1R, VAL) this->aux_data_[IT1ER].call(&T1::AT1T1R##_set, VAL)
 
@@ -114,10 +112,19 @@ namespace oln {
 	{
 	  area_min_ = nb;
 	}
+	unsigned get_area_min() const
+	{
+	  return area_min_;
+	}
 
 	void set_tower(float nb)
 	{
 	  tour_ = nb;
+	}
+
+	float get_tower() const
+	{
+	  return tour_;
 	}
 
 	void set_circle(float nb)
@@ -125,9 +132,19 @@ namespace oln {
 	  circle_ = nb;
 	}
 
+	float get_circle() const
+	{
+	  return circle_;
+	}
+
 	void set_area_max(unsigned nb)
 	{
 	  area_max_ = nb;
+	}
+
+	unsigned get_area_max() const
+	{
+	  return area_max_;
 	}
 
 	void set_level(unsigned nb)
@@ -135,9 +152,19 @@ namespace oln {
 	  level_ = nb;
 	}
 
+	unsigned get_level() const
+	{
+	  return level_;
+	}
+
 	void set_height(unsigned nb)
 	{
 	  height_ = nb;
+	}
+
+        unsigned get_height() const
+	{
+	  return height_;
 	}
 
 	// attributes to compute the output
@@ -282,20 +309,20 @@ namespace oln {
 			{
 			  unsigned tmp = get_aux_data(*c, height) +
 			    this->input[*c].value() - this->input[*p].value();
-			  set_aux_data(*p, height, ntg::max(tmp, get_aux_data(*p, height)));
+			  set_aux_data(*p, height, std::max(tmp, get_aux_data(*p, height)));
 			}
 		      if (tour_tag_)
 			set_aux_data(*p, int_volume, get_aux_data(*p, int_volume) +
 				     get_aux_data(*c, int_volume));
 		      if (circle_tag_)
 			{
-			  set_aux_data(*p, row_min, ntg::min(get_aux_data(*p, row_min),
+			  set_aux_data(*p, row_min, std::min(get_aux_data(*p, row_min),
 							 get_aux_data(*c, row_min)));
-			  set_aux_data(*p, row_max, ntg::max(get_aux_data(*p, row_max),
+			  set_aux_data(*p, row_max, std::max(get_aux_data(*p, row_max),
 							 get_aux_data(*c, row_max)));
-			  set_aux_data(*p, col_min, ntg::min(get_aux_data(*p, col_min),
+			  set_aux_data(*p, col_min, std::min(get_aux_data(*p, col_min),
 							 get_aux_data(*c, col_min)));
-			  set_aux_data(*p, col_max, ntg::max(get_aux_data(*p, col_max),
+			  set_aux_data(*p, col_max, std::max(get_aux_data(*p, col_max),
 							     get_aux_data(*c, col_max)));
 			}
 		      if (center_p_tag_)

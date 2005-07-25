@@ -39,6 +39,7 @@
 # include <oln/basics.hh>
 
 # include <queue>
+# include <fstream>
 
 namespace oln {
 

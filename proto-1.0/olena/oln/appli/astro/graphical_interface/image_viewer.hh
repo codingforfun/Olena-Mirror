@@ -25,9 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef _IMAGE_VIEWER_HH_
-# define _IMAGE_VIEWER_HH_
-# include "qtincludes.hh"
+#ifdef _COMPILE_WITH_QT
+# ifndef _IMAGE_VIEWER_HH_
+#  define _IMAGE_VIEWER_HH_
+#  include "qtincludes.hh"
 
 class image_viewer : public QWidget
 {
@@ -144,4 +145,5 @@ protected:
 
 };
 
-#endif // !_IMAGE_VIEWER_HH_
+# endif // !_IMAGE_VIEWER_HH_
+#endif // !_COMPILE_WITH_QT

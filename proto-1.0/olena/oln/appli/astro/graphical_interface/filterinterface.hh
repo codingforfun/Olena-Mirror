@@ -25,14 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef _FILTERINTERFACE_HH_
-# define _FILTERINTERFACE_HH_
-# include <string>
-# include <oln/appli/astro/clean.hh>
-# include "qtincludes.hh"
-# include "visualization_window.h"
-# include "image_viewer.hh"
-# include "utils.hh"
+#ifdef _COMPILE_WITH_QT
+# ifndef _FILTERINTERFACE_HH_
+#  define _FILTERINTERFACE_HH_
+#  include <string>
+#  include <oln/appli/astro/clean.hh>
+#  include "qtincludes.hh"
+#  include "visualization_window.h"
+#  include "image_viewer.hh"
+#  include "utils.hh"
 
 class FilterVisualizationWindow : public visualisation_window
 {
@@ -76,14 +77,13 @@ public:
     mt_.set_area_max(value_area_max->value());
     mt_.set_level(value_level->value());
     mt_.set_height(value_height->value());
-    mt_.set_circle(value_circle->value() / 100);
-    mt_.set_tower(value_tower->value() / 100);
-
-    std::string out = "attributes value changed.";//  area("
-//       + Utils::int2string(value_area->value())
-//       + "), point_value("
-//       + Utils::int2string(value_level->value())
-//       + ")";
+    float value_to_set = value_circle->value();
+    value_to_set /= 100;
+    mt_.set_circle(value_to_set);
+    value_to_set = value_tower->value();
+    value_to_set /= 100;
+    mt_.set_tower(value_to_set);
+    std::string out = "attributes value changed.";
     this->text_state->setText(out.c_str());
   }
 
@@ -109,6 +109,16 @@ public:
     display_out_.reload(tmp_);
     this->text_state->setText("");
     display_out_.show();
+#ifndef NDEBUG
+    std::cerr << "Attribute flags:" << std::endl
+	      << " * Area: " << mt_.area_tag_ << " from " <<  mt_.get_area_min() << " to "
+	      << mt_.get_area_max() << std::endl
+	      << " * Level: " << mt_.level_tag_ << " value: " << mt_.get_level() << std::endl
+	      << " * Height: " << mt_.height_tag_ << " value: " << mt_.get_height() << std::endl
+	      << " * Circle: " << mt_.circle_tag_ << " value: " << mt_.get_circle() << std::endl
+	      << " * Center: " << mt_.center_p_tag_ << std::endl
+	      << " * Tower: " << mt_.tour_tag_ << " value: " << mt_.get_tower() << std::endl;
+#endif
   }
 
   virtual void DisplayInputImage()
@@ -211,4 +221,5 @@ protected:
   char tmp_[21];
 };
 
-#endif // !_FILTERINTERFACE_HH_
+# endif // !_FILTERINTERFACE_HH_
+#endif // !_COMPILE_WITH_QT

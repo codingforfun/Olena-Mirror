@@ -25,11 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <qapplication.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qimage.h>
-#include <qwmatrix.h>
-#include <qslider.h>
-#include <qcheckbox.h>
-#include <qspinbox.h>
+#ifdef _COMPILE_WITH_QT
+# include <qapplication.h>
+# include <qpushbutton.h>
+# include <qlabel.h>
+# include <qimage.h>
+# include <qwmatrix.h>
+# include <qslider.h>
+# include <qcheckbox.h>
+# include <qspinbox.h>
+#endif // !_COMPILE_WITH_QT

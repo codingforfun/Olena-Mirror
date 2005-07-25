@@ -1,3 +1,16 @@
+2005-07-25  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* olena/oln/appli/astro/clean.hh: No ntg use anymore.
+	* olena/oln/appli/astro/tree_statistics.hh: Fix missing include.
+	* olena/oln/appli/astro/graphical_interface/interface.pro: Define to
+	know if sanity or makefile is building app.
+	* olena/oln/appli/astro/graphical_interface/image_viewer.hh: prevent
+	sanity.
+	* olena/oln/appli/astro/graphical_interface/filterinterface.hh: 
+	Likewise.
+	* olena/oln/appli/astro/graphical_interface/qtincludes.hh: Likewise.
+	* olena/oln/appli/astro/graphical_interface/utils.hh: Likewise.
+
 2005-07-14  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* olena/oln/makefile.src: Remove deleted files.

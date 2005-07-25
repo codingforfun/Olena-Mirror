@@ -3,6 +3,8 @@ LANGUAGE	= C++
 
 CONFIG	+= warn_off release qt
 
+DEFINES += _COMPILE_WITH_QT
+
 INCLUDEPATH	+= . ../../../../../olena ../../../../../metalic ../../../../../integre
 
 SOURCES	+= main.cc
