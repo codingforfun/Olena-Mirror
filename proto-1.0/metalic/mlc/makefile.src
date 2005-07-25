@@ -4,6 +4,7 @@
 ##
 
 MLC_DEP =					\
+  afun.hh					\
   any.hh					\
   arith.hh					\
   array/1d.hh					\
@@ -20,11 +21,14 @@ MLC_DEP =					\
   cmp.hh					\
   config/system.hh				\
   contract.hh					\
+  fcmp.hh					\
+  flogic.hh					\
   fun.hh					\
   if.hh						\
   implies.hh					\
   is_a.hh					\
   math.hh					\
+  overload.hh					\
   properties.hh					\
   switch.hh					\
   to_string.hh					\

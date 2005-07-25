@@ -1,3 +1,9 @@
+2005-07-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/flogic.hh: New file.
+	* mlc/fcmp.hh (fun): New namespace to put functions in.
+	* mlc/makefile.src: Update.
+
 2005-07-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Prepare overloading mechanism and introduction of function

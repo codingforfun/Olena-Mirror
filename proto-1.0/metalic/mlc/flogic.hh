@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_FCMP_HH
-# define METALIC_FCMP_HH
+#ifndef METALIC_FLOGIC_HH
+# define METALIC_FLOGIC_HH
 
 # include <mlc/afun.hh>
 
 
 
-# define mlc_decl_mfun_cmp(OperatorName, OperatorSymbol)					\
+# define mlc_decl_mfun_logic(OperatorName, OperatorBody)					\
 												\
   namespace fun											\
   {												\
@@ -58,9 +58,9 @@
     template <typename T1, typename T2>								\
     struct OperatorName##_ : public mlc::abstract::binary_function< OperatorName##_<T1,T2> >	\
     {												\
-      bool impl_binop(const T1& arg1, const T2& arg2) const					\
+      bool impl_binop(const T1& lhs, const T2& rhs) const					\
       {												\
-	return arg1 OperatorSymbol arg2;							\
+	return OperatorBody;									\
       }												\
     };												\
   }												\
@@ -75,17 +75,17 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 namespace mlc
 {
 
-  mlc_decl_mfun_cmp( eq,      == );
-  mlc_decl_mfun_cmp( neq,     != );
+  mlc_decl_mfun_logic(   and,       lhs and rhs  );
+  mlc_decl_mfun_logic(  nand,  not (lhs and rhs) );
 
-  mlc_decl_mfun_cmp( less,    <  );
-  mlc_decl_mfun_cmp( leq,     <= );
+  mlc_decl_mfun_logic(    or,       lhs or rhs  );
+  mlc_decl_mfun_logic(   nor,  not (lhs or rhs) );
 
-  mlc_decl_mfun_cmp( greater, >  );
-  mlc_decl_mfun_cmp( geq,     >= );
+  mlc_decl_mfun_logic(   xor,  (lhs and not rhs) or (not lhs and     rhs) );
+  mlc_decl_mfun_logic(  xnor,  (lhs and     rhs) or (not lhs and not rhs) );
 
 } // end of namespace mlc
 
 
 
-#endif // ! METALIC_FCMP_HH
+#endif // ! METALIC_FLOGIC_HH
