@@ -30,6 +30,7 @@
 
 # include <queue>
 
+# include <oln/canvas/forth.hh>
 # include <oln/canvas/backandforth.hh>
 # include <oln/level/compare.hh>
 # include <oln/utils/clone.hh>
@@ -65,6 +66,8 @@ namespace oln {
       typedef oln_nbh_type_of(nbh_type, window) window_type;
       typedef oln_type_of(I1, concrete) output_type;
 
+      // Abstract methods.
+
       bool test_fifo_push()
       {
 	p = bkd_p;
@@ -75,7 +78,8 @@ namespace oln {
 	return false;
       }
 
-      void preconditions()
+
+      void preconditions() const
       {
 	this->exact().impl_preconditions();
       }
@@ -94,6 +98,8 @@ namespace oln {
       {
 	this->exact().impl_fifo_loop_body();
       }
+
+      // Concrete methods.
 
       void init()
       {
@@ -153,6 +159,7 @@ namespace oln {
       ~reconstruction()
       {
 	mlc_check_method_impl(E, bool, test_fifo_push,	, );
+	mlc_check_method_impl(E, void, preconditions,	, const);
 	mlc_check_method_impl(E, void, bkd_loop_body,	, );
 	mlc_check_method_impl(E, void, fwd_loop_body,	, );
 	mlc_check_method_impl(E, void, fifo_loop_body,	, );
@@ -175,7 +182,6 @@ namespace oln {
 
 
 
-
     template <typename I1, typename I2, typename E>
     struct reconstruction<I1, I2, morpho::tag::sequential_type, E> :
       public back_and_forth_until_convergence<I1, E>
@@ -184,6 +190,8 @@ namespace oln {
       typedef oln_type_of(I1, neighb) nbh_type;
       typedef oln_nbh_type_of(nbh_type, window) window_type;
       typedef oln_type_of(I1, concrete) output_type;
+
+      // Concrete methods.
 
       void impl_init()
       {
@@ -218,6 +226,8 @@ namespace oln {
 	return output.unbox();
       }
 
+    protected:
+
       reconstruction(const abstract::image_with_nbh<I1>& marker,
 		     const abstract::image<I2>& mask) :
 	super_type(marker),
@@ -233,6 +243,77 @@ namespace oln {
       box<const I2> mask;
       oln_type_of(I1, point) p;
       oln_type_of(I1, niter) n;
+
+    };
+
+
+
+    template <typename I1, typename I2, typename E>
+    struct reconstruction<I1, I2, morpho::tag::parallel_type, E> :
+      public forth_until_convergence<I1, E>
+    {
+      typedef forth_until_convergence<I1, E> super_type;
+      typedef oln_type_of(I1, neighb) nbh_type;
+      typedef oln_nbh_type_of(nbh_type, window) window_type;
+      typedef oln_type_of(I1, concrete) output_type;
+
+      // Abstract methods.
+
+      void fwd_loop_body()
+      {
+	this->exact().impl_fwd_loop_body();
+      }
+
+      // Concrete methods.
+
+      void impl_init()
+      {
+	// FIXME: We can't use `output = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type output_tmp(clone(marker));
+	output = output_tmp;
+	// FIXME: We can't use `save = clone(marker)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	output_type save_tmp(clone(marker));
+	save = save_tmp;
+
+      }
+
+
+      bool impl_is_stable() const
+      {
+	return level::is_equal(save, output);
+      }
+
+      void impl_re_loop()
+      {
+	// FIXME: We can't use `save = clone(output)' directly here,
+	// because box's op=(const abstract::image<II>& rhs) would be
+	// called, which is empty (see oln/core/box.hh).
+	save.unbox() = clone(output);
+      }
+
+      oln_type_of(I1, concrete) get_output()
+      {
+	return output.unbox();
+      }
+
+    protected:
+
+      reconstruction(const abstract::image_with_nbh<I1>& marker,
+		     const abstract::image<I2>& mask) :
+	super_type(marker),
+	marker(marker.exact()),
+	mask(mask.exact())
+      {
+      }
+
+      box<oln_type_of(I1, concrete)> save;
+      box<oln_type_of(I1, concrete)> output;
+      box<const I1> marker;
+      box<const I2> mask;
 
     };
 

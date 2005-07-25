@@ -24,8 +24,10 @@ bool check()
   image2d<ntg::bin> mask;
   image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_dil_hyb;
   image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_dil_seq;
+  image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_dil_par;
   image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_ero_hyb;
   image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_ero_seq;
+  image_with_nbh<image2d<ntg::bin>, neighborhood2d> res_ero_par;
 
   utils::key::value_type data_key[16] =
     { 0xd1, 0x5c, 0x13, 0xd8, 0xe0, 0xa8, 0x58, 0x7d,
@@ -46,7 +48,14 @@ bool check()
 			   morpho::tag::sequential(),
 			   morpho::tag::by_dilation());
 
+  res_dil_par =
+    morpho::reconstruction(join(marker, neighb_c4()),
+			   mask,
+			   morpho::tag::parallel(),
+			   morpho::tag::by_dilation());
+
   image2d<ntg::bin> marker_c(level::invert(marker));
+
   res_ero_hyb =
     morpho::reconstruction(join(marker_c, neighb_c4()),
 			   level::invert(mask),
@@ -58,6 +67,12 @@ bool check()
 			   morpho::tag::sequential(),
 			   morpho::tag::by_erosion());
 
+  res_ero_par =
+    morpho::reconstruction(join(marker_c, neighb_c4()),
+			   level::invert(mask),
+			   morpho::tag::parallel(),
+			   morpho::tag::by_erosion());
+
   if (utils::md5(res_dil_hyb) != key)
     return true;
 
@@ -67,6 +82,10 @@ bool check()
   if (!level::is_equal(res_ero_hyb, res_ero_seq))
     return true;
   if (!level::is_equal(res_dil_hyb, level::invert(res_ero_seq)))
+    return true;
+  if (!level::is_equal(res_dil_hyb, res_dil_par))
+    return true;
+  if (!level::is_equal(res_ero_hyb, res_ero_par))
     return true;
 
   return false;

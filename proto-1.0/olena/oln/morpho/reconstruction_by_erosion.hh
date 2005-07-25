@@ -55,13 +55,6 @@ namespace oln {
 	using super_type::p;
 
 
-	reconstruction_by_erosion(const abstract::image_with_nbh<I1>& marker,
-				  const abstract::image<I2>& mask) :
-	  super_type(marker, mask)
-	{
-	}
-
-
 	/// Local image "and-value" for erosion on sets
 	/// (based on the point and its backward neighborhood).
 
@@ -107,31 +100,12 @@ namespace oln {
 	  output[fwd_p] = f_max_alt(mask[fwd_p].value(), fwd_and());
 	}
 
-	void impl_preconditions()
-	{
-	  precondition(level::is_greater_or_equal(marker, mask));
-	}
-
-      };
-
-      // Sequential version
-
-      template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::sequential_type, tag::by_erosion_type>
-	: public reconstruction_by_erosion<I1, I2, tag::sequential_type,
-					   reconstruction<I1, I2, tag::sequential_type,
-							  tag::by_erosion_type> >
-      {
-	typedef reconstruction<I1, I2, tag::sequential_type,
-			       tag::by_erosion_type> self_type;
-	typedef reconstruction_by_erosion<I1, I2, tag::sequential_type,
-					  self_type> super_type;
-
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+	reconstruction_by_erosion(const abstract::image_with_nbh<I1>& marker,
+				  const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
+
       };
 
 
@@ -147,13 +121,8 @@ namespace oln {
 	typedef reconstruction_by_erosion<I1, I2, tag::hybrid_type,
 					  self_type> super_type;
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
-	  super_type(marker, mask)
-	{
-	}
-
 	using super_type::mask;
+	using super_type::marker;
 	using super_type::output;
 	using super_type::bkd_p;
 	using super_type::n;
@@ -172,9 +141,92 @@ namespace oln {
 	    }
 	}
 
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(marker, mask));
+	}
+
 	bool impl_test_fifo_push()
 	{
 	  return output[n] > output[bkd_p] and output[n] > mask[n];
+	}
+
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	}
+
+      };
+
+
+      // Sequential version
+
+      template<typename I1, typename I2>
+      struct reconstruction <I1, I2, tag::sequential_type, tag::by_erosion_type>
+	: public reconstruction_by_erosion<I1, I2, tag::sequential_type,
+					   reconstruction<I1, I2, tag::sequential_type,
+							  tag::by_erosion_type> >
+      {
+	typedef reconstruction<I1, I2, tag::sequential_type,
+			       tag::by_erosion_type> self_type;
+	typedef reconstruction_by_erosion<I1, I2, tag::sequential_type,
+					  self_type> super_type;
+	using super_type::mask;
+	using super_type::marker;
+
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(marker, mask));
+	}
+
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	}
+      };
+
+
+      // Parallel version
+
+      template <typename I1, typename I2>
+      struct reconstruction<I1, I2, tag::parallel_type, tag::by_erosion_type>
+	: public canvas::reconstruction<I1, I2, tag::parallel_type,
+		reconstruction<I1, I2, tag::parallel_type, tag::by_erosion_type> >
+      {
+	typedef reconstruction<I1, I2, tag::parallel_type,
+			       tag::by_erosion_type> self_type;
+	typedef canvas::reconstruction<I1, I2, tag::parallel_type,
+				       self_type> super_type;
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::save;
+	using super_type::output;
+	using super_type::fwd_p;
+
+
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(marker, mask));
+	}
+
+	void impl_fwd_loop_body()
+	{
+	  // erosion step
+	  if (output[fwd_p])
+	    output[fwd_p] = local_and_value(join(save, marker.nbh_get()),
+					    fwd_p);
+
+	  // maximum between mask and output
+	  output[fwd_p] = f_max_alt(output[fwd_p].value(), mask[fwd_p].value());
+	}
+
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
+	  super_type(marker, mask)
+	{
 	}
 
       };

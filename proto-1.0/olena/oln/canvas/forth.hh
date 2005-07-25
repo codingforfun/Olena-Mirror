@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CANVAS_BACKANDFORTH_HH
-# define OLENA_CANVAS_BACKANDFORTH_HH
+#ifndef OLENA_CANVAS_FORTH_HH
+# define OLENA_CANVAS_FORTH_HH
 
 # include <oln/canvas/until_convergence.hh>
 # include <oln/core/abstract/image.hh>
@@ -40,15 +40,9 @@ namespace oln {
 
 
     template <typename I, typename E>
-    struct back_and_forth_until_convergence : public until_convergence<E>
+    struct forth_until_convergence : public until_convergence<E>
     {
       // Abstract methods.
-
-      // Do something like 'work -> output'.
-      void bkd_loop_body()
-      {
-	this->exact().impl_bkd_loop_body();
-      }
 
       // Do something like 'work -> output'.
       void fwd_loop_body()
@@ -61,33 +55,25 @@ namespace oln {
       {
 
 	// back
-	for_all_p (bkd_p)
-	  bkd_loop_body();
-
-	// forth
 	for_all_p (fwd_p)
 	  fwd_loop_body();
-
       }
 
 
     protected:
 
       // Ctor.
-      back_and_forth_until_convergence(const abstract::image<I>& input) :
-	bkd_p(input.size()),
+      forth_until_convergence(const abstract::image<I>& input) :
 	fwd_p(input.size())
       {
       }
 
       // Attributes.
-      oln_type_of(I, bkd_piter) bkd_p;
       oln_type_of(I, fwd_piter) fwd_p;
 
       // Check for impls..
-      ~back_and_forth_until_convergence()
+      ~forth_until_convergence()
       {
-	mlc_check_method_impl(E, void, bkd_loop_body, , );
 	mlc_check_method_impl(E, void, fwd_loop_body, , );
       }
 
@@ -95,20 +81,18 @@ namespace oln {
 
 
     template <typename I, typename E>
-    struct back_and_forth : public mlc::any<E>
+    struct forth : public mlc::any<E>
     {
       // Abstract methods.
 
-      // Initialize 'work'.
       void init()
       {
 	this->exact().impl_init();
       }
 
-      // Do something like 'work -> output'.
-      void bkd_loop_body()
+      void preconditions()
       {
-	this->exact().impl_bkd_loop_body();
+	this->exact().impl_preconditions();
       }
 
       // Do something like 'work -> output'.
@@ -120,15 +104,12 @@ namespace oln {
       // Concrete method.
       void run()
       {
+	preconditions();
 	init();
 
 	// forth
 	for_all_p (fwd_p)
 	  fwd_loop_body();
-
-	// back
-	for_all_p (bkd_p)
-	  bkd_loop_body();
 
       }
 
@@ -136,22 +117,20 @@ namespace oln {
     protected:
 
       // Ctor.
-      back_and_forth(const abstract::image<I>& input) :
-	bkd_p(input.size()),
+      forth(const abstract::image<I>& input) :
 	fwd_p(input.size())
       {
       }
 
       // Attributes.
-      oln_type_of(I, bkd_piter) bkd_p;
       oln_type_of(I, fwd_piter) fwd_p;
 
       // Check for impls..
-      ~back_and_forth()
+      ~forth()
       {
 	mlc_check_method_impl(E, void, init,          , );
-	mlc_check_method_impl(E, void, bkd_loop_body, , );
 	mlc_check_method_impl(E, void, fwd_loop_body, , );
+	mlc_check_method_impl(E, void, preconditions, , );
       }
 
     };
@@ -162,4 +141,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CANVAS_BACKANDFORTH_HH
+#endif // ! OLENA_CANVAS_FORTH_HH

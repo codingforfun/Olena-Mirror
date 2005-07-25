@@ -1,3 +1,17 @@
+2005-07-25  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/reconstruction: Add parallel reconstruction tests.
+	* oln/morpho/reconstruction_by_dilation.hh: Add `by dilation' version
+	of the parallel reconstruction.
+	* oln/morpho/reconstruction_by_erosion.hh: Add `by erosion' version
+	of the parallel reconstruction..
+	* oln/canvas/reconstruction.hh: Add parallel reconstruction canvas.
+	* oln/canvas/forth.hh: New. Forward loop canvas. Both with and without
+	convergence versions.
+	* oln/canvas/backandforth.hh: back_and_force_until_convergence now
+	inherits from until_convergence.
+	* oln/canvas/until_convergence.hh: New. `until convergence' canvas.
+
 2005-07-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Fix many "include"s and update basic operator overloading.
