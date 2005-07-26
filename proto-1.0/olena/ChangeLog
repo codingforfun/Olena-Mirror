@@ -1,3 +1,12 @@
+2005-07-26  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/reconstruction: Add tests for the selfdual
+	reconstruction.
+	* oln/morpho/reconstruction.hh: Uncomment parts related to the
+	selfdual reconstruction.
+	* oln/morpho/reconstruction_selfdual.hh: Selfdual reconstruction now
+	use neighborhood in place of windows.
+
 2005-07-25  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/morpho/tests/reconstruction: Add parallel reconstruction tests.
