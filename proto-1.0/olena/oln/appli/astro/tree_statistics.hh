@@ -294,6 +294,33 @@ namespace oln {
 	out.close();
       }
 
+      /**
+       ** Computes the histogram representing the distance between two local roots.
+       */
+      template<typename I>
+      std::map<unsigned, unsigned> local_root_distance_histogram(oln::appli::astro::clean<I>& tree)
+      {
+	typedef oln_type_of(I, point) point_type;
+	oln_type_of(I, fwd_piter) p(tree.input.size());
+	std::map<unsigned, unsigned> hist;
+	for_all_p(p)
+	  {
+	    if (tree.is_local_root(p))
+	      {
+		int d = 1;
+		point_type x = tree.parent[p];
+		while (not tree.is_local_root(x))
+		  {
+		    ++d;
+		    x = tree.parent[x];
+		  }
+		++hist[d];
+	      }
+	  }
+	return hist;
+      }
+
+
     } // end of namespace statistics
 
   } // end of namespace maxtree

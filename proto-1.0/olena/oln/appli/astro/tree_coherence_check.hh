@@ -326,7 +326,8 @@ namespace oln {
 	    q.pop();
 	    const std::vector<point_type> children = tree.children_get(p);
 	    typename std::vector<point_type>::const_iterator pchild;
-	    assert(seen[p] == false);
+	    if (not seen[p] == false)
+	      return false;
 	    seen[p] = true;
 	    for (pchild = children.begin();
 		 pchild != children.end();
@@ -344,6 +345,57 @@ namespace oln {
 	// end FIXME
       }
 
+      /**
+       ** Test if ancestors are always lower in value (except in particular cases)
+       **
+       ** \param I Exact type of maxtree's image.
+       **
+       ** \arg tree maxtree structure to check.
+       **
+       ** \warning Maxtree should have already been computed.
+       **
+       ** \return true if ok
+       **
+       */
+      template<typename I>
+      bool
+      maxtree_order_relationship_fwd(oln::appli::astro::clean<I>& tree)
+      {
+	typedef oln_type_of(I, point) point_type;
+	oln_type_of(I, fwd_piter) p(tree.input.size());
+	
+	for_all_p(p)
+	  {
+ 	    if (tree.parent[p] != p)
+	      if (not (tree.input[tree.parent[p]] < tree.input[p] or
+		       (tree.input[tree.parent[p]] == tree.input[p] and
+			((tree.parent[p].value()).row() > ((point_type)p).row() or
+			 ((tree.parent[p].value()).row() == ((point_type)p).row() and
+			  (tree.parent[p].value()).col() > ((point_type)p).col())))))
+		return false;
+	  }
+	return true;
+      }
+
+      template<typename I>
+      bool
+      maxtree_order_relationship_bwd(oln::appli::astro::clean<I>& tree)
+      {
+	typedef oln_type_of(I, point) point_type;
+	oln_type_of(I, fwd_piter) p(tree.input.size());
+
+	for_all_p(p)
+	  {
+ 	    if (tree.parent[p] != p)
+	      if (not (tree.input[tree.parent[p]] < tree.input[p] or
+		       (tree.input[tree.parent[p]] == tree.input[p] and
+			((tree.parent[p].value()).row() < ((point_type)p).row() or
+			 ((tree.parent[p].value()).row() == ((point_type)p).row() and
+			  (tree.parent[p].value()).col() < ((point_type)p).col())))))
+		return false;
+	  }
+	return true;
+      }
 
     } // end of namespace coherence_check
 

@@ -88,6 +88,11 @@ namespace oln {
 	return this->exact().impl_find_root(p);
       }
 
+      point_type find_local_root(const point_type& p)
+      {
+	return this->exact().impl_find_local_root(p);
+      }
+
       oln_ch_concrete_type(I, T1)& aux_data_get()
       {
 	return aux_data_;
@@ -208,12 +213,11 @@ namespace oln {
       // Attributes.
       box<const I> input;
       oln_type_of(I, concrete) output;
+      std::vector<std::vector<point_type> > S;
 
     protected:
-      std::vector<std::vector<point_type> > S;
       oln_ch_concrete_type(I, T1) aux_data_;
       std::vector<std::vector<T2> > aux_level_data_;
-
 
       // Ctor.
       tree(const abstract::image_with_nbh<I>& input) :

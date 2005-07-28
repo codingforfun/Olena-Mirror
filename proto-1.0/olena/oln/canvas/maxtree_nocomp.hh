@@ -195,29 +195,10 @@ namespace oln {
 
       point_type impl_find_root(const point_type& x)
       {
-	point_type lr;
-	if (parent[x] == x)
+	if (is_root(x))
 	  return x;
 	else
-	  if (is_local_root(x))
-	    {
-	      lr = find_local_root(parent[x]);
-	      parent[x] = lr;
-	    }
-	  else
-	    lr = find_local_root(x);
-	return find_root(lr);
-      }
-
-      point_type impl_find_local_root(const point_type& x)
-      {
-	if (is_root(x) or is_local_root(x))
-	  return x;
-	else
-	  {
-	    parent[x] = find_local_root(parent[x]);
-	    return parent[x];
-	  }
+	  return find_root(parent[x]);
       }
 
       bool is_root(const point_type& x) const
