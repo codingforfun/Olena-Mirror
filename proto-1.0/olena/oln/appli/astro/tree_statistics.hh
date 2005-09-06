@@ -56,13 +56,11 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** Tree is traversed using breadth-first traversal with a queue.
        ** Increments count on leaf (no children).
        **
-       ** \endcode
        **
        ** \return Number of leafs (terminal nodes).
        **
@@ -100,12 +98,10 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** Number of points - leafs count
        **
-       ** \endcode
        **
        ** \return Number of internal nodes.
        **
@@ -127,7 +123,6 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** count <- 0
@@ -137,7 +132,6 @@ namespace oln {
        **     then increment count (p is a local root)
        ** at the end, return the count
        **
-       ** \endcode
        **
        ** \return Number of local roots.
        **
@@ -167,14 +161,12 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** Tree is traversed using breadth-first traversal with a queue.
        ** Counts the children and nodes, The average is
        ** children_count / node_count.
        **
-       ** \endcode
        **
        ** \return Children per node average.
        **

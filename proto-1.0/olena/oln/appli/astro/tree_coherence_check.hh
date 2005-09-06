@@ -58,11 +58,9 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        ** The count of points that are parent of themselves
        ** should be exactly one.
-       ** \endcode
        **
        ** \return true if tree is ok.
        **
@@ -96,13 +94,11 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** for all points (p) from input
        **   check if children's parent is (p)
        **
-       ** \endcode
        **
        ** \return true if relationships are ok.
        **
@@ -138,7 +134,6 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** For all points (p) of input
@@ -148,7 +143,6 @@ namespace oln {
        **   else
        **     // nothing, root parent of itself
        **
-       ** \endcode
        **
        ** \return true if relationships are ok.
        **
@@ -194,14 +188,12 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** For all points (p) of input
        **   for all children (c) of (p)
        **     ensure (c) is not (p)
        **
-       ** \endcode
        **
        ** \return true if there is no recursion.
        **
@@ -243,7 +235,6 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** For all points (p) in decreasing order
@@ -252,7 +243,6 @@ namespace oln {
        **     ensure they were seen before
        **   mark (p) as seen
        **
-       ** \endcode
        **
        ** \return true if tree is good.
        **
@@ -299,14 +289,12 @@ namespace oln {
        **
        ** \warning Maxtree should have already been computed.
        **
-       ** \code
        ** Algorithm used :
        **
        ** Tree is traversed using breadth-first traversal with a queue.
        ** Every point is marked, at the end all the points must
        ** have been marked.
        **
-       ** \endcode
        **
        ** \return True if all points were marked.
        **
