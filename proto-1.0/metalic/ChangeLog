@@ -1,3 +1,7 @@
+2005-09-06  Simon Odou  <simon@lrde.epita.fr>
+
+	* tests/check/Makefile.runtests: Fix a mis-spellt `runtests' call.
+
 2005-07-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/flogic.hh: New file.
