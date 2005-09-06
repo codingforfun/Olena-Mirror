@@ -1,3 +1,7 @@
+2005-09-06  Simon Odou  <simon@lrde.epita.fr>
+
+	* configure.ac: Exports TOOLS_LDFLAGS for exdoc.
+
 2005-07-25  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* olena/oln/appli/astro/clean.hh: No ntg use anymore.

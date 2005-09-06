@@ -270,6 +270,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 
 AC_SUBST([DOC_CPPFLAGS])
+AC_SUBST([TOOLS_LDFLAGS])
 
 AC_OUTPUT
 
