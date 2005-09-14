@@ -1,5 +1,9 @@
 2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
 
+	* ntg/core/predecls.hh (lor_): Replace by ors.
+
+2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
+
 	* ntg/real/range.hh (operator void()): New overload.
 	* ntg/core/predecls.hh: Add fwd declarations.
 	(decl_overload): Add operator overload traits when ntg is

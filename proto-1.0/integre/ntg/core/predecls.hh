@@ -41,10 +41,10 @@
 
 # define ntg_can_handle_types(T1, T2)						\
 										\
-  mlc::lor_< mlc::and_< mlc_is_a(T1, ntg::value), mlc_is_a(T2, ntg::value) >,	\
-	     mlc::and_< mlc_is_a(T1, ntg::value), mlc::is_builtin<T2>     >,	\
-	     mlc::and_< mlc::is_builtin<T1>,      mlc_is_a(T2, ntg::value) >	\
-           >
+  mlc::ors< mlc::and_< mlc_is_a(T1, ntg::value), mlc_is_a(T2, ntg::value) >,	\
+	    mlc::and_< mlc_is_a(T1, ntg::value), mlc::is_builtin<T2>      >,	\
+	    mlc::and_< mlc::is_builtin<T1>,      mlc_is_a(T2, ntg::value) >	\
+          >
 
 
 
