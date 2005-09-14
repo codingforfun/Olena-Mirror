@@ -37,8 +37,13 @@
 
 # include <ntg/core/macros.hh>
 # include <ntg/core/type_traits.hh>
+# include <ntg/core/predecls.hh>
 
+# include <mlc/types.hh>
+# include <mlc/bool.hh>
 # include <mlc/if.hh>
+
+
 
 
 namespace ntg {
@@ -209,6 +214,54 @@ namespace ntg {
     };
 
   } // end of internal.
+
+  /*
+   */
+
+  template <class T, class U>
+  struct operator_plus_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_plus, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_minus_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_minus, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_times_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_times, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_div_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_div, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_mod_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_mod, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_logical_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_logical, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_cmp_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_cmp, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_min_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_min, T,U>::ret ret;
+  };
+
+  template <class T, class U>
+  struct operator_max_traits {
+    typedef typename internal::deduce_from_traits<internal::operator_max, T,U>::ret ret;
+  };
 
 } // end of ntg.
 

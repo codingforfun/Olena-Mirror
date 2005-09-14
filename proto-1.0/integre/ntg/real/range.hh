@@ -113,6 +113,8 @@ namespace ntg {
     template <class U>
     operator U() const { return this->val_; }
 
+    operator void() const {} // g++-4 needs that op to handle "(void)r;"
+
     // this precise operator helps the compiler (!):
     operator T() const { return this->val_; }
   };

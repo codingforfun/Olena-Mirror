@@ -1,3 +1,14 @@
+2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
+
+	* ntg/real/range.hh (operator void()): New overload.
+	* ntg/core/predecls.hh: Add fwd declarations.
+	(decl_overload): Add operator overload traits when ntg is
+	involved.
+	* ntg/core/type_traits.hh
+	(signed_type_traits): New traits.
+	* ntg/core/internal/global_ops_traits.hh
+	(operator_*_traits): New traits.
+
 2005-07-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests (check-runtests): Pass $(TEST) as

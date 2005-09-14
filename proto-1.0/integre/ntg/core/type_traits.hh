@@ -61,6 +61,20 @@ namespace ntg
     public internal::typetraits<T>
   {};
 
+
+  /*-------------------.
+  | signed_type_traits |
+  `-------------------*/
+
+  template <class T>
+  struct signed_type_traits
+  {
+    typedef typename type_traits<T>::signed_type ret;
+  };
+
+  // FIXME: add similar traits here...
+
+
 } // end of ntg.
 
 #endif // ndef NTG_CORE_TYPE_TRAITS_HH
