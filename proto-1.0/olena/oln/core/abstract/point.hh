@@ -139,7 +139,7 @@ namespace oln {
       /// Anteriority w.r.t. to a bkd image browsing.
       bool bkd_less(const exact_type& rhs) const
       {
-	return not (*this == rhs and not this->fwd_less(rhs));
+	return not (*this == rhs or this->fwd_less(rhs));
       }
 
       /*! \brief Test difference of two points.  Nota bene: this method

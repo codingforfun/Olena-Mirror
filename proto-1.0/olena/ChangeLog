@@ -1,3 +1,7 @@
+2005-09-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/core/abstract/point.hh: Fix bkd_less.
+
 2005-09-06  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/appli/astro/tree_coherence_check.hh: Remove a badly used
