@@ -1,5 +1,10 @@
 2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
 
+	* mlc/bool.hh (lor_): Replace by ors.
+	* mlc/types.hh (value.hh): Remove useless include.
+
+2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
+
 	* mlc/traits.hh: Delete; replace by...
 	* mlc/ftraits.hh: ...this new file.
 	* mlc/farith.hh: New file.

@@ -29,6 +29,7 @@
 # define METALIC_BOOL_HH
 
 # include <mlc/value.hh>
+# include <mlc/types.hh>
 
 
 /// Macro that retrieves a Boolean value from a static type representing a Boolean.
@@ -106,11 +107,88 @@ namespace mlc
   template <typename L, typename R> struct xor_  : public value <bool,   (mlc_bool(L) != mlc_bool(R)) > {};
   template <typename L, typename R> struct xnor_ : public value <bool, (!(mlc_bool(L) != mlc_bool(R)))> {};
 
-  // List of (imbricated) 'or_'.
-  // FIXME: instead of limited to three args, it should be variadic...
 
-  template <typename A1, typename A2, typename A3>
-  struct lor_ : public or_< or_<A1, A2>, A3 > {};
+
+  namespace internal
+  {
+    // helpers for mlc::ors
+
+    template <typename A1, typename A2>
+    struct ors2 : public or_<A1, A2> {};
+
+    template <>
+    struct ors2 <no_type, no_type> : public true_type {};
+
+    template <typename A1>
+    struct ors2 <A1, no_type> : public A1 {};
+
+    template <typename A2>
+    struct ors2 <no_type, A2>;
+
+    template <typename A1, typename A2,
+	      typename A3, typename A4>
+    struct ors4 : public ors2< ors2<A1, A2>, ors2<A3, A4> > {};
+
+    template <>
+    struct ors4 <no_type, no_type, no_type, no_type> : public true_type {};
+
+    template <typename A1, typename A2, typename A3, typename A4,
+	      typename A5, typename A6, typename A7, typename A8>
+    struct ors8 : public ors2< ors4<A1, A2, A3, A4>, ors4<A5, A6, A7, A8> > {};
+
+    // helpers for mlc::ands
+
+    template <typename A1, typename A2>
+    struct ands2 : public and_<A1, A2> {};
+
+    template <>
+    struct ands2 <no_type, no_type> : public true_type {};
+
+    template <typename A1>
+    struct ands2 <A1, no_type> : public A1 {};
+
+    template <typename A2>
+    struct ands2 <no_type, A2>;
+
+    template <typename A1, typename A2,
+	      typename A3, typename A4>
+    struct ands4 : public ands2< ands2<A1, A2>, ands2<A3, A4> > {};
+
+    template <>
+    struct ands4 <no_type, no_type, no_type, no_type> : public true_type {};
+
+    template <typename A1, typename A2, typename A3, typename A4,
+	      typename A5, typename A6, typename A7, typename A8>
+    struct ands8 : public ands2< ands4<A1, A2, A3, A4>, ands4<A5, A6, A7, A8> > {};
+
+  } // end of mlc::internal
+
+
+  // 'ors' is a list of 'or_'.
+
+  template <typename A1,
+	    typename A2,
+	    typename A3,
+	    typename A4 = no_type,
+	    typename A5 = no_type,
+	    typename A6 = no_type,
+	    typename A7 = no_type,
+	    typename A8 = no_type>
+  struct ors : public internal::ors8< A1, A2, A3, A4, A5, A6, A7, A8 >
+  {};
+
+  // 'ands' is a list of 'and_'.
+
+  template <typename A1,
+	    typename A2,
+	    typename A3,
+	    typename A4 = no_type,
+	    typename A5 = no_type,
+	    typename A6 = no_type,
+	    typename A7 = no_type,
+	    typename A8 = no_type>
+  struct ands : public internal::ands8< A1, A2, A3, A4, A5, A6, A7, A8 >
+  {};
 
 
 } // end of namespace mlc
