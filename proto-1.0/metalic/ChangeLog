@@ -1,3 +1,23 @@
+2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
+
+	* mlc/traits.hh: Delete; replace by...
+	* mlc/ftraits.hh: ...this new file.
+	* mlc/farith.hh: New file.
+	* mlc/fcmp.hh: Update.
+	* mlc/fun.hh: Comment contents so that it does not conflict
+	with...
+	* mlc/afun.hh: ...this file and its update.
+	* mlc/bool.hh (lor_): New meta function.
+	* mlc/typedef.hh (mlc_typedef_onlyif_of): New macro and
+	related equipment.
+	* mlc/flogic.hh: Update.
+	* mlc/makefile.src: Update.
+	* mlc/overload.hh: Update.
+	(f_overload): Change meta-algorithm.
+	* mlc/array/1d.hh: Remove dependency on ntg.
+	* mlc/array/2d.hh: Likewise.
+	* mlc/array/3d.hh: Likewise.
+
 2005-09-06  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests: Fix a mis-spellt `runtests' call.

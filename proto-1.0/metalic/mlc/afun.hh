@@ -31,7 +31,6 @@
 # include <mlc/any.hh>
 # include <mlc/contract.hh>
 # include <mlc/overload.hh>
-# include <mlc/properties.hh>
 # include <mlc/to_string.hh>
 
 
@@ -52,8 +51,6 @@ mlc_type_of(mlc, mlc::category::fun, FunType, Alias)
 
 namespace mlc
 {
-
-  mlc_equip_namespace_with_properties();
 
   mlc_decl_typedef(res_type);
   mlc_decl_typedef(arg_type);
@@ -133,10 +130,8 @@ namespace mlc
   };
 
 
-
-
   // traits for result type of meta functions.
-
+  
   template <typename F,
 	    typename A1,
 	    typename A2 = mlc::undefined_type,
@@ -147,21 +142,15 @@ namespace mlc
   };
 
 
-
-
-  // tags used for overloading abstract::*_function::operator().
-
+  // tags used for overloading abstract::meta_*_function::operator().
 
   namespace tag
   {
-    // for meta functions
-    struct mufun; // unary
-    struct mbfun; // binary
-    struct mtfun; // ternary
-
+    struct mufun;
+    struct mbfun;
+    struct mtfun;
+    
   } // end of mlc::tag
-
-
 
 
 
@@ -211,6 +200,7 @@ namespace mlc
   template <typename F>
   struct set_props < category::fun, abstract::unary_function<F> >
   {
+    // typedef mlc::undefined_type arg_type;
     typedef mlc::no_type arg1_type;
     typedef mlc::no_type arg2_type;
     typedef mlc::no_type arg3_type;
@@ -220,6 +210,8 @@ namespace mlc
   struct set_props < category::fun, abstract::binary_function<F> >
   {
     typedef mlc::no_type arg_type;
+    // typedef mlc::undefined_type arg1_type;
+    // typedef mlc::undefined_type arg2_type;
     typedef mlc::no_type arg3_type;
   };
 
@@ -227,6 +219,9 @@ namespace mlc
   struct set_props < category::fun, abstract::ternary_function<F> >
   {
     typedef mlc::no_type arg_type;
+    // typedef mlc::undefined_type arg1_type;
+    // typedef mlc::undefined_type arg2_type;
+    // typedef mlc::undefined_type arg3_type;
   };
 
 

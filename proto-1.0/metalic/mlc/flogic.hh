@@ -29,10 +29,69 @@
 # define METALIC_FLOGIC_HH
 
 # include <mlc/afun.hh>
+# include <mlc/ftraits.hh>
 
 
 
-# define mlc_decl_mfun_logic(OperatorName, OperatorBody)					\
+namespace mlc
+{
+  // sample uses:
+  //
+  // mlc::fun::and_<bool> f;
+  // f(b1, b2);
+  //
+  // mlc::fun::and_<bool, Boolean> f;
+  // f(b1, b2);
+  //
+  // mlc::f_and f;
+  // f(b1, b2);
+  // or directly:  mlc::f_and(b1, b2);
+
+
+
+  // The unary logic operator is 'not'.
+
+  namespace fun
+  {
+    template <typename T> struct not_;
+  }
+
+  template <typename T>
+  struct set_super_type < fun::not_<T> >
+  {
+    typedef abstract::unary_function< fun::not_<T> > ret;
+  };
+
+  template <typename T>
+  struct set_props < category::fun, fun::not_<T> >
+  {
+    typedef typename traits_not<T>::ret res_type;
+    typedef T arg_type;
+  };
+
+  namespace fun
+  {
+    template <typename T>
+    struct not_ : public mlc::abstract::unary_function< not_<T> >
+    {
+      typedef not_<T> self_type;
+      mlc_fun_type_of(self_type, res)
+      impl_unop(const T& arg) const
+      {
+	return not arg;
+      }
+    };
+  }
+
+  typedef mfun1<fun::not_> f_not_type;
+  static f_not_type f_not;
+
+} // end of namespace mlc
+
+
+
+
+# define mlc_decl_fun_binary_logic(OperatorName, OperatorBody)					\
 												\
   namespace fun											\
   {												\
@@ -48,17 +107,19 @@
   template <typename T1, typename T2>								\
   struct set_props < category::fun, fun::OperatorName##_<T1,T2> >				\
   {												\
-    typedef bool res_type;									\
+    typedef typename traits_##OperatorName<T1,T2>::ret res_type;				\
     typedef T1 arg1_type;									\
     typedef T2 arg2_type;									\
   };												\
 												\
   namespace fun											\
   {												\
-    template <typename T1, typename T2>								\
+    template <typename T1, typename T2 = T1>							\
     struct OperatorName##_ : public mlc::abstract::binary_function< OperatorName##_<T1,T2> >	\
     {												\
-      bool impl_binop(const T1& lhs, const T2& rhs) const					\
+      typedef OperatorName##_<T1,T2> self_type;							\
+      mlc_fun_type_of(self_type, res)								\
+      impl_binop(const T1& lhs, const T2& rhs) const						\
       {												\
 	return OperatorBody;									\
       }												\
@@ -72,17 +133,19 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
+// Binary logic operators.
+
 namespace mlc
 {
 
-  mlc_decl_mfun_logic(   and,       lhs and rhs  );
-  mlc_decl_mfun_logic(  nand,  not (lhs and rhs) );
+  mlc_decl_fun_binary_logic(   and,       lhs and rhs  );
+  mlc_decl_fun_binary_logic(  nand,  not (lhs and rhs) );
 
-  mlc_decl_mfun_logic(    or,       lhs or rhs  );
-  mlc_decl_mfun_logic(   nor,  not (lhs or rhs) );
+  mlc_decl_fun_binary_logic(    or,       lhs or rhs  );
+  mlc_decl_fun_binary_logic(   nor,  not (lhs or rhs) );
 
-  mlc_decl_mfun_logic(   xor,  (lhs and not rhs) or (not lhs and     rhs) );
-  mlc_decl_mfun_logic(  xnor,  (lhs and     rhs) or (not lhs and not rhs) );
+  mlc_decl_fun_binary_logic(   xor,  (lhs and not rhs) or (not lhs and     rhs) );
+  mlc_decl_fun_binary_logic(  xnor,  (lhs and     rhs) or (not lhs and not rhs) );
 
 } // end of namespace mlc
 

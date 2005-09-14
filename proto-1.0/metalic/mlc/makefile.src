@@ -21,8 +21,10 @@ MLC_DEP =					\
   cmp.hh					\
   config/system.hh				\
   contract.hh					\
+  farith.hh					\
   fcmp.hh					\
   flogic.hh					\
+  ftraits.hh					\
   fun.hh					\
   if.hh						\
   implies.hh					\
@@ -33,7 +35,6 @@ MLC_DEP =					\
   switch.hh					\
   to_string.hh					\
   tracked_ptr.hh				\
-  traits.hh					\
   typedef.hh					\
   types.hh					\
   value.hh

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,8 +31,11 @@
 # include <mlc/contract.hh>
 # include <mlc/arith.hh>
 # include <mlc/array/objs.hh>
-# include <ntg/basics.hh>
+# include <mlc/ftraits.hh>
+# include <mlc/to_string.hh>
+
 # include <iostream>
+# include <cmath>
 
 
 // impl
@@ -40,6 +43,20 @@
 
 namespace mlc
 {
+
+  // fwd decl
+  template<class Info_, class T_>
+  struct array1d;
+
+  // binary traits
+  template <class Tag, class Info_, class T_, class U>
+  struct binary_traits <Tag, array1d<Info_, T_>, U>
+  {
+    typedef typename binary_traits<Tag, T_, U>::ret V;
+    typedef array1d<Info_, V> ret;
+  };
+
+
 
   template<class Info_, class T_>
   struct array1d
@@ -85,7 +102,7 @@ namespace mlc
     static std::string
     name()
     {
-      return std::string("array1d< Info, ") + ntg_name(T) + " >";
+      return std::string("array1d< Info, ") + mlc_to_string(T) + " >";
     }
 
 
@@ -96,12 +113,12 @@ namespace mlc
 
     // Normalize (absolute values -> relative values)
 
-    array1d<Info_, ntg::float_s>
+    array1d<Info_, float>
     normalize()
     {
-      array1d<Info_, ntg::float_s> tmp;
-      ntg::float_s sum = 0.f;
-      const ntg::float_s epsilon = 0.01f; // FIXME : epsilon should be global
+      array1d<Info_, float> tmp;
+      float sum = 0.f;
+      const float epsilon = 0.01f; // FIXME : epsilon should be global
       unsigned i;
       for (i = 0; i < Info_::card; ++i)
 	sum += this->buffer_[i];
@@ -137,20 +154,20 @@ namespace mlc
     // Think of a mechanism similar to apply() and apply2().
 
     template <class U>
-    array1d< Info, ntg_return_type(times, T, U) >
+    array1d< Info, mlc_binary_ret(times, T, U) >
     operator*(U w)
     {
-      array1d< Info, ntg_return_type(times, T, U) > tmp;
+      array1d< Info, mlc_binary_ret(times, T, U) > tmp;
       for (unsigned i = 0; i < Info::card; ++i)
 	tmp[i] = this->buffer_[i] * w;
       return tmp;
     }
 
     template <class U>
-    array1d< Info, ntg_return_type(div, T, U) >
+    array1d< Info, mlc_binary_ret(div, T, U) >
     operator/(U w)
     {
-      array1d< Info, ntg_return_type(div, T, U) > tmp;
+      array1d< Info, mlc_binary_ret(div, T, U) > tmp;
       for (unsigned i = 0; i < Info::card; ++i)
 	tmp[i] = this->buffer_[i] / w;
       return tmp;

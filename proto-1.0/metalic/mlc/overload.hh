@@ -33,10 +33,15 @@
 # include <mlc/is_a.hh>
 # include <mlc/if.hh>
 # include <mlc/cmp.hh>
+# include <mlc/typedef.hh>
+# include <mlc/properties.hh>
 
 
 namespace mlc
 {
+
+  mlc_equip_namespace_with_properties();
+
 
   /// where (for use as where clause).
 
@@ -53,10 +58,12 @@ namespace mlc
   template <typename what_is_overloaded,
  	    unsigned i,
 	    typename T1,
-	    typename T2 = mlc::undefined_type,
-	    typename T3 = mlc::undefined_type>
-  struct decl_overload : public mlc::undefined_type
-  {};
+	    typename T2 = no_type,
+	    typename T3 = no_type>
+  struct decl_overload : public undefined_type // FIXME: undefined_type is obsolete here
+  {
+    // no 'ret' inside
+  };
 
   // we know that the structure above is specialized by a client when
   // it does not derive from mlc::undefined_type
@@ -69,13 +76,15 @@ namespace mlc
   {
 
     template <typename what, unsigned i,
-	      typename T1, typename T2, typename T3>
+	      typename T1,
+	      typename T2 = no_type,
+	      typename T3 = no_type>
     struct f_overload;
 
     // f_overload(i)  ---here, other params are omitted
     // {
     //   for i = 1...
-    //     if (decl_overload(i) derives from undefined_type)
+    //     if (decl_overload(i) has not "typedef ret")
     //       ---default case
     //       return decl_overload(0)
     //     else if (decl_overload(i) derives from true_type)
@@ -96,7 +105,7 @@ namespace mlc
 
     template <typename what, unsigned i,
 	      typename T1, typename T2, typename T3>
-    struct helper_f_overload <mlc::undefined_type,
+    struct helper_f_overload <undefined_type,
 			      what, i, T1,T2,T3>
     {
       typedef decl_overload<what, 0, T1,T2,T3> ret;
@@ -106,7 +115,7 @@ namespace mlc
 
     template <typename what, unsigned i,
 	      typename T1, typename T2, typename T3>
-    struct helper_f_overload <mlc::true_type,
+    struct helper_f_overload <true_type,
 			      what, i, T1,T2,T3>
     {
       typedef decl_overload<what, i, T1,T2,T3> ret;
@@ -116,10 +125,11 @@ namespace mlc
 
     template <typename what, unsigned i,
 	      typename T1, typename T2, typename T3>
-    struct helper_f_overload <mlc::false_type,
+    struct helper_f_overload <false_type,
 			      what, i, T1,T2,T3>
     {
-      typedef typename f_overload<what, i+1, T1,T2,T3>::ret ret;
+      typedef f_overload<what, i+1, T1,T2,T3> next_overload;
+      typedef typename next_overload::ret ret;
     };
 
     // f_overload
@@ -129,14 +139,33 @@ namespace mlc
     struct f_overload
     {
       typedef decl_overload<what, i, T1,T2,T3> decl;
+
+//       first version of meta-code:
+//       ---------------------------
+//       typedef typename
+//       if_< mlc_is_a(decl, undefined_type),
+// 	   undefined_type, typename
+// 	   if_< mlc_is_a(decl, true_type),
+// 		true_type,
+// 		false_type >::ret
+//       >::ret base;
+
+//       new version relying on mlc_typedef_of:
+//       --------------------------------------
+      typedef mlc_typedef_of(decl, ret) decl_ret;
+
+//       typedef eq<decl_ret, mlc::internal::not_found> eq_res;
+//       typedef false_type base;
       typedef typename
-      mlc::if_< mlc_is_a(decl, mlc::undefined_type),
-		mlc::undefined_type, typename
-		mlc::if_< mlc_is_a(decl, mlc::true_type),
-			  mlc::true_type,
-			  mlc::false_type >::ret
+      if_< eq<decl_ret, mlc::internal::not_found>,
+	   undefined_type, typename
+	   if_< mlc_is_a(decl, true_type),
+		true_type,
+		false_type >::ret
       >::ret base;
-      typedef typename helper_f_overload<base, what, i, T1,T2,T3>::ret ret;
+
+      typedef helper_f_overload<base, what, i, T1,T2,T3> helper;
+      typedef typename helper::ret ret;
     };
 
   } // end of namespace mlc::internal
@@ -146,15 +175,15 @@ namespace mlc
 
   template <typename what,
 	    typename T1,
-	    typename T2 = mlc::undefined_type,
-	    typename T3 = mlc::undefined_type>
+	    typename T2 = no_type,
+	    typename T3 = no_type>
   struct overload
   {
     static const unsigned start = 1;
     typedef typename internal::f_overload<what, start, T1,T2,T3>::ret overload_type;
 
     // ret
-    typedef typename overload_type::ret ret;
+    typedef mlc_typedef_of(overload_type, ret) ret;
 
     // exec
     static ret exec(const T1& arg1, const T2& arg2, const T3& arg3)
@@ -170,15 +199,15 @@ namespace mlc
 	    typename T1, typename T2>
   struct overload <what,
 		   T1, T2,
-		   mlc::undefined_type>
+		   no_type>
   {
-    typedef mlc::undefined_type T3;
+    typedef no_type T3;
 
     static const unsigned start = 1;
     typedef typename internal::f_overload<what, start, T1,T2,T3>::ret overload_type;
 
     // ret
-    typedef typename overload_type::ret ret;
+    typedef mlc_typedef_of(overload_type, ret) ret;
 
     // exec
     static ret exec(const T1& arg1, const T2& arg2)
@@ -194,16 +223,16 @@ namespace mlc
 	    typename T1>
   struct overload <what,
 		   T1,
-		   mlc::undefined_type, mlc::undefined_type>
+		   no_type, no_type>
   {
-    typedef mlc::undefined_type T2;
-    typedef mlc::undefined_type T3;
+    typedef no_type T2;
+    typedef no_type T3;
 
     static const unsigned start = 1;
     typedef typename internal::f_overload<what, start, T1,T2,T3>::ret overload_type;
 
     // ret
-    typedef typename overload_type::ret ret;
+    typedef mlc_typedef_of(overload_type, ret) ret;
 
     // exec
     static ret exec(const T1& arg1)
@@ -227,7 +256,7 @@ namespace tag
 }
 
 template <class T>
-struct decl_overload <tag::foo, 1, T> : public where< mlc::eq<T, int> >
+struct decl_overload <tag::foo, 1, T> : public where< eq<T, int> >
 {
   typedef int ret;
   static ret exec(const int& lhs)

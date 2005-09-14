@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_FCMP_HH
-# define METALIC_FCMP_HH
+#ifndef METALIC_FARITH_HH
+# define METALIC_FARITH_HH
 
 # include <mlc/afun.hh>
 # include <mlc/ftraits.hh>
@@ -35,7 +35,52 @@
 
 
 
-# define mlc_decl_fun_cmp(OperatorName, OperatorBody)						\
+/// Macro mlc_decl_fun_unary_arith.
+
+# define mlc_decl_fun_unary_arith(OperatorName, OperatorBody)				\
+											\
+  namespace fun										\
+  {											\
+    template <typename T> struct OperatorName##_;					\
+  }											\
+											\
+  template <typename T>									\
+  struct set_super_type < fun::OperatorName##_<T> >					\
+  {											\
+    typedef abstract::unary_function< fun::OperatorName##_<T> > ret;			\
+  };											\
+											\
+  template <typename T>									\
+  struct set_props < category::fun, fun::OperatorName##_<T> >				\
+  {											\
+    typedef typename traits_##OperatorName<T>::ret res_type;				\
+    typedef T arg_type;									\
+  };											\
+											\
+  namespace fun										\
+  {											\
+    template <typename T>								\
+    struct OperatorName##_ : public mlc::abstract::unary_function< OperatorName##_<T> >	\
+    {											\
+      typedef OperatorName##_<T> self_type;						\
+      mlc_fun_type_of(self_type, res)							\
+      impl_unop(const T& arg) const							\
+      {											\
+	return OperatorBody;								\
+      }											\
+    };											\
+  }											\
+											\
+  typedef mfun1<fun::OperatorName##_> f_##OperatorName##_type;				\
+  static f_##OperatorName##_type f_##OperatorName;					\
+											\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+/// Macro mlc_decl_fun_binary_arith.
+
+# define mlc_decl_fun_binary_arith(OperatorName, OperatorBody)					\
 												\
   namespace fun											\
   {												\
@@ -79,22 +124,35 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 namespace mlc
 {
+  // FIXME: update... sample uses:
+  //
+  // mlc::fun::and_<bool> f;
+  // f(b1, b2);
+  //
+  // mlc::fun::and_<bool, Boolean> f;
+  // f(b1, b2);
+  //
+  // mlc::f_and f;
+  // f(b1, b2);
+  // or directly:  mlc::f_and(b1, b2);
 
-  mlc_decl_fun_cmp( eq,      lhs == rhs );
-  mlc_decl_fun_cmp( neq,     lhs != rhs );
+  mlc_decl_fun_unary_arith(  inc,    ++arg );
+  mlc_decl_fun_unary_arith(  dec,    --arg );
+  mlc_decl_fun_unary_arith(  uminus, - arg );
 
-  mlc_decl_fun_cmp( less,    lhs <  rhs );
-  mlc_decl_fun_cmp( leq,     lhs <= rhs );
+  mlc_decl_fun_binary_arith( plus,  lhs + rhs );
+  mlc_decl_fun_binary_arith( minus, lhs - rhs );
+  mlc_decl_fun_binary_arith( times, lhs * rhs );
+  mlc_decl_fun_binary_arith( div,   lhs / rhs );
+  mlc_decl_fun_binary_arith( mod,   lhs % rhs );
 
-  mlc_decl_fun_cmp( greater, lhs >  rhs );
-  mlc_decl_fun_cmp( geq,     lhs >= rhs );
+  mlc_decl_fun_binary_arith( min,   (std::min<T1>(lhs, rhs)) );
+  mlc_decl_fun_binary_arith( max,   (std::max<T1>(lhs, rhs)) );
+  mlc_decl_fun_binary_arith( inf,   (std::min<T1>(lhs, rhs)) ); // FIXME: awful!
+  mlc_decl_fun_binary_arith( sup,   (std::max<T1>(lhs, rhs)) ); // FIXME: awful!
 
 } // end of namespace mlc
 
 
-// FIXME: min-like functions should be defined here
-// instead of in farith.hh...
 
-
-
-#endif // ! METALIC_FCMP_HH
+#endif // ! METALIC_FARITH_HH

@@ -106,6 +106,13 @@ namespace mlc
   template <typename L, typename R> struct xor_  : public value <bool,   (mlc_bool(L) != mlc_bool(R)) > {};
   template <typename L, typename R> struct xnor_ : public value <bool, (!(mlc_bool(L) != mlc_bool(R)))> {};
 
+  // List of (imbricated) 'or_'.
+  // FIXME: instead of limited to three args, it should be variadic...
+
+  template <typename A1, typename A2, typename A3>
+  struct lor_ : public or_< or_<A1, A2>, A3 > {};
+
+
 } // end of namespace mlc
 
 
