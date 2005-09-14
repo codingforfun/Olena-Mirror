@@ -56,7 +56,13 @@ typename oln_super_of_(Type)
 namespace oln
 {
 
+
   mlc_equip_namespace_with_properties();
+
+
+  // misc
+
+  mlc_decl_typedef(exact_type);
 
   // general
 

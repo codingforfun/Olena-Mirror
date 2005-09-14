@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD_HH
 # define OLENA_CORE_NEIGHBORHOOD_HH
 
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -103,7 +104,7 @@ namespace oln {
     **
     */
     template <typename E>
-    struct neighborhood : public mlc::any<E>
+    struct neighborhood : public oln::abstract::any<E>
     {
 
     protected:

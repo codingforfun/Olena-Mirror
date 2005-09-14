@@ -28,8 +28,8 @@
 #ifndef OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
 # define OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
 
-# include <mlc/any.hh>
 # include <mlc/types.hh>
+# include <oln/core/abstract/any.hh>
 
 
 namespace oln {
@@ -50,7 +50,9 @@ namespace oln {
       };
 
       template <typename A, typename E>
-      struct get_image_impl_helper <A, mlc::no_type, E> : public virtual mlc::any__best_speed<E>
+      struct get_image_impl_helper <A, mlc::no_type, E>
+	:
+	public virtual oln::abstract::any_best_speed<E>
       {
 	// no impl
       };
@@ -65,7 +67,9 @@ namespace oln {
       };
 
       template <typename E>
-      struct image_impl : public mlc::any__best_speed<E>
+      struct image_impl
+	:
+	public virtual oln::abstract::any_best_speed<E>
       {
 	typedef oln_type_of(E, delegated) D;
 	D& delegate() { return this->exact().impl_delegate(); }

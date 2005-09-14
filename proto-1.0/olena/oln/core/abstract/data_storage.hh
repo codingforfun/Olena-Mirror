@@ -28,8 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_DATA_STORAGE_HH
 # define OLENA_CORE_ABSTRACT_DATA_STORAGE_HH
 
-# include <mlc/any.hh>
 # include <mlc/to_string.hh>
+
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -84,7 +85,7 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct data_storage : public mlc::any<E>
+    struct data_storage : public oln::abstract::any<E>
     {
       // typedefs
 

@@ -28,26 +28,6 @@
 #ifndef OLENA_OPS_MACRO_HH
 # define OLENA_OPS_MACRO_HH
 
-# include <oln/core/abstract/image.hh>
-# include <oln/core/pw/value.hh>
-# include <oln/core/pw/check.hh>
-
-
-# define oln_decl_image_binary_op(OperatorName)				\
-									\
-  template <typename F1, typename F2>					\
-  struct set_overload_2 < tag::op_##OperatorName,			\
-			  where<F1, oln::abstract::image>,		\
-			  where<F2, oln::abstract::image> >		\
-  {									\
-    typedef bool ret;							\
-    static ret exec(const F1& lhs, const F2& rhs)			\
-    {									\
-      return oln::pw::check(oln::pw_value(lhs) == oln::pw_value(rhs));	\
-    }									\
-  };									\
-									\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
+// FIXME: empty
 
 #endif // ! OLENA_OPS_MACRO_HH

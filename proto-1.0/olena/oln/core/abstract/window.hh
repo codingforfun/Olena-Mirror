@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_WINDOW_HH
 
 # include <mlc/contract.hh>
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -95,7 +96,7 @@ namespace oln {
     */
 
     template<class W>
-    struct window : public mlc::any<W>
+    struct window : public oln::abstract::any<W>
     {
     public:
       typedef oln_wn_type_of(W, dpoint) dpoint_type;

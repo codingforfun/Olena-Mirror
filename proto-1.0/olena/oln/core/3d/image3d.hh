@@ -28,8 +28,6 @@
 #ifndef OLENA_CORE_3D_IMAGE3D_HH
 # define OLENA_CORE_3D_IMAGE3D_HH
 
-# include <mlc/traits.hh>
-
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/abstract/image_like_.hh>
 # include <oln/core/3d/array3d.hh>

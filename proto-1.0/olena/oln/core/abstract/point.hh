@@ -28,11 +28,11 @@
 #ifndef OLENA_CORE_ABSTRACT_POINT_HH
 # define OLENA_CORE_ABSTRACT_POINT_HH
 
-# include <mlc/any.hh>
 # include <mlc/if.hh>
 # include <mlc/cmp.hh>
 # include <mlc/contract.hh>
 
+# include <oln/core/abstract/any.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/grid.hh>
@@ -110,7 +110,7 @@ namespace oln {
     ** Parameter E is the exact type of point.
     */
     template <typename E>
-    struct point : public mlc::any<E>
+    struct point : public oln::abstract::any<E>
     {
 
       typedef E exact_type;
@@ -201,21 +201,6 @@ namespace oln {
 
 
   } // end of namespace abstract
-
-
-  // FIXME: read FIXME in oln/core/abstract/size.hh ...
-
-//   namespace internal
-//   {
-
-//     template <typename P>
-//     bool operator_eq(const oln::abstract::point<P>& lhs,
-// 		     const oln::abstract::point<P>& rhs)
-//     {
-//       return lhs.operator==(rhs); // FIXME: rename 'point::operator==' into 'point::eq'
-//     }
-
-//   } // end of namespace oln::internal
 
 
 } // end of namespace oln

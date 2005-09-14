@@ -33,6 +33,8 @@
 # include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/macros.hh>
 
+// FIXME: this file contents will be obsolete when...
+// FIXME: ...we have fun(pwf) work
 
 namespace oln {
 

@@ -28,152 +28,143 @@
 #ifndef OLENA_OPS_ARITH_HH
 # define OLENA_OPS_ARITH_HH
 
+# include <mlc/bool.hh>
+# include <mlc/is_a.hh>
+# include <mlc/typedef.hh>
+
 # include <oln/core/abstract/image.hh>
 # include <oln/core/pw/image.hh>
 # include <oln/core/pw/value.hh>
 # include <oln/core/pw/arith.hh>
 
+# include <oln/ops/overload.hh>
+
+
+# define oln_are_2_images(I1, I2)		\
+mlc::and_< mlc_is_a(I1, abstract::image),	\
+           mlc_is_a(I2, abstract::image) >
+
+
+# define oln_decl_binary_operator_overload(OperatorName, OperatorSymbol)	\
+										\
+  template <typename L, typename R>						\
+  struct decl_overload< mlc::tag::OperatorName##_, 6, L, R >			\
+    : mlc::where< oln_are_2_images(L, R) >					\
+  {										\
+    typedef pw::image< pw::binary_op< mlc::f_##OperatorName##_type,		\
+                                      pw::value<L>,				\
+                                      pw::value<R> > > ret;			\
+  };										\
+										\
+  template <typename L, typename R>						\
+  mlc_binary_ret(OperatorName, L, R)						\
+  operator OperatorSymbol (const abstract::image<L>& lhs,			\
+			   const abstract::image<R>& rhs)			\
+  {										\
+    return pw_image(pw_value(lhs) OperatorSymbol pw_value(rhs));		\
+  }										\
+										\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+# define oln_decl_unary_operator_overload(OperatorName, OperatorSymbol)	\
+									\
+  template <typename R>							\
+  struct decl_overload< mlc::tag::OperatorName##_, 6, R >		\
+    : mlc::where< mlc_is_a(R, abstract::image) >			\
+  {									\
+    typedef pw::image< pw::unary_op< mlc::f_##OperatorName##_type,	\
+                                     pw::value<R> > > ret;		\
+  };									\
+									\
+  template <typename R>							\
+  mlc_unary_ret(OperatorName, R)					\
+  operator OperatorSymbol (const abstract::image<R>& rhs)		\
+  {									\
+    return pw_image(OperatorSymbol pw_value(rhs));			\
+  }									\
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
 
 namespace oln
 {
 
-  /// Operator-like "min" and "max" between 2 images.
+  // Binary arithmetical operators between images.
 
-  template <typename L, typename R>
-  image_from_pwf< pw::binary_op< f_min_type,
-				 pw::value<L>,
-				 pw::value<R> > >
-  min (const abstract::image<L>& lhs,
-       const abstract::image<R>& rhs)
-  {
-    return image_for_all_p( oln::min(pw_value(lhs), pw_value(rhs)) );
-  }
+  oln_decl_binary_operator_overload(  plus, + );  
+  oln_decl_binary_operator_overload( minus, - );  
+  oln_decl_binary_operator_overload( times, * );  
+  oln_decl_binary_operator_overload(   div, / );  
+  oln_decl_binary_operator_overload(   mod, % );  
 
-  template <typename L, typename R>
-  image_from_pwf< pw::binary_op< f_max_type,
-				 pw::value<L>,
-				 pw::value<R> > >
-  max (const abstract::image<L>& lhs,
-       const abstract::image<R>& rhs)
-  {
-    return image_for_all_p( oln::max(pw_value(lhs), pw_value(rhs)) );
-  }
-
-  /// Operator-like "inf" and "sup" between 2 images.
-
-  template <typename L, typename R>
-  image_from_pwf< pw::binary_op< f_inf_type,
-				 pw::value<L>,
-				 pw::value<R> > >
-  inf (const abstract::image<L>& lhs,
-       const abstract::image<R>& rhs)
-  {
-    return image_for_all_p( oln::inf(pw_value(lhs), pw_value(rhs)) );
-  }
-
-  template <typename L, typename R>
-  image_from_pwf< pw::binary_op< f_sup_type,
-				 pw::value<L>,
-				 pw::value<R> > >
-  sup (const abstract::image<L>& lhs,
-       const abstract::image<R>& rhs)
-  {
-    return image_for_all_p( oln::sup(pw_value(lhs), pw_value(rhs)) );
-  }
+  oln_decl_unary_operator_overload(    inc, ++ );  
+  oln_decl_unary_operator_overload(    dec, -- );  
+  oln_decl_unary_operator_overload( uminus, - );  
 
 
+//   /// Operator-like "min" and "max" between 2 images.
 
-  /// Operator '+' between 2 images.
+//   template <typename L, typename R>
+//   image_from_pwf< pw::binary_op< f_min_type,
+// 				 pw::value<L>,
+// 				 pw::value<R> > >
+//   min (const abstract::image<L>& lhs,
+//        const abstract::image<R>& rhs)
+//   {
+//     return image_for_all_p( oln::min(pw_value(lhs), pw_value(rhs)) );
+//   }
 
-  template <typename L, typename R>
-  oln::image_from_pwf< oln::pw::binary_op< oln::f_plus_type,
-					   oln::pw::value<L>,
-					   oln::pw::value<R> > >
-  operator + (const oln::abstract::image<L>& lhs,
-	      const oln::abstract::image<R>& rhs)
-  {
-    return oln::image_for_all_p(oln::pw_value(lhs) + oln::pw_value(rhs));
-  }
+//   template <typename L, typename R>
+//   image_from_pwf< pw::binary_op< f_max_type,
+// 				 pw::value<L>,
+// 				 pw::value<R> > >
+//   max (const abstract::image<L>& lhs,
+//        const abstract::image<R>& rhs)
+//   {
+//     return image_for_all_p( oln::max(pw_value(lhs), pw_value(rhs)) );
+//   }
 
+//   /// Operator-like "inf" and "sup" between 2 images.
 
-  /// Operator '-' between 2 images.
+//   template <typename L, typename R>
+//   image_from_pwf< pw::binary_op< f_inf_type,
+// 				 pw::value<L>,
+// 				 pw::value<R> > >
+//   inf (const abstract::image<L>& lhs,
+//        const abstract::image<R>& rhs)
+//   {
+//     return image_for_all_p( oln::inf(pw_value(lhs), pw_value(rhs)) );
+//   }
 
-  template <typename L, typename R>
-  oln::image_from_pwf< oln::pw::binary_op< oln::f_minus_type,
-					   oln::pw::value<L>,
-					   oln::pw::value<R> > >
-  operator - (const oln::abstract::image<L>& lhs,
-	      const oln::abstract::image<R>& rhs)
-  {
-    return oln::image_for_all_p(oln::pw_value(lhs) - oln::pw_value(rhs));
-  }
+//   template <typename L, typename R>
+//   image_from_pwf< pw::binary_op< f_sup_type,
+// 				 pw::value<L>,
+// 				 pw::value<R> > >
+//   sup (const abstract::image<L>& lhs,
+//        const abstract::image<R>& rhs)
+//   {
+//     return image_for_all_p( oln::sup(pw_value(lhs), pw_value(rhs)) );
+//   }
 
-
-  /// Operator '*' between 2 images.
-
-  template <typename L, typename R>
-  oln::image_from_pwf< oln::pw::binary_op< oln::f_times_type,
-					   oln::pw::value<L>,
-					   oln::pw::value<R> > >
-  operator * (const oln::abstract::image<L>& lhs,
-	      const oln::abstract::image<R>& rhs)
-  {
-    return oln::image_for_all_p(oln::pw_value(lhs) * oln::pw_value(rhs));
-  }
-
-
-  /// Operator '/' between 2 images.
-
-  template <typename L, typename R>
-  oln::image_from_pwf< oln::pw::binary_op< oln::f_div_type,
-					   oln::pw::value<L>,
-					   oln::pw::value<R> > >
-  operator / (const oln::abstract::image<L>& lhs,
-	      const oln::abstract::image<R>& rhs)
-  {
-    return oln::image_for_all_p(oln::pw_value(lhs) / oln::pw_value(rhs));
-  }
-
-
-  /// Operator '%' between 2 images.
-
-  template <typename L, typename R>
-  oln::image_from_pwf< oln::pw::binary_op< oln::f_mod_type,
-					   oln::pw::value<L>,
-					   oln::pw::value<R> > >
-  operator % (const oln::abstract::image<L>& lhs,
-	      const oln::abstract::image<R>& rhs)
-  {
-    return oln::image_for_all_p(oln::pw_value(lhs) % oln::pw_value(rhs));
-  }
 
 
 } // end of namespace oln
 
 
 
-// FIXME...
-
-// /// Operator - (unary) on image.
-
-// template <typename R>
-// oln::image_from_pw< oln::pw::minus< oln::pw::literal< oln_pw_type_of(R, value) >,
-// 				    oln::pw::image<R> > >
-// operator - (const oln::abstract::image<R>& rhs)
-// {
-//   return oln::image_for_all_p( - oln::p_value(rhs));
-// }
-
 
 // template <typename I, typename F>
-// void operator + (const oln::abstract::image<I>&,
-// 		 const oln::pw::abstract::function<F>&)
+// void operator + (const abstract::image<I>&,
+// 		 const pw::abstract::function<F>&)
 // {
 //   struct OLENA_ERROR__args_are_not_compatible();
 // }
 // template <typename F, typename I>
-// void operator + (const oln::pw::abstract::function<F>&,
-// 		 const oln::abstract::image<I>&)
+// void operator + (const pw::abstract::function<F>&,
+// 		 const abstract::image<I>&)
 // {
 //   struct OLENA_ERROR__args_are_not_compatible();
 // }

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_PW_ABSTRACT_FUNCTION_HH
 # define OLENA_CORE_PW_ABSTRACT_FUNCTION_HH
 
-# include <mlc/any.hh>
+# include <oln/core/abstract/any.hh>
 # include <oln/core/abstract/image.hh>
 # include <oln/core/typedefs.hh>
 
@@ -80,23 +80,31 @@ namespace oln {
     }
   };
 
-
+  // fwd decls
   namespace pw {
-
-    // fwd decls
     namespace abstract {
       template <typename E> struct function;
     }
     template <typename T> struct literal;
     // FIXME:...
-//     template <typename L, typename R> struct minus;
-//     template <typename F> struct not_;
+    //     template <typename L, typename R> struct minus;
+    //     template <typename F> struct not_;
+  } // end of namespace oln::pw
 
+
+  template <typename E>
+  struct set_props < category::pw, pw::abstract::function<E> >
+  {
+    typedef E exact_type;
+  };
+
+
+  namespace pw {
 
     namespace abstract {
 
       template <typename E>
-      struct function : public mlc::any<E>
+      struct function : public oln::abstract::any<E>
       {
 	typedef oln_pw_type_of(E, point) point_type;
 	typedef oln_pw_type_of(E, value) value_type;
@@ -110,6 +118,12 @@ namespace oln {
 	const value_type operator()(const point_type& p) const
 	{
 	  return this->exact().impl_get(p);
+	}
+
+	template <typename P>
+	void operator[](const P&) const
+	{
+	  // FIXME: provide an explicit err msg, e.g., "[p] should not be used on a pwf"
 	}
 
 	bool hold(const point_type& p) const

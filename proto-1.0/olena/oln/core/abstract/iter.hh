@@ -28,9 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_ITER_HH
 # define OLENA_CORE_ABSTRACT_ITER_HH
 
-# include <mlc/any.hh>
 # include <mlc/contract.hh>
 
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -39,7 +39,7 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct iter : public mlc::any<E>
+    struct iter : public oln::abstract::any<E>
     {
 
       void next()

@@ -25,50 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS_HH
-# define OLENA_BASICS_HH
+#ifndef OLENA_CORE_ABSTRACT_ANY_HH
+# define OLENA_CORE_ABSTRACT_ANY_HH
 
-
-// std::
-
-
-# include <iostream>
-
-
-// mlc::
-
-# include <mlc/contract.hh>
-# include <mlc/ftraits.hh>
 # include <mlc/any.hh>
-# include <mlc/types.hh>
+# include <mlc/bool.hh>
+# include <mlc/is_a.hh>
 
 
-// ntg::
+namespace oln {
 
-// FIXME: include a fake ntg/decls.hh that should be in oln/
-
-
-// oln::
-
-# include <oln/core/abstract/any.hh>
-# include <oln/core/coord.hh> // FIXME: why?
-
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/image_entry.hh>
-
-# include <oln/core/abstract/size.hh>
-# include <oln/core/abstract/point.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/abstract/window.hh>
-# include <oln/core/abstract/neighborhood.hh>
-
-# include <oln/core/abstract/piter.hh>
-# include <oln/core/abstract/qiter.hh>
-# include <oln/core/abstract/niter.hh>
-
-# include <oln/core/any/all.hh>
-# include <oln/core/pw/all.hh>
+  namespace abstract {
 
 
+    template <typename E>
+    struct any
+      :
+      public mlc::any<E, mlc::dispatch_policy::simple>
+    {
+    protected:
+      typedef mlc::any<E, mlc::dispatch_policy::simple> super;
+      any(E* exact_ptr) : super(exact_ptr) {}
+      any() {}
+    };
 
-#endif // ! OLENA_BASICS_HH
+
+    template <typename E>
+    struct any_best_speed
+      :
+      public mlc::any<E, mlc::dispatch_policy::best_speed>
+    {
+    protected:
+      typedef mlc::any<E, mlc::dispatch_policy::best_speed> super;
+      any_best_speed(E* exact_ptr = 0) : super(exact_ptr) {}
+    };
+
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
+
+
+# define oln_is_any(Type) mlc::or_< mlc_is_a(Type, oln::abstract::any),			\
+                                    mlc_is_a(Type, oln::abstract::any_best_speed) >
+
+
+#endif // ! OLENA_CORE_ABSTRACT_ANY_HH

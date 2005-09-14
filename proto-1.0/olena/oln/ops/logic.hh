@@ -28,61 +28,69 @@
 #ifndef OLENA_OPS_LOGIC_HH
 # define OLENA_OPS_LOGIC_HH
 
+# include <mlc/bool.hh>
+# include <mlc/is_a.hh>
+
 # include <oln/core/abstract/image.hh>
+# include <oln/core/pw/unary_op.hh>
+# include <oln/core/pw/binary_op.hh>
 # include <oln/core/pw/image.hh>
 # include <oln/core/pw/value.hh>
 # include <oln/core/pw/logic.hh>
 
 
-/// Operator 'and' between 2 binary images.
+# define oln_decl_binary_logic_op(OperatorName, OperatorSymbol)		\
+									\
+  template <typename L, typename R>					\
+  struct decl_overload< mlc::tag::OperatorName##_, 6, L, R >		\
+    : mlc::where< mlc::and_< mlc_is_a(L, abstract::image),		\
+			     mlc_is_a(R, abstract::image) > >		\
+  {									\
+    typedef pw::image< pw::binary_op< mlc::f_##OperatorName##_type,	\
+                                      pw::value<L>,			\
+                                      pw::value<R> > > ret;		\
+  };									\
+									\
+  template <typename L, typename R>					\
+  const mlc_binary_ret(OperatorName, L, R)				\
+  operator OperatorSymbol(const abstract::image<L>& lhs,		\
+			  const abstract::image<R>& rhs)		\
+  {									\
+    mlc::and_< mlc_is_a(L, abstract::binary_image),			\
+               mlc_is_a(R, abstract::binary_image) >::ensure();		\
+    return pw_image(pw_value(lhs) OperatorSymbol pw_value(rhs));	\
+  }									\
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
-template <typename L, typename R>
-const oln::image_from_pwf< oln::pw::binary_op< oln::f_and_type,
-					       oln::pw::value<L>,
-					       oln::pw::value<R> > >
-operator and (const oln::abstract::binary_image<L>& lhs,
-	      const oln::abstract::binary_image<R>& rhs)
+
+
+namespace oln
 {
-  return oln::image_for_all_p(oln::pw_value(lhs) and oln::pw_value(rhs));
-}
+  oln_decl_binary_logic_op( and, and );
+  oln_decl_binary_logic_op(  or,  or );
+  oln_decl_binary_logic_op( xor, xor );
+
+  /// Unary operator 'not' on a binary image.
+
+  template <typename I>
+  struct decl_overload< mlc::tag::not_, 2, I >
+    : mlc::where< mlc_is_a(I, abstract::image) >
+  {
+    typedef pw::image< pw::unary_op< mlc::f_not_type,
+                                     pw::value<I> > > ret;
+  };
+
+  template <typename I>
+  const mlc_unary_ret(not, I)
+  operator not (const abstract::image<I>& rhs)
+  {
+    mlc_is_a(I, abstract::binary_image)::ensure();
+    return pw_image(not pw_value(rhs));
+  }
 
 
-/// Operator 'or' between 2 binary images.
-
-template <typename L, typename R>
-const oln::image_from_pwf< oln::pw::binary_op< oln::f_or_type,
-					       oln::pw::value<L>,
-					       oln::pw::value<R> > >
-operator or (const oln::abstract::binary_image<L>& lhs,
-	     const oln::abstract::binary_image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) or oln::pw_value(rhs));
-}
-
-
-/// Operator 'xor' between 2 binary images.
-
-template <typename L, typename R>
-const oln::image_from_pwf< oln::pw::binary_op< oln::f_xor_type,
-					       oln::pw::value<L>,
-					       oln::pw::value<R> > >
-operator xor (const oln::abstract::binary_image<L>& lhs,
-	      const oln::abstract::binary_image<R>& rhs)
-{
-  return oln::image_for_all_p(oln::pw_value(lhs) xor oln::pw_value(rhs));
-}
-
-
-// FIXME...
-// /// Unary operator 'not' on a binary image.
-
-// template <typename I>
-// oln::image_from_pw< oln::pw::not_< oln::pw::image<I> > >
-// operator ! (const oln::abstract::binary_image<I>& rhs)
-// {
-//   return oln::image_for_all_p(!oln::p_value(rhs));
-// }
-
+} // end of namespace oln
 
 
 #endif // ! OLENA_OPS_LOGIC_HH

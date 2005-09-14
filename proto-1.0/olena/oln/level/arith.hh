@@ -68,7 +68,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_type_of(I1, concrete) output("output");
-      output = clone( oln::min(input1, input2) );
+      output = clone( mlc::f_min(input1, input2) );
 
       exiting("level::min");
       return output;
@@ -92,7 +92,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_type_of(I1, concrete) output("output");
-      output = clone( oln::max(input1, input2) );
+      output = clone( mlc::f_max(input1, input2) );
 
       exiting("level::max");
       return output;
@@ -116,7 +116,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_type_of(I1, concrete) output("output");
-      output = clone( oln::inf(input1, input2) );
+      output = clone( mlc::f_inf(input1, input2) );
 
       exiting("level::inf");
       return output;
@@ -140,7 +140,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_type_of(I1, concrete) output("output");
-      output = clone( oln::sup(input1, input2) );
+      output = clone( mlc::f_sup(input1, input2) );
 
       exiting("level::sup");
       return output;
@@ -160,41 +160,41 @@ namespace oln
     };
 
 
-    template <typename I1, typename I2>
-    oln_arith_output(plus, I1, I2)
-    plus (const abstract::image<I1>& input1,
-	  const abstract::image<I2>& input2)
-    {
-      // FIXME: recording(?)
-      mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
-      typedef oln::f_::plus_<oln_type_of(I1, value), oln_type_of(I2, value)> fun_type;
-      return apply2(fun_type(), input1, input2);
-      // FIXME: does not work yet!
-//       return apply2(oln::f_plus, input1, input2);
-    }
-
-
-//     // plus
-
 //     template <typename I1, typename I2>
-//     oln_arith_output(plus,I1,I2)
+//     oln_arith_output(plus, I1, I2)
 //     plus (const abstract::image<I1>& input1,
 // 	  const abstract::image<I2>& input2)
 //     {
+//       // FIXME: recording(?)
 //       mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
-
-//       entering("level::plus");
-//       registering(input1, "input1");
-//       registering(input2, "input2");
-
-//       precondition(input1.size() == input2.size());
-
-//       oln_arith_output(plus,I1,I2) output("output");
-//       output = clone( input1 + input2 );
-
-//       exiting("level::plus");
-//       return output;
+//       typedef oln::f_::plus_<oln_type_of(I1, value), oln_type_of(I2, value)> fun_type;
+//       return apply2(fun_type(), input1, input2);
+//       // FIXME: does not work yet!
+// //       return apply2(oln::f_plus, input1, input2);
 //     }
+
+
+    // plus
+
+    template <typename I1, typename I2>
+    oln_arith_output(plus,I1,I2)
+    plus (const abstract::image<I1>& input1,
+	  const abstract::image<I2>& input2)
+    {
+      mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
+
+      entering("level::plus");
+      registering(input1, "input1");
+      registering(input2, "input2");
+
+      precondition(input1.size() == input2.size());
+
+      oln_arith_output(plus,I1,I2) output("output");
+      output = clone( input1 + input2 );
+
+      exiting("level::plus");
+      return output;
+    }
 
 
     // minus

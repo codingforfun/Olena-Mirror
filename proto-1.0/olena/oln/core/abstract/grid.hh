@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_GRID_HH
 # define OLENA_CORE_ABSTRACT_GRID_HH
 
-# include <mlc/any.hh>
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -94,7 +94,7 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct grid : public mlc::any<E>
+    struct grid : public oln::abstract::any<E>
     {
     protected:
       grid()

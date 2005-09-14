@@ -69,6 +69,7 @@ OLN_DEP =					\
   core/3d/size3d.hh				\
   core/3d/window3d.hh				\
 						\
+  core/abstract/any.hh				\
   core/abstract/data_storage.hh			\
   core/abstract/dpoint.hh			\
   core/abstract/grid.hh				\
@@ -108,6 +109,7 @@ OLN_DEP =					\
   core/coord.hh					\
 						\
   core/gen/attr.hh				\
+  core/gen/cst.hh				\
   core/gen/identity.hh				\
   core/gen/image_with_nbh.hh			\
   core/gen/internal/value_box.hh		\
@@ -147,11 +149,9 @@ OLN_DEP =					\
   funobj/abstract/unary.hh			\
   funobj/accum.hh				\
   funobj/arith.hh				\
-  funobj/cmp.hh					\
   funobj/decl_attr.hh				\
   funobj/infsup.hh				\
   funobj/invert.hh				\
-  funobj/logic.hh				\
 						\
   io/gz_stream.hh				\
   io/pnm_bin.hh					\
@@ -200,6 +200,7 @@ OLN_DEP =					\
   ops/cmp.hh					\
   ops/logic.hh					\
   ops/macro.hh					\
+  ops/overload.hh				\
 						\
   utils/buffer.hh				\
   utils/clone.hh				\

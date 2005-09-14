@@ -37,12 +37,11 @@ namespace oln {
 
   namespace pw {
 
-
     template <typename F>
     bool check(const abstract::function<F>& pred)
     {
       mlc::eq< oln_typeness_of(oln_pw_type_of(F, value)), typeness::binary_tag >::ensure();
-      typedef image_from_pwf<F> I;
+      typedef pw::image<F> I;
       I ima(pred);
       oln_type_of(I, fwd_piter) p(ima.size());
       for_all_p (p)
@@ -51,8 +50,13 @@ namespace oln {
       return true;
     }
 
-
   } // end of namespace oln::pw
+
+  template <typename F>
+  bool pw_check(const pw::abstract::function<F>& pred)
+  {
+    return pw::check(pred);
+  }
 
 } // end of namespace oln
 

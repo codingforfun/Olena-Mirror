@@ -1,3 +1,72 @@
+2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
+
+        Add general inheritance for oln objects and new
+	overloading mechanism for operators.
+	
+	* oln/core/abstract/any.hh: New file.
+	Abstract type for every oln objects.
+	* oln/core/gen/cst.hh: New file.
+	oln::cst<T> is the type for literals in oln.
+	* oln/ops/overload.hh: New file.
+	Make mlc overload mechanism relies on overload declarations
+	within oln.
+	* oln/funobj/logic.hh: Remove obsolete file.
+	Replace by mlc/flogic.hh.
+	* oln/funobj/cmp.hh: Remove obsolete file.
+	Replace by mlc/fcmp.hh.
+	* oln/makefile.src (OLN_DEP): Update.
+	
+	* oln/funobj/infsup.hh (oln/funobj/logic.hh): Comment useless
+	include.
+	* oln/core/typedefs.hh (exact_type): New typedef decl.
+	* oln/core/abstract/image.hh: Update.
+	* oln/core/abstract/piter.hh (mlc/any.hh): Remove useless include.
+	* oln/core/abstract/grid.hh: Update inheritance.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/data_storage.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/abstract/window.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/coord.hh: Likewise.
+	(operators): Change to regular writting.
+	* oln/core/2d/dpoint2d.hh:  Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/2d/size2d.hh (operator_eq): Remove.
+	* oln/core/3d/image3d.hh (mlc/traits.hh): Remove include.
+	
+	* oln/core/pw/binary_op.hh: Update to conform to mlc/afun.hh.
+	(oln/funobj/abstract/binary.hh): Remove obsolete include.
+	(binary_op): New ctor with a fun as 1st arg.
+	(decl_overload): New overloads for mlc::abstract::meta_*_function
+	when args are pw::abstract::functions and abstract::images.	
+	* oln/core/pw/unary_op.hh: Likewise.
+	* oln/core/pw/image.hh (image_from_pwf): Rename class as image.
+	(image_for_all_p): Rename as pw_image.
+	* oln/core/pw/check.hh: Update.
+	(pw_check): New facade procedure.
+	* oln/core/pw/abstract/function.hh: Update inheritance.
+	* oln/core/pw/apply.hh: Add fixme.
+
+	* oln/core/pw/macros.hh: Remove contents.
+	Macros are split in the three following files.
+	* oln/core/pw/arith.hh: Rewrite.
+	* oln/core/pw/logic.hh: Rewrite.
+	* oln/core/pw/cmp.hh: Rewrite.
+	* oln/utils/overload.hh: Remove contents.
+	Former contents has been split in
+	oln/ops/{overload,arith,logic,cmp}.hh.
+	* oln/ops/macro.hh: Likewise.
+	* oln/ops/arith.hh: Rewrite.
+	* oln/ops/logic.hh: Rewrite.
+	* oln/ops/cmp.hh: Rewrite.
+
+	* oln/basics.hh: Update include.
+	* oln/morpho/local.hh: Likewise.
+	* oln/level/arith.hh: Update.
+	
 2005-09-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/core/abstract/point.hh: Fix bkd_less.

@@ -29,7 +29,7 @@
 # define OLENA_CORE_FUNOBJ_INFSUP_HH
 
 # include <oln/funobj/arith.hh>
-# include <oln/funobj/logic.hh>
+//# include <oln/funobj/logic.hh>
 
 
 namespace oln

@@ -28,8 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
-# include <mlc/any.hh>
 # include <mlc/contract.hh>
+
+# include <oln/core/abstract/any.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/typedefs.hh>
 
@@ -53,7 +54,7 @@ namespace oln {
     ** Parameter E is the exact type of dpoint.
     */
     template <typename E>
-    struct dpoint : public mlc::any<E>
+    struct dpoint : public oln::abstract::any<E>
     {
       typedef E exact_type;
 

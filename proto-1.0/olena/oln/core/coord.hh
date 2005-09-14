@@ -30,7 +30,10 @@
 
 # include <iostream>
 # include <limits.h>
+
 # include <mlc/contract.hh>
+
+# include <oln/core/abstract/any.hh>
 
 
 // FIXME: this file should be in oln/utils/
@@ -39,7 +42,7 @@
 namespace oln {
 
 
-  class coord_t
+  class coord_t : public oln::abstract::any< coord_t >
   {
   public:
 
@@ -153,23 +156,49 @@ namespace oln {
 
   };
 
+  /// Operators ==.
 
-  namespace internal
+  bool operator==(const coord_t& lhs, const coord_t& rhs)
   {
+    precondition(lhs.is_defined() and rhs.is_defined());
+    return coord_t::value_type(lhs) == coord_t::value_type(rhs);
+  }
 
-    bool operator_eq(const coord_t& lhs, const coord_t& rhs)
-    {
-      precondition(lhs.is_defined() and rhs.is_defined());
-      return coord_t::value_type(lhs) == coord_t::value_type(rhs);
-    }
+  bool operator==(const coord_t::value_type& lhs,
+		  const coord_t& rhs)
+  {
+    precondition(rhs.is_defined());
+    return lhs == coord_t::value_type(rhs);
+  }
 
-    bool operator_less(const coord_t& lhs, const coord_t& rhs)
-    {
-      precondition(lhs.is_defined() and rhs.is_defined());
-      return coord_t::value_type(lhs) < coord_t::value_type(rhs);
-    }
+  bool operator==(const coord_t& lhs,
+		  const coord_t::value_type& rhs)
+  {
+    precondition(lhs.is_defined());
+    return coord_t::value_type(lhs) == rhs;
+  }
 
-  } // end of namespace oln::internal
+  /// Operators <.
+
+  bool operator<(const coord_t& lhs, const coord_t& rhs)
+  {
+    precondition(lhs.is_defined() and rhs.is_defined());
+    return coord_t::value_type(lhs) < coord_t::value_type(rhs);
+  }
+
+  bool operator<(const coord_t::value_type& lhs,
+		 const coord_t& rhs)
+  {
+    precondition(rhs.is_defined());
+    return lhs < coord_t::value_type(rhs);
+  }
+
+  bool operator<(const coord_t& lhs,
+		 const coord_t::value_type& rhs)
+  {
+    precondition(lhs.is_defined());
+    return coord_t::value_type(lhs) < rhs;
+  }
 
 
 } // end of namespace oln

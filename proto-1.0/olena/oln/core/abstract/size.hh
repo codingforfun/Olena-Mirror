@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_ABSTRACT_SIZE_HH
 # define OLENA_CORE_ABSTRACT_SIZE_HH
 
-# include <mlc/any.hh>
 # include <mlc/if.hh>
 # include <mlc/cmp.hh>
+
+# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -55,7 +56,7 @@ namespace oln {
     /// Abstract class for size classes.
 
     template <typename E>
-    struct size : public mlc::any__best_memory<E>
+    struct size : public oln::abstract::any<E> // FIXME: was mlc::any__best_memory<E> (!?)
     {
 
       // FIXME: remove?
@@ -90,19 +91,6 @@ namespace oln {
 
   } // end of namespace abstract
 
-//   // FIXME: this op is better than the corresponding collection of
-//   // op for subclasses
-//   namespace internal
-//   {
-
-//     template <typename S>
-//     bool operator_eq(const oln::abstract::size<S>& lhs,
-// 		     const oln::abstract::size<S>& rhs)
-//     {
-//       return lhs.operator==(rhs);
-//     }
-
-//   } // end of namespace oln::internal
 
 } // end of namespace oln
 

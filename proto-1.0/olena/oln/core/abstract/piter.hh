@@ -28,7 +28,6 @@
 #ifndef OLENA_CORE_ABSTRACT_PITER_HH
 # define OLENA_CORE_ABSTRACT_PITER_HH
 
-# include <mlc/any.hh>
 # include <mlc/types.hh>
 # include <mlc/contract.hh>
 

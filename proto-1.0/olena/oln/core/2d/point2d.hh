@@ -158,15 +158,10 @@ namespace oln {
     return tmp;
   }
 
-  namespace internal
+  bool operator==(const point2d& lhs, const point2d& rhs)
   {
-
-    bool operator_eq(const point2d& lhs, const point2d& rhs)
-    {
-      return lhs.operator==(rhs); // FIXME: should be lhs.eq(rhs)
-    }
-
-  } // end of namespace oln::internal
+    return lhs.operator==(rhs); // FIXME: should be lhs.eq(rhs)
+  }
 
 } // end of namespace oln
 

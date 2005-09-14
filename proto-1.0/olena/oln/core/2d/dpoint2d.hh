@@ -150,21 +150,16 @@ namespace oln {
     return tmp;
   }
 
-  namespace internal
+  const dpoint2d operator+(const dpoint2d& lhs, const dpoint2d& rhs)
   {
+    dpoint2d tmp(lhs.row() + rhs.row(), lhs.col() + rhs.col());
+    return tmp;
+  }
 
-    const dpoint2d operator_plus(const dpoint2d& lhs, const dpoint2d& rhs)
-    {
-      dpoint2d tmp(lhs.row() + rhs.row(), lhs.col() + rhs.col());
-      return tmp;
-    }
-
-    bool operator_eq(const dpoint2d& lhs, const dpoint2d& rhs)
-    {
-      return lhs.row() == rhs.row() and lhs.col() == rhs.col();
-    }
-    
-  } // end of namespace oln::internal
+  bool operator==(const dpoint2d& lhs, const dpoint2d& rhs)
+  {
+    return lhs.row() == rhs.row() and lhs.col() == rhs.col();
+  }
 
 } // end of namespace oln
 

@@ -32,6 +32,7 @@
 # include <ntg/core/macros.hh>
 # include <oln/basics.hh>
 # include <oln/funobj/accum.hh>
+# include <oln/funobj/infsup.hh>
 
 
 namespace oln {

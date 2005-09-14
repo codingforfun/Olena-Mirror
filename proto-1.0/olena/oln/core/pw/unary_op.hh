@@ -29,8 +29,10 @@
 # define OLENA_CORE_PW_UNARY_OP_HH
 
 # include <mlc/is_a.hh>
+# include <mlc/afun.hh>
 # include <oln/core/pw/abstract/unary_function.hh>
-# include <oln/funobj/abstract/unary.hh>
+# include <oln/core/pw/value.hh>
+# include <oln/core/pw/image.hh>
 
 
 
@@ -50,11 +52,17 @@ namespace oln {
   template <typename F, typename A>
   struct set_props < category::pw, pw::unary_op<F,A> >
   {
-    typedef typename f_::munary_result<F,A>::ret value_type;
+    typedef
+    typename mlc::mfun_res_traits< F,
+				   oln_pw_type_of(A, value) >::ret
+    value_type;
   };
 
 
   namespace pw {
+
+    // FIXME: unary_op only works with mlc::abstract::meta_unary_function
+    // FIXME: think about another type that works with mlc::abstract::unary_function...
 
     template <typename F, typename A>
     struct unary_op : public abstract::unary_function< A, pw::unary_op<F,A> >
@@ -68,8 +76,14 @@ namespace oln {
 	super_type(arg),
 	fun()
       {
-	mlc_is_a(F, f_::abstract::munary)::ensure();
-// 	mlc_is_a(F, f_::unary_meta)::ensure();
+	mlc_is_a(F, mlc::abstract::meta_unary_function)::ensure();
+      }
+      unary_op(const F& fun,
+	       const abstract::function<A>& arg) :
+	super_type(arg),
+	fun(fun)
+      {
+	mlc_is_a(F, mlc::abstract::meta_unary_function)::ensure();
       }
 
       typedef oln_pw_type_of(self_type, point) point_type;
@@ -87,6 +101,58 @@ namespace oln {
   } // end of namespace oln::pw
 
 } // end of namespace oln
+
+
+
+
+namespace mlc
+{
+
+  template <typename F, typename A>
+  struct decl_overload <tag::mufun, 1,
+			F, A> : public where< mlc_is_a(A, oln::pw::abstract::function) >
+  {
+    typedef oln_pw_type_of(A, exact) A_;
+
+    typedef oln::pw::unary_op<F,A_> ret;
+
+    template <class A_>
+    static ret exec(const F& fun,
+		    const oln::pw::abstract::function<A_>& arg)
+    {
+      // safety check:
+      mlc_is_a(F, mlc::abstract::meta_unary_function)::ensure();
+      ret tmp(fun, arg);
+      return tmp;
+    }
+  };
+
+
+  template <typename F, typename I>
+  struct decl_overload <tag::mufun, 2,
+			F, I> : public where< mlc_is_a(I, oln::abstract::image) >
+  {
+    // FIXME: oln_type_of(I, exact) does not work yet...
+    typedef I /*oln_type_of(I, exact)*/ I_;
+
+    typedef oln::pw::unary_op<F, oln::pw::value<I_> > PWF;
+    typedef oln::pw::image<PWF> ret;
+
+    template <class I_>
+    static ret exec(const F& fun,
+		    const oln::abstract::image<I_>& arg)
+    {
+      // safety check:
+      mlc_is_a(F, mlc::abstract::meta_unary_function)::ensure();
+      
+      oln::pw::value<I_> pw_val(arg);
+      PWF pw_fun(fun, pw_val);
+      ret tmp(pw_fun);
+      return tmp;
+    }
+  };
+
+} // end of namespace mlc
 
 
 #endif // ! OLENA_CORE_PW_UNARY_OP_HH

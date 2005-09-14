@@ -48,6 +48,8 @@ namespace oln {
   // fwd decls
   namespace abstract
   {
+    template <typename P> class point;
+    template <typename I> class image;
     template <typename I> class image_without_nbh;
     template <typename I> class readonly_image;
     template <typename I> class raw_image;
@@ -171,6 +173,14 @@ namespace oln {
       mlc::is_ok< image_dimension_type >::ensure();
     }
   };
+
+
+  template <typename I>
+  struct set_props < category::image, abstract::image<I> >
+  {
+    typedef I exact_type;
+  };
+
 
 } // end of namespace oln
 
@@ -300,6 +310,11 @@ namespace oln
        ! concrete methods !
        *------------------*/
 
+      template <typename P>
+      void operator()(const oln::abstract::point<P>&) const
+      {
+	// FIXME: provide an explicit err msg, e.g., "(p) should not be used on an ima"
+      }
 
       /*! \brief Give access to the value stored at \a p in the
       ** current image.  Precisely it returns a box that encloses this
