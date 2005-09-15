@@ -690,11 +690,11 @@ namespace oln {
       to_image() const;
 
       /// Distance of a point p.
-      const T&
+      const T
       operator[](const point_type& p) const;
 
       /// Distance of a point2d(row, col).
-      const T&
+      const T
       operator()(coord row, coord col) const;
 
     private:

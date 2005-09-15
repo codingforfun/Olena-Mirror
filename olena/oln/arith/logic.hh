@@ -56,16 +56,16 @@ namespace oln {
     oln_arith_declare_unfixedtype_functor_(logic_not, ntg::bin, ! val);
 
     /// AND NOT operators.
-    oln_arith_declare_all_nongenericbinop_procs_(logic_and);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_and)
 
     /// OR operators.
-    oln_arith_declare_all_nongenericbinop_procs_(logic_or);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_or)
 
     /// AND NOT operators.
-    oln_arith_declare_all_nongenericbinop_procs_(logic_and_not);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_and_not)
 
     /// NOT operator.
-    oln_arith_declare_nongenericunop_procs_(logic_not);
+    oln_arith_declare_nongenericunop_procs_(logic_not)
 
   } // end of arith
 

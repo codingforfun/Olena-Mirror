@@ -1,3 +1,14 @@
+2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust for G++ 4.0.
+
+	* ntg/color/color.hh
+	(typetraits<color<ncomps, qbits, color_system> >::nb_comp): Make
+	it a static const unsigned instead of an enum.
+	* ntg/vect/cplx.hh (cplx<rect, T>::to_polar): Move the definition
+	of this function outside the declaration of cplx<rect, T>, so as
+	to have it know the size of cplx<polar, T>.
+
 2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ntg/core/internal/global_ops.hh: Make compliant to g++-3.4.

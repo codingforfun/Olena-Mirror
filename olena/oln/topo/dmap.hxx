@@ -321,14 +321,14 @@ namespace oln {
     }
 
     template <class T, class T2>
-    const T&
+    const T
     dmap<T, T2>::operator[](const point_type& p) const
     {
       return imap_[p] / ch_.coef;
     }
 
     template <class T, class T2>
-    const T&
+    const T
     dmap<T, T2>::operator()(coord row, coord col) const
     {
       return imap_(row, col) / ch_.coef;

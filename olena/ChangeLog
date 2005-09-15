@@ -1,3 +1,14 @@
+2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust for G++ 4.0.
+
+	* oln/core/window2d.hh (neighb_type): Remove duplicate typedef.
+	* oln/topo/dmap.hh, oln/topo/dmap.hxx (operator[], operator()):
+	Return a copy, not a reference on a temporary.
+	* oln/arith/logic.hh: Remove superfluous semi-colons.
+	* oln/io/gz_stream.hh (zifstream, zofstream): Add forward
+	declarations.
+
 2005-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/abstract/image.hh (oln_fwd_iter_type_): Fix macro

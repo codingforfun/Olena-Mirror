@@ -1,15 +1,37 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 221)
-(Parent-Version oln 10 220)
-(Version-Log "2005-02-24  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 222)
+(Parent-Version oln 10 221)
+(Version-Log "2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
-	* oln/core/abstract/image.hh (oln_fwd_iter_type_): Fix macro
-	de
+	* config/oln.m4 (OLN_VERSION): Set to 0.10a.
+	Remove duplicate definition.
+
+2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust for G++ 4.0.
+
+	* oln/core/window2d.hh (neighb_type): Remove duplicate typedef.
+	* oln/topo/dmap.hh, oln/topo/dmap.hxx (operator[], operator()):
+	Return a copy, not a reference on a temporary.
+	* oln/arith/logic.hh: Remove superfluous semi-colons.
+	* oln/io/gz_stream.hh (zifstream, zofstream): Add forward
+	declarations.
+
+2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust for G++ 4.0.
+
+	* ntg/color/color.hh
+	(typetraits<color<ncomps, qbits, color_system> >::nb_comp): Make
+	it a static const unsigned instead of an enum.
+	* ntg/vect/cplx.hh (cplx<rect, T>::to_polar): Move the definition
+	of this function outside the declaration of cplx<rect, T>, so as
+	to have it know the size of cplx<polar, T>.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 24 Feb 2005 10:10:35 +0100")
+(Checkin-Time "Thu, 15 Sep 2005 17:50:38 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -112,11 +134,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.18 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.19 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.48 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.3 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.4 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -163,7 +185,7 @@
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 600))
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.19 600))
-  (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.4 600))
+  (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.5 600))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.10 600))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 600))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 600))
@@ -267,7 +289,7 @@
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 600))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.30 600))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.19 600))
-  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.22 600))
+  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.22.1.1 600))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.20 600))
   (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.21 600))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.12 600))
@@ -281,7 +303,7 @@
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.6 600))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.6 600))
   (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.7 600))
-  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.11 600))
+  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.12 600))
   
   
   (olena/oln/io/pnm_read_3d.hh (oln/b/11_pnm_read3d 1.14 600))
@@ -302,7 +324,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 600))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 600))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.15 600))
-  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.10 600))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.11 600))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 600))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.12 600))
@@ -352,8 +374,8 @@
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.17 600))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.16 600))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.7 600))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 600))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.11 600))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.12 600))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.12 600))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.14 600))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.11 600))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 600))
@@ -921,8 +943,8 @@
   (integre/ntg/real/range.hh (oln/t/16_range.hh 1.3.1.1 600))
   (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2.1.1 600))
   (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7.1.2 600))
-  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.5 600))
-  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.7 600))
+  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.6 600))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.8 600))
   (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.5.1.2 600))
 
 ;; Files deleted by populate at Mon, 30 Jun 2003 20:01:55 +0200,

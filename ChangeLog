@@ -1,3 +1,8 @@
+2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* config/oln.m4 (OLN_VERSION): Set to 0.10a.
+	Remove duplicate definition.
+
 2004-09-08  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* config/oln.m4: Minor fix.

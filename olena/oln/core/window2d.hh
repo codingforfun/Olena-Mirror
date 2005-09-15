@@ -77,7 +77,6 @@ namespace oln {
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
 
     typedef struct_elt_traits< self_type >::neighb_type neighb_type;
-    typedef struct_elt_traits< self_type >::neighb_type neighb_type;
     ///< Type of neighbor.
 
     /*!

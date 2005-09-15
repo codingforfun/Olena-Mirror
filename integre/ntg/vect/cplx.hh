@@ -323,11 +323,9 @@ namespace ntg {
       return cplx<rect, T>(-this->val_[0], -this->val_[1]);
     }
 
+    // Forward declaration.
     const cplx<polar, float_d>
-    to_polar() const
-    {
-      return cplx<polar, float_d>(magn(), angle());
-    }
+    to_polar() const;
 
   };
 
@@ -421,6 +419,13 @@ namespace ntg {
     }
 
   };
+
+  template <class T>
+  const cplx<polar, float_d>
+  cplx<rect, T>::to_polar() const
+  {
+    return cplx<polar, float_d>(magn(), angle());
+  }
 
   template<class T>
   inline std::ostream&
