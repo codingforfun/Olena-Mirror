@@ -1,3 +1,18 @@
+2005-09-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Update vcs support to 0.3.
+
+	* vcs/oln.rb: Update.
+	* vcs/HOWTO,
+	* integre/vcs,
+	* integre/vcs/oln.rb,
+	* olena/vcs,
+	* olena/vcs/oln.rb,
+	* doc/vcs,
+	* doc/vcs/oln.rb,
+	* metalic/vcs,
+	* metalic/vcs/oln.rb: Remove.
+
 2005-09-06  Simon Odou  <simon@lrde.epita.fr>
 
 	* configure.ac: Exports TOOLS_LDFLAGS for exdoc.

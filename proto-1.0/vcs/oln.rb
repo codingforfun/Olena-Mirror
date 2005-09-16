@@ -1,10 +1,9 @@
 class Vcs
 
-  def oln_commit! ( s, *args )
+  def oln_commit! ( *args )
 
-    common_commit!(*args) do |rev|
-      news!(:groups => ['lrde.olena.patches'],
-            :subject => "proto-1.0 #{rev}: #{s}")
+    common_commit!("proto-1.0 <%= rev %>: <%= title %>", *args) do |subject|
+      mail!(:to => ['olena-patches@lrde.epita.fr'], :subject => subject)
     end
 
   end
