@@ -42,12 +42,47 @@ namespace oln {
 
       // Generic implementation of reconstruction (routine).
 
-      template<typename I1, typename I2, typename A, typename Op>
+//       template<typename I1, typename I2, typename A, typename Op>
+//       oln_type_of(I1, concrete)
+//       reconstruction_(const abstract::image<I1>&	marker,
+// 		      const abstract::image<I2>&	mask)
+//       {
+// 	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+
+// 	reconstruction<I1, I2, A, Op> tmp(marker, mask);
+// 	// tmp.entering(); FIXME: something like that ?
+
+// 	tmp.run();
+
+// 	// tmp.exiting(); FIXME: something like that ?
+// 	return tmp.get_output();
+//       }
+
+      template <typename I1, typename I2, typename A, typename Op>
       oln_type_of(I1, concrete)
-      reconstruction_(const abstract::image_with_nbh<I1>& marker,
-		      const abstract::image<I2>&          mask)
+      reconstruction_(const abstract::binary_image<I1>&	marker,
+		      const abstract::binary_image<I2>&	mask)
       {
-	reconstruction<I1, I2, A, Op> tmp(marker, mask);
+	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+
+	binary_reconstruction<I1, I2, A, Op> tmp(marker, mask);
+	// tmp.entering(); FIXME: something like that ?
+
+	tmp.run();
+
+	// tmp.exiting(); FIXME: something like that ?
+	return tmp.get_output();
+      }
+
+
+      template <typename I1, typename I2, typename A, typename Op>
+      oln_type_of(I1, concrete)
+      reconstruction_(const abstract::greylevel_image<I1>&	marker,
+		      const abstract::greylevel_image<I2>&	mask)
+      {
+	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+
+	greylevel_reconstruction<I1, I2, A, Op> tmp(marker, mask);
 	// tmp.entering(); FIXME: something like that ?
 
 	tmp.run();

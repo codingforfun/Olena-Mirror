@@ -44,6 +44,16 @@ namespace oln {
     // (not: either -x or 1/x or min<->max or?)
    struct invert
     {
+      unsigned char operator()(const unsigned char& v) const
+      {
+	return 255 - v;
+      }
+
+      bool operator()(const bool& v) const
+      {
+	return !v;
+      }
+
       template <typename V>
       V operator()(const ntg::vect_value<V>& v) const
       {

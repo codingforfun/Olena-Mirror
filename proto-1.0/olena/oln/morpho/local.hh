@@ -62,6 +62,54 @@ namespace oln {
     }
 
 
+    /// Local image "inf-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_inf_value_fwd(const abstract::image<I>&    input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::not_binary_image)::ensure();
+
+      typedef oln_type_of(I, value) value_type;
+      typedef f_::accum_with_init<f_::inf_<value_type>, value_type> accum_type;
+      accum_type val(ntg_sup_val(value_type));
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.fwd_less(n))
+	  val(input[n]);
+
+      return val;
+    }
+
+
+    /// Local image "inf-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_inf_value_bkd(const abstract::image<I>&    input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::not_binary_image)::ensure();
+
+      typedef oln_type_of(I, value) value_type;
+      typedef f_::accum_with_init<f_::inf_<value_type>, value_type> accum_type;
+      accum_type val(ntg_sup_val(value_type));
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.bkd_less(n))
+	  val(input[n]);
+
+      return val;
+    }
+
+
     /// Local image "sup-value" for dilation on functions (based on the neighborhood).
 
     template <typename I>
@@ -78,6 +126,54 @@ namespace oln {
       oln_type_of(I, niter) n(input);
       for_all_n_of_p(n, p)
 	if (input.hold(n))
+	  val(input[n]);
+
+      return val;
+    }
+
+
+    /// Local image "sup-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_sup_value_fwd(const abstract::image<I>&    input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::not_binary_image)::ensure();
+
+      typedef oln_type_of(I, value) value_type;
+      typedef f_::accum_with_init<f_::sup_<value_type>, value_type> accum_type;
+      accum_type val(ntg_inf_val(value_type));
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.fwd_less(n))
+	  val(input[n]);
+
+      return val;
+    }
+
+
+    /// Local image "sup-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_sup_value_bkd(const abstract::image<I>&    input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::not_binary_image)::ensure();
+
+      typedef oln_type_of(I, value) value_type;
+      typedef f_::accum_with_init<f_::sup_<value_type>, value_type> accum_type;
+      accum_type val(ntg_inf_val(value_type));
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.bkd_less(n))
 	  val(input[n]);
 
       return val;
@@ -102,6 +198,47 @@ namespace oln {
     }
 
 
+    /// Local image "and-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_and_value_fwd(const abstract::image<I>& input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::binary_image)::ensure();
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.fwd_less(n) and not input[n])
+	  return false;
+
+      return true;
+    }
+
+
+    /// Local image "and-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a backward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_and_value_bkd(const abstract::image<I>& input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::binary_image)::ensure();
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.bkd_less(n) and not input[n])
+	  return false;
+
+      return true;
+    }
+
+
+
     /// Local image "or-value" for dilation on sets (based on the neighborhood).
 
     template <typename I>
@@ -114,6 +251,46 @@ namespace oln {
       oln_type_of(I, niter) n(input);
       for_all_n_of_p(n, p)
 	if (input.hold(n) and input[n])
+	  return true;
+
+      return false;
+    }
+
+
+    /// Local image "or-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a forward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_or_value_fwd(const abstract::image<I>& input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::binary_image)::ensure();
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.fwd_less(n) and input[n])
+	  return true;
+
+      return false;
+    }
+
+
+    /// Local image "or-value" for erosion on sets - based on the
+    /// neighborhood points that have already been processed when
+    /// performing a backward scan.
+
+    template <typename I>
+    oln_type_of(I, value) local_or_value_bkd(const abstract::image<I>& input,
+					      const oln_type_of(I, point)& p)
+    {
+      mlc_is_a(I, abstract::image_with_nbh)::ensure();
+      mlc_is_a(I, abstract::binary_image)::ensure();
+
+      oln_type_of(I, niter) n(input);
+      for_all_n_of_p(n, p)
+	if (input.hold(n) and p.bkd_less(n) and input[n])
 	  return true;
 
       return false;
@@ -206,6 +383,5 @@ namespace oln {
   } // end of namespace morpho
 
 } // end of namespace oln
-
 
 #endif // ! OLENA_MORPHO_LOCAL_HH

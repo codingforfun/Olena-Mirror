@@ -35,7 +35,7 @@
 //                         image
 //
 //                           ^
-//                           |                
+//                           |
 //         -------------------------------------------------
 //        |              |            |           |         |
 //
@@ -111,6 +111,12 @@ namespace oln {
 
       template <typename E>
       static tag_is<_label_tag>     selector(ntg::enum_value<E>*);
+
+      template <typename E>
+      static tag_is<_greylevel_tag> selector(ntg::real_value<E>*);
+
+      static tag_is<_greylevel_tag> selector(char*);
+      static tag_is<_greylevel_tag> selector(unsigned char*);
 
       static tag_is<_binary_tag>    selector(bool*);
       static tag_is<_binary_tag>    selector(ntg::bin*);

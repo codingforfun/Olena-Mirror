@@ -43,7 +43,10 @@ namespace oln {
     namespace impl {
 
       template <typename T, typename A, typename I1, typename I2>
-      struct reconstruction {};
+      struct binary_reconstruction {};
+
+      template <typename T, typename A, typename I1, typename I2>
+      struct greylevel_reconstruction {};
 
     }
 
@@ -56,6 +59,8 @@ namespace oln {
     template <typename I1, typename I2, typename A, typename E>
     struct reconstruction;
 
+
+    // HYBRID
     template <typename I1, typename I2, typename E>
     struct reconstruction<I1, I2, morpho::tag::hybrid_type, E>
       : public mlc::any<E>
@@ -146,7 +151,7 @@ namespace oln {
 
     protected:
 
-      reconstruction(const abstract::image_with_nbh<I1>& marker,
+      reconstruction(const abstract::image<I1>& marker,
 		     const abstract::image<I2>& mask) :
 	marker(marker.exact()),
 	mask(mask.exact()),
@@ -158,6 +163,7 @@ namespace oln {
 
       ~reconstruction()
       {
+	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	mlc_check_method_impl(E, bool, test_fifo_push,	, );
 	mlc_check_method_impl(E, void, preconditions,	, const);
 	mlc_check_method_impl(E, void, bkd_loop_body,	, );
@@ -182,6 +188,8 @@ namespace oln {
 
 
 
+
+    // SEQUENTIAL
     template <typename I1, typename I2, typename E>
     struct reconstruction<I1, I2, morpho::tag::sequential_type, E> :
       public back_and_forth_until_convergence<I1, E>
@@ -228,13 +236,14 @@ namespace oln {
 
     protected:
 
-      reconstruction(const abstract::image_with_nbh<I1>& marker,
+      reconstruction(const abstract::image<I1>& marker,
 		     const abstract::image<I2>& mask) :
 	super_type(marker),
 	marker(marker.exact()),
 	mask(mask.exact()),
 	n(marker)
       {
+	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
       }
 
       box<oln_type_of(I1, concrete)> save;
@@ -248,9 +257,10 @@ namespace oln {
 
 
 
+    // PARALLEL
     template <typename I1, typename I2, typename E>
     struct reconstruction<I1, I2, morpho::tag::parallel_type, E> :
-      public forth_until_convergence<I1, E>
+      public until_convergence<E>
     {
       typedef forth_until_convergence<I1, E> super_type;
       typedef oln_type_of(I1, neighb) nbh_type;
@@ -259,9 +269,24 @@ namespace oln {
 
       // Abstract methods.
 
-      void fwd_loop_body()
+      void first_step()
       {
-	this->exact().impl_fwd_loop_body();
+	this->exact().impl_first_step();
+      }
+
+      void second_step()
+      {
+	this->exact().impl_second_step();
+      }
+
+
+      void impl_loop_body()
+      {
+	for_all_p(fwd_p)
+	  first_step();
+
+	for_all_p(fwd_p)
+	  second_step();
       }
 
       // Concrete methods.
@@ -278,9 +303,7 @@ namespace oln {
 	// called, which is empty (see oln/core/box.hh).
 	output_type save_tmp(clone(marker));
 	save = save_tmp;
-
       }
-
 
       bool impl_is_stable() const
       {
@@ -302,26 +325,26 @@ namespace oln {
 
     protected:
 
-      reconstruction(const abstract::image_with_nbh<I1>& marker,
+      reconstruction(const abstract::image<I1>& marker,
 		     const abstract::image<I2>& mask) :
-	super_type(marker),
 	marker(marker.exact()),
-	mask(mask.exact())
+	mask(mask.exact()),
+	fwd_p(marker.size())
       {
+	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	mlc_check_method_impl(E, void, first_step,	, );
+	mlc_check_method_impl(E, void, second_step,	, );
       }
 
       box<oln_type_of(I1, concrete)> save;
       box<oln_type_of(I1, concrete)> output;
       box<const I1> marker;
       box<const I2> mask;
-
+      oln_type_of(I1, fwd_piter) fwd_p;
     };
-
 
   }
 
-
 }
-
 
 #endif // ! OLENA_CANVAS_RECONSTRUCTION_HH

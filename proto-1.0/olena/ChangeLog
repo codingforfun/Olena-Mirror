@@ -1,3 +1,20 @@
+2005-10-10  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Rewrite reconstruction classes.
+
+	* tests/morpho/tests/reconstruction: Now use builtin types.
+	* oln/funobj/invert.hh: Add bool and unsigned char inversion.
+	* oln/core/abstract/image_typeness.hh: Add rules (unsigned char, char and
+	ntg::real_value) for greylevel_image.
+	* oln/morpho/reconstruction.hh: Now support grey level images.
+	* oln/morpho/local.hh: Add new functions for handling neighborhood.
+	* oln/morpho/reconstruction_by_dilation.hh: Add grey level specialization
+	and use new functions from local.hh.
+	* oln/morpho/reconstruction_selfdual.hh: Likewise.
+	* oln/morpho/reconstruction_by_erosion.hh: Likewise.
+	* oln/canvas/reconstruction.hh: Now use mlc::is_a to check if the input
+	images have a neighborhood. A bit of cleaning.
+
 2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
 
         Add general inheritance for oln objects and new

@@ -40,8 +40,10 @@ namespace oln {
     namespace impl {
 
 
+      // BINARY
+
       template <typename I1, typename I2, typename A, typename E>
-      struct reconstruction_by_dilation
+      struct binary_reconstruction_by_dilation
 	: public canvas::reconstruction<I1, I2, A, E>
       {
 	typedef canvas::reconstruction<I1, I2, A, E> super_type;
@@ -55,55 +57,23 @@ namespace oln {
 	using super_type::p;
 
 
-	/// Local image "or-value" for dilation on sets
-	/// (based on the point and its backward neighborhood).
-
-	oln_type_of(I1, value) bkd_or()
-	{
-	  if (output[bkd_p])
-	    return true;
-	  p = bkd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.bkd_less(n) and output.hold(n) and output[n])
-	      return true;
-
-	  return false;
-	}
-
-
-	/// Local image "or-value" for dilation on sets
-	/// (based on the point and its forward neighborhood).
-
-	oln_type_of(I1, value) fwd_or()
-	{
-	  if (output[fwd_p])
-	    return true;
-	  p = fwd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.fwd_less(n) and output.hold(n) and output[n])
-	      return true;
-
-	  return false;
-	}
-
 	void impl_bkd_loop_body()
 	{
-	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_max_alt compile.  Try to get rid of it.
-	  output[bkd_p] = f_min_alt(mask[bkd_p].value(), bkd_or());
+	  output[bkd_p] = mask[bkd_p] and
+	    (output[bkd_p] or local_or_value_bkd(join(output, marker.nbh_get()), bkd_p));
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  // FIXME: The call to value_box<>::value is needed to have
-	  // f_max_alt compile.  Try to get rid of it.
-	  output[fwd_p] = f_min_alt(mask[fwd_p].value(), fwd_or());
+	  output[fwd_p] = mask[fwd_p] and
+	    (output[fwd_p] or local_or_value_fwd(join(output, marker.nbh_get()), fwd_p));
 	}
 
-	reconstruction_by_dilation(const abstract::image_with_nbh<I1>& marker,
-				  const abstract::image<I2>& mask) :
+	binary_reconstruction_by_dilation(const abstract::binary_image<I1>& marker,
+					  const abstract::binary_image<I2>& mask) :
 	  super_type(marker, mask)
 	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
 
       };
@@ -111,14 +81,187 @@ namespace oln {
       // Hybrid version
 
       template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::hybrid_type, tag::by_dilation_type>
-	: public reconstruction_by_dilation<I1, I2, tag::hybrid_type,
-	    reconstruction<I1, I2, tag::hybrid_type, tag::by_dilation_type> >
+      struct binary_reconstruction <I1, I2, tag::hybrid_type, tag::by_dilation_type>
+	: public binary_reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+		binary_reconstruction<I1, I2, tag::hybrid_type, tag::by_dilation_type> >
       {
-	typedef reconstruction<I1, I2, tag::hybrid_type,
+	typedef binary_reconstruction<I1, I2, tag::hybrid_type,
+				      tag::by_dilation_type> self_type;
+	typedef binary_reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+						  self_type> super_type;
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::output;
+	using super_type::bkd_p;
+	using super_type::n;
+	using super_type::p;
+	using super_type::fifo;
+
+
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(mask, marker));
+	}
+
+	void impl_fifo_loop_body()
+	{
+	  // output[n] < output[p] doesn't make sense with binary types.
+	  if ((output[n] == false and output[p] == true) and (mask[n] != output[n]))
+	    {
+	      output[n] = output[p] and mask[n];
+	      fifo.push(n);
+	    }
+	}
+
+	bool impl_test_fifo_push()
+	{
+	  return (output[n] == false and output[bkd_p] == true) and
+	    (output[n] == false and mask[n] == true);
+	}
+
+
+	binary_reconstruction(const abstract::binary_image<I1>& marker,
+			      const abstract::binary_image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	}
+
+      };
+
+
+      // Sequential version
+
+      template<typename I1, typename I2>
+      struct binary_reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
+	: public binary_reconstruction_by_dilation<I1, I2, tag::sequential_type,
+						   binary_reconstruction<I1, I2, tag::sequential_type,
+									 tag::by_dilation_type> >
+      {
+	typedef binary_reconstruction<I1, I2, tag::sequential_type,
 			       tag::by_dilation_type> self_type;
-	typedef reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+	typedef binary_reconstruction_by_dilation<I1, I2, tag::sequential_type,
 					  self_type> super_type;
+
+	using super_type::mask;
+	using super_type::marker;
+
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(mask, marker));
+	}
+
+
+	binary_reconstruction(const abstract::binary_image<I1>& marker,
+			      const abstract::binary_image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	}
+
+      };
+
+
+      // Parallel version
+
+      template <typename I1, typename I2>
+      struct binary_reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type>
+	: public canvas::reconstruction<I1, I2, tag::parallel_type,
+		binary_reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type> >
+      {
+	typedef binary_reconstruction<I1, I2, tag::parallel_type,
+				      tag::by_dilation_type> self_type;
+	typedef canvas::reconstruction<I1, I2, tag::parallel_type,
+				       self_type> super_type;
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::save;
+	using super_type::output;
+	using super_type::fwd_p;
+
+	void impl_first_step()
+	{
+	  output[fwd_p] = save[fwd_p] or
+	    local_or_value(join(save, marker.nbh_get()), fwd_p);
+	}
+
+	void impl_second_step()
+	{
+	  output[fwd_p] = mask[fwd_p] and output[fwd_p];
+	}
+
+	void impl_preconditions() const
+	{
+	  precondition(level::is_greater_or_equal(mask, marker));
+	}
+
+	binary_reconstruction(const abstract::binary_image<I1>& marker,
+			      const abstract::binary_image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	}
+
+      };
+
+
+
+      // GREYLEVEL
+
+      template <typename I1, typename I2, typename A, typename E>
+      struct greylevel_reconstruction_by_dilation
+	: public canvas::reconstruction<I1, I2, A, E>
+      {
+	typedef canvas::reconstruction<I1, I2, A, E> super_type;
+	typedef oln_type_of(I1, value) value_type;
+	typedef f_::accum_with_init<f_::sup_<value_type>, value_type> accum_type;
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::output;
+	using super_type::bkd_p;
+	using super_type::fwd_p;
+	using super_type::n;
+	using super_type::p;
+
+	void impl_bkd_loop_body()
+	{
+	  value_type nbh_max =
+	    f_max_alt(output[bkd_p].value(),
+		      local_sup_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	  output[bkd_p] = f_min_alt(mask[bkd_p].value(), nbh_max);
+	}
+
+	void impl_fwd_loop_body()
+	{
+	  value_type nbh_max =
+	    f_max_alt(output[fwd_p].value(),
+		      local_sup_value_fwd(join(output, marker.nbh_get()), fwd_p));
+	  output[fwd_p] = f_min_alt(mask[fwd_p].value(), nbh_max);
+	}
+
+	greylevel_reconstruction_by_dilation(const abstract::greylevel_image<I1>& marker,
+					     const abstract::greylevel_image<I2>& mask) :
+	  super_type(marker, mask)
+	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	}
+
+      };
+
+      // Hybrid version
+
+      template<typename I1, typename I2>
+      struct greylevel_reconstruction <I1, I2, tag::hybrid_type, tag::by_dilation_type>
+	: public greylevel_reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+		greylevel_reconstruction<I1, I2, tag::hybrid_type, tag::by_dilation_type> >
+      {
+	typedef greylevel_reconstruction<I1, I2, tag::hybrid_type,
+					 tag::by_dilation_type> self_type;
+	typedef greylevel_reconstruction_by_dilation<I1, I2, tag::hybrid_type,
+						     self_type> super_type;
 
 	using super_type::mask;
 	using super_type::marker;
@@ -138,23 +281,22 @@ namespace oln {
 	{
 	  if ((output[n] < output[p]) and (mask[n] != output[n]))
 	    {
-	      // FIXME: The calls to value_box<>::value are needed to
-	      // have f_min_alt compile.  Try to get rid of it.
-	      output[n] = f_max_alt(output[p].value(), mask[n].value());
+	      output[n] = f_min_alt(output[p].value(), mask[n].value());
 	      fifo.push(n);
 	    }
 	}
 
 	bool impl_test_fifo_push()
 	{
-	  return output[n] < output[bkd_p] and output[n] < mask[n];
+	  return (output[n] < output[bkd_p]) and (output[n] < mask[n]);
 	}
 
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
+				 const abstract::greylevel_image<I2>& mask) :
 	  super_type(marker, mask)
 	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
 
       };
@@ -163,15 +305,15 @@ namespace oln {
       // Sequential version
 
       template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
-	: public reconstruction_by_dilation<I1, I2, tag::sequential_type,
-					   reconstruction<I1, I2, tag::sequential_type,
-							  tag::by_dilation_type> >
+      struct greylevel_reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
+	: public greylevel_reconstruction_by_dilation<I1, I2, tag::sequential_type,
+						      greylevel_reconstruction<I1, I2, tag::sequential_type,
+									       tag::by_dilation_type> >
       {
-	typedef reconstruction<I1, I2, tag::sequential_type,
-			       tag::by_dilation_type> self_type;
-	typedef reconstruction_by_dilation<I1, I2, tag::sequential_type,
-					  self_type> super_type;
+	typedef greylevel_reconstruction<I1, I2, tag::sequential_type,
+					 tag::by_dilation_type> self_type;
+	typedef greylevel_reconstruction_by_dilation<I1, I2, tag::sequential_type,
+						     self_type> super_type;
 
 	using super_type::mask;
 	using super_type::marker;
@@ -182,10 +324,11 @@ namespace oln {
 	}
 
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
+				 const abstract::greylevel_image<I2>& mask) :
 	  super_type(marker, mask)
 	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
 
       };
@@ -194,14 +337,17 @@ namespace oln {
       // Parallel version
 
       template <typename I1, typename I2>
-      struct reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type>
+      struct greylevel_reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type>
 	: public canvas::reconstruction<I1, I2, tag::parallel_type,
-		reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type> >
+		greylevel_reconstruction<I1, I2, tag::parallel_type, tag::by_dilation_type> >
       {
-	typedef reconstruction<I1, I2, tag::parallel_type,
-			       tag::by_dilation_type> self_type;
+	typedef greylevel_reconstruction<I1, I2, tag::parallel_type,
+				      tag::by_dilation_type> self_type;
 	typedef canvas::reconstruction<I1, I2, tag::parallel_type,
 				       self_type> super_type;
+	typedef oln_type_of(I1, value) value_type;
+	typedef f_::accum_with_init<f_::sup_<value_type>, value_type> accum_type;
+
 
 	using super_type::mask;
 	using super_type::marker;
@@ -210,30 +356,31 @@ namespace oln {
 	using super_type::fwd_p;
 
 
+	void impl_first_step()
+	{
+	  output[fwd_p] =
+	    f_max_alt(output[fwd_p].value(),
+		      local_sup_value(join(output, marker.nbh_get()), fwd_p));
+	}
+
+	void impl_second_step()
+	{
+	  output[fwd_p] = f_min_alt(mask[fwd_p].value(), output[fwd_p].value());
+	}
+
 	void impl_preconditions() const
 	{
 	  precondition(level::is_greater_or_equal(mask, marker));
 	}
 
-	void impl_fwd_loop_body()
-	{
-	  // dilation step
-	  if (not output[fwd_p])
-	    output[fwd_p] = local_or_value(join(save, marker.nbh_get()),
-					   fwd_p);
-
-	  // minimum between mask and output
-	  output[fwd_p] = f_min_alt(output[fwd_p].value(), mask[fwd_p].value());
-	}
-
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
+				 const abstract::greylevel_image<I2>& mask) :
 	  super_type(marker, mask)
 	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
 
       };
-
 
     }
 

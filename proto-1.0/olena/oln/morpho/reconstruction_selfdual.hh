@@ -34,7 +34,6 @@
 # include <oln/funobj/arith.hh>
 
 
-//FIXME: Adapt ...
 namespace oln {
 
 
@@ -44,20 +43,23 @@ namespace oln {
     namespace impl {
 
 
+      // BINARY
+
       template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::selfdual_type, tag::none_type>
+      struct binary_reconstruction <I1, I2, tag::selfdual_type, tag::none_type>
 	: public canvas::reconstruction<I1, I2, tag::hybrid_type,
-	    reconstruction<I1, I2, tag::selfdual_type, tag::none_type> >
+	    binary_reconstruction<I1, I2, tag::selfdual_type, tag::none_type> >
       {
-	typedef reconstruction<I1, I2, tag::selfdual_type,
+	typedef binary_reconstruction<I1, I2, tag::selfdual_type,
 			       tag::none_type> self_type;
 	typedef canvas::reconstruction<I1, I2, tag::hybrid_type,
 				       self_type> super_type;
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
+	binary_reconstruction(const abstract::binary_image<I1>& marker,
+			      const abstract::binary_image<I2>& mask) :
 	  super_type(marker, mask)
 	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
 
 	using super_type::mask;
@@ -70,87 +72,25 @@ namespace oln {
 	using super_type::fifo;
 
 
-	/// Local image "or-value" for dilation on sets
-	/// (based on the point and its backward neighborhood).
-
-	oln_type_of(I1, value) bkd_or()
-	{
-	  if (output[bkd_p])
-	    return true;
-	  p = bkd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.bkd_less(n) and output.hold(n) and output[n])
-	      return true;
-
-	  return false;
-	}
-
-
-	/// Local image "or-value" for dilation on sets
-	/// (based on the point and its forward neighborhood).
-
-	oln_type_of(I1, value) fwd_or()
-	{
-	  if (output[fwd_p])
-	    return true;
-	  p = fwd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.fwd_less(n) and output.hold(n) and output[n])
-	      return true;
-
-	  return false;
-	}
-
-
-
-	/// Local image "and-value" for erosion on sets
-	/// (based on the point and its backward neighborhood).
-
-	oln_type_of(I1, value) bkd_and()
-	{
-	  if (not output[bkd_p])
-	    return false;
-	  p = bkd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.bkd_less(n) and output.hold(n) and not output[n])
-	      return false;
-
-	  return true;
-	}
-
-
-	/// Local image "and-value" for erosion on sets
-	/// (based on the point and its forward neighborhood).
-
-	oln_type_of(I1, value) fwd_and()
-	{
-	  if (not output[fwd_p])
-	    return false;
-	  p = fwd_p;
-	  for_all_n_of_p(n, p)
-	    if (p.fwd_less(n) and output.hold(n) and not output[n])
-	      return false;
-
-	  return true;
-	}
-
-
 	void impl_bkd_loop_body()
 	{
-	  // FIXME: Shouldn't be .value() !
 	  if (output[bkd_p] < mask[bkd_p])
-	    output[bkd_p] = f_min_alt(bkd_or(), mask[bkd_p].value());
+	    output[bkd_p] = mask[bkd_p] and
+	      (output[bkd_p] or local_or_value_bkd(join(output, marker.nbh_get()), bkd_p));
 	  else
-	    output[bkd_p] = f_max_alt(bkd_and(), mask[bkd_p].value());
+	    output[bkd_p] = mask[bkd_p] or
+	      (output[bkd_p] and local_and_value_bkd(join(output, marker.nbh_get()), bkd_p));
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  // FIXME: Shouldn't be .value() !
 	  if (output[fwd_p] < mask[fwd_p])
-	    output[fwd_p] = f_min_alt(fwd_or(), mask[fwd_p].value());
+	    output[fwd_p] = mask[fwd_p] and
+	      (output[fwd_p] or local_or_value_fwd(join(output, marker.nbh_get()), fwd_p));
 	  else
-	    output[fwd_p] = f_max_alt(fwd_and(), mask[fwd_p].value());
+	    output[fwd_p] = mask[fwd_p] or
+	      (output[fwd_p] and local_and_value_fwd(join(output, marker.nbh_get()), fwd_p));
+
 	}
 
 	void impl_fifo_loop_body()
