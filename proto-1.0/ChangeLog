@@ -1,3 +1,9 @@
+2005-10-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Update the Vcs extension to Vcs 0.4.
+
+	* vcs/oln.rb: Add the protocol version and the default commit.
+
 2005-09-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Update vcs support to 0.3.
