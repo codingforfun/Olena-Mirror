@@ -1,3 +1,21 @@
+2005-10-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add grey level self-dual reconstruction and clean reconstruction classes.
+
+	* tests/morpho/tests/reconstruction: Remove. Split into two files
+	(binary and grey level).
+	* tests/morpho/tests/reconstruction_binary: New. Test reconstruction
+	algorithms on binary images.
+	* tests/morpho/tests/reconstruction_greylevel: New. Test
+	reconstruction algorithms on grey level images.
+	* oln/funobj/invert.hh: Now use UCHAR_MAX.
+	* oln/morpho/reconstruction_by_dilation.hh: Call exact() when passing
+	input images to the upper class.
+	* oln/morpho/reconstruction_by_erosion.hh: Likewise.
+	* oln/morpho/reconstruction_selfdual.hh: Add grey level self-dual
+	reconstruction class.
+	* oln/canvas/reconstruction.hh: Remove useless image boxes.
+
 2005-10-10  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Rewrite reconstruction classes.

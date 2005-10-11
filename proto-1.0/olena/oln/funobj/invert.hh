@@ -46,7 +46,7 @@ namespace oln {
     {
       unsigned char operator()(const unsigned char& v) const
       {
-	return 255 - v;
+	return UCHAR_MAX - v;
       }
 
       bool operator()(const bool& v) const

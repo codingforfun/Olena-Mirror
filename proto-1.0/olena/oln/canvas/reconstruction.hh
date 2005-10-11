@@ -108,11 +108,7 @@ namespace oln {
 
       void init()
       {
-	// FIXME: We can't use `output = clone(marker)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	output_type output_tmp(clone(marker));
-	output = output_tmp;
+	output = clone(marker);
       }
 
       void run()
@@ -146,12 +142,12 @@ namespace oln {
 
       oln_type_of(I1, concrete) get_output()
       {
-	return output.unbox();
+	return output;
       }
 
     protected:
 
-      reconstruction(const abstract::image<I1>& marker,
+      reconstruction(const abstract::image_with_nbh<I1>& marker,
 		     const abstract::image<I2>& mask) :
 	marker(marker.exact()),
 	mask(mask.exact()),
@@ -180,7 +176,7 @@ namespace oln {
       oln_type_of(I1, point) p;
       oln_type_of(I1, niter) n;
 
-      box<oln_type_of(I1, concrete)> output;
+      oln_type_of(I1, concrete) output;
 
       std::queue<oln_type_of(I1, point) > fifo;
 
@@ -203,17 +199,8 @@ namespace oln {
 
       void impl_init()
       {
-	// FIXME: We can't use `output = clone(marker)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	output_type output_tmp(clone(marker));
-	output = output_tmp;
-	// FIXME: We can't use `save = clone(marker)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	output_type save_tmp(clone(marker));
-	save = save_tmp;
-
+	output = clone(marker);
+	save = clone(marker);
       }
 
       bool impl_is_stable() const
@@ -223,31 +210,27 @@ namespace oln {
 
       void impl_re_loop()
       {
-	// FIXME: We can't use `save = clone(output)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	save.unbox() = clone(output);
+	save = clone(output);
       }
 
       oln_type_of(I1, concrete) get_output()
       {
-	return output.unbox();
+	return output;
       }
 
     protected:
 
-      reconstruction(const abstract::image<I1>& marker,
+      reconstruction(const abstract::image_with_nbh<I1>& marker,
 		     const abstract::image<I2>& mask) :
 	super_type(marker),
 	marker(marker.exact()),
 	mask(mask.exact()),
 	n(marker)
       {
-	mlc_is_a(I1, abstract::image_with_nbh)::ensure();
       }
 
-      box<oln_type_of(I1, concrete)> save;
-      box<oln_type_of(I1, concrete)> output;
+      oln_type_of(I1, concrete) save;
+      oln_type_of(I1, concrete) output;
       box<const I1> marker;
       box<const I2> mask;
       oln_type_of(I1, point) p;
@@ -293,16 +276,8 @@ namespace oln {
 
       void impl_init()
       {
-	// FIXME: We can't use `output = clone(marker)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	output_type output_tmp(clone(marker));
-	output = output_tmp;
-	// FIXME: We can't use `save = clone(marker)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	output_type save_tmp(clone(marker));
-	save = save_tmp;
+	output = clone(marker);
+	save = clone(marker);
       }
 
       bool impl_is_stable() const
@@ -312,15 +287,12 @@ namespace oln {
 
       void impl_re_loop()
       {
-	// FIXME: We can't use `save = clone(output)' directly here,
-	// because box's op=(const abstract::image<II>& rhs) would be
-	// called, which is empty (see oln/core/box.hh).
-	save.unbox() = clone(output);
+	save = clone(output);
       }
 
       oln_type_of(I1, concrete) get_output()
       {
-	return output.unbox();
+	return output;
       }
 
     protected:
@@ -336,8 +308,8 @@ namespace oln {
 	mlc_check_method_impl(E, void, second_step,	, );
       }
 
-      box<oln_type_of(I1, concrete)> save;
-      box<oln_type_of(I1, concrete)> output;
+      oln_type_of(I1, concrete) save;
+      oln_type_of(I1, concrete) output;
       box<const I1> marker;
       box<const I2> mask;
       oln_type_of(I1, fwd_piter) fwd_p;

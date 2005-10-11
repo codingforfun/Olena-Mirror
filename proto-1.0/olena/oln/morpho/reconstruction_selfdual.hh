@@ -57,7 +57,98 @@ namespace oln {
 
 	binary_reconstruction(const abstract::binary_image<I1>& marker,
 			      const abstract::binary_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
+	{
+	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
+	}
+
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::output;
+	using super_type::fwd_p;
+	using super_type::bkd_p;
+	using super_type::p;
+	using super_type::n;
+	using super_type::fifo;
+
+
+	void impl_bkd_loop_body()
+	{
+	  // output[bkd_p] < mask[bkd_p]
+	  if (not output[bkd_p] and mask[bkd_p])
+	    output[bkd_p] = mask[bkd_p] and
+	      (output[bkd_p] or local_or_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	  else
+	    output[bkd_p] = mask[bkd_p] or
+	      (output[bkd_p] and local_and_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	}
+
+	void impl_fwd_loop_body()
+	{
+	  // output[fwd_p] < mask[fwd_p]
+	  if (not output[fwd_p] and mask[fwd_p])
+	    output[fwd_p] = mask[fwd_p] and
+	      (output[fwd_p] or local_or_value_fwd(join(output, marker.nbh_get()), fwd_p));
+	  else
+	    output[fwd_p] = mask[fwd_p] or
+	      (output[fwd_p] and local_and_value_fwd(join(output, marker.nbh_get()), fwd_p));
+
+	}
+
+	void impl_fifo_loop_body()
+	{
+	  // output[n] < mask[p]
+	  if (not output[n] and mask[p])
+	    {
+	      // output[n] < output[p] and mask[n] != output[n]
+	      if (output[p] and mask[n] != output[n])
+		{
+		  output[n] = output[p] and mask[n];
+		  fifo.push(n);
+		}
+	    }
+	  else
+	    // output[n] > output[p] && mask[n] != output[n]
+	    if (output[n] and not output[p] and mask[n] != output[n])
+	      {
+		output[n] = output[p] or mask[n];
+		fifo.push(n);
+	      }
+	}
+
+	bool impl_test_fifo_push()
+	{
+	  // (output[n] < output[bkd_p] and output[n] < mask[n]) or
+	  // (output[n] > output[bkd_p] and output[n] > mask[n])
+	  return output.hold(n) &&
+	    ((not output[n] and output[bkd_p] and mask[n]) ||
+	     (output[n] and not output[bkd_p] and not mask[n]));
+	}
+
+	void impl_preconditions() const
+	{
+	}
+
+      };
+
+
+
+      // GREY LEVEL
+
+      template<typename I1, typename I2>
+      struct greylevel_reconstruction <I1, I2, tag::selfdual_type, tag::none_type>
+	: public canvas::reconstruction<I1, I2, tag::hybrid_type,
+	    greylevel_reconstruction<I1, I2, tag::selfdual_type, tag::none_type> >
+      {
+	typedef greylevel_reconstruction<I1, I2, tag::selfdual_type,
+					 tag::none_type> self_type;
+	typedef canvas::reconstruction<I1, I2, tag::hybrid_type,
+				       self_type> super_type;
+	typedef oln_type_of(I1, value) value_type;
+
+	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
+				 const abstract::greylevel_image<I2>& mask) :
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -75,36 +166,51 @@ namespace oln {
 	void impl_bkd_loop_body()
 	{
 	  if (output[bkd_p] < mask[bkd_p])
-	    output[bkd_p] = mask[bkd_p] and
-	      (output[bkd_p] or local_or_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	    {
+	      value_type max =
+		f_max_alt(output[bkd_p].value(),
+			  local_sup_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	      output[bkd_p] = f_min_alt(mask[bkd_p].value(), max);
+	    }
 	  else
-	    output[bkd_p] = mask[bkd_p] or
-	      (output[bkd_p] and local_and_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	    {
+	      value_type min =
+		f_min_alt(output[bkd_p].value(),
+			  local_inf_value_bkd(join(output, marker.nbh_get()), bkd_p));
+	      output[bkd_p] = f_max_alt(mask[bkd_p].value(), min);
+	    }
 	}
 
 	void impl_fwd_loop_body()
 	{
 	  if (output[fwd_p] < mask[fwd_p])
-	    output[fwd_p] = mask[fwd_p] and
-	      (output[fwd_p] or local_or_value_fwd(join(output, marker.nbh_get()), fwd_p));
+	    {
+	      value_type max =
+		f_max_alt(output[fwd_p].value(),
+			  local_sup_value_fwd(join(output, marker.nbh_get()), fwd_p));
+	      output[fwd_p] = f_min_alt(mask[fwd_p].value(), max);
+	    }
 	  else
-	    output[fwd_p] = mask[fwd_p] or
-	      (output[fwd_p] and local_and_value_fwd(join(output, marker.nbh_get()), fwd_p));
-
+	    {
+	      value_type min =
+		f_min_alt(output[fwd_p].value(),
+			  local_inf_value_fwd(join(output, marker.nbh_get()), fwd_p));
+	      output[fwd_p] = f_max_alt(mask[fwd_p].value(), min);
+	    }
 	}
 
 	void impl_fifo_loop_body()
 	{
 	  if (output[n] < mask[p])
 	    {
-	      if (output[n] < output[p] && mask[n] != output[n])
+	      if (output[n] < output[p] and mask[n] != output[n])
 		{
 		  output[n] = f_min_alt(output[p].value(), mask[n].value());
 		  fifo.push(n);
 		}
 	    }
 	  else
-	    if (output[n] > output[p] && mask[n] != output[n])
+	    if (output[n] > output[p] and mask[n] != output[n])
 	      {
 		output[n] = f_max_alt(output[p].value(), mask[n].value());
 		fifo.push(n);
@@ -113,9 +219,9 @@ namespace oln {
 
 	bool impl_test_fifo_push()
 	{
-	  return output.hold(n) &&
-	    ((output[n] < output[bkd_p] && output[n] < mask[n]) ||
-	     (output[n] > output[bkd_p] && output[n] > mask[n]));
+	  return output.hold(n) and
+	    ((output[n] < output[bkd_p] and output[n] < mask[n]) or
+	     (output[n] > output[bkd_p] and output[n] > mask[n]));
 	}
 
 	void impl_preconditions() const

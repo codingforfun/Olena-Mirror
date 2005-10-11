@@ -53,9 +53,6 @@ namespace oln {
 	using super_type::output;
 	using super_type::bkd_p;
 	using super_type::fwd_p;
-	using super_type::n;
-	using super_type::p;
-
 
 	void impl_bkd_loop_body()
 	{
@@ -71,7 +68,7 @@ namespace oln {
 
 	binary_reconstruction_by_dilation(const abstract::binary_image<I1>& marker,
 					  const abstract::binary_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -123,7 +120,7 @@ namespace oln {
 
 	binary_reconstruction(const abstract::binary_image<I1>& marker,
 			      const abstract::binary_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -155,7 +152,7 @@ namespace oln {
 
 	binary_reconstruction(const abstract::binary_image<I1>& marker,
 			      const abstract::binary_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -199,7 +196,7 @@ namespace oln {
 
 	binary_reconstruction(const abstract::binary_image<I1>& marker,
 			      const abstract::binary_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -244,7 +241,7 @@ namespace oln {
 
 	greylevel_reconstruction_by_dilation(const abstract::greylevel_image<I1>& marker,
 					     const abstract::greylevel_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -294,7 +291,7 @@ namespace oln {
 
 	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
 				 const abstract::greylevel_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -326,7 +323,7 @@ namespace oln {
 
 	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
 				 const abstract::greylevel_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
@@ -360,7 +357,7 @@ namespace oln {
 	{
 	  output[fwd_p] =
 	    f_max_alt(output[fwd_p].value(),
-		      local_sup_value(join(output, marker.nbh_get()), fwd_p));
+		      local_sup_value(join(save, marker.nbh_get()), fwd_p));
 	}
 
 	void impl_second_step()
@@ -375,7 +372,7 @@ namespace oln {
 
 	greylevel_reconstruction(const abstract::greylevel_image<I1>& marker,
 				 const abstract::greylevel_image<I2>& mask) :
-	  super_type(marker, mask)
+	  super_type(marker.exact(), mask.exact())
 	{
 	  mlc_is_a(I1, abstract::image_with_nbh)::ensure();
 	}
