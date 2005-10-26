@@ -1,0 +1,219 @@
+
+		-*- outline -*-
+
+
+* damien
+
+** image type {size; f:p->v}
+is a primary lightweight image
+
+** add image type {ima; f:p->p}
+with a constraint: if p in D, f(p) in D
+so f can be a permutation over D...
+ex: f = hflip, vflip
+...or something else!
+ex: f:p->point(0), f:p->randp()
+
+** info::has
+equip all info classes 
+
+** 2d_hex
+with c6
+
+** nbh esiee
+add a nbhood encoded by a binary image
+
+
+
+* theo
+
+** graph of properties
+draw it!
+and provide with explicit definitions of properties
+(expressed by functions) for all classes
+
+** points as mask/subset........................................current task
+write proper image classes and equipments
+
+** add TUFA-algos
+from Damien's code
+
+
+* priority "short and easy"
+
+** rename
+*** in dpoint*
+(?) row and col as drow and dcol
+*** fwd_niter<DP>
+as fwd_niter_<DP> and typedef fwd_niter_<dpoint2d> as fwd_niter2d
+*** (?) delegate
+in delegate_image and subclasses: I->D, E->I
+
+** add typedefs
+...
+
+
+* priority 1
+
+nota bene: the following list is not yet ordered by priority
+
+** LUT image
+is an image but "ima[p] = v" is forbidden
+though, "level::fill(ima, v)" or "f(ima)" is ok...
+
+** lazy pw local processing
+sometimes we do not want to compute the result of an op on
+the whole image but just on one point (or several points)
+ex: pw_convol(ima, K)[p]
+
+** interpolation
+(ima, fpoint) -> value
+
+** fix
+first code annoted by 'ugly' and/or 'awful'
+then fixmes
+
+** Q. test '.has' in niters?
+instead of writing "for(p) for(n,p) if (input.has[n])"
+should this test be handled by niters?
+so that we simplify the loops to "for(p) for(n,p)"
+
+** image types interoperability
+assign, clone, and copy ctor
+
+** property checking
+how to automatically check that properties are correct?
+pb: huge nbr of combinations...
+
+** import some adv features
+overloading
+
+** image abstractions hierarchy
+for instance, abstract::binary_image
+like in proto-v1 => add virtual + meta-code
+
+** add variantes of {ima; f:p->p}
+ex: {ima; default_value; f:p->p [; interpol]} => rotation
+ex: translation, so differentiate between floating coords (fpoint)
+    and integral coords
+
+** morphers
+(so delegate images which are neither decorators nor extensions)
+find a proper classification 
+
+** border
+how to correctly handle this notion?
+
+** size cmp
+to test that 2 images have the same size
+or that one domain is included into another
+hint: bbox may be useful(?)
+
+** graph
+add a (very simple) graph class
+make that it can be viewed as an image
+
+** cylinder / torus
+add these morphers
+
+** different sizes
+theoretical size v. finite underlying size...
+Cf. simon
+bbox is the proper way to access the (underlying) finite image support
+
+** method hiding
+*** infinite dimensions
+hide image::nrows() for the client not to use it in a loop
+*** dynamically known information
+hide methods like image::npoints() when e.g. image has a mask
+idem with image::has() for instance with stl_<..>
+
+** TODO++
+augment this present TODO list
+
+
+
+* priority low
+
+** check immediate subclasses of delegate_image
+add meta-code to ensure that props are conform to these subclasses
+for instance, a decorated_image should not modify a property, etc.
+
+** check that...
+classes in *.hh conform to signatures defined in abstract.hh
+this task should be performed in background and in fine
+
+** any_point
+and any_stuff -like
+
+** [d]point as metavector
+so it allows generic code (and efficient arith)
+
+
+
+* done!
+
+** grid
+ex: grid2d should be grid2d_<C> (C being a coord type)K and so on
+
+** typename I::*_type
+change to oln_type_of(I, *)
+
+** value_set_type
+use mlc::no_type instead of void
+
+** import some mlc features
+bool, cmp, if
+is_a with C, TC, and TCC
+
+** add typedefs
+fpoint for point*_<fcoord>
+
+** rename
+*** through_fun
+as thru_pw_fun for the former name is not ambiguous
+*** with_mask_iter
+as partial_iter
+*** with_mask(..) and with_subset(..)
+as resp. mask(..) and subset(..)
+*** with_mask and with_subset
+as resp. with_imask and with_isubset
+*** with_nbh(..)
+as ".. + nbh"
+*** nbh_c4
+as c4 + add other connectivities
+*** neighb
+as neighb_gen_
+*** size*
+as size_gen_<Grid>
+
+** errors in prop definitions (v2)
+*** nbh(mask) v. mask(nbh)
++nbh(+mask)::niter <- fwd_niter<point>
++mask(+nbh)::niter <- mask_iter<fwd_niter<point>,mask>
+hint: niter should be provided from info...
+*** value_set_type: no_type -> no_type
++log(f(ima))::value_set_type is not no_type!
+
+** iters from set_type_of (v2)
+*** info -> *_piter
+*** info -> niter
+image::iter <- f(image::info)
+so that we avoid trouble with combinatory
+rationale: info = topology
+so we have all we need in info and
+   the presence of e.g. decorators-like is ignored
+thus move iter defs from images to infos
+
+** type 'points'
+these types can be used as a mask; an image masked that way has
+dedicated efficient piters (idem with subset instead of mask)
+*** the simplest one = bbox
+bbox2d is like size2d but do not derive from info
+a bbox is a "set of points"
+actually size2d has (precisely: "returns") a bbox2d
+*** simple ones
+like vector<P> and/or list<P>
+with proper piters (and ::has?), etc.
+*** run-length
+about the same as above (but more compact in memory)

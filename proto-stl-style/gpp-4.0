@@ -1,0 +1,1 @@
+g++-4.0 -Wall -ansi -pedantic -ggdb main.cc

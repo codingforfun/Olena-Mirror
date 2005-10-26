@@ -1,0 +1,174 @@
+
+		-*- outline -*-
+
+
+* contents
+
+** main file
+
+main.cc		a tour-like
+
+** utils
+misc.hh		contract macros, typedef macros
+mlc.hh		undefined, no_type, eq, neq, any, value
+abstract.hh	abstract classes
+coord.hh	coord
+gen.hh		neighb<DP>, fwd_niter<P>
+
+type_of.hh	NEW: introduce oln_type_of(I, something)
+
+algos.hh	generic algorithms
+f.hh		some function-objects
+value_box.hh	a value box for use in some classes derived from
+		delegate_image
+images.hh	include all image types (see just below)
+
+** image types
+
+*** hierarchy
+                     image
+                       |
+                      ...  { here abstractions for clients } 
+                       |
+                  entry_image  { below internal class to plug image types }
+                       |
+        ----------------------------------------- ... --------
+        |                           |                        |
+  primary_image              delegate_image                box<I>
+        |                           |
+   --------------                  ...
+   |            |
+data_image  lightweight_image
+
+
+
+                       delegate_image
+                              |
+       ------------------------------------------------
+       |                  |               |           |
+decorated_image   extended_image   morphed_image     ...
+
+
+*** abstractions
+
+image<E>		base class
+
+entry_image<E>		FIXME: say something like "base class to sub-class"
+			and "bottom class for all client abstract image
+			types"
+
+primary_image<E>	for basic image types (to be instantiated)
+			ex: image2d<T>
+
+data_image<E>		for primary image types that really *store* data
+			ex: image2d<T>
+
+lightweight_image<E>	for primary image types that have *no* stored data
+			ex: {size;f:p->v}
+
+delegate_image<I, E>	for image types that rely on another image type
+
+decorated_image<I,E>	properties are preserved (so the same versions of
+			algorithms are selected) but extra code is performed
+			ex: with_log<I>
+			FIXME: that is not really true! e.g., value_set_type
+			       is changed by with_log...
+
+extended_image<I,E>	only change: property no_type -> an_effective_type
+			ex: with_nbh<I>
+
+morphed_image<I,E>	for delegate image types that are neither decorated
+			nor extended
+			ex: with_subset<I,S>
+
+TODO: define proper subclass for morphed_image?...
+
+
+*** primary types
+1d_fwd_decls.hh
+1d.hh		image1d<T>
+2d_fwd_decls.hh
+2d.hh		image2d<T>
+
+*** function-based types
+fun.hh		through_fun_<I, F>
+bijfun.hh	through_bijfun_<I, F>
+attr.hh		attr_<I, A>
+
+*** other types
+rowof.hh	rowof_<I>
+with_nbh.hh	with_nbh_<I, N>
+with_mask.hh	with_mask_<I, M>
+with_subset.hh	with_subset_<I, S>
+with_log.hh	with_log_<I>
+
+*** TODO
+fromfun.hh	something like: ima(info + f:p->v)
+mixfun.hh	through_mixin_<I,M>
+cylinder.hh
+torus.hh
+
+
+
+* property graph
+
+
+** generalities
+
+*** constraints
+that's great when there is no constraint upon deductions from a type;
+that is the sign of good decoupling between types
+
+*** automatic deductions
+for all couple (category, class),  piter <- fwd_piter
+
+
+** grid
+
+*** props
+
+grid -> dim
+     -> point --> coord
+              \-> dpoint
+
+*** constraint
+
+if point -> grid or dim: for all grid g, g::point::grid = g
+
+*** rmq
+which is simpler than:
+  grid -> dim   \
+       -> coord --> point
+                 -> dpoint
+
+and better because there is no trivial deduction 'coord->point' in the
+general case
+
+*** discussion
+is it a good idea to parameterize grid1d_ by C?
+yes: if we want to generalize such grid type to be able to handle
+     grid1d_<long int> with no extra code
+no:  grid1d is then a very simple type; coding aside something like
+     grid1d_long_int is a good thing
+
+
+** info
+
+*** props
+
+info -> piter  (FIXME: redundant cause -> point)
+     -> niter
+     -> grid (so point, dpoint)
+
+*** constraints
+
+FIXME: ...
+
+
+
+* set_type_of on images
+
+** foreword
+
+to each image is associated an info; an info contains all topological
+information to handle iterations on p and on n, neighbor of p.

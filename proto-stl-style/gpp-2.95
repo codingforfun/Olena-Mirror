@@ -1,0 +1,1 @@
+g++-2.95 -Wall -ansi -pedantic  -finline-limit-500 -ggdb main.cc
