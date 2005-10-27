@@ -1,0 +1,10 @@
+2005-10-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* a.out: Remove file.
+	* gpp: Remove file.
+	* ChangeLog: New file.
+	* TOUR: New file.
+
+2005-10-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* New project.

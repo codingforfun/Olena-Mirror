@@ -1,0 +1,244 @@
+		-*- outline -*-
+
+* image types
+
+** a primary 2D type
+
+*** data
+
+int main()
+{
+  image2d<int> ima(3, 3);
+  iota(ima);
+  fancy_print(ima);
+  //...
+}
+
+gives:
+
++----------+
+|  1  2  3 |
+|  4  5  6 |
+|  7  8  9 |
++----------+
+
+*** iteration over points  
+
+With:
+
+template <class I>
+void echo_input_p(const abstract::image<I>& input)
+{
+  oln_type_of(I, fwd_piter) p(input.info());
+  for_all_p(p)
+    std::cout << input[p] << ' ';
+  std::cout << std::endl;
+}
+
+the call:
+  echo_input_p(ima);
+gives:
+
+1 2 3 4 5 6 7 8 9
+
+And with:
+
+template <class I>
+void echo_p(const abstract::image<I>& input)
+{
+  oln_type_of(I, fwd_piter) p(input.info());
+  for_all_p(p)
+    std::cout << p.point() << ' ';
+  std::cout << std::endl;
+}
+
+we have:
+(0,1) (0,2) (0,3) (1,1) (1,2) (1,3) (2,1) (2,2) (2,3)
+
+*** iterators
+
+An iterator such as the "fwd_piter" one is constructed with
+"input.info()" which provides all required information about the
+topology of images like "input".  That emphases that the iterator
+object 'p', that definitly looks like an image point, is not bound to
+the particular image "input" and thus can be used in conjunction with
+another image.  (See the routine geodesic_sum below).
+
+*** type deduction
+
+In the previous examples we see that types are deduced from the type I
+through the macro "oln_type_of(I, the_type_we_want)".  For example,
+"oln_type_of(I, fwd_piter)" is the type of iterators defined by the
+topology of I.  We will see more example in the following.
+
+
+** image thru a pure function
+
+*** in a glance
+
+ima2 = f_minus(ima);
+
+leads to ima2 being:
+
++----------+
+| -1 -2 -3 |
+| -4 -5 -6 |
+| -7 -8 -9 |
++----------+
+
+ima2 has the same topology than the one of ima (seeing an image
+through a function does not affect the topology); we have:
+"ima.info() == ima2.info()".  We also have:
+"oln_type_of(ima2_t,  piter) == oln_type_of(ima_t,  piter)".
+
+*** memory snapshot
+
+"f_minus(ima)" creates an object that composes "ima".  Below an arrow
+"->" symbolizes a pointer and values are given between parens: 
+
+ima2 -> fun_   (= &f_minus)
+     -> image_ (= ima)      -> data_ (= new int[N])
+
+ima2 is a light-weight object that does not duplicate the data of
+"ima" (sizeof(ima2) is equivalent to 2 pointers).  We do not really
+have a "new" image with its own data buffer but a new object, which
+behaves like "-ima" (for instance, we have "ima2[p] == - ima[p]") and
+which is really an image.
+
+*** how it works
+
+The type of ima2 is instantiated from the template:
+
+// warning: this is c++-like pseudo-code
+template <class I, class F>
+struct thru_fun
+{
+  // meths:
+  value_type operator[](point_type p) const { return fun_(image_[p]); }
+  // attrs:
+  I image_; // kind of shared_ptr
+  F fun_;
+};
+
+and, more precisely, we have "typeof(ima2) == thru_fun<ima_t, f_minus_t>"
+
+*** generalization
+
+Actually almost all images types that are not primary image types are
+constructed like this type.  We can write:
+
+template <class I, class D>
+struct non_primary_image_type
+{
+  ctor(I image, D auxdata) { //...
+  info_type info() const   { //... 
+
+  // body...
+
+  // attributes:
+  I image_;
+  D auxdata_;
+};
+
+where info_type is a type that can be deduced from the image type.
+
+
+** image plus a neighborhood
+
+*** in a glance
+
+To associate a neighborhood with an image, we write:
+ 
+ima2 = ima + c4;
+
+The topology of ima2 now owns a neighborhood.  We can check that:
+  oln_type_of(ima_t,  nbh) == no_type
+and
+  oln_type_of(ima2_t, nbh) == neighb2d.
+
+Moreover:
+  oln_type_of(ima_t,  niter) == no_type
+and
+  oln_type_of(ima2_t, niter) == fwd_niter2d.
+
+Conversely the remaining features of ima2 are the same than the ones
+of ima, e.g., if ima data are float then ima2 data also are float.
+Precisely "oln_type_of(ima_t, value) == oln_type_of(ima2_t, value)".
+We also have "oln_type_of(ima_t, piter) == oln_type_of(ima2_t, piter)".
+
+*** practicing 1/2
+
+With ima being:
+
++----------+
+|  1  2  3 |
+|  4  5  6 |
+|  7  8  9 |
++----------+
+
+and with:
+
+template <class I>
+void echo_input_p_n(const abstract::image<I>& input)
+{
+  oln_type_of(I, fwd_piter) p(input.info());
+  oln_type_of(I, fwd_niter) n(input.info());
+  for_all_p(p)
+  {
+    std::cout << input[p] << ": ";
+    for_all_n_of_p(n, p)
+      std::cout << input[n] << ' ';
+    std::cout << endl;
+  }
+}
+
+the call:
+  echo_input_p_n(ima + c4);
+gives:
+
+1: 2 4
+2: 1 3 5
+3: 2 6
+4: 1 5 7
+5: 2 4 6 8
+...
+
+where c4 is the object representing the 4-connectivity.
+
+*** practicing 2/2
+
+With:
+
+template <class I>
+oln_type_of(I, concrete)
+geodesic_sum(const abstract::image<I>& input)
+{
+  mlc::neq<oln_type_of(I, nbh), no_type>::ensure();
+  oln_type_of(I, concrete) output(input.info());
+  oln_type_of(I, piter) p(input.info());
+  oln_type_of(I, niter) n(input.info());
+  for_all_p(p)
+  {
+    oln_type_of(I, value) sum = input[p];
+    for_all_n_of_p(n, p)
+      sum += input[n];
+    output[p] = sum;       //  <- here p is used on output
+  }
+  return output;
+}
+
+the call "geodesic_sum(ima2)" works, whereas "geodesic_sum(ima)" does not.
+
+*** a second classification of image types
+
+The first discriminant is primary v. non-primary.  The second one is
+"are we talking about the same image? (or not).
+
+FIXME: HERE
+
+ima+c is ima
+
+We have "ima[p] == ima2[p]" and "ima[p] = 0" leads to "ima2[p] == 0".
+Just think that "ima2" is "ima PLUS an extra property" (namely a
+neighborhood).
+
