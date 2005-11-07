@@ -18,7 +18,7 @@ funs << FunctionLoader.from_cxx_call('my_lib/lib.hh', 'foo3',
 funs << FunctionLoader.from_cxx_call('my_lib/lib.hh', 'my_lib::x::foo4',
                                      ['u<float>', 't<t<char, char>, u<const int> >'], 'u<char>***')
 funs << FunctionLoader.from_cxx_call('my_lib/lib.hh', 'foo3',
-                                     ['t<int, char>', 'const t<int, char>*', 'const t<int, char>&'],
+                                     ['t<int, char>', 'const t<int, char>', 'const t<int, char>&'],
                                      't<int, char>*')
 
 # FIXME funs

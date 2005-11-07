@@ -1,5 +1,11 @@
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Fix a test.
+
+	* test/test_function_loader_cxx.rb: Remove a incorrect *.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add from_cxx_call.
 
 	* src/function_loader.rb: Add from_cxx_call.
