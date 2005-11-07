@@ -51,22 +51,25 @@ struct function_loader_t
     ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
   }
 
-
   void call(const std::string& inc, const std::string& name,
 	    const data& arg1)
   {
-//     typedef void (
+    typedef void (*func_t)(const data&);
     ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
 	 << name << "\", [\"" << arg1.name_ << "\"]" << ruby::eval;
-    return RDLPTR(ruby.last_value())->ptr;
+    func_t to_call = RDLPTR(ruby.last_value())->ptr;
+    to_call(const data& arg1);
   }
 
   void call_ret(const std::string& inc, const std::string& name,
 		const data& arg1, const data& ret)
   {
+    typedef void (*func_t)(const data&, const data&);
     ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
 	 << name << "\", [\"" << arg1.name_ << "\"], \""
 	 << ret.name_ << "\"" << ruby::eval;
+    func_t to_call = RDLPTR(ruby.last_value())->ptr;
+    to_call(const data& arg1, const data& arg2);
   }
 
   ruby::stream ruby;

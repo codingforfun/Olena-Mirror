@@ -1,5 +1,11 @@
 2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
 
+	Changes in the loader.
+
+	* src/function_loader.hh: Add call_ret().
+
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
 	Add call() in the loader.
 
 	* src/function_loader.hh: Add call() in the loader.
