@@ -1,5 +1,11 @@
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Use YAML instead of PStore.
+
+	* src/function_loader.rb: Because PStore segv sometimes :(.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Some fixes.
 
 	* src/data.hh, src/call.hh: include cassert.

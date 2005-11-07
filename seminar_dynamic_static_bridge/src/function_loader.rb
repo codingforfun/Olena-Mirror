@@ -1,6 +1,6 @@
 require 'pathname'
 require 'dl'
-require 'pstore'
+require 'yaml'
 
 class Array
   alias_method :top, :last
@@ -39,17 +39,18 @@ end # class EncodedSymbol
 
 class Cache
   def initialize ( pathname )
-    @pstore = PStore.new pathname.to_s
+    @pathname = pathname
+    @cache = (@pathname.exist?)? YAML.load(@pathname.read) : {}
     @local = {}
   end
   def []= ( key, value )
     sym, lib_path = value
-    @pstore.transaction { @pstore[key] = lib_path }
+    @cache[key] = lib_path
+    @pathname.open('w') { |f| f.puts @cache.to_yaml }
     @local[key] = sym
   end
   def [] ( key )
-    lib_path = nil
-    @pstore.transaction { lib_path = @pstore[key] }
+    lib_path = @cache[key]
     sym = @local[key]
     if sym.nil?
       raise NotImplementedError
@@ -71,7 +72,7 @@ class FunctionLoader
     self.name = name
     self.args = args
     self.ret  = ret
-    @cache = Cache.new(repository + 'cache.db')
+    @cache = Cache.new(repository + 'cache.yml')
   end
   def self.enc ( name, code, cxx_char=nil )
     EncodedSymbol.new(name, code, cxx_char)
@@ -158,7 +159,7 @@ class FunctionLoader
       when /linux/  then '-shared'
       end
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
-    out = Pathname.new 'g++.out'
+    out = repository + 'g++.out'
     cmd = "g++ #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
     puts cmd
     if system cmd
