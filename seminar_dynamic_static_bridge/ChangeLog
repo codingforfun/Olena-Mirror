@@ -1,5 +1,12 @@
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Some fixes.
+
+	* src/data.hh, src/call.hh: include cassert.
+	* src/function_loader.rb: Use Pathname#read instead of File.read.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Change the argument parser.
 
 	* src/function_loader.rb: Use a little LL parser.

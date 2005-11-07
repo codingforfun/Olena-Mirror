@@ -1,4 +1,5 @@
 #include <string>
+#include <cassert>
 
 namespace dyn {
 

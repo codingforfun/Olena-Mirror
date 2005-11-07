@@ -168,7 +168,7 @@ class FunctionLoader
       cache[@identifier] = [sym, lib_path]
       sym
     else
-      STDERR.puts File.read(out).
+      STDERR.puts out.read.
         gsub(/^#{file}:/, "[[#@name]]:").
         gsub(/dyn::generated::#@identifier/, @name.to_s)
       exit 1
