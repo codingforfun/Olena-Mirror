@@ -1,5 +1,12 @@
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Change the argument parser.
+
+	* src/function_loader.rb: Use a little LL parser.
+	* test/fixtures/some_identifiers.yml.cc: All tests passes now.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add the Vcs extension.
 
 	* vcs: New.

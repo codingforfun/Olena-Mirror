@@ -100,28 +100,7 @@ class FunctionLoader
     @name = split(name).stringify.join.to_sym
   end
   def args= ( args )
-#     @args = []
-#     str = split(args).stringify.join
-#     str.scan(/[^,<]+(?:<[^>]*>)?/) { |x| @args << x }
-#     p @args
-    @args = []
-    stack = split(args).reverse
-    arg = []
-    until stack.empty?
-      case (top = stack.pop).code
-      when :C
-        @args << arg.stringify.join
-        arg = []
-      when :L
-        arg << top
-        until stack.top.code == :R
-          arg << stack.pop
-        end
-      else
-        arg << top
-      end
-    end
-    @args << arg.stringify.join unless arg.empty?
+    @args = ArgParser.new(split(args).reverse).parse
   end
   def ret= ( ret )
     @ret = split(ret).stringify.join
@@ -137,7 +116,7 @@ class FunctionLoader
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
       arguments << "const dyn::data& #{arg}"
-      call_args << arg
+      call_args << "*(#{arg}_value->p_obj_)"
       vars << "dyn::data_proxy< #{type} >* #{arg}_value = " +
               "dynamic_cast< dyn::data_proxy< #{type} >* >(#{arg}.proxy_);"
     end
@@ -232,4 +211,48 @@ class FunctionLoader
       @@default_includes << Pathname.new(path).expand_path
     end
   end
+
+  class ArgParser
+    attr_reader :stack, :result, :current, :top
+    def initialize ( stack )
+      @stack = stack
+      @current = []
+      @result = []
+      @top = nil
+    end
+    def template_args
+      current << top
+      until stack.empty?
+        case (top = stack.pop).code
+        when :R
+          current << top
+          return
+        when :L
+          template_args
+        else
+          current << top
+        end
+      end
+      raise
+    end
+    def args
+      until stack.empty?
+        case (@top = stack.pop).code
+        when :C
+          result << current.stringify.join
+          current.clear
+        when :L
+          template_args
+        else
+          current << top
+        end
+      end
+      result << current.stringify.join unless current.empty?
+    end
+    def parse
+      args
+      result
+    end
+  end
+
 end # class FunctionLoader
