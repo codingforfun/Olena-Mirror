@@ -59,10 +59,13 @@ class Cache
 end
 
 class FunctionLoader
-  attr_reader :identifier, :path, :name, :args, :ret, :cache, :includes
+  attr_reader :identifier, :path, :name, :args, :ret, :cache, :includes, :include_dirs
+  @@default_includes ||= []
+  @@default_include_dirs ||= []
   def initialize ( identifier )
     path, name, args, ret = identifier.split '__'
-    @includes = []
+    @includes = @@default_includes.dup
+    @include_dirs = @@default_include_dirs.dup
     @identifier = identifier
     self.path = path
     self.name = name
@@ -175,23 +178,25 @@ class FunctionLoader
       when /darwin/ then '-bundle'
       when /linux/  then '-shared'
       end
-    includes_opts = includes.map { |x| "-I#{x}" }.join ' '
-    cmd = "g++ #{opts} #{includes_opts} -o #{lib_path} #{file} 2> gcc.out"
+    includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
+    out = Pathname.new 'g++.out'
+    cmd = "g++ #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
     puts cmd
     if system cmd
+      out.unlink if out.exist?
       lib = DL.dlopen(lib_path.to_s)
       sym = lib[@identifier, '0' + 'P'*arity]
       cache[@identifier] = [sym, lib_path]
       sym
     else
-      STDERR.puts File.read('gcc.out').
+      STDERR.puts File.read(out).
         gsub(/^#{file}:/, "[[#@name]]:").
         gsub(/dyn::generated::#@identifier/, @name.to_s)
       exit 1
     end
   end
   def arity
-    args.size + ((ret?)? 0 : 1)
+    args.size + ((ret?)? 1 : 0)
   end
   def to_s
     "#@path: #@ret #@name(#{@args.join(', ')})"
@@ -207,5 +212,24 @@ class FunctionLoader
   end
   def dyn_dir
     Pathname.new(__FILE__).dirname.parent
+  end
+  class << self
+    def from_mlc_name_of ( aPath, aString )
+      puts "from_mlc_name_of('#{aPath}', '#{aString}')"
+      identifier = 'my_U_lib_S_lib_D_hh__foo1____void'
+      fun = new identifier
+#       puts fun
+#       puts fun.to_cxx
+      fun_ptr = fun.get_function
+#       puts fun_ptr
+#      fun_ptr.call
+      fun_ptr
+    end
+    def include_dir ( path )
+      @@default_include_dirs << Pathname.new(path).expand_path
+    end
+    def include ( path )
+      @@default_includes << Pathname.new(path).expand_path
+    end
   end
 end # class FunctionLoader

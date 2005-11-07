@@ -1,0 +1,4 @@
+check:
+	@@CXX@@ @@CFLAGS@@ test_function_loader.cc -o test_function_loader @@LIBRUBYARG@@
+	./test_function_loader
+

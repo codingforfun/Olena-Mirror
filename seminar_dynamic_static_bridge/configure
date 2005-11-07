@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'rbconfig'
+
+class Configure
+  def initialize ( &block )
+    @patt = {}
+    instance_eval(&block)
+    do_gsub
+  end
+  def gsub ( name, val=get(name.to_s) )
+    @patt[((name.is_a? Regexp)? name : "@@#{name}@@")] = val
+  end
+  def do_gsub
+    Pathname.glob('**/*.in').each do |path|
+      puts path
+      contents = path.read
+      @patt.each { |patt, val| contents.gsub! patt, val }
+      Pathname.new(path.to_s.sub(/\.in$/, '')).open('w') { |f| f.puts contents }
+    end
+  end
+  def get ( name )
+    Config::CONFIG[name] || eval(name)
+  end
+end
+Kernel.send :undef_method, :gsub
+
+SOURCE_DIR = (Pathname.new(__FILE__).dirname + 'src').expand_path
+
+Configure.new do
+  gsub :SOURCE_DIR
+  gsub :LDSHARED
+  gsub :LIBRUBYARG
+  gsub :LIBRUBYARG_SHARED
+  gsub :CXX, 'g++'
+  gsub :CFLAGS, '-I' + Config::CONFIG['topdir']
+end
+
+puts "Configuring: done."

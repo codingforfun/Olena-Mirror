@@ -6,10 +6,12 @@ fixtures = test + 'fixtures'
 src = root + 'src'
 require src + 'function_loader'
 
+FunctionLoader.include_dir fixtures
+FunctionLoader.include_dir src
+
 Pathname.glob(fixtures + '*.yml.cc').each do |file|
   YAML.load(file.read).each do |identifier, ref|
     fun = FunctionLoader.new identifier
-    fun.includes << fixtures << src
     puts fun
     puts ref
     puts fun.to_cxx
