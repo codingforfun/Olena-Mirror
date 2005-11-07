@@ -1,6 +1,8 @@
 #include <string>
 #include <cassert>
 
+#include "mlc.hh"
+
 namespace dyn {
 
   // data  -->  abstract_data
@@ -13,9 +15,9 @@ namespace dyn {
 
   struct abstract_data
   {
-    virtual const std::string mangle() const = 0;
+//     virtual const std::string mangle() const = 0;
     virtual abstract_data* clone() const = 0;
-    virtual void assign_to(void* lhs) const = 0;
+//     virtual void assign_to(void* lhs) const = 0;
     virtual void print(std::ostream& ostr) const = 0;
     virtual ~abstract_data() {}
   };
@@ -27,20 +29,20 @@ namespace dyn {
   {
     data_proxy(const T& obj) : p_obj_(&obj) {}
 
-    virtual const std::string mangle() const
-    {
-      return mangle_arg(*p_obj_);
-    }
+//     virtual const std::string mangle() const
+//     {
+//       return mangle_arg(*p_obj_);
+//     }
 
     virtual data_proxy<T>* clone() const
     {
       return new data_proxy<T>(*p_obj_);
     }
 
-    virtual void assign_to(void* lhs) const
-    {
-      *(T*)lhs = *p_obj_;
-    }
+//     virtual void assign_to(void* lhs) const
+//     {
+//       *(T*)lhs = *p_obj_;
+//     }
 
     virtual void print(std::ostream& ostr) const
     {
@@ -70,7 +72,8 @@ namespace dyn {
     data(const T& obj)
     {
       proxy_ = new data_proxy<T>(obj);
-      name_ = "unkown";
+      name_ = mlc_name<T>::of();
+      std::cout << name_ << std::endl;
     }
 
     data(const data& rhs)
@@ -103,21 +106,21 @@ namespace dyn {
 
     bool set_name(const std::string& name);
 
-    template <class T>
-    operator T() const
-    {
-      assert(proxy_ != 0);
-      // here also check that proxy_ contains a T*
-      T tmp;
-      proxy_->assign_to(&tmp);
-      return tmp;
-    }
+//     template <class T>
+//     operator T() const
+//     {
+//       assert(proxy_ != 0);
+//       // here also check that proxy_ contains a T*
+//       T tmp;
+//       proxy_->assign_to(&tmp);
+//       return tmp;
+//     }
 
-    const std::string mangle() const
-    {
-      assert(proxy_ != 0);
-      return proxy_->mangle();
-    }
+//     const std::string mangle() const
+//     {
+//       assert(proxy_ != 0);
+//       return proxy_->mangle();
+//     }
 
     void print(std::ostream& ostr) const
     {

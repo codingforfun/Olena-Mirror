@@ -22,13 +22,12 @@ namespace dyn {
   // misc
 
   bool data::set_name(const std::string& name)
-  {    
+  {
     dat_t::iterator d = dat.find(name);
     if (d != dat.end()) {
       std::cerr << "object name \"" << name << "\" already exist" << std::endl;
       return false;
     }
-    this->name_ = name;
     dat[name] = *this;
     return true;
   }

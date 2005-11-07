@@ -1,3 +1,16 @@
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	New loader c++-side interface.
+
+	* test/test_damien.cc: New. A test.
+	* test/Makefile.in: Add test_damien.cc compilation.
+	* test/fixtures/my_lib/damien.hh: New. Functions needed by the test.
+	* src/mangle.hh: Remove.
+	* src/env.hh: remove this->name_ = name.
+	* src/data.hh: Comment mangle related methods.
+	* src/dyn.hh: Remove mangle.hh inclusion.
+	* src/function_loader.hh: Add call methods.
+
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Fix a test.

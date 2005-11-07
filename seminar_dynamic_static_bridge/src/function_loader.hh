@@ -15,7 +15,7 @@ function_loader.include(file);
 
 struct function_loader_t
 {
-//   typedef void (*fun_t)();
+  typedef void (*fun_t)();
 
   function_loader_t()
   {
@@ -30,13 +30,13 @@ struct function_loader_t
          << "\"" << ruby::eval;
   }
 
-  void *
+  fun_t
   load(const std::string& header_path, const std::string& fun_name)
   {
     std::cout << "Loading the function " << fun_name << " in " << header_path << std::endl;
     ruby << "FunctionLoader.from_mlc_name_of \""
          << header_path << "\", \"" << fun_name << "\"" << ruby::eval;
-    return RDLPTR(ruby.last_value())->ptr;
+    return (fun_t)(RDLPTR(ruby.last_value())->ptr);
   }
 
   void
@@ -51,26 +51,38 @@ struct function_loader_t
     ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
   }
 
-  void call(const std::string& inc, const std::string& name,
-	    const data& arg1)
+  void call_(const std::string& inc, const std::string& name,
+	     const dyn::data& arg1)
   {
-    typedef void (*func_t)(const data&);
+    std::cout << arg1.name_ << std::endl;
+    typedef void (*func_t)(const dyn::data&);
     ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
 	 << name << "\", [\"" << arg1.name_ << "\"]" << ruby::eval;
-    func_t to_call = RDLPTR(ruby.last_value())->ptr;
-    to_call(const data& arg1);
+    func_t to_call = (func_t)RDLPTR(ruby.last_value())->ptr;
+    to_call(arg1);
   }
 
-  void call_ret(const std::string& inc, const std::string& name,
-		const data& arg1, const data& ret)
+  void call(const std::string& inc, const std::string& name,
+	    const std::string& arg1)
   {
-    typedef void (*func_t)(const data&, const data&);
-    ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
-	 << name << "\", [\"" << arg1.name_ << "\"], \""
-	 << ret.name_ << "\"" << ruby::eval;
-    func_t to_call = RDLPTR(ruby.last_value())->ptr;
-    to_call(const data& arg1, const data& arg2);
+
+    dyn::dat_t::iterator d = dyn::dat.find(arg1);
+    if (d != dyn::dat.end())
+      call_(inc, name, d->second);
+    else
+      std::cout << "unregistered data \"" << arg1 << "\"" << std::endl;
   }
+
+//   void call_ret(const std::string& inc, const std::string& name,
+// 		const dyn::data& arg1, const dyn::data& ret)
+//   {
+//     typedef void (*func_t)(const dyn::data&, const dyn::data&);
+//     ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
+// 	 << name << "\", [\"" << arg1.name_ << "\"], \""
+// 	 << ret.name_ << "\"" << ruby::eval;
+//     func_t to_call = (func_t)RDLPTR(ruby.last_value())->ptr;
+//     to_call(arg1, ret);
+//   }
 
   ruby::stream ruby;
 };
