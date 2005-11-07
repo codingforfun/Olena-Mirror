@@ -1,3 +1,11 @@
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add from_cxx_call.
+
+	* src/function_loader.rb: Add from_cxx_call.
+	* test/fixtures/some_identifiers.yml.cc: Remove the useless type spec.
+	* test/test_function_loader_cxx.rb: New.
+
 2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Changes in the loader.

@@ -20,12 +20,13 @@ class SimpleSymbol
 end # class SimpleSymbol
 
 class EncodedSymbol
-  attr_reader :name, :code, :cxx_char
+  attr_reader :name, :code, :cxx_char, :patt
   @@codes     ||= {}
   def initialize ( name, code, cxx_char=nil )
     @name = name
     @code = (code.is_a? Integer)? code.chr.to_sym : code
     @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
+    @patt = to_s.strip
     raise if @@codes[@code]
     @@codes[@code] = self
   end
@@ -33,7 +34,19 @@ class EncodedSymbol
     @@codes[arg.to_sym]
   end
   def to_s
-    @cxx_char || "#@name "
+    (@cxx_char || "#@name ").to_s
+  end
+  def self.encode ( str )
+    result = str.gsub '_', '_U_'
+    result.gsub!(/\s*/, '')
+    @@codes.each_value do |v|
+      next if v.code == :U
+      result.gsub!(v.patt, "_#{v.code}_")
+    end
+    result.gsub!(/_+/, '_')
+    result.gsub!(/^_/, '')
+    result.gsub!(/_$/, '')
+    result
   end
 end # class EncodedSymbol
 
@@ -197,6 +210,22 @@ class FunctionLoader
     def from_mlc_name_of ( aPath, aString )
       puts "from_mlc_name_of('#{aPath}', '#{aString}')"
       identifier = 'my_U_lib_S_lib_D_hh__foo1____void'
+      fun = new identifier
+#       puts fun
+#       puts fun.to_cxx
+      fun_ptr = fun.get_function
+#       puts fun_ptr
+#      fun_ptr.call
+      fun_ptr
+    end
+    def mangle ( aString )
+      EncodedSymbol.encode(aString)
+    end
+    def from_cxx_call ( aPath, aFunctionName, arguments=[], ret='void' )
+      puts "from_cxx_call('#{aPath}', '#{aFunctionName}', #{arguments.inspect}, #{ret})"
+      identifier = mangle(aPath) + '__' + mangle(aFunctionName) + '__'
+      identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
+      identifier << '__' << mangle(ret)
       fun = new identifier
 #       puts fun
 #       puts fun.to_cxx
