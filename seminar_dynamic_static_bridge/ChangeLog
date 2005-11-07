@@ -1,3 +1,9 @@
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add call() in the loader.
+
+	* src/function_loader.hh: Add call() in the loader.
+
 2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Use YAML instead of PStore.

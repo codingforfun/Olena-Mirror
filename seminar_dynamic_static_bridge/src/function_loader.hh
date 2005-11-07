@@ -5,6 +5,7 @@
 #include "dl.h"
 #include "ruby_stream.hh"
 #include "config.hh"
+#include "dyn.hh"
 
 /*#define dyn_include(file) \
 \#include file \
@@ -14,7 +15,7 @@ function_loader.include(file);
 
 struct function_loader_t
 {
-  typedef void (*fun_t)();
+//   typedef void (*fun_t)();
 
   function_loader_t()
   {
@@ -29,13 +30,13 @@ struct function_loader_t
          << "\"" << ruby::eval;
   }
 
-  fun_t
+  void *
   load(const std::string& header_path, const std::string& fun_name)
   {
     std::cout << "Loading the function " << fun_name << " in " << header_path << std::endl;
     ruby << "FunctionLoader.from_mlc_name_of \""
          << header_path << "\", \"" << fun_name << "\"" << ruby::eval;
-    return (fun_t)(RDLPTR(ruby.last_value())->ptr);
+    return RDLPTR(ruby.last_value())->ptr;
   }
 
   void
@@ -48,6 +49,24 @@ struct function_loader_t
   include_dir(const std::string& dir)
   {
     ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
+  }
+
+
+  void call(const std::string& inc, const std::string& name,
+	    const data& arg1)
+  {
+//     typedef void (
+    ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
+	 << name << "\", [\"" << arg1.name_ << "\"]" << ruby::eval;
+    return RDLPTR(ruby.last_value())->ptr;
+  }
+
+  void call_ret(const std::string& inc, const std::string& name,
+		const data& arg1, const data& ret)
+  {
+    ruby << "FunctionLoader.from_cxx_call \"" << inc << "\", \""
+	 << name << "\", [\"" << arg1.name_ << "\"], \""
+	 << ret.name_ << "\"" << ruby::eval;
   }
 
   ruby::stream ruby;
