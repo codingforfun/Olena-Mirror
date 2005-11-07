@@ -1,0 +1,7 @@
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add the Vcs extension.
+
+	* vcs: New.
+	* vcs/dynamic_static_bridge_vcs.rb: New.
+
