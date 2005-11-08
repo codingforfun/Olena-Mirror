@@ -1,3 +1,23 @@
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Improve the call convention.
+
+	* test/test_damien.cc,
+	* test/Makefile.in,
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh,
+	* test/test_function_loader.cc,
+	* test/test_function_loader_cxx.rb,
+	* configure,
+	* src/env.hh,
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/call.hh,
+	* src/mlc.hh,
+	* src/function_loader.rb: Improve the call convention.
+	* src/function_loader.hh: Rename to ...
+	* src/function_loader.erb.hh: ... this.
+
 2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
 
 	New loader c++-side interface.

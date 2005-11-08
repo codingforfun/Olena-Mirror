@@ -2,6 +2,9 @@
 
 require 'pathname'
 require 'rbconfig'
+require 'erb'
+
+TOP_DIR = Pathname.new(__FILE__).dirname
 
 class Configure
   def initialize ( &block )
@@ -13,7 +16,7 @@ class Configure
     @patt[((name.is_a? Regexp)? name : "@@#{name}@@")] = val
   end
   def do_gsub
-    Pathname.glob('**/*.in').each do |path|
+    Pathname.glob(TOP_DIR + '**/*.in').each do |path|
       puts path
       contents = path.read
       @patt.each { |patt, val| contents.gsub! patt, val }
@@ -23,10 +26,14 @@ class Configure
   def get ( name )
     Config::CONFIG[name] || eval(name)
   end
+  def erb ( file )
+    result = ERB.new(file.read, nil, '<-%->', '$erbout_').result
+    Pathname.new(file.to_s.sub(/\.erb\./, '.')).open('w') { |f| f.puts result }
+  end
 end
 Kernel.send :undef_method, :gsub
 
-SOURCE_DIR = (Pathname.new(__FILE__).dirname + 'src').expand_path
+SOURCE_DIR = TOP_DIR.expand_path + 'src'
 
 Configure.new do
   gsub :SOURCE_DIR
@@ -35,6 +42,7 @@ Configure.new do
   gsub :LIBRUBYARG_SHARED
   gsub :CXX, 'g++'
   gsub :CFLAGS, '-I' + Config::CONFIG['topdir']
+  erb SOURCE_DIR + 'function_loader.erb.hh'
 end
 
 puts "Configuring: done."

@@ -19,6 +19,7 @@ namespace dyn {
     virtual abstract_data* clone() const = 0;
 //     virtual void assign_to(void* lhs) const = 0;
     virtual void print(std::ostream& ostr) const = 0;
+    virtual std::string type() const = 0;
     virtual ~abstract_data() {}
   };
 
@@ -53,7 +54,15 @@ namespace dyn {
     template <class U>
     void assign(const U& rhs) const
     {
+      std::cout << "assign " << p_obj_ << std::endl;
+      assert(p_obj_ != 0);
       *(const_cast<T*>(p_obj_)) = rhs;
+    }
+
+    std::string type() const
+    {
+      assert(p_obj_ != 0);
+      mlc_name_of(*p_obj_);
     }
 
     const T* p_obj_;
@@ -63,26 +72,22 @@ namespace dyn {
 
   struct data
   {
-    data()
-      : proxy_(0),
-	name_("unkown")
-    {}
+    data() : proxy_(0), type_("unkown") {}
 
     template <class T>
     data(const T& obj)
     {
       proxy_ = new data_proxy<T>(obj);
-      name_ = mlc_name<T>::of();
-      std::cout << name_ << std::endl;
+      type_ = mlc_name<T>::of();
     }
 
     data(const data& rhs)
     {
       if (rhs.proxy_ != 0)
-	proxy_ = rhs.proxy_->clone();
+        proxy_ = rhs.proxy_->clone();
       else
-	proxy_ = 0;
-      name_ = rhs.name_;
+        proxy_ = 0;
+      type_ = rhs.type_;
     }
 
     data& operator=(const data& rhs)
@@ -90,21 +95,21 @@ namespace dyn {
       assert(rhs.proxy_ != 0);
       assert(rhs.proxy_ != proxy_);
       if (proxy_ != 0)
-	delete proxy_;
+        delete proxy_;
       proxy_ = rhs.proxy_->clone();
-      name_ = rhs.name_;
+      type_ = rhs.type_;
       return *this;
     }
 
     ~data()
     {
       if (proxy_ != 0) {
-	delete proxy_;
-	proxy_ = 0; // safety
+        delete proxy_;
+        proxy_ = 0; // safety
       }
     }
 
-    bool set_name(const std::string& name);
+//    bool set_type(const std::string& type);
 
 //     template <class T>
 //     operator T() const
@@ -128,8 +133,13 @@ namespace dyn {
       proxy_->print(ostr);
     }
 
+    std::string type() const
+    {
+      return type_;
+    }
+
     abstract_data* proxy_;
-    std::string name_;
+    std::string type_;
   };
 
 }

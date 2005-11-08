@@ -1,104 +1,14 @@
 #include "mangle.hh"
 
 #include <sstream>
-#include <fstream>
 #include <cassert>
 
 namespace dyn {
-
-  // loader
-
-  struct
-  {
-    static std::string& repository()
-    {
-      static std::string name = "/tmp/";
-      return name;
-    }
-
-    void* operator()(const std::string& proc, unsigned argc)
-    {
-      map_t::iterator i = map_.find(proc);
-      if (i == map_.end())
-	{
-	  std::cout << "compiling \"" << proc << "\"... " << std::endl;
- 	  generate(proc, argc);
-	  compile(proc);
-          // std::cout << "not yet impled!" << std::endl;
-	  // FIXME: then load in map!!!
-	  return 0;
-	}
-      return i->second;
-    }
-
-    void generate(const std::string& proc, unsigned argc)
-    {
-      std::string filename = repository() + proc + ".cc";
-      std::ofstream file(filename.c_str());
-      file << "#include \"dyn.hh\"" << std::endl;
-      file << "#include \"lib.hh\"" << std::endl; // FIXME: not generic
-      file << "namespace generated" << std::endl << "{" << std::endl;
-      file << "  void " << proc << "(";
-      for (unsigned i = 1; i <= argc; ++i)
-	file << "const dyn::data& arg" << i << (i != argc ? ", " : ")");
-      file << std::endl << "  {" << std::endl;
-      for (unsigned i = 1; i <= argc; ++i) {
-	std::string type = demangle_arg(proc, i);
-	file << "    const dyn::data_proxy< " << type << " >* arg" << i
-	     << "_ = dynamic_cast<const dyn::data_proxy< " << type
-	     << " >*>(arg" << i << ".proxy_);" << std::endl;
-      }
-      file << "    arg" << argc << "_->assign( " << demangle_proc(proc) << "(";
-      for (unsigned i = 1; i < argc; ++i)
-	file << "*(arg" << i << "_->p_obj_)" << (i != argc-1 ? ", " : ") );");
-      file << std::endl;
-      file << "  }" << std::endl;
-      file << "}" << std::endl;
-      file.close();
-    }
-
-    void compile(const std::string& proc)
-    {
-      const std::string filename = repository() + proc + ".cc";
-      const std::string gxx = "g++";
-      const std::string cmd = gxx + " -I . -shared " + filename;
-      std::cout << cmd << std::endl;
-      int compile_status = system(cmd.c_str());
-      if (compile_status)
-      {
-        std::cout << "compile ko" << std::endl;
-        assert(compile_status == 0);
-      }
-      else
-        std::cout << "compile ok" << std::endl;
-      // FIXME: not yet impled
-    }
-
-    typedef std::map<std::string, void*> map_t;
-    map_t map_;
-  }
-    proc_loader;
-
-
 
   // call routines
   // ---------------------------------------------
 
   // data-like one
-
-  void call(const std::string& name,
-	    const data& arg, const data& ret)
-  {
-    std::ostringstream name_;
-    name_ << mangle_name(name)
-	  << arg.mangle()
-	  << ret.mangle();
-    typedef void (*proc_type_)(const data&, const data&);
-    void* p_ = proc_loader(name_.str(), 2);
-    if (p_ == 0) return;
-    proc_type_ proc_ = proc_type_(p_);
-    (*proc_)(arg, ret); // ...
-  }
 
   // generic one
 

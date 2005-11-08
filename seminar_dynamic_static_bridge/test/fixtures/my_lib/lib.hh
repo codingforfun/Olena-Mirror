@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include "mlc.hh"
 
 template <class T>
 struct u
@@ -10,12 +11,16 @@ struct u
   const T& x_;
 };
 
+mlc_set_name_TC(u);
+
 template <class T, class V>
 struct t
 {
   t<T, V>(const T& x, const V& y) : x_(x), y_(y) {}
   const T& x_, y_;
 };
+
+mlc_set_name_TCC(t);
 
 template <class T>
 std::ostream& operator<< (std::ostream& ostr, const u<T>& x)
@@ -36,7 +41,8 @@ void foo1()
 
 int* foo2()
 {
-  std::cout << "foo2()" << std::endl;
+  std::cout << "foo2() => 42" << std::endl;
+  return new int(42);
 }
 
 template <class T>

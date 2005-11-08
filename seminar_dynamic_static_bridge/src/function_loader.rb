@@ -65,27 +65,25 @@ class Cache
   def [] ( key )
     lib_path = @cache[key]
     sym = @local[key]
-    if sym.nil?
-      raise NotImplementedError
-    end
-    [sym, lib_path]
+    return lib_path if sym.nil?
+    sym
   end
 end
 
 class FunctionLoader
-  attr_reader :identifier, :path, :name, :args, :ret, :cache, :includes, :include_dirs
+  attr_reader :identifier, :path, :name, :args, :ret, :includes, :include_dirs, :lib_path, :sym
   @@default_includes ||= []
-  @@default_include_dirs ||= []
+  @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier )
     path, name, args, ret = identifier.split '__'
     @includes = @@default_includes.dup
     @include_dirs = @@default_include_dirs.dup
     @identifier = identifier
+    @@cache ||= Cache.new(repository + 'cache.yml')
     self.path = path
     self.name = name
     self.args = args
     self.ret  = ret
-    @cache = Cache.new(repository + 'cache.yml')
   end
   def self.enc ( name, code, cxx_char=nil )
     EncodedSymbol.new(name, code, cxx_char)
@@ -159,13 +157,13 @@ class FunctionLoader
      |  }
      |};".gsub(/^\s*\|/, '')
   end
-  def get_function
+  def compile
     file = repository + "#@identifier.cc"
     file.open('w') do |f|
       f.puts to_cxx
     end
     lib_ext = 'so'
-    lib_path = repository + "#@identifier.#{lib_ext}"
+    @lib_path = repository + "#@identifier.#{lib_ext}"
     opts =
       case RUBY_PLATFORM
       when /darwin/ then '-bundle'
@@ -174,18 +172,35 @@ class FunctionLoader
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
     out = repository + 'g++.out'
     cmd = "g++ #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
-    puts cmd
     if system cmd
       out.unlink if out.exist?
-      lib = DL.dlopen(lib_path.to_s)
-      sym = lib[@identifier, '0' + 'P'*arity]
-      cache[@identifier] = [sym, lib_path]
-      sym
     else
+      STDERR.puts cmd
       STDERR.puts out.read.
         gsub(/^#{file}:/, "[[#@name]]:").
         gsub(/dyn::generated::#@identifier/, @name.to_s)
       exit 1
+    end
+  end
+  def load_lib
+    lib = DL.dlopen(lib_path.to_s)
+    @sym = lib[identifier, '0' + 'P'*arity]
+    @@cache[identifier] = [sym, lib_path]
+    sym
+  end
+  def get_function
+    case cached = @@cache[identifier]
+    when nil
+      puts "MISS: Just In Time: #{self}"
+      compile
+      load_lib
+    when Pathname
+      puts "HIT: Load the library for #{self}"
+      @lib_path = cached
+      load_lib
+    else
+      puts "HIT"
+      cached
     end
   end
   def arity
@@ -196,43 +211,19 @@ class FunctionLoader
   end
   def repository
     repository = Pathname.new('repository')
-    unless repository.exist?
-      repository.mkpath
-      dyn_hh = 'dyn.hh'
-      (repository + dyn_hh).make_symlink(dyn_dir + dyn_hh)
-    end
+    repository.mkpath unless repository.exist?
     repository
   end
-  def dyn_dir
-    Pathname.new(__FILE__).dirname.parent
-  end
   class << self
-    def from_mlc_name_of ( aPath, aString )
-      puts "from_mlc_name_of('#{aPath}', '#{aString}')"
-      identifier = 'my_U_lib_S_lib_D_hh__foo1____void'
-      fun = new identifier
-#       puts fun
-#       puts fun.to_cxx
-      fun_ptr = fun.get_function
-#       puts fun_ptr
-#      fun_ptr.call
-      fun_ptr
-    end
     def mangle ( aString )
       EncodedSymbol.encode(aString)
     end
-    def from_cxx_call ( aPath, aFunctionName, arguments=[], ret='void' )
-      puts "from_cxx_call('#{aPath}', '#{aFunctionName}', #{arguments.inspect}, #{ret})"
+    private :mangle
+    def call ( aPath, aFunctionName, arguments=[], ret='void' )
       identifier = mangle(aPath) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
       identifier << '__' << mangle(ret)
-      fun = new identifier
-#       puts fun
-#       puts fun.to_cxx
-      fun_ptr = fun.get_function
-#       puts fun_ptr
-#      fun_ptr.call
-      fun_ptr
+      new(identifier).get_function
     end
     def include_dir ( path )
       @@default_include_dirs << Pathname.new(path).expand_path

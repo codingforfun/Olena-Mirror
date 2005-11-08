@@ -16,12 +16,12 @@ namespace dyn {
 
   // dat
 
-  typedef std::map<std::string, data> dat_t;
+/*  typedef std::map<std::string, data> dat_t;
   dat_t dat;
-
+*/
   // misc
 
-  bool data::set_name(const std::string& name)
+/*  bool data::set_name(const std::string& name)
   {
     dat_t::iterator d = dat.find(name);
     if (d != dat.end()) {
@@ -31,8 +31,8 @@ namespace dyn {
     dat[name] = *this;
     return true;
   }
-
-  template <class T>
+*/
+/*  template <class T>
   void mk_data(const T& obj, const std::string& name)
   {
     data* d = new data(obj);
@@ -42,8 +42,8 @@ namespace dyn {
       std::cerr << "call to dyn::mk_data aborted!" << std::endl;
     }
   }
-
-  void rm_data(const std::string& name)
+*/
+/*  void rm_data(const std::string& name)
   {
     dat_t::iterator d = dat.find(name);
     if (d == dat.end()) {
@@ -54,6 +54,6 @@ namespace dyn {
     }
     dat.erase(name);
   }
-
+*/
 }
 

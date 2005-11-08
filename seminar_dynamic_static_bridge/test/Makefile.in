@@ -1,8 +1,7 @@
 check:
-	@@CXX@@ @@CFLAGS@@ test_function_loader.cc -o test_function_loader @@LIBRUBYARG@@
+	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_function_loader.cc -o test_function_loader @@LIBRUBYARG@@
 	./test_function_loader
 
 damien:
-	@@CXX@@ @@CFLAGS@@ test_damien.cc -o test_damien @@LIBRUBYARG@@
+	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_damien.cc -o test_damien @@LIBRUBYARG@@
 	./test_damien
-

@@ -1,4 +1,5 @@
 #include <iostream>
+#include "mlc.hh"
 
 struct up
 {
@@ -13,7 +14,7 @@ struct down : public up
 
   virtual void print(std::ostream& ostr) const
   {
-    ostr << t_ << std::endl;
+    ostr << "down< " << t_ << " >";
   }
   const T& t_;
 
@@ -25,24 +26,19 @@ std::ostream& operator<<(std::ostream& ostr, const up& obj)
   return ostr;
 }
 
-template <class T> struct mlc_name;
-
-template <class T>
-struct mlc_name<down<T> >
-{
-  static std::string of()
-  {
-    return "down< " + mlc_name<T>::of() + " >";
-  }
-};
-
+mlc_set_name_TC(down);
 
 void foo(const up& a)
 {
-  std::cout << a << std::endl;
+  std::cout << "foo(" << a << ")" << std::endl;
 }
 
 void foo(const int& i)
 {
-  std::cout << i << std::endl;
+  std::cout << "foo(" << i << ")" << std::endl;
+}
+
+void bar(const up& a, const up& b, int c=0)
+{
+  std::cout << "bar(" << a << ", " << b << ", " << c << ")" << std::endl;
 }

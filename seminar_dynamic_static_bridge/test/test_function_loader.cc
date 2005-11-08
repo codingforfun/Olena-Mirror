@@ -1,16 +1,32 @@
-#include "../src/function_loader.hh"
-/*dyn_include("../src/mlc.hh")
-dyn_include("fixtures/my_lib/lib.hh")
-*/
-
-#include "../src/mlc.hh"
-#include "fixtures/my_lib/lib.hh"
+#include "function_loader.hh"
+#include "config.hh"
+#include "my_lib/lib.hh"
 
 int main()
 {
-  function_loader.include_dir("../src");
-  function_loader.include_dir("fixtures");
-  void (*foo1_)() = function_loader.load("fixtures/my_lib/lib.hh", mlc_name_of(foo1));
-  foo1_();
+  dyn::function_loader.include_dir(SOURCE_DIR);
+  dyn::function_loader.include_dir("fixtures");
+
+  dyn::fun dfoo1("my_lib/lib.hh", "foo1");
+  dyn::fun dfoo2("my_lib/lib.hh", "foo2");
+  dyn::fun dfoo3("my_lib/lib.hh", "foo3");
+  dyn::fun dfoo4("my_lib/lib.hh", "foo4");
+
+  dfoo1();
+
+  dfoo3(1, 2, 3);
+
+  t<int, int> t12(1, 2);
+
+  dfoo3(t12, t<int, int>(3, 4), t<int, int>(5, 6));
+
+//  dfoo4(u<float>(4.4), t<t<char, char>, u<int> >(t<char, char>('a', 'b'), u<int>(42)));
+
+//  int* x1 = dfoo2();
+//  data x2 = dfoo2();
+//  dyn::data ret;
+//  ret.type_ = "int*";
+//  dfoo2.call_ret(ret);
+
   return 0;
 }
