@@ -120,6 +120,7 @@ class FunctionLoader
   def ret?
     @ret != 'void'
   end
+
   def to_cxx
     call_args = []
     arguments = []

@@ -1,5 +1,16 @@
 2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Make call_ret works.
+
+	* test/test_function_loader.cc,
+	* src/function_loader.erb.hh,
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/mlc.hh,
+	* src/function_loader.rb: Update.
+
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Improve the call convention.
 
 	* test/test_damien.cc,

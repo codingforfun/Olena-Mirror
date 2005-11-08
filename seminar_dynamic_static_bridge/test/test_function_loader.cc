@@ -22,8 +22,8 @@ int main()
 
 //  dfoo4(u<float>(4.4), t<t<char, char>, u<int> >(t<char, char>('a', 'b'), u<int>(42)));
 
-//  int* x1 = dfoo2();
-//  data x2 = dfoo2();
+  int* x1 = dfoo2.call_ret();
+//  var x2 = dfoo2.call_ret();
 //  dyn::data ret;
 //  ret.type_ = "int*";
 //  dfoo2.call_ret(ret);

@@ -143,3 +143,5 @@ namespace dyn {
   };
 
 }
+
+typedef dyn::data var;

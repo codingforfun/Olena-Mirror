@@ -24,7 +24,6 @@ template <class C1, class C2, class C3> struct mlc_name < CLASS<C1,C2,C3> > \
 { static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C1>::of() + ">"; } }
 
 
-
 template <class T>
 struct mlc_name
 {
@@ -55,6 +54,13 @@ mlc_set_name(unsigned long);
 mlc_set_name(float);
 mlc_set_name(double);
 mlc_set_name(bool);
+
+// ptr
+template <typename T>
+struct mlc_name <T*>
+{
+  static std::string of() { return mlc_name<T>::of() + "*"; }
+};
 
 
 // some std
