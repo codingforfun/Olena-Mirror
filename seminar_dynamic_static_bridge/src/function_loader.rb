@@ -65,6 +65,7 @@ class Cache
   def [] ( key )
     lib_path = @cache[key]
     sym = @local[key]
+    return nil unless lib_path and lib_path.exist?
     return lib_path if sym.nil?
     sym
   end
@@ -131,14 +132,14 @@ class FunctionLoader
       arguments << "const dyn::data& #{arg}"
       call_args << "*(#{arg}_value->p_obj_)"
       vars << "dyn::data_proxy< #{type} >* #{arg}_value = " +
-              "dynamic_cast< dyn::data_proxy< #{type} >* >(#{arg}.proxy_);"
+              "dynamic_cast< dyn::data_proxy< #{type} >* >(#{arg}.proxy());"
     end
     call = "#@name(#{call_args.join(', ')})"
     if ret?
       type = @ret.gsub(/&*$/, '') # remove references (XXX)
       arguments << "dyn::data& ret"
       vars << "dyn::data_proxy< #{type} >* ret_value = " +
-              "dynamic_cast< dyn::data_proxy< #{type} >* >(ret.proxy_);"
+              "dynamic_cast< dyn::data_proxy< #{type} >* >(ret.proxy());"
       vars << "ret_value->assign(#{call});"
     else
       vars << call + ';'

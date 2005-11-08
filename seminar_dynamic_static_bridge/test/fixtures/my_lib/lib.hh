@@ -65,7 +65,7 @@ namespace my_lib
   template <class T>
   T sqr(const T& t)
   {
-    std::cout << "sqr(" << t << ")" << std::endl;
+    std::cout << "sqr(" << t << ") => " << t * t << std::endl;
     return t * t;
   }
 

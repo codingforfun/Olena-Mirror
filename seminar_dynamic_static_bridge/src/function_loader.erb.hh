@@ -22,15 +22,15 @@ namespace dyn {
 
   struct data_ret
   {
-    data_ret(const fun& fun, const std::vector<data>& arguments, const std::string& arguments_types) :
+    data_ret(const fun& fun, const std::vector<data>* arguments, const std::string& arguments_types) :
       fun_(fun), arguments_(arguments), arguments_types_(arguments_types) {}
 
     template <typename T>
     operator T() const;
 
-    const std::vector<data>& arguments_;
-    const std::string& arguments_types_;
     const fun& fun_;
+    const std::vector<data>* arguments_;
+    const std::string arguments_types_;
   };
 
 
@@ -64,7 +64,6 @@ namespace dyn {
     void* load(const std::string& inc, const std::string& name,
                const std::string& arguments_types, const std::string& ret_type)
     {
-
       ruby << "FunctionLoader.call \"" << inc << "\", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
            << ret_type << "\"" << ruby::eval;
@@ -76,8 +75,6 @@ namespace dyn {
 
   function_loader_t function_loader;
 
-  data nil;
-
   struct fun
   {
     fun(const std::string& header_path, const std::string& name) :
@@ -85,7 +82,7 @@ namespace dyn {
 
     template <int N>
     data
-    call_ret2(const std::vector<data>&, const std::string&, const std::string&)
+    call_ret(const std::vector<data>&, const std::string&, const std::string&)
     {
       assert(0);
     }
@@ -103,12 +100,12 @@ namespace dyn {
       operator() (<%= arguments %>) const
       {
 
-        std::vector<data> arguments;
+        std::vector<data>* arguments = new std::vector<data>;
         std::string arguments_types;
 
-      <%- (i - 1).times do |j| -%>
+      <%- i.times do |j| -%>
         const data object<%= j %> = arg<%= j %>;
-        arguments.push_back(object<%= j %>);
+        arguments->push_back(object<%= j %>);
         arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
       <%- end -%>
         return data_ret(*this, arguments, arguments_types);
@@ -117,24 +114,29 @@ namespace dyn {
     <%- end -%>
 
     void
-    call_ret2(const std::vector<data>& arguments,
-              const std::string& arguments_types,
-              const std::string& ret_type) const
+    call_ret(const std::vector<data>* arguments,
+             const data& ret,
+             const std::string& arguments_types,
+             const std::string& ret_type) const
     {
       void* ptr = function_loader.load(header_path_, name_, arguments_types, ret_type);
 
       assert(ptr != 0);
-      switch (arguments.size())
+      switch (arguments->size())
       {
       <%- NB_MAX_ARGUMENTS.times do |i| -%>
-      <%- objects = (0 .. i - 1).map { |j| "arguments[#{j}]" }.join(', ') -%>
+      <%- objects = ((0 .. i - 1).map { |j| "(*arguments)[#{j}]" } << 'ret').join(', ') -%>
         case <%= i %>:
         {
-          typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+          typedef void (*func_t)(<%= (['const dyn::data&'] * (i + 1)).join(', ') %>);
+          assert(ptr != 0);
           ((func_t)ptr)(<%= objects %>);
           break;
         }
       <%- end -%>
+        default:
+          std::cerr << arguments->size() << std::endl;
+          assert(0);
       }
     }
 
@@ -176,37 +178,16 @@ namespace dyn {
 
     <%- end -%>
 
-    void
-    call_ret2(const std::vector<data>& arguments,
-              const std::string& arguments_types,
-              const std::string& ret_type) const
-    {
-      void* ptr = function_loader.load(header_path_, name_, arguments_types, ret_type);
-
-      assert(ptr != 0);
-      switch (arguments.size())
-      {
-      <%- NB_MAX_ARGUMENTS.times do |i| -%>
-      <%- objects = (0 .. i - 1).map { |j| "arguments[#{j}]" }.join(', ') -%>
-        case <%= i %>:
-        {
-          typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
-          ((func_t)ptr)(<%= objects %>);
-          break;
-        }
-      <%- end -%>
-      }
-    }
-
     const std::string header_path_;
     const std::string name_;
   };
 
-
   template <typename T>
   data_ret::operator T() const
   {
-    fun_.call_ret2(arguments_, arguments_types_, mlc_name_of(T()));
+    T ret;
+    fun_.call_ret(arguments_, ret, arguments_types_, mlc_name_of(ret));
+    return ret;
   }
 
 

@@ -15,9 +15,7 @@ namespace dyn {
 
   struct abstract_data
   {
-//     virtual const std::string mangle() const = 0;
     virtual abstract_data* clone() const = 0;
-//     virtual void assign_to(void* lhs) const = 0;
     virtual void print(std::ostream& ostr) const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
@@ -30,20 +28,10 @@ namespace dyn {
   {
     data_proxy(const T& obj) : p_obj_(&obj) {}
 
-//     virtual const std::string mangle() const
-//     {
-//       return mangle_arg(*p_obj_);
-//     }
-
     virtual data_proxy<T>* clone() const
     {
       return new data_proxy<T>(*p_obj_);
     }
-
-//     virtual void assign_to(void* lhs) const
-//     {
-//       *(T*)lhs = *p_obj_;
-//     }
 
     virtual void print(std::ostream& ostr) const
     {
@@ -54,7 +42,6 @@ namespace dyn {
     template <class U>
     void assign(const U& rhs) const
     {
-      std::cout << "assign " << p_obj_ << std::endl;
       assert(p_obj_ != 0);
       *(const_cast<T*>(p_obj_)) = rhs;
     }
@@ -62,7 +49,7 @@ namespace dyn {
     std::string type() const
     {
       assert(p_obj_ != 0);
-      mlc_name_of(*p_obj_);
+      return mlc_name_of(*p_obj_);
     }
 
     const T* p_obj_;
@@ -109,24 +96,6 @@ namespace dyn {
       }
     }
 
-//    bool set_type(const std::string& type);
-
-//     template <class T>
-//     operator T() const
-//     {
-//       assert(proxy_ != 0);
-//       // here also check that proxy_ contains a T*
-//       T tmp;
-//       proxy_->assign_to(&tmp);
-//       return tmp;
-//     }
-
-//     const std::string mangle() const
-//     {
-//       assert(proxy_ != 0);
-//       return proxy_->mangle();
-//     }
-
     void print(std::ostream& ostr) const
     {
       assert(proxy_ != 0);
@@ -138,6 +107,13 @@ namespace dyn {
       return type_;
     }
 
+    abstract_data* proxy() const
+    {
+      assert(proxy_ != 0);
+      return proxy_;
+    }
+
+    protected:
     abstract_data* proxy_;
     std::string type_;
   };

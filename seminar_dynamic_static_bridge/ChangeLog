@@ -1,3 +1,18 @@
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More tests, more warnings, less errors.
+
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/function_loader.erb.hh,
+	* src/function_loader.rb,
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/lib.hh,
+	* test/test_function_loader.cc,
+	* configure: Update.
+	* src/env.hh: Remove.
+	* src/call.hh: Remove.
+
 2005-11-08  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Add procedures.
