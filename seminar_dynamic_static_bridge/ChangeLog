@@ -1,3 +1,10 @@
+2005-11-08  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add procedures.
+
+	* test/test_function_loader.cc: Use procedures and functions.
+	* src/function_loader.erb.hh: Add procedures.
+
 2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Make call_ret works.

@@ -64,7 +64,7 @@ namespace dyn {
     void* load(const std::string& inc, const std::string& name,
                const std::string& arguments_types, const std::string& ret_type)
     {
-      
+
       ruby << "FunctionLoader.call \"" << inc << "\", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
            << ret_type << "\"" << ruby::eval;
@@ -91,30 +91,6 @@ namespace dyn {
     }
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
-
-      <%- typenames = (0 .. i - 1).map { |j| "typename T#{j}" }.join(', ') -%>
-      <%- arguments = (0 .. i - 1).map { |j| "const T#{j}& arg#{j}" }.join(', ') -%>
-      <%- objects   = (0 .. i - 1).map { |j| "object#{j}" }.join(', ') -%>
-
-      <%- unless typenames.empty? -%>
-      template < <%= typenames %> >
-      <%- end -%>
-      void
-      operator() (<%= arguments %>) const
-      {
-        typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
-        std::string arguments_types;
-
-      <%- i.times do |j| -%>
-        const data object<%= j %> = arg<%= j %>;
-        arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
-      <%- end -%>
-
-        func_t ptr = (func_t)function_loader.load(header_path_, name_,
-                                                  arguments_types, "void");
-        assert(ptr != 0);
-        ptr(<%= objects %>);
-      }
 
       <%- typenames = (0 .. i - 1).map { |j| "typename T#{j}" }.join(', ') -%>
       <%- arguments = (0 .. i - 1).map { |j| "const T#{j}& arg#{j}" }.join(', ') -%>
@@ -165,6 +141,67 @@ namespace dyn {
     const std::string header_path_;
     const std::string name_;
   };
+
+
+  struct proc
+  {
+    proc(const std::string& header_path, const std::string& name) :
+      header_path_(header_path), name_(name) {}
+
+    <%- NB_MAX_ARGUMENTS.times do |i| -%>
+
+      <%- typenames = (0 .. i - 1).map { |j| "typename T#{j}" }.join(', ') -%>
+      <%- arguments = (0 .. i - 1).map { |j| "const T#{j}& arg#{j}" }.join(', ') -%>
+      <%- objects   = (0 .. i - 1).map { |j| "object#{j}" }.join(', ') -%>
+
+      <%- unless typenames.empty? -%>
+      template < <%= typenames %> >
+      <%- end -%>
+      void
+      operator() (<%= arguments %>) const
+      {
+        typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+        std::string arguments_types;
+
+      <%- i.times do |j| -%>
+        const data object<%= j %> = arg<%= j %>;
+        arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
+      <%- end -%>
+
+        func_t ptr = (func_t)function_loader.load(header_path_, name_,
+                                                  arguments_types, "void");
+        assert(ptr != 0);
+        ptr(<%= objects %>);
+      }
+
+    <%- end -%>
+
+    void
+    call_ret2(const std::vector<data>& arguments,
+              const std::string& arguments_types,
+              const std::string& ret_type) const
+    {
+      void* ptr = function_loader.load(header_path_, name_, arguments_types, ret_type);
+
+      assert(ptr != 0);
+      switch (arguments.size())
+      {
+      <%- NB_MAX_ARGUMENTS.times do |i| -%>
+      <%- objects = (0 .. i - 1).map { |j| "arguments[#{j}]" }.join(', ') -%>
+        case <%= i %>:
+        {
+          typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+          ((func_t)ptr)(<%= objects %>);
+          break;
+        }
+      <%- end -%>
+      }
+    }
+
+    const std::string header_path_;
+    const std::string name_;
+  };
+
 
   template <typename T>
   data_ret::operator T() const
