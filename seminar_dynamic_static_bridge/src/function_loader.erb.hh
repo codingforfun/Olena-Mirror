@@ -18,21 +18,14 @@ namespace dyn {
 
   <% NB_MAX_ARGUMENTS = 10 %>
 
-  struct fun;
-
-  struct data_ret
+  enum kind_t
   {
-    data_ret(const fun& fun, const std::vector<data>* arguments, const std::string& arguments_types) :
-      fun_(fun), arguments_(arguments), arguments_types_(arguments_types) {}
-
-    template <typename T>
-    operator T() const;
-
-    const fun& fun_;
-    const std::vector<data>* arguments_;
-    const std::string arguments_types_;
+    FUN,
+    PROC,
+    METHOD
   };
 
+  struct fun;
 
   struct function_loader_t
   {
@@ -61,12 +54,16 @@ namespace dyn {
       ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
     }
 
-    void* load(const std::string& inc, const std::string& name,
-               const std::string& arguments_types, const std::string& ret_type)
+    void*
+    load(kind_t kind,
+         const std::string& name,
+         const std::string& arguments_types,
+         const std::string& header_path)
     {
-      ruby << "FunctionLoader.call \"" << inc << "\", \""
+      std::string kind_s = ((kind == FUN)? ":fun" : ((kind == PROC)? ":proc" : ":method"));
+      ruby << "FunctionLoader.call " << kind_s << ", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
-           << ret_type << "\"" << ruby::eval;
+           << header_path << "\"" << ruby::eval;
       return RDLPTR(ruby.last_value())->ptr;
     }
 
@@ -75,17 +72,10 @@ namespace dyn {
 
   function_loader_t function_loader;
 
-  struct fun
+  struct generic_fun
   {
-    fun(const std::string& header_path, const std::string& name) :
-      header_path_(header_path), name_(name) {}
-
-    template <int N>
-    data
-    call_ret(const std::vector<data>&, const std::string&, const std::string&)
-    {
-      assert(0);
-    }
+    generic_fun(kind_t kind, const std::string& name, const std::string& header_path="") :
+      kind_(kind), name_(name), header_path_(header_path) {}
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
 
@@ -96,73 +86,10 @@ namespace dyn {
       <%- unless typenames.empty? -%>
       template < <%= typenames %> >
       <%- end -%>
-      data_ret
+      data
       operator() (<%= arguments %>) const
       {
-
-        std::vector<data>* arguments = new std::vector<data>;
-        std::string arguments_types;
-
-      <%- i.times do |j| -%>
-        const data object<%= j %> = arg<%= j %>;
-        arguments->push_back(object<%= j %>);
-        arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
-      <%- end -%>
-        return data_ret(*this, arguments, arguments_types);
-      }
-
-    <%- end -%>
-
-    void
-    call_ret(const std::vector<data>* arguments,
-             const data& ret,
-             const std::string& arguments_types,
-             const std::string& ret_type) const
-    {
-      void* ptr = function_loader.load(header_path_, name_, arguments_types, ret_type);
-
-      assert(ptr != 0);
-      switch (arguments->size())
-      {
-      <%- NB_MAX_ARGUMENTS.times do |i| -%>
-      <%- objects = ((0 .. i - 1).map { |j| "(*arguments)[#{j}]" } << 'ret').join(', ') -%>
-        case <%= i %>:
-        {
-          typedef void (*func_t)(<%= (['const dyn::data&'] * (i + 1)).join(', ') %>);
-          assert(ptr != 0);
-          ((func_t)ptr)(<%= objects %>);
-          break;
-        }
-      <%- end -%>
-        default:
-          std::cerr << arguments->size() << std::endl;
-          assert(0);
-      }
-    }
-
-    const std::string header_path_;
-    const std::string name_;
-  };
-
-
-  struct proc
-  {
-    proc(const std::string& header_path, const std::string& name) :
-      header_path_(header_path), name_(name) {}
-
-    <%- NB_MAX_ARGUMENTS.times do |i| -%>
-
-      <%- typenames = (0 .. i - 1).map { |j| "typename T#{j}" }.join(', ') -%>
-      <%- arguments = (0 .. i - 1).map { |j| "const T#{j}& arg#{j}" }.join(', ') -%>
-      <%- objects   = (0 .. i - 1).map { |j| "object#{j}" }.join(', ') -%>
-
-      <%- unless typenames.empty? -%>
-      template < <%= typenames %> >
-      <%- end -%>
-      void
-      operator() (<%= arguments %>) const
-      {
-        typedef void (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+        typedef data (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
         std::string arguments_types;
 
       <%- i.times do |j| -%>
@@ -170,25 +97,29 @@ namespace dyn {
         arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
       <%- end -%>
 
-        func_t ptr = (func_t)function_loader.load(header_path_, name_,
-                                                  arguments_types, "void");
+        func_t ptr = (func_t)function_loader.load(kind_, name_, arguments_types, header_path_);
         assert(ptr != 0);
-        ptr(<%= objects %>);
+        return ptr(<%= objects %>);
       }
 
     <%- end -%>
 
-    const std::string header_path_;
+    const kind_t kind_;
     const std::string name_;
+    const std::string header_path_;
   };
 
-  template <typename T>
-  data_ret::operator T() const
+  struct fun : public generic_fun
   {
-    T ret;
-    fun_.call_ret(arguments_, ret, arguments_types_, mlc_name_of(ret));
-    return ret;
-  }
+    fun(const std::string& name, const std::string& header_path="") :
+      generic_fun(FUN, name, header_path) {}
+  };
+
+  struct proc : public generic_fun
+  {
+    proc(const std::string& name, const std::string& header_path="") :
+      generic_fun(PROC, name, header_path) {}
+  };
 
 
 } // end of namespace dyn

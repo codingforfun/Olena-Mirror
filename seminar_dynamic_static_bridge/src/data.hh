@@ -17,6 +17,7 @@ namespace dyn {
   {
     virtual abstract_data* clone() const = 0;
     virtual void print(std::ostream& ostr) const = 0;
+    // virtual void assign_to(void* lhs) const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
   };
@@ -31,6 +32,14 @@ namespace dyn {
     virtual data_proxy<T>* clone() const
     {
       return new data_proxy<T>(*p_obj_);
+    }
+
+    template <typename V>
+    operator V() const
+    {
+      assert(p_obj_ != 0);
+      V ret(*p_obj_);
+      return ret;
     }
 
     virtual void print(std::ostream& ostr) const
@@ -54,6 +63,40 @@ namespace dyn {
 
     const T* p_obj_;
   };
+
+  struct NilClass {};
+
+  template <>
+  struct data_proxy<NilClass> : public abstract_data
+  {
+    data_proxy<NilClass>(const NilClass& nil_object) {}
+
+    virtual data_proxy<NilClass>* clone() const
+    {
+      return const_cast<data_proxy<NilClass>*>(this);
+    }
+
+    virtual void print(std::ostream& ostr) const
+    {
+      ostr << std::string("nil");
+    }
+
+    std::string type() const
+    {
+      return "data_nil";
+    }
+
+  };
+
+  struct fun;
+
+  template <typename T1, typename T2>
+  T2
+  data_cast(const T1& src, const T2& dest)
+  {
+    T2 ret(src);
+    return ret;
+  }
 
   // data
 
@@ -88,6 +131,27 @@ namespace dyn {
       return *this;
     }
 
+
+    template <typename T>
+    operator T() const
+    {
+      assert(proxy_ != 0);
+      data_proxy<T>* dynamic_cast_returned_pointer = dynamic_cast<data_proxy<T>*>(proxy_);
+      if (dynamic_cast_returned_pointer != 0)
+      {
+        assert(dynamic_cast_returned_pointer->p_obj_ != 0);
+        return *dynamic_cast_returned_pointer->p_obj_;
+      }
+      else
+      {
+        fun dyn_data_cast("data_cast");
+        T tmp;
+        T ret(dyn_data_cast(*this, tmp));
+        return ret;
+      }
+    }
+
+
     ~data()
     {
       if (proxy_ != 0) {
@@ -118,6 +182,15 @@ namespace dyn {
     std::string type_;
   };
 
+  NilClass nil_object;
+  data nil(nil_object);
 }
+
+std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)
+{   
+  d.print(ostr);
+  return ostr;
+}     
+
 
 typedef dyn::data var;

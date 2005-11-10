@@ -1,3 +1,13 @@
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Simplify the function handling.
+
+	* test/test_damien.cc,
+	* test/test_function_loader.cc,
+	* src/function_loader.erb.hh,
+	* src/data.hh,
+	* src/function_loader.rb: Update.
+
 2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	More tests, more warnings, less errors.

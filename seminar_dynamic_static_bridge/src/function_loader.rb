@@ -72,19 +72,19 @@ class Cache
 end
 
 class FunctionLoader
-  attr_reader :identifier, :path, :name, :args, :ret, :includes, :include_dirs, :lib_path, :sym
+  attr_reader :identifier, :path, :name, :args, :includes, :include_dirs, :lib_path, :sym
   @@default_includes ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
-  def initialize ( identifier )
-    path, name, args, ret = identifier.split '__'
+  def initialize ( identifier, kind=:fun )
+    path, name, args = identifier.split '__'
     @includes = @@default_includes.dup
     @include_dirs = @@default_include_dirs.dup
     @identifier = identifier
+    @kind = kind
     @@cache ||= Cache.new(repository + 'cache.yml')
     self.path = path
     self.name = name
-    self.args = args
-    self.ret  = ret
+    self.args = args || ''
   end
   def self.enc ( name, code, cxx_char=nil )
     EncodedSymbol.new(name, code, cxx_char)
@@ -115,13 +115,9 @@ class FunctionLoader
   def args= ( args )
     @args = ArgParser.new(split(args).reverse).parse
   end
-  def ret= ( ret )
-    @ret = split(ret).stringify.join
+  def kind
+    @kind
   end
-  def ret?
-    @ret != 'void'
-  end
-
   def to_cxx
     call_args = []
     arguments = []
@@ -129,28 +125,31 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
-      arguments << "const dyn::data& #{arg}"
+      arguments << "const data& #{arg}"
       call_args << "*(#{arg}_value->p_obj_)"
-      vars << "dyn::data_proxy< #{type} >* #{arg}_value = " +
-              "dynamic_cast< dyn::data_proxy< #{type} >* >(#{arg}.proxy());"
+      vars << "data_proxy< #{type} >* #{arg}_value = " +
+              "dynamic_cast< data_proxy< #{type} >* >(#{arg}.proxy());"
     end
     call = "#@name(#{call_args.join(', ')})"
-    if ret?
-      type = @ret.gsub(/&*$/, '') # remove references (XXX)
-      arguments << "dyn::data& ret"
-      vars << "dyn::data_proxy< #{type} >* ret_value = " +
-              "dynamic_cast< dyn::data_proxy< #{type} >* >(ret.proxy());"
-      vars << "ret_value->assign(#{call});"
-    else
-      vars << call + ';'
+    case kind
+      when :fun
+        vars << "data ret_value(#{call});"
+        vars << 'return ret_value;'
+      when :proc
+        vars << call + ';' << 'return nil;'
+      else raise
     end
-    inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
-    "|#include #{inc}
+    str = ''
+    unless path.to_s.empty?
+      inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
+      str << "#include #{inc}"
+    end
+    str << "|
      |#include \"dyn.hh\"
      |extern \"C\" {
      |  namespace dyn {
      |    namespace generated {
-     |      void
+     |      data
      |      #@identifier(#{arguments.join(', ')})
      |      {
      |        #{vars.join("\n" + ' ' * 8)}
@@ -206,10 +205,10 @@ class FunctionLoader
     end
   end
   def arity
-    args.size + ((ret?)? 1 : 0)
+    args.size
   end
   def to_s
-    "#@path: #@ret #@name(#{@args.join(', ')})"
+    "#@path: #@name(#{@args.join(', ')})"
   end
   def repository
     repository = Pathname.new('repository')
@@ -221,11 +220,10 @@ class FunctionLoader
       EncodedSymbol.encode(aString)
     end
     private :mangle
-    def call ( aPath, aFunctionName, arguments=[], ret='void' )
+    def call ( kind, aFunctionName, arguments=[], aPath='' )
       identifier = mangle(aPath) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
-      identifier << '__' << mangle(ret)
-      new(identifier).get_function
+      new(identifier, kind).get_function
     end
     def include_dir ( path )
       @@default_include_dirs << Pathname.new(path).expand_path

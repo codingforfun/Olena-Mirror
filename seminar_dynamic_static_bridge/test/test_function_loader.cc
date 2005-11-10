@@ -7,12 +7,12 @@ int main()
   dyn::function_loader.include_dir(SOURCE_DIR);
   dyn::function_loader.include_dir("fixtures");
 
-  dyn::proc dfoo1("my_lib/lib.hh", "foo1");
-  dyn::fun  dfoo2("my_lib/lib.hh", "foo2");
-  dyn::fun  dfoo3("my_lib/lib.hh", "foo3");
-  dyn::fun  dfoo4("my_lib/lib.hh", "foo4");
-  dyn::fun  dsqr("my_lib/lib.hh", "my_lib::sqr");
-  dyn::fun  dpower("my_lib/lib.hh", "my_lib::power");
+  dyn::proc dfoo1("foo1", "my_lib/lib.hh");
+  dyn::fun  dfoo2("foo2", "my_lib/lib.hh");
+  dyn::fun  dfoo3("foo3", "my_lib/lib.hh");
+  dyn::fun  dfoo4("foo4", "my_lib/lib.hh");
+  dyn::fun  dsqr("my_lib::sqr", "my_lib/lib.hh");
+  dyn::fun  dpower("my_lib::power", "my_lib/lib.hh");
 
   dfoo1();
 
@@ -26,11 +26,16 @@ int main()
   // var x2b = dfoo3(t12, t<int, int>(3, 4), t<int, int>(5, 6));
 
   int* x4 = dfoo2();
-  std::cout << x4 << std::endl;
-  // var x4b = dfoo2();
+  std::cout << *x4 << std::endl;
+  var x4b = dfoo2();
+  std::cout << x4b << std::endl;
 
-  float f2 = dsqr(3.4);
-  std::cout << f2 << std::endl;
+  float f2a = dsqr(3.4);
+  std::cout << f2a << std::endl;
+  double f2b = dsqr(3.4);
+  std::cout << f2b << std::endl;
+  var f2c = dsqr(3.4);
+  std::cout << f2c << std::endl;
   int i1 = dsqr(3);
   std::cout << i1 << std::endl;
 

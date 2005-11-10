@@ -13,7 +13,7 @@ int main()
   down<down<std::string> > d(c);
   down<int>                e(20);
 
-  dyn::proc dyn_foo("my_lib/damien.hh", "foo");
+  dyn::proc dyn_foo("foo", "my_lib/damien.hh");
 
   for ( int i = 0; i < 6; ++i )
   {
