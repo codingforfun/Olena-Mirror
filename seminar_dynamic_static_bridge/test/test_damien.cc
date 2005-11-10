@@ -4,8 +4,9 @@
 
 int main()
 {
-  dyn::function_loader.include_dir(SOURCE_DIR);
-  dyn::function_loader.include_dir("fixtures");
+  dyn::include_dir(SOURCE_DIR);
+  dyn::include_dir("fixtures");
+  dyn::include("my_lib/damien.hh");
 
   down<char>               a('x');
   down<int>                b(10);
@@ -13,7 +14,7 @@ int main()
   down<down<std::string> > d(c);
   down<int>                e(20);
 
-  dyn::proc dyn_foo("foo", "my_lib/damien.hh");
+  dyn::proc dyn_foo("foo");
 
   for ( int i = 0; i < 6; ++i )
   {

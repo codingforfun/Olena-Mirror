@@ -4,15 +4,18 @@
 
 int main()
 {
-  dyn::function_loader.include_dir(SOURCE_DIR);
-  dyn::function_loader.include_dir("fixtures");
+  dyn::include_dir(SOURCE_DIR);
+  dyn::include_dir("fixtures");
 
-  dyn::proc dfoo1("foo1", "my_lib/lib.hh");
-  dyn::fun  dfoo2("foo2", "my_lib/lib.hh");
-  dyn::fun  dfoo3("foo3", "my_lib/lib.hh");
-  dyn::fun  dfoo4("foo4", "my_lib/lib.hh");
-  dyn::fun  dsqr("my_lib::sqr", "my_lib/lib.hh");
-  dyn::fun  dpower("my_lib::power", "my_lib/lib.hh");
+  dyn::proc dfoo1("foo1", "my_lib/lib.hh"); // With the include
+
+  dyn::include("my_lib/lib.hh"); // setup a default include
+
+  dyn::fun  dfoo2("foo2"); // use the default includes
+  dyn::fun  dfoo3("foo3");
+  dyn::fun  dfoo4("foo4");
+  dyn::fun  dsqr("my_lib::sqr");
+  dyn::fun  dpower("my_lib::power");
 
   dfoo1();
 

@@ -121,5 +121,16 @@ namespace dyn {
       generic_fun(PROC, name, header_path) {}
   };
 
+  void
+  include(const std::string& file)
+  {
+    function_loader.include(file);
+  }
+
+  void
+  include_dir(const std::string& dir)
+  {
+    function_loader.include_dir(dir);
+  }
 
 } // end of namespace dyn

@@ -140,11 +140,14 @@ class FunctionLoader
       else raise
     end
     str = ''
-    unless path.to_s.empty?
+    includes = @includes.dup
+    includes << path.to_s
+    includes.each do |path|
+      next if path.to_s.empty?
       inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
-      str << "#include #{inc}"
+      str << "#include #{inc}\n"
     end
-    str << "|
+    str << "
      |#include \"dyn.hh\"
      |extern \"C\" {
      |  namespace dyn {
@@ -229,7 +232,7 @@ class FunctionLoader
       @@default_include_dirs << Pathname.new(path).expand_path
     end
     def include ( path )
-      @@default_includes << Pathname.new(path).expand_path
+      @@default_includes << Pathname.new(path)
     end
   end
 

@@ -1,5 +1,10 @@
 2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add a default include handling.
+
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Simplify the function handling.
 
 	* test/test_damien.cc,
