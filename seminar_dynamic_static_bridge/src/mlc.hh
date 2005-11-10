@@ -39,6 +39,28 @@ std::string mlc_name_of(const T&)
   return mlc_name<T>::of();
 }
 
+// ptr
+template <typename T>
+struct mlc_name <T*>
+{
+  static std::string of() { return mlc_name<T>::of() + "*"; }
+};
+
+
+// const
+template <typename T>
+struct mlc_name <const T>
+{
+  static std::string of() { return std::string("const ") + mlc_name<T>::of(); }
+};
+
+// ref
+template <typename T>
+struct mlc_name <T&>
+{
+  static std::string of() { return mlc_name<T>::of() + "&"; }
+};
+
 // built-in
 
 mlc_set_name(void);
@@ -54,14 +76,6 @@ mlc_set_name(unsigned long);
 mlc_set_name(float);
 mlc_set_name(double);
 mlc_set_name(bool);
-
-// ptr
-template <typename T>
-struct mlc_name <T*>
-{
-  static std::string of() { return mlc_name<T>::of() + "*"; }
-};
-
 
 // some std
 
