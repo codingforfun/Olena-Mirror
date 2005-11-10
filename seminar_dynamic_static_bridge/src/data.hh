@@ -17,7 +17,6 @@ namespace dyn {
   {
     virtual abstract_data* clone() const = 0;
     virtual void print(std::ostream& ostr) const = 0;
-    // virtual void assign_to(void* lhs) const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
   };
@@ -46,13 +45,6 @@ namespace dyn {
     {
       assert(p_obj_ != 0);
       ostr << (*p_obj_);
-    }
-
-    template <class U>
-    void assign(const U& rhs) const
-    {
-      assert(p_obj_ != 0);
-      *(const_cast<T*>(p_obj_)) = rhs;
     }
 
     std::string type() const

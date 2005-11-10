@@ -1,5 +1,10 @@
 2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Remove data#assign.
+
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	mlc_name_of: const and ref.
 
 
