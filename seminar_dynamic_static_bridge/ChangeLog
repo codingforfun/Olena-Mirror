@@ -1,3 +1,11 @@
+2005-11-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Change dynamic_cast to reinterpret_case.
+
+	* src/function_loader.rb: Change dynamic_cast to reinterpret_case.
+		For some reasons, dynamic_cast doesn't work in a function
+		called via the DL API.
+
 2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Remove data#assign.

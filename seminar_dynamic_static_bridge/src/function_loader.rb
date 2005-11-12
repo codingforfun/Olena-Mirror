@@ -128,7 +128,7 @@ class FunctionLoader
       arguments << "const data& #{arg}"
       call_args << "*(#{arg}_value->p_obj_)"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
-              "dynamic_cast< data_proxy< #{type} >* >(#{arg}.proxy());"
+              "reinterpret_cast<data_proxy< #{type} >* >(#{arg}->proxy());"
     end
     call = "#@name(#{call_args.join(', ')})"
     case kind
