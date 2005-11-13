@@ -68,23 +68,17 @@ namespace dyn {
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
 
-      <%- typenames = (0 .. i - 1).map { |j| "typename T#{j}" }.join(', ') -%>
-      <%- arguments = (0 .. i - 1).map { |j| "const T#{j}& arg#{j}" }.join(', ') -%>
-      <%- objects   = (0 .. i - 1).map { |j| "object#{j}" }.join(', ') -%>
+      <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" }.join(', ') -%>
+      <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" }.join(', ') -%>
 
-      <%- unless typenames.empty? -%>
-      template < <%= typenames %> >
-      <%- end -%>
       data
       operator() (<%= arguments %>) const
       {
         typedef data (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
         std::string arguments_types;
-
-      <%- i.times do |j| -%>
-        const data object<%= j %> = arg<%= j %>;
-        arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>object<%= j %>.type();
-      <%- end -%>
+	<%- i.times do |j| -%>
+	  arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>arg<%= j %>.type();
+       <%- end -%>
 
         func_t ptr = (func_t)function_loader.load(kind_, name_, arguments_types, header_path_);
         assert(ptr != 0);

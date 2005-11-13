@@ -16,7 +16,7 @@ namespace dyn {
   struct abstract_data
   {
     virtual abstract_data* clone() const = 0;
-    virtual void print(std::ostream& ostr) const = 0;
+//     virtual void print(std::ostream& ostr) const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
   };
@@ -38,15 +38,21 @@ namespace dyn {
     operator V() const
     {
       assert(p_obj_ != 0);
-      V ret(*p_obj_);
+      V ret(*obj());
       return ret;
     }
 
-    virtual void print(std::ostream& ostr) const
+//     virtual void print(std::ostream& ostr) const
+//     {
+//       assert(p_obj_ != 0);
+//       ostr << (*p_obj_);
+//     }
+
+    T* obj() const
     {
-      assert(p_obj_ != 0);
-      ostr << (*p_obj_);
+      return const_cast<T*>(p_obj_);
     }
+
 
     std::string type() const
     {
@@ -56,6 +62,48 @@ namespace dyn {
 
     const T* p_obj_;
   };
+
+
+
+  template <class T>
+  struct data_proxy<const T>: public abstract_data
+  {
+    data_proxy(const T& obj) : p_obj_(&obj) {
+    }
+
+    virtual data_proxy<T>* clone() const
+    {
+      return new data_proxy<T>(*p_obj_);
+    }
+
+    template <typename V>
+    operator V() const
+    {
+      assert(p_obj_ != 0);
+      V ret(*obj());
+      return ret;
+    }
+
+    const T* obj() const
+    {
+      return p_obj_;
+    }
+
+//     virtual void print(std::ostream& ostr) const
+//     {
+//       assert(p_obj_ != 0);
+//       ostr << (*p_obj_);
+//     }
+
+    std::string type() const
+    {
+      assert(p_obj_ != 0);
+      return mlc_name_of(*p_obj_);
+    }
+
+    const T* p_obj_;
+  };
+
 
   struct NilClass {};
 
@@ -70,10 +118,10 @@ namespace dyn {
       return new data_proxy<NilClass>();
     }
 
-    virtual void print(std::ostream& ostr) const
-    {
-      ostr << std::string("nil");
-    }
+//     virtual void print(std::ostream& ostr) const
+//     {
+//       ostr << std::string("nil");
+//     }
 
     std::string type() const
     {
@@ -101,6 +149,13 @@ namespace dyn {
     template <class T>
     data(const T& obj)
     {
+      proxy_ = new data_proxy<const T>(obj);
+      type_ = mlc_name<T>::of();
+    }
+
+    template <class T>
+    data(T& obj)
+    {
       proxy_ = new data_proxy<T>(obj);
       type_ = mlc_name<T>::of();
     }
@@ -121,7 +176,7 @@ namespace dyn {
       if (proxy_ != 0)
 	{
 	  std::cout << "deleting " << proxy_ << std::endl;
-// 	  delete proxy_;
+	  delete proxy_;
 	}
       proxy_ = rhs.proxy_->clone();
       type_ = rhs.type_;
@@ -147,21 +202,19 @@ namespace dyn {
     }
 
 
-//     ~data()
-//     {
-//       std::cout << "~data" << std::endl;
-//       if (proxy_ != 0) {
-// 	std::cout << "deleting " << proxy_ << std::endl;
-//         delete proxy_;
-//         proxy_ = 0; // safety
-//       }
-//     }
-
-    void print(std::ostream& ostr) const
+    ~data()
     {
-      assert(proxy_ != 0);
-      proxy_->print(ostr);
+      if (proxy_ != 0) {
+        delete proxy_;
+        proxy_ = 0; // safety
+      }
     }
+
+//     void print(std::ostream& ostr) const
+//     {
+//       assert(proxy_ != 0);
+//       proxy_->print(ostr);
+//     }
 
     std::string type() const
     {
@@ -186,11 +239,11 @@ namespace dyn {
 mlc_set_name(dyn::NilClass);
 
 
-std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)
-{
-  d.print(ostr);
-  return ostr;
-}
+// std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)
+// {
+//   d.print(ostr);
+//   return ostr;
+// }
 
 
 typedef dyn::data var;

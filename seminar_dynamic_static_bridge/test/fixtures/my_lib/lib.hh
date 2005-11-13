@@ -7,7 +7,7 @@
 template <class T>
 struct u
 {
-  u<T>(const T& x) : x_(x) {}
+  u(const T& x) : x_(x) {}
   const T& x_;
 };
 

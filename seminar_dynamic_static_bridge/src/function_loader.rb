@@ -126,10 +126,10 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
-      arguments << "const data* #{arg}"
-      call_args << "*(#{arg}_value->p_obj_)"
+      arguments << "const data& #{arg}"
+      call_args << "*(#{arg}_value->obj())"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
-              "reinterpret_cast<data_proxy< #{type} >* >(#{arg}->proxy());"
+              "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
     end
     call = "#@name(#{call_args.join(', ')})"
     case kind

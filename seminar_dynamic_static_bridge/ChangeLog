@@ -1,3 +1,18 @@
+2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add const/non const proxy support and tests for olena.
+
+	* test/test_olena.cc: New. Tests for olena.
+	* test/fixtures/my_lib/lib.hh: Remove templates from constructor
+	names.
+	* test/test_function_loader.cc: Remove an include.
+	* src/function_loader.erb.hh: Operator() now takes directly dyn::data
+	objects as arguments.
+	* src/data.hh: Comment print methods so that we can have proxy_data
+	of std::ostream..
+	* src/mlc.hh: Add useful empty lines.
+	* src/function_loader.rb: Change pointers to references.
+
 2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add constructors.
