@@ -9,22 +9,9 @@
 #include "dyn.hh"
 #include "mlc.hh"
 
-/*#define dyn_include(file) \
-\#include file \
-function_loader.include(file);
-*/
-
 namespace dyn {
 
   <% NB_MAX_ARGUMENTS = 10 %>
-
-  enum kind_t
-  {
-    FUN,
-    PROC,
-    METHOD_FUN,
-    METHOD_PROC
-  };
 
   struct fun;
 
@@ -56,13 +43,12 @@ namespace dyn {
     }
 
     void*
-    load(kind_t kind,
+    load(const std::string& kind,
          const std::string& name,
          const std::string& arguments_types,
          const std::string& header_path)
     {
-      std::string kind_s = ((kind == FUN)? ":fun" : ((kind == PROC)? ":proc" : ((kind == METHOD_PROC)? ":method_proc" : ":method_fun")));
-      ruby << "FunctionLoader.call " << kind_s << ", \""
+      ruby << "FunctionLoader.call " << kind << ", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
            << header_path << "\"" << ruby::eval;
       return RDLPTR(ruby.last_value())->ptr;
@@ -75,7 +61,9 @@ namespace dyn {
 
   struct generic_fun
   {
-    generic_fun(kind_t kind, const std::string& name, const std::string& header_path="") :
+    generic_fun(const std::string& kind,
+                const std::string& name,
+                const std::string& header_path="") :
       kind_(kind), name_(name), header_path_(header_path) {}
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
@@ -105,7 +93,7 @@ namespace dyn {
 
     <%- end -%>
 
-    const kind_t kind_;
+    const std::string kind_;
     const std::string name_;
     const std::string header_path_;
   };
@@ -113,25 +101,31 @@ namespace dyn {
   struct fun : public generic_fun
   {
     fun(const std::string& name, const std::string& header_path="") :
-      generic_fun(FUN, name, header_path) {}
+      generic_fun(":fun", name, header_path) {}
   };
 
   struct proc : public generic_fun
   {
     proc(const std::string& name, const std::string& header_path="") :
-      generic_fun(PROC, name, header_path) {}
+      generic_fun(":proc", name, header_path) {}
   };
 
   struct method_proc : public generic_fun
   {
     method_proc(const std::string& name, const std::string& header_path="") :
-      generic_fun(METHOD_PROC, name, header_path) {}
+      generic_fun(":method_proc", name, header_path) {}
   };
 
   struct method_fun : public generic_fun
   {
     method_fun(const std::string& name, const std::string& header_path="") :
-      generic_fun(METHOD_FUN, name, header_path) {}
+      generic_fun(":method_fun", name, header_path) {}
+  };
+
+  struct ctor : public generic_fun
+  {
+    ctor(const std::string& name, const std::string& header_path="") :
+      generic_fun(":ctor", name, header_path) {}
   };
 
   void

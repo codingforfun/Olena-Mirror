@@ -134,8 +134,7 @@ class FunctionLoader
     call = "#@name(#{call_args.join(', ')})"
     case kind
       when :fun
-        vars << "data ret_value(#{call});"
-        vars << 'return ret_value;'
+        vars << "return data(#{call});"
       when :proc
         vars << call + ';' << 'return nil;'
       when :method_proc
@@ -145,8 +144,9 @@ class FunctionLoader
       when :method_fun
         obj = "(#{call_args.shift})"
         call = "#{obj}.#@name(#{call_args.join(', ')})"
-        vars << "data ret_value(#{call});"
-        vars << 'return ret_value;'
+        vars << "return data(#{call});"
+      when :ctor
+        vars << "return data(*(new #{call}));"
       else raise
     end
     str = ''

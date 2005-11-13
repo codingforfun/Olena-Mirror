@@ -1,5 +1,10 @@
 2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add constructors.
+
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Remove \r in data.hh.
 
 
