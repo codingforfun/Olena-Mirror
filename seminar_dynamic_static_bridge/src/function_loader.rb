@@ -1,6 +1,7 @@
 require 'pathname'
 require 'dl'
 require 'yaml'
+require 'set'
 
 class Array
   alias_method :top, :last
@@ -73,8 +74,8 @@ end
 
 class FunctionLoader
   attr_reader :identifier, :path, :name, :args, :includes, :include_dirs, :lib_path, :sym
-  @@default_includes ||= []
-  @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
+  @@default_includes ||= SortedSet.new
+  @@default_include_dirs ||= SortedSet[Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, kind=:fun )
     path, name, args = identifier.split '__'
     @includes = @@default_includes.dup
@@ -150,7 +151,7 @@ class FunctionLoader
     end
     str = ''
     includes = @includes.dup
-    includes << path.to_s
+    includes << path
     includes.each do |path|
       next if path.to_s.empty?
       inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}

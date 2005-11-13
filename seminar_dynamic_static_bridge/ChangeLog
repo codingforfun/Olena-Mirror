@@ -1,3 +1,8 @@
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use a SortedSet for includes and include_dirs.
+
+
 2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Add methods.
