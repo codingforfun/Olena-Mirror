@@ -1,5 +1,10 @@
 2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Remove \r in data.hh.
+
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Fix the conversion (step1).
 
 2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
