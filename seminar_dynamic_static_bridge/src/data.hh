@@ -26,7 +26,8 @@ namespace dyn {
   template <class T>
   struct data_proxy : public abstract_data
   {
-    data_proxy(const T& obj) : p_obj_(&obj) {}
+    data_proxy(const T& obj) : p_obj_(&obj) {
+    }
 
     virtual data_proxy<T>* clone() const
     {
@@ -61,11 +62,12 @@ namespace dyn {
   template <>
   struct data_proxy<NilClass> : public abstract_data
   {
-    data_proxy<NilClass>(const NilClass& nil_object) {}
+    data_proxy(const NilClass& nil_object) {}
+    data_proxy() {}
 
     virtual data_proxy<NilClass>* clone() const
     {
-      return const_cast<data_proxy<NilClass>*>(this);
+      return new data_proxy<NilClass>();
     }
 
     virtual void print(std::ostream& ostr) const
@@ -94,7 +96,8 @@ namespace dyn {
 
   struct data
   {
-    data() : proxy_(0), type_("unkown") {}
+    data() : proxy_(0), type_("unkown") {
+    }
 
     template <class T>
     data(const T& obj)
@@ -105,7 +108,7 @@ namespace dyn {
 
     data(const data& rhs)
     {
-      if (rhs.proxy_ != 0)
+       if (rhs.proxy_ != 0)
         proxy_ = rhs.proxy_->clone();
       else
         proxy_ = 0;
@@ -117,7 +120,10 @@ namespace dyn {
       assert(rhs.proxy_ != 0);
       assert(rhs.proxy_ != proxy_);
       if (proxy_ != 0)
-        delete proxy_;
+	{
+	  std::cout << "deleting " << proxy_ << std::endl;
+// 	  delete proxy_;
+	}
       proxy_ = rhs.proxy_->clone();
       type_ = rhs.type_;
       return *this;
@@ -144,13 +150,15 @@ namespace dyn {
     }
 
 
-    ~data()
-    {
-      if (proxy_ != 0) {
-        delete proxy_;
-        proxy_ = 0; // safety
-      }
-    }
+//     ~data()
+//     {
+//       std::cout << "~data" << std::endl;
+//       if (proxy_ != 0) {
+// 	std::cout << "deleting " << proxy_ << std::endl;
+//         delete proxy_;
+//         proxy_ = 0; // safety
+//       }
+//     }
 
     void print(std::ostream& ostr) const
     {
@@ -178,11 +186,14 @@ namespace dyn {
   data nil(nil_object);
 }
 
+mlc_set_name(dyn::NilClass);
+
+
 std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)
-{   
+{
   d.print(ostr);
   return ostr;
-}     
+}
 
 
 typedef dyn::data var;

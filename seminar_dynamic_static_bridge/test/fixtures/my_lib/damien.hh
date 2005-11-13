@@ -4,6 +4,8 @@
 struct up
 {
   virtual void print(std::ostream&) const = 0;
+  virtual void print_noarg() const = 0;
+  virtual ~up() {};
 };
 
 
@@ -14,10 +16,17 @@ struct down : public up
 
   virtual void print(std::ostream& ostr) const
   {
-    ostr << "down< " << t_ << " >";
+    ostr <<  t_;
   }
+
+  virtual void print_noarg() const
+  {
+    std::cout << t_ << std::endl;
+  }
+
   const T& t_;
 
+  virtual ~down() {}
 };
 
 std::ostream& operator<<(std::ostream& ostr, const up& obj)

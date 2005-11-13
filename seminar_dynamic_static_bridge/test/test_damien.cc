@@ -1,6 +1,7 @@
+#include "my_lib/damien.hh"
 #include "function_loader.hh"
 #include "config.hh"
-#include "my_lib/damien.hh"
+
 
 int main()
 {
@@ -9,23 +10,25 @@ int main()
   dyn::include("my_lib/damien.hh");
 
   down<char>               a('x');
-  down<int>                b(10);
-  down<std::string>        c("bar");
-  down<down<std::string> > d(c);
-  down<int>                e(20);
+//   down<int>                b(10);
+//   down<std::string>        c("bar");
+//   down<down<std::string> > d(c);
+//   down<int>                e(20);
 
-  dyn::proc dyn_foo("foo");
+  dyn::method_proc method_foo("print_noarg");
 
-  for ( int i = 0; i < 6; ++i )
-  {
-    std::cout << "*** Turn " << i << " ***" << std::endl;
-    dyn_foo(a);
-    dyn_foo(b);
-    dyn_foo(c);
-    dyn_foo(d);
-    dyn_foo(e);
-    dyn_foo(42);
-  }
+  method_foo(a);
+//   for ( int i = 0; i < 5; ++i )
+//   {
+//     std::cout << "*** Turn " << i << " ***" << std::endl;
+//     dyn_foo(a);
 
-  return 0;
+//     dyn_foo(b);
+//     dyn_foo(c);
+//     dyn_foo(d);
+//     dyn_foo(e);
+//     dyn_foo(42);
+//   }
+
+  std::cout << "exiting" << std::endl;
 }

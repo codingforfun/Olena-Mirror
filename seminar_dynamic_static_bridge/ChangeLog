@@ -1,3 +1,16 @@
+2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add methods.
+
+	* .: .
+	* test/test_damien.cc: Test methods.
+	* test/fixtures/my_lib/damien.hh: Add a method that doesn't take a
+	std::ostream as argument :).
+	* src/function_loader.erb.hh: Add method_proc and method_fun.
+	* src/data.hh: Nothing worth being mentionned, mostly comments
+	that I've been too lazy to remove.
+	* src/function_loader.rb: Add method wrappers generation..
+
 2005-11-12  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Change dynamic_cast to reinterpret_case.

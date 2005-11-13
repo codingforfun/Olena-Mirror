@@ -22,7 +22,8 @@ namespace dyn {
   {
     FUN,
     PROC,
-    METHOD
+    METHOD_FUN,
+    METHOD_PROC
   };
 
   struct fun;
@@ -60,7 +61,7 @@ namespace dyn {
          const std::string& arguments_types,
          const std::string& header_path)
     {
-      std::string kind_s = ((kind == FUN)? ":fun" : ((kind == PROC)? ":proc" : ":method"));
+      std::string kind_s = ((kind == FUN)? ":fun" : ((kind == PROC)? ":proc" : ((kind == METHOD_PROC)? ":method_proc" : ":method_fun")));
       ruby << "FunctionLoader.call " << kind_s << ", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
            << header_path << "\"" << ruby::eval;
@@ -119,6 +120,18 @@ namespace dyn {
   {
     proc(const std::string& name, const std::string& header_path="") :
       generic_fun(PROC, name, header_path) {}
+  };
+
+  struct method_proc : public generic_fun
+  {
+    method_proc(const std::string& name, const std::string& header_path="") :
+      generic_fun(METHOD_PROC, name, header_path) {}
+  };
+
+  struct method_fun : public generic_fun
+  {
+    method_fun(const std::string& name, const std::string& header_path="") :
+      generic_fun(METHOD_FUN, name, header_path) {}
   };
 
   void

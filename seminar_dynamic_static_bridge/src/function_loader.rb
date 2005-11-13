@@ -125,7 +125,7 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
-      arguments << "const data& #{arg}"
+      arguments << "const data* #{arg}"
       call_args << "*(#{arg}_value->p_obj_)"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
               "reinterpret_cast<data_proxy< #{type} >* >(#{arg}->proxy());"
@@ -137,6 +137,15 @@ class FunctionLoader
         vars << 'return ret_value;'
       when :proc
         vars << call + ';' << 'return nil;'
+      when :method_proc
+        obj = "(#{call_args.shift})"
+        call = "#{obj}.#@name(#{call_args.join(', ')})"
+        vars << call + ';' << 'return nil;'
+      when :method_fun
+        obj = "(#{call_args.shift})"
+        call = "#{obj}.#@name(#{call_args.join(', ')})"
+        vars << "data ret_value(#{call});"
+        vars << 'return ret_value;'
       else raise
     end
     str = ''
