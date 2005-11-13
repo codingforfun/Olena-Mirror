@@ -1,5 +1,9 @@
 2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Fix the conversion (step1).
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Use a SortedSet for includes and include_dirs.
 
 

@@ -213,7 +213,7 @@ class FunctionLoader
       @lib_path = cached
       load_lib
     else
-      puts "HIT"
+      puts "HIT #{self}"
       cached
     end
   end
@@ -221,7 +221,7 @@ class FunctionLoader
     args.size
   end
   def to_s
-    "#@path: #@name(#{@args.join(', ')})"
+    "#@path #@name(#{@args.join(', ')})"
   end
   def repository
     repository = Pathname.new('repository')

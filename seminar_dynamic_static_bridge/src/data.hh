@@ -86,10 +86,9 @@ namespace dyn {
 
   template <typename T1, typename T2>
   T2
-  data_cast(const T1& src, const T2& dest)
+  data_cast(const T1& src, const T2*)
   {
-    T2 ret(src);
-    return ret;
+    return src;
   }
 
   // data
@@ -134,7 +133,7 @@ namespace dyn {
     operator T() const
     {
       assert(proxy_ != 0);
-      data_proxy<T>* dynamic_cast_returned_pointer = dynamic_cast<data_proxy<T>*>(proxy_);
+      data_proxy<T>* dynamic_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
       if (dynamic_cast_returned_pointer != 0)
       {
         assert(dynamic_cast_returned_pointer->p_obj_ != 0);
@@ -142,10 +141,8 @@ namespace dyn {
       }
       else
       {
-        fun dyn_data_cast("data_cast");
-        T tmp;
-        T ret(dyn_data_cast(*this, tmp));
-        return ret;
+        static fun dyn_data_cast("data_cast");
+        return dyn_data_cast(*this, (T*)0);
       }
     }
 
