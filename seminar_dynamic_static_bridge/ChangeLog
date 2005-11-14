@@ -1,3 +1,9 @@
+2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add olena entry to Makefile.in.
+
+	* test/Makefile.in: Refer to title.
+
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	More examples.
