@@ -34,9 +34,18 @@ struct mlc_name
 };
 
 template <class T>
-std::string mlc_name_of(const T&)
+struct mlc_name2
 {
-  return mlc_name<T>::of();
+  static std::string of(const T&)
+  {
+    return mlc_name<T>::of();
+  }
+};
+
+template <class T>
+std::string mlc_name_of(const T& t)
+{
+  return mlc_name2<T>::of(t);
 }
 
 // ptr
@@ -44,6 +53,12 @@ template <typename T>
 struct mlc_name <T*>
 {
   static std::string of() { return mlc_name<T>::of() + "*"; }
+};
+
+template <typename T>
+struct mlc_name2 <T*>
+{
+  static std::string of(const T* const& t) { return mlc_name2<T>::of(*t) + "*"; }
 };
 
 
@@ -54,11 +69,23 @@ struct mlc_name <const T>
   static std::string of() { return std::string("const ") + mlc_name<T>::of(); }
 };
 
+template <typename T>
+struct mlc_name2 <const T>
+{
+  static std::string of(const T& t) { return std::string("const ") + mlc_name2<T>::of(t); }
+};
+
 // ref
 template <typename T>
 struct mlc_name <T&>
 {
   static std::string of() { return mlc_name<T>::of() + "&"; }
+};
+
+template <typename T>
+struct mlc_name2 <T&>
+{
+  static std::string of(const T& t) { return mlc_name2<T>::of(t) + "&"; }
 };
 
 // built-in

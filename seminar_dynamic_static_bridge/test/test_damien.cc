@@ -1,7 +1,14 @@
 #include "my_lib/damien.hh"
-#include "function_loader.hh"
+#include "dyn.hh"
 #include "config.hh"
 
+namespace dyn
+{
+  namespace down
+  {
+    ::dyn::fun mk("mk_down");
+  }
+}
 
 int main()
 {
@@ -21,8 +28,13 @@ int main()
   dyn::ctor        mk_down_int("down<int>");
 
   var f = mk_down_char('x');
-  var g = mk_down_int(42);
+
+  std::cout << mlc_name_of(f) << std::endl;
+
+  var g = mk_down_int(44);
   // var h = mk_down(e);
+
+  var j = dyn::down::mk(46);
 
   for ( int i = 0; i < 5; ++i )
   {
@@ -41,7 +53,9 @@ int main()
 
     dyn_foo(g);
 
-    // h->foo();
+    // j("print_noarg");
+
+    // j->print_noarg();
   }
 
   std::cout << "exiting" << std::endl;

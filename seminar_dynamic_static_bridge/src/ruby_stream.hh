@@ -1,3 +1,6 @@
+#ifndef RUBY_STREAM_HH
+#define RUBY_STREAM_HH
+
 namespace ruby
 {
 
@@ -49,3 +52,5 @@ ruby::stream& operator<< (ruby::stream& stream, const T& obj)
   stream.push(obj);
   return stream;
 }
+
+#endif

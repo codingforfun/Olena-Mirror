@@ -1,0 +1,53 @@
+#ifndef DYN_DATA_HXX
+# define DYN_DATA_HXX
+
+# include <string>
+# include <cassert>
+
+# include "function.hh"
+
+# include "mlc.hh"
+
+namespace dyn {
+
+  template <typename T>
+  T data::convert_to() const
+  {
+    assert(proxy_ != 0);
+    data_proxy<T>* dynamic_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
+    if (dynamic_cast_returned_pointer != 0)
+    {
+      assert(dynamic_cast_returned_pointer->p_obj_ != 0);
+      return *dynamic_cast_returned_pointer->p_obj_;
+    }
+    else
+    {
+      static fun dyn_data_cast("data_cast");
+      return dyn_data_cast(*this, (T*)0);
+    }
+  }
+
+  <%- NB_MAX_ARGUMENTS.times do |i| -%>
+
+    <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
+    <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
+
+    data*
+    data::operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
+    {
+      method_fun meth(meth_name);
+      return meth(<%= (['*this'] + objects).join(', ') %>);
+    }
+
+    data*
+    data::v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
+    {
+      method_proc meth(meth_name);
+      return meth(<%= (['*this'] + objects).join(', ') %>);
+    }
+
+  <%- end -%>
+
+}
+
+#endif

@@ -33,6 +33,8 @@ class Configure
 end
 Kernel.send :undef_method, :gsub
 
+NB_MAX_ARGUMENTS = 10
+
 SOURCE_DIR = TOP_DIR.expand_path + 'src'
 
 Configure.new do
@@ -42,7 +44,9 @@ Configure.new do
   gsub :LIBRUBYARG_SHARED
   gsub :CXX, 'g++'
   gsub :CFLAGS, '-I' + Config::CONFIG['topdir'] + ' -Wall'
-  erb SOURCE_DIR + 'function_loader.erb.hh'
+  erb SOURCE_DIR + 'data.erb.hh'
+  erb SOURCE_DIR + 'data.erb.hxx'
+  erb SOURCE_DIR + 'function.erb.hh'
 end
 
 puts "Configuring: done."

@@ -1,3 +1,24 @@
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Work in progress.
+
+	* test/test_function_loader.cc: Restore the include.
+	* src/dyn.hh: Manage includes in the proper order.
+	* src/mlc.hh: Add mlc_name2 for dynamic type deductions.
+	* src/function_loader.rb: Support for method_fun2 and method_proc2.
+
+	* src/function_loader.erb.hh: Remove.
+	* src/data.erb.hxx: New.
+	* src/function_loader.hh: New.
+	* src/function.erb.hh: New.
+	* src/data.erb.hh: New.
+	* src/data.hh: Remove.
+
+	* src/ruby_stream.hh,
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/damien.hh,
+	* configure: Update.
+
 2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Add const/non const proxy support and tests for olena.

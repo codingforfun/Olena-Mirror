@@ -130,27 +130,42 @@ class FunctionLoader
       call_args << "*(#{arg}_value->obj())"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
               "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
+      vars << "assert(#{arg}_value != !\"reinterpret_cast failed\");"
     end
     call = "#@name(#{call_args.join(', ')})"
     case kind
       when :fun
-        vars << "return data(#{call});"
+        vars << "return #{call};"
       when :proc
         vars << call + ';' << 'return nil;'
-      when :method_proc
+      when :method_proc, :method_proc2
         obj = "(#{call_args.shift})"
         call = "#{obj}.#@name(#{call_args.join(', ')})"
         vars << call + ';' << 'return nil;'
-      when :method_fun
+      when :method_fun, :method_fun2
         obj = "(#{call_args.shift})"
         call = "#{obj}.#@name(#{call_args.join(', ')})"
-        vars << "return data(#{call});"
+        vars << "return #{call};"
+#       when :method_proc2
+#         obj = "(#{call_args.shift})"
+#         call = "#{obj}.#@name(#{call_args.join(', ')})"
+#         vars << call + ';' << 'return nil;'
+#       when :method_fun2
+#         obj = "(#{call_args.shift})"
+#         call = "#{obj}.#@name(#{call_args.join(', ')})"
+#         vars << "return data(#{call});"
       when :ctor
-        vars << "return data(*(new #{call}));"
+#        long_name = "::dyn::#@name::#{@name}__class".gsub('::::', '::')
+        # ret_type = "::dyn::Object"
+        vars << "return *(new #@name(#{call_args.join(', ')}));"
+      when :ctor2
+        vars << "#@name ret(#{call_args.join(', ')});"
+        vars << "return ret;"
       else raise
     end
     str = ''
     includes = @includes.dup
+    includes << Pathname.new('data.hh')
     includes << path
     includes.each do |path|
       next if path.to_s.empty?
@@ -158,7 +173,6 @@ class FunctionLoader
       str << "#include #{inc}\n"
     end
     str << "
-     |#include \"dyn.hh\"
      |extern \"C\" {
      |  namespace dyn {
      |    namespace generated {
@@ -189,11 +203,17 @@ class FunctionLoader
     if system cmd
       out.unlink if out.exist?
     else
+      out_s = out.read
+      if kind.to_s =~ /fun/ and out_s =~ /conversion from `void' to non-scalar type `dyn::data' requested/
+        STDERR.puts 'Not a function, try to compile a procedure'
+        @kind = kind.to_s.gsub('fun', 'proc').to_sym
+        return compile
+      end
       STDERR.puts cmd
-      STDERR.puts out.read.
+      STDERR.puts out_s.
         gsub(/^#{file}:/, "[[#@name]]:").
         gsub(/dyn::generated::#@identifier/, @name.to_s)
-      exit 1
+      exit! 1
     end
   end
   def load_lib

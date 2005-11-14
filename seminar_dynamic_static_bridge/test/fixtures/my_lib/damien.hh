@@ -29,6 +29,13 @@ struct down : public up
   virtual ~down() {}
 };
 
+template <typename T>
+down<T>
+mk_down(const T& t)
+{
+  return t;
+}
+
 std::ostream& operator<<(std::ostream& ostr, const up& obj)
 {
   obj.print(ostr);
