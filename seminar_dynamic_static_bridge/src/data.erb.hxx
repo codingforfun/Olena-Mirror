@@ -17,8 +17,7 @@ namespace dyn {
     data_proxy<T>* dynamic_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
     if (dynamic_cast_returned_pointer != 0)
     {
-      assert(dynamic_cast_returned_pointer->p_obj_ != 0);
-      return *dynamic_cast_returned_pointer->p_obj_;
+      return *dynamic_cast_returned_pointer->obj();
     }
     else
     {

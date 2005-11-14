@@ -204,7 +204,7 @@ class FunctionLoader
       out.unlink if out.exist?
     else
       out_s = out.read
-      if kind.to_s =~ /fun/ and out_s =~ /conversion from `void' to non-scalar type `dyn::data' requested/
+      if kind.to_s =~ /fun/ and out_s =~ /conversion from [`']void' to non-scalar type [`']dyn::data' requested/
         STDERR.puts 'Not a function, try to compile a procedure'
         @kind = kind.to_s.gsub('fun', 'proc').to_sym
         return compile

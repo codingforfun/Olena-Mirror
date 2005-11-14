@@ -64,6 +64,7 @@ namespace dyn {
       return mlc_name_of(*p_obj_);
     }
 
+    protected:
     const T* p_obj_;
   };
 
@@ -106,6 +107,7 @@ namespace dyn {
       return mlc_name_of(*p_obj_);
     }
 
+    protected:
     const T* p_obj_;
   };
 

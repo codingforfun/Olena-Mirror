@@ -4,10 +4,7 @@
 
 namespace dyn
 {
-  namespace down
-  {
-    ::dyn::fun mk("mk_down");
-  }
+  ::dyn::fun down("mk_down");
 }
 
 int main()
@@ -34,7 +31,7 @@ int main()
   var g = mk_down_int(44);
   // var h = mk_down(e);
 
-  var j = dyn::down::mk(46);
+  var j = dyn::down(46);
 
   for ( int i = 0; i < 5; ++i )
   {
