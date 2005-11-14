@@ -1,3 +1,8 @@
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Separation interface/implementation for function.erb.hh.
+
+
 2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Rename some includes and add olena test to Makefile.in.

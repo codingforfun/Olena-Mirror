@@ -3,7 +3,7 @@
 
 # include "data.hh"
 
-# include "function.hh"
+# include "function.hxx"
 
 # include "data.hxx"
 

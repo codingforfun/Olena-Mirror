@@ -4,6 +4,8 @@
 # include <string>
 # include <cassert>
 
+# include "function.hh"
+
 # include "name_of.hh"
 
 
@@ -175,31 +177,6 @@ namespace dyn {
 
   struct data
   {
-    data() : proxy_(0), type_("unkown") {
-    }
-
-    template <class T>
-    data(const T& obj)
-    {
-      proxy_ = new data_proxy<const T>(obj);
-      type_ = mlc_name<T>::of();
-    }
-
-    template <class T>
-    data(T& obj)
-    {
-      proxy_ = new data_proxy<T>(obj);
-      type_ = mlc_name_of(obj);
-    }
-
-    data(const data& rhs)
-    {
-       if (rhs.proxy_ != 0)
-        proxy_ = rhs.proxy_->clone();
-      else
-        proxy_ = 0;
-      type_ = rhs.type_;
-    }
 
     data& operator=(const data& rhs)
     {
@@ -269,11 +246,43 @@ namespace dyn {
 
     <%- end -%>
 
-    #include "data_gen.hh"
-
     protected:
     abstract_data* proxy_;
     std::string type_;
+
+    public:
+
+    #include "data_gen.hh"
+
+#   ifndef INITIALIZE_METHODS_ATTRIBUTES
+#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method")
+    method_fun fake_method;
+#   endif
+
+    data() : proxy_(0), type_("unkown"), INITIALIZE_METHODS_ATTRIBUTES {}
+
+    template <class T>
+    data(const T& obj) : INITIALIZE_METHODS_ATTRIBUTES
+    {
+      proxy_ = new data_proxy<const T>(obj);
+      type_ = mlc_name<T>::of();
+    }
+
+    template <class T>
+    data(T& obj) : INITIALIZE_METHODS_ATTRIBUTES
+    {
+      proxy_ = new data_proxy<T>(obj);
+      type_ = mlc_name_of(obj);
+    }
+
+    data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+    {
+       if (rhs.proxy_ != 0)
+        proxy_ = rhs.proxy_->clone();
+      else
+        proxy_ = 0;
+      type_ = rhs.type_;
+    }
   };
 
   NilClass nil_object;

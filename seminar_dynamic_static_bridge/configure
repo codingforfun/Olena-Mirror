@@ -47,6 +47,7 @@ Configure.new do
   erb SOURCE_DIR + 'data.erb.hh'
   erb SOURCE_DIR + 'data.erb.hxx'
   erb SOURCE_DIR + 'function.erb.hh'
+  erb SOURCE_DIR + 'function.erb.hxx'
 end
 
 system("touch #{SOURCE_DIR + 'data_gen.hh'}")
