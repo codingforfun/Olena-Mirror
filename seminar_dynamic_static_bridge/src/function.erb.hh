@@ -28,17 +28,17 @@ namespace dyn
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
 
-      <%- arguments = (0 .. i).map { |j| "const data& arg#{j}" }.join(', ') -%>
-      <%- objects   = (0 .. i).map { |j| "arg#{j}" } -%>
+      <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" }.join(', ') -%>
+      <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
 
       data
       operator() (<%= arguments %>) const
       {
-        typedef data (*func_t)(<%= (['const dyn::data&'] * (i + 1)).join(', ') %>);
-        typedef data (*func_t2)(<%= (['const dyn::data*'] + ['const dyn::data&'] * (i + 1)).join(', ') %>);
+        typedef data (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+        typedef data (*func_t2)(<%= (['const dyn::data*'] + ['const dyn::data&'] * i).join(', ') %>);
         std::string arguments_types;
 
-      <%- (i + 1).times do |j| -%>
+      <%- i.times do |j| -%>
         arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>data_type(arg<%= j %>);
       <%- end -%>
 

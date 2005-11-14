@@ -3,20 +3,22 @@
 
 struct up
 {
+  up(int i) : i_(i) {}
   virtual void print(std::ostream&) const = 0;
   virtual void print_noarg() const = 0;
   virtual ~up() {};
+  int i_;
 };
 
 
 template <typename T>
 struct down : public up
 {
-  down(const T& t) : t_(t) {}
+  down(const T& t) : up(0), t_(t) {}
 
   virtual void print(std::ostream& ostr) const
   {
-    ostr <<  t_;
+    ostr << "down< " << t_ << " >";
   }
 
   virtual void print_noarg() const
@@ -57,4 +59,9 @@ void foo(const int& i)
 void bar(const up& a, const up& b, int c=0)
 {
   std::cout << "bar(" << a << ", " << b << ", " << c << ")" << std::endl;
+}
+
+void change(up& a)
+{
+  a.i_++;
 }

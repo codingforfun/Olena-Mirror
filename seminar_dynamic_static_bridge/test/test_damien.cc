@@ -15,12 +15,18 @@ int main()
 
   down<char>               a('x');
   down<int>                b(10);
-  down<std::string>        c("bar");
+  std::string              bar("bar"); 
+  down<std::string>        c(bar); // c("bar"); // it's worst
   down<down<std::string> > d(c);
   down<int>                e(20);
 
+  var d2 = d;
+
+  std::cout << d2 << std::endl;
+
   dyn::proc        dyn_foo("foo");
   dyn::method_proc dyn_print_noarg("print_noarg");
+  dyn::proc        dyn_change("change");
   dyn::ctor        mk_down_char("down<char>");
   dyn::ctor        mk_down_int("down<int>");
 
@@ -32,6 +38,14 @@ int main()
   // var h = mk_down(e);
 
   var j = dyn::down(46);
+
+  // std::cout is not printable
+  // if you try to do this it will compile
+  // but fail on assertion
+  // you can use is_printable before draw it.
+  var not_printable = std::cout;
+  if (not_printable.is_printable())
+    std::cout << not_printable << std::endl;
 
   for ( int i = 0; i < 5; ++i )
   {
@@ -50,10 +64,13 @@ int main()
 
     dyn_foo(g);
 
+    dyn_change(c);
+
     // j("print_noarg");
 
     // j->print_noarg();
   }
 
   std::cout << "exiting" << std::endl;
+  return 0;
 }

@@ -1,5 +1,18 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Yeah it works.
+
+	* src/data.erb.hh: Setup conditional inheritance to handle printablity.
+
+	* src/data.erb.hxx, src/function.erb.hh: Fix argument number
+	compatiblity.
+
+	* test/test_damien.cc: Add test about printablity.
+	* test/fixtures/my_lib/damien.hh: Add proc change.
+	* test/test_function_loader.cc: Include dyn not function_loader.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Minor changes.
 
 

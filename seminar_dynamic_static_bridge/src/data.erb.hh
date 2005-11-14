@@ -6,6 +6,7 @@
 
 # include "mlc.hh"
 
+
 namespace dyn {
 
   // data  -->  abstract_data
@@ -20,6 +21,7 @@ namespace dyn {
   {
     virtual abstract_data* clone() const = 0;
     virtual void print(std::ostream& ostr) const = 0;
+    virtual bool is_printable() const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
   };
@@ -27,14 +29,26 @@ namespace dyn {
   // data_proxy<T>
 
   template <class T>
-  struct data_proxy : public abstract_data
+  struct data_proxy2 : public abstract_data
   {
-    data_proxy(const T& obj) : p_obj_(&obj) {
+    data_proxy2() {}
+  };
+
+  template <class T>
+  struct printable {};
+
+  template <class T>
+  struct not_printable {};
+  
+  template <class T>
+  struct data_proxy2< not_printable<T> > : public data_proxy2<T>
+  {
+    data_proxy2(const T& obj) : p_obj_(&obj) {
     }
 
-    virtual data_proxy<T>* clone() const
+    virtual data_proxy2< not_printable<T> >* clone() const
     {
-      return new data_proxy<T>(*p_obj_);
+      return new data_proxy2< not_printable<T> >(*p_obj_);
     }
 
     template <typename V>
@@ -47,8 +61,12 @@ namespace dyn {
 
     virtual void print(std::ostream& ostr) const
     {
-      assert(p_obj_ != 0);
-      ostr << (*p_obj_);
+      assert(!"Not printable");
+    }
+
+    virtual bool is_printable() const
+    {
+      return false;
     }
 
     T* obj() const
@@ -68,48 +86,52 @@ namespace dyn {
     const T* p_obj_;
   };
 
-
-
   template <class T>
-  struct data_proxy<const T>: public abstract_data
+  struct data_proxy2< printable<T> > : public data_proxy2< not_printable<T> >
   {
-    data_proxy(const T& obj) : p_obj_(&obj) {
-    }
-
-    virtual data_proxy<T>* clone() const
-    {
-      return new data_proxy<T>(*p_obj_);
-    }
-
-    template <typename V>
-    operator V() const
-    {
-      assert(p_obj_ != 0);
-      V ret(*obj());
-      return ret;
-    }
-
-    const T* obj() const
-    {
-      assert(p_obj_ != 0);
-      return p_obj_;
-    }
+    data_proxy2(const T& obj) : data_proxy2< not_printable<T> >(obj) {}
 
     virtual void print(std::ostream& ostr) const
     {
-      assert(p_obj_ != 0);
-      ostr << (*p_obj_);
+      assert(this->p_obj_ != 0);
+      ostr << (*this->p_obj_);
     }
 
-    std::string type() const
+    virtual bool is_printable() const
     {
-      assert(p_obj_ != 0);
-      return mlc_name_of(*p_obj_);
+      return true;
     }
 
-    protected:
-    const T* p_obj_;
   };
+
+  template <class T>
+  struct printablity { typedef printable<T> ret; };
+
+# define set_not_printable(TYPE) \
+   template <> struct printablity< TYPE > { typedef not_printable< TYPE > ret; }
+
+  set_not_printable(std::ostream);
+  // and so one ...
+
+  template <class T>
+  struct data_proxy : public data_proxy2< typename printablity<T>::ret >
+  {
+    data_proxy(const T& obj) : data_proxy2< typename printablity<T>::ret >(obj) {}
+  };
+
+
+  template <class T>
+  struct data_proxy<const T>: public data_proxy<T>
+  {
+    data_proxy<const T>(const T& obj) : data_proxy<T>(obj) {}
+
+    const T* obj() const
+    {
+      assert(this->p_obj_ != 0);
+      return this->p_obj_;
+    }
+  };
+
 
 
   struct NilClass {};
@@ -128,6 +150,11 @@ namespace dyn {
     virtual void print(std::ostream& ostr) const
     {
       ostr << std::string("nil");
+    }
+
+    virtual bool is_printable() const
+    {
+      return true;
     }
 
     std::string type() const
@@ -213,6 +240,12 @@ namespace dyn {
       proxy_->print(ostr);
     }
 
+    bool is_printable() const
+    {
+      assert(proxy_ != 0);
+      return proxy_->is_printable();
+    }
+
     std::string type() const
     {
       return type_;
@@ -224,7 +257,7 @@ namespace dyn {
       return proxy_;
     }
 
-    <%- NB_MAX_ARGUMENTS.times do |i| -%>
+    <%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
       data*
