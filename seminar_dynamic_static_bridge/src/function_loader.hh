@@ -1,6 +1,14 @@
 #ifndef DYN_FUNCTION_LOADER_HH
 #define DYN_FUNCTION_LOADER_HH
 
+// Protection against already loaded config.h
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_VERSION
+#undef HAVE_DLFCN_H
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -11,6 +19,14 @@
 #include "config.hh"
 #include "data.hh"
 #include "name_of.hh"
+
+// Protection against futur config.h
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_VERSION
+#undef HAVE_DLFCN_H
 
 namespace dyn {
 
@@ -32,6 +48,12 @@ namespace dyn {
     include(const std::string& file)
     {
       ruby << "FunctionLoader.include \"" << file << "\"" << ruby::eval;
+    }
+
+    void
+    post_include(const std::string& file)
+    {
+      ruby << "FunctionLoader.post_include \"" << file << "\"" << ruby::eval;
     }
 
     void
@@ -61,6 +83,12 @@ namespace dyn {
   include(const std::string& file)
   {
     function_loader.include(file);
+  }
+
+  void
+  post_include(const std::string& file)
+  {
+    function_loader.post_include(file);
   }
 
   void

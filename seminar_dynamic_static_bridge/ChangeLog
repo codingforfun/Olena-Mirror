@@ -1,5 +1,14 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	post_include and unset.
+
+	* src: Ignore function.hxx.
+	* src/function_loader.hh: Handle post_include and unset macros to
+	avoid multiple defs.
+	* src/function_loader.rb: Implement post_include.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Separation interface/implementation for function.erb.hh.
 
 

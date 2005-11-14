@@ -75,10 +75,12 @@ end
 class FunctionLoader
   attr_reader :identifier, :path, :name, :args, :includes, :include_dirs, :lib_path, :sym
   @@default_includes ||= SortedSet.new
+  @@default_post_includes ||= SortedSet.new
   @@default_include_dirs ||= SortedSet[Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, kind=:fun )
     path, name, args = identifier.split '__'
     @includes = @@default_includes.dup
+    @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
     @identifier = identifier
     @kind = kind
@@ -164,9 +166,10 @@ class FunctionLoader
       else raise
     end
     str = ''
-    includes = @includes.dup
+    includes = @includes.to_a
     includes << Pathname.new('data.hh')
     includes << path
+    includes += @post_includes.to_a
     includes.each do |path|
       next if path.to_s.empty?
       inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
@@ -263,6 +266,9 @@ class FunctionLoader
     end
     def include ( path )
       @@default_includes << Pathname.new(path)
+    end
+    def post_include ( path )
+      @@default_post_includes << Pathname.new(path)
     end
   end
 
