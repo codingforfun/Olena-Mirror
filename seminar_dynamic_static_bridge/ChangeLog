@@ -1,5 +1,13 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add 2 big trees.
+
+	* test/fixtures/tree: New.
+	* test/fixtures/tree/tree.yml: New.
+	* test/fixtures/tree/tree.swig: New.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add some swig tools.
 
 	* bin: New.
