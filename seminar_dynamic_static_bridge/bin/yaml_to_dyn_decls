@@ -1,0 +1,204 @@
+#!/usr/bin/env ruby
+require 'yaml'
+require 'rubygems'
+require_gem 'ruby_ex'
+require 'ruby_ex'
+require 'r_path'
+require 'set'
+tree = YAML.load STDIN.read
+class Hash
+  undef type
+  def name
+    # self['sym:name'] || super
+    super.gsub(/.*::/, '')
+  end
+  def method_missing ( meth )
+    self[meth.to_s]
+  end
+end
+class Dumper
+  def initialize
+    @namespace = []
+    @includes = []
+    @states = []
+    @all_methods = {}
+    @classes = SortedSet[]
+    @mlc_set_names = []
+    @io = STDOUT
+  end
+  def with ( io, &block )
+    oldio = @io
+    begin
+      @io = io
+      block[]
+    ensure
+      @io = oldio
+    end
+  end
+  OPERATORS =
+  {
+    '<<'  => 'push',
+    '<<=' => 'push_assign',
+    '>>=' => 'pop_assign',
+    '='   => 'assign',
+    '=='  => 'equal',
+    '!='  => 'not_equal',
+    '<='  => 'less_or_equal',
+    '<'   => 'less',
+    '>='  => 'greater_or_equal',
+    '>'   => 'greater',
+    '++'  => 'incr',
+    '--'  => 'decr',
+    '()'  => 'paren',
+  }
+  def operator ( name )
+    op = name[/operator\s*(.*)/, 1]
+    return "operator_convert_#{op}" if op =~ /\w/
+    raise "Operator not yet named: #{name}" unless OPERATORS.has_key? op
+    'operator_' + OPERATORS[op]
+  end
+  def puts ( *args )
+    print '  ' * @namespace.size
+    @io.puts(*args)
+  end
+  def namespace ( name, &block )
+    puts "namespace #{name} {"
+    @namespace << name
+    @states << 'namespace'
+    block[]
+    @namespace.pop
+    @states.pop
+    puts "} // end of namespace #{name}"
+  end
+  def struct ( name, &block )
+    puts "// struct #{name} {"
+    @namespace << name
+    @states << 'struct'
+    block[]
+    puts "ctor #{name}(\"#{name}\");"
+    @namespace.pop
+    @states.pop
+    puts '// };'
+  end
+  def print_dyn ( key, tree )
+    return if tree.nil?
+    case tree
+    when Array
+      tree.each do |node|
+        print_dyn(nil, node)
+      end
+      return
+    when Hash
+      if tree.size == 1
+        print_dyn(*tree.to_a.first)
+        return
+      end
+    when String
+      return
+    end
+    key = tree.kind if key.nil? or (%w[template class].include? key)
+
+    # No struct specializations
+    return if tree.specialization == '1'
+    return if tree.partialspecialization == '1'
+
+    # No instance variables
+    return if key == 'cdecl' and not (tree.decl != '' and tree.access.nil?)
+    
+    # No typdefs
+    return if tree.storage == 'typedef'
+
+    case key
+    when 'namespace'
+      namespace tree.name do
+        print_dyn nil, tree.contents
+      end
+    when 'struct'
+      name = (@namespace[1..-1] + [tree.name]).join('::')
+      unless @classes.include? name
+        @classes << name
+        case n = (parms = (tree.templateparms || '').split(/\s*,\s*/)).size
+        when 0 then @mlc_set_names << "mlc_set_name(#{name});"
+        else
+          b = -1
+          builtin_type = /bool|char/
+          parms.map! { |p| (p =~ builtin_type)? "#{p} B#{b += 1}" : p }
+          parm_names = parms.map { |p| p.split(/\s+/).last }
+          name_of = parms.map do |p|
+            var = p.split(/\s+/).last
+            case p
+            when /bool/ then "((#{var})? \"true\" : \"false\")"
+            when /char/ then "\"'\" + std::string(#{var}) + \"'\""
+            else "mlc_name<#{var}>::of()"
+            end
+          end.join(" + \", \" + ")
+          @mlc_set_names <<
+            "template <#{parms.join(', ')}> struct mlc_name " +
+            "< #{name}<#{parm_names.join(', ')}> > " +
+            "{ static std::string of() { return std::string(\"#{name}\") + " +
+            "\"<\" + #{name_of} + \">\"; } };"
+        end
+      end
+      struct tree.name do
+        print_dyn nil, tree.contents
+      end
+    when 'cdecl'
+      node_name = tree.name
+      if node_name =~ /operator/
+        node_name = operator(node_name)
+      end
+      name = (@namespace + [node_name]).join('::')
+      if tree.type == 'void'
+        type = 'proc'
+      else
+        type = 'fun '
+      end
+      if @states.last == 'struct'
+        @all_methods[node_name] =
+          ["method_#{type} #{node_name};", "#{node_name}(\"#{name}\", \"#{@includes.last}\")"]
+      else
+        puts "#{type} #{node_name}(\"#{name}\", \"#{@includes.last}\");"
+      end
+    when 'include'
+      @includes << tree.name
+      print_dyn nil, tree.contents
+      @includes.pop
+    # when 'constructor'
+      # dump "dyn::ctor(#{convert_params(tree.parms)})"
+    end
+  end
+  def print_data_gen
+    ctor_init = []
+    @all_methods.each do |k, meth|
+      ctor_init << meth.last
+      puts meth.first
+    end
+    @io.puts "#define INITIALIZE_METHODS_ATTRIBUTES \\\n  " + ctor_init.join(", \\\n  ")
+  end
+  def print_mlc_set_names
+    @mlc_set_names.each do |mlc_set_name|
+      next if mlc_set_name =~ /TiSlot/  # XXX constant ignoring
+      puts mlc_set_name
+    end
+  end
+end
+dumper = Dumper.new
+root = tree.rpath_find(:first, ARGV[0] || 'top/contents/include/*name/vcsn\.i')
+# puts root.to_yaml
+dumper.namespace 'dyn' do
+  dumper.print_dyn nil, root['contents']
+end
+puts '// ------------------------------------------------ '
+puts '// data_gen.hh'
+File.open('data_gen.hh', 'w') do |data_gen_hh|
+  dumper.with(data_gen_hh) do
+    dumper.print_data_gen
+  end
+end
+puts '// ------------------------------------------------ '
+puts '// dyn_vaucanson.hh'
+File.open('dyn_vaucanson.hh', 'w') do |dyn_vaucanson_hh|
+  dumper.with(dyn_vaucanson_hh) do
+    dumper.print_mlc_set_names
+  end
+end

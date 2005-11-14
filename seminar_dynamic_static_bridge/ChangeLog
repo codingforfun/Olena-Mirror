@@ -1,5 +1,14 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add some swig tools.
+
+	* bin: New.
+	* bin/mk_swig_input: New.
+	* bin/yaml_to_dyn_decls: New.
+	* bin/swig_tree_to_yaml: New.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	post_include and unset.
 
 	* src: Ignore function.hxx.
