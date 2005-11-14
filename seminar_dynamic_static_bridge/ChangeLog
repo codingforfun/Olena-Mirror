@@ -1,5 +1,10 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Touch data_gen.hh in configure.
+
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Work in progress.
 
 	* test/test_function_loader.cc: Restore the include.

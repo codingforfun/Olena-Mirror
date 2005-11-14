@@ -49,4 +49,6 @@ Configure.new do
   erb SOURCE_DIR + 'function.erb.hh'
 end
 
+system("touch #{SOURCE_DIR + 'data_gen.hh'}")
+
 puts "Configuring: done."
