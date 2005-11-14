@@ -1,5 +1,15 @@
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	More examples.
+
+	* test/test_damien.cc: Test deref, get_i, get_t, and clone.
+	* test/fixtures/my_lib/damien.hxx: New. To test that it works even if
+	the code is not available during the driver compilation.
+	Add deref, get_i, get_t, change, clone.
+	* test/fixtures/my_lib/damien.hh: It's now just the minimal interface.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Yeah it works.
 
 	* src/data.erb.hh: Setup conditional inheritance to handle printablity.

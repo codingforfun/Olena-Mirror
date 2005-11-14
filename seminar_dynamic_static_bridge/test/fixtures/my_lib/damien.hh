@@ -1,3 +1,6 @@
+#ifndef DAMIEN_HH
+#define DAMIEN_HH
+
 #include <iostream>
 #include "mlc.hh"
 
@@ -7,6 +10,7 @@ struct up
   virtual void print(std::ostream&) const = 0;
   virtual void print_noarg() const = 0;
   virtual ~up() {};
+  virtual int get_i() const { return i_; }
   int i_;
 };
 
@@ -26,17 +30,15 @@ struct down : public up
     std::cout << t_ << std::endl;
   }
 
+  const T* get_t() const;
+  const down<T>* clone();
+
   const T& t_;
 
   virtual ~down() {}
 };
 
-template <typename T>
-down<T>
-mk_down(const T& t)
-{
-  return t;
-}
+mlc_set_name_TC(down);
 
 std::ostream& operator<<(std::ostream& ostr, const up& obj)
 {
@@ -44,24 +46,5 @@ std::ostream& operator<<(std::ostream& ostr, const up& obj)
   return ostr;
 }
 
-mlc_set_name_TC(down);
+#endif
 
-void foo(const up& a)
-{
-  std::cout << "foo(" << a << ")" << std::endl;
-}
-
-void foo(const int& i)
-{
-  std::cout << "foo(" << i << ")" << std::endl;
-}
-
-void bar(const up& a, const up& b, int c=0)
-{
-  std::cout << "bar(" << a << ", " << b << ", " << c << ")" << std::endl;
-}
-
-void change(up& a)
-{
-  a.i_++;
-}
