@@ -10,7 +10,7 @@
 #include "ruby_stream.hh"
 #include "config.hh"
 #include "data.hh"
-#include "mlc.hh"
+#include "name_of.hh"
 
 namespace dyn {
 

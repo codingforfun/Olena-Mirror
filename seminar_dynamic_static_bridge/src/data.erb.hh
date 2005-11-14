@@ -4,7 +4,7 @@
 # include <string>
 # include <cassert>
 
-# include "mlc.hh"
+# include "name_of.hh"
 
 
 namespace dyn {
@@ -39,7 +39,7 @@ namespace dyn {
 
   template <class T>
   struct not_printable {};
-  
+
   template <class T>
   struct data_proxy2< not_printable<T> > : public data_proxy2<T>
   {

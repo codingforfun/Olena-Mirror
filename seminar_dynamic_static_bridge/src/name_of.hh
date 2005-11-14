@@ -1,5 +1,5 @@
-#ifndef MLC
-# define MLC
+#ifndef NAME_OF
+# define NAME_OF
 
 # include <string>
 

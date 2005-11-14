@@ -6,7 +6,7 @@
 
 # include "function.hh"
 
-# include "mlc.hh"
+# include "name_of.hh"
 
 namespace dyn {
 

@@ -1,3 +1,17 @@
+2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Rename some includes and add olena test to Makefile.in.
+
+	* test/test_olena.cc: Include dyn.hh.
+	* test/Makefile.in: Add olena test.
+	* test/fixtures/oln_name.hh: New. Contains name declarations for
+	olena.
+	* src/name_of.hh: New. Old mlc.hh
+	* src/data.erb.hxx: Update mlc.hh -> name_of.hh.
+	* src/mlc.hh: Remove.
+	* src/function_loader.hh: Update mlc.hh -> name_of.hh.
+	* src/data.erb.hh: Likewise.
+
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	More warning flags.
