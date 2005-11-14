@@ -43,7 +43,7 @@ Configure.new do
   gsub :LIBRUBYARG
   gsub :LIBRUBYARG_SHARED
   gsub :CXX, 'g++'
-  gsub :CFLAGS, '-I' + Config::CONFIG['topdir'] + ' -Wall'
+  gsub :CFLAGS, '-W -Wall -I' + Config::CONFIG['topdir']
   erb SOURCE_DIR + 'data.erb.hh'
   erb SOURCE_DIR + 'data.erb.hxx'
   erb SOURCE_DIR + 'function.erb.hh'

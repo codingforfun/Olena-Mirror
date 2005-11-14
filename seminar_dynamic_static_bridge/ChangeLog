@@ -1,3 +1,8 @@
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More warning flags.
+
+
 2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	Add olena entry to Makefile.in.

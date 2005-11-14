@@ -12,7 +12,7 @@ namespace ruby
     stream() : last_value_(Qnil) {}
 
     void
-    push(const eval_type& eval_value)
+    push(const eval_type&)
     {
       eval();
     }

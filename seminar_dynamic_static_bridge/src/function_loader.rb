@@ -199,7 +199,7 @@ class FunctionLoader
       end
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
     out = repository + 'g++.out'
-    cmd = "g++ #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
+    cmd = "g++ -W -Wall #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else

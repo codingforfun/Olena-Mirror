@@ -20,7 +20,7 @@ namespace dyn {
   struct abstract_data
   {
     virtual abstract_data* clone() const = 0;
-    virtual void print(std::ostream& ostr) const = 0;
+    virtual void print(std::ostream&) const = 0;
     virtual bool is_printable() const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
@@ -59,7 +59,7 @@ namespace dyn {
       return ret;
     }
 
-    virtual void print(std::ostream& ostr) const
+    virtual void print(std::ostream&) const
     {
       assert(!"Not printable");
     }
@@ -139,7 +139,7 @@ namespace dyn {
   template <>
   struct data_proxy<NilClass> : public abstract_data
   {
-    data_proxy(const NilClass& nil_object) {}
+    data_proxy(const NilClass&) {}
     data_proxy() {}
 
     virtual data_proxy<NilClass>* clone() const
@@ -261,11 +261,11 @@ namespace dyn {
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
       data*
-      data::operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
+      operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
       data*
-      data::v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
+      v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
 
     <%- end -%>
 

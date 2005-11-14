@@ -13,7 +13,7 @@ namespace dyn {
   template <typename T>
   T data::convert_to() const
   {
-    assert(proxy_ != 0);
+    assert(proxy_);
     data_proxy<T>* dynamic_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
     if (dynamic_cast_returned_pointer != 0)
     {

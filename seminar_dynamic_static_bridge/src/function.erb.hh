@@ -24,7 +24,7 @@ namespace dyn
                 const std::string& kind,
                 const std::string& name,
                 const std::string& header_path="") :
-      kind_(kind), name_(name), header_path_(header_path) {}
+      obj_ptr_(obj_ptr), kind_(kind), name_(name), header_path_(header_path) {}
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
 
@@ -46,7 +46,10 @@ namespace dyn
         assert(ptr != 0);
 
         if (kind_ == "method_proc2" || kind_ == "method_fun2")
+        {
+          assert(obj_ptr_ != 0);
           return ((func_t2)ptr)(<%= (['obj_ptr_'] + objects).join(', ') %>);
+        }
 
         return ((func_t)ptr)(<%= objects.join(', ') %>);
       }
