@@ -1,5 +1,10 @@
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	A printable is not a not_printable.
+
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Less badly used references.
 
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>

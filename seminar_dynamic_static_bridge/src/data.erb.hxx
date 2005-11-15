@@ -21,8 +21,8 @@ namespace dyn {
     }
     else
     {
-      static fun dyn_data_cast("data_cast");
-      return dyn_data_cast(*this, (T*)0);
+      static fun dyn_data_cast(std::string("data_cast<") + mlc_name<T>::of() + ">");
+      return dyn_data_cast(*this);
     }
   }
 

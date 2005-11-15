@@ -10,7 +10,6 @@
 #undef HAVE_DLFCN_H
 
 #include <string>
-#include <iostream>
 #include <sstream>
 #include <vector>
 #include <ruby.h>
