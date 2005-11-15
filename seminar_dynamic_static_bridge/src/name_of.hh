@@ -23,12 +23,20 @@ template <class C1, class C2> struct mlc_name < CLASS<C1,C2> > \
 template <class C1, class C2, class C3> struct mlc_name < CLASS<C1,C2,C3> > \
 { static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C1>::of() + ">"; } }
 
+template <typename message>
+struct mlc_error_message
+{
+  private:
+    mlc_error_message() {}
+};
 
 template <class T>
 struct mlc_name
 {
   static std::string of()
   {
+    struct mlc_name_of_on_an_unkown_type_please_use_mlc_set_name_on_this_T {};
+    mlc_error_message<mlc_name_of_on_an_unkown_type_please_use_mlc_set_name_on_this_T> e;
     return "UNKNOWN!";
   }
 };

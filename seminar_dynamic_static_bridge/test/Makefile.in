@@ -10,3 +10,6 @@ damien:
 olena:
 	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures -I${PATH_TO_OLN} test_olena.cc -o test_olena @@LIBRUBYARG@@
 	./test_olena
+
+vaucanson:
+	cd vaucanson && $(MAKE) check

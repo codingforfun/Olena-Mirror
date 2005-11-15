@@ -2,6 +2,7 @@ require 'pathname'
 require 'dl'
 require 'yaml'
 require 'set'
+require 'cxx_symbols'
 
 class Array
   alias_method :top, :last
@@ -9,47 +10,6 @@ class Array
     map { |x| x.to_s }
   end
 end # class Array
-
-class SimpleSymbol
-  attr_reader :code
-  def initialize ( code )
-    @code = code
-  end
-  def to_s
-    @code.to_s
-  end
-end # class SimpleSymbol
-
-class EncodedSymbol
-  attr_reader :name, :code, :cxx_char, :patt
-  @@codes     ||= {}
-  def initialize ( name, code, cxx_char=nil )
-    @name = name
-    @code = (code.is_a? Integer)? code.chr.to_sym : code
-    @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
-    @patt = to_s.strip
-    raise if @@codes[@code]
-    @@codes[@code] = self
-  end
-  def self.[] ( arg )
-    @@codes[arg.to_sym]
-  end
-  def to_s
-    (@cxx_char || "#@name ").to_s
-  end
-  def self.encode ( str )
-    result = str.gsub '_', '_U_'
-    result.gsub!(/\s*/, '')
-    @@codes.each_value do |v|
-      next if v.code == :U
-      result.gsub!(v.patt, "_#{v.code}_")
-    end
-    result.gsub!(/_+/, '_')
-    result.gsub!(/^_/, '')
-    result.gsub!(/_$/, '')
-    result
-  end
-end # class EncodedSymbol
 
 class Cache
   def initialize ( pathname )
@@ -89,20 +49,6 @@ class FunctionLoader
     self.name = name
     self.args = args || ''
   end
-  def self.enc ( name, code, cxx_char=nil )
-    EncodedSymbol.new(name, code, cxx_char)
-  end
-  enc :underscore, :U, ?_
-  enc :slash,      :S, ?/
-  enc :dot,        :D, ?.
-  enc :function,   :F
-  enc :left,       :L, '< '
-  enc :right,      :R, ' >'
-  enc :ref,        :REF, ?&
-  enc :const,      :CONST
-  enc :ptr,        :PTR, ?*
-  enc :namespace,  :N, '::'
-  enc :comma,      :C, ', '
   def split ( aString )
     aString.split('_').map do |x|
       s = EncodedSymbol[x]
@@ -172,7 +118,10 @@ class FunctionLoader
     includes += @post_includes.to_a
     includes.each do |path|
       next if path.to_s.empty?
-      inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
+      inc = path.to_s
+      if inc !~ /["<]/
+        inc = (path.to_s =~ /\.hh$/)? %Q{"#{path}"} : %Q{<#{path}>}
+      end
       str << "#include #{inc}\n"
     end
     str << "
@@ -189,12 +138,14 @@ class FunctionLoader
      |};".gsub(/^\s*\|/, '')
   end
   def compile
-    file = repository + "#@identifier.cc"
+    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').gsub('_U_', '_')
+    (repository + @basename).dirname.mkpath
+    file = repository + "#@basename.cc"
     file.open('w') do |f|
       f.puts to_cxx
     end
     lib_ext = 'so'
-    @lib_path = repository + "#@identifier.#{lib_ext}"
+    @lib_path = repository + "#@basename.#{lib_ext}"
     opts =
       case RUBY_PLATFORM
       when /darwin/ then '-bundle'
@@ -252,10 +203,6 @@ class FunctionLoader
     repository
   end
   class << self
-    def mangle ( aString )
-      EncodedSymbol.encode(aString)
-    end
-    private :mangle
     def call ( kind, aFunctionName, arguments=[], aPath='' )
       identifier = mangle(aPath) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')

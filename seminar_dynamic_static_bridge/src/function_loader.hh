@@ -38,10 +38,8 @@ namespace dyn {
       ruby_init();
       ruby_script("function_loader.hh");
       ruby_init_loadpath();
-      ruby << "require \""
-           << SOURCE_DIR
-           << "/function_loader.rb"
-           << "\"" << ruby::eval;
+      ruby << "$: << \"" << SOURCE_DIR << "\"" << ruby::eval;
+      ruby << "require 'function_loader'" << ruby::eval;
     }
 
     void

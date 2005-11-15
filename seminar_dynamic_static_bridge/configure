@@ -36,6 +36,14 @@ Kernel.send :undef_method, :gsub
 NB_MAX_ARGUMENTS = 10
 
 SOURCE_DIR = TOP_DIR.expand_path + 'src'
+BIN = TOP_DIR.expand_path + 'bin'
+TESTDIR = TOP_DIR.expand_path + 'test'
+
+SWIGDIR = TOP_DIR.expand_path + 'test/swig'
+SWIG = SWIGDIR + 'swig'
+SWIGINCLUDES = "-I#{SWIGDIR}/Lib -I#{SWIGDIR}/Lib/python"
+
+VCSN = TESTDIR + 'vaucanson/sources'
 
 Configure.new do
   gsub :SOURCE_DIR
@@ -44,6 +52,11 @@ Configure.new do
   gsub :LIBRUBYARG_SHARED
   gsub :CXX, 'g++'
   gsub :CFLAGS, '-W -Wall -I' + Config::CONFIG['topdir']
+  gsub :SWIGDIR
+  gsub :SWIG
+  gsub :SWIGINCLUDES
+  gsub :BIN
+  gsub :VCSN
   erb SOURCE_DIR + 'data.erb.hh'
   erb SOURCE_DIR + 'data.erb.hxx'
   erb SOURCE_DIR + 'function.erb.hh'

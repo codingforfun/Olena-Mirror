@@ -295,6 +295,10 @@ namespace dyn {
 
 }
 
+mlc_set_name(dyn::abstract_data);
+mlc_set_name_TC(dyn::data_proxy);
+mlc_set_name_TC(dyn::data_proxy2);
+mlc_set_name(dyn::data);
 mlc_set_name(dyn::NilClass);
 
 template <>

@@ -1,3 +1,21 @@
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add the vaucanson test.
+
+	* src/name_of.hh: Error at compile time for default case of mlc_name<T>.
+	* src/function_loader.hh: Put the SOURCE_DIR in $:.
+	* src/data.erb.hh: Add some mlc_set_name().
+	* bin/mk_swig_input: Take the dir as argument.
+	* bin/yaml_to_dyn_decls: Mangle conversion operators.
+	* src/cxx_symbols.rb: New. Extract from ...
+	* src/function_loader.rb: ... here.
+
+	* test/Makefile.in: Add vaucanson.
+	* test/vaucanson: New.
+	* test/vaucanson/Makefile.in: New.
+	* configure: Update.
+	* test: Add some ignore rules.
+
 2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add 2 big trees.

@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
 includes = []
 
+dir = ARGV.shift
 if ARGV.empty?
-  STDERR.puts "usage #$0 <path/to/some/c++/headers.hh>*"
+  STDERR.puts "usage #$0 <dir> <path/to/some/c++/headers.hh>*"
   exit
 end
 flags = '' # '-DVCSN_USE_INTERFACE_ONLY'
 ARGV.each do |root|
-  `g++ -I vcsn/include #{flags} -E #{root} | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
+  `g++ -I#{dir} #{flags} -E #{root} | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
     line.chomp!
     line.gsub!(/^.*include\/(vaucanson\/.*)".*$/, '\1')
-    next unless line =~ /\.hh$/
+    next unless line =~ /\.t?hh$/
 
-    next if line =~ /\/(static|letter)\.hh/ # XXX hard skipping
+    next if line =~ /\/(static|letter|freemonoid_product(_base)?)\.hh/ # XXX hard skipping
 
     includes << line unless includes.include? line
   end

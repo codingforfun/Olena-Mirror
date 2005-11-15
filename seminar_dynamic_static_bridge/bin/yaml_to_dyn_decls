@@ -5,7 +5,9 @@ require_gem 'ruby_ex'
 require 'ruby_ex'
 require 'r_path'
 require 'set'
+require __FILE__.to_path.dirname.parent/'src/cxx_symbols'
 tree = YAML.load STDIN.read
+raise "Tree is Empty" if tree.nil?
 class Hash
   undef type
   def name
@@ -53,7 +55,7 @@ class Dumper
   }
   def operator ( name )
     op = name[/operator\s*(.*)/, 1]
-    return "operator_convert_#{op}" if op =~ /\w/
+    return "operator_convert_#{mangle(op)}" if op =~ /\w/
     raise "Operator not yet named: #{name}" unless OPERATORS.has_key? op
     'operator_' + OPERATORS[op]
   end
@@ -177,7 +179,7 @@ class Dumper
   end
   def print_mlc_set_names
     @mlc_set_names.each do |mlc_set_name|
-      next if mlc_set_name =~ /TiSlot/  # XXX constant ignoring
+      next if mlc_set_name =~ /TiSlot|PartialExp/  # XXX constant ignoring
       puts mlc_set_name
     end
   end
