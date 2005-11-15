@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <iostream>
-#include "mlc.hh"
+#include "name_of.hh"
 
 template <class T>
 struct u

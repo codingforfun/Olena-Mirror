@@ -112,10 +112,10 @@ class FunctionLoader
       else raise
     end
     str = ''
-    includes = @includes.to_a
+    includes = @includes.dup # to_a
     includes << Pathname.new('data.hh')
     includes << path
-    includes += @post_includes.to_a
+    includes += @post_includes
     includes.each do |path|
       next if path.to_s.empty?
       inc = path.to_s
@@ -138,7 +138,8 @@ class FunctionLoader
      |};".gsub(/^\s*\|/, '')
   end
   def compile
-    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').gsub('_U_', '_')
+    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').
+                  gsub('_U_', '_').gsub(/\/$/, '__').gsub(/^\//, '__')
     (repository + @basename).dirname.mkpath
     file = repository + "#@basename.cc"
     file.open('w') do |f|

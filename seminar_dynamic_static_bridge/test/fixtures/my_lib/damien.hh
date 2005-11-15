@@ -2,7 +2,7 @@
 #define DAMIEN_HH
 
 #include <iostream>
-#include "mlc.hh"
+#include "name_of.hh"
 
 struct up
 {

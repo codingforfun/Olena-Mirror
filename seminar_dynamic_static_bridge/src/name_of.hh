@@ -122,6 +122,7 @@ namespace std {
 mlc_set_name_TCc(std::vector);
 mlc_set_name_TCcc(std::set);
 mlc_set_name_TCc(std::list);
+mlc_set_name(std::ostream);
 mlc_set_name(std::string);
 
 #endif

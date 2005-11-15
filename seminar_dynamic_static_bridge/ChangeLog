@@ -1,5 +1,15 @@
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Fix basics tests.
+
+	* test/fixtures/my_lib/damien.hxx,
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh: Use name_of not mlc.
+	* src/name_of.hh: Add std::ostream.
+	* src/function_loader.rb: Fix simple function file mangling.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add the vaucanson test.
 
 	* src/name_of.hh: Error at compile time for default case of mlc_name<T>.
