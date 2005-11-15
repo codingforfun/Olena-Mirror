@@ -41,6 +41,13 @@ namespace dyn {
       ruby << "require 'function_loader'" << ruby::eval;
     }
 
+    ~function_loader_t()
+    {
+      std::cout << "<~functionloader>" << std::endl;
+      ruby_finalize();
+      std::cout << "</~functionloader>" << std::endl;
+    }
+
     void
     include(const std::string& file)
     {

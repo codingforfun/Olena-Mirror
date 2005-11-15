@@ -51,7 +51,7 @@ Configure.new do
   gsub :LIBRUBYARG
   gsub :LIBRUBYARG_SHARED
   gsub :CXX, 'g++'
-  gsub :CFLAGS, '-W -Wall -I' + Config::CONFIG['topdir']
+  gsub :CFLAGS, '-ggdb -W -Wall -I' + Config::CONFIG['topdir']
   gsub :SWIGDIR
   gsub :SWIG
   gsub :SWIGINCLUDES

@@ -75,7 +75,7 @@ class FunctionLoader
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
       arguments << "const data& #{arg}"
-      call_args << "*(#{arg}_value->obj())"
+      call_args << "#{arg}_value->obj()"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
               "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
       vars << "assert(#{arg}_value != !\"reinterpret_cast failed\");"

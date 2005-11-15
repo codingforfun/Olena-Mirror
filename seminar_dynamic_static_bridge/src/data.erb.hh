@@ -5,6 +5,9 @@
 # include <cassert>
 # include <ostream>
 
+// FIXME
+# include <iostream>
+
 # include "function.hh"
 
 # include "name_of.hh"
@@ -34,32 +37,33 @@ namespace dyn {
   template <class T>
   struct data_proxy2 : public abstract_data
   {
-    data_proxy2(const T& obj) : p_obj_(&obj) {
+    data_proxy2(const T& obj) : obj_(obj) {
     }
 
     template <typename V>
     operator V() const
     {
-      assert(p_obj_ != 0);
-      V ret(*obj());
-      return ret;
+      return obj();
     }
 
-    T* obj() const
+    const T& obj() const
     {
-      assert(p_obj_ != 0);
-      return const_cast<T*>(p_obj_);
+      return obj_;
+    }
+
+    T& obj()
+    {
+      return obj_;
     }
 
 
     std::string type() const
     {
-      assert(p_obj_ != 0);
-      return mlc_name_of(*p_obj_);
+      return mlc_name_of(obj_);
     }
 
     protected:
-    const T* p_obj_;
+    T obj_;
   };
 
   template <class T>
@@ -75,7 +79,7 @@ namespace dyn {
 
     virtual data_proxy2< not_printable<T> >* clone() const
     {
-      return new data_proxy2< not_printable<T> >(*this->p_obj_);
+      return new data_proxy2< not_printable<T> >(this->obj_);
     }
 
     virtual void print(std::ostream&) const
@@ -96,13 +100,12 @@ namespace dyn {
 
     virtual data_proxy2< printable<T> >* clone() const
     {
-      return new data_proxy2< printable<T> >(*this->p_obj_);
+      return new data_proxy2< printable<T> >(this->obj_);
     }
 
     virtual void print(std::ostream& ostr) const
     {
-      assert(this->p_obj_ != 0);
-      ostr << (*this->p_obj_);
+      ostr << (this->obj_);
     }
 
     virtual bool is_printable() const
@@ -131,12 +134,6 @@ namespace dyn {
   struct data_proxy<const T>: public data_proxy<T>
   {
     data_proxy<const T>(const T& obj) : data_proxy<T>(obj) {}
-
-    const T* obj() const
-    {
-      assert(this->p_obj_ != 0);
-      return this->p_obj_;
-    }
   };
 
 
@@ -211,8 +208,12 @@ namespace dyn {
 
     ~data()
     {
+      std::cout << "<~data>" << this << std::endl;
+      print(std::cout);
+      std::cout << std::endl;
       delete proxy_;
       proxy_ = 0; // safety
+      std::cout << "</~data>" << std::endl;
     }
 
     void print(std::ostream& ostr) const

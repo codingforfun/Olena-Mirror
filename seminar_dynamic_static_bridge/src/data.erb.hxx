@@ -8,6 +8,11 @@
 
 # include "name_of.hh"
 
+
+// FIXME
+#include <iostream>
+
+
 namespace dyn {
 
   template <typename T>
@@ -15,12 +20,15 @@ namespace dyn {
   {
     assert(proxy_);
     data_proxy<T>* dynamic_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
+    std::cout << "convert_to<" << mlc_name<T>::of() << ">: " << proxy_ << ", " << dynamic_cast_returned_pointer << std::endl;
     if (dynamic_cast_returned_pointer != 0)
     {
-      return *dynamic_cast_returned_pointer->obj();
+      std::cout << "dynamic_cast_returned_pointer OK\n";
+      return dynamic_cast_returned_pointer->obj();
     }
     else
     {
+      std::cout << "convert\n";
       static fun dyn_data_cast(std::string("data_cast<") + mlc_name<T>::of() + ">");
       return dyn_data_cast(*this);
     }

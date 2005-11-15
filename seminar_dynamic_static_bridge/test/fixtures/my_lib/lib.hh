@@ -41,14 +41,23 @@ void foo1()
 
 int* foo2()
 {
-  std::cout << "foo2() => 42" << std::endl;
-  return new int(42);
+  static int i = 42;
+  std::cout << "foo2() => &42" << std::endl;
+  return &i;
+  // new int(42);
+}
+
+int foo2b()
+{
+  std::cout << "foo2b() => 42" << std::endl;
+  return 42;
 }
 
 template <class T>
-T* foo3(T t1, const T t2, const T& t3)
+const T* foo3(T t1, const T t2, const T& t3)
 {
   std::cout << "foo3(" << t1 << ", " << t2 << ", " << t3 << ")" << std::endl;
+  return &t3;
 }
 
 namespace my_lib

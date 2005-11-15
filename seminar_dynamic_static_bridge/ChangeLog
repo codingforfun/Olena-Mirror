@@ -1,5 +1,17 @@
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Make works better.
+
+	* test/fixtures/my_lib/lib.hh,
+	* test/test_function_loader.cc,
+	* configure,
+	* src/data.erb.hxx,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/data.erb.hh: Update.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	A printable is not a not_printable.
 
 
