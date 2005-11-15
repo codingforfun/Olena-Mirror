@@ -1,5 +1,12 @@
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Some fixes.
+
+	* test/test_function_loader.cc: Exit.
+	* src/function_loader.rb: Fix.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Make works better.
 
 	* test/fixtures/my_lib/lib.hh,

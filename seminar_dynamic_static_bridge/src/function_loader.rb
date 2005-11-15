@@ -112,11 +112,7 @@ class FunctionLoader
       else raise
     end
     str = ''
-    includes = @includes.dup # to_a
-    includes << Pathname.new('data.hh')
-    includes << path
-    includes += @post_includes
-    includes.each do |path|
+    [@includes.to_a, Pathname.new('data.hh'), path, @post_includes.to_a].flatten.each do |path|
       next if path.to_s.empty?
       inc = path.to_s
       if inc !~ /["<]/

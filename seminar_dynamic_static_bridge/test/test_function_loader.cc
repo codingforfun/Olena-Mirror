@@ -51,5 +51,5 @@ int main()
   // int i1 = dsqr(3);
   // std::cout << i1 << std::endl;
 
-  return 0;
+  exit(0);
 }
