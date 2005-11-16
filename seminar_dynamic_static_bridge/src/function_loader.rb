@@ -157,7 +157,7 @@ class FunctionLoader
       out.unlink if out.exist?
     else
       out_s = out.read
-      if kind.to_s =~ /fun/ and out_s =~ /conversion from [`']void' to non-scalar type [`']dyn::data' requested/
+      if kind.to_s =~ /fun/ and out_s =~ gcc_void_error
         STDERR.puts 'Not a function, try to compile a procedure'
         @kind = kind.to_s.gsub('fun', 'proc').to_sym
         return compile
@@ -195,6 +195,11 @@ class FunctionLoader
   end
   def to_s
     "#@path #@name(#{@args.join(', ')})"
+  end
+  def gcc_void_error
+    /( conversion\sfrom\s[`']void'\sto\snon-scalar\stype\s[`']dyn::data'\s
+     | invalid\suse\sof\svoid\sexpression
+     )/x
   end
   def repository
     repository = Pathname.new('repository')

@@ -4,7 +4,8 @@ test = Pathname.new(__FILE__).dirname
 root = test.parent
 fixtures = test + 'fixtures'
 src = root + 'src'
-require src + 'function_loader'
+$: << src
+require 'function_loader'
 
 FunctionLoader.include_dir fixtures
 FunctionLoader.include_dir src

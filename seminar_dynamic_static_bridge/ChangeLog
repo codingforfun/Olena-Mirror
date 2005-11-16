@@ -1,3 +1,13 @@
+2005-11-17  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Fix some tests.
+
+	* test/fixtures/some_identifiers.yml.cc,
+	* test/test_function_loader.rb,
+	* test/test_function_loader_cxx.rb: Adapt these tests to the current
+	version. 
+	* src/function_loader.rb: Improve the void detection.
+
 2005-11-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	After the rush...
