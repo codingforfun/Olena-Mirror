@@ -1,3 +1,22 @@
+2005-11-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	After the rush...
+
+	* test/fixtures/vaucanson: New.
+	* test/fixtures/vaucanson/dyn_vaucanson_mlc_name_of.hh: New.
+	* test/fixtures/vaucanson/dyn_vaucanson_dyn_mirror.hh: New.
+	* test/vaucanson/dyn_algorithms.cc: New.
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/lib.hh,
+	* test/vaucanson/Makefile.in,
+	* test/test_function_loader.cc,
+	* src/name_of.hh,
+	* src/data.erb.hxx,
+	* src/cxx_symbols.rb,
+	* src/function_loader.rb,
+	* src/data.erb.hh,
+	* bin/yaml_to_dyn_decls: Many changes.
+
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Some fixes.

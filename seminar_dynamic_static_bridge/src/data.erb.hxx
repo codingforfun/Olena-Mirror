@@ -24,7 +24,7 @@ namespace dyn {
     if (dynamic_cast_returned_pointer != 0)
     {
       std::cout << "dynamic_cast_returned_pointer OK\n";
-      return dynamic_cast_returned_pointer->obj();
+      return *dynamic_cast_returned_pointer->obj();
     }
     else
     {

@@ -24,7 +24,7 @@ class Dumper
     @includes = []
     @states = []
     @all_methods = {}
-    @classes = SortedSet[]
+    @qualified_names = SortedSet[]
     @mlc_set_names = []
     @io = STDOUT
   end
@@ -60,7 +60,7 @@ class Dumper
     'operator_' + OPERATORS[op]
   end
   def puts ( *args )
-    print '  ' * @namespace.size
+    @io.print '  ' * @namespace.size
     @io.puts(*args)
   end
   def namespace ( name, &block )
@@ -72,12 +72,15 @@ class Dumper
     @states.pop
     puts "} // end of namespace #{name}"
   end
-  def struct ( name, &block )
+  def struct ( name, qualified_name, &block )
     puts "// struct #{name} {"
     @namespace << name
     @states << 'struct'
     block[]
-    puts "ctor #{name}(\"#{name}\");"
+    unless @qualified_names.include? "ctor #{qualified_name}"
+      @qualified_names << "ctor #{qualified_name}"
+      puts "ctor #{name}(\"#{qualified_name}\");"
+    end
     @namespace.pop
     @states.pop
     puts '// };'
@@ -117,8 +120,8 @@ class Dumper
       end
     when 'struct'
       name = (@namespace[1..-1] + [tree.name]).join('::')
-      unless @classes.include? name
-        @classes << name
+      unless @qualified_names.include? name
+        @qualified_names << name
         case n = (parms = (tree.templateparms || '').split(/\s*,\s*/)).size
         when 0 then @mlc_set_names << "mlc_set_name(#{name});"
         else
@@ -138,10 +141,10 @@ class Dumper
             "template <#{parms.join(', ')}> struct mlc_name " +
             "< #{name}<#{parm_names.join(', ')}> > " +
             "{ static std::string of() { return std::string(\"#{name}\") + " +
-            "\"<\" + #{name_of} + \">\"; } };"
+            "\"< \" + #{name_of} + \" >\"; } };"
         end
       end
-      struct tree.name do
+      struct tree.name, name do
         print_dyn nil, tree.contents
       end
     when 'cdecl'
@@ -150,6 +153,8 @@ class Dumper
         node_name = operator(node_name)
       end
       name = (@namespace + [node_name]).join('::')
+      return if @qualified_names.include? name
+      @qualified_names << name
       if tree.type == 'void'
         type = 'proc'
       else
@@ -187,8 +192,14 @@ end
 dumper = Dumper.new
 root = tree.rpath_find(:first, ARGV[0] || 'top/contents/include/*name/vcsn\.i')
 # puts root.to_yaml
-dumper.namespace 'dyn' do
-  dumper.print_dyn nil, root['contents']
+puts '// ------------------------------------------------ '
+puts '// dyn_vaucanson3.hh'
+File.open('dyn_vaucanson3.hh', 'w') do |dyn_vaucanson3_hh|
+  dumper.with(dyn_vaucanson3_hh) do
+    dumper.namespace 'dyn' do
+      dumper.print_dyn nil, root['contents']
+    end
+  end
 end
 puts '// ------------------------------------------------ '
 puts '// data_gen.hh'

@@ -26,15 +26,23 @@ class EncodedSymbol
     (@cxx_char || "#@name ").to_s
   end
   def self.encode ( str )
+    # p str
     result = str.gsub '_', '_U_'
+    result.gsub!('operator>>', 'operator_RR_')
+    result.gsub!('operator<<', 'operator_LL_')
+    # result.gsub!(/<\s+</, '<~<')
+    # result.gsub!(/>\s+>/, '>~>')
     result.gsub!(/\s*/, '')
+    # result.gsub!('~', ' ')
     @@codes.each_value do |v|
-      next if v.code == :U
+      next if [:U, :RR, :LL].include? v.code
       result.gsub!(v.patt, "_#{v.code}_")
     end
+    result.gsub!(/\s*/, '')
     result.gsub!(/_+/, '_')
     result.gsub!(/^_/, '')
     result.gsub!(/_$/, '')
+    # p result
     result
   end
   def self.enc ( name, code, cxx_char=nil )
@@ -46,6 +54,8 @@ class EncodedSymbol
   enc :function,   :F
   enc :left,       :L, '< '
   enc :right,      :R, ' >'
+  enc :leftleft,   :LL, '<<'
+  enc :rightright, :RR, '>>'
   enc :ref,        :REF, ?&
   enc :const,      :CONST
   enc :ptr,        :PTR, ?*

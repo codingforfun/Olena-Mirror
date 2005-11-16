@@ -44,12 +44,9 @@ int main()
   var j = dyn::down(46);
 
   // std::cout is not printable
-  // if you try to do this it will compile
-  // but fail on assertion
-  // you can use is_printable before draw it.
-  var not_printable = std::cout;
-  if (not_printable.is_printable())
-    std::cout << not_printable << std::endl;
+  // but a data containing std::cout yes
+  var dyn_std_cout = std::cout;
+  std::cout << dyn_std_cout << std::endl;
 
   for ( int i = 0; i < 5; ++i )
   {

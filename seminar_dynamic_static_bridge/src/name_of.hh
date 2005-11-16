@@ -9,19 +9,19 @@ template <> struct mlc_name <NAME> { static std::string of() { return #NAME; } }
 
 # define mlc_set_name_TC(CLASS) \
 template <class C> struct mlc_name < CLASS<C> > \
-{ static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C>::of() + ">"; } }
+{ static std::string of() { return std::string(#CLASS) + "< " + mlc_name<C>::of() + " >"; } }
 
 # define mlc_set_name_TCC(CLASS) \
 template <class C1, class C2> struct mlc_name < CLASS<C1,C2> > \
-{ static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C1>::of() + ", " +  mlc_name<C2>::of() + ">"; } }
+{ static std::string of() { return std::string(#CLASS) + "< " + mlc_name<C1>::of() + ", " +  mlc_name<C2>::of() + " >"; } }
 
 # define mlc_set_name_TCc(CLASS) \
 template <class C1, class C2> struct mlc_name < CLASS<C1,C2> > \
-{ static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C1>::of() + ">"; } }
+{ static std::string of() { return std::string(#CLASS) + "< " + mlc_name<C1>::of() + " >"; } }
 
 # define mlc_set_name_TCcc(CLASS) \
 template <class C1, class C2, class C3> struct mlc_name < CLASS<C1,C2,C3> > \
-{ static std::string of() { return std::string(#CLASS) + "<" + mlc_name<C1>::of() + ">"; } }
+{ static std::string of() { return std::string(#CLASS) + "< " + mlc_name<C1>::of() + " >"; } }
 
 template <typename message>
 struct mlc_error_message
@@ -114,16 +114,24 @@ mlc_set_name(bool);
 
 // some std
 
+#include <iosfwd>
+
 namespace std {
-  template <class _Tp, class _Alloc>                  class vector;
-  template <class _Key, class _Compare, class _Alloc> class set;
-  template <class _Tp, class _Alloc>                  class list;
+  template <class _Tp, class _Alloc>                   class vector;
+  template <class _Key, class _Compare, class _Alloc>  class set;
+  template <class _Tp, class _Alloc>                   class list;
 }
 mlc_set_name_TCc(std::vector);
 mlc_set_name_TCcc(std::set);
 mlc_set_name_TCc(std::list);
-mlc_set_name(std::ostream);
 mlc_set_name(std::string);
+mlc_set_name(std::istream);
+mlc_set_name(std::ostream);
+mlc_set_name_TCc(std::basic_istream);
+mlc_set_name_TCc(std::basic_ostream);
+mlc_set_name(std::istringstream);
+mlc_set_name(std::ostringstream);
+
 
 #endif
 

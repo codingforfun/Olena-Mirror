@@ -7,8 +7,8 @@
 template <class T>
 struct u
 {
-  u(const T& x) : x_(x) {}
-  const T& x_;
+  u(T& x) : x_(x) {}
+  T& x_;
 };
 
 mlc_set_name_TC(u);
@@ -26,6 +26,13 @@ template <class T>
 std::ostream& operator<< (std::ostream& ostr, const u<T>& x)
 {
   return ostr << "u< " << x.x_ << " >";
+}
+
+template <class T>
+std::istream& operator>> (std::istream& istr, u<T>&)
+{
+  // istr >> x.x_;
+  return istr;
 }
 
 template <class T, class V>

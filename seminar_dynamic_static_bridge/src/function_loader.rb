@@ -75,7 +75,7 @@ class FunctionLoader
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references (XXX)
       arguments << "const data& #{arg}"
-      call_args << "#{arg}_value->obj()"
+      call_args << "*(#{arg}_value->obj())"
       vars << "data_proxy< #{type} >* #{arg}_value = " +
               "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
       vars << "assert(#{arg}_value != !\"reinterpret_cast failed\");"
@@ -83,7 +83,8 @@ class FunctionLoader
     call = "#@name(#{call_args.join(', ')})"
     case kind
       when :fun
-        vars << "return #{call};"
+        vars << "data ret(#{call}, (dyn::by_cpy*)0);"
+        vars << 'return ret;'
       when :proc
         vars << call + ';' << 'return nil;'
       when :method_proc, :method_proc2
@@ -93,7 +94,8 @@ class FunctionLoader
       when :method_fun, :method_fun2
         obj = "(#{call_args.shift})"
         call = "#{obj}.#@name(#{call_args.join(', ')})"
-        vars << "return #{call};"
+        vars << "data ret(#{call}, (dyn::by_cpy*)0);"
+        vars << 'return ret;'
 #       when :method_proc2
 #         obj = "(#{call_args.shift})"
 #         call = "#{obj}.#@name(#{call_args.join(', ')})"
@@ -108,7 +110,7 @@ class FunctionLoader
         vars << "return *(new #@name(#{call_args.join(', ')}));"
       when :ctor2
         vars << "#@name ret(#{call_args.join(', ')});"
-        vars << "return ret;"
+        vars << 'return ret;'
       else raise
     end
     str = ''
@@ -150,7 +152,7 @@ class FunctionLoader
       end
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
     out = repository + 'g++.out'
-    cmd = "g++ -W -Wall #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
+    cmd = "g++ -ggdb -W -Wall #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else
@@ -176,15 +178,15 @@ class FunctionLoader
   def get_function
     case cached = @@cache[identifier]
     when nil
-      puts "MISS: Just In Time: #{self}"
+      puts "\e[31mMISS: Just In Time: #{self}\e[0m"
       compile
       load_lib
     when Pathname
-      puts "HIT: Load the library for #{self}"
+      puts "\e[33mHIT: Load the library for #{self}\e[0m"
       @lib_path = cached
       load_lib
     else
-      puts "HIT #{self}"
+      puts "\e[32mHIT #{self}\e[0m"
       cached
     end
   end
