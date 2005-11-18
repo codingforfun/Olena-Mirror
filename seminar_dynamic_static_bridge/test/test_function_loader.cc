@@ -113,5 +113,6 @@ int main()
     // std::cout << i << ": " << *dit << std::endl;
   // }
 
+  echo("exiting");
   return 0;
 }

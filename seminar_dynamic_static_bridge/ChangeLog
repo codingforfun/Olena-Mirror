@@ -1,5 +1,12 @@
 2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add a little README file.
+
+	* README: New.
+	* test/test_function_loader.cc: Add an exit message.
+
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add some operators and handle returned references.
 
 
