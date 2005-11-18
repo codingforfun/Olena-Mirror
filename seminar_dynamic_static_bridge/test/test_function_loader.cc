@@ -2,6 +2,7 @@
 #include "config.hh"
 #include "my_lib/lib.hh"
 #include <sstream>
+#include <algorithm>
 
 int main()
 {
@@ -9,9 +10,9 @@ int main()
   dyn::include_dir("fixtures");
 
   dyn::include("my_lib/lib.hh"); // setup a default include
+  dyn::include("vector");
 
-  // dyn::proc dfoo1("foo1", "my_lib/lib.hh"); // With the include
-  dyn::proc dfoo1("foo1"); // , "my_lib/lib.hh"); // With the include
+  dyn::proc dfoo1("foo1", "my_lib/lib.hh"); // With the include
 
   dyn::fun  dfoo2("foo2"); // use the default includes
   dyn::fun  dfoo2b("foo2b");
@@ -44,26 +45,73 @@ int main()
   std::cout << *x4e << std::endl;
 
   float f2a = dsqr(3.4);
-  std::cout << f2a << std::endl;
+  std::cout << "f2a: " << f2a << std::endl;
   double f2b = dsqr(3.4);
-  std::cout << f2b << std::endl;
+  std::cout << "f2b: " << f2b << std::endl;
+  assert(fabs(f2a - f2b) < 0.00001);
   var f2c = dsqr(3.4);
   std::cout << f2c << std::endl;
   int i1 = dsqr(3);
   std::cout << i1 << std::endl;
 
-  // Test istreams
+  echo("Test istreams");
   std::istringstream istr("32");
-  // std::vector<int> tab(10);
-  // tab[0] = 4;
-  // u<int> ui(tab[0]);
   int uii = 4;
   u<int> ui(uii);
-  dyn::fun reader("operator>>");
-  std::cout << ui << std::endl;
-  // istr >> ui;
-  reader(istr, ui);
-  std::cout << ui << std::endl;
+  var dui = ui;
+  std::cout << dui << std::endl;
+  istr >> dui;
+  std::cout << dui << std::endl;
+
+  echo("Test affectations");
+  var count = 0;
+  ++count;
+  echo(count);
+  int counti = count;
+  assert(counti == 1);
+
+  echo("Test containers");
+  std::vector<int> v(4);
+  std::generate(v.begin(), v.end(), rand);
+  std::vector<int>::iterator it;
+  stl_each(v, it)
+    echo(*it);
+  it = v.begin();
+
+  dyn::method_fun begin("begin");
+  dyn::method_fun end("end");
+  var dv = v;
+  var dit = it;
+  echo(dv[2]);
+  v[2] = 51;
+  echo(v[2]);
+  echo(dv[2]);
+  dv[2] = 42;
+  int dv_2 = dv[2];
+  echo(dv_2);
+  assert(dv_2 == 42);
+  std::cout << "v[0] => " << *dit << std::endl;
+  int my_begin_i = *begin(dv);
+  int ref_begin_i = dv[0];
+  echo(my_begin_i);
+  echo(ref_begin_i);
+  assert(my_begin_i == ref_begin_i);
+  int my_end_i = *end(dv);
+  int ref_end_i = *v.end();
+  echo(my_end_i);
+  echo(ref_end_i);
+  assert(my_end_i == ref_end_i);
+  bool r;
+  assert(! (r = (my_end_i != ref_end_i)));
+  assert(! (r = (end(dv) != v.end())));
+  // int i = 0;
+  // stl_each(v, i)
+  // for (dit = begin(dv); diff(dit, end(dv)) && i < 42; incr(dit), ++i)
+  // std::vector<int>::iterator tmp;
+  // for (dit = begin(dv); tmp = dit, v.end() != tmp && i < 42; incr(dit), ++i)
+  // {
+    // std::cout << i << ": " << *dit << std::endl;
+  // }
 
   return 0;
 }

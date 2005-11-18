@@ -1,3 +1,8 @@
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add some operators and handle returned references.
+
+
 2005-11-17  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Fix some tests.

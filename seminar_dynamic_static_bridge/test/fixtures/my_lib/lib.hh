@@ -2,7 +2,11 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream> // Warning does not work without me
 #include "name_of.hh"
+#include <vector>
+
+mlc_set_name(std::vector<int>::iterator);
 
 template <class T>
 struct u
@@ -29,10 +33,9 @@ std::ostream& operator<< (std::ostream& ostr, const u<T>& x)
 }
 
 template <class T>
-std::istream& operator>> (std::istream& istr, u<T>&)
+std::istream& operator>> (std::istream& istr, u<T>& x)
 {
-  // istr >> x.x_;
-  return istr;
+  return istr >> x.x_;
 }
 
 template <class T, class V>
@@ -51,7 +54,6 @@ int* foo2()
   static int i = 42;
   std::cout << "foo2() => &42" << std::endl;
   return &i;
-  // new int(42);
 }
 
 int foo2b()
@@ -91,5 +93,9 @@ namespace my_lib
     std::cout << "power(" << f << "," << t << ")" << std::endl;
     return std::exp(t * std::log(f));
   }
+
+#define stl_each(c, i) for (i = c.begin(); i != c.end(); ++i)
+
+#define echo(i) std::cout << i << std::endl
 
 } // end of my_lib

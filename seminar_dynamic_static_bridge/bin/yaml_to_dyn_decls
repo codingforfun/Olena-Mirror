@@ -37,27 +37,8 @@ class Dumper
       @io = oldio
     end
   end
-  OPERATORS =
-  {
-    '<<'  => 'push',
-    '<<=' => 'push_assign',
-    '>>=' => 'pop_assign',
-    '='   => 'assign',
-    '=='  => 'equal',
-    '!='  => 'not_equal',
-    '<='  => 'less_or_equal',
-    '<'   => 'less',
-    '>='  => 'greater_or_equal',
-    '>'   => 'greater',
-    '++'  => 'incr',
-    '--'  => 'decr',
-    '()'  => 'paren',
-  }
   def operator ( name )
-    op = name[/operator\s*(.*)/, 1]
-    return "operator_convert_#{mangle(op)}" if op =~ /\w/
-    raise "Operator not yet named: #{name}" unless OPERATORS.has_key? op
-    'operator_' + OPERATORS[op]
+    mangle(name)
   end
   def puts ( *args )
     @io.print '  ' * @namespace.size

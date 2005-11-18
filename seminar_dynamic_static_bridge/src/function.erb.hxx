@@ -23,7 +23,7 @@ namespace dyn
         arguments_types += <%= (j.zero?)? '' : '"\", \"" + ' %>data_type(arg<%= j %>);
       <%- end -%>
 
-        void* ptr = load_function(kind_, name_, arguments_types, header_path_);
+        void* ptr = load_function(kind_, name_, arguments_types, header_path_, options_);
         assert(ptr != 0);
 
         if (kind_ == "method_proc2" || kind_ == "method_fun2")

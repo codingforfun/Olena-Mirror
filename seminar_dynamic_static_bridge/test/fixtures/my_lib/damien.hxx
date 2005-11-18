@@ -41,12 +41,5 @@ void change(up& a)
   a.i_++;
 }
 
-
-template <typename T>
-const T& deref(const T* ptr)
-{
-  return *ptr;
-}
-
 #endif
 

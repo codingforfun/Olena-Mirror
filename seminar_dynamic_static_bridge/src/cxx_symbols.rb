@@ -10,43 +10,81 @@ end # class SimpleSymbol
 
 class EncodedSymbol
   attr_reader :name, :code, :cxx_char, :patt
-  @@codes     ||= {}
+  @@codes ||= []
   def initialize ( name, code, cxx_char=nil )
     @name = name
     @code = (code.is_a? Integer)? code.chr.to_sym : code
     @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
     @patt = to_s.strip
-    raise if @@codes[@code]
-    @@codes[@code] = self
+    raise if @@codes.include? @code
+    @@codes << self
   end
   def self.[] ( arg )
-    @@codes[arg.to_sym]
+    @@codes.find { |x| x.code == arg.to_sym }
   end
   def to_s
     (@cxx_char || "#@name ").to_s
   end
+  @@operators ||=
+  {
+    '<<'  => 'push',
+    '>>'  => 'pop',
+    '<<=' => 'push_assign',
+    '>>=' => 'pop_assign',
+    '='   => 'assign',
+    '=='  => 'equal',
+    '!='  => 'not_equal',
+    '<='  => 'less_or_equal',
+    '<'   => 'less',
+    '>='  => 'greater_or_equal',
+    '>'   => 'greater',
+    '++'  => 'incr',
+    '--'  => 'decr',
+    '()'  => 'paren',
+    '[]'  => 'square_brackets',
+    '->'  => 'arrow',
+    '!'   => 'bang',
+    '~'   => 'tilde',
+    '&'   => 'ampersand',
+    '->*' => 'arrow_deref',
+    '*'   => 'star',
+    '/'   => 'slash',
+    '%'   => 'percent',
+    '+'   => 'plus',
+    '-'   => 'minus',
+    '^'   => 'xor',
+    '|'   => 'bar',
+    '&&'  => 'ampersand_ampersand',
+    '||'  => 'bar_bar',
+    '+='  => 'plus_assign',
+    '-='  => 'minus_assign',
+    '*='  => 'star_assign',
+    '/='  => 'slash_assign',
+    '%='  => 'percent_assign',
+    '&='  => 'ampersand_assign',
+    '^='  => 'xor_assign',
+    '|='  => 'bar_assign',
+    ','   => 'comma'                                        
+  }
   def self.encode ( str )
-    # p str
     result = str.gsub '_', '_U_'
-    result.gsub!('operator>>', 'operator_RR_')
-    result.gsub!('operator<<', 'operator_LL_')
-    # result.gsub!(/<\s+</, '<~<')
-    # result.gsub!(/>\s+>/, '>~>')
     result.gsub!(/\s*/, '')
-    # result.gsub!('~', ' ')
-    @@codes.each_value do |v|
-      next if [:U, :RR, :LL].include? v.code
+    @@codes.each do |v|
+      next if v.code == :U
       result.gsub!(v.patt, "_#{v.code}_")
     end
+    result.gsub!(/operator\s*([a-zA-Z]+)/, 'operator_convert_\1')
     result.gsub!(/\s*/, '')
     result.gsub!(/_+/, '_')
     result.gsub!(/^_/, '')
     result.gsub!(/_$/, '')
-    # p result
     result
   end
   def self.enc ( name, code, cxx_char=nil )
     EncodedSymbol.new(name, code, cxx_char)
+  end
+  @@operators.to_a.sort{|x,y| y.first.size <=> x.first.size}.each do |k, v|
+    enc v.to_sym, "#{v}".upcase.gsub('_', '').to_sym, "operator#{k}"
   end
   enc :underscore, :U, ?_
   enc :slash,      :S, ?/
@@ -54,8 +92,6 @@ class EncodedSymbol
   enc :function,   :F
   enc :left,       :L, '< '
   enc :right,      :R, ' >'
-  enc :leftleft,   :LL, '<<'
-  enc :rightright, :RR, '>>'
   enc :ref,        :REF, ?&
   enc :const,      :CONST
   enc :ptr,        :PTR, ?*

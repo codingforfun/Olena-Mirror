@@ -70,11 +70,12 @@ namespace dyn {
     load(const std::string& kind,
          const std::string& name,
          const std::string& arguments_types,
-         const std::string& header_path)
+         const std::string& header_path,
+         const std::string& options)
     {
       ruby << "FunctionLoader.call " << kind << ", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
-           << header_path << "\"" << ruby::eval;
+           << header_path << "\"" << ", { " << options << " }" << ruby::eval;
       return RDLPTR(ruby.last_value())->ptr;
     }
 
@@ -105,9 +106,10 @@ namespace dyn {
   load_function(const std::string& kind,
                 const std::string& name,
                 const std::string& arguments_types,
-                const std::string& header_path)
+                const std::string& header_path,
+                const std::string& options)
   {
-    return function_loader.load(kind, name, arguments_types, header_path);
+    return function_loader.load(kind, name, arguments_types, header_path, options);
   }
 
 } // end of namespace dyn

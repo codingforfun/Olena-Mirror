@@ -32,7 +32,6 @@ int main()
   dyn::method_fun  dyn_get_i("get_i");
   dyn::method_fun  dyn_get_t("get_t");
   dyn::method_fun  dyn_clone("clone");
-  dyn::fun         dyn_deref("deref");
 
   var f = mk_down_char('x');
 
@@ -69,10 +68,10 @@ int main()
 
     var x1 = dyn_get_i(b);
     std::cout << "dyn_get_i(b) => " << x1 << std::endl;
-    var x2 = dyn_deref(dyn_get_t(d));
+    var x2 = *dyn_get_t(d);
     std::cout << "dyn_get_t(d) => " << x2 << std::endl;
 
-    var x3 = dyn_deref(dyn_clone(a));
+    var x3 = *dyn_clone(a);
     std::cout << "*clone(a) => " << x3 << std::endl;
 
     // j("print_noarg");

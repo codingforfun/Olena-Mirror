@@ -1,7 +1,6 @@
 require 'pathname'
 require 'dl'
 require 'yaml'
-require 'set'
 require 'cxx_symbols'
 
 class Array
@@ -33,17 +32,19 @@ class Cache
 end
 
 class FunctionLoader
-  attr_reader :identifier, :path, :name, :args, :includes, :include_dirs, :lib_path, :sym
-  @@default_includes ||= SortedSet.new
-  @@default_post_includes ||= SortedSet.new
-  @@default_include_dirs ||= SortedSet[Pathname.new(__FILE__).dirname.parent]
-  def initialize ( identifier, kind=:fun )
-    path, name, args = identifier.split '__'
+  attr_reader :identifier, :path, :name, :args, :includes, :include_dirs,
+              :lib_path, :sym, :options
+  @@default_includes ||= []
+  @@default_post_includes ||= []
+  @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
+  def initialize ( identifier, options={} )
+    kind, path, name, args = identifier.split '__'
+    @options = options
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
     @identifier = identifier
-    @kind = kind
+    @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
     self.path = path
     self.name = name
@@ -59,7 +60,7 @@ class FunctionLoader
     @path = Pathname.new(split(path).stringify.join)
   end
   def name= ( name )
-    @name = split(name).stringify.join.to_sym
+    @name = split(name).stringify.join
   end
   def args= ( args )
     @args = ArgParser.new(split(args).reverse).parse
@@ -73,37 +74,35 @@ class FunctionLoader
     vars      = []
     args.each_with_index do |a, i|
       arg = "arg#{i}"
-      type = a.gsub(/&*$/, '') # remove references (XXX)
+      type = a.gsub(/&*$/, '') # remove references cause they are forbidden on lhs
       arguments << "const data& #{arg}"
-      call_args << "*(#{arg}_value->obj())"
-      vars << "data_proxy< #{type} >* #{arg}_value = " +
+      call_args << "*(#{arg}_reinterpret_cast_ptr->obj())"
+      vars << "data_proxy< #{type} >* #{arg}_reinterpret_cast_ptr = " +
               "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
-      vars << "assert(#{arg}_value != !\"reinterpret_cast failed\");"
+      vars << "assert(#{arg}_reinterpret_cast_ptr);"
     end
-    call = "#@name(#{call_args.join(', ')})"
+    if options[:method]
+      call = "(#{call_args.shift}).#@name(#{call_args.join(', ')})"
+    else
+      call = "#@name(#{call_args.join(', ')})"
+    end
+    by_cpy = (options[:lvalue])? '' : ', (dyn::by_cpy*)0'
     case kind
       when :fun
-        vars << "data ret(#{call}, (dyn::by_cpy*)0);"
+        vars << "data ret(#{call}#{by_cpy});"
         vars << 'return ret;'
       when :proc
         vars << call + ';' << 'return nil;'
-      when :method_proc, :method_proc2
-        obj = "(#{call_args.shift})"
-        call = "#{obj}.#@name(#{call_args.join(', ')})"
-        vars << call + ';' << 'return nil;'
-      when :method_fun, :method_fun2
-        obj = "(#{call_args.shift})"
-        call = "#{obj}.#@name(#{call_args.join(', ')})"
-        vars << "data ret(#{call}, (dyn::by_cpy*)0);"
+      when :op
+        @name.gsub!('operator', '')
+        call =
+          case call_args.size
+          when 1 then "#{@name}(#{call_args.first})"
+          when 2 then "(#{call_args.shift}) #{@name} (#{call_args.shift})"
+          else raise
+          end
+        vars << "data ret(#{call}#{by_cpy});"
         vars << 'return ret;'
-#       when :method_proc2
-#         obj = "(#{call_args.shift})"
-#         call = "#{obj}.#@name(#{call_args.join(', ')})"
-#         vars << call + ';' << 'return nil;'
-#       when :method_fun2
-#         obj = "(#{call_args.shift})"
-#         call = "#{obj}.#@name(#{call_args.join(', ')})"
-#         vars << "return data(#{call});"
       when :ctor
 #        long_name = "::dyn::#@name::#{@name}__class".gsub('::::', '::')
         # ret_type = "::dyn::Object"
@@ -111,10 +110,10 @@ class FunctionLoader
       when :ctor2
         vars << "#@name ret(#{call_args.join(', ')});"
         vars << 'return ret;'
-      else raise
+      else raise "Unknown kind: #{kind}"
     end
     str = ''
-    [@includes.to_a, Pathname.new('data.hh'), path, @post_includes.to_a].flatten.each do |path|
+    (@includes | [Pathname.new('data.hh'), path] | @post_includes).each do |path|
       next if path.to_s.empty?
       inc = path.to_s
       if inc !~ /["<]/
@@ -164,8 +163,8 @@ class FunctionLoader
       end
       STDERR.puts cmd
       STDERR.puts out_s.
-        gsub(/^#{file}:/, "[[#@name]]:").
-        gsub(/dyn::generated::#@identifier/, @name.to_s)
+        gsub(/^#{Regexp.quote(file)}:/, "[[#@name]]:").
+        gsub(/dyn::generated::#{Regexp.quote(@identifier)}/, @name.to_s)
       exit! 1
     end
   end
@@ -178,15 +177,15 @@ class FunctionLoader
   def get_function
     case cached = @@cache[identifier]
     when nil
-      puts "\e[31mMISS: Just In Time: #{self}\e[0m"
+      STDERR.puts "\e[36mJIT: \e[31mMISS: compile:\e[0m #{self}"
       compile
       load_lib
     when Pathname
-      puts "\e[33mHIT: Load the library for #{self}\e[0m"
+      STDERR.puts "\e[36mJIT: \e[33mHIT: dlopen:\e[0m #{self}"
       @lib_path = cached
       load_lib
     else
-      puts "\e[32mHIT #{self}\e[0m"
+      STDERR.puts "\e[36mJIT: \e[32mHIT: dlsym:\e[0m #{self}"
       cached
     end
   end
@@ -194,7 +193,7 @@ class FunctionLoader
     args.size
   end
   def to_s
-    "#@path #@name(#{@args.join(', ')})"
+    "#@name(#{@args.join(', ')})" + ((@path.to_s.empty?)? '' : " in #@path")
   end
   def gcc_void_error
     /( conversion\sfrom\s[`']void'\sto\snon-scalar\stype\s[`']dyn::data'\s
@@ -207,19 +206,22 @@ class FunctionLoader
     repository
   end
   class << self
-    def call ( kind, aFunctionName, arguments=[], aPath='' )
-      identifier = mangle(aPath) + '__' + mangle(aFunctionName) + '__'
+    def call ( kind, aFunctionName, arguments=[], aPath='', options={} )
+      identifier = mangle(kind.to_s) + '__' + mangle(aPath) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
-      new(identifier, kind).get_function
+      new(identifier, options).get_function
     end
     def include_dir ( path )
-      @@default_include_dirs << Pathname.new(path).expand_path
+      x = Pathname.new(path).expand_path
+      @@default_include_dirs << x unless @@default_include_dirs.include? x
     end
     def include ( path )
-      @@default_includes << Pathname.new(path)
+      x = Pathname.new(path)
+      @@default_includes << x unless @@default_includes.include? x
     end
     def post_include ( path )
-      @@default_post_includes << Pathname.new(path)
+      x = Pathname.new(path)
+      @@default_post_includes << x unless @@default_post_includes.include? x
     end
   end
 
