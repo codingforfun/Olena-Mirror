@@ -1,3 +1,20 @@
+2005-11-18  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add demangle from libiberty.
+
+	* test/test_damien.cc: a few changes.
+	* test/fixtures/my_lib/damien.hxx: Add sqr.
+	* test/fixtures/my_lib/damien.hh: Add sqr.
+	* lib/libiberty-linux.a: New. libiberty for linux.
+	* lib/libiberty-macos.a: New. libiberty for macos.
+	* src/demangle.h: New. Demangling header.
+	* src/ansidecl.h: New. Needed by demangle.h
+	* src/function_loader.hh: Add misc_compile_line for add compilation
+	line options.
+	* src/function_loader.rb: Likewise.
+	* src/data.erb.hh: Now use demangling from libiberty instead of
+	name_of.
+
 2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add type2() and simplify the function options.

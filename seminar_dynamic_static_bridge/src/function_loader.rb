@@ -36,6 +36,7 @@ class FunctionLoader
               :lib_path, :sym, :options
   @@default_includes ||= []
   @@default_post_includes ||= []
+  @@default_misc_compile_line ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, options={} )
     kind, path, name, args = identifier.split '__'
@@ -43,6 +44,7 @@ class FunctionLoader
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
+    @misc_compile_line = @@default_misc_compile_line.dup
     @identifier = identifier
     @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
@@ -150,8 +152,10 @@ class FunctionLoader
       when /linux/  then '-shared'
       end
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
+    misc_compile_line = @misc_compile_line.map { |x| "#{x}" }.join ' '
     out = repository + 'g++.out'
-    cmd = "g++ -ggdb -W -Wall #{opts} #{includes_opts} -o #{lib_path} #{file} 2> #{out}"
+    cmd = "g++ -ggdb -W -Wall #{opts} #{includes_opts} #{misc_compile_line} -o #{lib_path} #{file} 2> #{out}"
+    puts cmd
     if system cmd
       out.unlink if out.exist?
     else
@@ -219,6 +223,9 @@ class FunctionLoader
     def include_dir ( path )
       x = Pathname.new(path).expand_path
       @@default_include_dirs << x unless @@default_include_dirs.include? x
+    end
+    def misc_compile_line ( elt )
+      @@default_misc_compile_line << elt unless @@default_misc_compile_line.include? elt
     end
     def include ( path )
       x = Pathname.new(path)
