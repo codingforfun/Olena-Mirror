@@ -206,10 +206,15 @@ class FunctionLoader
     repository
   end
   class << self
-    def call ( kind, aFunctionName, arguments=[], aPath='', options={} )
+    def call ( kind, aFunctionName, arguments=[], aPath='', options='' )
       identifier = mangle(kind.to_s) + '__' + mangle(aPath) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
-      new(identifier, options).get_function
+      opts = {}
+      options.split(/\s*,\s*/).each do |x|
+        next if x.empty?
+        opts[x.to_sym] = true
+      end
+      new(identifier, opts).get_function
     end
     def include_dir ( path )
       x = Pathname.new(path).expand_path

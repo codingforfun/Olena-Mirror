@@ -25,10 +25,10 @@ namespace dyn
     generic_fun(const data* obj_ptr,
                 const std::string kind,
                 const std::string name,
-                const std::string header_path="",
-                const std::string options="") :
+                const std::string options="",
+                const std::string header_path="") :
       obj_ptr_(obj_ptr), kind_(kind), name_(name),
-      header_path_(header_path), options_(options) {}
+      options_(options), header_path_(header_path) {}
 
     <%- NB_MAX_ARGUMENTS.times do |i| -%>
 
@@ -43,32 +43,17 @@ namespace dyn
     const data* obj_ptr_;
     const std::string kind_;
     const std::string name_;
-    const std::string header_path_;
     const std::string options_;
+    const std::string header_path_;
   };
 
   <% %w[ fun proc ctor ctor2 ].each do |name| %>
   struct <%= name %> : public generic_fun
   {
-    <%= name %>(const std::string name, const std::string header_path="") :
-      generic_fun(0, ":<%= name %>", name, header_path) {}
-  };
-  <% end %>
-
-  <% %w[ proc fun ].each do |name| %>
-  struct method_<%= name %> : public generic_fun
-  {
-    method_<%= name %>(const std::string name, const std::string header_path="") :
-      generic_fun(0, ":<%= name %>", name, header_path, ":method => true") {}
-  };
-  <% end %>
-
-  // lvalues versions
-  <% %w[ fun ].each do |name| %>
-  struct lvalue_method_<%= name %> : public generic_fun
-  {
-    lvalue_method_<%= name %>(const std::string name, const std::string header_path="") :
-      generic_fun(0, ":<%= name %>", name, header_path, ":method => true, :lvalue => true") {}
+    <%= name %>(const std::string name,
+                const std::string options="",
+                const std::string header_path="") :
+      generic_fun(0, ":<%= name %>", name, options, header_path) {}
   };
   <% end %>
 
@@ -82,8 +67,11 @@ namespace dyn
 
   struct op : public generic_fun
   {
-    op(const std::string name, const std::string header_path="") :
-      generic_fun(0, ":op", std::string("operator") + name, header_path) {}
+    op(const std::string name,
+       const std::string options="",
+       const std::string header_path="") :
+      generic_fun(0, ":op", std::string("operator") + name,
+                  options, header_path) {}
   };
 
 } // end of namespace dyn

@@ -24,7 +24,7 @@
 // monoid free(alphabet(set(lettre = char|int|string)))|ou pas(2 free)
 
 #include "dyn.hh"
-#include "dyn_vaucanson3.hh"
+#include "dyn_vaucanson_dyn_mirror.hh"
 
 // #include CONTEXT_HEADER
 
@@ -48,9 +48,6 @@
 // #include <vaucanson/algorithms/standard.hh>
 // #include <vaucanson/algorithms/normalized.hh>
 // #include <vaucanson/tools/dot_display.hh>
-
-// #include "dyn_vaucanson.hh"
-// #include "dyn_vaucanson2.hh"
 
 namespace dyn {
   // fun transpose("transpose", "vaucanson/algorithms/transpose.hh");
@@ -450,7 +447,7 @@ main(int argc, char** argv)
   dyn::include_dir(".");
   // dyn::include(CONTEXT_HEADER);
   dyn::include("vaucanson/xml/XML.hh");
-  dyn::post_include("dyn_vaucanson.hh");
+  dyn::post_include("dyn_vaucanson_mlc_name.hh");
   dyn::post_include("dyn_vaucanson2.hh");
 
 std::string letter_t(argv[1]);
@@ -495,7 +492,7 @@ std::string gen_automaton_t;
   dyn::ctor new_automata_set(automata_set_t);
   dyn::ctor new_automaton(automaton_t);
 
-  dyn::method_proc insert("insert");
+  dyn::proc insert("insert", "method");
 
   var alphabet     = new_alphabet();
                        // insert(alphabet, 'a');
@@ -507,6 +504,10 @@ std::string gen_automaton_t;
   var automaton    = new_automaton(automata_set);
 
   std::cout << dyn::automaton_saver(automaton, string_out(), XML());
+
+  std::cout << automaton.type() << std::endl;
+
+  std::cout << automaton.type2() << std::endl;
 
   std::string algorithms("vaucanson/algorithms/");
   dyn::fun algo(argv[3], algorithms + argv[3] + ".hh");

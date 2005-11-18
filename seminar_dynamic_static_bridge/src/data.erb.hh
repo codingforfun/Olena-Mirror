@@ -24,6 +24,7 @@ namespace dyn {
   {
     virtual abstract_data* clone() const = 0;
     virtual std::string type() const = 0;
+    virtual std::string type2() const = 0;
     virtual ~abstract_data() {}
   };
 
@@ -61,6 +62,12 @@ namespace dyn {
     {
       assert(p_obj_);
       return mlc_name_of(*p_obj_);
+    }
+
+    std::string type2() const
+    {
+      assert(p_obj_);
+      return typeid(*p_obj_).name();
     }
 
     protected:
@@ -111,7 +118,7 @@ namespace dyn {
   template <>
   struct data_proxy<NilClass> : public abstract_data
   {
-    data_proxy(const NilClass&) {}
+    data_proxy(const NilClass& nil_object) : nil_object_(nil_object) {}
     data_proxy() {}
 
     virtual data_proxy<NilClass>* clone() const
@@ -124,6 +131,12 @@ namespace dyn {
       return "data_nil";
     }
 
+    std::string type2() const
+    {
+      return typeid(nil_object_).name();
+    }
+
+    NilClass nil_object_;
   };
 
   template <typename T1, typename T2>
@@ -199,6 +212,13 @@ namespace dyn {
     }
 
 
+    std::string type2() const
+    {
+      assert(proxy_);
+      return proxy_->type2();
+    }
+
+
     data operator[](const data&);
     const data& operator[](const data&) const;
     data operator*();
@@ -207,7 +227,7 @@ namespace dyn {
 
     abstract_data* proxy() const
     {
-      assert(proxy_ != 0);
+      assert(proxy_);
       return proxy_;
     }
 
@@ -233,8 +253,8 @@ namespace dyn {
     #include "data_gen.hh"
 
 #   ifndef INITIALIZE_METHODS_ATTRIBUTES
-#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method")
-    method_fun fake_method;
+#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method", "method")
+    fun fake_method;
 #   endif
 
     data() : proxy_(0), type_("unkown"), INITIALIZE_METHODS_ATTRIBUTES {}

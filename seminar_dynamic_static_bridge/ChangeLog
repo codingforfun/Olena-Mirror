@@ -1,5 +1,9 @@
 2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add type2() and simplify the function options.
+
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add a little README file.
 
 	* README: New.

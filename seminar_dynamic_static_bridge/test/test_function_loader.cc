@@ -9,10 +9,9 @@ int main()
   dyn::include_dir(SOURCE_DIR);
   dyn::include_dir("fixtures");
 
-  dyn::include("my_lib/lib.hh"); // setup a default include
-  dyn::include("vector");
-
   dyn::proc dfoo1("foo1", "my_lib/lib.hh"); // With the include
+
+  dyn::include("my_lib/lib.hh"); // setup a default include
 
   dyn::fun  dfoo2("foo2"); // use the default includes
   dyn::fun  dfoo2b("foo2b");
@@ -78,8 +77,8 @@ int main()
     echo(*it);
   it = v.begin();
 
-  dyn::method_fun begin("begin");
-  dyn::method_fun end("end");
+  dyn::fun begin("begin", "method");
+  dyn::fun end("end", "method");
   var dv = v;
   var dit = it;
   echo(dv[2]);
@@ -108,7 +107,7 @@ int main()
   // stl_each(v, i)
   // for (dit = begin(dv); diff(dit, end(dv)) && i < 42; incr(dit), ++i)
   // std::vector<int>::iterator tmp;
-  // for (dit = begin(dv); tmp = dit, v.end() != tmp && i < 42; incr(dit), ++i)
+  // for (dit = begin(dv); v.end() != dit; ++dit, ++i)
   // {
     // std::cout << i << ": " << *dit << std::endl;
   // }

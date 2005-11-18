@@ -29,9 +29,9 @@ int main()
   dyn::proc        dyn_change("change");
   dyn::ctor        mk_down_char("down<char>");
   dyn::ctor        mk_down_int("down<int>");
-  dyn::method_fun  dyn_get_i("get_i");
-  dyn::method_fun  dyn_get_t("get_t");
-  dyn::method_fun  dyn_clone("clone");
+  dyn::fun   dyn_get_i("get_i", "method");
+  dyn::fun   dyn_get_t("get_t", "method");
+  dyn::fun   dyn_clone("clone", "method");
 
   var f = mk_down_char('x');
 

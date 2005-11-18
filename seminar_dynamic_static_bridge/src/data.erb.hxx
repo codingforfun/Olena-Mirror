@@ -55,14 +55,14 @@ namespace dyn {
     data*
     data::operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
     {
-      method_fun meth(meth_name);
+      fun meth(meth_name, "method");
       return meth(<%= (['*this'] + objects).join(', ') %>);
     }
 
     data*
     data::v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
     {
-      method_proc meth(meth_name);
+      proc meth(meth_name, "method");
       return meth(<%= (['*this'] + objects).join(', ') %>);
     }
 
@@ -76,7 +76,7 @@ namespace dyn {
     op operator_decr("--");
     op operator_star("*");
     op operator_not_equal("!=");
-    lvalue_method_fun operator_square_brackets("operator[]");
+    fun operator_square_brackets("operator[]", "method, lvalue");
   }
 
   // FIXME

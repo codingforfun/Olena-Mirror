@@ -143,7 +143,7 @@ class Dumper
       end
       if @states.last == 'struct'
         @all_methods[node_name] =
-          ["method_#{type} #{node_name};", "#{node_name}(\"#{name}\", \"#{@includes.last}\")"]
+          ["#{type} #{node_name};", "#{node_name}(\"#{name}\", \"method\", \"#{@includes.last}\")"]
       else
         puts "#{type} #{node_name}(\"#{name}\", \"#{@includes.last}\");"
       end
@@ -174,9 +174,9 @@ dumper = Dumper.new
 root = tree.rpath_find(:first, ARGV[0] || 'top/contents/include/*name/vcsn\.i')
 # puts root.to_yaml
 puts '// ------------------------------------------------ '
-puts '// dyn_vaucanson3.hh'
-File.open('dyn_vaucanson3.hh', 'w') do |dyn_vaucanson3_hh|
-  dumper.with(dyn_vaucanson3_hh) do
+puts '// dyn_vaucanson_dyn_mirror.hh'
+File.open('dyn_vaucanson_dyn_mirror.hh', 'w') do |dyn_vaucanson_dyn_mirror_hh|
+  dumper.with(dyn_vaucanson_dyn_mirror_hh) do
     dumper.namespace 'dyn' do
       dumper.print_dyn nil, root['contents']
     end
@@ -190,9 +190,9 @@ File.open('data_gen.hh', 'w') do |data_gen_hh|
   end
 end
 puts '// ------------------------------------------------ '
-puts '// dyn_vaucanson.hh'
-File.open('dyn_vaucanson.hh', 'w') do |dyn_vaucanson_hh|
-  dumper.with(dyn_vaucanson_hh) do
+puts '// dyn_vaucanson_mlc_name.hh'
+File.open('dyn_vaucanson_mlc_name.hh', 'w') do |dyn_vaucanson_mlc_name_hh|
+  dumper.with(dyn_vaucanson_mlc_name_hh) do
     dumper.print_mlc_set_names
   end
 end

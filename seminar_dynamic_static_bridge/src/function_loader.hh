@@ -75,7 +75,7 @@ namespace dyn {
     {
       ruby << "FunctionLoader.call " << kind << ", \""
            << name << "\", [\"" <<  arguments_types << "\"], \""
-           << header_path << "\"" << ", { " << options << " }" << ruby::eval;
+           << header_path << "\"" << ", \"" << options << "\"" << ruby::eval;
       return RDLPTR(ruby.last_value())->ptr;
     }
 
