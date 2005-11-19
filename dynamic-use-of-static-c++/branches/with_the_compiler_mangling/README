@@ -1,0 +1,12 @@
+HOW TO USE THIS PROJECT
+
+./configure
+
+cd test
+
+make check
+make damien
+
+# Does not works yet:
+make vaucanson
+make olena

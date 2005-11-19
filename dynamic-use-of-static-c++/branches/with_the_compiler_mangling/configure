@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'rbconfig'
+require 'erb'
+
+TOP_DIR = Pathname.new(__FILE__).dirname
+
+class Configure
+  def initialize ( &block )
+    @patt = {}
+    instance_eval(&block)
+    do_gsub
+  end
+  def gsub ( name, val=get(name.to_s) )
+    @patt[((name.is_a? Regexp)? name : "@@#{name}@@")] = val
+  end
+  def do_gsub
+    Pathname.glob(TOP_DIR + '**/*.in').each do |path|
+      puts path
+      contents = path.read
+      @patt.each { |patt, val| contents.gsub! patt, val }
+      Pathname.new(path.to_s.sub(/\.in$/, '')).open('w') { |f| f.puts contents }
+    end
+  end
+  def get ( name )
+    Config::CONFIG[name] || eval(name)
+  end
+  def erb ( file )
+    result = ERB.new(file.read, nil, '<-%->', '$erbout_').result
+    Pathname.new(file.to_s.sub(/\.erb\./, '.')).open('w') { |f| f.puts result }
+  end
+end
+Kernel.send :undef_method, :gsub
+
+NB_MAX_ARGUMENTS = 10
+
+SOURCE_DIR = TOP_DIR.expand_path + 'src'
+BIN = TOP_DIR.expand_path + 'bin'
+TESTDIR = TOP_DIR.expand_path + 'test'
+
+SWIGDIR = TOP_DIR.expand_path + 'test/swig'
+SWIG = SWIGDIR + 'swig'
+SWIGINCLUDES = "-I#{SWIGDIR}/Lib -I#{SWIGDIR}/Lib/python"
+
+VCSN = TESTDIR + 'vaucanson/sources'
+
+Configure.new do
+  gsub :SOURCE_DIR
+  gsub :LDSHARED
+  gsub :LIBRUBYARG
+  gsub :LIBRUBYARG_SHARED
+  gsub :CXX, 'g++'
+  gsub :CFLAGS, '-ggdb -W -Wall -I' + Config::CONFIG['topdir']
+  gsub :SWIGDIR
+  gsub :SWIG
+  gsub :SWIGINCLUDES
+  gsub :BIN
+  gsub :VCSN
+  erb SOURCE_DIR + 'data.erb.hh'
+  erb SOURCE_DIR + 'data.erb.hxx'
+  erb SOURCE_DIR + 'function.erb.hh'
+  erb SOURCE_DIR + 'function.erb.hxx'
+end
+
+system("touch #{SOURCE_DIR + 'data_gen.hh'}")
+
+puts "Configuring: done."
