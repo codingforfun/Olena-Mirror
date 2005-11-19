@@ -66,6 +66,12 @@ namespace dyn {
       ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
     }
 
+    void
+    misc_compile_line(const std::string& elt)
+    {
+      ruby << "FunctionLoader.misc_compile_line \"" << elt << "\"" << ruby::eval;
+    }
+
     void*
     load(const std::string& kind,
          const std::string& name,
@@ -100,6 +106,11 @@ namespace dyn {
   include_dir(const std::string& dir)
   {
     function_loader.include_dir(dir);
+  }
+
+  void misc_compile_line(const std::string& elt)
+  {
+    function_loader.misc_compile_line(elt);
   }
 
   void*

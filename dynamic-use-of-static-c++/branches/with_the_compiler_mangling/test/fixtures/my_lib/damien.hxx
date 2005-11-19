@@ -41,5 +41,18 @@ void change(up& a)
   a.i_++;
 }
 
+template <typename T>
+void print(const T& a)
+{
+  std::cout << a << std::endl;
+}
+
+template <typename T>
+T sqr(const T& a)
+{
+  return a * a;
+}
+
+
 #endif
 

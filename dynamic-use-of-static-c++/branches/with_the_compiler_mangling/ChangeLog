@@ -1,12 +1,29 @@
 2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
-	Add a better support for methods.
+	Restore the Damien patch into the new branch.
 
+	Add demangle from libiberty.
+
+	* test/test_damien.cc: a few changes.
+	* test/fixtures/my_lib/damien.hxx: Add sqr.
+	* test/fixtures/my_lib/damien.hh: Add sqr.
+	* lib/libiberty-linux.a: New. libiberty for linux.
+	* lib/libiberty-macos.a: New. libiberty for macos.
+	* src/demangle.h: New. Demangling header.
+	* src/ansidecl.h: New. Needed by demangle.h
+	* src/function_loader.hh: Add misc_compile_line for add compilation
+	line options.
+	* src/function_loader.rb: Likewise.
+	* src/data.erb.hh: Now use demangling from libiberty instead of
+	name_of.
+
+2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add a better support for methods.
 
 2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Revert the previous patch before make a branch.
-
 
 2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
@@ -22,7 +39,6 @@
 2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add some operators and handle returned references.
-
 
 2005-11-17  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
@@ -75,7 +91,6 @@
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	A printable is not a not_printable.
-
 
 2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 

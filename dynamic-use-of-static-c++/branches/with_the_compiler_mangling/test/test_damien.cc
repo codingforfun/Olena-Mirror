@@ -19,17 +19,8 @@ int main()
   dyn::include_dir(SOURCE_DIR);
   dyn::include_dir("fixtures");
   dyn::include("my_lib/damien.hxx");
-
-  down<char>               a('x');
-  down<int>                b(10);
-  std::string              bar("bar"); 
-  down<std::string>        c(bar); // c("bar"); // it's worst
-  down<down<std::string> > d(c);
-  down<int>                e(20);
-
-  var d2 = d;
-
-  std::cout << d2 << std::endl;
+  dyn::misc_compile_line("/home/lrde/lrde-2006/thivol_d/lang/c++/seminar_dynamic_static_bridge/lib/libiberty-linux.a");
+  cplus_demangle_set_style(gnu_v3_demangling);
 
   dyn::proc dyn_foo("foo");
   dyn::proc dyn_print_noarg("print_noarg", "method");
@@ -40,9 +31,10 @@ int main()
   dyn::fun  dyn_get_t("get_t", "method");
   dyn::fun  dyn_clone("clone", "method");
 
-  var f = mk_down_char('x');
+  dyn::fun	dyn_sqr("sqr");
+  dyn::proc	dyn_print("print");
 
-  std::cout << mlc_name_of(f) << std::endl;
+  dyn_print(dyn_sqr(10));
 
   var g = mk_down_int(44);
   var h = dyn::mk_down(e);
