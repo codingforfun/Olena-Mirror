@@ -72,9 +72,11 @@ class FunctionLoader
     call_args = []
     arguments = []
     vars      = []
+    first_type_is_ptr = nil
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references cause they are forbidden on lhs
+      first_type_is_ptr ||= type =~ /\*\s*$/
       arguments << "const data& #{arg}"
       call_args << "*(#{arg}_reinterpret_cast_ptr->obj())"
       vars << "data_proxy< #{type} >* #{arg}_reinterpret_cast_ptr = " +
@@ -82,7 +84,8 @@ class FunctionLoader
       vars << "assert(#{arg}_reinterpret_cast_ptr);"
     end
     if options[:method]
-      call = "(#{call_args.shift}).#@name(#{call_args.join(', ')})"
+      indirection = (first_type_is_ptr)? '->' : '.'
+      call = "(#{call_args.shift})#{indirection}#@name(#{call_args.join(', ')})"
     else
       call = "#@name(#{call_args.join(', ')})"
     end

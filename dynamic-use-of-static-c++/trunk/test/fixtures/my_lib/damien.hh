@@ -9,6 +9,7 @@ struct up
   up(int i) : i_(i) {}
   virtual void print(std::ostream&) const = 0;
   virtual void print_noarg() const = 0;
+  virtual up* fake_method(const up&) const = 0;
   virtual ~up() {};
   virtual int get_i() const { return i_; }
   int i_;
@@ -30,6 +31,11 @@ struct down : public up
     std::cout << t_ << std::endl;
   }
 
+  virtual up* fake_method(const up& rhs) const
+  {
+    return new down<int>(i_ + rhs.get_i());
+  }
+
   const T* get_t() const;
   const down<T>* clone();
 
@@ -38,6 +44,8 @@ struct down : public up
   virtual ~down() {}
 };
 
+
+mlc_set_name(up);
 mlc_set_name_TC(down);
 
 std::ostream& operator<<(std::ostream& ostr, const up& obj)

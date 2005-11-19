@@ -5,6 +5,13 @@
 namespace dyn
 {
   ::dyn::fun down("mk_down");
+
+  template <typename T>
+  data mk_down(const T& t)
+  {
+    fun ctor(std::string("down< ") + mlc_name_of(t) + " >");
+    return ctor(t);
+  }
 }
 
 int main()
@@ -24,23 +31,25 @@ int main()
 
   std::cout << d2 << std::endl;
 
-  dyn::proc        dyn_foo("foo");
-  dyn::method_proc dyn_print_noarg("print_noarg");
-  dyn::proc        dyn_change("change");
-  dyn::ctor        mk_down_char("down<char>");
-  dyn::ctor        mk_down_int("down<int>");
-  dyn::fun   dyn_get_i("get_i", "method");
-  dyn::fun   dyn_get_t("get_t", "method");
-  dyn::fun   dyn_clone("clone", "method");
+  dyn::proc dyn_foo("foo");
+  dyn::proc dyn_print_noarg("print_noarg", "method");
+  dyn::proc dyn_change("change");
+  dyn::ctor mk_down_char("down<char>");
+  dyn::ctor mk_down_int("down<int>");
+  dyn::fun  dyn_get_i("get_i", "method");
+  dyn::fun  dyn_get_t("get_t", "method");
+  dyn::fun  dyn_clone("clone", "method");
 
   var f = mk_down_char('x');
 
   std::cout << mlc_name_of(f) << std::endl;
 
   var g = mk_down_int(44);
-  // var h = mk_down(e);
+  var h = dyn::mk_down(e);
 
   var j = dyn::down(46);
+
+  dyn::fun j_print_noarg = j.method("print_noarg");
 
   // std::cout is not printable
   // but a data containing std::cout yes
@@ -74,9 +83,12 @@ int main()
     var x3 = *dyn_clone(a);
     std::cout << "*clone(a) => " << x3 << std::endl;
 
-    // j("print_noarg");
+    j.send("print_noarg");
 
-    // j->print_noarg();
+    j.fake_method(a).send("print_noarg");
+    h.fake_method(a).send("print_noarg");
+
+    j_print_noarg();
   }
 
   std::cout << "exiting" << std::endl;

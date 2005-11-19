@@ -235,14 +235,12 @@ namespace dyn {
     <%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
-      data*
-      operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
-
-      <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
-      data*
-      v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
+      data
+      send(<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
 
     <%- end -%>
+
+    fun method(const std::string& method_name);
 
     protected:
     abstract_data* proxy_;
@@ -253,7 +251,7 @@ namespace dyn {
     #include "data_gen.hh"
 
 #   ifndef INITIALIZE_METHODS_ATTRIBUTES
-#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method", "method")
+#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method", "method", "", this)
     fun fake_method;
 #   endif
 
@@ -301,11 +299,6 @@ namespace dyn {
 
   NilClass nil_object;
   data nil(nil_object);
-
-  std::string data_type(const data& d)
-  {
-    return d.type();
-  }
 
 }
 

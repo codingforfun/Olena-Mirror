@@ -52,22 +52,20 @@ namespace dyn {
     <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
     <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
 
-    data*
-    data::operator() (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
+    data
+    data::send (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
     {
       fun meth(meth_name, "method");
       return meth(<%= (['*this'] + objects).join(', ') %>);
     }
 
-    data*
-    data::v (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
-    {
-      proc meth(meth_name, "method");
-      return meth(<%= (['*this'] + objects).join(', ') %>);
-    }
-
   <%- end -%>
 
+  fun data::method(const std::string& method_name)
+  {
+    fun m(method_name, "method", "", this);
+    return m;
+  }
 
   namespace internal {
     op operator_push("<<");

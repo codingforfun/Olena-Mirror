@@ -1,5 +1,10 @@
 2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Add a better support for methods.
+
+
+2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Revert the previous patch before make a branch.
 
 
