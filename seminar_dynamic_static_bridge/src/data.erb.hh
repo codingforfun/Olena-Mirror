@@ -7,9 +7,7 @@
 # include <ostream>
 
 # include "function.hh"
-extern "C" {
-# include "demangle.h"
-}
+
 # include "name_of.hh"
 
 namespace dyn {
@@ -63,8 +61,7 @@ namespace dyn {
     std::string type() const
     {
       assert(p_obj_);
-//       return mlc_name_of(*p_obj_);
-      return cplus_demangle(typeid(*p_obj_).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
+      return mlc_name_of(*p_obj_);
     }
 
     std::string type2() const
@@ -267,8 +264,7 @@ namespace dyn {
     {
       // proxy_ = new data_proxy<const T>(obj); // FIXME constness
       proxy_ = new data_proxy<T>(obj);
-//       type_ = mlc_name_of(obj);
-      type_ = cplus_demangle(typeid(obj).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
+      type_ = mlc_name_of(obj);
     }
 
     template <class T>
@@ -276,24 +272,21 @@ namespace dyn {
     {
       // proxy_ = new data_proxy_by_cpy<const T>(obj); // FIXME constness
       proxy_ = new data_proxy_by_cpy<T>(obj);
-//       type_ = mlc_name_of(obj);
-      type_ = cplus_demangle(typeid(obj).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
+      type_ = mlc_name_of(obj);
     }
 
     template <class T>
     data(T& obj) : INITIALIZE_METHODS_ATTRIBUTES
     {
       proxy_ = new data_proxy<T>(obj);
-//       type_ = mlc_name_of(obj);
-      type_ = cplus_demangle(typeid(obj).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
+      type_ = mlc_name_of(obj);
     }
 
     template <class T>
     data(T& obj, const by_cpy*) : INITIALIZE_METHODS_ATTRIBUTES
     {
       proxy_ = new data_proxy_by_cpy<T>(obj);
-      type_ = cplus_demangle(typeid(obj).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
-//       type_ = mlc_name_of(obj);
+      type_ = mlc_name_of(obj);
     }
 
     data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES

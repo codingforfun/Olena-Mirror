@@ -46,11 +46,5 @@ std::ostream& operator<<(std::ostream& ostr, const up& obj)
   return ostr;
 }
 
-template <typename T>
-void print(const T&);
-
-template <typename T>
-T sqr(const T&);
-
 #endif
 
