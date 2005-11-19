@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+includes = []
+
+dir = ARGV.shift
+if ARGV.empty?
+  STDERR.puts "usage #$0 <dir> <path/to/some/c++/headers.hh>*"
+  exit
+end
+flags = '' # '-DVCSN_USE_INTERFACE_ONLY'
+ARGV.each do |root|
+  `g++ -I#{dir} #{flags} -E #{root} | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
+    line.chomp!
+    line.gsub!(/^.*include\/(vaucanson\/.*)".*$/, '\1')
+    next unless line =~ /\.t?hh$/
+
+    next if line =~ /\/(static|letter|freemonoid_product(_base)?)\.hh/ # XXX hard skipping
+
+    includes << line unless includes.include? line
+  end
+end
+File.open('vcsn.i', 'w') do |vcsn_i|
+  includes.reverse_each do |include|
+    vcsn_i.puts "%include \"#{include}\""
+  end
+  vcsn_i.puts "%module vcsn"
+end
