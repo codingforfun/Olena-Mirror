@@ -4,7 +4,7 @@
 
 int main()
 {
-  dyn::include_dir(SOURCE_DIR);
+  dyn::include_dir(DYNDIR);
   dyn::include_dir("fixtures");
   dyn::include_dir("../proto-stl-style");
   dyn::include("all.hh");

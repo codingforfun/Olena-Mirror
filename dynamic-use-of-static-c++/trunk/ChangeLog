@@ -1,5 +1,31 @@
 2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Constness, reference/copy returned values...
+
+	* src/data.erb.hh, src/data.erb.hxx:
+	Really handle the constness (without const_cast), provide different
+	kinds of memory managment (by_ptr, by_ref, by_cpy, by_const_ref), to
+	honor readonly, lvalue, by_cpy properties. Add a traits to make a
+	good automatic default behaviour.
+
+	* configure: Improve and make it loadable.
+	* src/dyn.hh,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/function.erb.hh: Update.
+	* src/cxx_symbols.rb: Better const handling.
+
+	* test/test_containers.cc: New. Extract from test_function_loader.cc.
+	* test/test_function_loader.cc: Remove the container tests.
+
+	* test/Makefile.in: Make it real, but do not handle deps :(
+	* test/test_olena.cc,
+	* src/config.hh.in,
+	* test/vaucanson/dyn_algorithms.cc,
+	* test/test_damien.cc: Replace SOURCE_DIR by DYNDIR.
+
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	In fact, an iterator has a copy ctor :).
 
 	* test/fixtures/my_lib/lib.hh: Remove this silly and buggy

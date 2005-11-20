@@ -37,15 +37,13 @@ namespace dyn {
       ruby_init();
       ruby_script("function_loader.hh");
       ruby_init_loadpath();
-      ruby << "$: << \"" << SOURCE_DIR << "\"" << ruby::eval;
+      ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
       ruby << "require 'function_loader'" << ruby::eval;
     }
 
     ~function_loader_t()
     {
-      std::cout << "<~functionloader>" << std::endl;
       ruby_finalize();
-      std::cout << "</~functionloader>" << std::endl;
     }
 
     void

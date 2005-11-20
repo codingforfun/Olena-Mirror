@@ -14,8 +14,13 @@ class EncodedSymbol
   def initialize ( name, code, cxx_char=nil )
     @name = name
     @code = (code.is_a? Integer)? code.chr.to_sym : code
-    @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
-    @patt = to_s.strip
+    if cxx_char.is_a? Regexp
+      @patt = cxx_char
+      @cxx_char = "#@name "
+    else
+      @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
+      @patt = to_s.strip
+    end
     raise if @@codes.include? @code
     @@codes << self
   end
@@ -68,11 +73,11 @@ class EncodedSymbol
   }
   def self.encode ( str )
     result = str.gsub '_', '_U_'
-    result.gsub!(/\s*/, '')
     @@codes.each do |v|
       next if v.code == :U
       result.gsub!(v.patt, "_#{v.code}_")
     end
+    result.gsub!(/\s*/, '')
     result.gsub!(/operator\s*([a-zA-Z]+)/, 'operator_convert_\1')
     result.gsub!(/\s*/, '')
     result.gsub!(/_+/, '_')
@@ -93,7 +98,7 @@ class EncodedSymbol
   enc :left,       :L, '< '
   enc :right,      :R, ' >'
   enc :ref,        :REF, ?&
-  enc :const,      :CONST
+  enc :const,      :CONST, /\bconst\b/
   enc :ptr,        :PTR, ?*
   enc :namespace,  :N, '::'
   enc :comma,      :C, ', '

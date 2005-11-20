@@ -1,5 +1,5 @@
-#include "my_lib/damien.hh"
 #include "dyn.hh"
+#include "my_lib/damien.hh"
 #include "config.hh"
 
 namespace dyn
@@ -16,7 +16,7 @@ namespace dyn
 
 int main()
 {
-  dyn::include_dir(SOURCE_DIR);
+  dyn::include_dir(DYNDIR);
   dyn::include_dir("fixtures");
   dyn::include("my_lib/damien.hxx");
 

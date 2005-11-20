@@ -21,12 +21,22 @@ namespace dyn {
 
 
   template <typename T>
-  T& data::get_ref_on() const
+  T& data::get_ref_on()
+  {
+    assert(proxy_);
+    data_proxy_by_ref<T>* reinterpret_cast_returned_pointer = reinterpret_cast<data_proxy_by_ref<T>*>(proxy_);
+    assert(reinterpret_cast_returned_pointer);
+    return reinterpret_cast_returned_pointer->obj();
+  }
+
+
+  template <typename T>
+  const T& data::get_ref_on() const
   {
     assert(proxy_);
     data_proxy<T>* reinterpret_cast_returned_pointer = reinterpret_cast<data_proxy<T>*>(proxy_);
     assert(reinterpret_cast_returned_pointer);
-    return *reinterpret_cast_returned_pointer->obj();
+    return reinterpret_cast_returned_pointer->const_ref();
   }
 
 
@@ -40,8 +50,7 @@ namespace dyn {
   data& data::operator=(const T& rhs)
   {
     assert(proxy_);
-    static proc dyn_data_assign(std::string("data_assign<") + type() + ", " + mlc_name<T>::of() + ">");
-    type_ = mlc_name_of(rhs);
+    static proc dyn_data_assign(std::string("data_assign<") + proxy()->type() + ", " + mlc_name<T>::of() + ">");
     dyn_data_assign(*this, rhs);
     return *this;
   }
@@ -73,6 +82,7 @@ namespace dyn {
     op operator_incr("++");
     op operator_decr("--");
     op operator_star("*");
+    op operator_equal("==");
     op operator_not_equal("!=");
     fun operator_square_brackets("operator[]", "method, lvalue");
   }
@@ -86,12 +96,6 @@ namespace dyn {
   data data::operator*()
   {
     return internal::operator_star(*this);
-  }
-
-  // FIXME is the ref good ?
-  const data& data::operator[](const data& at) const
-  {
-    return internal::operator_square_brackets(*this, at).get_const_ref();
   }
 
   data data::operator[](const data& at)
@@ -125,6 +129,11 @@ dyn::data& operator--(dyn::data& d)
 bool operator!=(const dyn::data& lhs, const dyn::data& rhs)
 {
   return dyn::internal::operator_not_equal(lhs, rhs);
+}
+
+bool operator==(const dyn::data& lhs, const dyn::data& rhs)
+{
+  return dyn::internal::operator_equal(lhs, rhs);
 }
 
 

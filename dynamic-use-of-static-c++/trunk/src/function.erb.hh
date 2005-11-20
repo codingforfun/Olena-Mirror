@@ -17,8 +17,6 @@ namespace dyn
                 const std::string& header_path,
                 const std::string& options);
 
-  std::string data_type(const data&);
-
   struct generic_fun
   {
 

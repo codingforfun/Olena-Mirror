@@ -1,1 +1,1 @@
-#define SOURCE_DIR "@@SOURCE_DIR@@"
+#define DYNDIR "@@DYNDIR@@"

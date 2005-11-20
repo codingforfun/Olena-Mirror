@@ -1,6 +1,8 @@
 #ifndef DYN_HH
 # define DYN_HH
 
+# include "config.hh"
+
 # include "data.hh"
 
 # include "function.hxx"

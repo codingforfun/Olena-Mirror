@@ -1,15 +1,29 @@
-check:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_function_loader.cc -o test_function_loader @@LIBRUBYARG@@
+CC = @@CXX@@
+CXX = @@CXX@@
+CXXFLAGS = @@CFLAGS@@ -I@@SRCDIR@@ -Ifixtures
+LDFLAGS = @@LIBRUBYARG@@
+
+simple: test_function_loader.o test_function_loader
 	./test_function_loader
 
-damien:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_damien.cc -o test_damien @@LIBRUBYARG@@
+containers: test_containers.o test_containers
+	./test_containers
+
+damien: test_damien.o test_damien
 	./test_damien
 
-
-olena:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures -I${PATH_TO_OLN} test_olena.cc -o test_olena @@LIBRUBYARG@@
+# -I${PATH_TO_OLN} 
+olena: test_olena.o test_olena
 	./test_olena
 
 vaucanson:
 	cd vaucanson && $(MAKE) check
+
+check: simple containers damien
+
+clean:
+	rm -f test_function_loader test_damien test_olena test_containers
+	rm -f *.o
+
+repository_clean: clean
+	rm -rf repository
