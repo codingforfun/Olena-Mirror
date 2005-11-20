@@ -1,3 +1,10 @@
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	In fact, an iterator has a copy ctor :).
+
+	* test/fixtures/my_lib/lib.hh: Remove this silly and buggy
+	specializtion.
+
 2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add a better support for methods.
