@@ -1,6 +1,9 @@
-#include "dyn.hh"
-#include "my_lib/lib.hh"
 #include <algorithm>
+
+#include "my_lib/lib.hh"
+
+#include "dyn.hh"
+using namespace dyn::language;
 
 int main()
 {
@@ -16,8 +19,8 @@ int main()
     echo(*it);
   it = v.begin();
 
-  dyn::fun begin("begin", "method");
-  dyn::fun end("end", "method");
+  fun begin("begin", "method");
+  fun end("end", "method");
   var dv = v;
   var dit = it;
   echo(dv[2]);

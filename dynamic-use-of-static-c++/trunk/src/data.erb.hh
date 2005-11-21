@@ -29,6 +29,12 @@ namespace dyn {
 #  endif
 # endif
 
+  namespace language
+  {
+    struct val;
+    struct var;
+  }
+
   // data  -->  abstract_data
   //                 ^
   //                 |
@@ -175,7 +181,10 @@ namespace dyn {
     T obj_;
   };
 
-  struct NilClass {};
+  struct NilClass
+  {
+    NilClass(int) {}
+  };
 
   struct data_nil : public data_proxy<NilClass>
   {
@@ -189,6 +198,9 @@ namespace dyn {
     }
     const NilClass nil_object_;
   };
+
+  const NilClass nil_object(0);
+  data_nil nil_proxy(nil_object);
 
   template <typename T1, typename T2>
   T2
@@ -268,7 +280,8 @@ namespace dyn {
 
     ~data()
     {
-      delete proxy_;
+      if (proxy_ != &nil_proxy)
+        delete proxy_;
     }
 
 
@@ -313,7 +326,7 @@ namespace dyn {
     fun fake_method;
 #   endif
 
-    data() : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES {}
+    data() : proxy_(&nil_proxy), INITIALIZE_METHODS_ATTRIBUTES {}
 
     template <class T>
     data(const T& obj, const tag::by_copy*) : INITIALIZE_METHODS_ATTRIBUTES
@@ -350,17 +363,21 @@ namespace dyn {
       proxy_ = new typename dyn_choose_data_proxy< readonly<T> >::ret(obj);
     }
 
+    data(const language::var& rhs);
+    data(const language::val& rhs);
+
     data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
     {
-       if (rhs.proxy_ != 0)
+      logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+       if (rhs.proxy_ != &nil_proxy)
         proxy_ = rhs.proxy_->clone();
       else
-        proxy_ = 0;
+        proxy_ = &nil_proxy;
     }
+
   };
 
-  NilClass nil_object;
-  data nil(nil_object);
+  const data nil;
 
 }
 

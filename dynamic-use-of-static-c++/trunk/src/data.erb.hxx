@@ -81,6 +81,7 @@ namespace dyn {
     op operator_pop(">>");
     op operator_incr("++");
     op operator_decr("--");
+    op operator_plus("+");
     op operator_star("*");
     op operator_equal("==");
     op operator_not_equal("!=");
@@ -101,6 +102,24 @@ namespace dyn {
   data data::operator[](const data& at)
   {
     return internal::operator_square_brackets(*this, at);
+  }
+
+  data::data(const language::var& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  {
+    logger << "data(const language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+    if (rhs.proxy_ != &nil_proxy)
+      proxy_ = rhs.proxy_->clone();
+    else
+      proxy_ = &nil_proxy;
+  }
+
+  data::data(const language::val& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  {
+    logger << "data(const language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+    if (rhs.proxy_ != &nil_proxy)
+      proxy_ = rhs.proxy_->clone();
+    else
+      proxy_ = &nil_proxy;
   }
 }
 
@@ -134,6 +153,12 @@ bool operator!=(const dyn::data& lhs, const dyn::data& rhs)
 bool operator==(const dyn::data& lhs, const dyn::data& rhs)
 {
   return dyn::internal::operator_equal(lhs, rhs);
+}
+
+
+dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs)
+{
+  return dyn::internal::operator_plus(lhs, rhs);
 }
 
 

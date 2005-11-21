@@ -3,26 +3,31 @@ CXX = @@CXX@@
 CXXFLAGS = @@CFLAGS@@ -I@@SRCDIR@@ -Ifixtures
 LDFLAGS = @@LIBRUBYARG@@
 
-simple: test_function_loader.o test_function_loader
-	./test_function_loader
+<%-
+TESTS = %w[
+  function_loader
+  containers
+  damien
+  olena
+  var_and_val
+]
+-%>
 
-containers: test_containers.o test_containers
-	./test_containers
 
-damien: test_damien.o test_damien
-	./test_damien
+<%- TESTS.each do |name| -%>
 
-# -I${PATH_TO_OLN} 
-olena: test_olena.o test_olena
-	./test_olena
+<%= name %>: test_<%= name %>.o test_<%= name %>
+	./test_<%= name %> || false
+
+<%- end -%>
 
 vaucanson:
 	cd vaucanson && $(MAKE) check
 
-check: simple containers damien
+check: <%= TESTS.join(' ') %>
 
 clean:
-	rm -f test_function_loader test_damien test_olena test_containers
+	rm -f <%= TESTS.map{|x| 'test_' + x}.join(' ') %>
 	rm -f *.o
 
 repository_clean: clean

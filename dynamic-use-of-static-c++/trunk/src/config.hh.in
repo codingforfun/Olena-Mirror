@@ -1,1 +1,2 @@
 #define DYNDIR "@@DYNDIR@@"
+#define OLENA_PROTO_STL_STYLE "@@OLENA_PROTO_STL_STYLE@@"

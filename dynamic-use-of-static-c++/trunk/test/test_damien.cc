@@ -1,10 +1,11 @@
-#include "dyn.hh"
 #include "my_lib/damien.hh"
-#include "config.hh"
+
+#include "dyn.hh"
+using namespace dyn::language;
 
 namespace dyn
 {
-  ::dyn::fun down("mk_down");
+  fun down("mk_down");
 
   template <typename T>
   data mk_down(const T& t)
@@ -31,14 +32,14 @@ int main()
 
   std::cout << d2 << std::endl;
 
-  dyn::proc dyn_foo("foo");
-  dyn::proc dyn_print_noarg("print_noarg", "method");
-  dyn::proc dyn_change("change");
-  dyn::ctor mk_down_char("down<char>");
-  dyn::ctor mk_down_int("down<int>");
-  dyn::fun  dyn_get_i("get_i", "method");
-  dyn::fun  dyn_get_t("get_t", "method");
-  dyn::fun  dyn_clone("clone", "method");
+  proc dyn_foo("foo");
+  proc dyn_print_noarg("print_noarg", "method");
+  proc dyn_change("change");
+  ctor mk_down_char("down<char>");
+  ctor mk_down_int("down<int>");
+  fun  dyn_get_i("get_i", "method");
+  fun  dyn_get_t("get_t", "method");
+  fun  dyn_clone("clone", "method");
 
   var f = mk_down_char('x');
 
@@ -49,7 +50,7 @@ int main()
 
   var j = dyn::down(46);
 
-  dyn::fun j_print_noarg = j.method("print_noarg");
+  fun j_print_noarg = j.method("print_noarg");
 
   // std::cout is not printable
   // but a data containing std::cout yes

@@ -22,6 +22,7 @@ class Configure
       puts path
       contents = path.read
       @patt.each { |patt, val| contents.gsub! patt, val }
+      contents = ERB.new(contents, nil, '<-%->', '$erbout_').result
       Pathname.new(path.to_s.sub(/\.in$/, '')).open('w') { |f| f.puts contents }
     end
   end
@@ -48,9 +49,15 @@ SWIGINCLUDES = "-I#{SWIGDIR}/Lib -I#{SWIGDIR}/Lib/python"
 
 VCSN = TESTDIR + 'vaucanson/sources'
 
+# Make the proper to the olena-proto-stl-style in test
+OLENA_PROTO_STL_STYLE = TESTDIR + 'olena/proto-stl-style'
+
 CXX = 'ccache g++'
-CFLAGS = '-ggdb -W -Wall -I' + Config::CONFIG['topdir']
-LDFLAGS = 
+
+INCLUDE_DIRS = [Config::CONFIG['topdir'], OLENA_PROTO_STL_STYLE]
+
+CFLAGS = '-DDYNDEBUG -ggdb -W -Wall ' + INCLUDE_DIRS.map{|x|'-I' + x}.join(' ')
+LDFLAGS =
   case RUBY_PLATFORM
     when /darwin/ then '-bundle'
     when /linux/  then '-shared'

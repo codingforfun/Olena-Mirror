@@ -1,18 +1,17 @@
-#include "../proto-stl-style/all.hh"
 #include "dyn.hh"
-#include "config.hh"
+using namespace dyn::language;
 
 int main()
 {
   dyn::include_dir(DYNDIR);
   dyn::include_dir("fixtures");
-  dyn::include_dir("../proto-stl-style");
+  dyn::include_dir(OLENA_PROTO_STL_STYLE);
   dyn::include("all.hh");
   dyn::include("oln_name.hh");
 
-  dyn::proc dyn_iota("iota");
-  dyn::proc dyn_println_2d("println_2d");
-  dyn::ctor        mk_image2d_int("image2d<int>");
+  proc dyn_iota("iota");
+  proc dyn_println_2d("println_2d");
+  ctor mk_image2d_int("image2d<int>");
 
 
 //   image2d<int> ima(3, 3);

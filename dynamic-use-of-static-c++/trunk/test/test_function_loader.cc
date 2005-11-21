@@ -1,8 +1,10 @@
-#include "dyn.hh"
-#include "config.hh"
-#include "my_lib/lib.hh"
 #include <sstream>
-#include <algorithm>
+
+#include "my_lib/lib.hh"
+
+#include "dyn.hh"
+
+using namespace dyn::language;
 
 int main()
 {
@@ -63,9 +65,7 @@ int main()
   std::cout << dui << std::endl;
 
   echo("Test affectations");
-  int countib = 0;
-  var count(countib);
-  // var count = 0;
+  var count = 0;
   ++count;
   echo(count);
   assert(count == 1);

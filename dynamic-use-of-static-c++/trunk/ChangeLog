@@ -1,3 +1,21 @@
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add val, improve var.
+
+	* test/test_var_and_val.cc: New. Does not works completly.
+	* src/dyn.hh: Add the var and the val classes.
+	* src/data.erb.hh: Add new ctors decls.
+	* src/data.erb.hxx: Add the new ctors defs.
+
+	* test/Makefile.in:Make it an erb template.
+	* src/config.hh.in,
+	* configure,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Update.
+	* test/olena: New.
+
 2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Constness, reference/copy returned values...
