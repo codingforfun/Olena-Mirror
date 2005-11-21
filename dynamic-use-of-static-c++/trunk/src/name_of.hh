@@ -2,6 +2,7 @@
 # define NAME_OF
 
 # include <string>
+# include <sstream>
 
 
 # define mlc_set_name(NAME) \
@@ -95,6 +96,37 @@ struct mlc_name2 <T&>
 {
   static std::string of(const T& t) { return mlc_name2<T>::of(t) + "&"; }
 };
+
+// T []
+template <typename T>
+struct mlc_name <T[]>
+{
+  static std::string of() { return mlc_name<T>::of() + " []"; }
+};
+
+template <typename T>
+struct mlc_name2 <T[]>
+{
+  static std::string of(const T []) { return mlc_name<T>::of() + " []"; }
+};
+
+// T [N]
+template <typename T, unsigned int N>
+struct mlc_name <T[N]>
+{
+  static std::string of()
+  {
+    std::ostringstream ostr;
+    ostr << mlc_name<T>::of() << " [" << N << "]";
+    return ostr.str();
+  }
+  // static std::string of() { return mlc_name<T>::of() + " [" + N + "]"; }
+};
+
+// template <typename T, unsigned int N>
+// struct mlc_name2 <T[N]>
+// {
+// };
 
 // built-in
 

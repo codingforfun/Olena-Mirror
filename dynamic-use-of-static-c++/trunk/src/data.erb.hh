@@ -318,6 +318,12 @@ namespace dyn {
 
     fun method(const std::string& method_name);
 
+    bool is_const()
+    {
+      std::string type_(type());
+      return type_.find("dyn::data_proxy_by_const_ref<") == 0;
+    }
+
     protected:
     abstract_data* proxy_;
 
@@ -367,6 +373,8 @@ namespace dyn {
       proxy_ = new typename dyn_choose_data_proxy< readonly<T> >::ret(obj);
     }
 
+    data(language::var& rhs);
+    data(language::val& rhs);
     data(const language::var& rhs);
     data(const language::val& rhs);
 

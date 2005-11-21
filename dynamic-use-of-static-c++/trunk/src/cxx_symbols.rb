@@ -102,6 +102,8 @@ class EncodedSymbol
   enc :ptr,        :PTR, ?*
   enc :namespace,  :N, '::'
   enc :comma,      :C, ', '
+  enc :right_sqr_bra, :RSB, ' ['
+  enc :left_sqr_bra,  :LSB, ']'
 end # class EncodedSymbol
 
 def mangle ( aString )

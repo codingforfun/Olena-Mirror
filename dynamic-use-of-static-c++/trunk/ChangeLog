@@ -1,5 +1,16 @@
 2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	More ctors, more tests.
+
+	* test/test_var_and_val.cc: More tests.
+	* src/name_of.hh: Add T[], and T[N].
+	* src/data.erb.hxx: Add 2 ctors defs.
+	* src/dyn.hh: Add 3 ctors defs.
+	* src/cxx_symbols.rb: Handle [].
+	* src/data.erb.hh: Add is_const() and 2 ctors decls.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Make nil_proxy a pointer and no more take its address.
 
 	* src/data.erb.hxx, src/data.erb.hh: Update.

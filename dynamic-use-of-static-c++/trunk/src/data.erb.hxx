@@ -121,6 +121,24 @@ namespace dyn {
     else
       proxy_ = nil_proxy;
   }
+
+  data::data(language::var& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  {
+    logger << "data(language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+    if (rhs.proxy_ != nil_proxy)
+      proxy_ = rhs.proxy_->clone();
+    else
+      proxy_ = nil_proxy;
+  }
+
+  data::data(language::val& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  {
+    logger << "data(language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+    if (rhs.proxy_ != nil_proxy)
+      proxy_ = rhs.proxy_->clone(); // FIXME should copy it's contents not just the proxy
+    else
+      proxy_ = nil_proxy;
+  }
 }
 
 std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)

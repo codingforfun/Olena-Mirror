@@ -7,8 +7,6 @@
 
 # include "function.hxx"
 
-// typedef dyn::data var;
-
 namespace dyn
 {
   namespace language
@@ -28,6 +26,9 @@ namespace dyn
       var(const data& rhs) : data(rhs) { logger << "var(const data& rhs)" << std::endl; }
       var(const var& rhs)  : data(rhs) { logger << "var(const var& rhs)" << std::endl; }
       var(const val& rhs)  : data(rhs) { logger << "var(const val& rhs)" << std::endl; }
+      var(data& rhs) : data(rhs) { logger << "var(data& rhs)" << std::endl; }
+      var(var& rhs)  : data(rhs) { logger << "var(var& rhs)" << std::endl; }
+      var(val& rhs)  : data(rhs) { logger << "var(val& rhs)" << std::endl; }
     };
 
     struct val : public data
