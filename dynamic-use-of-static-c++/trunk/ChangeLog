@@ -1,5 +1,11 @@
 2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Make nil_proxy a pointer and no more take its address.
+
+	* src/data.erb.hxx, src/data.erb.hh: Update.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Add val, improve var.
 
 	* test/test_var_and_val.cc: New. Does not works completly.

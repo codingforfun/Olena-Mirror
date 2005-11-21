@@ -200,7 +200,7 @@ namespace dyn {
   };
 
   const NilClass nil_object(0);
-  data_nil nil_proxy(nil_object);
+  data_nil* nil_proxy = new data_nil(nil_object);
 
   template <typename T1, typename T2>
   T2
@@ -280,8 +280,12 @@ namespace dyn {
 
     ~data()
     {
-      if (proxy_ != &nil_proxy)
+      if (proxy_ != nil_proxy)
+      {
+        logger << "~data [ type() = " << type() << " ]" << std::endl;
         delete proxy_;
+        proxy_ = nil_proxy;
+      }
     }
 
 
@@ -326,7 +330,7 @@ namespace dyn {
     fun fake_method;
 #   endif
 
-    data() : proxy_(&nil_proxy), INITIALIZE_METHODS_ATTRIBUTES {}
+    data() : proxy_(nil_proxy), INITIALIZE_METHODS_ATTRIBUTES {}
 
     template <class T>
     data(const T& obj, const tag::by_copy*) : INITIALIZE_METHODS_ATTRIBUTES
@@ -369,10 +373,10 @@ namespace dyn {
     data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
     {
       logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-       if (rhs.proxy_ != &nil_proxy)
+       if (rhs.proxy_ != nil_proxy)
         proxy_ = rhs.proxy_->clone();
       else
-        proxy_ = &nil_proxy;
+        proxy_ = nil_proxy;
     }
 
   };

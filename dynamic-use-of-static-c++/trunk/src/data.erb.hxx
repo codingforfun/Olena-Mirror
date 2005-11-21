@@ -107,19 +107,19 @@ namespace dyn {
   data::data(const language::var& rhs) : INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(const language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != &nil_proxy)
+    if (rhs.proxy_ != nil_proxy)
       proxy_ = rhs.proxy_->clone();
     else
-      proxy_ = &nil_proxy;
+      proxy_ = nil_proxy;
   }
 
   data::data(const language::val& rhs) : INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(const language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != &nil_proxy)
+    if (rhs.proxy_ != nil_proxy)
       proxy_ = rhs.proxy_->clone();
     else
-      proxy_ = &nil_proxy;
+      proxy_ = nil_proxy;
   }
 }
 
