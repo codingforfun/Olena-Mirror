@@ -1,3 +1,78 @@
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Merge trunk -> branch.
+
+	Merge from 335 to 341.
+	Replace misc_compile_line to cflags and ldflags
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More ctors, more tests.
+
+	* test/test_var_and_val.cc: More tests.
+	* src/name_of.hh: Add T[], and T[N].
+	* src/data.erb.hxx: Add 2 ctors defs.
+	* src/dyn.hh: Add 3 ctors defs.
+	* src/cxx_symbols.rb: Handle [].
+	* src/data.erb.hh: Add is_const() and 2 ctors decls.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make nil_proxy a pointer and no more take its address.
+
+	* src/data.erb.hxx, src/data.erb.hh: Update.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add val, improve var.
+
+	* test/test_var_and_val.cc: New. Does not works completly.
+	* src/dyn.hh: Add the var and the val classes.
+	* src/data.erb.hh: Add new ctors decls.
+	* src/data.erb.hxx: Add the new ctors defs.
+
+	* test/Makefile.in:Make it an erb template.
+	* src/config.hh.in,
+	* configure,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Update.
+	* test/olena: New.
+
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Constness, reference/copy returned values...
+
+	* src/data.erb.hh, src/data.erb.hxx:
+	Really handle the constness (without const_cast), provide different
+	kinds of memory managment (by_ptr, by_ref, by_cpy, by_const_ref), to
+	honor readonly, lvalue, by_cpy properties. Add a traits to make a
+	good automatic default behaviour.
+
+	* configure: Improve and make it loadable.
+	* src/dyn.hh,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/function.erb.hh: Update.
+	* src/cxx_symbols.rb: Better const handling.
+
+	* test/test_containers.cc: New. Extract from test_function_loader.cc.
+	* test/test_function_loader.cc: Remove the container tests.
+
+	* test/Makefile.in: Make it real, but do not handle deps :(
+	* test/test_olena.cc,
+	* src/config.hh.in,
+	* test/vaucanson/dyn_algorithms.cc,
+	* test/test_damien.cc: Replace SOURCE_DIR by DYNDIR.
+
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	In fact, an iterator has a copy ctor :).
+
+	* test/fixtures/my_lib/lib.hh: Remove this silly and buggy
+	specializtion.
+
 2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Restore the Damien patch into the new branch.

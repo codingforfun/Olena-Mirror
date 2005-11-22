@@ -1,15 +1,34 @@
-check:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_function_loader.cc -o test_function_loader @@LIBRUBYARG@@
-	./test_function_loader
+CC = @@CXX@@
+CXX = @@CXX@@
+CXXFLAGS = @@CFLAGS@@ -I@@SRCDIR@@ -Ifixtures
+LDFLAGS = @@LIBRUBYARG@@
 
-damien:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures test_damien.cc -o test_damien @@LIBRUBYARG@@
-	./test_damien
+<%-
+TESTS = %w[
+  function_loader
+  containers
+  damien
+  olena
+  var_and_val
+]
+-%>
 
 
-olena:
-	@@CXX@@ @@CFLAGS@@ -I@@SOURCE_DIR@@ -Ifixtures -I${PATH_TO_OLN} test_olena.cc -o test_olena @@LIBRUBYARG@@
-	./test_olena
+<%- TESTS.each do |name| -%>
+
+<%= name %>: test_<%= name %>.o test_<%= name %>
+	./test_<%= name %> || false
+
+<%- end -%>
 
 vaucanson:
 	cd vaucanson && $(MAKE) check
+
+check: <%= TESTS.join(' ') %>
+
+clean:
+	rm -f <%= TESTS.map{|x| 'test_' + x}.join(' ') %>
+	rm -f *.o
+
+repository_clean: clean
+	rm -rf repository

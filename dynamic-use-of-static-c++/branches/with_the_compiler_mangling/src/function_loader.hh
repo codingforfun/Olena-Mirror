@@ -37,15 +37,13 @@ namespace dyn {
       ruby_init();
       ruby_script("function_loader.hh");
       ruby_init_loadpath();
-      ruby << "$: << \"" << SOURCE_DIR << "\"" << ruby::eval;
+      ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
       ruby << "require 'function_loader'" << ruby::eval;
     }
 
     ~function_loader_t()
     {
-      std::cout << "<~functionloader>" << std::endl;
       ruby_finalize();
-      std::cout << "</~functionloader>" << std::endl;
     }
 
     void
@@ -67,9 +65,15 @@ namespace dyn {
     }
 
     void
-    misc_compile_line(const std::string& elt)
+    cflags(const std::string& elt)
     {
-      ruby << "FunctionLoader.misc_compile_line \"" << elt << "\"" << ruby::eval;
+      ruby << "FunctionLoader.cflags \"" << elt << "\"" << ruby::eval;
+    }
+
+    void
+    ldflags(const std::string& elt)
+    {
+      ruby << "FunctionLoader.ldflags \"" << elt << "\"" << ruby::eval;
     }
 
     void*
@@ -108,9 +112,14 @@ namespace dyn {
     function_loader.include_dir(dir);
   }
 
-  void misc_compile_line(const std::string& elt)
+  void cflags(const std::string& elt)
   {
-    function_loader.misc_compile_line(elt);
+    function_loader.cflags(elt);
+  }
+
+  void ldflags(const std::string& elt)
+  {
+    function_loader.ldflags(elt);
   }
 
   void*

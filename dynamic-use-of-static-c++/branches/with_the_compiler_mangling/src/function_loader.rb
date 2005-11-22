@@ -2,6 +2,7 @@ require 'pathname'
 require 'dl'
 require 'yaml'
 require 'cxx_symbols'
+load Pathname.new(__FILE__).dirname.parent + 'configure'
 
 class Array
   alias_method :top, :last
@@ -36,7 +37,8 @@ class FunctionLoader
               :lib_path, :sym, :options
   @@default_includes ||= []
   @@default_post_includes ||= []
-  @@default_misc_compile_line ||= []
+  @@default_cflags ||= []
+  @@default_ldflags ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, options={} )
     kind, path, name, args = identifier.split '__'
@@ -44,7 +46,8 @@ class FunctionLoader
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
-    @misc_compile_line = @@default_misc_compile_line.dup
+    @cflags = @@default_cflags.dup
+    @ldflags = @@default_ldflags.dup
     @identifier = identifier
     @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
@@ -78,11 +81,11 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references cause they are forbidden on lhs
-      first_type_is_ptr ||= type =~ /\*\s*$/
+      first_type_is_ptr ||= type =~ /\*\s*>\s*$/
       arguments << "const data& #{arg}"
-      call_args << "*(#{arg}_reinterpret_cast_ptr->obj())"
-      vars << "data_proxy< #{type} >* #{arg}_reinterpret_cast_ptr = " +
-              "reinterpret_cast<data_proxy< #{type} >* >(#{arg}.proxy());"
+      call_args << "#{arg}_reinterpret_cast_ptr->obj()"
+      vars << "#{type}* #{arg}_reinterpret_cast_ptr = " +
+              "reinterpret_cast<#{type}* >(#{arg}.proxy());"
       vars << "assert(#{arg}_reinterpret_cast_ptr);"
     end
     if options[:method]
@@ -91,10 +94,10 @@ class FunctionLoader
     else
       call = "#@name(#{call_args.join(', ')})"
     end
-    by_cpy = (options[:lvalue])? '' : ', (dyn::by_cpy*)0'
+    tag = (options[:lvalue])? ', (dyn::tag::lvalue*)0' : ', (dyn::tag::by_copy*)0'
     case kind
       when :fun
-        vars << "data ret(#{call}#{by_cpy});"
+        vars << "data ret(#{call}#{tag});"
         vars << 'return ret;'
       when :proc
         vars << call + ';' << 'return nil;'
@@ -106,7 +109,7 @@ class FunctionLoader
           when 2 then "(#{call_args.shift}) #{@name} (#{call_args.shift})"
           else raise
           end
-        vars << "data ret(#{call}#{by_cpy});"
+        vars << "data ret(#{call}#{tag});"
         vars << 'return ret;'
       when :ctor
 #        long_name = "::dyn::#@name::#{@name}__class".gsub('::::', '::')
@@ -149,16 +152,11 @@ class FunctionLoader
     end
     lib_ext = 'so'
     @lib_path = repository + "#@basename.#{lib_ext}"
-    opts =
-      case RUBY_PLATFORM
-      when /darwin/ then '-bundle'
-      when /linux/  then '-shared'
-      end
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
-    misc_compile_line = @misc_compile_line.map { |x| "#{x}" }.join ' '
+    cflags, ldflags = cflags.join ' ', ldflags.join ' '
     out = repository + 'g++.out'
-    cmd = "g++ -ggdb -W -Wall #{opts} #{includes_opts} #{misc_compile_line} -o #{lib_path} #{file} 2> #{out}"
-    puts cmd
+    object_file = file.to_s.gsub('.cc', '.o')
+    cmd = "(#{CXX} #{CFLAGS} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{LDFLAGS} #{ldflags} #{object_file} -o #{lib_path}) 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else
@@ -227,8 +225,11 @@ class FunctionLoader
       x = Pathname.new(path).expand_path
       @@default_include_dirs << x unless @@default_include_dirs.include? x
     end
-    def misc_compile_line ( elt )
-      @@default_misc_compile_line << elt unless @@default_misc_compile_line.include? elt
+    def cflags ( elt )
+      @@default_cflags << elt unless @@default_cflags.include? elt
+    end
+    def ldflags ( elt )
+      @@default_ldflags << elt unless @@default_ldflags.include? elt
     end
     def include ( path )
       x = Pathname.new(path)

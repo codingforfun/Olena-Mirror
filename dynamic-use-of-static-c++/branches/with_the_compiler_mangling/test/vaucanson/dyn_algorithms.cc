@@ -442,7 +442,7 @@ main(int argc, char** argv)
   // if (argc < 2)
     // usage(argc, argv);
 
-  dyn::include_dir(SOURCE_DIR);
+  dyn::include_dir(DYNDIR);
   dyn::include_dir("../../../include");
   dyn::include_dir(".");
   // dyn::include(CONTEXT_HEADER);

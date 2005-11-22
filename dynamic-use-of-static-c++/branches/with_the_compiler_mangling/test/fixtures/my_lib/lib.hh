@@ -6,7 +6,6 @@
 #include "name_of.hh"
 #include <vector>
 
-has_not_cpy_ctor(std::vector<int>::iterator);
 mlc_set_name(std::vector<int>::iterator);
 
 template <class T>
