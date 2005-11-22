@@ -1,3 +1,9 @@
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	No more share the same nil object.
+
+	* src/data.erb.hh: Update clone and the cpy ctor of data.
+
 2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	More ctors, more tests.
