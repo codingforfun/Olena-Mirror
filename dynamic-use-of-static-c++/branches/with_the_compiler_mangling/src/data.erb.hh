@@ -190,7 +190,7 @@ namespace dyn {
     data_nil(const NilClass& nil_object) : nil_object_(nil_object) {}
     const NilClass& const_ref() const { return nil_object_; }
     const NilClass& obj() const { return nil_object_; }
-    virtual data_nil* clone() const { return new data_nil(nil_object_); }
+    virtual data_nil* clone() const { return new data_nil(NilClass(0)); }
     virtual std::string proxy_type() const
     {
       return mlc_name_of(*this);
@@ -379,11 +379,16 @@ namespace dyn {
 
     data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
     {
-      logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-       if (rhs.proxy_ != nil_proxy)
-        proxy_ = rhs.proxy_->clone();
-      else
+      if (rhs.proxy_ == 0)
+      {
+        logger << "data(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
         proxy_ = nil_proxy;
+      }
+      else
+      {
+        logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+        proxy_ = rhs.proxy_->clone();
+      }
     }
 
   };
