@@ -3,6 +3,9 @@
 
 # include <string>
 # include <sstream>
+extern "C" {
+# include "demangle.h"
+}
 
 
 # define mlc_set_name(NAME) \
@@ -54,7 +57,7 @@ struct mlc_name2
 template <class T>
 std::string mlc_name_of(const T& t)
 {
-  return cplus_demangle(typeid(*p_obj_).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
+  return cplus_demangle(typeid(t).name(), DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS);
   // return mlc_name2<T>::of(t);
 }
 

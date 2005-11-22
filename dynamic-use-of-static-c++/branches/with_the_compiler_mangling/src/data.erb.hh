@@ -5,9 +5,6 @@
 # include <cassert>
 
 # include "function.hh"
-extern "C" {
-# include "demangle.h"
-}
 # include "name_of.hh"
 
 template <typename T>
