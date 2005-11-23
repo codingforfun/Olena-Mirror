@@ -16,7 +16,7 @@ class EncodedSymbol
     @code = (code.is_a? Integer)? code.chr.to_sym : code
     if cxx_char.is_a? Regexp
       @patt = cxx_char
-      @cxx_char = "#@name "
+      @cxx_char = " #@name "
     else
       @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
       @patt = to_s.strip
@@ -28,7 +28,7 @@ class EncodedSymbol
     @@codes.find { |x| x.code == arg.to_sym }
   end
   def to_s
-    (@cxx_char || "#@name ").to_s
+    (@cxx_char || " #@name ").to_s
   end
   @@operators ||=
   {

@@ -57,11 +57,16 @@ CXX = 'ccache g++'
 
 INCLUDE_DIRS = [Config::CONFIG['topdir'], OLENA_PROTO_STL_STYLE]
 
-CFLAGS = '-DDYNDEBUG -ggdb -W -Wall ' + INCLUDE_DIRS.map{|x|'-I' + x}.join(' ')
+CFLAGS = '-DDYNDEBUG -DCOMPILER_DEMANGLING -ggdb -W -Wall ' + INCLUDE_DIRS.map{|x|'-I' + x}.join(' ')
 LDFLAGS = LIBDIR.to_s +
   case RUBY_PLATFORM
-    when /darwin/ then '/libiberty-macos.a -bundle'
-    when /linux/  then '/libiberty-linux.a -shared'
+    when /darwin/ then '/libiberty-macos.a'
+    when /linux/  then '/libiberty-linux.a'
+  end
+SHARED =
+  case RUBY_PLATFORM
+    when /darwin/ then '-bundle'
+    when /linux/  then '-shared'
   end
 
 

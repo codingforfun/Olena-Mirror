@@ -16,8 +16,9 @@ TESTS = %w[
 
 <%- TESTS.each do |name| -%>
 
-<%= name %>: test_<%= name %>.o test_<%= name %>
-	./test_<%= name %> || false
+<%= name %>: test_<%= name %>.o
+	$(CXX) test_<%= name %>.o $(LDFLAGS) -o test_<%= name %>
+	./test_<%= name %>
 
 <%- end -%>
 

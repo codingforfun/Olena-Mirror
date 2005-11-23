@@ -1,3 +1,7 @@
+2005-11-23  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use the compiler typeof + binutils demangling.
+
 2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Merge trunk -> branch.

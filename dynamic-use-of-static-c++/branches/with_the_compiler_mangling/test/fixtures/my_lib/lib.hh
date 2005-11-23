@@ -6,8 +6,6 @@
 #include "name_of.hh"
 #include <vector>
 
-mlc_set_name(std::vector<int>::iterator);
-
 template <class T>
 struct u
 {
@@ -15,16 +13,12 @@ struct u
   T& x_;
 };
 
-mlc_set_name_TC(u);
-
 template <class T, class V>
 struct t
 {
   t<T, V>(const T& x, const V& y) : x_(x), y_(y) {}
   const T& x_, y_;
 };
-
-mlc_set_name_TCC(t);
 
 template <class T>
 std::ostream& operator<< (std::ostream& ostr, const u<T>& x)

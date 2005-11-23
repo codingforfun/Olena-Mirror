@@ -45,9 +45,6 @@ struct down : public up
 };
 
 
-mlc_set_name(up);
-mlc_set_name_TC(down);
-
 std::ostream& operator<<(std::ostream& ostr, const up& obj)
 {
   obj.print(ostr);

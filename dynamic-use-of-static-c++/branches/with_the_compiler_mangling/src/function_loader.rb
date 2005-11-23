@@ -34,7 +34,7 @@ end
 
 class FunctionLoader
   attr_reader :identifier, :path, :name, :args, :includes, :include_dirs,
-              :lib_path, :sym, :options
+              :lib_path, :sym, :options, :cflags, :ldflags
   @@default_includes ||= []
   @@default_post_includes ||= []
   @@default_cflags ||= []
@@ -153,10 +153,10 @@ class FunctionLoader
     lib_ext = 'so'
     @lib_path = repository + "#@basename.#{lib_ext}"
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
-    cflags, ldflags = cflags.join ' ', ldflags.join ' '
+    cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
     out = repository + 'g++.out'
     object_file = file.to_s.gsub('.cc', '.o')
-    cmd = "(#{CXX} #{CFLAGS} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{LDFLAGS} #{ldflags} #{object_file} -o #{lib_path}) 2> #{out}"
+    cmd = "(#{CXX} #{CFLAGS} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{SHARED} #{object_file} #{LDFLAGS} #{ldflags} -o #{lib_path}) 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else

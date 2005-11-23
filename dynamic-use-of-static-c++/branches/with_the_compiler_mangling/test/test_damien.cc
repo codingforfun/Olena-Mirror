@@ -20,8 +20,6 @@ int main()
   dyn::include_dir(DYNDIR);
   dyn::include_dir("fixtures");
   dyn::include("my_lib/damien.hxx");
-  dyn::ldflags(DYNDIR "../lib/libiberty-linux.a");
-  cplus_demangle_set_style(gnu_v3_demangling);
 
   down<char>               a('x');
   down<int>                b(10);

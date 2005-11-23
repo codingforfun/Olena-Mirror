@@ -48,9 +48,6 @@ namespace dyn
 }
 
 
-mlc_set_name(dyn::language::var);
-mlc_set_name(dyn::language::val);
-
 # include "data.hxx"
 
 # include "function_loader.hh"
