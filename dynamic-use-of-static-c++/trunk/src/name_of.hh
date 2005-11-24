@@ -4,6 +4,39 @@
 # include <string>
 # include <sstream>
 
+# ifndef NO_COMPILER_DEMANGLING
+
+extern "C" {
+# include "demangle.h"
+}
+
+#define DEMANGLE_OPTIONS DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS
+
+std::string demangle(const char* name)
+{
+  std::string result(cplus_demangle(name, DEMANGLE_OPTIONS));
+  size_t pos;
+  if ((pos = result.find("char_traints")) != std::string::npos)
+    result.replace(pos, 12, "char_traits ");
+  return result;
+}
+
+template <class T>
+std::string mlc_name_of(const T&)
+{
+  return demangle(typeid(T).name());
+}
+
+template <typename T>
+struct mlc_name
+{
+  static std::string of()
+  {
+    return demangle(typeid(T).name());
+  }
+};
+
+# else
 
 # define mlc_set_name(NAME) \
 template <> struct mlc_name <NAME> { static std::string of() { return #NAME; } }
@@ -120,13 +153,7 @@ struct mlc_name <T[N]>
     ostr << mlc_name<T>::of() << " [" << N << "]";
     return ostr.str();
   }
-  // static std::string of() { return mlc_name<T>::of() + " [" + N + "]"; }
 };
-
-// template <typename T, unsigned int N>
-// struct mlc_name2 <T[N]>
-// {
-// };
 
 // built-in
 
@@ -164,8 +191,6 @@ mlc_set_name_TCc(std::basic_ostream);
 mlc_set_name(std::istringstream);
 mlc_set_name(std::ostringstream);
 
+# endif
 
 #endif
-
-
-

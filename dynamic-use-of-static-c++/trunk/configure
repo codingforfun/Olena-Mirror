@@ -40,6 +40,7 @@ NB_MAX_ARGUMENTS = 10
 
 DYNDIR = TOP_DIR.expand_path + 'src'
 SRCDIR = TOP_DIR + 'src'
+LIBDIR = TOP_DIR + 'lib'
 BIN = TOP_DIR.expand_path + 'bin'
 TESTDIR = TOP_DIR.expand_path + 'test'
 
@@ -57,7 +58,12 @@ CXX = 'ccache g++'
 INCLUDE_DIRS = [Config::CONFIG['topdir'], OLENA_PROTO_STL_STYLE]
 
 CFLAGS = '-DDYNDEBUG -ggdb -W -Wall ' + INCLUDE_DIRS.map{|x|'-I' + x}.join(' ')
-LDFLAGS =
+LDFLAGS = LIBDIR.to_s +
+  case RUBY_PLATFORM
+    when /darwin/ then '/libiberty-macos.a'
+    when /linux/  then '/libiberty-linux.a'
+  end
+SHARED =
   case RUBY_PLATFORM
     when /darwin/ then '-bundle'
     when /linux/  then '-shared'

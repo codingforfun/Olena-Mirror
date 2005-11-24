@@ -64,6 +64,18 @@ namespace dyn {
       ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
     }
 
+    void
+    cflags(const std::string& elt)
+    {
+      ruby << "FunctionLoader.cflags \"" << elt << "\"" << ruby::eval;
+    }
+
+    void
+    ldflags(const std::string& elt)
+    {
+      ruby << "FunctionLoader.ldflags \"" << elt << "\"" << ruby::eval;
+    }
+
     void*
     load(const std::string& kind,
          const std::string& name,
@@ -98,6 +110,16 @@ namespace dyn {
   include_dir(const std::string& dir)
   {
     function_loader.include_dir(dir);
+  }
+
+  void cflags(const std::string& elt)
+  {
+    function_loader.cflags(elt);
+  }
+
+  void ldflags(const std::string& elt)
+  {
+    function_loader.ldflags(elt);
   }
 
   void*

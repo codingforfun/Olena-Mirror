@@ -16,7 +16,7 @@ class EncodedSymbol
     @code = (code.is_a? Integer)? code.chr.to_sym : code
     if cxx_char.is_a? Regexp
       @patt = cxx_char
-      @cxx_char = "#@name "
+      @cxx_char = " #@name "
     else
       @cxx_char = (cxx_char.is_a? Integer)? cxx_char.chr.to_sym : cxx_char
       @patt = to_s.strip
@@ -28,7 +28,7 @@ class EncodedSymbol
     @@codes.find { |x| x.code == arg.to_sym }
   end
   def to_s
-    (@cxx_char || "#@name ").to_s
+    (@cxx_char || " #@name ").to_s
   end
   @@operators ||=
   {
@@ -69,16 +69,19 @@ class EncodedSymbol
     '&='  => 'ampersand_assign',
     '^='  => 'xor_assign',
     '|='  => 'bar_assign',
-    ','   => 'comma'                                        
+    ','   => 'comma'
   }
   def self.encode ( str )
     result = str.gsub '_', '_U_'
+    result.gsub!(/operator\s*/, 'operator')
     @@codes.each do |v|
       next if v.code == :U
       result.gsub!(v.patt, "_#{v.code}_")
     end
     result.gsub!(/\s*/, '')
     result.gsub!(/operator\s*([a-zA-Z]+)/, 'operator_convert_\1')
+    result.gsub!(/\s*/, '')
+    result.gsub!(/operator\s*([a-zA-Z]+)/, 'OPERATOR_CONVERT_\1')
     result.gsub!(/\s*/, '')
     result.gsub!(/_+/, '_')
     result.gsub!(/^_/, '')
@@ -89,7 +92,7 @@ class EncodedSymbol
     EncodedSymbol.new(name, code, cxx_char)
   end
   @@operators.to_a.sort{|x,y| y.first.size <=> x.first.size}.each do |k, v|
-    enc v.to_sym, "#{v}".upcase.gsub('_', '').to_sym, "operator#{k}"
+    enc "operator#{v}".to_sym, "operator#{v}".upcase.gsub('_', '').to_sym, "operator#{k}"
   end
   enc :underscore, :U, ?_
   enc :slash,      :S, ?/

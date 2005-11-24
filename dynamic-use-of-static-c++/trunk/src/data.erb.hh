@@ -5,7 +5,6 @@
 # include <cassert>
 
 # include "function.hh"
-
 # include "name_of.hh"
 
 template <typename T>
@@ -265,13 +264,22 @@ namespace dyn {
 
     const data& get_const_ref() const;
 
+    std::string& const_stripping(std::string& str) const
+    {
+      size_t pos;
+      while ((pos = str.find("const ")) != std::string::npos)
+        str.erase(pos, 6);
+      while ((pos = str.find(" const")) != std::string::npos)
+        str.erase(pos, 6);
+      return str;
+    }
+
     template <typename T>
     operator T() const
     {
-      std::string str(proxy()->type());
-      if (str.compare(0, 6, "const ") == 0)
-        str.erase(0, 6);
-      if (mlc_name<T>::of() == str)
+      std::string src_type(proxy()->type());
+      std::string dest_type(mlc_name<T>::of());
+      if (const_stripping(src_type) == const_stripping(dest_type))
         return get_ref_on<T>();
       else
         return convert_to<T>();
@@ -448,27 +456,5 @@ struct dyn_choose_data_proxy< dyn::NilClass >
 
 has_not_cpy_ctor(std::ostream);
 has_not_cpy_ctor(std::istream);
-
-template <>
-struct mlc_name<__gnu_cxx::__normal_iterator<const int*, std::vector<int, std::allocator<int> > > >
-{
-  static std::string of() { return "__gnu_cxx::__normal_iterator<const int*, std::vector<int, std::allocator<int> > >"; }
-};
-
-mlc_set_name(dyn::abstract_data);
-mlc_set_name(dyn::data_nil);
-mlc_set_name_TC(dyn::data_proxy);
-mlc_set_name_TC(dyn::data_proxy_by_cpy);
-mlc_set_name_TC(dyn::data_proxy_by_ref);
-mlc_set_name_TC(dyn::data_proxy_by_const_ref);
-mlc_set_name_TC(dyn::data_proxy_by_ptr);
-mlc_set_name(dyn::data);
-mlc_set_name(dyn::NilClass);
-
-template <>
-struct mlc_name2 <dyn::data>
-{
-  static std::string of(const dyn::data& d) { return d.type(); }
-};
 
 #endif

@@ -34,9 +34,11 @@ end
 
 class FunctionLoader
   attr_reader :identifier, :path, :name, :args, :includes, :include_dirs,
-              :lib_path, :sym, :options
+              :lib_path, :sym, :options, :cflags, :ldflags
   @@default_includes ||= []
   @@default_post_includes ||= []
+  @@default_cflags ||= []
+  @@default_ldflags ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, options={} )
     kind, path, name, args = identifier.split '__'
@@ -44,6 +46,8 @@ class FunctionLoader
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
+    @cflags = @@default_cflags.dup
+    @ldflags = @@default_ldflags.dup
     @identifier = identifier
     @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
@@ -97,6 +101,7 @@ class FunctionLoader
         vars << 'return ret;'
       when :proc
         vars << call + ';' << 'return nil;'
+        # vars << call + ';' << 'data ret;' << 'return ret;'
       when :op
         @name.gsub!('operator', '')
         call =
@@ -149,9 +154,10 @@ class FunctionLoader
     lib_ext = 'so'
     @lib_path = repository + "#@basename.#{lib_ext}"
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
+    cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
     out = repository + 'g++.out'
     object_file = file.to_s.gsub('.cc', '.o')
-    cmd = "(#{CXX} #{CFLAGS} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{LDFLAGS} #{object_file} -o #{lib_path}) 2> #{out}"
+    cmd = "(#{CXX} #{CFLAGS} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{SHARED} #{object_file} #{LDFLAGS} #{ldflags} -o #{lib_path}) 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else
@@ -161,10 +167,12 @@ class FunctionLoader
         @kind = kind.to_s.gsub('fun', 'proc').to_sym
         return compile
       end
+      short_name = 'dynamic_function_wrapper'
       STDERR.puts cmd
       STDERR.puts out_s.
-        gsub(/^#{Regexp.quote(file)}:/, "[[#@name]]:").
-        gsub(/dyn::generated::#{Regexp.quote(@identifier)}/, @name.to_s)
+        sub(/^#{Regexp.quote(file)}:/, "[[#@name as #{short_name}]]:").
+        gsub(/^#{Regexp.quote(file)}:/, "[[#{short_name}]]:").
+        gsub(/dyn::generated::#{Regexp.quote(@identifier)}/, short_name)
       exit! 1
     end
   end
@@ -219,6 +227,12 @@ class FunctionLoader
     def include_dir ( path )
       x = Pathname.new(path).expand_path
       @@default_include_dirs << x unless @@default_include_dirs.include? x
+    end
+    def cflags ( elt )
+      @@default_cflags << elt unless @@default_cflags.include? elt
+    end
+    def ldflags ( elt )
+      @@default_ldflags << elt unless @@default_ldflags.include? elt
     end
     def include ( path )
       x = Pathname.new(path)
