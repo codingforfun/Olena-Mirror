@@ -136,16 +136,11 @@ class Dumper
       name = (@namespace + [node_name]).join('::')
       return if @qualified_names.include? name
       @qualified_names << name
-      if tree.type == 'void'
-        type = 'proc'
-      else
-        type = 'fun '
-      end
       if @states.last == 'struct'
         @all_methods[node_name] =
-          ["#{type} #{node_name};", "#{node_name}(\"#{name}\", \"method\", \"#{@includes.last}\")"]
+          ["fun #{node_name};", "#{node_name}(\"#{name}\", \"method\", \"#{@includes.last}\")"]
       else
-        puts "#{type} #{node_name}(\"#{name}\", \"#{@includes.last}\");"
+        puts "fun #{node_name}(\"#{name}\", \"#{@includes.last}\");"
       end
     when 'include'
       @includes << tree.name

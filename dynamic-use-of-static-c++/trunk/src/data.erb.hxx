@@ -50,7 +50,7 @@ namespace dyn {
   data& data::operator=(const T& rhs)
   {
     assert(proxy_);
-    static proc dyn_data_assign(std::string("data_assign<") + proxy()->type() + ", " + mlc_name<T>::of() + ">");
+    static fun dyn_data_assign(std::string("data_assign<") + proxy()->type() + ", " + mlc_name<T>::of() + ">");
     dyn_data_assign(*this, rhs);
     return *this;
   }
@@ -85,7 +85,7 @@ namespace dyn {
     op operator_star("*");
     op operator_equal("==");
     op operator_not_equal("!=");
-    fun operator_square_brackets("operator[]", "method, lvalue");
+    fun operator_square_brackets("operator[]", "method");
   }
 
   // FIXME

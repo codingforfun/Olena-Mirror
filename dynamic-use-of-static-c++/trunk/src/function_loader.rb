@@ -81,7 +81,7 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references cause they are forbidden on lhs
-      first_type_is_ptr ||= type =~ /\*\s*>\s*$/
+      first_type_is_ptr ||= type =~ /\*\s*(const)\s*>\s*$/
       arguments << "const data& #{arg}"
       call_args << "#{arg}_reinterpret_cast_ptr->obj()"
       vars << "#{type}* #{arg}_reinterpret_cast_ptr = " +
@@ -94,31 +94,23 @@ class FunctionLoader
     else
       call = "#@name(#{call_args.join(', ')})"
     end
-    tag = (options[:lvalue])? ', (dyn::tag::lvalue*)0' : ', (dyn::tag::by_copy*)0'
     case kind
-      when :fun
-        vars << "data ret(#{call}#{tag});"
-        vars << 'return ret;'
-      when :proc
-        vars << call + ';' << 'return nil;'
-        # vars << call + ';' << 'data ret;' << 'return ret;'
-      when :op
-        @name.gsub!('operator', '')
-        call =
-          case call_args.size
-          when 1 then "#{@name}(#{call_args.first})"
-          when 2 then "(#{call_args.shift}) #{@name} (#{call_args.shift})"
-          else raise
-          end
-        vars << "data ret(#{call}#{tag});"
+      when :fun, :op
+        if kind == :op
+          @name.gsub!('operator', '')
+          call =
+            case call_args.size
+            when 1 then "#{@name}(#{call_args.first})"
+            when 2 then "(#{call_args.shift}) #{@name} (#{call_args.shift})"
+            else raise
+            end
+        end
+        vars << "policy::receiver<select_dyn_policy((#{call}))> receiver;"
+        vars << "(receiver(), #{call});"
+        vars << "data ret(receiver.proxy(), (proxy_tag*)0);"
         vars << 'return ret;'
       when :ctor
-#        long_name = "::dyn::#@name::#{@name}__class".gsub('::::', '::')
-        # ret_type = "::dyn::Object"
         vars << "return *(new #@name(#{call_args.join(', ')}));"
-      when :ctor2
-        vars << "#@name ret(#{call_args.join(', ')});"
-        vars << 'return ret;'
       else raise "Unknown kind: #{kind}"
     end
     str = ''
@@ -162,11 +154,6 @@ class FunctionLoader
       out.unlink if out.exist?
     else
       out_s = out.read
-      if kind.to_s =~ /fun/ and out_s =~ gcc_void_error
-        STDERR.puts 'Not a function, try to compile a procedure'
-        @kind = kind.to_s.gsub('fun', 'proc').to_sym
-        return compile
-      end
       short_name = 'dynamic_function_wrapper'
       STDERR.puts cmd
       STDERR.puts out_s.
@@ -202,11 +189,6 @@ class FunctionLoader
   end
   def to_s
     "#@name(#{@args.join(', ')})" + ((@path.to_s.empty?)? '' : " in #@path")
-  end
-  def gcc_void_error
-    /( conversion\sfrom\s[`']void'\sto\snon-scalar\stype\s[`']dyn::data'\s
-     | invalid\suse\sof\svoid\sexpression
-     )/x
   end
   def repository
     repository = Pathname.new('repository')

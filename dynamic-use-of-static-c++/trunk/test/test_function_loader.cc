@@ -11,7 +11,7 @@ int main()
   dyn::include_dir(DYNDIR);
   dyn::include_dir("fixtures");
 
-  dyn::proc dfoo1("foo1", "my_lib/lib.hh"); // With the include
+  dyn::fun dfoo1("foo1", "my_lib/lib.hh"); // With the include
 
   dyn::include("my_lib/lib.hh"); // setup a default include
 

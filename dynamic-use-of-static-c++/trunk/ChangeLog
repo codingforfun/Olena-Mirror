@@ -1,3 +1,23 @@
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Automatic void detection, and automatic referencing for ret values.
+
+	* src/policy.hh: New. Use few C++ tricks to get rid of void functions,
+	and detect functions returning references and const references.
+	* src/data.erb.hh,
+	* src/data.erb.hxx,
+	* src/function_loader.rb: Update to the new policy system.
+	* src/function.erb.hh: Remove proc and ctor2.
+	* src/cxx_symbols.rb: Better const handling.
+	* src/dyn.hh: Update.
+	* bin/yaml_to_dyn_decls: No more generate proc decls.
+
+	* lib/libiberty-macos.a: Use a new and patched version (no use of environ).
+
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_function_loader.cc: Replace proc by fun.
+
 2005-11-24  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Merge the demangling branch into the trunk.

@@ -32,9 +32,9 @@ int main()
 
   std::cout << d2 << std::endl;
 
-  proc dyn_foo("foo");
-  proc dyn_print_noarg("print_noarg", "method");
-  proc dyn_change("change");
+  fun  dyn_foo("foo");
+  fun  dyn_print_noarg("print_noarg", "method");
+  fun  dyn_change("change");
   ctor mk_down_char("down<char>");
   ctor mk_down_int("down<int>");
   fun  dyn_get_i("get_i", "method");

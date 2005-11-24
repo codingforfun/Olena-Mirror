@@ -7,8 +7,8 @@ int main()
   dyn::include_dir(OLENA_PROTO_STL_STYLE);
   dyn::include("all.hh");
 
-  proc iota("iota");
-  proc println_2d("println_2d");
+  fun  iota("iota");
+  fun  println_2d("println_2d");
   ctor mk_image2d_int("image2d<int>");
 
   var ima = mk_image2d_int(3, 3);

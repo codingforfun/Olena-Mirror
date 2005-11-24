@@ -94,6 +94,7 @@ class EncodedSymbol
   @@operators.to_a.sort{|x,y| y.first.size <=> x.first.size}.each do |k, v|
     enc "operator#{v}".to_sym, "operator#{v}".upcase.gsub('_', '').to_sym, "operator#{k}"
   end
+  enc :const,      :CONST, /\bconst\b/
   enc :underscore, :U, ?_
   enc :slash,      :S, ?/
   enc :dot,        :D, ?.
@@ -101,7 +102,6 @@ class EncodedSymbol
   enc :left,       :L, '< '
   enc :right,      :R, ' >'
   enc :ref,        :REF, ?&
-  enc :const,      :CONST, /\bconst\b/
   enc :ptr,        :PTR, ?*
   enc :namespace,  :N, '::'
   enc :comma,      :C, ', '

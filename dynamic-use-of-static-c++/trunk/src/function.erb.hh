@@ -40,7 +40,7 @@ namespace dyn
     const data* obj_ptr_;
   };
 
-  <% %w[ fun proc ctor ctor2 ].each do |name| %>
+  <% %w[ fun ctor ].each do |name| %>
   struct <%= name %> : public generic_fun
   {
     <%= name %>(const std::string name,

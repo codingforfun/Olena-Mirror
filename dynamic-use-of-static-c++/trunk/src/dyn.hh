@@ -18,7 +18,10 @@ namespace dyn
       var() : data() { logger << "var()" << std::endl; }
 
       template <class T>
-      var(const T& obj) : data(obj, (tag::by_copy*)0) { logger << "var(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl; } // lvalue ?
+      var(const T& obj) : data((abstract_data*)new data_proxy_by_cpy<T>(obj), (proxy_tag*)0)
+      {
+        logger << "var(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
+      }
 
       template <class T>
       var(T& obj) : data(obj) { logger << "var(T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl; }
@@ -42,7 +45,6 @@ namespace dyn
     };
 
     typedef ::dyn::fun  fun;
-    typedef ::dyn::proc proc;
     typedef ::dyn::ctor ctor;
   }
 }

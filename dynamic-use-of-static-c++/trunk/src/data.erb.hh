@@ -7,9 +7,6 @@
 # include "function.hh"
 # include "name_of.hh"
 
-template <typename T>
-struct dyn_choose_data_proxy;
-
 # ifdef DYNDEBUG
 #  include <iostream>
 # else
@@ -34,6 +31,20 @@ namespace dyn {
     struct var;
   }
 
+  namespace policy
+  {
+    enum type
+    {
+      none     = 0,
+      is_const = 1,
+      is_ref   = 2,
+      is_ptr   = 4,
+      is_pod   = 8,
+      is_void  = 16,
+    };
+  }
+  struct proxy_tag;
+
   // data  -->  abstract_data
   //                 ^
   //                 |
@@ -55,6 +66,19 @@ namespace dyn {
   template <class T>
   struct data_proxy : public abstract_data
   {
+#   define gen_ctor                                      \
+    data_proxy()                                         \
+    {                                                    \
+      logger << "ctor: " << proxy_type() << std::endl;   \
+    }
+
+#   define gen_proxy_type                       \
+    virtual std::string proxy_type() const      \
+    {                                           \
+      return mlc_name_of(*this);                \
+    }
+
+    gen_proxy_type
 
     template <typename V>
     operator V() const
@@ -69,28 +93,20 @@ namespace dyn {
     }
 
     virtual const T& const_ref() const = 0;
-
-    protected:
-    data_proxy() {}
   };
 
 
   template <class T>
   struct data_proxy_by_ptr : public data_proxy<T>
   {
-    data_proxy_by_ptr(const T* obj) : data_proxy<T>(obj) {
-      logger << "data_proxy by ptr " << mlc_name_of(obj) << ", ptr: " << obj << std::endl;
-    }
+    data_proxy_by_ptr(const T* obj) { logger << "ctor: " << proxy_type() << std::endl; }
 
     virtual data_proxy_by_ptr<T>* clone() const
     {
       return new data_proxy_by_ptr<T>(p_obj_);
     }
 
-    virtual std::string proxy_type() const
-    {
-      return mlc_name_of(*this);
-    }
+    gen_proxy_type
 
     virtual const T& const_ref() const
     {
@@ -106,36 +122,9 @@ namespace dyn {
 
 
   template <class T>
-  struct data_proxy_by_const_ref : public data_proxy<T>
-  {
-    data_proxy_by_const_ref(const T& obj) : obj_(obj) {
-      logger << "data_proxy by const ref " << mlc_name_of(obj) << std::endl;
-    }
-
-    virtual data_proxy_by_const_ref<T>* clone() const
-    {
-      return new data_proxy_by_const_ref<T>(obj_);
-    }
-
-    virtual const T& const_ref() const { return obj_; }
-    const T& obj() const { return obj_; }
-
-    virtual std::string proxy_type() const
-    {
-      return mlc_name_of(*this);
-    }
-
-    protected:
-    const T& obj_;
-  };
-
-
-  template <class T>
   struct data_proxy_by_ref : public data_proxy<T>
   {
-    data_proxy_by_ref(T& obj) : obj_(obj) {
-      logger << "data_proxy by ref " << mlc_name_of(obj) << std::endl;
-    }
+    data_proxy_by_ref(T& obj) : obj_(obj) { logger << "ctor: " << proxy_type() << std::endl; }
 
     virtual data_proxy_by_ref<T>* clone() const
     {
@@ -146,21 +135,17 @@ namespace dyn {
     const T& obj() const { return obj_; }
     T& obj() { return obj_; }
 
-    virtual std::string proxy_type() const
-    {
-      return mlc_name_of(*this);
-    }
+    gen_proxy_type
 
     protected:
     T& obj_;
   };
 
+
   template <class T>
   struct data_proxy_by_cpy : public data_proxy<T>
   {
-    data_proxy_by_cpy(const T obj) : obj_(T(obj)) {
-      logger << "data_proxy_by_cpy " << mlc_name_of(obj) << std::endl;
-    }
+    data_proxy_by_cpy(const T obj) : obj_(T(obj)) { logger << "ctor: " << proxy_type() << std::endl; }
 
     virtual data_proxy_by_cpy<T>* clone() const
     {
@@ -171,10 +156,7 @@ namespace dyn {
     const T& obj() const { return obj_; }
     T& obj() { return obj_; }
 
-    virtual std::string proxy_type() const
-    {
-      return mlc_name_of(*this);
-    }
+    gen_proxy_type
 
     protected:
     T obj_;
@@ -187,14 +169,12 @@ namespace dyn {
 
   struct data_nil : public data_proxy<NilClass>
   {
+    data_nil() : nil_object_(NilClass(0)) { logger << "ctor: " << proxy_type() << std::endl; }
     data_nil(const NilClass& nil_object) : nil_object_(nil_object) {}
     const NilClass& const_ref() const { return nil_object_; }
     const NilClass& obj() const { return nil_object_; }
-    virtual data_nil* clone() const { return new data_nil(NilClass(0)); }
-    virtual std::string proxy_type() const
-    {
-      return mlc_name_of(*this);
-    }
+    virtual data_nil* clone() const { return new data_nil; }
+    gen_proxy_type
     const NilClass nil_object_;
   };
 
@@ -215,21 +195,6 @@ namespace dyn {
   {
     lhs = rhs;
   }
-
-  namespace tag
-  {
-    struct by_copy;
-    struct lvalue;
-  }
-
-  template <typename T>
-  struct by_copy;
-
-  template <typename T>
-  struct lvalue;
-
-  template <typename T>
-  struct readonly;
 
   // data
 
@@ -329,7 +294,8 @@ namespace dyn {
     bool is_const()
     {
       std::string type_(type());
-      return type_.find("dyn::data_proxy_by_const_ref<") == 0;
+      return type_.find("dyn::data_proxy_by_ref<") == 0
+          && type_.rfind("const>") == type_.length() - 6;
     }
 
     protected:
@@ -346,45 +312,43 @@ namespace dyn {
 
     data() : proxy_(nil_proxy), INITIALIZE_METHODS_ATTRIBUTES {}
 
-    template <class T>
-    data(const T& obj, const tag::by_copy*) : INITIALIZE_METHODS_ATTRIBUTES
+    data(abstract_data* proxy, proxy_tag*) : INITIALIZE_METHODS_ATTRIBUTES
     {
-      logger << "data(const T& obj, const tag::by_copy*) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-      proxy_ = new typename dyn_choose_data_proxy< by_copy< readonly<T> > >::ret(obj);
+      proxy_ = proxy;
     }
 
     template <class T>
     data(T& obj) : INITIALIZE_METHODS_ATTRIBUTES
     {
       logger << "data(T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-      proxy_ = new typename dyn_choose_data_proxy<T>::ret(obj);
-    }
-
-    template <class T>
-    data(T& obj, const tag::by_copy*) : INITIALIZE_METHODS_ATTRIBUTES
-    {
-      logger << "data(T& obj, const tag::by_copy*) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-      proxy_ = new typename dyn_choose_data_proxy<by_copy<T> >::ret(obj);
-    }
-
-    template <class T>
-    data(T& obj, const tag::lvalue*) : INITIALIZE_METHODS_ATTRIBUTES
-    {
-      logger << "data(T& obj, const tag::lvalue*) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-      proxy_ = new typename dyn_choose_data_proxy< lvalue<T> >::ret(obj);
+      proxy_ = new data_proxy_by_ref<T>(obj);
     }
 
     template <class T>
     data(const T& obj) : INITIALIZE_METHODS_ATTRIBUTES
     {
       logger << "data(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-      proxy_ = new typename dyn_choose_data_proxy< readonly<T> >::ret(obj);
+      proxy_ = new data_proxy_by_ref<const T>(obj);
     }
 
     data(language::var& rhs);
     data(language::val& rhs);
     data(const language::var& rhs);
     data(const language::val& rhs);
+
+    data(data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+    {
+      if (rhs.proxy_ == 0)
+      {
+        logger << "data(data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
+        proxy_ = nil_proxy;
+      }
+      else
+      {
+        logger << "data(data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+        proxy_ = rhs.proxy_->clone();
+      }
+    }
 
     data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
     {
@@ -406,55 +370,24 @@ namespace dyn {
 
 }
 
-template <typename T>
+template <typename T, dyn::policy::type policy>
 struct dyn_choose_data_proxy
 {
-  typedef dyn::data_proxy_by_ref<T> ret;
-};
-
-template <typename T>
-struct dyn_choose_data_proxy< dyn::readonly< T > >
-{
-  typedef dyn::data_proxy_by_const_ref<T> ret;
-};
-
-template <typename T>
-struct dyn_choose_data_proxy< dyn::by_copy<T> >
-{
   typedef dyn::data_proxy_by_cpy<T> ret;
 };
 
 template <typename T>
-struct dyn_choose_data_proxy< dyn::by_copy< dyn::readonly<T> > >
-{
-  typedef dyn::data_proxy_by_cpy<T> ret;
-};
-
-template <typename T>
-struct dyn_choose_data_proxy< dyn::lvalue< T > >
+struct dyn_choose_data_proxy<T, dyn::policy::is_ref>
 {
   typedef dyn::data_proxy_by_ref<T> ret;
 };
 
-template <>
-struct dyn_choose_data_proxy< dyn::NilClass >
+template <typename T>
+struct dyn_choose_data_proxy<T, (dyn::policy::type)(dyn::policy::is_ref + dyn::policy::is_const)>
 {
-  typedef dyn::data_nil ret;
+  typedef dyn::data_proxy_by_ref<T> ret;
 };
 
-#define has_not_cpy_ctor(TYPE)                                          \
-  template <>                                                           \
-  struct dyn_choose_data_proxy< dyn::by_copy< TYPE > >                  \
-  {                                                                     \
-    typedef dyn_choose_data_proxy< TYPE >::ret ret;                     \
-  };                                                                    \
-  template <>                                                           \
-  struct dyn_choose_data_proxy< dyn::by_copy< dyn::readonly< TYPE > > > \
-  {                                                                     \
-    typedef dyn_choose_data_proxy< dyn::readonly< TYPE > >::ret ret;    \
-  }
-
-has_not_cpy_ctor(std::ostream);
-has_not_cpy_ctor(std::istream);
+# include "policy.hh"
 
 #endif
