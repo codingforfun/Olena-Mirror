@@ -107,7 +107,11 @@ class FunctionLoader
         vars << "data ret(receiver.proxy(), (proxy_tag*)0);"
         vars << 'return ret;'
       when :ctor
-        vars << "return *(new #@name(#{call_args.join(', ')}));"
+        vars << "typedef #@name T;"
+        vars << "T* ptr = new T(#{call_args.join(', ')});"
+        vars << "abstract_data* proxy = new data_proxy_by_ptr<T>(ptr);"
+        vars << "data ret(proxy, (proxy_tag*)0);"
+        vars << 'return ret;'
       else raise "Unknown kind: #{kind}"
     end
     str = ''

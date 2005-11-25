@@ -97,10 +97,11 @@ namespace dyn {
   };
 
 
+  // FIXME Perhaps we can use smart pointers here.
   template <class T>
   struct data_proxy_by_ptr : public data_proxy<T>
   {
-    data_proxy_by_ptr(const T* obj) { logger << "ctor: " << proxy_type() << std::endl; }
+    data_proxy_by_ptr(T* obj) : p_obj_(obj) { logger << "ctor: " << proxy_type() << std::endl; }
 
     virtual data_proxy_by_ptr<T>* clone() const
     {
@@ -114,16 +115,22 @@ namespace dyn {
 
     gen_proxy_type
 
-    virtual const T& const_ref() const
+    T& obj()
     {
       assert(p_obj_);
       return *p_obj_;
     }
 
-    const T& obj() const { return const_ref(); }
+    const T& obj() const
+    {
+      assert(p_obj_);
+      return *p_obj_;
+    }
+
+    virtual const T& const_ref() const { return obj(); }
 
     protected:
-    const T* p_obj_;
+    T* p_obj_;
   };
 
 

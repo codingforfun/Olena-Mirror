@@ -1,5 +1,12 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Use a data_proxy_by_ptr values returned by a ctor.
+
+	* src/function_loader.rb: Change the generated code for ctors.
+	* src/data.erb.hh: Some fixes in data_proxy_by_ptr<T>.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Change the data methods extension system.
 
 	* src/data.erb.hh: Declare them.
