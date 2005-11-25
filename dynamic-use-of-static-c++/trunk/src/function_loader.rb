@@ -81,7 +81,7 @@ class FunctionLoader
     args.each_with_index do |a, i|
       arg = "arg#{i}"
       type = a.gsub(/&*$/, '') # remove references cause they are forbidden on lhs
-      first_type_is_ptr ||= type =~ /\*\s*(const)\s*>\s*$/
+      first_type_is_ptr ||= type =~ /\*\s*(const)?\s*>\s*$/
       arguments << "const data& #{arg}"
       call_args << "#{arg}_reinterpret_cast_ptr->obj()"
       vars << "#{type}* #{arg}_reinterpret_cast_ptr = " +

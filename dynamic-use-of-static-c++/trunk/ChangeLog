@@ -1,5 +1,16 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Little fix with the constness.
+
+	* test/test_containers.cc: Restore the "for" loop over a std::vector.
+	* src/function_loader.rb: Make const optional in the first_type_is_ptr
+	regexp.
+	* src/policy.hh: Do not write in cout but in logger. Do not propagate
+	the const here.
+	* src/data.erb.hh: But here.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Automatic void detection, and automatic referencing for ret values.
 
 	* src/policy.hh: New. Use few C++ tricks to get rid of void functions,

@@ -64,7 +64,7 @@ namespace dyn
     template <type policy>
     struct receiver
     {
-      receiver() : proxy_(0) { std::cout << "receiver() [ policy = " << policy << " ]" << std::endl; }
+      receiver() : proxy_(0) { logger << "receiver() [ policy = " << policy << " ]" << std::endl; }
 
       receiver& operator() ()
       {
@@ -83,7 +83,7 @@ namespace dyn
       receiver& operator,(const T& obj)
       {
         logger << "receiver::operator,(const T&) [ T = " << mlc_name<const T>::of() << " ]" << std::endl;
-        proxy_ = new typename dyn_choose_data_proxy<const T, policy>::ret(obj);
+        proxy_ = new typename dyn_choose_data_proxy<T, policy>::ret(obj);
         return *this;
       }
 

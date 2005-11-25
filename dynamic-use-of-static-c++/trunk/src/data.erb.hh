@@ -385,7 +385,7 @@ struct dyn_choose_data_proxy<T, dyn::policy::is_ref>
 template <typename T>
 struct dyn_choose_data_proxy<T, (dyn::policy::type)(dyn::policy::is_ref + dyn::policy::is_const)>
 {
-  typedef dyn::data_proxy_by_ref<T> ret;
+  typedef dyn::data_proxy_by_ref<const T> ret;
 };
 
 # include "policy.hh"

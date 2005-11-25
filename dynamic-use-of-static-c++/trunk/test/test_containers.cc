@@ -78,14 +78,12 @@ int main()
   assert((bool)(*tmp1 == *tmp2));
   assert((bool)(tmp1 == tmp2));
   assert((bool)(end(dv) == v.end()));
-  // int i = 0;
+  int i = 0;
   // stl_each(v, i)
-  // for (dit = begin(dv); diff(dit, end(dv)) && i < 42; incr(dit), ++i)
-  // std::vector<int>::iterator tmp;
-  // for (dit = begin(dv); v.end() != dit; ++dit, ++i)
-  // {
-    // std::cout << i << ": " << *dit << std::endl;
-  // }
+  for (dit = begin(dv); v.end() != dit && i < 20; ++dit, ++i)
+    std::cout << i << ": " << *dit << std::endl;
+
+  assert(i == 4);
 
   echo("exiting");
   return 0;
