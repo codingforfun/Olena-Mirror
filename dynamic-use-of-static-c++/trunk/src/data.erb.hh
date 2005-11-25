@@ -273,6 +273,8 @@ namespace dyn {
     template <typename T>
     const T& get_ref_on() const;
 
+    const data& get_const_ref() const;
+
     std::string& const_stripping(std::string& str) const
     {
       size_t pos;

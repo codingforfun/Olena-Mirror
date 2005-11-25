@@ -1,5 +1,12 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Revert the previous patch.
+
+	* src/data.erb.hxx, src/data.erb.hh: Restore this useful piece
+      of code.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Remove a FIXME and some useless code.
 
 	* src/data.erb.hh, src/data.erb.hxx: Remove data::get_const_ref and the
