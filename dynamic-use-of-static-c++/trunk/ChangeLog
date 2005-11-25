@@ -1,5 +1,12 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Factor cpy ctors.
+
+	* src/data.erb.hh, src/data.erb.hxx:
+	Clean, unify and factor the cpy ctors, and assignments operators.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Little fix with the constness.
 
 	* test/test_containers.cc: Restore the "for" loop over a std::vector.

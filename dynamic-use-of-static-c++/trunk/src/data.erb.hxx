@@ -104,40 +104,28 @@ namespace dyn {
     return internal::operator_square_brackets(*this, at);
   }
 
-  data::data(const language::var& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  data::data(const language::var& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(const language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != nil_proxy)
-      proxy_ = rhs.proxy_->clone();
-    else
-      proxy_ = nil_proxy;
+    assign(rhs);
   }
 
-  data::data(const language::val& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  data::data(const language::val& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(const language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != nil_proxy)
-      proxy_ = rhs.proxy_->clone();
-    else
-      proxy_ = nil_proxy;
+    assign(rhs);
   }
 
-  data::data(language::var& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  data::data(language::var& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != nil_proxy)
-      proxy_ = rhs.proxy_->clone();
-    else
-      proxy_ = nil_proxy;
+    assign(rhs);
   }
 
-  data::data(language::val& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+  data::data(language::val& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
   {
     logger << "data(language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-    if (rhs.proxy_ != nil_proxy)
-      proxy_ = rhs.proxy_->clone(); // FIXME should copy it's contents not just the proxy
-    else
-      proxy_ = nil_proxy;
+    assign(rhs); // FIXME should copy it's contents not just the proxy
   }
 }
 

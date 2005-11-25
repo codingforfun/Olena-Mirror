@@ -201,16 +201,27 @@ namespace dyn {
   struct data
   {
 
-    data& operator=(const data& rhs)
+    data& assign(const data& rhs)
     {
       if (&rhs == this) return *this;
-      assert(rhs.proxy_);
-      assert(rhs.proxy_ != proxy_);
-      // if (proxy_ != 0)
-        // delete proxy_;
-      proxy_ = rhs.proxy_->clone();
+      if (rhs.proxy_ == 0)
+      {
+        logger << "operator=(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
+        proxy_ = nil_proxy;
+      }
+      else
+      {
+        assert(rhs.proxy_ != proxy_);
+        // if (proxy_ != 0)
+        //   delete proxy_;
+        proxy_ = rhs.proxy_->clone();
+      }
       return *this;
     }
+
+    data& operator=(const data& rhs) { return assign(rhs); }
+
+    data& operator=(data& rhs) { return assign(rhs); }
 
 
     template <typename T>
@@ -336,32 +347,16 @@ namespace dyn {
     data(const language::var& rhs);
     data(const language::val& rhs);
 
-    data(data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+    data(data& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
     {
-      if (rhs.proxy_ == 0)
-      {
-        logger << "data(data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
-        proxy_ = nil_proxy;
-      }
-      else
-      {
-        logger << "data(data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-        proxy_ = rhs.proxy_->clone();
-      }
+      logger << "data(data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+      assign(rhs);
     }
 
-    data(const data& rhs) : INITIALIZE_METHODS_ATTRIBUTES
+    data(const data& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
     {
-      if (rhs.proxy_ == 0)
-      {
-        logger << "data(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
-        proxy_ = nil_proxy;
-      }
-      else
-      {
-        logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
-        proxy_ = rhs.proxy_->clone();
-      }
+      logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
+      assign(rhs);
     }
 
   };
