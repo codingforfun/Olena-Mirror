@@ -79,8 +79,8 @@ int main()
 
   echo("val_str5");
   val val_str5(var_str1);
-  assert(not val_str5.is_const()); // FIXME should be const
-  val_str5[0] = 'b';               // FIXME should not compile
+  assert(val_str5.is_const());
+  // val_str5[0] = 'b'; // Does not compile
   assert(val_str5 == "b youhou");
 
   echo("var_str6");

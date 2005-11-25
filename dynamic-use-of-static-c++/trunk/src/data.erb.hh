@@ -56,6 +56,7 @@ namespace dyn {
   struct abstract_data
   {
     virtual abstract_data* clone() const = 0;
+    virtual abstract_data* const_clone() const { return clone(); }
     virtual std::string proxy_type() const = 0;
     virtual std::string type() const = 0;
     virtual ~abstract_data() {}
@@ -106,6 +107,11 @@ namespace dyn {
       return new data_proxy_by_ptr<T>(p_obj_);
     }
 
+    virtual data_proxy_by_ptr<const T>* const_clone() const
+    {
+      return new data_proxy_by_ptr<const T>(p_obj_);
+    }
+
     gen_proxy_type
 
     virtual const T& const_ref() const
@@ -131,6 +137,11 @@ namespace dyn {
       return new data_proxy_by_ref<T>(obj_);
     }
 
+    virtual data_proxy_by_ref<const T>* const_clone() const
+    {
+      return new data_proxy_by_ref<const T>(obj_);
+    }
+
     virtual const T& const_ref() const { return obj_; }
     const T& obj() const { return obj_; }
     T& obj() { return obj_; }
@@ -152,6 +163,11 @@ namespace dyn {
       return new data_proxy_by_cpy<T>(obj_);
     }
 
+    virtual data_proxy_by_cpy<const T>* const_clone() const
+    {
+      return new data_proxy_by_cpy<const T>(obj_);
+    }
+
     virtual const T& const_ref() const { return obj_; }
     const T& obj() const { return obj_; }
     T& obj() { return obj_; }
@@ -161,6 +177,7 @@ namespace dyn {
     protected:
     T obj_;
   };
+
 
   struct NilClass
   {
@@ -206,7 +223,7 @@ namespace dyn {
       if (&rhs == this) return *this;
       if (rhs.proxy_ == 0)
       {
-        logger << "operator=(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
+        logger << "assign(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
         proxy_ = nil_proxy;
       }
       else
@@ -215,6 +232,24 @@ namespace dyn {
         // if (proxy_ != 0)
         //   delete proxy_;
         proxy_ = rhs.proxy_->clone();
+      }
+      return *this;
+    }
+
+    data& const_assign(const data& rhs)
+    {
+      if (&rhs == this) return *this;
+      if (rhs.proxy_ == 0)
+      {
+        logger << "const_assign(const data& rhs) [ rhs.proxy_ == 0 ]" << std::endl;
+        proxy_ = nil_proxy;
+      }
+      else
+      {
+        assert(rhs.proxy_ != proxy_);
+        // if (proxy_ != 0)
+        //   delete proxy_;
+        proxy_ = rhs.proxy_->const_clone();
       }
       return *this;
     }

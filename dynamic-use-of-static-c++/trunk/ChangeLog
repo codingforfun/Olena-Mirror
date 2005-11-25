@@ -1,5 +1,13 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Make works the var -> val conversion.
+
+	* src/dyn.hh: Use const_assign.
+	* src/data.erb.hh: Implement it.
+	* test/test_var_and_val.cc: Remove the FIXME about that.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Factor cpy ctors.
 
 	* src/data.erb.hh, src/data.erb.hxx:

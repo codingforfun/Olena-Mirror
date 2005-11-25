@@ -40,7 +40,10 @@ namespace dyn
       val(const T& obj) : data(obj) { logger << "val(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl; }
 
       val(const data& rhs) : data(rhs) { logger << "val(const data& rhs)" << std::endl; }
-      val(const var& rhs)  : data(rhs) { logger << "val(const var& rhs)" << std::endl; }
+      val(const var& rhs) : data() {
+        logger << "val(const var& rhs)" << std::endl;
+        const_assign(rhs);
+      }
       val(const val& rhs)  : data(rhs) { logger << "val(const val& rhs)" << std::endl; }
     };
 
