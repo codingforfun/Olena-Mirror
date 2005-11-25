@@ -3,6 +3,8 @@
 
 # include "config.hh"
 
+# define DYN_FULL_IMPLEMENTATION
+
 # include "data.hh"
 
 # include "function.hxx"

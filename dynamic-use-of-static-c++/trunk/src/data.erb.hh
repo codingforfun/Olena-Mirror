@@ -326,17 +326,6 @@ namespace dyn {
       return proxy_;
     }
 
-
-    <%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
-
-      <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
-      data
-      send(<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
-
-    <%- end -%>
-
-    fun method(const std::string& method_name);
-
     bool is_const()
     {
       std::string type_(type());
@@ -344,34 +333,19 @@ namespace dyn {
           && type_.rfind("const>") == type_.length() - 6;
     }
 
-    protected:
-    abstract_data* proxy_;
+    data() : proxy_(nil_proxy) {}
 
-    public:
-
-    #include "data_gen.hh"
-
-#   ifndef INITIALIZE_METHODS_ATTRIBUTES
-#   define INITIALIZE_METHODS_ATTRIBUTES fake_method("fake_method", "method", "", this)
-    fun fake_method;
-#   endif
-
-    data() : proxy_(nil_proxy), INITIALIZE_METHODS_ATTRIBUTES {}
-
-    data(abstract_data* proxy, proxy_tag*) : INITIALIZE_METHODS_ATTRIBUTES
-    {
-      proxy_ = proxy;
-    }
+    data(abstract_data* proxy, proxy_tag*) : proxy_(proxy) {}
 
     template <class T>
-    data(T& obj) : INITIALIZE_METHODS_ATTRIBUTES
+    data(T& obj)
     {
       logger << "data(T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
       proxy_ = new data_proxy_by_ref<T>(obj);
     }
 
     template <class T>
-    data(const T& obj) : INITIALIZE_METHODS_ATTRIBUTES
+    data(const T& obj)
     {
       logger << "data(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
       proxy_ = new data_proxy_by_ref<const T>(obj);
@@ -382,18 +356,32 @@ namespace dyn {
     data(const language::var& rhs);
     data(const language::val& rhs);
 
-    data(data& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+    data(data& rhs) : proxy_(0)
     {
       logger << "data(data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
       assign(rhs);
     }
 
-    data(const data& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+    data(const data& rhs) : proxy_(0)
     {
       logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
       assign(rhs);
     }
 
+#   ifdef DYN_FULL_IMPLEMENTATION
+<%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
+  <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
+    <%- ALL_METHODS.each do |meth, includes| -%>
+    data <%= meth %>(<%= arguments.join(', ') %>) const;
+    <%- end -%>
+    data send(<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
+  <%- end -%>
+
+    fun method(const std::string& method_name);
+#   endif
+
+    protected:
+      abstract_data* proxy_;
   };
 
   const data nil;

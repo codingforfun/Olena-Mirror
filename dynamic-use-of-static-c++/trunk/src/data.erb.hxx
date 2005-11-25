@@ -56,20 +56,6 @@ namespace dyn {
   }
 
 
-  <%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
-
-    <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
-    <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
-
-    data
-    data::send (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
-    {
-      fun meth(meth_name, "method");
-      return meth(<%= (['*this'] + objects).join(', ') %>);
-    }
-
-  <%- end -%>
-
   fun data::method(const std::string& method_name)
   {
     fun m(method_name, "method", "", this);
@@ -103,25 +89,25 @@ namespace dyn {
     return internal::operator_square_brackets(*this, at);
   }
 
-  data::data(const language::var& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+  data::data(const language::var& rhs) : proxy_(0)
   {
     logger << "data(const language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
     assign(rhs);
   }
 
-  data::data(const language::val& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+  data::data(const language::val& rhs) : proxy_(0)
   {
     logger << "data(const language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
     assign(rhs);
   }
 
-  data::data(language::var& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+  data::data(language::var& rhs) : proxy_(0)
   {
     logger << "data(language::var& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
     assign(rhs);
   }
 
-  data::data(language::val& rhs) : proxy_(0), INITIALIZE_METHODS_ATTRIBUTES
+  data::data(language::val& rhs) : proxy_(0)
   {
     logger << "data(language::val& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
     assign(rhs); // FIXME should copy it's contents not just the proxy
@@ -166,5 +152,30 @@ dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs)
   return dyn::internal::operator_plus(lhs, rhs);
 }
 
+namespace dyn
+{
+<%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
+  <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
+  <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
+
+  data
+  data::send (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
+  {
+    fun meth(meth_name, "method");
+    return meth(<%= (['*this'] + objects).join(', ') %>);
+  }
+
+  <%- ALL_METHODS.each do |meth_name, includes| -%>
+
+  data
+  data::<%= meth_name %> (<%= arguments.join(', ') %>) const
+  {
+    fun meth("<%= meth_name %>", "method", "<%= includes.join(':') %>");
+    return meth(<%= (['*this'] + objects).join(', ') %>);
+  }
+
+  <%- end -%>
+<%- end -%>
+}
 
 #endif

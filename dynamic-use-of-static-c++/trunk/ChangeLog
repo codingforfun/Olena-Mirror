@@ -1,5 +1,16 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Change the data methods extension system.
+
+	* src/data.erb.hh: Declare them.
+	* src/data.erb.hxx: Implement them.
+	* configure: Give it as argument the file containing your methods.
+	* src/dyn.hh: Define DYN_FULL_IMPLEMENTATION.
+	* bin/yaml_to_dyn_decls: Generate methods with the new format.
+	* test/vaucanson/Makefile.in: Update.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Higly simplify the arguments handling.
 
 	* src/function_loader.rb: No more stringify then parse arguments.

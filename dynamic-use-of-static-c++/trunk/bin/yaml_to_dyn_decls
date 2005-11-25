@@ -137,8 +137,8 @@ class Dumper
       return if @qualified_names.include? name
       @qualified_names << name
       if @states.last == 'struct'
-        @all_methods[node_name] =
-          ["fun #{node_name};", "#{node_name}(\"#{name}\", \"method\", \"#{@includes.last}\")"]
+        @all_methods[node_name] ||= Set.new
+        @all_methods[node_name] << @includes.last
       else
         puts "fun #{node_name}(\"#{name}\", \"#{@includes.last}\");"
       end
@@ -150,13 +150,8 @@ class Dumper
       # dump "dyn::ctor(#{convert_params(tree.parms)})"
     end
   end
-  def print_data_gen
-    ctor_init = []
-    @all_methods.each do |k, meth|
-      ctor_init << meth.last
-      puts meth.first
-    end
-    @io.puts "#define INITIALIZE_METHODS_ATTRIBUTES \\\n  " + ctor_init.join(", \\\n  ")
+  def print_all_methods
+    puts @all_methods.to_yaml
   end
   def print_mlc_set_names
     @mlc_set_names.each do |mlc_set_name|
@@ -178,10 +173,10 @@ File.open('dyn_vaucanson_dyn_mirror.hh', 'w') do |dyn_vaucanson_dyn_mirror_hh|
   end
 end
 puts '// ------------------------------------------------ '
-puts '// data_gen.hh'
-File.open('data_gen.hh', 'w') do |data_gen_hh|
-  dumper.with(data_gen_hh) do
-    dumper.print_data_gen
+puts '// all_methods.yml'
+File.open('dyn_vaucanson_methods.yml', 'w') do |all_methods_yml|
+  dumper.with(all_methods_yml) do
+    dumper.print_all_methods
   end
 end
 puts '// ------------------------------------------------ '
