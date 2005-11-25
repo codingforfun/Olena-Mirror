@@ -40,7 +40,7 @@ class FunctionLoader
   @@default_cflags ||= []
   @@default_ldflags ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
-  def initialize ( identifier, options={} )
+  def initialize ( identifier, arguments=[], options={} )
     kind, path, name, args = identifier.split '__'
     @options = options
     @includes = @@default_includes.dup
@@ -51,9 +51,9 @@ class FunctionLoader
     @identifier = identifier
     @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
+    @args = arguments
     self.path = path
     self.name = name
-    self.args = args || ''
   end
   def split ( aString )
     aString.split('_').map do |x|
@@ -66,9 +66,6 @@ class FunctionLoader
   end
   def name= ( name )
     @name = split(name).stringify.join
-  end
-  def args= ( args )
-    @args = ArgParser.new(split(args).reverse).parse
   end
   def kind
     @kind
@@ -204,7 +201,8 @@ class FunctionLoader
         next if x.empty?
         opts[x.to_sym] = true
       end
-      new(identifier, opts).get_function
+      arguments.delete_if { |x| x.empty? }
+      new(identifier, arguments, opts).get_function
     end
     def include_dir ( path )
       x = Pathname.new(path).expand_path
@@ -223,49 +221,6 @@ class FunctionLoader
     def post_include ( path )
       x = Pathname.new(path)
       @@default_post_includes << x unless @@default_post_includes.include? x
-    end
-  end
-
-  class ArgParser
-    attr_reader :stack, :result, :current, :top
-    def initialize ( stack )
-      @stack = stack
-      @current = []
-      @result = []
-      @top = nil
-    end
-    def template_args
-      current << top
-      until stack.empty?
-        case (top = stack.pop).code
-        when :R
-          current << top
-          return
-        when :L
-          template_args
-        else
-          current << top
-        end
-      end
-      raise
-    end
-    def args
-      until stack.empty?
-        case (@top = stack.pop).code
-        when :C
-          result << current.stringify.join
-          current.clear
-        when :L
-          template_args
-        else
-          current << top
-        end
-      end
-      result << current.stringify.join unless current.empty?
-    end
-    def parse
-      args
-      result
     end
   end
 

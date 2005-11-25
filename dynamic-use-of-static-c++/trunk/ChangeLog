@@ -1,5 +1,11 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Higly simplify the arguments handling.
+
+	* src/function_loader.rb: No more stringify then parse arguments.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Revert the previous patch.
 
 	* src/data.erb.hxx, src/data.erb.hh: Restore this useful piece
