@@ -1,5 +1,12 @@
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Remove a FIXME and some useless code.
+
+	* src/data.erb.hh, src/data.erb.hxx: Remove data::get_const_ref and the
+	const version of operator*.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Make works the var -> val conversion.
 
 	* src/dyn.hh: Use const_assign.

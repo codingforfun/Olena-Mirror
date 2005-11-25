@@ -40,12 +40,6 @@ namespace dyn {
   }
 
 
-  const data& data::get_const_ref() const
-  {
-    return *this;
-  }
-
-
   template <typename T>
   data& data::operator=(const T& rhs)
   {
@@ -86,12 +80,6 @@ namespace dyn {
     op operator_equal("==");
     op operator_not_equal("!=");
     fun operator_square_brackets("operator[]", "method");
-  }
-
-  // FIXME
-  const data& data::operator*() const
-  {
-    return internal::operator_star(*this).get_const_ref();
   }
 
   data data::operator*()
