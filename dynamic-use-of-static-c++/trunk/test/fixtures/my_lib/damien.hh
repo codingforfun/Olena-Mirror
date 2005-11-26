@@ -2,7 +2,6 @@
 #define DAMIEN_HH
 
 #include <iostream>
-#include "name_of.hh"
 
 struct up
 {

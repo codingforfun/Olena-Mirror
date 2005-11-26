@@ -7,7 +7,7 @@
 
 # include "data.hh"
 
-# include "function.hxx"
+# include "function.hh"
 
 namespace dyn
 {
@@ -53,9 +53,6 @@ namespace dyn
     typedef ::dyn::ctor ctor;
   }
 }
-
-
-# include "data.hxx"
 
 # include "function_loader.hh"
 

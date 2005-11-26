@@ -6,20 +6,7 @@
 
 # ifndef NO_COMPILER_DEMANGLING
 
-extern "C" {
-# include "demangle.h"
-}
-
-#define DEMANGLE_OPTIONS DMGL_VERBOSE | DMGL_TYPES | DMGL_ANSI | DMGL_PARAMS
-
-std::string demangle(const char* name)
-{
-  std::string result(cplus_demangle(name, DEMANGLE_OPTIONS));
-  size_t pos;
-  if ((pos = result.find("char_traints")) != std::string::npos)
-    result.replace(pos, 12, "char_traits ");
-  return result;
-}
+std::string demangle(const char* name);
 
 template <class T>
 std::string mlc_name_of(const T&)

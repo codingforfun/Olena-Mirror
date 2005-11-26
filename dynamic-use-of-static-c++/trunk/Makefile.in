@@ -1,0 +1,17 @@
+CXX = @@COMPILE@@
+LDFLAGS = @@LDFLAGS@@ @@STATIC@@ @@LIBERTYARG@@ @@LIBRUBYARG@@
+
+LIB = lib/libdyn.la
+% SRCS = %w[all_methods name_of function ruby_stream function_loader data policy]
+OBJS = <%= SRCS.map { |x| "src/#{x}.o" }.join(' ') %>
+LOBJS = <%= SRCS.map { |x| "src/#{x}.lo" }.join(' ') %>
+
+all: $(LIB)
+
+$(LIB): $(OBJS)
+	@@LINK@@ $(CXXFLAGS) $(LOBJS) $(LDFLAGS) -o $@
+
+clean:
+	rm -f $(LIB) $(LOBJS) $(OBJS)
+
+re: clean all

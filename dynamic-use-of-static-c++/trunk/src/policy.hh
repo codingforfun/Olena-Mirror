@@ -1,6 +1,8 @@
 #ifndef DYN_POLICY_HH
 # define DYN_POLICY_HH
 
+# include "data.hh"
+
 namespace dyn
 {
   namespace policy
@@ -31,7 +33,7 @@ namespace dyn
       template <typename T>
       id_for_pod<N + is_pod> operator, (T) { assert(0); }
     };
-    id_for_pod<2> id_for_pod_2;
+    extern id_for_pod<2> id_for_pod_2;
 
     template <unsigned N>
     struct id_for_ptr_and_ref : id<N>
@@ -46,7 +48,7 @@ namespace dyn
       template <typename T>
       id_for_ptr_and_ref<N + is_ptr + check_is_const<T>::val> operator, (T*) { assert(0); }
     };
-    id_for_ptr_and_ref<2> id_for_ptr_and_ref_2;
+    extern id_for_ptr_and_ref<2> id_for_ptr_and_ref_2;
 
     template <unsigned n>
     struct simplify;

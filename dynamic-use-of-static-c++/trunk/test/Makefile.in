@@ -1,7 +1,4 @@
-CC = @@CXX@@
-CXX = @@CXX@@
-CXXFLAGS = @@CFLAGS@@ -I@@SRCDIR@@ -Ifixtures
-LDFLAGS = @@LIBRUBYARG@@ @@LDFLAGS@@
+CXX = @@COMPILE@@ -Ifixtures
 
 <%-
 TESTS = %w[
@@ -13,11 +10,10 @@ TESTS = %w[
 ]
 -%>
 
-
 <%- TESTS.each do |name| -%>
 
 <%= name %>: test_<%= name %>.o
-	$(CXX) test_<%= name %>.o $(LDFLAGS) -o test_<%= name %>
+	@@LINK@@ test_<%= name %>.lo @@LIBDYNARG@@ -o test_<%= name %>
 	./test_<%= name %>
 
 <%- end -%>
@@ -29,7 +25,7 @@ check: <%= TESTS.join(' ') %>
 
 clean:
 	rm -f <%= TESTS.map{|x| 'test_' + x}.join(' ') %>
-	rm -f *.o
+	rm -f *.o *.lo
 
 repository_clean: clean
 	rm -rf repository

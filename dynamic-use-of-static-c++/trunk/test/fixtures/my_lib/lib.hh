@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iostream>
 #include <sstream> // Warning does not work without me
-#include "name_of.hh"
 #include <vector>
 
 template <class T>

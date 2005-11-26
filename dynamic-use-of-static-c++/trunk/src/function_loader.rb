@@ -115,7 +115,7 @@ class FunctionLoader
       else raise "Unknown kind: #{kind}"
     end
     str = ''
-    (@includes | [Pathname.new('data.hh'), path] | @post_includes).each do |path|
+    (@includes | [Pathname.new('policy.hh'), path] | @post_includes).each do |path|
       next if path.to_s.empty?
       inc = path.to_s
       if inc !~ /["<]/
@@ -150,7 +150,8 @@ class FunctionLoader
     cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
     out = repository + 'g++.out'
     object_file = file.to_s.gsub('.cc', '.o')
-    cmd = "(#{CXX} #{CFLAGS} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && #{CXX} #{SHARED} #{object_file} #{LDFLAGS} #{ldflags} -o #{lib_path}) 2> #{out}"
+    cmd = "(#{COMPILE} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && " +
+          "#{LINK} #{SHARED} #{object_file} #{LIBDYNARG} #{ldflags} -o #{lib_path}) 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else

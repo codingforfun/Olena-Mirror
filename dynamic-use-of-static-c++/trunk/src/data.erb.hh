@@ -3,27 +3,13 @@
 
 # include <string>
 # include <cassert>
-
 # include "function.hh"
 # include "name_of.hh"
-
-# ifdef DYNDEBUG
-#  include <iostream>
-# else
-#  include <fstream>
-# endif
+# include "all_methods.hh"
 
 namespace dyn {
 
-# ifdef DYNDEBUG
-  std::ostream& logger(std::cerr);
-# else
-#  ifdef NDEBUG
-  std::ofstream logger("/dev/null");
-#  else
-  std::ofstream logger("dyn.log");
-#  endif
-# endif
+  extern std::ostream& logger;
 
   namespace language
   {
@@ -202,8 +188,8 @@ namespace dyn {
     const NilClass nil_object_;
   };
 
-  const NilClass nil_object(0);
-  data_nil* nil_proxy = new data_nil(nil_object);
+  extern const NilClass nil_object;
+  extern data_nil* nil_proxy;
 
   template <typename T1, typename T2>
   T2
@@ -222,8 +208,18 @@ namespace dyn {
 
   // data
 
-  struct data
+  struct data : public all_methods
   {
+
+    virtual const data& self() const
+    {
+      return *this;
+    }
+
+    virtual data& self()
+    {
+      return *this;
+    }
 
     data& assign(const data& rhs)
     {
@@ -279,8 +275,6 @@ namespace dyn {
 
     template <typename T>
     const T& get_ref_on() const;
-
-    const data& get_const_ref() const;
 
     std::string& const_stripping(std::string& str) const
     {
@@ -340,19 +334,21 @@ namespace dyn {
           && type_.rfind("const>") == type_.length() - 6;
     }
 
+    fun method(const std::string& method_name);
+
     data() : proxy_(nil_proxy) {}
 
-    data(abstract_data* proxy, proxy_tag*) : proxy_(proxy) {}
+    data(abstract_data* proxy, proxy_tag*) : all_methods(), proxy_(proxy) {}
 
     template <class T>
-    data(T& obj)
+    data(T& obj) : all_methods()
     {
       logger << "data(T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
       proxy_ = new data_proxy_by_ref<T>(obj);
     }
 
     template <class T>
-    data(const T& obj)
+    data(const T& obj) : all_methods()
     {
       logger << "data(const T& obj) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
       proxy_ = new data_proxy_by_ref<const T>(obj);
@@ -363,35 +359,35 @@ namespace dyn {
     data(const language::var& rhs);
     data(const language::val& rhs);
 
-    data(data& rhs) : proxy_(0)
+    data(data& rhs) : all_methods(), proxy_(0)
     {
       logger << "data(data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
       assign(rhs);
     }
 
-    data(const data& rhs) : proxy_(0)
+    data(const data& rhs) : all_methods(), proxy_(0)
     {
       logger << "data(const data& rhs) [ rhs.type() = " << rhs.type() << " ]" << std::endl;
       assign(rhs);
     }
 
-#   ifdef DYN_FULL_IMPLEMENTATION
-<%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
-  <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
-    <%- ALL_METHODS.each do |meth, includes| -%>
-    data <%= meth %>(<%= arguments.join(', ') %>) const;
-    <%- end -%>
-    data send(<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const;
-  <%- end -%>
-
-    fun method(const std::string& method_name);
-#   endif
-
     protected:
       abstract_data* proxy_;
   };
 
-  const data nil;
+  extern const data nil;
+
+  namespace internal {
+    extern op operator_push;
+    extern op operator_pop;
+    extern op operator_incr;
+    extern op operator_decr;
+    extern op operator_plus;
+    extern op operator_star;
+    extern op operator_equal;
+    extern op operator_not_equal;
+    extern fun operator_square_brackets;
+  }
 
 }
 
@@ -413,6 +409,8 @@ struct dyn_choose_data_proxy<T, (dyn::policy::type)(dyn::policy::is_ref + dyn::p
   typedef dyn::data_proxy_by_ref<const T> ret;
 };
 
-# include "policy.hh"
+# ifdef DYN_FULL_IMPLEMENTATION
+# include "data.hxx"
+# endif
 
 #endif

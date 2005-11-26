@@ -1,3 +1,39 @@
+2005-11-26  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Code re-organisation. Produce a library using libtool.
+
+	* src/dyn.hh: Update.
+	* src/data.erb.hh: Inherit from all_methods.
+	* src/data.erb.hxx: Remove. No more an erb template.
+	* src/data.hxx: New. From data.erb.hxx.
+	* src/data.cc: New.
+	* src/ruby_stream.hh: Export ruby::eval, add the environment struct.
+	* src/ruby_stream.cc: New.
+	* src/function.erb.cc: New.
+	* src/policy.hh: Export the implementation.
+	* src/policy.cc: New.
+	* src/name_of.hh: Export the implementation.
+	* src/name_of.cc: New.
+	* src/function_loader.hh: Export the implementation.
+	* src/function_loader.cc: New.
+	* src/function_loader.rb: Update to libtool.
+	* src/all_methods.erb.hh: New.
+	* src/all_methods.erb.cc: New.
+	* src/function.erb.hxx: Remove.
+
+	Remove the old static library, add a libtool one.
+	* lib/libiberty-macos.a: Remove.
+	* lib/.libs: New.
+	* lib/libiberty-powerpc-darwin.la: New.
+	* lib/.libs/libiberty-powerpc-darwin.a: New.
+
+	* configure: Improve and simplify.
+	* Makefile.in: New.
+
+	* test/Makefile.in: Update to libtool.
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh: Remove the name_of.hh include.
+
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Use a data_proxy_by_ptr values returned by a ctor.

@@ -4,98 +4,159 @@ require 'pathname'
 require 'rbconfig'
 require 'erb'
 
-TOP_DIR = Pathname.new(__FILE__).dirname
+class Pathname
+  def remove_prefix ( prefix )
+    len = prefix.to_s.size
+    result = to_s
+    if result[0...len] == prefix.to_s
+      result[0...len] = ''
+    end
+    result.gsub!(/^\//, '')
+    Pathname.new result
+  end
+  def count
+    c = to_s.split('/').size
+    # p [:count, to_s, c]
+    c
+  end
+end
 
 class Configure
+  attr_reader :client
   def initialize ( &block )
-    return unless $0 == __FILE__
+    @client = $0 != __FILE__
     @patt = {}
     instance_eval(&block)
     do_gsub
     puts "Configuring: done."
   end
-  def gsub ( name, val=get(name.to_s) )
-    @patt[((name.is_a? Regexp)? name : "@@#{name}@@")] = val
-  end
-  def do_gsub
-    Pathname.glob(TOP_DIR + '**/*.in').each do |path|
-      puts path
-      contents = path.read
-      @patt.each { |patt, val| contents.gsub! patt, val }
-      contents = ERB.new(contents, nil, '<-%->', '$erbout_').result
-      Pathname.new(path.to_s.sub(/\.in$/, '')).open('w') { |f| f.puts contents }
+  def set ( name, val )
+    # p [:set, name, val]
+    [name.to_s, name.to_s.downcase, name.to_s.upcase].each do |n|
+      Config::CONFIG[n.to_sym] = val
+      Config::CONFIG[n] = val
     end
   end
-  def get ( name )
-    Config::CONFIG[name] || eval(name)
+  def gsub ( regx, val )
+    raise unless regx.is_a? Regexp
+    @patt[regx] = val
   end
-  def erb ( file )
-    result = ERB.new(file.read, nil, '<-%->', '$erbout_').result
-    Pathname.new(file.to_s.sub(/\.erb\./, '.')).open('w') { |f| f.puts result }
+  def do_gsub
+    return if client
+    Pathname.glob(topdir + '**/*.in').each do |path|
+      erb path
+    end
+  end
+  # example
+  # topdir = ../..
+  # path = ../../src/foo.in
+  # val = ../../bin
+  # must substitute bindir by ../bin
+  # remove topdir
+  # path = src/foo.in
+  # val = bin
+  # ../bin = '..' * (src/foo.in).dirname.count + val
+  def erb ( path )
+    return if client
+    puts path
+    contents = path.read
+    Config::CONFIG.each do |k, v|
+      @patt["@@#{Regexp.quote(k.to_s)}@@"] = v
+    end
+    @patt.each do |patt, val|
+      if val.is_a? Pathname
+        val_ = val.remove_prefix topdir
+        new_prefix = '../' * path.dirname.remove_prefix(topdir).count
+        val = new_prefix + val_
+        # p "replace #{patt} by #{val} in #{path}"
+      end
+      val = val.join(' ') if val.is_a? Array
+      contents.gsub! patt, val.to_s
+    end
+    contents = ERB.new(contents, nil, '<-%->', '$erbout_').result
+    generated = Pathname.new(path.to_s.sub(/\.in$/, '').sub(/\.erb\./, '.'))
+    generated.chmod(0644) if generated.exist?
+    generated.open('w') { |f| f.puts contents }
+    generated.chmod(0444)
+  end
+  def self.get ( n )
+    x = Config::CONFIG[n]
+    # p [:get, n, x]
+    x
   end
 end
 Kernel.send :undef_method, :gsub
 
-NB_MAX_ARGUMENTS = 10
-ALL_METHODS = { 'fake_method' => [] }
-if file = ARGV.shift
-  file = Pathname.new(file)
-  if file.exist?
-    YAML.load(file.read).each do |k, v|
-      ALL_METHODS[k] ||= []
-      ALL_METHODS[k] += v
-    end
-  end
+def Object.const_missing ( n )
+  Configure.get n
 end
 
-DYNDIR = TOP_DIR.expand_path + 'src'
-SRCDIR = TOP_DIR + 'src'
-LIBDIR = TOP_DIR + 'lib'
-BIN = TOP_DIR.expand_path + 'bin'
-TESTDIR = TOP_DIR.expand_path + 'test'
-
-SWIGDIR = TOP_DIR.expand_path + 'test/swig'
-SWIG = SWIGDIR + 'swig'
-SWIGINCLUDES = "-I#{SWIGDIR}/Lib -I#{SWIGDIR}/Lib/python"
-
-VCSN = TESTDIR + 'vaucanson/sources'
-
-# Make the proper to the olena-proto-stl-style in test
-OLENA_PROTO_STL_STYLE = TESTDIR + 'olena/proto-stl-style'
-
-CXX = 'ccache g++'
-
-INCLUDE_DIRS = [Config::CONFIG['topdir'], OLENA_PROTO_STL_STYLE]
-
-CFLAGS = '-DDYNDEBUG -ggdb -W -Wall ' + INCLUDE_DIRS.map{|x|'-I' + x}.join(' ')
-LDFLAGS = LIBDIR.to_s +
-  case RUBY_PLATFORM
-    when /darwin/ then '/libiberty-macos.a'
-    when /linux/  then '/libiberty-linux.a'
-  end
-SHARED =
-  case RUBY_PLATFORM
-    when /darwin/ then '-bundle'
-    when /linux/  then '-shared'
-  end
-
+def method_missing ( n, *args )
+  return super unless args.empty?
+  Configure.get n
+end
 
 Configure.new do
-  gsub :SRCDIR
-  gsub :DYNDIR
-  gsub :LDSHARED
-  gsub :LIBRUBYARG
-  gsub :LIBRUBYARG_SHARED
-  gsub :CXX
-  gsub :CFLAGS, CFLAGS
-  gsub :LDFLAGS, LDFLAGS
-  gsub :SWIGDIR
-  gsub :SWIG
-  gsub :SWIGINCLUDES
-  gsub :BIN
-  gsub :VCSN
-  erb SRCDIR + 'data.erb.hh'
-  erb SRCDIR + 'data.erb.hxx'
-  erb SRCDIR + 'function.erb.hh'
-  erb SRCDIR + 'function.erb.hxx'
+
+  set :ruby_topdir, Config::CONFIG['topdir']
+
+  set :topdir, Pathname.new(__FILE__).dirname
+
+  set :nb_max_arguments, 10
+  all_methods = { 'fake_method' => [] }
+  if file = ARGV.shift
+    file = Pathname.new(file)
+    if file.exist?
+      YAML.load(file.read).each do |k, v|
+        all_methods[k] ||= []
+        all_methods[k] += v
+      end
+    end
+  end
+  set :all_methods, all_methods
+
+  set :dyndir,  topdir + 'src'
+  set :srcdir,  topdir + 'src'
+  set :libdir,  topdir + 'lib'
+  set :bin,     topdir + 'bin'
+  set :testdir, topdir + 'test'
+
+  set :swigdir, topdir + 'test/swig'
+  set :swig, swigdir + 'swig'
+  set :swigincludes, "-i#{swigdir}/lib -i#{swigdir}/lib/python"
+
+  set :vcsn, testdir + 'vaucanson/sources'
+
+  # make the proper to the olena-proto-stl-style in test
+  set :olena_proto_stl_style, testdir + 'olena/proto-stl-style'
+
+  set :cxx, 'ccache g++'
+
+  set :include_dirs, [ruby_topdir, olena_proto_stl_style, srcdir.expand_path]
+
+  set :cflags, '-DDYNDEBUG -ggdb -W -Wall ' + include_dirs.map{|x|'-I' + x}.join(' ')
+  set :ldflags, ''
+
+  set :libdynarg, libdir + 'libdyn.la'
+
+  set :libertyarg, libdir + "libiberty-#{RUBY_PLATFORM}.la"
+
+  set :shared, 
+    case RUBY_PLATFORM
+      when /darwin/ then '-bundle'
+      when /linux/  then '-shared'
+    end
+
+  set :static, '-static'
+
+  set :compile, "libtool --tag=CXX --mode=compile #{cxx} #{cflags}"
+  set :link, "libtool --tag=CXX --mode=link #{cxx}"
+  # set :compile, "#{cxx} #{cflags} -c"
+  # set :link, cxx
+
+  erb srcdir + 'data.erb.hh'
+  erb srcdir + 'function.erb.hh'
+  erb srcdir + 'function.erb.cc'
+  erb srcdir + 'all_methods.erb.hh'
+  erb srcdir + 'all_methods.erb.cc'
 end

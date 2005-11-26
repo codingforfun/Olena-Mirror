@@ -1,11 +1,47 @@
 #ifndef RUBY_STREAM_HH
 #define RUBY_STREAM_HH
 
+// Protection against already loaded config.h
+# undef PACKAGE_BUGREPORT
+# undef PACKAGE_NAME
+# undef PACKAGE_STRING
+# undef PACKAGE_TARNAME
+# undef PACKAGE_VERSION
+# undef HAVE_DLFCN_H
+
+# include <string>
+# include <sstream>
+# include <ruby.h>
+# include "dl.h"
+# include "config.hh"
+
+// Protection against futur config.h
+# undef PACKAGE_BUGREPORT
+# undef PACKAGE_NAME
+# undef PACKAGE_STRING
+# undef PACKAGE_TARNAME
+# undef PACKAGE_VERSION
+# undef HAVE_DLFCN_H
+
 namespace ruby
 {
+  struct environment
+  {
+    environment()
+    {
+      ruby_init();
+      ruby_script("embeddeed ruby");
+      ruby_init_loadpath();
+    }
+
+    ~environment()
+    {
+      ruby_finalize();
+    }
+  };
 
   struct eval_type {};
-  eval_type eval;
+  extern eval_type eval;
 
   struct stream
   {
