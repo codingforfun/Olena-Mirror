@@ -33,7 +33,7 @@ class Cache
 end
 
 class FunctionLoader
-  attr_reader :identifier, :path, :name, :args, :includes, :include_dirs,
+  attr_reader :identifier, :paths, :name, :args, :includes, :include_dirs,
               :lib_path, :sym, :options, :cflags, :ldflags
   @@default_includes ||= []
   @@default_post_includes ||= []
@@ -41,7 +41,7 @@ class FunctionLoader
   @@default_ldflags ||= []
   @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
   def initialize ( identifier, arguments=[], options={} )
-    kind, path, name, args = identifier.split '__'
+    kind, paths, name, args = identifier.split '__'
     @options = options
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
@@ -52,7 +52,7 @@ class FunctionLoader
     @kind = kind.gsub('_U_', '_').to_sym
     @@cache ||= Cache.new(repository + 'cache.yml')
     @args = arguments
-    self.path = path
+    self.paths = paths
     self.name = name
   end
   def split ( aString )
@@ -61,8 +61,9 @@ class FunctionLoader
       (s.nil?)? SimpleSymbol.new(x) : s
     end
   end
-  def path= ( path )
-    @path = Pathname.new(split(path).stringify.join)
+  def paths= ( paths )
+    @paths = paths.split('_P_').map { |path| Pathname.new(split(path).stringify.join) }
+    @paths.delete_if { |x| x.to_s.empty? }
   end
   def name= ( name )
     @name = split(name).stringify.join
@@ -115,7 +116,7 @@ class FunctionLoader
       else raise "Unknown kind: #{kind}"
     end
     str = ''
-    (@includes | [Pathname.new('policy.hh'), path] | @post_includes).each do |path|
+    (@includes | [Pathname.new('policy.hh')] | paths | @post_includes).each do |path|
       next if path.to_s.empty?
       inc = path.to_s
       if inc !~ /["<]/
@@ -190,7 +191,7 @@ class FunctionLoader
     args.size
   end
   def to_s
-    "#@name(#{@args.join(', ')})" + ((@path.to_s.empty?)? '' : " in #@path")
+    "#@name(#{@args.join(', ')})" + ((paths.empty?)? '' : " in #{paths.join(', ')}")
   end
   def repository
     repository = Pathname.new('repository')
@@ -198,8 +199,8 @@ class FunctionLoader
     repository
   end
   class << self
-    def call ( kind, aFunctionName, arguments=[], aPath='', options='' )
-      identifier = mangle(kind.to_s) + '__' + mangle(aPath) + '__' + mangle(aFunctionName) + '__'
+    def call ( kind, aFunctionName, arguments=[], somePaths='', options='' )
+      identifier = mangle(kind.to_s) + '__' + mangle(somePaths) + '__' + mangle(aFunctionName) + '__'
       identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
       opts = {}
       options.split(/\s*,\s*/).each do |x|
@@ -210,8 +211,7 @@ class FunctionLoader
       new(identifier, arguments, opts).get_function
     end
     def include_dir ( path )
-      x = Pathname.new(path).expand_path
-      @@default_include_dirs << x unless @@default_include_dirs.include? x
+      register(path, @@default_include_dirs, true)
     end
     def cflags ( elt )
       @@default_cflags << elt unless @@default_cflags.include? elt
@@ -220,13 +220,19 @@ class FunctionLoader
       @@default_ldflags << elt unless @@default_ldflags.include? elt
     end
     def include ( path )
-      x = Pathname.new(path)
-      @@default_includes << x unless @@default_includes.include? x
+      register(path, @@default_includes)
     end
     def post_include ( path )
-      x = Pathname.new(path)
-      @@default_post_includes << x unless @@default_post_includes.include? x
+      register(path, @@default_post_includes)
     end
+    def register ( paths, set, expand=false )
+      paths.split(':').each do |path|
+        x = Pathname.new(path)
+        x = x.expand_path if expand
+        set << x unless set.include? x
+      end
+    end
+    private :register
   end
 
 end # class FunctionLoader

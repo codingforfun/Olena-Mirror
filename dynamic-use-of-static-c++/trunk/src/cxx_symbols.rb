@@ -104,6 +104,7 @@ class EncodedSymbol
   enc :ref,        :REF, ?&
   enc :ptr,        :PTR, ?*
   enc :namespace,  :N, '::'
+  enc :path_sep,   :P, ':'
   enc :comma,      :C, ', '
   enc :right_sqr_bra, :RSB, ' ['
   enc :left_sqr_bra,  :LSB, ']'

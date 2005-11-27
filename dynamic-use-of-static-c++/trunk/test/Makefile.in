@@ -5,8 +5,9 @@ TESTS = %w[
   function_loader
   containers
   damien
-  olena
   var_and_val
+  methods
+  olena
 ]
 -%>
 

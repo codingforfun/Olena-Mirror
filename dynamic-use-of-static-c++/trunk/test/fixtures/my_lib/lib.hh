@@ -87,6 +87,17 @@ namespace my_lib
     return std::exp(t * std::log(f));
   }
 
+  struct boo
+  {
+    boo(std::ostream& ostr) : ostr_(ostr) {}
+    template <typename T1, typename T2>
+    void print(const T1& a, const T2& b)
+    {
+      ostr_ << "<[" << a << ", " << b << "]>" << std::endl;
+    }
+    std::ostream& ostr_;
+  };
+
 #define stl_each(c, i) for (i = c.begin(); i != c.end(); ++i)
 
 #define echo(i) std::cout << i << std::endl

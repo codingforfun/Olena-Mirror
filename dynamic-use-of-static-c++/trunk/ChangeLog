@@ -1,3 +1,16 @@
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Handle multiple paths for a same function (sep by `:').
+
+	* test/test_methods.cc: New.
+	* bin/mk_swig_input,
+	* bin/yaml_to_dyn_decls,
+	* src/cxx_symbols.rb,
+	* src/function_loader.rb,
+	* configure,
+	* test/Makefile.in,
+	* test/fixtures/my_lib/lib.hh: Update.
+
 2005-11-26  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Code re-organisation. Produce a library using libtool.

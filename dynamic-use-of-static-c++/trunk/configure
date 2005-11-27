@@ -3,6 +3,7 @@
 require 'pathname'
 require 'rbconfig'
 require 'erb'
+require 'yaml'
 
 class Pathname
   def remove_prefix ( prefix )
@@ -79,6 +80,10 @@ class Configure
     generated.open('w') { |f| f.puts contents }
     generated.chmod(0444)
   end
+  def run ( &block )
+    return if client
+    instance_eval(&block)
+  end
   def self.get ( n )
     x = Config::CONFIG[n]
     # p [:get, n, x]
@@ -104,12 +109,14 @@ Configure.new do
 
   set :nb_max_arguments, 10
   all_methods = { 'fake_method' => [] }
-  if file = ARGV.shift
-    file = Pathname.new(file)
-    if file.exist?
-      YAML.load(file.read).each do |k, v|
-        all_methods[k] ||= []
-        all_methods[k] += v
+  run do
+    if file = ARGV.shift
+      file = Pathname.new(file)
+      if file.exist?
+        YAML.load(file.read).each do |k, v|
+          all_methods[k] ||= []
+          all_methods[k] += v
+        end
       end
     end
   end
@@ -149,7 +156,7 @@ Configure.new do
 
   set :static, '-static'
 
-  set :compile, "libtool --tag=CXX --mode=compile #{cxx} #{cflags}"
+  set :compile, "libtool --tag=CXX --mode=compile #{cxx} -static #{cflags}"
   set :link, "libtool --tag=CXX --mode=link #{cxx}"
   # set :compile, "#{cxx} #{cflags} -c"
   # set :link, cxx
