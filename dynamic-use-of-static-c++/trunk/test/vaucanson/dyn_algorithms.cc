@@ -19,57 +19,15 @@
 // #include <cstdlib>
 // #include <list>
 
-
-// semi_ring numeric(bool|int|...)|tropical_min|tropical_max // |rational
-// monoid free(alphabet(set(lettre = char|int|string)))|ou pas(2 free)
-
 #include "dyn.hh"
 #include "dyn_vaucanson_dyn_mirror.hh"
+#include "vaucanson_tools_dyn.hh"
+#include "vaucanson_tools_dyn_xml.hh"
 
-// #include CONTEXT_HEADER
-
-// #define VCSN_USE_INTERFACE_ONLY
-// #include <vaucanson/xml/XML.hh>
-// #include <vaucanson/algorithms/derived_term_automaton.hh>
-// #include <vaucanson/algorithms/product.hh>
-// #include <vaucanson/algorithms/transpose.hh>
-// #include <vaucanson/algorithms/eval.hh>
-// #include <vaucanson/algorithms/determinize.hh>
-// #include <vaucanson/algorithms/closure.hh>
-// #include <vaucanson/algorithms/isomorph.hh>
-// #include <vaucanson/algorithms/minimization_hopcroft.hh>
-// #include <vaucanson/algorithms/minimization_moore.hh>
-// #include <vaucanson/algorithms/trim.hh>
-// #include <vaucanson/algorithms/concatenate.hh>
-// #include <vaucanson/algorithms/sum.hh>
-// #include <vaucanson/algorithms/krat_exp_expand.hh>
-// #include <vaucanson/algorithms/accessible.hh>
-// #include <vaucanson/algorithms/realtime.hh>
-// #include <vaucanson/algorithms/standard.hh>
-// #include <vaucanson/algorithms/normalized.hh>
-// #include <vaucanson/tools/dot_display.hh>
-
-namespace dyn {
-  // fun transpose("transpose", "vaucanson/algorithms/transpose.hh");
-  // fun standard_of("vcsn::boolean_automaton::standard_of", "vaucanson/algorithms/standard_of.hh");
-  // fun read_operator("operator>>", "vaucanson/tools/io.hh");
-  // proc read_operator("read_operator", "vaucanson/tools/io.hh");
-  proc my_automaton_loader("my_automaton_loader", "vaucanson/tools/io.hh");
-  fun automaton_loader("automaton_loader", "vaucanson/tools/io.hh");
-  fun automaton_saver("automaton_saver", "vaucanson/tools/io.hh");
-}
-
-// struct context
-// {
-  // ctor letter;
-  // ctor alphabet;
-// }
-
-// using namespace CONTEXT_NAMESPACE;
-
-// using namespace dyn::vcsn;
 using namespace dyn::vcsn::io;
 using dyn::vcsn::xml::XML;
+using namespace dyn::language;
+using namespace dyn::vcsn::tools;
 
 // static
 // void
@@ -97,27 +55,27 @@ using dyn::vcsn::xml::XML;
   // return new_rat_exp(alphabet(), s);
 // }
 
-// static
-// var
-// get_aut(std::string s, var context_automaton)
-// {
-  // std::istream* is (s == "-" ? &std::cin : new std::ifstream (s.c_str()));
-  // if (not is->fail())
-    // {
-      // // *is >> dyn::automaton_loader(context_automaton, string_out (), XML ());
-      // dyn::my_automaton_loader(*is, context_automaton);
-      // // read_operator(*is, dyn::automaton_loader(context_automaton, string_out (), XML ()));
+static
+var
+get_aut(std::string s)
+{
+  std::istream* is (s == "-" ? &std::cin : new std::ifstream (s.c_str()));
+  if (not is->fail())
+    {
+      var automaton = dyn::vcsn::tools::xml::load_from_xml(*is);
+      // var loader = dyn::automaton_loader(context_automaton, string_out (), XML ());
+      // *is >> loader;
 
-      // if (s != "-")
-        // delete is;
-      // return context_automaton;
-    // }
-  // else
-    // {
-      // std::cerr << "FATAL: Could not load automaton." << std::endl;
-      // exit(1);
-    // }
-// }
+      if (s != "-")
+        delete is;
+      return automaton;
+    }
+  else
+    {
+      std::cerr << "FATAL: Could not load automaton." << std::endl;
+      exit(1);
+    }
+}
 
 #if 0
 static
@@ -445,80 +403,24 @@ main(int argc, char** argv)
   dyn::include_dir(DYNDIR);
   dyn::include_dir("../../../include");
   dyn::include_dir(".");
-  // dyn::include(CONTEXT_HEADER);
   dyn::include("vaucanson/xml/XML.hh");
-  dyn::post_include("dyn_vaucanson_mlc_name.hh");
-  dyn::post_include("dyn_vaucanson2.hh");
 
-std::string letter_t(argv[1]);
-std::string alphabet_t;
-  alphabet_t += "vcsn::Element<vcsn::algebra::AlphabetSet<" + letter_t + " >, std::set<" + letter_t + " > >";
-std::string monoid_t;
-  monoid_t += "vcsn::algebra::FreeMonoid<" + alphabet_t + " >";
-std::string monoid_elt_value_t;
-  monoid_elt_value_t += "std::basic_string<" + letter_t + " >";
-std::string monoid_elt_t;
-  monoid_elt_t += "vcsn::Element<" + monoid_t + ", " + monoid_elt_value_t + " >";
-std::string semiring_t("vcsn::algebra::NumericalSemiring");
-std::string semiring_elt_value_t(argv[2]);
-std::string semiring_elt_t;
-  semiring_elt_t += "vcsn::Element<" + semiring_t + ", " + semiring_elt_value_t + " >";
-std::string series_set_t;
-  series_set_t += "vcsn::algebra::Series<" + semiring_elt_t + "::set_t, " + monoid_elt_t + "::set_t>";
-std::string series_set_elt_value_t;
-  series_set_elt_value_t += "vcsn::algebra::polynom<" + monoid_elt_value_t + ", " + semiring_elt_value_t + " >";
-std::string series_set_elt_t;
-  series_set_elt_t += "vcsn::Element<" + series_set_t + ", " + series_set_elt_value_t + " >";
-std::string rat_exp_impl_t;
-  rat_exp_impl_t += "vcsn::rat::exp<" + monoid_elt_value_t + ", " + semiring_elt_value_t + " >";
-std::string rat_exp_t;
-  rat_exp_t += "vcsn::Element<" + series_set_t + ", " + rat_exp_impl_t + " >";
-std::string automaton_impl_t;
-  automaton_impl_t += "vcsn::Graph<vcsn::labels_are_series, " + monoid_elt_value_t + ", ";
-  automaton_impl_t += semiring_elt_value_t + ", " + series_set_elt_value_t + ", ";
-  automaton_impl_t += letter_t + ", vcsn::NoTag, vcsn::geometry>";
-std::string automata_set_t;
-  automata_set_t += "vcsn::Automata<" + series_set_elt_t + "::set_t>";
-std::string automaton_t;
-  automaton_t += "vcsn::Element<" + automata_set_t + ", " + automaton_impl_t + " >";
-std::string gen_automaton_t;
-  gen_automaton_t += "vcsn::generalized_traits< " + automaton_t + " >::automaton_t";
+  std::cout << "context" << std::endl;
+  // algebraic_context context(argv[1], argv[2]);
 
-  dyn::ctor new_letter(letter_t); // argv[1]
-  dyn::ctor new_alphabet(alphabet_t);
-  dyn::ctor new_semiring(semiring_t);
-  dyn::ctor new_monoid(monoid_t);
-  dyn::ctor new_series(series_set_t);
-  dyn::ctor new_automata_set(automata_set_t);
-  dyn::ctor new_automaton(automaton_t);
+  // dyn::proc insert("insert", "method");
 
-  dyn::proc insert("insert", "method");
+  // var context_automaton = context.mk_automaton();
 
-  var alphabet     = new_alphabet();
-                       // insert(alphabet, 'a');
-                       // insert(alphabet, 'b');
-  var semiring     = new_semiring();
-  var freemonoid   = new_monoid(alphabet);
-  var series       = new_series(semiring, freemonoid);
-  var automata_set = new_automata_set(series);
-  var automaton    = new_automaton(automata_set);
+  var automaton = get_aut(argv[4]);
 
-  std::cout << dyn::automaton_saver(automaton, string_out(), XML());
-
-  std::cout << automaton.type() << std::endl;
-
-  std::cout << automaton.type2() << std::endl;
+  std::cout << dyn::vcsn::automaton_saver(automaton, string_out(), XML());
 
   std::string algorithms("vaucanson/algorithms/");
   dyn::fun algo(argv[3], algorithms + argv[3] + ".hh");
 
-  std::cout << dyn::automaton_saver(algo(automaton), string_out(), XML());
+  std::cout << dyn::vcsn::automaton_saver(algo(automaton), string_out(), XML());
 
-
-
-
-
-  // var automaton2 = get_aut(argv[3], automaton);
   // std::string cmd (argv[1]);
   // int i;
 
@@ -554,5 +456,9 @@ std::string gen_automaton_t;
       // std::cerr << " * info"  << std::endl;
       // exit(1);
     // }
+
+  std::cout << "Exiting, segv in approch..." << std::endl;
+  
 }
+
 

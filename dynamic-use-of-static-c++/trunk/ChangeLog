@@ -1,5 +1,10 @@
 2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Vaucanson test...
+
+
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Handle multiple paths for a same function (sep by `:').
 
 	* test/test_methods.cc: New.
