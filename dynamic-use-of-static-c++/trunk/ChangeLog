@@ -1,5 +1,13 @@
 2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Improve background compilation.
+
+	* configure: Add silent_link (libtool --silent).
+	* src/function_loader.rb: Make objects without libtool (to avoid the
+	double compilation), and use the silent linking.
+
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Vaucanson test...
 
 

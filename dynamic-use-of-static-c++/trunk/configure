@@ -158,6 +158,7 @@ Configure.new do
 
   set :compile, "libtool --tag=CXX --mode=compile #{cxx} -static #{cflags}"
   set :link, "libtool --tag=CXX --mode=link #{cxx}"
+  set :silent_link, "libtool --silent --tag=CXX --mode=link #{cxx}"
   # set :compile, "#{cxx} #{cflags} -c"
   # set :link, cxx
 

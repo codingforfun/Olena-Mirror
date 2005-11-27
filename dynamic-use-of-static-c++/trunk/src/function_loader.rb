@@ -151,8 +151,9 @@ class FunctionLoader
     cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
     out = repository + 'g++.out'
     object_file = file.to_s.gsub('.cc', '.o')
-    cmd = "(#{COMPILE} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && " +
-          "#{LINK} #{SHARED} #{object_file} #{LIBDYNARG} #{ldflags} -o #{lib_path}) 2> #{out}"
+    compile = "#{CXX} #{CFLAGS}" # #{COMPILE} for libtool
+    cmd = "(#{compile} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && " +
+          "#{SILENT_LINK} #{SHARED} #{object_file} #{LIBDYNARG} #{ldflags} -o #{lib_path}) 2> #{out}"
     if system cmd
       out.unlink if out.exist?
     else
