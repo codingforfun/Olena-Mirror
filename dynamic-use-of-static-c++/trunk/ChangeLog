@@ -1,5 +1,13 @@
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Update the liberty lib for i486-linux.
+
+	* lib/libiberty-linux.a: Remove.
+	* lib/libiberty-i486-linux.la: New.
+	* lib/.libs/libiberty-i486-linux.a: New.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Clean svn:ignore properties.
 
 	* .,
