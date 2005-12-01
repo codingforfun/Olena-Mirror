@@ -1,5 +1,11 @@
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Use a more portable pattern.
+
+	* src/Makefile.am: No # since it begins a comment.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Now works installed.
 
 	* src/Makefile.am: Adapt to the new design.

@@ -49,7 +49,7 @@ CLEANFILES = $(BUILT_SOURCES)
 ### RULES ###
 #############
 
-cut_local_includes = grep -v '#[\t ]*include[\t ]*".*"'
+cut_local_includes = grep -v '^.[\t ]*include[\t ]*".*"'
 
 dyn-all.hh: $(dyn_all_hh_DEPENDECIES)
 	rm -f $@
