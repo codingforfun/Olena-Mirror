@@ -11,8 +11,8 @@ version = '0.1'
 prefix = Pathname.new('@prefix@')
 includedir = expand('@includedir@', binding)
 top_builddir = Pathname.new(__FILE__).dirname.parent
-top_srcdir = '@top_srcdir@'
-exec_prefix = '@exec_prefix@'
+top_srcdir = expand('@top_srcdir@', binding)
+exec_prefix = expand('@exec_prefix@', binding)
 libdir = expand('@libdir@', binding)
 
 libtool_libs = Pathname.new("#{libdir}/libdyn.la")

@@ -1,4 +1,4 @@
-#include "dyn.hh"
+#include "dyn-all.hh"
 using namespace dyn::language;
 #include <iostream>
 

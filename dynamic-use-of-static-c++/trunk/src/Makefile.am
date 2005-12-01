@@ -1,47 +1,71 @@
+include_HEADERS = dyn-all.hh dyn-light.hh
+lib_LTLIBRARIES = libdyn.la
+
 AM_CPPFLAGS = -I$(top_builddir) -I$(srcdir) -I. -I@RUBY_topdir@
 
 ERB = ruby $(top_srcdir)/config/erbx
+
+dyn_light_hh_DEPENDECIES = \
+	$(srcdir)/name_of.hh \
+	function.hh \
+	all_methods.hh \
+	$(srcdir)/data.hh \
+	$(srcdir)/policy.hh
+
+dyn_all_hh_DEPENDECIES = \
+        config.hh \
+	$(srcdir)/name_of.hh \
+	function.hh \
+	all_methods.hh \
+	$(srcdir)/data.hh \
+	$(srcdir)/data.hxx \
+	$(srcdir)/function_loader.hh \
+	$(srcdir)/dyn.hh
+
+BUILT_SOURCES =
+	all_methods.hh all_methods.cc \
+	function.hh function.cc \
+	data.hh config.hh
+
+libdyn_la_SOURCES = \
+	dyn.hh \
+	data.hh data.hxx data.cc \
+	all_methods.hh all_methods.cc \
+	function.hh function.cc \
+	function_loader.hh function_loader.cc \
+	name_of.hh name_of.cc \
+	policy.hh policy.cc \
+	ruby_stream.hh ruby_stream.cc \
+	ansidecl.h demangle.h config.hh
+
+libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@
+
+libdyn_la_LDFLAGS = -version-info 0:1:0
+
+CLEANFILES = $(BUILT_SOURCES)
+
+
+#############
+### RULES ###
+#############
+
+cut_local_includes = grep -v '#[\t ]*include[\t ]*".*"'
+
+dyn-all.hh: $(dyn_all_hh_DEPENDECIES)
+	rm -f $@
+	echo "// Generated: do not edit by hand!" > $@
+	echo "#define DYN_FULL_IMPLEMENTATION" >> $@
+	cat $(dyn_all_hh_DEPENDECIES) | $(cut_local_includes) >> $@
+	chmod -w $@
+
+dyn-light.hh: $(dyn_light_hh_DEPENDECIES)
+	rm -f $@
+	echo "// Generated: do not edit by hand!" > $@
+	cat $(dyn_light_hh_DEPENDECIES) | $(cut_local_includes) >> $@
+	chmod -w $@
 
 %.hh: %.erb.hh
 	$(ERB) -i $< -o $@
 
 %.cc: %.erb.cc
 	$(ERB) -i $< -o $@
-
-lib_LTLIBRARIES = libdyn.la
-
-BUILT_libdyn_la_HEADERS_ = \
-	all_methods.hh \
-	function.hh \
-	data.hh
-
-BUILT_libdyn_la_SOURCES = \
-	all_methods.cc \
-	function.cc
-
-BUILT_SOURCES = $(BUILT_libdyn_la_SOURCES) $(BUILT_libdyn_la_HEADERS_)
-
-include_HEADERS = \
-	dyn.hh \
-	data.hxx \
-	$(BUILT_libdyn_la_HEADERS_) \
-	function_loader.hh \
-	name_of.hh \
-	policy.hh
-
-libdyn_la_SOURCES = \
-	ansidecl.h demangle.h config.hh \
-	$(include_HEADERS) \
-	data.cc \
-	$(BUILT_libdyn_la_SOURCES) \
-	function_loader.cc \
-	name_of.cc \
-	policy.cc \
-	ruby_stream.hh \
-	ruby_stream.cc
-
-libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@
-
-libdyn_la_LDFLAGS = -version-info 0:1:0
-
-CLEANFILES = $(BUILT_libdyn_la_SOURCES)

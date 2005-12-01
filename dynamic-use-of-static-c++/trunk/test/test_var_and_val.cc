@@ -1,6 +1,6 @@
 #include "my_lib/lib.hh"
 
-#include "dyn.hh"
+#include "dyn-all.hh"
 using namespace dyn::language;
 
 int main()

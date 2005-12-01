@@ -117,7 +117,7 @@ class FunctionLoader
       else raise "Unknown kind: #{kind}"
     end
     str = ''
-    (@includes | [Pathname.new('policy.hh')] | paths | @post_includes).each do |path|
+    (@includes | [Pathname.new('dyn-light.hh')] | paths | @post_includes).each do |path|
       next if path.to_s.empty?
       inc = path.to_s
       if inc !~ /["<]/

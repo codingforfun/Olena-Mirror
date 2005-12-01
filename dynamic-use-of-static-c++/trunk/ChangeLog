@@ -1,5 +1,22 @@
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Now works installed.
+
+	* src/Makefile.am: Adapt to the new design.
+	* src/function_loader.rb: Use dyn-light.hh.
+	* src/data.erb.hh: Leave a FIXME.
+	* bin/dyn-config.in: More calls to expand.
+	* bin/Makefile.am: Install just dyn-config.
+
+	* test/test_var_and_val.cc,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Include dyn-all.hh.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Update the liberty lib for i486-linux.
 
 	* lib/libiberty-linux.a: Remove.
