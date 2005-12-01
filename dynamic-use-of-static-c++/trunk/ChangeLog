@@ -1,5 +1,11 @@
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Commit a common .vcs.
+
+	* .vcs: New.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	2 little fixes.
 
 	* configure.ac: Remove useless echo ans comments.
