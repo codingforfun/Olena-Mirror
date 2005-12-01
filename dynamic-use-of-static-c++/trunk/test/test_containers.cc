@@ -7,8 +7,7 @@ using namespace dyn::language;
 
 int main()
 {
-  dyn::include_dir(DYNDIR);
-  dyn::include_dir("fixtures");
+  dyn::include_dir(DYN_FIXTURES);
   dyn::include("my_lib/lib.hh");
 
   echo("Test containers");

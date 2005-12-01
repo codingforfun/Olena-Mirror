@@ -2,7 +2,7 @@ require 'pathname'
 require 'dl'
 require 'yaml'
 require 'cxx_symbols'
-load Pathname.new(__FILE__).dirname.parent + 'configure'
+require 'md5'
 
 class Array
   alias_method :top, :last
@@ -15,6 +15,7 @@ class Cache
   def initialize ( pathname )
     @pathname = pathname
     @cache = (@pathname.exist?)? YAML.load(@pathname.read) : {}
+    @cache ||= {}
     @local = {}
   end
   def []= ( key, value )
@@ -138,22 +139,26 @@ class FunctionLoader
      |};".gsub(/^\s*\|/, '')
   end
   def compile
-    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').
-                  gsub('_U_', '_').gsub(/\/$/, '__').gsub(/^\//, '__')
-    (repository + @basename).dirname.mkpath
-    file = repository + "#@basename.cc"
+#    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').
+ #                 gsub('_U_', '_').gsub(/\/$/, '__').gsub(/^\//, '__')
+    md5 = Digest::MD5.new(@identifier).to_s
+    (repository + md5).mkpath
+    @basename = 'dyn_' + md5
+    file = repository + md5 + "#@basename.cc"
     file.open('w') do |f|
       f.puts to_cxx
     end
-    lib_ext = 'so'
-    @lib_path = repository + "#@basename.#{lib_ext}"
+    lib_ext = 'la'
+    @lib_path = repository + md5 + "lib#@basename.#{lib_ext}"
     includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
     cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
-    out = repository + 'g++.out'
-    object_file = file.to_s.gsub('.cc', '.o')
-    compile = "#{CXX} #{CFLAGS}" # #{COMPILE} for libtool
-    cmd = "(#{compile} #{cflags} -c #{includes_opts} #{file} -o #{object_file} && " +
-          "#{SILENT_LINK} #{SHARED} #{object_file} #{LIBDYNARG} #{ldflags} -o #{lib_path}) 2> #{out}"
+    out = repository + 'make.out'
+    # cmd = "make CFLAGS='#{cflags} #{includes_opts}' LDFLAGS='#{ldflags}' #{lib_path} > #{out} 2>&1"
+    object_file = file.to_s.gsub(/\.cc$/, '.lo')
+    dyn_config = 'dyn-config'
+    cmd = "(`#{dyn_config} --compile` #{cflags} #{includes_opts} #{file} -o #{object_file} && "
+    cmd += "`#{dyn_config} --link` -module -export-dynamic -rpath #{repository.expand_path} #{ldflags} #{object_file} -o #{lib_path}) > #{out} 2>&1"
+    puts cmd
     if system cmd
       out.unlink if out.exist?
     else
@@ -168,7 +173,8 @@ class FunctionLoader
     end
   end
   def load_lib
-    lib = DL.dlopen(lib_path.to_s)
+    lib_path_a = lib_path.dirname + '.libs' + lib_path.basename.to_s.gsub(/\.la$/, '.so')
+    lib = DL.dlopen(lib_path_a)
     @sym = lib[identifier, '0' + 'P'*arity]
     @@cache[identifier] = [sym, lib_path]
     sym

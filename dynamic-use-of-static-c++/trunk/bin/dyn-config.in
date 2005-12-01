@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'pathname'
+
+def expand ( var, binding )
+  var.gsub(/\$\{(.*)\}/) { eval($1, binding) }
+end
+
+name = 'libdyn'
+version = '0.1'
+prefix = Pathname.new('@prefix@')
+includedir = expand('@includedir@', binding)
+top_builddir = Pathname.new(__FILE__).dirname.parent
+top_srcdir = '@top_srcdir@'
+exec_prefix = '@exec_prefix@'
+libdir = expand('@libdir@', binding)
+
+libtool_libs = Pathname.new("#{libdir}/libdyn.la")
+if libtool_libs.exist? # FIXME Perhaps is assertion is bad.
+  cflags = "-I#{includedir}"
+  libtool = 'libtool' # Hope that libtool is installed
+else
+  cflags = "-I#{top_builddir}/src -I#{top_srcdir}/src"
+  libtool_libs = "#{top_builddir}/src/libdyn.la"
+  libtool = "#{top_builddir}/libtool"
+end
+
+o = OptionParser.new do |o|
+  o.banner { "Usage: #$0 [OPTION]" }
+
+  o.on('--prefix DIR',
+       "change #{name} prefix [default #{prefix}])") { |prefix| }
+
+  o.on('--exec-prefix DIR',
+       "change #{name} exec prefix [default #{exec_prefix}])") { |exec_prefix| }
+
+  # o.on('--libs', 'print library linking information') do
+  # end
+
+  o.on('--libtool-libs', 'print linking information for use with libtool') do
+    puts libtool_libs
+  end
+
+  o.on('--cflags', 'print pre-processor and compiler flags') do
+    puts cflags
+  end
+
+  o.on('--compile', 'compile line (add at least the input and the output)') do
+    puts "#{libtool} --mode=compile --tag=CXX ccache g++ -c #{cflags}"
+  end
+
+  o.on('--link', 'link line (add at least the input and the output)') do
+    puts "#{libtool} --mode=link --tag=CXX ccache g++ #{libtool_libs}"
+  end
+
+  o.on_tail('--help', 'display this help and exit') do
+    STDERR.puts o
+    exit
+  end
+  
+  o.on_tail('--version', 'output version information') do
+    puts "#$0 #{version}"
+  end
+end
+
+puts o if ARGV.empty?
+
+o.parse!(ARGV)

@@ -17,8 +17,7 @@ namespace dyn
 
 int main()
 {
-  dyn::include_dir(DYNDIR);
-  dyn::include_dir("fixtures");
+  dyn::include_dir(DYN_FIXTURES);
   dyn::include("my_lib/damien.hxx");
 
   down<char>               a('x');

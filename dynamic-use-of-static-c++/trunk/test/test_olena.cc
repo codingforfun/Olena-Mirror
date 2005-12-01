@@ -3,8 +3,8 @@ using namespace dyn::language;
 
 int main()
 {
-  dyn::include_dir(DYNDIR);
-  dyn::include_dir(OLENA_PROTO_STL_STYLE);
+  dyn::include_dir(OLENA_PROTO_STL_STYLE); // FIXME: Move it into fixtures/olean-proto-stl-style
+  // FIXME: Add
   dyn::include("all.hh");
 
   fun  iota("iota");

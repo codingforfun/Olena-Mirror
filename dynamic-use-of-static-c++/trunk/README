@@ -1,12 +1,19 @@
 HOW TO USE THIS PROJECT
 
-./configure
+From the repository:
 
-cd test
+  # Initialize the build system
+  ./bootstrap
 
-make check
-make damien
+  # Make a build dir
+  mkdir _build && cd _build
 
-# Does not works yet:
-make vaucanson
-make olena
+  # Configure the build for your system
+  # The config.site try to use more efficient tools (g++-4.0 and ccache)
+  # it also enable the configure caching.
+  # With --prefix you can set the destination (here _install)
+  CONFIG_SITE=`pwd`/../config.site ../configure --prefix=`pwd`/../_install
+
+  make check # The test with a latest prototype of olena will fail if you
+             # don't checkout it:
+             # cd test/olena && svn co https://svn.lrde.epita.fr/svn/oln/prototypes/proto-stl-style

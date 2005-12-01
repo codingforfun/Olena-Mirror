@@ -8,8 +8,8 @@
 
 namespace dyn
 {
- 
-<%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
+
+<%- (DYN_MAX_ARGUMENTS - 1).times do |i| -%>
   <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
   <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
 

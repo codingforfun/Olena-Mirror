@@ -4,8 +4,7 @@ using namespace dyn::language;
 
 int main()
 {
-  dyn::include_dir(DYNDIR);
-  dyn::include_dir("fixtures");
+  dyn::include_dir(DYN_FIXTURES);
 
   std::cout << "Test methods" << std::endl;
   ctor mk_down_int("down<int>", "", "my_lib/damien.hh");

@@ -16,9 +16,11 @@ namespace dyn {
   std::ostream& logger(std::cerr);
 # else
 #  ifdef NDEBUG
-  std::ofstream logger("/dev/null");
+  std::ofstream dev_null("/dev/null");
+  std::ostream& logger(dev_null);
 #  else
-  std::ofstream logger("dyn.log");
+  std::ofstream dyn_log("dyn.log");
+  std::ostream& logger(dyn_log);
 #  endif
 # endif
 

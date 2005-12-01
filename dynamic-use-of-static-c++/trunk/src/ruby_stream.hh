@@ -13,15 +13,17 @@
 # include <sstream>
 # include <ruby.h>
 # include "dl.h"
-# include "config.hh"
 
-// Protection against futur config.h
+// Remove variables defined by the config.h of ruby
 # undef PACKAGE_BUGREPORT
 # undef PACKAGE_NAME
 # undef PACKAGE_STRING
 # undef PACKAGE_TARNAME
 # undef PACKAGE_VERSION
 # undef HAVE_DLFCN_H
+
+# include "_config/config.h"
+# include "config.hh"
 
 namespace ruby
 {

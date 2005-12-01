@@ -28,7 +28,7 @@ namespace dyn
       kind_(kind), name_(name), options_(options),
       header_path_(header_path), obj_ptr_(obj_ptr) {}
 
-    <%- NB_MAX_ARGUMENTS.times do |i| -%>
+    <%- DYN_MAX_ARGUMENTS.times do |i| -%>
       data
       operator() (<%= (["const data&"] * i).join(', ') %>) const;
     <%- end -%>

@@ -1,3 +1,53 @@
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Dyn now use the autotools!
+
+	* README: Deal with the new the schema.
+	* bin/dyn-config.in: New. A nice tool to use the project.
+
+	Removing part:
+	* configure: Remove.
+	* Makefile.in: Remove.
+	* test/Makefile.in: Remove.
+	* test/vaucanson/Makefile.in: Remove.
+
+	New autotools part:
+	* bootstrap: New.
+	* configure.ac: New.
+	* config: New.
+	* config/erbx: New.
+	* config/ruby.m4: New.
+	* config/mk_local_config_rb_in.rb: New.
+	* config/rbconfig_gen.rb: New.
+	* config/warning.m4: New.
+	* config/Makefile.am: New.
+	* config.site: New.
+	* Makefile.am: New.
+	* data/Makefile.am: New.
+	* data/function.cc: New. Dummy function to make a base makefile.
+	* bin/Makefile.am: New.
+	* src/Makefile.am: New.
+	* test/Makefile.am: New.
+	* test/vaucanson/Makefile.am: New.
+
+	Test part:
+	* test/test_var_and_val.cc,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Update include dirs.
+
+	* src/all_methods.erb.hh,
+	* src/all_methods.erb.cc,
+	* src/function.erb.hh,
+	* src/function.erb.cc,
+	* src/ruby_stream.hh: Update includes and erb variables.
+
+	* src/function_loader.rb: Use md5 for filenames.
+	* src/config.hh.in: Add DYN_FIXTURES.
+	* src/data.cc: Properly setup de logger.
+
 2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Improve background compilation.

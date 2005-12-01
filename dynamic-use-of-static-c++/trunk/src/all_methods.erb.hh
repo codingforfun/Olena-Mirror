@@ -16,7 +16,7 @@ namespace dyn
     virtual ~all_methods() {};
 
 # ifdef DYN_FULL_IMPLEMENTATION
-<%- (NB_MAX_ARGUMENTS - 1).times do |i| -%>
+<%- (DYN_MAX_ARGUMENTS - 1).times do |i| -%>
   <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
     <%- ALL_METHODS.each do |meth, includes| -%>
 
