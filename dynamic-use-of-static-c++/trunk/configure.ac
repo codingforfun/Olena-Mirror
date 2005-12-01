@@ -83,9 +83,7 @@ dnl  fi
 
 dnl  AC_MSG_RESULT([$has_swig])
 
-echo x$ac_abs_srcdir
-my_abs_srcdir=`cd $srcdir && pwd` # esyscmd([pwd]) # FIXME
-echo y$my_abs_srcdir
+my_abs_srcdir=`cd $srcdir && pwd`
 
 # FIXME: Remove me when function_loader will be pure C++
 AC_SUBST([DYNDIR], [$my_abs_srcdir/src])

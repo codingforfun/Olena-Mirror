@@ -1,5 +1,12 @@
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	2 little fixes.
+
+	* configure.ac: Remove useless echo ans comments.
+	* README: Talk about the PATH extension.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Dyn now use the autotools!
 
 	* README: Deal with the new the schema.
