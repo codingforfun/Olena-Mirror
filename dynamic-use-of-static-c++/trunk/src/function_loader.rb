@@ -1,37 +1,7 @@
 require 'pathname'
-require 'dl'
-require 'yaml'
-require 'cxx_symbols'
-require 'md5'
 
-class Array
-  alias_method :top, :last
-  def stringify
-    map { |x| x.to_s }
-  end
-end # class Array
+DYN_DATADIR = Pathname.new(__FILE__).dirname.parent + '_build/data'
 
-class Cache
-  def initialize ( pathname )
-    @pathname = pathname
-    @cache = (@pathname.exist?)? YAML.load(@pathname.read) : {}
-    @cache ||= {}
-    @local = {}
-  end
-  def []= ( key, value )
-    sym, lib_path = value
-    @cache[key] = lib_path
-    @pathname.open('w') { |f| f.puts @cache.to_yaml }
-    @local[key] = sym
-  end
-  def [] ( key )
-    lib_path = @cache[key]
-    sym = @local[key]
-    return nil unless lib_path and lib_path.exist?
-    return lib_path if sym.nil?
-    sym
-  end
-end
 
 class FunctionLoader
   attr_reader :identifier, :paths, :name, :args, :includes, :include_dirs,
@@ -40,34 +10,28 @@ class FunctionLoader
   @@default_post_includes ||= []
   @@default_cflags ||= []
   @@default_ldflags ||= []
-  @@default_include_dirs ||= [Pathname.new(__FILE__).dirname.parent]
-  def initialize ( identifier, arguments=[], options={} )
-    kind, paths, name, args = identifier.split '__'
-    @options = options
+  @@default_include_dirs ||= []
+  def initialize ( identifier, kind, aFunctionName, arguments=[], somePaths='', options='' )
+    @identifier = identifier
+    @options = {}
+    options.split(/\s*,\s*/).each do |x|
+      next if x.empty?
+      @options[x.to_sym] = true
+    end
     @includes = @@default_includes.dup
     @post_includes = @@default_post_includes.dup
     @include_dirs = @@default_include_dirs.dup
     @cflags = @@default_cflags.dup
     @ldflags = @@default_ldflags.dup
-    @identifier = identifier
-    @kind = kind.gsub('_U_', '_').to_sym
-    @@cache ||= Cache.new(repository + 'cache.yml')
+    @kind = kind.to_sym
     @args = arguments
-    self.paths = paths
-    self.name = name
-  end
-  def split ( aString )
-    aString.split('_').map do |x|
-      s = EncodedSymbol[x]
-      (s.nil?)? SimpleSymbol.new(x) : s
-    end
+    arguments.delete_if { |x| x.empty? }
+    self.paths = somePaths
+    @name = aFunctionName
   end
   def paths= ( paths )
-    @paths = paths.split('_P_').map { |path| Pathname.new(split(path).stringify.join) }
+    @paths = paths.split(':').map { |path| Pathname.new(path) }
     @paths.delete_if { |x| x.to_s.empty? }
-  end
-  def name= ( name )
-    @name = split(name).stringify.join
   end
   def kind
     @kind
@@ -130,7 +94,7 @@ class FunctionLoader
      |  namespace dyn {
      |    namespace generated {
      |      data
-     |      #@identifier(#{arguments.join(', ')})
+     |      dyn_#{identifier}(#{arguments.join(', ')})
      |      {
      |        #{vars.join("\n" + ' ' * 8)}
      |      }
@@ -139,83 +103,47 @@ class FunctionLoader
      |};".gsub(/^\s*\|/, '')
   end
   def compile
-#    @basename = @identifier.gsub(/_[SN]?_/, '/').gsub('_D_', '.').
- #                 gsub('_U_', '_').gsub(/\/$/, '__').gsub(/^\//, '__')
-    md5 = Digest::MD5.new(@identifier).to_s
-    (repository + md5).mkpath
-    @basename = 'dyn_' + md5
-    file = repository + md5 + "#@basename.cc"
-    file.open('w') do |f|
-      f.puts to_cxx
+    dir = repository + @identifier
+    unless dir.exist?
+      dir.mkpath
+      makefile = (DYN_DATADIR + 'Makefile.template').read
+      makefile.gsub!(/libdyn_function\.la/, "libdyn_#{identifier}.la")
+      (dir + 'Makefile').open('w') { |f| f.puts makefile }
+      file = dir + "function.cc"
+      (dir + '.deps').mkpath
+      (dir + '.deps' + 'libdyn_function_la-function.Plo').open('w')
+      file.open('w') do |f|
+        f.puts to_cxx
+      end
+      includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
+      cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
+      (dir + 'Makefile').open('a') do |f|
+        f.puts "CXXFLAGS += #{includes_opts} #{cflags}"
+        f.puts "LDFLAGS += #{ldflags}"
+      end
     end
-    lib_ext = 'la'
-    @lib_path = repository + md5 + "lib#@basename.#{lib_ext}"
-    includes_opts = include_dirs.map { |x| "-I#{x}" }.join ' '
-    cflags, ldflags = @cflags.join(' '), @ldflags.join(' ')
-    out = repository + 'make.out'
-    # cmd = "make CFLAGS='#{cflags} #{includes_opts}' LDFLAGS='#{ldflags}' #{lib_path} > #{out} 2>&1"
-    object_file = file.to_s.gsub(/\.cc$/, '.lo')
-    dyn_config = 'dyn-config'
-    cmd = "(`#{dyn_config} --compile` #{cflags} #{includes_opts} #{file} -o #{object_file} && "
-    cmd += "`#{dyn_config} --link` -module -export-dynamic -rpath #{repository.expand_path} #{ldflags} #{object_file} -o #{lib_path}) > #{out} 2>&1"
-    puts cmd
+    out = dir + 'make.out'
+    cmd = "cd #{dir} && make > make.out 2>&1"
     if system cmd
       out.unlink if out.exist?
     else
-      out_s = out.read
-      short_name = 'dynamic_function_wrapper'
       STDERR.puts cmd
-      STDERR.puts out_s.
-        sub(/^#{Regexp.quote(file)}:/, "[[#@name as #{short_name}]]:").
-        gsub(/^#{Regexp.quote(file)}:/, "[[#{short_name}]]:").
-        gsub(/dyn::generated::#{Regexp.quote(@identifier)}/, short_name)
+      STDERR.puts out.read
       exit! 1
     end
   end
-  def load_lib
-    lib_path_a = lib_path.dirname + '.libs' + lib_path.basename.to_s.gsub(/\.la$/, '.so')
-    lib = DL.dlopen(lib_path_a)
-    @sym = lib[identifier, '0' + 'P'*arity]
-    @@cache[identifier] = [sym, lib_path]
-    sym
-  end
-  def get_function
-    case cached = @@cache[identifier]
-    when nil
-      STDERR.puts "\e[36mJIT: \e[31mMISS: compile:\e[0m #{self}"
-      compile
-      load_lib
-    when Pathname
-      STDERR.puts "\e[36mJIT: \e[33mHIT: dlopen:\e[0m #{self}"
-      @lib_path = cached
-      load_lib
-    else
-      STDERR.puts "\e[36mJIT: \e[32mHIT: dlsym:\e[0m #{self}"
-      cached
-    end
-  end
-  def arity
-    args.size
-  end
-  def to_s
-    "#@name(#{@args.join(', ')})" + ((paths.empty?)? '' : " in #{paths.join(', ')}")
-  end
   def repository
     repository = Pathname.new('repository')
-    repository.mkpath unless repository.exist?
+    unless repository.exist?
+      repository.mkpath
+      (repository + 'Makefile').make_symlink(DYN_DATADIR + 'Makefile.repository')
+    end
     repository
   end
   class << self
-    def call ( kind, aFunctionName, arguments=[], somePaths='', options='' )
-      identifier = mangle(kind.to_s) + '__' + mangle(somePaths) + '__' + mangle(aFunctionName) + '__'
-      identifier << arguments.map { |arg| mangle(arg) }.join('_C_')
-      opts = {}
-      options.split(/\s*,\s*/).each do |x|
-        next if x.empty?
-        opts[x.to_sym] = true
-      end
-      arguments.delete_if { |x| x.empty? }
-      new(identifier, arguments, opts).get_function
+    def call ( identifier, kind, aFunctionName, arguments=[], somePaths='', options='' )
+      fun = new(identifier, kind, aFunctionName, arguments, somePaths, options)
+      fun.compile
     end
     def include_dir ( path )
       register(path, @@default_include_dirs, true)

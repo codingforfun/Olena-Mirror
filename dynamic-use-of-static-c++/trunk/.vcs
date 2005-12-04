@@ -5,6 +5,7 @@ precious:
 unmask:
   - test/olena/proto-stl-style
   - test/dyn.log
+  - libltdl
 
 exclude:
   - Makefile.in

@@ -1,15 +1,13 @@
 include_HEADERS = dyn-all.hh dyn-light.hh
 lib_LTLIBRARIES = libdyn.la
 
-AM_CPPFLAGS = -I$(top_builddir) -I$(srcdir) -I. -I@RUBY_topdir@
-
 ERB = ruby $(top_srcdir)/config/erbx
 
 dyn_light_hh_DEPENDECIES = \
 	$(srcdir)/name_of.hh \
 	function.hh \
 	all_methods.hh \
-	$(srcdir)/data.hh \
+	data.hh \
 	$(srcdir)/policy.hh
 
 dyn_all_hh_DEPENDECIES = \
@@ -17,12 +15,13 @@ dyn_all_hh_DEPENDECIES = \
 	$(srcdir)/name_of.hh \
 	function.hh \
 	all_methods.hh \
-	$(srcdir)/data.hh \
+	data.hh \
 	$(srcdir)/data.hxx \
 	$(srcdir)/function_loader.hh \
 	$(srcdir)/dyn.hh
 
-BUILT_SOURCES =
+BUILT_SOURCES = \
+	dyn-all.hh dyn-light.hh \
 	all_methods.hh all_methods.cc \
 	function.hh function.cc \
 	data.hh config.hh
@@ -38,7 +37,16 @@ libdyn_la_SOURCES = \
 	ruby_stream.hh ruby_stream.cc \
 	ansidecl.h demangle.h config.hh
 
-libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@
+libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@ \
+		   $(LIBLTDL)
+
+libdyn_la_DEPENDENCIES = $(LIBLTDL)
+
+libdyn_la_CPPFLAGS = $(LTDLINCL) \
+		     -I$(top_builddir) \
+		     -I$(srcdir) -I. -I@RUBY_topdir@
+
+libdyn_la_CXXFLAGS = $(WARNING_CXXFLAGS)
 
 libdyn_la_LDFLAGS = -version-info 0:1:0
 

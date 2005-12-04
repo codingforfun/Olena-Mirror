@@ -1,6 +1,7 @@
 AC_PREREQ([2.59])
 
 # Catch some macros that are not expanded.
+m4_pattern_forbid([^AC_LIBLTDL_])
 m4_pattern_forbid([^DYN_])
 m4_pattern_allow([^DYN_FIXTURES$])
 m4_pattern_forbid([^ERB$])
@@ -46,13 +47,30 @@ DYN_CXX_WARNINGS([[-Wall],
                   [-Wmissing-declarations],
                   [-Wnested-externs]])
 
-## -------------------- ##
-## Auxiliary programs.  ##
-## -------------------- ##
+## -------- ##
+## Libtool. ##
+## -------- ##
 
+# Configure libltdl
+AC_CONFIG_SUBDIRS(libltdl)
+
+AC_DISABLE_STATIC
+# Use the installable version of ltdl
+
+# AC_LIBLTDL_INSTALLABLE
+# INSTALL_LTDL
+
+AC_LIBLTDL_CONVENIENCE
+
+# Check for dlopen support
+AC_LIBTOOL_DLOPEN
 # We don't need static libraries, speed the compilation up.
 AC_DISABLE_STATIC
+# Configure libtool
 AC_PROG_LIBTOOL
+
+AC_SUBST(INCLTDL)
+AC_SUBST(LIBLTDL)
 
 dnl  ## ------ ##
 dnl  ## Swig.  ##

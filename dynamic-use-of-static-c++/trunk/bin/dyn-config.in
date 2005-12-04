@@ -15,13 +15,15 @@ top_srcdir = expand('@top_srcdir@', binding)
 exec_prefix = expand('@exec_prefix@', binding)
 libdir = expand('@libdir@', binding)
 
-libtool_libs = Pathname.new("#{libdir}/libdyn.la")
-if libtool_libs.exist? # FIXME Perhaps is assertion is bad.
+libtool_flags = '-export-dynamic'
+libdir_libdyn_la = Pathname.new("#{libdir}/libdyn.la")
+if libdir_libdyn_la.exist? # FIXME Perhaps is assertion is bad.
   cflags = "-I#{includedir}"
   libtool = 'libtool' # Hope that libtool is installed
+  libtool_libs = "#{libdir_libdyn_la} #{libtool_flags}"
 else
   cflags = "-I#{top_builddir}/src -I#{top_srcdir}/src"
-  libtool_libs = "#{top_builddir}/src/libdyn.la"
+  libtool_libs = "#{top_builddir}/src/libdyn.la #{libtool_flags}"
   libtool = "#{top_builddir}/libtool"
 end
 

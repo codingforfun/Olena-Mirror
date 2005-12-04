@@ -12,7 +12,6 @@
 # include <string>
 # include <sstream>
 # include <ruby.h>
-# include "dl.h"
 
 // Remove variables defined by the config.h of ruby
 # undef PACKAGE_BUGREPORT

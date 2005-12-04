@@ -4,6 +4,8 @@
 # include <cassert>
 # include <string>
 # include "data.hh"
+# include <list>
+# include "function_loader.hh"
 
 namespace dyn
 {
@@ -16,15 +18,13 @@ namespace dyn
       generic_fun::operator() (<%= arguments %>) const
       {
         typedef data (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
-        std::string arguments_types;
+        arguments_types_t arguments_types;
 
         if (obj_ptr_)
-        {
-          arguments_types += obj_ptr_->type() + "\", \"";
-        }
+          arguments_types.push_back(obj_ptr_->type());
 
       <%- i.times do |j| -%>
-        arguments_types += arg<%= j %>.type()<%= (j == i - 1)? '' : ' + "\", \""' %>;
+        arguments_types.push_back(arg<%= j %>.type());
       <%- end -%>
 
         void* ptr = load_function(kind_, name_, arguments_types, header_path_, options_);

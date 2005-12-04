@@ -2,7 +2,6 @@
 #define DAMIEN_HXX
 
 #include <iostream>
-#include "name_of.hh"
 #include "damien.hh"
 
 template <typename T>

@@ -10,13 +10,6 @@ namespace dyn
 
   struct data;
 
-  void*
-  load_function(const std::string& kind,
-                const std::string& name,
-                const std::string& arguments_types,
-                const std::string& header_path,
-                const std::string& options);
-
   struct generic_fun
   {
 

@@ -14,13 +14,14 @@ int main()
 
   dyn::include("my_lib/lib.hh"); // setup a default include
 
-  dyn::fun  dfoo2("foo2"); // use the default includes
-  dyn::fun  dfoo2b("foo2b");
-  dyn::fun  dfoo3("foo3");
-  dyn::fun  dfoo4("foo4");
-  dyn::fun  dsqr("my_lib::sqr");
-  dyn::fun  dpower("my_lib::power");
+  dyn::fun dfoo2("foo2"); // use the default includes
+  dyn::fun dfoo2b("foo2b");
+  dyn::fun dfoo3("foo3");
+  dyn::fun dfoo4("foo4");
+  dyn::fun dsqr("my_lib::sqr");
+  dyn::fun dpower("my_lib::power");
 
+  dfoo1();
   dfoo1();
 
   int* x1 = dfoo3(1, 2, 3);

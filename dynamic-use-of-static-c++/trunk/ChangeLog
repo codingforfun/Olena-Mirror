@@ -1,5 +1,29 @@
 2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Use libltdl.
+
+	* bootstrap,
+	* Makefile.am,
+	* configure.ac: Add the libltld.
+
+	* src/Makefile.am,
+	* src/function.erb.cc,
+	* src/ruby_stream.hh,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb: More C++ less ruby.
+
+	* bin/dyn-config.in: .
+	* data/Makefile.am: Produce two makefiles for the repository.
+	* data/function.cc: Update the include.
+
+	* test/Makefile.am: Update flags.
+	* test/fixtures/my_lib/damien.hxx: Remove the name_of include.
+	* test/test_function_loader.cc: Add another dfoo1 call.
+
+2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Remove all svn:ignore properties.
 
 	* ., test, src: Update.
