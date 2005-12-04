@@ -1,9 +1,6 @@
 # -*- shell-script -*-
 
-if test $PACKAGE_TARNAME != dyn; then
-  echo "Loading config.site for the wrong package." >&2
-  exit 1
-fi
+if test $PACKAGE_TARNAME == dyn; then
 
 # Use the cache.
 cache_file=config.cache
@@ -21,3 +18,7 @@ done
 echo CC:$CC
 echo CXX:$CXX
 echo CXXFLAGS:$CXXFLAGS
+
+else
+  echo "Loading config.site for the wrong package." >&2
+fi

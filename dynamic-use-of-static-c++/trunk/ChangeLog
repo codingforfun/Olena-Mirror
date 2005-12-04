@@ -1,5 +1,11 @@
 2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Make the config.site compliant with sub-confgiures on linux.
+
+	* config.site: Do not exit if the package name is wrong.
+
+2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Use libltdl.
 
 	* bootstrap,
