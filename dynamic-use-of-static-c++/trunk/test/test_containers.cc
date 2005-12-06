@@ -18,8 +18,8 @@ int main()
     echo(*it);
   it = v.begin();
 
-  fun begin("begin", "method");
-  fun end("end", "method");
+  meth begin("begin");
+  meth end("end");
   var dv = v;
   var dit = it;
   echo(dv[2]);

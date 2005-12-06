@@ -51,6 +51,8 @@ namespace dyn
 
     typedef ::dyn::fun  fun;
     typedef ::dyn::ctor ctor;
+    typedef ::dyn::meth meth;
+    typedef ::dyn::meth method;
   }
 }
 

@@ -22,7 +22,6 @@ namespace dyn {
   load_function(fun_kind kind,
                 const std::string& name,
                 const arguments_types_t& arguments_types,
-                const std::string& options,
                 const std::string& header_path);
 
 } // end of namespace dyn

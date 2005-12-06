@@ -1,5 +1,22 @@
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Remove options, add method.
+
+	* src/function.erb.cc,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/all_methods.erb.cc,
+	* src/data.erb.hh,
+	* src/data.cc: Update.
+	* src/dyn.hh: Add typdefs.
+	* test/test_function_loader.cc,
+	* test/test_damien.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc: Update tests.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Disable the ruby segv handler.
 
 	* src/function_loader.cc: Ignore segv cause the system handle it

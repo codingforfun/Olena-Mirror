@@ -32,13 +32,13 @@ int main()
   std::cout << d2 << std::endl;
 
   fun  dyn_foo("foo");
-  fun  dyn_print_noarg("print_noarg", "method");
   fun  dyn_change("change");
   ctor mk_down_char("down<char>");
   ctor mk_down_int("down<int>");
-  fun  dyn_get_i("get_i", "method");
-  fun  dyn_get_t("get_t", "method");
-  fun  dyn_clone("clone", "method");
+  meth dyn_print_noarg("print_noarg");
+  meth dyn_get_i("get_i");
+  meth dyn_get_t("get_t");
+  method dyn_clone("clone"); // Same as meth
 
   var f = mk_down_char('x');
 
@@ -49,7 +49,7 @@ int main()
 
   var j = dyn::down(46);
 
-  fun j_print_noarg = j.method("print_noarg");
+  meth j_print_noarg = j.method("print_noarg");
 
   // std::cout is not printable
   // but a data containing std::cout yes

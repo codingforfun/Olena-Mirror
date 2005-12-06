@@ -37,13 +37,13 @@ namespace dyn {
     op operator_star("*");
     op operator_equal("==");
     op operator_not_equal("!=");
-    fun operator_square_brackets("operator[]", "method");
+    meth operator_square_brackets("operator[]");
   }
 
 
-  fun data::method(const std::string& method_name)
+  meth data::method(const std::string& method_name)
   {
-    fun m(method_name, "method", "*", this);
+    meth m(method_name, "*", this);
     return m;
   }
 

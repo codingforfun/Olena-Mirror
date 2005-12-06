@@ -16,8 +16,8 @@ namespace dyn
   data
   all_methods::send (<%= (['const std::string& meth_name'] + arguments).join(', ') %>) const
   {
-    fun meth(meth_name, "method");
-    return meth(<%= (['self()'] + objects).join(', ') %>);
+    meth m(meth_name);
+    return m(<%= (['self()'] + objects).join(', ') %>);
   }
 
   <%- ALL_METHODS.each do |meth_name, includes| -%>
@@ -25,8 +25,8 @@ namespace dyn
   data
   all_methods::<%= meth_name %> (<%= arguments.join(', ') %>) const
   {
-    fun meth("<%= meth_name %>", "method", "<%= includes.join(':') %>");
-    return meth(<%= (['self()'] + objects).join(', ') %>);
+    meth m("<%= meth_name %>", "<%= includes.join(':') %>");
+    return m(<%= (['self()'] + objects).join(', ') %>);
   }
 
   <%- end -%>

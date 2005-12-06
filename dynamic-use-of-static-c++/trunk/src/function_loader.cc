@@ -124,7 +124,6 @@ namespace dyn {
             const std::list<std::string>& args,
             fun_kind kind,
             const std::string paths,
-            const std::string options,
             OStream& ostr)
     {
       ruby::stream r;
@@ -167,7 +166,7 @@ namespace dyn {
              << nl << "assert(" << arg << "_reinterpret_cast_ptr);" << nl;
       }
 
-      if ( options.find("method") != str::npos )
+      if ( kind == METH)
       {        
         call << call_args.front() << ((first_type_is_ptr)? "->" : ".");
         call_args.pop_front();
@@ -199,6 +198,7 @@ namespace dyn {
             default: assert(0);
           }
           // no break here
+        case METH:
         case FUN:
           body << "policy::receiver<select_dyn_policy((" << call.str() << "))> receiver;" << nl
                << "(receiver(), " << call.str() << ");" << nl
@@ -250,7 +250,6 @@ namespace dyn {
     load(fun_kind kind,
          const std::string& name,
          const arguments_types_t& arguments_types,
-         const std::string& options,
          const std::string& paths)
     {
       std::ostringstream ostr;
@@ -269,7 +268,6 @@ namespace dyn {
         gen_path<std::ostream> fun(ostr);
         foreach_path_in_paths(paths, fun);
       }
-      if (options != "") ostr << ", options: " << options;
       std::string prototype = ostr.str();
 
       ruby << "Digest::MD5.new(%q{" << prototype.c_str() << "}).to_s" << ruby::eval;
@@ -286,7 +284,7 @@ namespace dyn {
       std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
 
       ruby << "compile %q{";
-      gen_cxx(identifier, name, arguments_types, kind, paths, options, ruby);
+      gen_cxx(identifier, name, arguments_types, kind, paths, ruby);
       ruby << "}, %q{" << identifier << "}, %q{" << name << "}, %q{";
       join(cflags_.begin(), cflags_.end(), ' ', ruby);
       ruby << "}, %q{";
@@ -341,10 +339,9 @@ namespace dyn {
   load_function(fun_kind kind,
                 const std::string& name,
                 const arguments_types_t& arguments_types,
-                const std::string& options,
                 const std::string& header_path)
   {
-    return function_loader.load(kind, name, arguments_types, options, header_path);
+    return function_loader.load(kind, name, arguments_types, header_path);
   }
 
 } // end of namespace dyn

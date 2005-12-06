@@ -10,7 +10,7 @@ int main()
 {
   dyn::include_dir(DYN_FIXTURES);
 
-  dyn::fun dfoo1("foo1", "", "my_lib/lib.hh"); // With the include
+  dyn::fun dfoo1("foo1", "my_lib/lib.hh"); // With the include
 
   dyn::include("my_lib/lib.hh"); // setup a default include
 

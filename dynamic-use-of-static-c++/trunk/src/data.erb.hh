@@ -336,7 +336,7 @@ namespace dyn {
           && type_.rfind("const>") == type_.length() - 6;
     }
 
-    fun method(const std::string& method_name);
+    meth method(const std::string& method_name);
 
     data() : proxy_(nil_proxy) {}
 
@@ -388,7 +388,7 @@ namespace dyn {
     extern op operator_star;
     extern op operator_equal;
     extern op operator_not_equal;
-    extern fun operator_square_brackets;
+    extern meth operator_square_brackets;
   }
 
 }
