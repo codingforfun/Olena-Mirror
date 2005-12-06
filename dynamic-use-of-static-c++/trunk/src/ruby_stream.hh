@@ -1,6 +1,8 @@
 #ifndef RUBY_STREAM_HH
 #define RUBY_STREAM_HH
 
+// #define DEBUG_RUBY_STREAM
+
 // Protection against already loaded config.h
 # undef PACKAGE_BUGREPORT
 # undef PACKAGE_NAME
@@ -9,6 +11,9 @@
 # undef PACKAGE_VERSION
 # undef HAVE_DLFCN_H
 
+# ifdef DEBUG_RUBY_STREAM
+#  include <iostream>
+# endif
 # include <string>
 # include <sstream>
 # include <ruby.h>
@@ -66,7 +71,9 @@ namespace ruby
     {
       if (contents_.str().size() != 0)
       {
-        // std::cout << "Eval (" << contents_.str() << ")" << std::endl;
+#       ifdef DEBUG_RUBY_STREAM
+          std::cerr << "Eval (" << contents_.str() << ")" << std::endl;
+#       endif
         last_value_ = rb_eval_string(contents_.str().c_str());
         contents_.str(std::string());
       }

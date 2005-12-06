@@ -1,3 +1,20 @@
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Generate the C++ code from C++.
+
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb: More C++, less ruby.
+
+	* src/function.erb.cc: Reverse load_function argument order.
+	* src/function.erb.hh: Reorder arguments.
+	* src/ruby_stream.hh: Add a debug mode.
+	* src/data.erb.hh: Remove a useless comma.
+	* src/data.cc: Add * to paths in method().
+	* config/erbx: Add * to fake_method.
+	* test/test_function_loader.cc: The path is the third argument.
+	* configure.ac: Add -Werror.
+
 2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Make the config.site compliant with sub-confgiures on linux.

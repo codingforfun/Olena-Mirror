@@ -43,7 +43,7 @@ namespace dyn {
 
   fun data::method(const std::string& method_name)
   {
-    fun m(method_name, "method", "", this);
+    fun m(method_name, "method", "*", this);
     return m;
   }
 

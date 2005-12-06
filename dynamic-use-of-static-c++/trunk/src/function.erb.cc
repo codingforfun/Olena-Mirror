@@ -9,6 +9,7 @@
 
 namespace dyn
 {
+
     <%- DYN_MAX_ARGUMENTS.times do |i| -%>
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" }.join(', ') -%>
@@ -27,7 +28,7 @@ namespace dyn
         arguments_types.push_back(arg<%= j %>.type());
       <%- end -%>
 
-        void* ptr = load_function(kind_, name_, arguments_types, header_path_, options_);
+        void* ptr = load_function(kind_, name_, arguments_types, options_, header_paths_);
         assert(ptr);
 
         if (obj_ptr_)

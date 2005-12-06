@@ -10,9 +10,6 @@ namespace dyn {
   include(const std::string& file);
 
   void
-  post_include(const std::string& file);
-
-  void
   include_dir(const std::string& dir);
 
   void cflags(const std::string& elt);
@@ -22,11 +19,11 @@ namespace dyn {
   typedef std::list<std::string> arguments_types_t;
 
   void*
-  load_function(const std::string& kind,
+  load_function(fun_kind kind,
                 const std::string& name,
                 const arguments_types_t& arguments_types,
-                const std::string& header_path,
-                const std::string& options);
+                const std::string& options,
+                const std::string& header_path);
 
 } // end of namespace dyn
 

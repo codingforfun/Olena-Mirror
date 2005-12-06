@@ -2,7 +2,7 @@
 
 # For this project only
 DYN_MAX_ARGUMENTS = 10
-ALL_METHODS = { 'fake_method' => [] }
+ALL_METHODS = { 'fake_method' => ['*'] }
 # end
 
 require 'erb'

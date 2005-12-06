@@ -28,7 +28,7 @@ namespace dyn {
       is_ref   = 2,
       is_ptr   = 4,
       is_pod   = 8,
-      is_void  = 16,
+      is_void  = 16
     };
   }
   struct proxy_tag;

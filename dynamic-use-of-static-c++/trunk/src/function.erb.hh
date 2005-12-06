@@ -7,29 +7,36 @@
 namespace dyn
 {
 
+  enum fun_kind
+  {
+    FUN,
+    OP,
+    CTOR
+  };
 
   struct data;
 
   struct generic_fun
   {
 
-    generic_fun(const std::string kind,
+    generic_fun(fun_kind kind,
                 const std::string name,
-                const std::string options="",
-                const std::string header_path="",
-                const data*       obj_ptr=0) :
+                const std::string options,
+                const std::string header_paths,
+                const data*       obj_ptr) :
       kind_(kind), name_(name), options_(options),
-      header_path_(header_path), obj_ptr_(obj_ptr) {}
+      header_paths_(header_paths), obj_ptr_(obj_ptr) {}
+
 
     <%- DYN_MAX_ARGUMENTS.times do |i| -%>
       data
       operator() (<%= (["const data&"] * i).join(', ') %>) const;
     <%- end -%>
 
-    const std::string kind_;
+    const fun_kind kind_;
     const std::string name_;
     const std::string options_;
-    const std::string header_path_;
+    const std::string header_paths_;
     const data* obj_ptr_;
   };
 
@@ -38,9 +45,9 @@ namespace dyn
   {
     <%= name %>(const std::string name,
                 const std::string options="",
-                const std::string header_path="",
+                const std::string header_paths="*",
                 const data*       obj_ptr=0) :
-      generic_fun(":<%= name %>", name, options, header_path, obj_ptr) {}
+      generic_fun(<%= name.upcase %>, name, options, header_paths, obj_ptr) {}
   };
   <% end %>
 
@@ -48,10 +55,10 @@ namespace dyn
   {
     op(const std::string name,
        const std::string options="",
-       const std::string header_path="",
+       const std::string header_paths="*",
        const data*       obj_ptr=0) :
-      generic_fun(":op", std::string("operator") + name,
-                  options, header_path, obj_ptr) {}
+      generic_fun(OP, std::string("operator") + name,
+                  options, header_paths, obj_ptr) {}
   };
 
 } // end of namespace dyn
