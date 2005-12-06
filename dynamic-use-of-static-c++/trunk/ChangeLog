@@ -1,5 +1,13 @@
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Flags and include_dirs go to the (dark) C++ side.
+
+	* src/function_loader.rb: Simplify since it's just a function now.
+	* src/function_loader.cc: Update accordingly.
+	* test/Makefile.am: Add a rule to build tests.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Generate the C++ code from C++.
 
 	* src/function_loader.cc,

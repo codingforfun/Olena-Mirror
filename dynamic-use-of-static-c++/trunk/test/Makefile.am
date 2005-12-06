@@ -54,5 +54,7 @@ olena_test_DEPENDENCIES = $(top_builddir)/src/libdyn.la
 
 TESTS = $(check_PROGRAMS)
 
+tests: $(check_PROGRAMS)
+
 repository_clean: clean
 	rm -rf repository

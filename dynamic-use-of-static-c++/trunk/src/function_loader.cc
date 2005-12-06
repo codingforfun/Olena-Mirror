@@ -230,27 +230,7 @@ namespace dyn {
     void
     include_dir(const std::string& dir)
     {
-      ruby << "FunctionLoader.include_dir \"" << dir << "\"" << ruby::eval;
-    }
-
-    void
-    cflags(const std::string& elt)
-    {
-      ruby << "FunctionLoader.cflags \"" << elt << "\"" << ruby::eval;
-    }
-
-    void
-    ldflags(const std::string& elt)
-    {
-      ruby << "FunctionLoader.ldflags \"" << elt << "\"" << ruby::eval;
-    }
-
-#if 0
-
-    void
-    include_dir(const std::string& dir)
-    {
-      include_dirs_.push_back(dir);
+      cflags_.push_back(std::string("-I") + dir);
     }
 
     void
@@ -264,8 +244,6 @@ namespace dyn {
     {
       ldflags_.push_back(elt);
     }
-
-#endif
 
     void*
     load(fun_kind kind,
@@ -306,10 +284,13 @@ namespace dyn {
 
       std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
 
-      ruby << "FunctionLoader.call %q{";
+      ruby << "compile %q{";
       gen_cxx(identifier, name, arguments_types, kind, paths, options, ruby);
-      ruby << "}, \"" << identifier << "\", \""
-           << name << "\"" << ruby::eval;
+      ruby << "}, %q{" << identifier << "}, %q{" << name << "}, %q{";
+      join(cflags_.begin(), cflags_.end(), ' ', ruby);
+      ruby << "}, %q{";
+      join(ldflags_.begin(), ldflags_.end(), ' ', ruby);
+      ruby << "}" << ruby::eval;
 
       const char* error;
       std::string lib_path = std::string("repository/") + identifier
