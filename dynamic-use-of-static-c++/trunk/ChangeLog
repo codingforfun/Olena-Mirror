@@ -1,5 +1,11 @@
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Remove to ruby evals.
+
+	* src/function_loader.cc: Update.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Remove options, add method.
 
 	* src/function.erb.cc,

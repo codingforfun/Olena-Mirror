@@ -153,11 +153,21 @@ namespace dyn {
         oarg << "arg" << i;
         str arg(oarg.str());
 
+        str type(*it);
         // remove references cause they are forbidden on lhs
-        r << '"' << *it << "\".gsub(/&*$/, '')" << ruby::eval;
-        str type(STR2CSTR(r.last_value()));
-        r << "!! (\"" << type << "\" =~ /\\*\\s*(const)?\\s*>\\s*$/)" << ruby::eval;
-        first_type_is_ptr = r.last_value() == Qtrue;
+        while (*type.rbegin() == '&') type.erase(--type.end());
+
+        if ( kind == METH and i == 0 )
+        {
+          // check if the first type is a pointer to choose the good op (. or ->)
+          str stripped_type(type);
+          unsigned pos;
+          while ((pos = stripped_type.find(" ")) != str::npos) stripped_type.erase(pos, 1);
+          unsigned len = stripped_type.length();
+          first_type_is_ptr = ((stripped_type.compare(len - 7, 7, "*const>") == 0)
+                            || (stripped_type.compare(len - 2, 2, "*>") == 0));
+        }
+
         if (it != args.begin()) ostr << ", ";
         ostr << "const data& " << arg;
         call_args.push_back(arg + "_reinterpret_cast_ptr->obj()");
