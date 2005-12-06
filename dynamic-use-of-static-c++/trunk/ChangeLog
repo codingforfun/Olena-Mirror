@@ -1,5 +1,12 @@
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
+	Disable the ruby segv handler.
+
+	* src/function_loader.cc: Ignore segv cause the system handle it
+      normally.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
 	Flags and include_dirs go to the (dark) C++ side.
 
 	* src/function_loader.rb: Simplify since it's just a function now.

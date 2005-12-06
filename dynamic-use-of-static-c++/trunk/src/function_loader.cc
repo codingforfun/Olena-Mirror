@@ -109,6 +109,7 @@ namespace dyn {
       ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
       ruby << "require 'function_loader'" << ruby::eval;
       ruby << "require 'md5'" << ruby::eval;
+      ruby << "Signal.trap(:SEGV, 'IGNORE')" << ruby::eval;
     }
 
     ~function_loader_t()
