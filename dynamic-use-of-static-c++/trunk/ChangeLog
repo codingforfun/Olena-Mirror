@@ -1,3 +1,10 @@
+2006-01-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add another version of libiberty.
+
+	* lib/libiberty-powerpc-darwin8.3.0.la: A copy of
+  libiberty-powerpc-darwin.la
+
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Remove to ruby evals.
