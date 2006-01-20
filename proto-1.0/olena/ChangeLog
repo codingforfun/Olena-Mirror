@@ -1,3 +1,9 @@
+2006-01-20  Nicolas Widynski  <widyns_n@lrde.epita.fr>
+
+	Fix laplacian convolution.
+
+	* oln/convolution/laplacian.hh: Fix laplacian convolution.
+
 2006-01-20  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Update laplacian convolution.

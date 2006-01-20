@@ -40,16 +40,7 @@ namespace oln {
 
     template <typename I>
     oln_type_of(I, concrete)
-      laplacian_first_derivative(const abstract::image<I>& input);
-
-    template <typename I>
-    oln_type_of(I, concrete)
-      laplacian_second_derivative_xy_yx(const abstract::image<I>& input);
-
-    template <typename I>
-    oln_type_of(I, concrete)
-      laplacian_second_derivative_xx_yy(const abstract::image<I>& input);
-
+      laplacian(const abstract::image<I>& input);
 
     namespace impl {
 
@@ -58,28 +49,7 @@ namespace oln {
 
       template <typename I>
       oln_type_of(I, concrete)
-	laplacian_first_derivative_(const abstract::image2d<I>& input)
-      {
-	oln_type_of(I, concrete) lpl(input.size(), "laplacian first derivative");
-	oln_type_of(I, fwd_piter) p(input.size());
-	oln_type_of(I, point) pt;
-	oln_type_of(I, value) v;
-
-	for_all_p(p)
-	  {
-	    pt = p;
-	    lpl[p] = (input[oln_type_of(I, point)((coord_t)(pt.row() - 1), pt.col())].value() +
-		      input[oln_type_of(I, point)((coord_t)(pt.row()), pt.col())].value() +
-		      input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col() - 1))].value() +
-		      input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col()))].value() -
-		      4 * input[p].value()) / 4;
-	  }
-	return lpl;
-      }
-
-      template <typename I>
-      oln_type_of(I, concrete)
-	laplacian_second_derivative_xx_yy_(const abstract::image2d<I>& input)
+	laplacian_(const abstract::image2d<I>& input)
       {
 	oln_type_of(I, concrete) lpl(input.size(), "laplacian second derivative");
 	oln_type_of(I, fwd_piter) p(input.size());
@@ -103,23 +73,9 @@ namespace oln {
 
     template <typename I>
     oln_type_of(I, concrete)
-      laplacian_first_derivative(const abstract::image<I>& input)
+      laplacian_(const abstract::image<I>& input)
     {
-      return impl::laplacian_first_derivative_(input.exact());
-    }
-
-    template <typename I>
-    oln_type_of(I, concrete)
-      laplacian_second_derivative_xy_yx(const abstract::image<I>& input)
-    {
-      return impl::laplacian_first_derivative_(impl::laplacian_first_derivative_(input.exact()));
-    }
-
-    template <typename I>
-    oln_type_of(I, concrete)
-      laplacian_second_derivative_xx_yy(const abstract::image<I>& input)
-    {
-      return impl::laplacian_second_derivative_xx_yy_(input.exact());
+      return impl::laplacian_(input.exact());
     }
 
 
