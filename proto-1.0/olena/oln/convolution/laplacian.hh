@@ -45,13 +45,11 @@ namespace oln {
     namespace impl {
 
 
-      // FIXME : type I must be a ntg::int_s8 u8...
-
       template <typename I>
       oln_type_of(I, concrete)
 	laplacian_(const abstract::image2d<I>& input)
       {
-	oln_type_of(I, concrete) lpl(input.size(), "laplacian second derivative");
+	oln_type_of(I, concrete) lpl(input.size(), "laplacian");
 	oln_type_of(I, fwd_piter) p(input.size());
 	oln_type_of(I, point) pt;
 	oln_type_of(I, value) v;
@@ -73,7 +71,7 @@ namespace oln {
 
     template <typename I>
     oln_type_of(I, concrete)
-      laplacian_(const abstract::image<I>& input)
+      laplacian(const abstract::image<I>& input)
     {
       return impl::laplacian_(input.exact());
     }
