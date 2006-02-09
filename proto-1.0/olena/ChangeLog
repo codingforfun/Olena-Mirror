@@ -1,5 +1,12 @@
 2006-02-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Add anisotropic diffusion.
+
+	* oln/level/anisotropic_diffusion.hh: New. Anisotropic diffusion algorithm.
+	* oln/makefile.src: Add anisotropic_diffusion.hh to the makefile.
+
+2006-02-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	* oln/appli/denoising/nl_means.hh: New.
 	* oln/makefile.src: .
 

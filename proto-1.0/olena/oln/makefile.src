@@ -177,6 +177,7 @@ OLN_DEP =					\
   level/invert.hh				\
   level/level_components.hh			\
   level/logic.hh				\
+  level/anisotropic_diffusion.hh		\
 						\
   morpho/closing.hh				\
   morpho/dilation.hh				\
