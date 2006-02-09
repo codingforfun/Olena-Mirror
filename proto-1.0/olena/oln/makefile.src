@@ -10,6 +10,8 @@ OLN_DEP =					\
   appli/astro/tree_coherence_check.hh		\
   appli/astro/tree_statistics.hh		\
 						\
+  appli/denoising/nl_means.hh			\
+						\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
@@ -29,6 +31,8 @@ OLN_DEP =					\
   convert/force.hh				\
   convert/stretch.hh				\
   convert/value_to_point.hh			\
+						\
+  convolution/laplacian.hh			\
 						\
   core/1d/array1d.hh				\
   core/1d/bkd_piter1d.hh			\
