@@ -1,5 +1,11 @@
 2006-02-10  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Add Image Inpainting algorithm.
+
+	* oln/appli/inpainting/image_inpainting.hh: New. Based on Bertalmio algorithm.
+
+2006-02-10  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Update anisotropic diffusion filter.
 
 	* oln/level/anisotropic_diffusion.hh: Fix bug.
