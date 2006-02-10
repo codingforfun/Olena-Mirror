@@ -31,8 +31,9 @@
 # include <oln/basics.hh>
 # include <oln/utils/clone.hh>
 # include <oln/morpho/gradient_morpho.hh>
+
 # define SQR(u) u*u
-# define ABS(u) u > 0 ? u : -u
+# define ABS(u) u >= 0 ? u : -u
 
 namespace oln {
 
@@ -94,7 +95,6 @@ namespace oln {
       double compute_capa(const abstract::image<I>& input)
       {
 	double K = 0;
-	// on admet un 255 dans l'image
 	double seuil = 0.9 * 255;
 
 	oln_type_of(I, concrete) grad = morpho::gradient_morpho(input);
@@ -108,25 +108,27 @@ namespace oln {
 	return K;
       }
 
+
       double diffusion_coefficient(double grad, double K)
       {
-	std::cout << "----------------" << std::endl;
-	std::cout << grad << std::endl;
-	std::cout << K << std::endl;
 	return 1 / (1 + SQR(grad / K));
       }
 
       template <typename I>
       oln_type_of(I, concrete)
-	anisotropic_diffusion_(const abstract::image<I>& input)
+	anisotropic_diffusion_(const abstract::image<I>& input, unsigned nb_it)
       {
       	oln_type_of(I, concrete) a_d(input.size(), "gradient");
       	oln_ch_concrete_type(I, std::vector<double>) grad(input.size(), "gradient");
 	oln_type_of(I, fwd_piter) p(input.size());
 
 	bool conv = false;
+	bool change = false;
 	double K = 0;
 	double modify = 0;
+	double error = 0;
+	double tmp = 0;
+	unsigned it = 1;
 
 	a_d = clone(input.exact());
 
@@ -135,6 +137,8 @@ namespace oln {
 	    clean_ima(a_d.exact());
 	    grad = gradient_on_each_side_(a_d);
 	    K = compute_capa(a_d);
+	    change = false;
+	    error = 0;
 
 	    for_all_p(p)
 	      {
@@ -142,17 +146,28 @@ namespace oln {
 
 		typename std::vector<double>::const_iterator it;
 
-		for (it = grad[p].value().begin(); it != grad[p].value().end(); it++)
-		  modify += *it * diffusion_coefficient(ABS((double)*it), K);
+		for (it = grad.at(p).begin(); it != grad.at(p).end(); it++)
+		  modify += (double)(*it) * diffusion_coefficient((double)*it, K);
 
-		if (a_d[p] + 0.14 * modify >= 0 and a_d[p] + 0.14 * modify <= 255)
-		  a_d[p] = a_d[p] + 0.14 * modify;
+		if (modify != 0 and a_d[p] + 0.14 * modify >= 0 and a_d[p] + 0.14 * modify <= 255)
+		  {
+		    tmp = a_d[p];
+		    a_d[p] = a_d[p] + 0.14 * modify;
+		    if ((double)a_d[p] != tmp)
+		      change = true;
+		  }
+
+		error += ABS(modify);
 	      }
 
-	    std::cout << modify << std::endl;
-	    if (not modify)
+ 	    std::cout << "error " << error << std::endl;
+
+	    if (it >= nb_it or error < 0.1 or change == false)
 	      conv = true;
+
+	    it++;
 	  };
+
 	return a_d;
     }
 
@@ -163,9 +178,9 @@ namespace oln {
 
     template <typename I>
     oln_type_of(I, concrete)
-      anisotropic_diffusion(const abstract::image<I>& input)
+      anisotropic_diffusion(const abstract::image<I>& input, unsigned nb_it)
     {
-      return impl::anisotropic_diffusion_(input.exact());
+      return impl::anisotropic_diffusion_(input.exact(), nb_it);
     }
 
   } // end of namespace oln::level

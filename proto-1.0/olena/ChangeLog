@@ -1,3 +1,9 @@
+2006-02-10  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Update anisotropic diffusion filter.
+
+	* oln/level/anisotropic_diffusion.hh: Fix bug.
+
 2006-02-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Add anisotropic diffusion.
