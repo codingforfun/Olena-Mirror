@@ -1,3 +1,9 @@
+2006-02-12  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Util function : set outsides boundaries at the same value of image boundaries.
+
+	* oln/utils/clean_boundaries.hh: New. To clean image boundaries.
+
 2006-02-10  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Add Image Inpainting algorithm.
