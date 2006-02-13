@@ -12,6 +12,8 @@ OLN_DEP =					\
 						\
   appli/denoising/nl_means.hh			\
 						\
+  appli/inpainting/image_inpainting.hh		\
+						\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
@@ -170,6 +172,7 @@ OLN_DEP =					\
   io/vectorial.hh				\
   io/write_image.hh				\
 						\
+  level/anisotropic_diffusion.hh		\
   level/arith.hh				\
   level/compare.hh				\
   level/extrema_components.hh			\
@@ -177,7 +180,6 @@ OLN_DEP =					\
   level/invert.hh				\
   level/level_components.hh			\
   level/logic.hh				\
-  level/anisotropic_diffusion.hh		\
 						\
   morpho/closing.hh				\
   morpho/dilation.hh				\
@@ -209,6 +211,7 @@ OLN_DEP =					\
 						\
   utils/buffer.hh				\
   utils/clone.hh				\
+  utils/clean_boundaries.hh			\
   utils/invert.hh				\
   utils/key.hh					\
   utils/md5.hh					\

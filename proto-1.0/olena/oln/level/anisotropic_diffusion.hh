@@ -31,6 +31,7 @@
 # include <oln/basics.hh>
 # include <oln/utils/clone.hh>
 # include <oln/morpho/gradient_morpho.hh>
+# include <oln/utils/clean_boundaries.hh>
 
 # define SQR(u) u*u
 # define ABS(u) u >= 0 ? u : -u
@@ -41,59 +42,82 @@ namespace oln {
 
     namespace impl {
 
-      template <typename I>
-      oln_ch_concrete_type(I, std::vector<double>)
-	gradient_on_each_side_(const abstract::image<I>& input)
+      // version 2d of the 4nbhs gradient
+      template <typename T>
+      image2d<std::vector<double> >
+      gradient_on_each_side_(const image2d<T>& input)
       {
-	oln_ch_concrete_type(I, std::vector<double>) g(input.size(), "gradient");
-	oln_type_of(I, fwd_piter) p(input.size());
-	oln_type_of(I, point) pt;
+	image2d<std::vector<double> > g(input.size(), "gradient");
+	fwd_piter2d p(input.size());
+	point2d pt;
 
 	for_all_p(p)
 	  {
 	    pt = p;
 
 	    // N
-	    g.at(p).push_back((double)input[oln_type_of(I, point)((coord_t)(pt.row() - 1), pt.col())].value() -
-			      input[oln_type_of(I, point)((coord_t)(pt.row()), pt.col())].value());
+	    g.at(p).push_back((input(pt.row() - 1, pt.col()) - input[p]) / 2);
 
 	    // S
-	    g.at(p).push_back((double)input[oln_type_of(I, point)((coord_t)(pt.row() + 1), pt.col())].value() -
-			      input[oln_type_of(I, point)((coord_t)(pt.row()), pt.col())].value());
+	    g.at(p).push_back((input(pt.row() + 1, pt.col()) - input[p]) / 2);
 
 	    // E
-	    g.at(p).push_back((double)input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col() + 1))].value() -
-			      input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col()))].value());
+	    g.at(p).push_back((input(pt.row(), pt.col() + 1) - input[p]) / 2);
 
 	    // W
-	    g.at(p).push_back((double)input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col() - 1))].value() -
-			      input[oln_type_of(I, point)(pt.row(), (coord_t)(pt.col()))].value());
+	    g.at(p).push_back((input(pt.row(), pt.col() - 1) - input[p]) / 2);
 	  }
 
 	return g;
       }
 
 
-      template <typename T>
-      void clean_ima(image2d<T>& ima)
-      {
-	for (int j = 0; j < ima.size().ncols(); j++)
-	  {
-	    ima(-1, j) = ima(0, j);
-	    ima(ima.size().nrows(), j) = ima(ima.size().nrows() - 1, j);
-	  }
-
-	for (int j = 0; j < ima.size().nrows(); j++)
-	  {
-	    ima(j, -1) = ima(j, 0);
-	    ima(j, ima.size().ncols()) = ima(j, ima.size().ncols() - 1);
-	  }
-      }
-
-
       template <typename I>
       double compute_capa(const abstract::image<I>& input)
       {
+	// static version of cappa (near the variance)
+	return 6;
+
+
+	// 4 nbhs version of gradient
+
+	/*
+        double K = 0;
+	double seuil = 0;
+
+        oln_type_of(I, concrete) grad(input.size());
+        oln_type_of(I, fwd_piter) p(input.size());
+        oln_type_of(I, point) pt;
+
+	for_all_p(p)
+	  {
+	    pt = p;
+
+	    grad[p] = (double) ((ABS((double) (input[oln_type_of(I, point)(pt.row() - 1, pt.col())].value()))) +
+				(ABS((double) (input[oln_type_of(I, point)(pt.row() + 1, pt.col())].value()))) +
+				(ABS((double) (input[oln_type_of(I, point)(pt.row(), pt.col() + 1)].value()))) +
+				(ABS((double) (input[oln_type_of(I, point)(pt.row(), pt.col() - 1)].value()))) +
+				(ABS((double) (- 4 * input[oln_type_of(I, point)((coord_t)(pt.row()), pt.col())].value())))) / 8;
+
+	    seuil = grad[p] > seuil ? grad[p] : seuil;
+	  }
+
+	seuil *= 0.9;
+
+	for_all_p(p)
+          {
+	    //            if (grad[p] < (int)seuil)
+	    if (grad[p] > (int)seuil)
+              K++;
+          }
+	std::cout << K << std::endl;
+	return K;
+	*/
+
+
+	// morphologic version of gradient
+
+	/*
 	double K = 0;
 	double seuil = 0.9 * 255;
 
@@ -103,9 +127,11 @@ namespace oln {
 	for_all_p(p)
 	  {
 	    if (grad[p] < (int)seuil)
+	      //	    if (grad[p] > (int)seuil)
 	      K++;
 	  }
 	return K;
+	*/
       }
 
 
@@ -114,6 +140,7 @@ namespace oln {
 	return 1 / (1 + SQR(grad / K));
       }
 
+      // generic function of the anisotropic diffusion
       template <typename I>
       oln_type_of(I, concrete)
 	anisotropic_diffusion_(const abstract::image<I>& input, unsigned nb_it)
@@ -134,8 +161,8 @@ namespace oln {
 
 	while (conv == false)
 	  {
-	    clean_ima(a_d.exact());
-	    grad = gradient_on_each_side_(a_d);
+	    utils::clean_boundaries(a_d.exact());
+	    grad = gradient_on_each_side_(a_d.exact());
 	    K = compute_capa(a_d);
 	    change = false;
 	    error = 0;
@@ -162,23 +189,22 @@ namespace oln {
 
  	    std::cout << "error " << error << std::endl;
 
-	    if (it >= nb_it or error < 0.1 or change == false)
+	    if ((it >= nb_it and nb_it != 0) or error < 0.1 or change == false)
 	      conv = true;
 
 	    it++;
 	  };
 
 	return a_d;
-    }
-
-
+      }
 
     } // end of namespace oln::level::impl
 
 
+    // nb_it = 0 signifies until algorithm convergence.
     template <typename I>
     oln_type_of(I, concrete)
-      anisotropic_diffusion(const abstract::image<I>& input, unsigned nb_it)
+      anisotropic_diffusion(const abstract::image<I>& input, unsigned nb_it = 0)
     {
       return impl::anisotropic_diffusion_(input.exact(), nb_it);
     }
