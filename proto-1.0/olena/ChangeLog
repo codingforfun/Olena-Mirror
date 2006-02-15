@@ -1,5 +1,16 @@
 2006-02-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Implementation of Image Inpainting algorithm in Olena 0.10.
+
+	* oln/convolution/laplacian_olena_0_10.hh: New. Laplacian 2d.
+	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic diffusion
+							from Perona Malik.
+	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological gradient.
+	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image inpainting
+							algorithm from Bertalmio.
+
+2006-02-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Implementation of image inpainting algorithm in Olena 0.10.
 
 	* oln/convolution/laplacian_olena_0_10.hh: New. Laplacian 2d.

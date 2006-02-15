@@ -210,54 +210,6 @@ namespace oln {
 	return g;
       }
 
-      template <typename T>
-      std::ostream& operator<<(std::ostream& ostr, const image2d<std::vector<T> >& ima)
-      {
-	for (int i = 0; i < 9; i++)
-	  {
-	    for (int j = 0; j < 9; j++)
-	      {
-		ostr << "(" << ima(i,j)[0] << "," << ima(i,j)[1] << ") " << "\t";
-		if ((ima(i,j)[0] == 0 or ima(i,j)[0] == 1) and
-		    (ima(i,j)[1] == 0 or ima(i,j)[1] == 1))
-		  ostr << "\t";
-	      }
-
-	    ostr << std::endl;
-	  }
-	return ostr;
-      }
-
-
-      template <typename T>
-      std::ostream& operator<<(std::ostream& ostr, const image2d<T>& ima)
-      {
-	for (int i = 0; i < 9; i++)
-	  {
-	    for (int j = 0; j < 9; j++)
-	      ostr << ima(i,j) << "\t";
-	    ostr << std::endl;
-	  }
-	return ostr;
-      }
-
-
-      template <typename T>
-      void clean_ima(image2d<T>& ima)
-      {
-	for (int j = 0; j < ima.size().ncols(); j++)
-	  {
-	    ima(-1, j) = ima(0, j);
-	    ima(ima.size().nrows(), j) = ima(ima.size().nrows() - 1, j);
-	  }
-
-	for (int j = 0; j < ima.size().nrows(); j++)
-	  {
-	    ima(j, -1) = ima(j, 0);
-	    ima(j, ima.size().ncols()) = ima(j, ima.size().ncols() - 1);
-	  }
-      }
-
 
       template <typename T, typename T2>
       image2d<ntg::int_u8>

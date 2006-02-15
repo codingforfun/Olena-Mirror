@@ -42,7 +42,7 @@ namespace oln {
       image2d<T> dil = dilation(input, win_c4p());
       image2d<T> ero = erosion(input, win_c4p());
       image2d<T> res(input.size());
-      oln_iter_type(image2d<T>) p(input);
+      oln_iter_type(image2d<T>)  p(input);
       for_all(p)
 	{
 	  res[p] = dil[p] - ero[p];

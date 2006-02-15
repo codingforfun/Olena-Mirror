@@ -51,7 +51,7 @@ namespace oln {
       {
 	image2d<T> lpl(input.size());
 	oln_iter_type(image2d<T>) p(input);
-	point2d pt;
+	point2d	 pt;
 
 	for_all(p)
 	  {

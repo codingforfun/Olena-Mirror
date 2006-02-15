@@ -75,7 +75,7 @@ namespace oln {
       template <typename T>
       double compute_capa(const image2d<T>& input)
       {
-	// static version of cappa (near the variance)
+	// static version of cappa (near the variance).
 	return 20;
       }
 
