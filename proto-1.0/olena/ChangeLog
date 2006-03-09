@@ -1,5 +1,12 @@
 2006-03-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Watersnakes : add reconstruction by erosion with tarjan union-find.
+
+	* oln/morpho/watersnakes.hh: Add reconstruction by erosion with tarjan
+		                     union-find (quicker).
+
+2006-03-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Implementation of watersnake algorithm.
 
 	* oln/morpho/watersnakes.hh: New. Watershed + snake algorithm.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,9 +37,18 @@
 # include <oln/level/compare.hh>
 # include <oln/morpho/gradient_morpho.hh>
 
+# include <oln/basics2d.hh>
+# include <oln/level/fill.hh>
+# include <ntg/basics.hh>
+
+# include "misc.hh"
+# include "Rs.hh"
+
+
 const float INFTY = 1000000000000.f;
 # define WSHED 255
 # define MASK_VALUE -1
+typedef enum version_t { TARJAN = 0, NORMAL = 1 } version;
 
 namespace oln {
 
@@ -66,7 +75,6 @@ namespace oln {
 		    if (input[n] < input[p])
 		      LS[p] = LS[p] > (float)(input[p] - input[n]) ? LS[p] : (float)(input[p] - input[n]);
 	      }
-	    LS[p] = LS[p] == 256 ? 0 : LS[p];
 	  }
 	return LS;
       }
@@ -412,7 +420,8 @@ namespace oln {
 		     const image2d<T>& orig,
 		     const image2d<T2>& marqueur,
 		     const window2d& ng,
-		     int b)
+		     int b,
+		     version v)
       {
 	image2d<T> res(input.size());
 	image2d<int> label;
@@ -431,7 +440,16 @@ namespace oln {
 	for_all(p)
 	  propagate_minima_(input, mark, ng, p);
 
-	image2d<T> recon = reconstruction_by_erosion(input, mark);
+	image2d<T> recon;
+
+	if (v == NORMAL)
+	  recon = reconstruction_by_erosion(input, mark);
+	else
+	  { // version de tarjan
+	    typedef Rs::tarjan< image2d<T2>, image2d<T> > op_type;
+	    op_type op(marqueur, input, ng);
+	    recon = op.output;
+	  }
 
 	image2d<float> LS = lower_slope(recon, ng);
 	label = init_watershed_(recon, mark, ng, nb_compo);
@@ -476,12 +494,13 @@ namespace oln {
       watersnakes_(const image2d<T>& input,
 		   const image2d<T2>& marqueur,
 		   const window2d& ng,
-		   int b)
+		   int b,
+		   version v)
       {
 	image2d<T> grad(input.size());
 
 	grad = morpho::gradient_morpho(input, ng);
- 	return watershed_line(grad, input, marqueur, ng, b);
+ 	return watershed_line(grad, input, marqueur, ng, b, v);
       }
 
 
@@ -493,9 +512,10 @@ namespace oln {
     watersnakes(const image2d<T>& input,
 		const image2d<T2>& marqueur,
 		const window2d& ng,
-		int b)
+		int b,
+		version v = TARJAN)
     {
-      return impl::watersnakes_(input, marqueur, ng, b);
+      return impl::watersnakes_(input, marqueur, ng, b, v);
     }
 
   } // end of oln::morpho
