@@ -1,3 +1,12 @@
+2006-03-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Implementation of watersnake algorithm.
+
+	* oln/morpho/watersnakes.hh: New. Watershed + snake algorithm.
+				     Snakes aim at smoothing boundaries.
+
+	Note: This algorithm is non optimized for the moment.
+
 2006-03-02  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Watershed by hill climbing.
