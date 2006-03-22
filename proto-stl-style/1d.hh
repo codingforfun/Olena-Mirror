@@ -349,7 +349,7 @@ struct image1d : public abstract::data_image< image1d<T> >
   bool has(const point_type& p) const
   {
     return p.index() >= 0
-      and p.index() < info_.nindices;
+      and p.index() < info_.nindices();
   }
 
   bool has_large(const point_type& p) const
