@@ -1,3 +1,7 @@
+2006-03-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	* olena/ChangeLog: Clean up.
+
 2006-03-23  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Add GPL License to trunk.

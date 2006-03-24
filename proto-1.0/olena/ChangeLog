@@ -1,16 +1,22 @@
+2005-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/morpho/shortest_path_watershed.hh
+	(shortest_path_watershed_): Fix comment.
+
 2006-03-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
-	Watersnakes : add reconstruction by erosion with tarjan union-find.
+	Watersnakes: add reconstruction by erosion with Tarjan's
+	union-find.
 
-	* oln/morpho/watersnakes.hh: Add reconstruction by erosion with tarjan
-		                     union-find (quicker).
+	* oln/morpho/watersnakes.hh: Add reconstruction by erosion with
+	Tarjan's union-find (quicker).
 
 2006-03-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Implementation of watersnake algorithm.
 
 	* oln/morpho/watersnakes.hh: New. Watershed + snake algorithm.
-				     Snakes aim at smoothing boundaries.
+	Snakes aim at smoothing boundaries.
 
 	Note: This algorithm is non optimized for the moment.
 
@@ -25,33 +31,36 @@
 	Implementation of Image Inpainting algorithm in Olena 0.10.
 
 	* oln/convolution/laplacian_olena_0_10.hh: New. Laplacian 2d.
-	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic diffusion
-							from Perona Malik.
-	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological gradient.
-	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image inpainting
-							algorithm from Bertalmio.
+	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic
+	diffusion from Perona Malik.
+	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological
+	gradient.
+	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image
+	inpainting algorithm from Bertalmio.
 
 2006-02-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Implementation of image inpainting algorithm in Olena 0.10.
 
 	* oln/convolution/laplacian_olena_0_10.hh: New. Laplacian 2d.
-	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic diffusion
-		                                          from Perona Malik.
-	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological gradiant.
-	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image inpainting
-		                                                 from Bertalmio.
+	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic
+	diffusion from Perona Malik.
+	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological
+	gradiant.
+	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image
+	inpainting from Bertalmio.
 
 2006-02-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Implementation of image inpainting algorithm in Olena 0.10.
 
 	* oln/convolution/laplacian_olena_0_10.hh: New. Laplacian 2d.
-	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic diffusion
-	                                          from Perona Malik.
-	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological gradiant.
-	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image inpainting
-	                                                 from Bertalmio.
+	* oln/level/anisotropic_diffusion_olena_0_10.hh: New. Anisotropic
+	diffusion from Perona Malik.
+	* oln/morpho/gradient_morpho_olena_0_10.hh: New. Morphological
+	gradiant.
+	* oln/appli/inpainting/image_inpainting_olena_0_10.hh: New. Image
+	inpainting from Bertalmio.
 
 2006-02-13  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
@@ -62,7 +71,8 @@
 
 2006-02-12  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
-	Util function : set outsides boundaries at the same value of image boundaries.
+	Util function : set outsides boundaries at the same value of image
+	boundaries.
 
 	* oln/utils/clean_boundaries.hh: New. To clean image boundaries.
 
@@ -70,7 +80,8 @@
 
 	Add Image Inpainting algorithm.
 
-	* oln/appli/inpainting/image_inpainting.hh: New. Based on Bertalmio algorithm.
+	* oln/appli/inpainting/image_inpainting.hh: New. Based on
+	Bertalmio algorithm.
 
 2006-02-10  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
@@ -82,7 +93,8 @@
 
 	Add anisotropic diffusion.
 
-	* oln/level/anisotropic_diffusion.hh: New. Anisotropic diffusion algorithm.
+	* oln/level/anisotropic_diffusion.hh: New. Anisotropic diffusion
+	algorithm.
 	* oln/makefile.src: Add anisotropic_diffusion.hh to the makefile.
 
 2006-02-09  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
@@ -106,12 +118,13 @@
 
 	Update laplacian convolution.
 
-	* oln/convolution/laplacian.hh: Update laplacian convolution for first and
-					second derivatives.
+	* oln/convolution/laplacian.hh: Update laplacian convolution for
+	first and second derivatives.
 
 2005-10-11  Damien Thivolle  <damien@lrde.epita.fr>
 
-	Add grey level self-dual reconstruction and clean reconstruction classes.
+	Add grey level self-dual reconstruction and clean reconstruction
+	classes.
 
 	* tests/morpho/tests/reconstruction: Remove. Split into two files
 	(binary and grey level).
@@ -133,22 +146,22 @@
 
 	* tests/morpho/tests/reconstruction: Now use builtin types.
 	* oln/funobj/invert.hh: Add bool and unsigned char inversion.
-	* oln/core/abstract/image_typeness.hh: Add rules (unsigned char, char and
-	ntg::real_value) for greylevel_image.
+	* oln/core/abstract/image_typeness.hh: Add rules (unsigned char,
+	char and ntg::real_value) for greylevel_image.
 	* oln/morpho/reconstruction.hh: Now support grey level images.
 	* oln/morpho/local.hh: Add new functions for handling neighborhood.
-	* oln/morpho/reconstruction_by_dilation.hh: Add grey level specialization
-	and use new functions from local.hh.
+	* oln/morpho/reconstruction_by_dilation.hh: Add grey level
+	specialization and use new functions from local.hh.
 	* oln/morpho/reconstruction_selfdual.hh: Likewise.
 	* oln/morpho/reconstruction_by_erosion.hh: Likewise.
-	* oln/canvas/reconstruction.hh: Now use mlc::is_a to check if the input
-	images have a neighborhood. A bit of cleaning.
+	* oln/canvas/reconstruction.hh: Now use mlc::is_a to check if the
+	input images have a neighborhood. A bit of cleaning.
 
 2005-09-14  Thierry GERAUD  <theo@lrde.epita.fr>
 
-        Add general inheritance for oln objects and new
+	Add general inheritance for oln objects and new
 	overloading mechanism for operators.
-	
+
 	* oln/core/abstract/any.hh: New file.
 	Abstract type for every oln objects.
 	* oln/core/gen/cst.hh: New file.
@@ -161,7 +174,7 @@
 	* oln/funobj/cmp.hh: Remove obsolete file.
 	Replace by mlc/fcmp.hh.
 	* oln/makefile.src (OLN_DEP): Update.
-	
+
 	* oln/funobj/infsup.hh (oln/funobj/logic.hh): Comment useless
 	include.
 	* oln/core/typedefs.hh (exact_type): New typedef decl.
@@ -182,12 +195,12 @@
 	* oln/core/2d/point2d.hh: Likewise.
 	* oln/core/2d/size2d.hh (operator_eq): Remove.
 	* oln/core/3d/image3d.hh (mlc/traits.hh): Remove include.
-	
+
 	* oln/core/pw/binary_op.hh: Update to conform to mlc/afun.hh.
 	(oln/funobj/abstract/binary.hh): Remove obsolete include.
 	(binary_op): New ctor with a fun as 1st arg.
 	(decl_overload): New overloads for mlc::abstract::meta_*_function
-	when args are pw::abstract::functions and abstract::images.	
+	when args are pw::abstract::functions and abstract::images.
 	* oln/core/pw/unary_op.hh: Likewise.
 	* oln/core/pw/image.hh (image_from_pwf): Rename class as image.
 	(image_for_all_p): Rename as pw_image.
@@ -212,7 +225,7 @@
 	* oln/basics.hh: Update include.
 	* oln/morpho/local.hh: Likewise.
 	* oln/level/arith.hh: Update.
-	
+
 2005-09-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/core/abstract/point.hh: Fix bkd_less.
@@ -249,13 +262,13 @@
 2005-07-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Fix many "include"s and update basic operator overloading.
-	
+
 	* oln/ops/macro.hh: New file.
 	* oln/funobj/invert.hh (oln/basics.hh): Fix to pass make check.
 	(FIXME): New negative commentary about this file.
 	* oln/core/abstract/point.hh (operator_eq): Add commented code
 	that will be later useful.
-	* oln/core/abstract/size.hh (operator_eq): Likewise. 
+	* oln/core/abstract/size.hh (operator_eq): Likewise.
 	* oln/core/coord.hh (operator==): Replace by...
 	(operator_eq): ...this.
 	* oln/core/2d/dpoint2d.hh (operator+): Replace by...
@@ -462,7 +475,7 @@
 2005-07-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	'set' and 'get' are now only for images; 'at' is for data storage.
-	
+
 	* oln/core/abstract/image_rawness.hh (at): Rename default impl as...
 	(impl_at): ...this.
 	* oln/core/abstract/data_storage.hh (set,get): Remove methods cause
@@ -480,13 +493,13 @@
 	(impl_set_data): Remove cause useless.
 
 	Factor data storage instanciations.
-	
+
 	* oln/core/traits.hh: New file.
 	* oln/core/2d/image2d.hh: Remove dead code.
 	(value_storage_type): Rely on storage type traits.
 
 	Preparing a better overloading for classic operators.
-	
+
 	* oln/utils/overload.hh: New file.
 	* oln/core/pw/macros.hh: Add explicit versions of macros where
 	operators are procedures.
@@ -496,7 +509,7 @@
 	procedures.
 
 	Bug fixes.
-	
+
 	* tests/morpho/tests/geodesic_erosion (exact): Remove.
 	* tests/morpho/tests/geodesic_dilation (exact): Remove.
 	* oln/core/box.hh (inc_ncalls): Qualify method names in strings.
@@ -506,7 +519,7 @@
 	* oln/morpho/geodesic_erosion.hh (n): Fix default value definition.
 	(work): Fix first assignment in bodies.
 	* oln/morpho/geodesic_dilation.hh: Likewise.
-	
+
 2005-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add hit-or-miss transform.
