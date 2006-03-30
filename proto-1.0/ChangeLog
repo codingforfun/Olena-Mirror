@@ -1,3 +1,9 @@
+2006-03-30  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Add GPL to trunk.
+
+	* COPYING: Modify FDL to Gnu General Public License.
+
 2006-03-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* olena/ChangeLog: Clean up.
