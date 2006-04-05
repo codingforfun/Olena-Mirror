@@ -1,5 +1,11 @@
 2006-04-05  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Update for opened and closed snakes.
+
+	* oln/appli/snakes/snakes.hh: Update for opened and closed snakes.
+
+2006-04-05  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Add a closed snake algorithm.
 
 	* oln/appli/snakes: New. Directory.

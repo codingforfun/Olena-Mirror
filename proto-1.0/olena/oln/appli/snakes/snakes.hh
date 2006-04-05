@@ -51,6 +51,7 @@ namespace oln {
 	return sqr(x1 - x2) + sqr(y1 - y2);
       }
 
+
       template <typename T>
       void verify_integrity_(const image2d<T>& grad,
 			     int &x1,
@@ -206,6 +207,7 @@ namespace oln {
 	    x2 = p2.row() + dmax;
 	    y2 = p2.col();
 	  }
+
 	verify_integrity_(grad, x1, x2, y1, y2);
 
 	return draw_line_(point2d(x1, y1), point2d(x2, y2));
@@ -229,10 +231,14 @@ namespace oln {
 				       const std::vector<point2d>& v,
 				       unsigned int fen,
 				       float lambda,
-				       unsigned int dmax)
+				       unsigned int dmax,
+				       unsigned int type)
       {
 	std::vector<point2d>::const_iterator it = v.begin();
 	std::vector<point2d> res;
+
+	if (type)
+	  res.push_back(v[0]);
 
 	for (; (it + 2) != v.end(); it++)
 	  {
@@ -257,9 +263,13 @@ namespace oln {
 	    res.push_back(n_pt);
 	  }
 
-	res.push_back(res[0]);
-	res.push_back(res[1]);
-
+	if (type == 0)
+	  {
+	    res.push_back(res[0]);
+	    res.push_back(res[1]);
+	  }
+	else
+	  res.push_back(*(v.end() - 1));
 
 	if (lambda != 0)
 	  {
@@ -272,6 +282,7 @@ namespace oln {
 		std::vector<point2d>::iterator it3 = res.begin();
 		std::vector<point2d>::iterator p_s;
 		point2d n_pt(0,0);
+
 		for (; (it3 + 2) != res.end(); it3++)
 		  {
 		    point2d p1 = *it3;
@@ -282,7 +293,6 @@ namespace oln {
 		    std::vector<point2d>::const_iterator it2 = v_normal.begin();
 
 		    float angle_ref = angle_force(p1, p2, p3);
-
 		    float force_ref = grad[p2] - (180 - angle_ref) * lambda;
 
 		    for (; it2 != v_normal.end(); it2++)
@@ -302,17 +312,20 @@ namespace oln {
 		if (max > 0)
 		  {
 		    conv = false;
-		    if (p_s == (res.begin() + 1)) // 2nd
+		    if (type == 0)
 		      {
-			(*(res.end() - 1)).col() = n_pt.col();
-			(*(res.end() - 1)).row() = n_pt.row();
+			if (p_s == (res.begin() + 1)) // 2nd
+			  {
+			    (*(res.end() - 1)).col() = n_pt.col();
+			    (*(res.end() - 1)).row() = n_pt.row();
+			  }
+			else
+			  if (p_s == (res.end() - 2)) // last
+			    {
+			      (*(res.begin())).col() = n_pt.col();
+			      (*(res.begin())).row() = n_pt.row();
+			    }
 		      }
-		    else
-		      if (p_s == (res.end() - 2)) // last
-			{
-			  (*(res.begin())).col() = n_pt.col();
-			  (*(res.begin())).row() = n_pt.row();
-			}
 		    (*p_s).col() = n_pt.col();
 		    (*p_s).row() = n_pt.row();
 		  }
@@ -322,8 +335,8 @@ namespace oln {
 	return res;
       }
 
-
-      std::vector<point2d> regen_snaxels(std::vector<point2d>& v)
+      std::vector<point2d> regen_snaxels(std::vector<point2d>& v,
+					 int type)
       {
 	std::vector<point2d> res;
 	std::vector<point2d> tmp;
@@ -338,14 +351,23 @@ namespace oln {
 	  }
 
 	int nb_pts = v.size() * 2;
-	int cpt = 1;
+	int cpt = 0;
 
 	for (it2 = tmp.begin(); it2 != tmp.end(); it2++, cpt++)
 	  if ((cpt % (tmp.size() / nb_pts)) == 0)
 	    res.push_back(*it2);
 
+	if (type == 0)
+	  {
+	    res.push_back(res[0]);
+	    res.push_back(res[1]);
+	  }
+	else
+	  res.push_back(*(v.end() - 1));
+
 	return res;
       }
+
 
       template <typename T>
       void clean_ima(image2d<T>& ima)
@@ -367,25 +389,35 @@ namespace oln {
       template <typename T>
       std::vector<point2d>
       snakes_(const image2d<T>& input,
+	      const std::vector<point2d>& v_init,
 	      unsigned int fen,
 	      unsigned int nb_gen,
 	      float lambda,
-	      unsigned int dmax)
+	      unsigned int dmax,
+	      unsigned int type)
       {
 	image2d<T> grad = morpho::gradient_morpho(input, win_c4p());
 	clean_ima(grad);
 
 	std::vector<point2d> res;
+	std::vector<point2d>::const_iterator it = v_init.begin();
+	for (it = v_init.begin(); it != v_init.end(); it++)
+	  res.push_back(*it);
 
-	// build init points + 2 (close snake)
+	if (type == 0)
+	  {
+	    res.push_back(res[0]);
+	    res.push_back(res[1]);
+	  }
 
 	int i = 0;
+
 	while (i < nb_gen)
 	  {
-	    res = gen_snakes_(grad, res, fen, lambda, dmax);
+	    res = gen_snakes_(grad, res, fen, lambda, dmax, type);
 	    i++;
 	    if (i < nb_gen)
-	      res = regen_snaxels(res);
+	      res = regen_snaxels(res, type);
 	  }
 
 	return res;
@@ -397,12 +429,14 @@ namespace oln {
     template <typename T>
     std::vector<point2d>
     snakes(const image2d<T>& input,
+	   const std::vector<point2d>& v_init,
 	   unsigned int fen,
 	   unsigned int nb_gen,
 	   float lambda,
-	   unsigned int dmax)
+	   unsigned int dmax,
+	   unsigned int type) // 0 : ferme, 1 : ouvert
     {
-      return impl::snakes_(input, fen, nb_gen, lambda, dmax);
+      return impl::snakes_(input, v_init, fen, nb_gen, lambda, dmax, type);
     }
 
   } // end of namespace oln::appli
