@@ -1,3 +1,11 @@
+2006-04-05  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Add a closed snake algorithm.
+
+	* oln/appli/snakes: New. Directory.
+	* oln/appli/snakes/snakes.hh: New. Snake algorithm.
+				      2 forces : gradient and snake perimeter.
+
 2005-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/morpho/shortest_path_watershed.hh
