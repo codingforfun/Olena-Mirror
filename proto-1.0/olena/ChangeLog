@@ -1,5 +1,12 @@
 2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Add sample for real time segmentation.
+
+	* oln/appli/snakes/snakes.cc: New. Real time segmentation using snakes
+	                              and watersnakes.
+
+2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Update snake force.
 
 	* oln/appli/snakes/snakes.hh: 2 external forces to be chosen : gradient
