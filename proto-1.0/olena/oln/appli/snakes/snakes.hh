@@ -36,6 +36,8 @@
 # include <vector>
 
 #define sqr(u) ((u)*(u))
+typedef enum SNAKE_TYPE { FERME = 0, OUVERT = 1 } snake_type;
+typedef enum FORCE_TYPE { GRADIENT = 0, VARIANCE = 1 } force_type;
 const float PI = 3.14159265;
 
 
@@ -48,12 +50,12 @@ namespace oln {
       inline
       float euclidian_distance(int x1, int x2, int y1, int y2) // sqr
       {
-	return sqr(x1 - x2) + sqr(y1 - y2);
+	return (sqr(x1 - x2) + sqr(y1 - y2));
       }
 
 
       template <typename T>
-      void verify_integrity_(const image2d<T>& grad,
+      void verify_integrity_(const image2d<T>& force,
 			     int &x1,
 			     int &x2,
 			     int &y1,
@@ -63,19 +65,19 @@ namespace oln {
 	  x1 = 0;
 	if (x2 < 0)
 	  x2 = 0;
-	if (x1 > grad.nrows())
-	  x1 = grad.nrows() - 1;
-	if (x2 > grad.nrows())
-	  x2 = grad.nrows() - 1;
+	if (x1 > force.nrows())
+	  x1 = force.nrows() - 1;
+	if (x2 > force.nrows())
+	  x2 = force.nrows() - 1;
 
 	if (y1 < 0)
 	  y1 = 0;
 	if (y2 < 0)
 	  y2 = 0;
-	if (y1 > grad.ncols())
-	  y1 = grad.ncols() - 1;
-	if (y2 > grad.ncols())
-	  y2 = grad.ncols() - 1;
+	if (y1 > force.ncols())
+	  y1 = force.ncols() - 1;
+	if (y2 > force.ncols())
+	  y2 = force.ncols() - 1;
       }
 
 
@@ -154,9 +156,8 @@ namespace oln {
 
 
 
-
       template <typename T>
-      std::vector<point2d> compute_normal_points_(const image2d<T>& grad,
+      std::vector<point2d> compute_normal_points_(const image2d<T>& force,
 						  const point2d& p1,
 						  const point2d& p2,
 						  const point2d& p3,
@@ -208,12 +209,13 @@ namespace oln {
 	    y2 = p2.col();
 	  }
 
-	verify_integrity_(grad, x1, x2, y1, y2);
+	verify_integrity_(force, x1, x2, y1, y2);
 
 	return draw_line_(point2d(x1, y1), point2d(x2, y2));
       }
 
 
+      // we can compute the second derivative.
       float angle_force(const point2d& p1, const point2d& p2, const point2d& p3)
       { // al kashi
 	float b = euclidian_distance(p1.row(), p2.row(), p1.col(), p2.col());
@@ -221,49 +223,99 @@ namespace oln {
 	float a = euclidian_distance(p1.row(), p3.row(), p1.col(), p3.col());
 	float angle =  acos((b + c - a) / (2 * sqrt(b) * sqrt(c))); // rad
 	angle = (angle * 180) / PI; //deg
-	return angle;
+	return sqr(180 - angle) / sqr(180);
       }
 
+      template <typename T>
+      double variance(const image2d<T>& input,
+		      const point2d& p,
+		      unsigned int fen)
+      {
+	double moy = 0;
+	double res = 0;
 
+	for (int i = p.row() - fen / 2; i < p.row() + fen / 2; i++)
+	  for (int j = p.col() - fen / 2; j < p.col() + fen / 2; j++)
+	    {
+	      point2d p(i, j);
+	      if (input.hold(p))
+		moy += input[p];
+	    }
+
+	moy /= sqr(fen);
+
+	for (int i = p.row() - fen / 2; i < p.row() + fen / 2; i++)
+	  for (int j = p.col() - fen / 2; j < p.col() + fen / 2; j++)
+	    {
+	      point2d p(i, j);
+	      if (input.hold(p))
+		res += sqr(input[p] - moy);
+	    }
+
+	return res / sqr(fen);
+      }
 
       template <typename T>
-      std::vector<point2d> gen_snakes_(const image2d<T>& grad,
+      std::vector<point2d> gen_snakes_(const image2d<T>& force,
 				       const std::vector<point2d>& v,
+				       force_type f,
 				       unsigned int fen,
 				       float lambda,
 				       unsigned int dmax,
-				       unsigned int type)
+				       snake_type type)
       {
 	std::vector<point2d>::const_iterator it = v.begin();
 	std::vector<point2d> res;
 
-	if (type)
-	  res.push_back(v[0]);
-
-	for (; (it + 2) != v.end(); it++)
+	for (; it != v.end(); it++)
 	  {
 	    point2d p1 = *it;
-	    point2d p2 = *(it + 1);
-	    point2d p3 = *(it + 2);
-	    std::vector<point2d> v_normal = compute_normal_points_(grad, p1, p2, p3, dmax);
+	    point2d p2 = *it;
+	    point2d p3 = *it;
+
+	    if (type)
+	      {
+		if (it != v.begin())
+		  p1 = *(it - 1);
+		if (it + 1 != v.end())
+		  p3 = *(it + 1);
+	      }
+	    else
+	      {
+		if (it == v.begin())
+		  continue;
+		if (it + 1 == v.end())
+		  continue;
+		p1 = *(it - 1);
+		p3 = *(it + 1);
+	      }
+
+	    std::vector<point2d> v_normal = compute_normal_points_(force, p1, p2, p3, dmax);
 	    std::vector<point2d>::const_iterator it2 = v_normal.begin();
 
-	    float max = -1;
-	    point2d n_pt(0,0);
+	    float max = -1000000000;
+	    point2d n_pt(-1,-1);
 
 	    for (; it2 != v_normal.end(); it2++)
 	      {
-		float force = grad[*it2];
-		if (max < force)
+		float v_force = 0;
+
+		if (f == GRADIENT)
+		  v_force = (float)(force[*it2]) / 255 - angle_force(p1, *it2, p3) * lambda;
+		else
+		  v_force = variance(force, *it2, fen) / 128 - angle_force(p1, *it2, p3) * lambda;
+
+		if (max < v_force)
 		  {
-		    max = force;
+		    max = v_force;
 		    n_pt = *it2;
 		  }
 	      }
-	    res.push_back(n_pt);
+	    if (n_pt.row() != -1)
+	      res.push_back(n_pt);
 	  }
 
-	if (type == 0)
+	if (type == FERME)
 	  {
 	    res.push_back(res[0]);
 	    res.push_back(res[1]);
@@ -271,77 +323,48 @@ namespace oln {
 	else
 	  res.push_back(*(v.end() - 1));
 
-	if (lambda != 0)
-	  {
-	    bool conv = false;
-
-	    while (conv == false)
-	      {
-		conv = true;
-		float max = 0;
-		std::vector<point2d>::iterator it3 = res.begin();
-		std::vector<point2d>::iterator p_s;
-		point2d n_pt(0,0);
-
-		for (; (it3 + 2) != res.end(); it3++)
-		  {
-		    point2d p1 = *it3;
-		    point2d p2 = *(it3 + 1);
-		    point2d p3 = *(it3 + 2);
-
-		    std::vector<point2d> v_normal = compute_normal_points_(grad, p1, p2, p3, dmax);
-		    std::vector<point2d>::const_iterator it2 = v_normal.begin();
-
-		    float angle_ref = angle_force(p1, p2, p3);
-		    float force_ref = grad[p2] - (180 - angle_ref) * lambda;
-
-		    for (; it2 != v_normal.end(); it2++)
-		      {
-			float angle = angle_force(p1, *it2, p3);
-			float force = grad[*it2] - (180 - angle) * lambda;
-
-			if (p2.col() != (*it2).col() and p2.row() != (*it2).row() and force - force_ref > max)
-			  {
-			    max = force - force_ref;
-			    p_s = it3 + 1;
-			    n_pt = *it2;
-			  }
-		      }
-		  }
-
-		if (max > 0)
-		  {
-		    conv = false;
-		    if (type == 0)
-		      {
-			if (p_s == (res.begin() + 1)) // 2nd
-			  {
-			    (*(res.end() - 1)).col() = n_pt.col();
-			    (*(res.end() - 1)).row() = n_pt.row();
-			  }
-			else
-			  if (p_s == (res.end() - 2)) // last
-			    {
-			      (*(res.begin())).col() = n_pt.col();
-			      (*(res.begin())).row() = n_pt.row();
-			    }
-		      }
-		    (*p_s).col() = n_pt.col();
-		    (*p_s).row() = n_pt.row();
-		  }
-	      }
-	  }
-
 	return res;
       }
 
+
+      template <typename T>
+      void init_view(const image2d<T>& input,
+		     const std::vector<point2d>& v)
+      {
+	oln_iter_type(image2d<T>) p(input);
+	image2d<ntg::int_u8> out(input.size());
+	image2d<bool> mask(input.size());
+
+	for_all(p)
+	  mask[p] = false;
+
+	std::vector<point2d>::const_iterator it = v.begin();
+	for (; it != v.end(); it++)
+	  mask[*it] = true;
+
+	for_all(p)
+	  {
+	    if (mask[p] == true)
+	      out[p] = 255;
+	    else
+	      out[p] = input[p];
+	  }
+
+	save(out, "init.pgm");
+      }
+
+
       std::vector<point2d> regen_snaxels(std::vector<point2d>& v,
-					 int type)
+					 snake_type type,
+					 unsigned max_pts)
       {
 	std::vector<point2d> res;
 	std::vector<point2d> tmp;
 	std::vector<point2d>::iterator it = v.begin();
 	std::vector<point2d>::iterator it2;
+
+	if (2 * v.size() > max_pts)
+	  return v;
 
 	for (it = v.begin(); (it + 1) != v.end(); it++)
 	  {
@@ -357,14 +380,40 @@ namespace oln {
 	  if ((cpt % (tmp.size() / nb_pts)) == 0)
 	    res.push_back(*it2);
 
-	if (type == 0)
+	if (type == FERME)
 	  {
 	    res.push_back(res[0]);
 	    res.push_back(res[1]);
 	  }
-	else
-	  res.push_back(*(v.end() - 1));
+ 	else
+ 	  res.push_back(*(v.end() - 1));
 
+	return res;
+      }
+
+
+      std::vector<point2d> redispatch(const std::vector<point2d>& v,
+				      int nb_snaxels)
+      {
+	std::vector<point2d> res;
+	std::vector<point2d> tmp;
+	std::vector<point2d>::const_iterator it = v.begin();
+	int cpt = 0;
+
+	for (; it + 1 != v.end(); it++)
+	  {
+	    std::vector<point2d> vec = draw_line_(*it, *(it+1));
+	    std::vector<point2d>::const_iterator it2 = vec.begin();
+
+	    for (; it2 != vec.end(); it2++)
+	      tmp.push_back(*it2);
+	  }
+
+	for (it = tmp.begin(); it != tmp.end(); it++, cpt++)
+	  if ((cpt % (int)(roundf(((float)(tmp.size()) / nb_snaxels)))) == 0)
+	    res.push_back(*it);
+
+	res.push_back(*(v.end() - 1));
 	return res;
       }
 
@@ -390,34 +439,46 @@ namespace oln {
       std::vector<point2d>
       snakes_(const image2d<T>& input,
 	      const std::vector<point2d>& v_init,
+	      force_type f,
 	      unsigned int fen,
 	      unsigned int nb_gen,
+	      unsigned int max_pts,
 	      float lambda,
 	      unsigned int dmax,
-	      unsigned int type)
+	      snake_type type)
       {
-	image2d<T> grad = morpho::gradient_morpho(input, win_c4p());
-	clean_ima(grad);
+	image2d<T> force(input.size());
+
+	if (f == GRADIENT)
+	  force = morpho::gradient_morpho(input, win_c4p());
+	else
+	  {
+	    oln_iter_type(image2d<T>) p(input);
+	    for_all(p)
+	      force[p] = input[p];
+	  }
+
+	clean_ima(force);
 
 	std::vector<point2d> res;
 	std::vector<point2d>::const_iterator it = v_init.begin();
 	for (it = v_init.begin(); it != v_init.end(); it++)
 	  res.push_back(*it);
 
-	if (type == 0)
+	if (type == FERME)
 	  {
 	    res.push_back(res[0]);
 	    res.push_back(res[1]);
 	  }
 
 	int i = 0;
-
 	while (i < nb_gen)
 	  {
-	    res = gen_snakes_(grad, res, fen, lambda, dmax, type);
+	    res = gen_snakes_(force, res, f, fen, lambda, dmax, type);
+	    res = redispatch(res, max_pts);
 	    i++;
 	    if (i < nb_gen)
-	      res = regen_snaxels(res, type);
+	      res = regen_snaxels(res, type, max_pts);
 	  }
 
 	return res;
@@ -430,13 +491,15 @@ namespace oln {
     std::vector<point2d>
     snakes(const image2d<T>& input,
 	   const std::vector<point2d>& v_init,
+	   force_type f,
 	   unsigned int fen,
 	   unsigned int nb_gen,
+	   unsigned int max_pts,
 	   float lambda,
 	   unsigned int dmax,
-	   unsigned int type) // 0 : ferme, 1 : ouvert
+	   snake_type type = OUVERT)
     {
-      return impl::snakes_(input, v_init, fen, nb_gen, lambda, dmax, type);
+      return impl::snakes_(input, v_init, f, fen, nb_gen, max_pts, lambda, dmax, type);
     }
 
   } // end of namespace oln::appli

@@ -1,5 +1,12 @@
 2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Update snake force.
+
+	* oln/appli/snakes/snakes.hh: 2 external forces to be chosen : gradient
+	                              and variance. Energy of non agglutination.
+
+2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Update Watersnakes.
 
 	* oln/morpho/watersnakes.hh: Little modifications.
