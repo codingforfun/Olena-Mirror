@@ -46,7 +46,7 @@
 
 
 const float INFTY = 1000000000000.f;
-# define WSHED 255
+# define WSHED -2
 # define MASK_VALUE -1
 typedef enum version_t { TARJAN = 0, NORMAL = 1 } version;
 
@@ -76,6 +76,7 @@ namespace oln {
 		      LS[p] = LS[p] > (float)(input[p] - input[n]) ? LS[p] : (float)(input[p] - input[n]);
 	      }
 	  }
+
 	return LS;
       }
 
@@ -131,22 +132,22 @@ namespace oln {
 	return out;
       }
 
-       bool futur_fwd(const point2d& n, const point2d& p)
-       {
-	 if ((n.row() == p.row() and n.col() == p.col() + 1) or
-	     n.row() > p.row())
-	   return true;
-	 return false;
-       }
+      bool futur_fwd(const point2d& n, const point2d& p)
+      {
+	if ((n.row() == p.row() and n.col() == p.col() + 1) or
+	    n.row() > p.row())
+	  return true;
+	return false;
+      }
 
 
-       bool futur_bkd(const point2d& n, const point2d& p)
-       {
-	 if ((n.row() == p.row() and n.col() == p.col() - 1) or
-	     n.row() < p.row())
-	   return true;
-	 return false;
-       }
+      bool futur_bkd(const point2d& n, const point2d& p)
+      {
+	if ((n.row() == p.row() and n.col() == p.col() - 1) or
+	    n.row() < p.row())
+	  return true;
+	return false;
+      }
 
       template <typename T>
       const T point_at(const image2d<T>& ima, const point2d& p, int x, int y)
@@ -189,7 +190,6 @@ namespace oln {
 
       template <typename T>
       bool is_a_boundary_point(const image2d<int>& label,
-			       const window2d& ng,
 			       const T& p,
 			       unsigned& label_b)
       {
@@ -207,20 +207,18 @@ namespace oln {
       template <typename T>
       bool
       snake_iteration(image2d<T>& label,
-		      const window2d& ng,
 		      const image2d<float *>& dist,
-		      unsigned nb_compo,
 		      int b)
       {
 	float dist_min = INFTY;
 	point2d p_replace;
-	unsigned label_replace;
+	unsigned label_replace = 0;
 
 	oln_iter_type(image2d<T>) p(label);
 	for_all(p)
 	  {
 	    unsigned label_b;
-	    if (is_a_boundary_point(label, ng, p, label_b))
+	    if (is_a_boundary_point(label, p, label_b))
 	      {
 		float tmp = - dist[p][label[p] - 1] + compute_perimeter(label, p, label[p], b) +
 		  dist[p][label_b - 1] - compute_perimeter(label, p, label_b, b);
@@ -261,16 +259,13 @@ namespace oln {
 	    if (marqueur[p] == false)
 	      {
 		dist[p][label[p] - 1] = input[p];
-		for (int i = 0; i < nb_compo; i++)
-		  if (i != label[p] - 1)
+		for (unsigned i = 0; i < nb_compo; i++)
+		  if ((int)i != label[p] - 1)
 		    dist[p][i] = INFTY;
 	      }
 	    else
-	      {
-		for (int i = 0; i < nb_compo; i++)
-		  dist[p][i] = INFTY;
-	      }
-
+	      for (unsigned i = 0; i < nb_compo; i++)
+		dist[p][i] = INFTY;
 	  }
 
 	int i = 0;
@@ -290,7 +285,7 @@ namespace oln {
 			float grad = local_grad(input, LS, p, n);
 			float tmp = chamfer_distance(p, n) * grad;
 
-			for (int k = 0; k < nb_compo; k++)
+			for (unsigned k = 0; k < nb_compo; k++)
 			  if (dist[p][k] + tmp < dist[n][k])
 			    {
 			      dist[n][k] = dist[p][k] + tmp;
@@ -311,7 +306,7 @@ namespace oln {
 			float grad = local_grad(input, LS, p2, n);
 			float tmp = chamfer_distance(p2, n) * grad;
 
-			for (int k = 0; k < nb_compo; k++)
+			for (unsigned k = 0; k < nb_compo; k++)
 			  if (dist[p2][k] + tmp < dist[n][k])
 			    {
 			      dist[n][k] = dist[p2][k] + tmp;
@@ -366,56 +361,55 @@ namespace oln {
 		       const window2d& win,
 		       const point2d& p,
 		       unsigned& compo)
-       {
-	 if (minima[p] == false and label[p] == MASK_VALUE)
-	   {
-	     bool test = false;
-	     oln_neighb_type(window2d) q(win, p);
-	     for_all (q)
-	       if (input.hold(q) and minima[q] == false and label[q] != MASK_VALUE)
-		 {
-		   test = true;
-		   label[p] = label[q];
-		 }
-	     if (test == true)
-	       {
-		 for_all (q)
-		   if (input.hold(q) and minima[q] == false and label[q] == MASK_VALUE)
-		     mark_compo_(input, label, minima, win, q, compo);
-	       }
-	     if (test == false)
-	       {
-		 label[p] = ++compo;
-		 for_all (q)
-		   if (input.hold(q) and minima[q] == false)
-		     mark_compo_(input, label, minima, win, q, compo);
-	       }
-	   }
-       }
+      {
+	if (minima[p] == false and label[p] == MASK_VALUE)
+	  {
+	    bool test = false;
+	    oln_neighb_type(window2d) q(win, p);
+	    for_all (q)
+	      if (input.hold(q) and minima[q] == false and label[q] != MASK_VALUE)
+		{
+		  test = true;
+		  label[p] = label[q];
+		}
+	    if (test == true)
+	      {
+		for_all (q)
+		  if (input.hold(q) and minima[q] == false and label[q] == MASK_VALUE)
+		    mark_compo_(input, label, minima, win, q, compo);
+	      }
+	    if (test == false)
+	      {
+		label[p] = ++compo;
+		for_all (q)
+		  if (input.hold(q) and minima[q] == false)
+		    mark_compo_(input, label, minima, win, q, compo);
+	      }
+	  }
+      }
 
 
-       template <typename T, typename T2>
-       image2d<int>
-       init_watershed_(const image2d<T>& input,
-		       const image2d<T2>& minima,
-		       const window2d& win,
-		       unsigned& cpt)
-       {
-	 image2d<int> output(input.size());
+      template <typename T, typename T2>
+      image2d<int>
+      init_watershed_(const image2d<T>& input,
+		      const image2d<T2>& minima,
+		      const window2d& win,
+		      unsigned& cpt)
+      {
+	image2d<int> output(input.size());
 
-	 level::fill(output, MASK_VALUE);
-	 unsigned tmp;
+	level::fill(output, MASK_VALUE);
 
-	 oln_iter_type(image2d<T>) p(input);
-	 for_all (p)
-	   if (minima[p] == false)
-	     mark_compo_(input, output, minima, win, p, cpt);
+	oln_iter_type(image2d<T>) p(input);
+	for_all (p)
+	  if (minima[p] == false)
+	    mark_compo_(input, output, minima, win, p, cpt);
 
-	 return output;
-       }
+	return output;
+      }
 
       template<typename T, typename T2>
-      image2d<T>
+      std::vector<point2d>
       watershed_line(const image2d<T>& input,
 		     const image2d<T>& orig,
 		     const image2d<T2>& marqueur,
@@ -423,16 +417,13 @@ namespace oln {
 		     int b,
 		     version v)
       {
-	image2d<T> res(input.size());
+	image2d<int> final(input.size());
 	image2d<int> label;
 	image2d<T2> mark(input.size());
 	oln_iter_type(image2d<T>) p(input);
 	image2d<bool> is_wshed_line(input.size());
-	float dist;
-	float tmp;
+	std::vector<point2d> res;
 	unsigned nb_compo = 0;
-
-	int i = 0;
 
 	for_all(p)
 	  mark[p] = marqueur[p];
@@ -450,8 +441,8 @@ namespace oln {
 	    op_type op(marqueur, input, ng);
 	    recon = op.output;
 	  }
-
 	image2d<float> LS = lower_slope(recon, ng);
+
 	label = init_watershed_(recon, mark, ng, nb_compo);
 
 	image2d<float*> topo = topographic_distance(recon, LS, mark, label, ng, nb_compo);
@@ -460,8 +451,7 @@ namespace oln {
 	  {
 	    unsigned mini_label = 1;
 	    float mini_topo = topo[p][0];
-	    int h = 1;
-	    for (; h < nb_compo; h++)
+	    for (unsigned h = 1; h < nb_compo; h++)
 	      if (mini_topo > topo[p][h])
 		{
 		  mini_topo = topo[p][h];
@@ -469,20 +459,25 @@ namespace oln {
 		}
 	    label[p] = mini_label;
 	  }
-	while (snake_iteration(label, ng, topo, nb_compo, b))
+
+	while (snake_iteration(label, topo, b))
 	  ;
 
-	level::fill(res, 0);
+	level::fill(final, 0);
 	for_all(p)
 	  {
 	    oln_neighb_type(window2d) q(win_c4p(), p);
 	    for_all (q)
 	      if (input.hold(q))
-		if (label[p] != label[q] and res[q] != WSHED)
-		  res[p] = WSHED;
-	    if (res[p] == 0)
-	      res[p] = orig[p];
+		if (label[p] != label[q] and final[q] != WSHED)
+		  final[p] = WSHED;
+	    if (final[p] == 0)
+	      final[p] = orig[p];
 	  }
+
+	for_all(p)
+	  if (final[p] == WSHED)
+	    res.push_back(p);
 
 	return res;
       }
@@ -490,7 +485,7 @@ namespace oln {
 
 
       template<typename T, typename T2>
-      image2d<T>
+      std::vector<point2d>
       watersnakes_(const image2d<T>& input,
 		   const image2d<T2>& marqueur,
 		   const window2d& ng,
@@ -508,7 +503,7 @@ namespace oln {
 
 
     template<typename T, typename T2>
-    image2d<T>
+    std::vector<point2d>
     watersnakes(const image2d<T>& input,
 		const image2d<T2>& marqueur,
 		const window2d& ng,

@@ -1,3 +1,9 @@
+2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Update Watersnakes.
+
+	* oln/morpho/watersnakes.hh: Little modifications.
+
 2006-04-05  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Update for opened and closed snakes.
