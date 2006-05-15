@@ -24,12 +24,8 @@ void aff_points(const oln::image2d<T>& input,
     mask[*it] = true;
 
   for_all(p)
-    {
-      if (mask[p] == true)
-	out[p] = 255;
-      else
-	out[p] = input[p];
-    }
+    if (mask[p] == true)
+      out[p] = 255;
 }
 
 template <typename T>
@@ -52,17 +48,30 @@ void aff_droites(const oln::image2d<T>& input,
       for (; it2 != vec.end(); it2++)
 	mask[*it2] = true;
     }
-
   for_all(p)
-    {
-      if (mask[p] == true)
-	out[p] = 255;
-      else
-	out[p] = input[p];
-    }
+    if (mask[p] == true)
+      out[p] = 255;
 }
 
 
+template <typename T>
+void my_copy(const oln::image2d<T>& input,
+	     oln::image2d<T>& out)
+{
+  oln_iter_type(oln::image2d<T>) p(input);
+  for_all(p)
+    out[p] = input[p];
+}
+
+template <typename T>
+bool is_element_vec(const std::vector<T>& v, const T& elt)
+{
+  typename std::vector<T>::const_iterator it = v.begin();
+  for (; it != v.end(); it++)
+    if (*it == elt)
+      return true;
+  return false;
+}
 
 bool nearly_equal(int x1, int x2, int y1, int y2)
 {
@@ -70,78 +79,130 @@ bool nearly_equal(int x1, int x2, int y1, int y2)
 }
 
 template <typename T>
+int chemin(const std::vector<oln::point2d>& v,
+	   const oln::image2d<T>& ima,
+	   std::vector<oln::point2d>& seen,
+	   //	   const oln::point2d& pred,
+	   const oln::point2d& p,
+	   oln::point2d& f,
+	   oln::point2d& tmp,
+	   int& max,
+	   bool& stop)
+{
+  oln_neighb_type(oln::window2d) q(oln::win_c8p(), p);
+  bool end = true;
+  seen.push_back(p);
+  for_all (q)
+    {
+      if (is_element_vec(seen, (oln::point2d)(q)) == 0 and
+	  is_element_vec(v, (oln::point2d)(q)))
+	    {
+	      int res = 1 + chemin(v, ima, seen, q, f, tmp, max, stop);
+	      if (res > max)
+		{
+		  max = res;
+		  f = tmp;
+		}
+	      end = false;
+	    }
+    }
+  if (end)
+    {
+      tmp = p;
+      return 1;
+    }
+  return 0;
+}
+
+
+std::vector<oln::point2d> verify_snaxels(const std::vector<oln::point2d>& v_init,
+					 const std::vector<oln::point2d>& v)
+{
+  std::vector<oln::point2d> res;
+
+  if (v_init.size() - v.size() > 5)
+    {
+      std::vector<oln::point2d>::const_iterator it;
+      for (it = v_init.begin(); it != v_init.end(); it++)
+	if (is_element_vec(v, *it) == 0)
+	  res.push_back(*it);
+    }
+  return res;
+}
+
+
+
+template <typename T>
 std::vector<oln::point2d> tri_vec(const oln::image2d<T>& ima,
-				  const std::vector<oln::point2d>& v)
+				  const std::vector<oln::point2d>& v,
+				  snake_type type) // OUVERT || FERME
 {
   std::vector<oln::point2d> res;
   std::vector<oln::point2d>::const_iterator it;
   std::vector<oln::point2d>::iterator it2;
+  oln::point2d dep;
+  oln::point2d tmp2;
+  oln::point2d arr;
 
-  int ex_1_x = -100;
-  int ex_1_y = -100;
-  int ex_2_x = 0;
-  int ex_2_y = 0;
-  int save_x = -1;
-  int save_y = -1;
+  bool stop = false;
+  oln::point2d beg(-1,-1);
 
-
-  for (int i = 0; i < 2; i++)
+  for (it = v.begin(); it != v.end(); it++)
     {
-      double min = 100000000;
-
-      for (it = v.begin(); it != v.end(); it++)
+      unsigned nb_nbh = 0;
+      oln_neighb_type(oln::window2d) q(oln::win_c8p(), *it);
+      for_all (q)
+	if ((oln::point2d)(q) != *it and ima.hold(q) and is_element_vec(v, (oln::point2d)(q)))
+	  ++nb_nbh;
+      if (nb_nbh == 2)
 	{
-	  if (i and nearly_equal((*it).row(), ex_1_x, (*it).col(), ex_1_y))
-	    continue;
-
-	  double tmp1 = oln::snakes::impl::euclidian_distance((*it).row(), 0, 0, 0);
-	  double tmp2 = oln::snakes::impl::euclidian_distance((*it).row(), ima.nrows(), 0, 0);
-	  double tmp3 = oln::snakes::impl::euclidian_distance(0, 0, (*it).col(), 0);
-	  double tmp4 = oln::snakes::impl::euclidian_distance(0, 0, (*it).col(), ima.ncols());
-
-	  double tmp_min;
-
-	  if (tmp1 <= tmp2 and tmp1 <= tmp3 and tmp1 <= tmp4)
-	    tmp_min = tmp1;
-	  if (tmp2 <= tmp1 and tmp2 <= tmp3 and tmp2 <= tmp4)
-	    tmp_min = tmp2;
-	  if (tmp3 <= tmp1 and tmp3 <= tmp2 and tmp3 <= tmp4)
-	    tmp_min = tmp3;
-	  if (tmp4 <= tmp1 and tmp4 <= tmp2 and tmp4 <= tmp3)
-	    tmp_min = tmp4;
-
-	  if (tmp_min < min)
-	    {
-	      min = tmp_min;
-	      save_x = (*it).row();
-	      save_y = (*it).col();
-	    }
-	}
-      if (not i)
-	{
-	  ex_1_x = save_x;
-	  ex_1_y = save_y;
-	}
-      else
-	{
-	  ex_2_x = save_x;
-	  ex_2_y = save_y;
+	  beg = *it;
+	  break;
 	}
     }
+  if (beg.row() == -1)
+    beg = *(v.begin() + v.size() / 2);
 
-  res.push_back(oln::point2d(ex_1_x, ex_1_y));
+  dep = beg;
+  arr = beg;
+  std::vector<oln::point2d> seen;
+
+  int i = 0;
+  oln_neighb_type(oln::window2d) q(oln::win_c8p(), beg);
+  for_all (q)
+    {
+      if ((oln::point2d)(q) != beg and ima.hold(q) and is_element_vec(v, (oln::point2d)(q)))
+	{
+	  bool s = false;
+	  int max = 0;
+
+	  seen.push_back(beg);
+	  if (not i)
+	    chemin(v, ima, seen, (oln::point2d)(q), dep, tmp2, max, s);
+	  else
+	    chemin(v, ima, seen, (oln::point2d)(q), arr, tmp2, max, s);
+
+	  seen.clear();
+	  i++;
+	}
+    }
+  res.push_back(dep);
 
   std::vector<oln::point2d> tmp;
   for (it = v.begin(); it != v.end(); it++)
-    if (((*it).row() != ex_1_x or (*it).col() != ex_1_y) and
-	((*it).row() != ex_2_x or (*it).col() != ex_2_y))
-      tmp.push_back(*it);
+    if (*it != dep)
+      if (type == OUVERT)
+	{
+	  if (*it != arr)
+	    tmp.push_back(*it);
+	}
+      else
+	tmp.push_back(*it);
 
 
-  bool stop = false;
-
-  int tmp_x = ex_1_x;
-  int tmp_y = ex_1_y;
+  stop = false;
+  int tmp_x = dep.row();
+  int tmp_y = dep.col();
 
   while (stop == false)
     {
@@ -160,21 +221,81 @@ std::vector<oln::point2d> tri_vec(const oln::image2d<T>& ima,
 		  p_ref = it2;
 		}
 	    }
-	  res.push_back(p);
+ 	  if (min <= 10)
+	    res.push_back(p);
 	  tmp.erase(p_ref);
-	  tmp_x = p.row();
-	  tmp_y = p.col();
-	}
-      else
-	{
-	  res.push_back(oln::point2d(tmp.front().row(), tmp.front().col()));
-	  stop = true;
+ 	  if (min <= 10)
+	    {
+	      tmp_x = p.row();
+	      tmp_y = p.col();
+	    }
+	  if (tmp.size() == 1)
+	    stop = true;
 	}
     }
 
-  res.push_back(oln::point2d(ex_2_x, ex_2_y));
+  if (type == OUVERT or is_element_vec(res, arr) == 0)
+    res.push_back(arr);
   return res;
 }
+
+
+std::vector<std::vector<oln::point2d> > filter_size(std::vector<std::vector<oln::point2d> >& v)
+{
+  std::vector<std::vector<oln::point2d> > res;
+
+  for (int i = 0; i < v.size(); i++)
+    if (v[i].size() > 4)
+      res.push_back(v[i]);
+
+  return res;
+}
+
+
+void decoup_set(std::vector<std::vector<oln::point2d> >& v)
+{
+  std::vector<oln::point2d>::iterator it;
+  std::vector<oln::point2d>::iterator it2;
+  bool stop = false;
+
+  for (int i = 0; stop == false and i < v.size(); i++)
+    for (int j = i + 1; stop == false and j < v.size(); j++)
+      for (it = v[i].begin(); stop == false and it != v[i].end(); it++)
+	for (it2 = v[j].begin(); stop == false and it2 != v[j].end(); it2++)
+	  if (nearly_equal((*it).row(), (*it2).row(), (*it).col(), (*it2).col()))
+	    {
+	      std::vector<oln::point2d> n1;
+	      std::vector<oln::point2d> n2;
+
+	      std::vector<oln::point2d>::iterator it3;
+	      std::vector<oln::point2d>::iterator it4;
+
+	      if (it + 1 != v[i].end() and it + 2 != v[i].end() and it + 3 != v[i].end() and
+		  it != v[i].begin() and it + 1 != v[i].begin() and it + 2 != v[i].begin())
+		{
+		  for (it3 = it + 1; it3 != v[i].end(); it3++)
+		    n1.push_back(*it3);
+		  v[i].erase(it + 1, v[i].end() - 1);
+		}
+
+	      if (it2 + 1 != v[j].end() and it2 + 2 != v[j].end() and it2 + 3 != v[j].end() and
+		  it2 != v[j].begin() and it2 + 1 != v[j].begin() and it2 + 2 != v[j].begin())
+		{
+		  for (it4 = it2 + 1; it4 != v[j].end(); it4++)
+		    n2.push_back(*it4);
+		  v[j].erase(it2 + 1, v[j].end() - 1);
+		}
+	      if (n1.size())
+		v.push_back(n1);
+	      if (n2.size())
+		v.push_back(n2);
+	      if (n2.size() or n1.size())
+		decoup_set(v);
+	      stop = true;
+	    }
+
+}
+
 
 
 int main(int argc, char **argv)
@@ -187,18 +308,33 @@ int main(int argc, char **argv)
       exit(1);
     }
 
-  std::vector<oln::point2d> v;
+  std::vector<std::vector<oln::point2d> > v;
   unsigned max_pts = (unsigned)atoi(argv[7]);
 
   oln::image2d<ntg::bin> mask = load(argv[8]);
   oln::image2d<int_u8> input1 = load(argv[9]);
 
   v = morpho::watersnakes(input1, mask, win_c8p(), 5);
+  v = filter_size(v);
+  //  decoup_set(v);
 
-  v = tri_vec(input1, v);
+  for (int cpt = 0; cpt < v.size(); cpt++)
+    {
+      std::vector<oln::point2d> v_new = tri_vec(input1, v[cpt], (snake_type)atoi(argv[6]));
+      std::vector<oln::point2d> v_verif = verify_snaxels(v[cpt], v_new);
+      v[cpt] = v_new;
+      if (v_verif.size() > 0)
+	v.push_back(v_verif);
+      if (v[cpt].size() > max_pts)
+	v[cpt] = oln::snakes::impl::redispatch(v[cpt], max_pts);
+    }
 
-  if (max_pts)
-    v = oln::snakes::impl::redispatch(v, max_pts);
+  std::vector<unsigned> v_max_pts;
+  for (int cpt = 0; cpt < v.size(); cpt++)
+    if ((unsigned)((float)(v[cpt].size()) * 0.6) > max_pts)
+      v_max_pts.push_back(max_pts);
+    else
+      v_max_pts.push_back((unsigned)((float)(v[cpt].size()) * 0.6));
 
   for (int i = 9; i < argc; i++)
     {
@@ -209,16 +345,19 @@ int main(int argc, char **argv)
       oln::image2d<int_u8> out(input.size());
       unsigned nb_gen = 0;
 
-      if (i == 9)
-	nb_gen = (unsigned)atoi(argv[3]);
-      else
-	nb_gen = 1;
+      my_copy(input, out);
 
-      v = oln::snakes::snakes(input, v, (force_type)(atoi(argv[1])), (unsigned)atoi(argv[2]), nb_gen, max_pts, atof(argv[4]), (unsigned)atoi(argv[5]), (snake_type)atoi(argv[6]));
+      nb_gen = (unsigned)atoi(argv[3]);
 
-      aff_droites(input, v, out);
-      //      aff_points(input, v, out);
-
+      for (int cpt = 0; cpt < v.size(); cpt++)
+	{
+	  if (v[cpt].size() > v_max_pts[cpt])
+	    v[cpt] = oln::snakes::impl::redispatch(v[cpt], v_max_pts[cpt]);
+	  else
+	    v[cpt] = oln::snakes::impl::redispatch_normal(v[cpt], v[cpt].size());
+	  v[cpt] = oln::snakes::snakes(input, v[cpt], (force_type)(atoi(argv[1])), (unsigned)atoi(argv[2]), nb_gen, v_max_pts[cpt], atof(argv[4]), (unsigned)atoi(argv[5]), (snake_type)atoi(argv[6]));
+	  aff_droites(input, v[cpt], out);
+	}
       char t[30];
       sprintf(t, "snakes_%d.pgm", i - 8);
 

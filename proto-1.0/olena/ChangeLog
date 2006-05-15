@@ -1,5 +1,12 @@
 2006-05-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	Fix bugs and update snakes for multi segmentation.
+
+	* oln/appli/snakes/snakes.cc: Fix bugs.
+	* oln/appli/snakes/snakes.hh: Update snakes for multi segmentation.
+
+2006-05-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	Update Watersnake for multi segmentation.
 
 	* oln/morpho/watersnakes.hh: Update for multi segmentation.

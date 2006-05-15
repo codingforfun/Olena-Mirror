@@ -40,7 +40,6 @@ typedef enum SNAKE_TYPE { FERME = 0, OUVERT = 1 } snake_type;
 typedef enum FORCE_TYPE { GRADIENT = 0, VARIANCE = 1 } force_type;
 const float PI = 3.14159265;
 
-
 namespace oln {
 
   namespace snakes {
@@ -80,22 +79,17 @@ namespace oln {
 	  y2 = force.ncols() - 1;
       }
 
-
       std::vector<point2d> draw_line_(const point2d& p,
 				      const point2d& q)
       {
 	std::vector<point2d> res;
-
 	point2d p_cur = p;
+
 	if (q.col() == p.col()) // cas vertical
 	  {
 	    int sens = q.row() > p.row() ? 1 : -1;
 	    while (p_cur != q)
 	      {
-		double pc_p = euclidian_distance(p_cur.row(), p.row(), p_cur.col(), p.col());
-		double pc_q = euclidian_distance(p_cur.row(), q.row(), p_cur.col(), q.col());
-		double p_q = euclidian_distance(p.row(), q.row(), p.col(), q.col());
-
 		res.push_back(p_cur);
 		p_cur.row() = p_cur.row() + sens;
 	      }
@@ -107,10 +101,6 @@ namespace oln {
 		int sens = q.col() > p.col() ? 1 : -1;
 		while (p_cur != q)
 		  {
-		    double pc_p = euclidian_distance(p_cur.row(), p.row(), p_cur.col(), p.col());
-		    double pc_q = euclidian_distance(p_cur.row(), q.row(), p_cur.col(), q.col());
-		    double p_q = euclidian_distance(p.row(), q.row(), p.col(), q.col());
-
 		    res.push_back(p_cur);
 		    p_cur.col() = p_cur.col() + sens;
 		  }
@@ -132,10 +122,6 @@ namespace oln {
 
 		while (p_cur != q)
 		  {
-		    double pc_p = euclidian_distance(p_cur.row(), p.row(), p_cur.col(), p.col());
-		    double pc_q = euclidian_distance(p_cur.row(), q.row(), p_cur.col(), q.col());
-		    double p_q = euclidian_distance(p.row(), q.row(), p.col(), q.col());
-
 		    res.push_back(p_cur);
 
 		    if (abs(decalage) >= abs(denom))
@@ -154,8 +140,6 @@ namespace oln {
 	return res;
       }
 
-
-
       template <typename T>
       std::vector<point2d> compute_normal_points_(const image2d<T>& force,
 						  const point2d& p1,
@@ -163,9 +147,12 @@ namespace oln {
 						  const point2d& p3,
 						  unsigned int dmax)
       {
+	point2d pp1(p1.row(), p1.col());
+	point2d pp3(p3.row(), p3.col());
+
 	float x_c = p2.row();
 	float y_c = p2.col();
-	float a_p1_p3 = (p1.col() - p3.col()) != 0 ? (float)(((float)(p1.row() - p3.row())) / (p1.col() - p3.col())) : 0;
+	float a_p1_p3 = (pp1.col() - pp3.col()) != 0 ? (float)(((float)(pp1.row() - pp3.row())) / (pp1.col() - pp3.col())) : 0;
 	float a = -a_p1_p3;
 	float b = p2.col() - a * p2.row(); // use of - slope of p1 et p3
 
@@ -203,10 +190,20 @@ namespace oln {
 	  }
 	else
 	  {
-	    x1 = p2.row() - dmax;
-	    y1 = p2.col();
-	    x2 = p2.row() + dmax;
-	    y2 = p2.col();
+	    if (pp3.row() == pp1.row())
+	      {
+		x1 = p2.row() - dmax;
+		y1 = p2.col();
+		x2 = p2.row() + dmax;
+		y2 = p2.col();
+	      }
+	    else
+	      {
+		x1 = p2.row();
+		y1 = p2.col() - dmax;
+		x2 = p2.row();
+		y2 = p2.col() + dmax;
+	      }
 	  }
 
 	verify_integrity_(force, x1, x2, y1, y2);
@@ -225,6 +222,7 @@ namespace oln {
 	angle = (angle * 180) / PI; //deg
 	return sqr(180 - angle) / sqr(180);
       }
+
 
       template <typename T>
       double variance(const image2d<T>& input,
@@ -255,6 +253,7 @@ namespace oln {
 	return res / sqr(fen);
       }
 
+
       template <typename T>
       std::vector<point2d> gen_snakes_(const image2d<T>& force,
 				       const std::vector<point2d>& v,
@@ -266,6 +265,9 @@ namespace oln {
       {
 	std::vector<point2d>::const_iterator it = v.begin();
 	std::vector<point2d> res;
+
+	if (type == OUVERT)
+	  res.push_back(*(v.begin()));
 
 	for (; it != v.end(); it++)
 	  {
@@ -322,7 +324,6 @@ namespace oln {
 	  }
 	else
 	  res.push_back(*(v.end() - 1));
-
 	return res;
       }
 
@@ -376,9 +377,16 @@ namespace oln {
 	int nb_pts = v.size() * 2;
 	int cpt = 0;
 
-	for (it2 = tmp.begin(); it2 != tmp.end(); it2++, cpt++)
-	  if ((cpt % (tmp.size() / nb_pts)) == 0)
+	if (tmp.size() > nb_pts)
+	  {
+	    for (it2 = tmp.begin(); it2 != tmp.end(); it2++, cpt++)
+	      if ((cpt % (tmp.size() / nb_pts)) == 0)
+		res.push_back(*it2);
+	  }
+	else
+	  for (it2 = tmp.begin(); it2 != tmp.end(); it2++, cpt++)
 	    res.push_back(*it2);
+
 
 	if (type == FERME)
 	  {
@@ -390,7 +398,6 @@ namespace oln {
 
 	return res;
       }
-
 
       std::vector<point2d> redispatch(const std::vector<point2d>& v,
 				      int nb_snaxels)
@@ -416,6 +423,33 @@ namespace oln {
 	res.push_back(*(v.end() - 1));
 	return res;
       }
+
+
+      std::vector<point2d> redispatch_normal(const std::vector<point2d>& v,
+					     int nb_snaxels)
+      {
+	std::vector<point2d> res;
+	std::vector<point2d> tmp;
+	std::vector<point2d>::const_iterator it = v.begin();
+	int cpt = 0;
+
+	for (; it + 1 != v.end(); it++)
+	  {
+	    std::vector<point2d> vec = draw_line_(*it, *(it+1));
+	    std::vector<point2d>::const_iterator it2 = vec.begin();
+
+	    for (; it2 != vec.end(); it2++)
+	      tmp.push_back(*it2);
+	  }
+
+	for (it = tmp.begin(); it != tmp.end(); it++, cpt++)
+	  if ((cpt % (int)(roundf(((float)(tmp.size()) / nb_snaxels)))) == 0)
+	    res.push_back(*it);
+
+	res.push_back(*(v.end() - 1));
+	return res;
+      }
+
 
 
       template <typename T>
@@ -475,7 +509,8 @@ namespace oln {
 	while (i < nb_gen)
 	  {
 	    res = gen_snakes_(force, res, f, fen, lambda, dmax, type);
-	    res = redispatch(res, max_pts);
+	    if (res.size() > max_pts)
+	      res = redispatch(res, max_pts);
 	    i++;
 	    if (i < nb_gen)
 	      res = regen_snaxels(res, type, max_pts);
