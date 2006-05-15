@@ -1,3 +1,9 @@
+2006-05-15  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	Update Watersnake for multi segmentation.
+
+	* oln/morpho/watersnakes.hh: Update for multi segmentation.
+
 2006-04-11  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	Add sample for real time segmentation.

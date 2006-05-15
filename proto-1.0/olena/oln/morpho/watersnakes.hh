@@ -29,6 +29,7 @@
 # define OLENA_MORPHO_WATERSNAKES_HH
 
 # include <string>
+# include <map>
 
 # include <oln/basics.hh>
 # include <oln/morpho/erosion.hh>
@@ -409,7 +410,7 @@ namespace oln {
       }
 
       template<typename T, typename T2>
-      std::vector<point2d>
+      std::vector<std::vector<point2d> >
       watershed_line(const image2d<T>& input,
 		     const image2d<T>& orig,
 		     const image2d<T2>& marqueur,
@@ -417,12 +418,14 @@ namespace oln {
 		     int b,
 		     version v)
       {
-	image2d<int> final(input.size());
 	image2d<int> label;
 	image2d<T2> mark(input.size());
 	oln_iter_type(image2d<T>) p(input);
 	image2d<bool> is_wshed_line(input.size());
-	std::vector<point2d> res;
+	std::vector<point2d> tmp;
+	std::vector<std::vector<point2d> > res;
+	std::map<std::pair<int, int>, int> num_wshed;
+	int cpt = 0;
 	unsigned nb_compo = 0;
 
 	for_all(p)
@@ -432,7 +435,6 @@ namespace oln {
 	  propagate_minima_(input, mark, ng, p);
 
 	image2d<T> recon;
-
 	if (v == NORMAL)
 	  recon = reconstruction_by_erosion(input, mark);
 	else
@@ -441,10 +443,9 @@ namespace oln {
 	    op_type op(marqueur, input, ng);
 	    recon = op.output;
 	  }
+
 	image2d<float> LS = lower_slope(recon, ng);
-
 	label = init_watershed_(recon, mark, ng, nb_compo);
-
 	image2d<float*> topo = topographic_distance(recon, LS, mark, label, ng, nb_compo);
 
 	for_all(p)
@@ -463,21 +464,30 @@ namespace oln {
 	while (snake_iteration(label, topo, b))
 	  ;
 
-	level::fill(final, 0);
 	for_all(p)
 	  {
 	    oln_neighb_type(window2d) q(win_c4p(), p);
 	    for_all (q)
 	      if (input.hold(q))
-		if (label[p] != label[q] and final[q] != WSHED)
-		  final[p] = WSHED;
-	    if (final[p] == 0)
-	      final[p] = orig[p];
+		if (label[p] != label[q])
+		  {
+		    int p1 = std::min(label[p], label[q]);
+		    int p2 = std::max(label[p], label[q]);
+		    if (num_wshed.find(std::pair<int, int>(p1, p2)) == num_wshed.end())
+		      {
+			num_wshed[std::pair<int, int>(p1, p2)] = cpt++;
+			std::vector<point2d> tmp;
+			tmp.push_back(p);
+			res.push_back(tmp);
+		      }
+		    else
+		      {
+			if (res[(*(num_wshed.find(std::pair<int, int>(p1, p2)))).second].back() != p)
+			  if (label[p] == p1)
+			    res[(*(num_wshed.find(std::pair<int, int>(p1, p2)))).second].push_back(p);
+		      }
+		  }
 	  }
-
-	for_all(p)
-	  if (final[p] == WSHED)
-	    res.push_back(p);
 
 	return res;
       }
@@ -485,7 +495,7 @@ namespace oln {
 
 
       template<typename T, typename T2>
-      std::vector<point2d>
+      std::vector<std::vector<point2d> >
       watersnakes_(const image2d<T>& input,
 		   const image2d<T2>& marqueur,
 		   const window2d& ng,
@@ -503,7 +513,7 @@ namespace oln {
 
 
     template<typename T, typename T2>
-    std::vector<point2d>
+    std::vector<std::vector<point2d> >
     watersnakes(const image2d<T>& input,
 		const image2d<T2>& marqueur,
 		const window2d& ng,
