@@ -1,37 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 222)
-(Parent-Version oln 10 221)
-(Version-Log "2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 223)
+(Parent-Version oln 10 222)
+(Version-Log "2006-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
-	* config/oln.m4 (OLN_VERSION): Set to 0.10a.
-	Remove duplicate definition.
-
-2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
-
-	Adjust for G++ 4.0.
-
-	* oln/core/window2d.hh (neighb_type): Remove duplicate typedef.
-	* oln/topo/dmap.hh, oln/topo/dmap.hxx (operator[], operator()):
-	Return a copy, not a reference on a temporary.
-	* oln/arith/logic.hh: Remove superfluous semi-colons.
-	* oln/io/gz_stream.hh (zifstream, zofstream): Add forward
-	declarations.
-
-2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
-
-	Adjust for G++ 4.0.
-
-	* ntg/color/color.hh
-	(typetraits<color<ncomps, qbits, color_system> >::nb_comp): Make
-	it a static const unsigned instead of an enum.
-	* ntg/vect/cplx.hh (cplx<rect, T>::to_polar): Move the definition
-	of this function outside the declaration of cplx<rect, T>, so as
-	to have it know the size of cplx<polar, T>.
+	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):
+	Remove the third operator, causing a an ambiguity with G++ 4.0.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 15 Sep 2005 17:50:38 +0200")
+(Checkin-Time "Thu, 22 Jun 2006 10:49:20 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -138,7 +116,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.48 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.4 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.5 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -184,7 +162,7 @@
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 600) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 600))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.19 600))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.20 600))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.5 600))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.10 600))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 600))

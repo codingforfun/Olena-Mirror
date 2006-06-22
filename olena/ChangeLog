@@ -1,3 +1,8 @@
+2006-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):
+	Remove the third operator, causing a an ambiguity with G++ 4.0.
+
 2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust for G++ 4.0.

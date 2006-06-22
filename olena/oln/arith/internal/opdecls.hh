@@ -218,18 +218,41 @@
 				                 T2,								\
 						 ntg_return_type(OPNAME, T1, T2)>()),				\
 		    input1, input2);										\
-    }														\
-														\
-    /* Same as above, with inline conversion in the functor. */							\
-    template<class IRet, class I1, class I2> inline								\
-    typename mute<I1, oln_value_type(IRet)>::ret								\
-    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)				\
-    {														\
-      return apply2(f_##OPNAME<oln_value_type(I1),								\
-		               oln_value_type(I2),								\
-		               oln_value_type(IRet)>(),								\
-		    input1, input2);										\
     }
+/* FIXME: Used to be part from the previous macro, but causes ambiguous
+   calls with G++ 4.0 and 4.1: theses compiler seems to consider that
+
+     OPNAME(ima1, ima2);
+
+   could be both interpreted as a call to
+
+     template<class I1, class I2> inline
+     typename arith_return_type_proxy_##OPNAME##_<I1, I2>::ret
+     OPNAME(const abstract::image<I1>& input1,
+            const abstract::image<I2>& input2)
+
+   or
+
+     template<class IRet, class I1, class I2> inline
+     typename mute<I1, oln_value_type(IRet)>::ret
+     OPNAME(const abstract::image<I1>& input1,
+            const abstract::image<I2>& input2)
+
+   despite the fact that this call doesn't resolve the first parameter
+   (`IRet') of the second version.  It might be a bug in the 4.x branch
+   of G++.  */
+//
+//
+//     /* Same as above, with inline conversion in the functor. */
+//     template<class IRet, class I1, class I2> inline
+//     typename mute<I1, oln_value_type(IRet)>::ret
+//     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
+//     {
+//       return apply2(f_##OPNAME<oln_value_type(I1),
+// 		               oln_value_type(I2),
+// 		               oln_value_type(IRet)>(),
+// 		    input1, input2);
+//     }
 
 /// Apply OPNAME with a constant as second operand.
 # define oln_arith_declare_binopcst_procs_(OPNAME)						\
