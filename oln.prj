@@ -1,61 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 226)
-(Parent-Version oln 10 225)
-(Version-Log "2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 227)
+(Parent-Version oln 10 226)
+(Version-Log "Add missing files:
 
-	Revive Swilena.
+  tools/swilena/meta/swilena_config.i
+  tools/swilena/meta/swilena_basics.i
+  tools/swilena/ruby/tests/sanity.rb
+  tools/swilena/python/tests/sanity.py
 
-	* expand.sh (MODULES): Generate new SWIG interfaces:
-	swilena_basics1d.i, swilena_basics2d.i, swilena_basics3d.i.
-	Don't add `-lswigpy' nor `-lswigrb' to LDFLAGS when linking the
-	C++ wrappers.
-	Add a dependency-tracking mechanism for the generated C++
-	wrappers.
-
-	* meta/swilena_basics.i, meta/swilena_config.i: New files.
-	* meta/Makefile.am (EXTRA_DIST): Add swilena_basics.i and
-	swilena_config.i.
-	* meta/swilena_arith.i, meta/swilena_conversions.i,
-	* meta/swilena_image.i
-	* meta/swilena_imagesize.i, meta/swilena_morpho.i,
-	* meta/swilena_ntg.i, meta/swilena_point.i,
-	* meta/swilena_structelt.i, meta/swilena_w_win.i: Include
-	swilena_config.i.
-	* meta/swilena_arith.i, meta/swilena_conversions.i,
-	* meta/swilena_image.i,
-	* meta/swilena_structelt.i: Include
-	swilena_basics' SWIG interfaces for 1-, 2- and 3-dimension images,
-	and avoid code duplication.
-	* generate_arith_instantiations.py (write_headers)
-	* generate_conversions_instantiations.py (write_headers)
-	* generate_morpho_instantiations.py (write_headers): Generate an
-	%include statement for swilena_config.i.
-	Generate an %include statement instead of an %import for
-	swilena_image%(dim)sd.i.
-
-	* meta/swilena_exception.i (START_PROTECT, END_PROTECT): Remove
-	these guards.
-	* meta/swilena_ntg.i (decl_complex, decl_ntg): Turn them into a
-	``function'' macros with an empty argument list to pacify swig.
-	Adjust callers.
-	* meta/swilena_structelt.i: Don't wrap the `T(unsigned n, const
-	coord crd[])' ctor.
-	* meta/swilena_image.i: Include swilena_exception.i.
-	(oln::io::internal::anything): Ask swig not to generated a default
-	ctor for this class.
-	* meta/swilena_arith.i: Catch up with the new naming convention
-	w.r.t. operators.
-
-	* python/tests/sanity.py: New test.
-	* python/tests/Makefile.am (dist_noinst_DATA): Add sanity.py.
-	* ruby/tests/sanity.rb: New test.
-	* ruby/tests/Makefile.am (dist_noinst_DATA): Add sanity.rb.
-	(TESTS): Set to $(dist_noinst_DATA).
+(already mentioned in ChangeLog 10.226).
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 30 Jun 2006 17:26:15 +0200")
+(Checkin-Time "Fri, 30 Jun 2006 17:48:53 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -1524,6 +1482,15 @@
 
 
   (olena/oln/morpho/abstract/attribute.hxx (oln/v/38_attribute. 1.1 600))
-  (olena/oln/morpho/abstract/attribute.hh (oln/v/40_attribute. 1.1 600)))
+  (olena/oln/morpho/abstract/attribute.hh (oln/v/40_attribute. 1.1 600))
+
+;; Files added by populate at Fri, 30 Jun 2006 17:41:53 +0200,
+;; to version 10.226(w), by levill_r:
+
+  (tools/swilena/meta/swilena_config.i (oln/w/36_swilena_co 1.1 644))
+  (tools/swilena/meta/swilena_basics.i (oln/w/37_swilena_ba 1.1 644))
+  (tools/swilena/ruby/tests/sanity.rb (oln/w/38_sanity.rb 1.1 755))
+  (tools/swilena/python/tests/sanity.py (oln/w/39_sanity.py 1.1 744))
+)
 (Merge-Parents)
 (New-Merge-Parents)
