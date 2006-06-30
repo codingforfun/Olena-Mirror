@@ -1,3 +1,8 @@
+2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	* config/oln.m4 (AC_CHECK_SWIG_FLAGS): Don't check for the `-c'
+	nor the `-noruntime' flags.
+
 2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* config/oln.m4 (OLN_VERSION): Set to 0.10a.

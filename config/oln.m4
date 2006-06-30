@@ -319,25 +319,28 @@ AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
   AC_LANG_POP([C++])
 ])
 
-# Recent versions of SWIG use -nountime instead of -c
+# Recent versions of SWIG no longer link with a runtime library (the
+# runtime is embedded in the C++ wrapper).
 
+# FIXME: Clean up.
 AC_DEFUN([AC_CHECK_SWIG_FLAGS],
 [dnl
-  AC_CACHE_CHECK([for SWIG supports for -noruntime],
-                  [ac_cv_swig_flags],
-                  [if $SWIG -help 2>&1 | grep -- "-noruntime" > /dev/null 2>&1; then
-			ac_cv_swig_flags=recent
-                      else
-                        ac_cv_swig_flags=old
-                   fi])
-   case "$ac_cv_swig_flags" in
-     recent)
-	SWIG_FLAGS="-noruntime"
-	;;
-     old)
-	SWIG_FLAGS="-c"
-      	;;
-   esac
+#   AC_CACHE_CHECK([for SWIG supports for -noruntime],
+#                   [ac_cv_swig_flags],
+#                   [if $SWIG -help 2>&1 | grep -- "-noruntime" > /dev/null 2>&1; then
+# 			ac_cv_swig_flags=recent
+#                       else
+#                         ac_cv_swig_flags=old
+#                    fi])
+#    case "$ac_cv_swig_flags" in
+#      recent)
+# 	SWIG_FLAGS="-noruntime"
+# 	;;
+#      old)
+# 	SWIG_FLAGS="-c"
+#       	;;
+#    esac
+   SWIG_FLAGS=''
 
    AC_SUBST([SWIG_FLAGS])
 ])

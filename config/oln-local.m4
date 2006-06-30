@@ -57,6 +57,7 @@ AC_DEFUN([MLC_TESTS], dnl Auxiliary function for test categories selection
             AC_CONFIG_FILES([metalic/tests/$1/Makefile])
           fi])dnl End of MLC_TESTS
 
+# FIXME: Improve this (see TC's swig.m4).
 AC_DEFUN([AC_CHECK_SWIG13],
 [dnl
      AC_ARG_VAR([SWIG], [the SWIG interface generator])
