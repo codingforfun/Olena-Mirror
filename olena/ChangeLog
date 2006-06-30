@@ -1,3 +1,9 @@
+2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):
+	Re-enable the third operator, but rename it as OPNAME_with_ret.
+	* oln/morpho/geodesic_erosion.hh: Typos in comments.
+
 2006-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):

@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -175,9 +176,41 @@
 #define default_functor_return_type_cst_(OPNAME, I1, T2)		\
   typename default_functor_type_cst_(OPNAME, I1, T2)::result_type
 
-///  Declare front-end functions.
+/** \def Declare front-end functions.
+
+    OPNAME_with_ret used to be named OPNAME previously, but it caused
+    ambiguous calls with modern (and more compliant) compilers
+    (GCC 4.0, GCC 4.1, ICC 9.1).  These compilers consider that
+
+      \code
+      OPNAME<T>(ima1, ima2);
+      \endcode
+
+    could be both interpreted as a call to
+
+      \code
+      template<class I1, class I2> inline
+      typename arith_return_type_proxy_##OPNAME##_<I1, I2>::ret
+      OPNAME(const abstract::image<I1>& input1,
+             const abstract::image<I2>& input2)
+
+      (with I1 = T and I2 = typeof(ima2))
+      \endcode
+
+    as well as a call to
+
+      \code
+      template<class IRet, class I1, class I2> inline
+      typename mute<I1, oln_value_type(IRet)>::ret
+      OPNAME(const abstract::image<I1>& input1,
+             const abstract::image<I2>& input2)
+
+      (with IRet = T, I1 = typeof(ima1), I2 = typeof(ima2)).
+      \endcode
+
+    Using different names for these operators removes the ambiguity.  */
 # define oln_arith_declare_binop_procs_(OPNAME)									\
-    /* 														\
+    /*														\
        FIXME: this is a workaround for an odd bug of icc and como						\
        http://www.lrde.epita.fr/cgi-bin/twiki/view/Know/MysteriousTemplateFunctionOverloadingWithIccAndComo	\
        Remove this traits and use its content directly when this bug gets fixed.				\
@@ -218,41 +251,21 @@
 				                 T2,								\
 						 ntg_return_type(OPNAME, T1, T2)>()),				\
 		    input1, input2);										\
+    }														\
+														\
+    /* Same as above, with inline conversion in the functor. */							\
+    /* This operator has a `_with_ret' suffix for disambiguation purpose */					\
+    /* (see above).  */												\
+    template<class IRet, class I1, class I2> inline								\
+    typename mute<I1, oln_value_type(IRet)>::ret								\
+    OPNAME##_with_ret(const abstract::image<I1>& input1, const abstract::image<I2>& input2)			\
+    {														\
+      return apply2(f_##OPNAME<oln_value_type(I1),								\
+		               oln_value_type(I2),								\
+		               oln_value_type(IRet)>(),								\
+		    input1, input2);										\
     }
-/* FIXME: Used to be part from the previous macro, but causes ambiguous
-   calls with G++ 4.0 and 4.1: theses compiler seems to consider that
 
-     OPNAME(ima1, ima2);
-
-   could be both interpreted as a call to
-
-     template<class I1, class I2> inline
-     typename arith_return_type_proxy_##OPNAME##_<I1, I2>::ret
-     OPNAME(const abstract::image<I1>& input1,
-            const abstract::image<I2>& input2)
-
-   or
-
-     template<class IRet, class I1, class I2> inline
-     typename mute<I1, oln_value_type(IRet)>::ret
-     OPNAME(const abstract::image<I1>& input1,
-            const abstract::image<I2>& input2)
-
-   despite the fact that this call doesn't resolve the first parameter
-   (`IRet') of the second version.  It might be a bug in the 4.x branch
-   of G++.  */
-//
-//
-//     /* Same as above, with inline conversion in the functor. */
-//     template<class IRet, class I1, class I2> inline
-//     typename mute<I1, oln_value_type(IRet)>::ret
-//     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
-//     {
-//       return apply2(f_##OPNAME<oln_value_type(I1),
-// 		               oln_value_type(I2),
-// 		               oln_value_type(IRet)>(),
-// 		    input1, input2);
-//     }
 
 /// Apply OPNAME with a constant as second operand.
 # define oln_arith_declare_binopcst_procs_(OPNAME)						\

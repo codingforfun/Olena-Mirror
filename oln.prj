@@ -1,16 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 224)
-(Parent-Version oln 10 223)
+(Project-Version oln 10 225)
+(Parent-Version oln 10 224)
 (Version-Log "2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
 
-	* config/oln.m4 (AC_CHECK_SWIG_FLAGS): Don't check for the `-c'
-	nor the `-noruntime' flags.
-
+	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):
+	Re-enable the third operator, but rename it as OPNAME_with_ret.
+	* oln/morpho/geodesic_erosion.hh: Typos in comments.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 30 Jun 2006 16:51:46 +0200")
+(Checkin-Time "Fri, 30 Jun 2006 17:17:34 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -117,7 +117,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.48 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.5 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.6 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -163,7 +163,7 @@
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 600) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 600))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.20 600))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.21 600))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.5 600))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.10 600))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 600))
@@ -332,7 +332,7 @@
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 600))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.22 600))
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.13 600))
-  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.20 600))
+  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.21 600))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 600))
   (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.17 600))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 600))

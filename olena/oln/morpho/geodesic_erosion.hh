@@ -47,7 +47,7 @@ namespace oln {
     ** \param N Exact type of neighborhood.
     **
     ** \arg marker Image to work on.
-    ** \arg mask Image used for geodesic dilation.
+    ** \arg mask Image used for geodesic erosion.
     ** \arg Ng Neighborhood to use.
     **
     ** Compute  the geodesic erosion  of marker  with respect  to the
@@ -104,13 +104,13 @@ namespace oln {
       ** \param N Exact type of neighborhood.
       **
       ** \arg marker Image to work on.
-      ** \arg mask Image used for geodesic dilation.
+      ** \arg mask Image used for geodesic erosion.
       ** \arg Ng Neighborhood to use.
       **
-      **  Compute the  geodesic erosion of marker with  respect to the
-      ** mask  mask  image  using  se as  structural  element.  Soille
+      ** Compute the  geodesic erosion of marker with  respect to the
+      ** mask  image  using  se as  structural  element.  Soille
       ** p.156. Computation is performed  by hand (i.e without calling
-      ** dilation).
+      ** erosion).
       **
       ** \pre Marker must be greater or equal than mask.
       **
