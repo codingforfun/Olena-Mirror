@@ -19,13 +19,15 @@ def write_headers():
 
 %%module swilena_arith%(dim)sd
 
+%%include swilena_config.i
+
 %%include swilena_exception.i
 %%include swilena_ntg_macros.i
 %%import swilena_ntg.i
 
 %%include swilena_arith.i
 
-%%import swilena_image%(dim)sd.i
+%%include swilena_image%(dim)sd.i
 
 decl_arith(%(dim)s)
 

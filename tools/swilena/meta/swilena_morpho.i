@@ -2,6 +2,8 @@
 
 %module swilena_morpho
 
+%include swilena_config.i
+
 /*
   Algorithms are supported by a simple two-level mechanism:
 

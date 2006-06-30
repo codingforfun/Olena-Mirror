@@ -19,10 +19,12 @@ def write_headers():
 
 %%module swilena_conversions%(dim)sd
 
+%%include swilena_config.i
+
 %%include swilena_exception.i
 
 %%include swilena_ntg_macros.i
-%%import swilena_image%(dim)sd.i
+%%include swilena_image%(dim)sd.i
 %%import swilena_ntg.i
 
 %%include swilena_conversions.i

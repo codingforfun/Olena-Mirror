@@ -1,26 +1,18 @@
 // -*- C++ -*-
 
+%include swilena_config.i
+
 %define decl_image(Dim)
 %include swilena_describe.i
+%include swilena_exception.i
 %include swilena_core.i
+
+%include swilena_basics ## Dim ## d.i
 
 %import swilena_imagesize ## Dim ## d.i
 %import swilena_point ## Dim ## d.i
 
-#if Dim == 1
-%{
-#include <oln/basics1d.hh>
-%}
-#elif Dim == 2
-%{
-#include <oln/basics2d.hh>
-%}  
-#elif Dim == 3
-%{
-#include <oln/basics3d.hh>
-%}
-#endif
-
+%nodefaultctor oln::io::internal::anything;
 namespace oln
 {
   template<typename T>

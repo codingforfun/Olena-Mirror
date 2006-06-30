@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+%include swilena_config.i
+
 /*----------------------------------------------.
 | oln::window, and oln::neighborhood structures |
 `----------------------------------------------*/
@@ -31,8 +33,14 @@
 
      structelt_methods(T, Dim)
 
+    // FIXME: SWIG is unable to wrap this ctor because of a strange
+    // invalid pointer conversion w.r.t. its second argument.  Have a
+    // look at the SWIG manual for more details on how arrays are
+    // handled.
+#if 0
      // utility constructor
      T(unsigned n, const coord crd[]);
+#endif
 
      // set operations
      %extend
@@ -77,23 +85,9 @@ T& add(coord, coord, coord);
 %include swilena_describe.i
 %include swilena_core.i
 
-%import swilena_point ## Dim ## d.i
+%include swilena_basics ## Dim ##d.i
 
-#if Dim == 1
-%{
-#include <oln/basics1d.hh>
-%}
-#elif Dim == 2
-%{
-#include <oln/basics2d.hh>
-%}
-#elif Dim == 3
-%{
-#include <oln/basics3d.hh>
-%}
-#else
-#error Unsupported dimension.
-#endif
+%import swilena_point ## Dim ## d.i
 
 namespace oln
 {

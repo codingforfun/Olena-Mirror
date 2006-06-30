@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // FIXME: avoid code repetitions!
 
 #define ntg_bin ntg::bin

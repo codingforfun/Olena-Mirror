@@ -2,8 +2,8 @@
 
 import os
 import sys
-from swilena_arith2d import *
 from swilena_image2d import *
+from swilena_arith2d import *
 
 imgdir = os.environ['IMGDIR']
 

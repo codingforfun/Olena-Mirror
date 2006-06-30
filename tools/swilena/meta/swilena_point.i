@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+%include swilena_config.i
+
 /*--------------------------------------.
 | oln::point and oln::dpoint structures |
 `--------------------------------------*/

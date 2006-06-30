@@ -1,5 +1,8 @@
-%module swilena_ntg
+%module swilena_ntg						// -*- C++ -*-
+
+%include swilena_config.i
 %include swilena_exception.i
+
 
 /***** Generic class declaration for scalars ******/
 
@@ -157,7 +160,7 @@ class Name
 };
 %enddef
 
-%define decl_complex
+%define decl_complex()
 template<typename repr, typename T>
 class cplx
 {
@@ -186,7 +189,7 @@ class cplx
 %enddef
 
 // Swig preprocessor does not understand empty call to macros.
-%define decl_ntg
+%define decl_ntg()
 %include <ntg/vect/cplx_representation.hh>
 %include <ntg/core/predecls.hh>
 %{
@@ -202,12 +205,12 @@ namespace ntg
   decl_scalar_class(ntg, int_s, long)
   decl_bin_class(ntg, bin, bool)
 
-  decl_complex
+  decl_complex()
 
 }
 %enddef
 
-decl_ntg
+decl_ntg()
 
 /*
    Macro are defined for every type and should be used in all modules
@@ -238,4 +241,3 @@ decl_ntg
 %template(cplx_rect)  ntg::cplx< ntg::rect, ntg_float >;
 
 %template(cplx_polar)  ntg::cplx< ntg::polar, ntg_float >;
-

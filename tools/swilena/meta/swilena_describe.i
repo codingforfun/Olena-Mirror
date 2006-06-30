@@ -1,4 +1,4 @@
-%include std_string.i
+%include std_string.i						// -*- C++ -*-
 %{
 #include <sstream>
 %}

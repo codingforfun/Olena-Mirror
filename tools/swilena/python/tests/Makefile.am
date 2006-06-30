@@ -3,7 +3,7 @@
 ## Makefile.am for swilena/python/tests
 ##
 
-dist_noinst_DATA = arith.py conversions.py simple1.py morpho.py
+dist_noinst_DATA = sanity.py arith.py conversions.py simple1.py morpho.py
 
 TESTS_ENVIRONMENT = \
 	PYTHONPATH="$(PYTHONPATH):..:$(srcdir)/.." \

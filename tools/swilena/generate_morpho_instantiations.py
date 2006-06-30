@@ -27,6 +27,8 @@ def write_headers():
 
 %%module swilena_morpho%(dim)sd_%(str_type)s
 
+%%include swilena_config.i
+
 %%include swilena_exception.i
 
 %%include swilena_ntg_macros.i
@@ -34,7 +36,7 @@ def write_headers():
 
 %%include swilena_morpho.i
 
-%%import swilena_image%(dim)sd.i
+%%include swilena_image%(dim)sd.i
 
 """ % vars())
 
