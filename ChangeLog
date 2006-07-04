@@ -1,3 +1,10 @@
+2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix C++ compiler identification.
+
+	* config/oln.m4 (AC_CXX_FLAGS): Check for the Intel C++ compiler
+	before the GNU C++ compiler.
+
 2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	* config/oln.m4 (AC_CHECK_SWIG_FLAGS): Don't check for the `-c'

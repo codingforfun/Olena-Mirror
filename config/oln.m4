@@ -465,15 +465,19 @@ AC_DEFUN([AC_WITH_OLN],
 # specifications.
 
 # This macro checks for the following compilers :
+#   - Intel C++ (icpc)
 #   - GNU C++ (g++)
 #   - Sun WorkShop C++ (Sun/CC)
-#   - Intel C++ (icc)
 #   - Comeau C++ (como)
 # and sets the following autoconf variables:
 #   CXXFLAGS_DEBUG
 #   CXXFLAGS_STRICT
 #   CXXFLAGS_STRICT_ERRORS
 #   CXXFLAGS_OPTIMIZE
+#
+# The Intel C++ compiler is checked before the GNU C++ compiler,
+# because our test for the latter recognizes the former as G++ (i.e.,
+# icpc defines __GNUC__).  Perhaps we should use another test for G++.
 
 AC_DEFUN([AC_CXX_FLAGS],
 [dnl
@@ -482,7 +486,10 @@ AC_DEFUN([AC_CXX_FLAGS],
    AC_CACHE_CHECK([for C++ compiler-specific extra flags],
                   [ac_cv_cxx_style],
                   [ac_cv_cxx_style=unknown
-                   if test "x$ac_compiler_gnu" != xno; then
+                   if $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
+                   then
+                      ac_cv_cxx_style=Intel
+                   elif test "x$ac_compiler_gnu" != xno; then
 		      [case `$CXX --version` in
                       *3.[2-9]* | \
                       *[4-9].*  )
@@ -492,9 +499,6 @@ AC_DEFUN([AC_CXX_FLAGS],
                        esac]
                    elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then
 		      ac_cv_cxx_style=Sun
-                   elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
-                   then
-                      ac_cv_cxx_style=Intel
                    else
                       echo "int main() {}" >conftest.cc
                       if $CXX --version conftest.cc 2>&1 \
