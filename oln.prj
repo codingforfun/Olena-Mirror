@@ -1,17 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 229)
-(Parent-Version oln 10 228)
+(Project-Version oln 10 230)
+(Parent-Version oln 10 229)
 (Version-Log "2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
-	Improve C++ compliance.
+	Work around a bug in SWIG 1.3.29.
 
-	* oln/topo/tarjan/tarjan_with_attr.hh (get_compute_impl): Prefix
-	calls to member functions of base class with `this->'.
+	* generate_arith_instantiations.py (write_algorithms)
+	* generate_morpho_instantiations.py (write_algorithms): Work
+	around a bug in SWIG 1.3.29 in the generation of C++ wrappers.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 04 Jul 2006 13:39:39 +0200")
+(Checkin-Time "Tue, 04 Jul 2006 13:44:05 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -120,7 +121,7 @@
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.7 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.40 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.41 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -1061,7 +1062,7 @@
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8.1.1 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8.1.2 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1113,7 +1114,7 @@
   (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.2 600))
   (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.2 600))
   (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1.1.1 700))
-  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1.1.1 700))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1.1.2 700))
 
 ;; Files added by populate at Mon, 10 Nov 2003 14:06:22 +0100,
 ;; to version 10.39(w), by burrus_n:

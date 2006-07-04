@@ -59,13 +59,19 @@ def write_algorithms():
 		      "ntg_int_u8", "ntg_int_u32",
 		      "ntg_int_s8", "ntg_int_s32",
 		      "ntg_float" ]:
-	    img_type = "::oln::image%(dim)sd< %(type)s >" % vars()
+            # FIXME: SWIG 1.3.29 Bug.  We used to refer to `oln::image' from
+            # the global (top-level) namespace, i.e. `::oln::image',
+            # but it makes swig 1.3.29 generate invalid C++ code when
+            # used ad a template argument: the space between `<' and
+            # `::' is eaten by swig, and `<:' is understood as a
+            # trigraph (for `[') by the C++ compiler.
+	    img_type = "oln::image%(dim)sd< %(type)s >" % vars()
 	    bigger_type = get_bigger_type(type)
-	    return_img_type = "::oln::image%(dim)sd< %(bigger_type)s >" % vars()
+	    return_img_type = "oln::image%(dim)sd< %(bigger_type)s >" % vars()
 
 	    # FIXME: these algorithms do not work with bin
             if type != "ntg_bin":
-		for algo in [ "plus", "minus", "times", "div" ]:		
+		for algo in [ "plus", "minus", "times", "div" ]:
 		    instantiate(dim, algo, return_img_type, img_type, img_type)
 
 	    instantiate(dim, "min", return_img_type, img_type, img_type)
