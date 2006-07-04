@@ -167,7 +167,7 @@ namespace oln {
 		oln_neighb_type(N) Q_prime(Ng, p_p);
 		for_all (Q_prime)
 		  if (is_proc(Q_prime))
-		    uni(Q_prime.cur(), p_p);
+		    this->uni(Q_prime.cur(), p_p);
 		if (to_comp_[p_p] == (ncomps_ + 1)) // new component
 		  ++ncomps_;
 		else

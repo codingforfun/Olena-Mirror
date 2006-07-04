@@ -1,3 +1,10 @@
+2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve C++ compliance.
+
+	* oln/topo/tarjan/tarjan_with_attr.hh (get_compute_impl): Prefix
+	calls to member functions of base class with `this->'.
+
 2006-06-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh (oln_arith_declare_binop_procs_):

@@ -1,17 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 228)
-(Parent-Version oln 10 227)
+(Project-Version oln 10 229)
+(Parent-Version oln 10 228)
 (Version-Log "2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
-	Fix C++ compiler identification.
+	Improve C++ compliance.
 
-	* config/oln.m4 (AC_CXX_FLAGS): Check for the Intel C++ compiler
-	before the GNU C++ compiler.
+	* oln/topo/tarjan/tarjan_with_attr.hh (get_compute_impl): Prefix
+	calls to member functions of base class with `this->'.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 04 Jul 2006 13:33:04 +0200")
+(Checkin-Time "Tue, 04 Jul 2006 13:39:39 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -118,7 +118,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.48 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.6 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.7 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.40 600))
 
@@ -1428,7 +1428,7 @@
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 
-  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.4 600))
+  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.5 600))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.4 600))
 
 
