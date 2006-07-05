@@ -92,7 +92,9 @@ namespace oln {
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(marker, mask));
-      return arith::max<oln_concrete_type(I1)>(erosion(marker, convert::ng_to_cse(Ng)), mask);
+      return arith::max_with_ret<oln_concrete_type(I1)>
+	(erosion(marker, convert::ng_to_cse(Ng)),
+	 mask);
     }
 
     namespace sure {

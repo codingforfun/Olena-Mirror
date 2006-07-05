@@ -1,5 +1,14 @@
 2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with new naming conventions w.r.t. operators in geodesic
+	dilation and erosion.
+
+	* oln/morpho/geodesic_dilation.hh (oln::morpho::geodesic_dilation)
+	* oln/morpho/geodesic_erosion.hh (oln::morpho::geodesic_erosion):
+	Catch up with the new naming convention w.r.t. operators.
+
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix color conversions.
 
 	* oln/convert/float_cmp.hh: New file.

@@ -94,9 +94,9 @@ namespace oln {
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(mask, marker));
-      return arith::min<oln_concrete_type(I1)>(dilation(marker,
-							convert::ng_to_cse(Ng)),
-					       mask);
+      return arith::min_with_ret<oln_concrete_type(I1)>
+	(dilation(marker, convert::ng_to_cse(Ng)),
+	 mask);
     }
 
     namespace sure {
