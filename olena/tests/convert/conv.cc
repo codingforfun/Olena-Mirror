@@ -2,8 +2,7 @@
 
 /* The extra indirection to the _STR and _CONC macros is required so that
    if the arguments to STR() (or CONC()) are themselves macros, they will
-  ls
- be expanded before being quoted.   */
+   be expanded before being quoted.   */
 #ifndef STR
 # define _STR(arg)     #arg
 # define STR(arg)      _STR(arg)

@@ -31,6 +31,7 @@
 
 # include <oln/basics.hh>
 # include <oln/convert/abstract/colorconv.hh>
+# include <oln/convert/float_cmp.hh>
 
 # include <ntg/basics.hh>
 # include <ntg/color/rgb.hh>
@@ -71,17 +72,17 @@ namespace oln {
 
 	out[hsv_V] = max_in;
 
-	if (max_in != 0)
+	if (approx_neq(max_in, 0))
 	  out[hsv_S] = delta / max_in;
 	else
 	  out[hsv_S] = 0;
 
-	if (out[hsv_S] == 0)
+	if (approx_eq(out[hsv_S], 0))
 	  out[hsv_H] = -1;   // undefined
 	else {
-	  if (in[rgb_R] == max_in)
+	  if (approx_eq(in[rgb_R], max_in))
 	    out[hsv_H] = (in[rgb_G] - in[rgb_B]) / delta;
-	  else if (in[rgb_G] == max_in)
+	  else if (approx_eq(in[rgb_G], max_in))
 	    out[hsv_H] = 2 + (in[rgb_B] - in[rgb_R]) / delta;
 	  else
 	    out[hsv_H] = 4 + (in[rgb_R] - in[rgb_G]) / delta;
@@ -129,7 +130,7 @@ namespace oln {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 
-	if(in[hsv_S] == 0)
+	if(approx_eq(in[hsv_S], 0))
 	  out[rgb_G] = out[rgb_B] = out[rgb_R] = in[hsv_V];
 	else
 	  {

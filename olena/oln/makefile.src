@@ -20,6 +20,7 @@ OLN_DEP =					\
   convert/abstract/conversion.hh		\
   convert/conversion.hh				\
   convert/conversion_ng_se.hh			\
+  convert/float_cmp.hh				\
   convert/force.hh				\
   convert/nrgbxyz.hh				\
   convert/rgbyiq.hh				\

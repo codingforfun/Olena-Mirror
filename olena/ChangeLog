@@ -1,3 +1,17 @@
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix color conversions.
+
+	* oln/convert/float_cmp.hh: New file.
+	* oln/convert/rgbhsv.hh: Include it.
+	(f_rgb_to_hsv::doit, f_hsv_to_rgb::doit): Use approx_eq and
+	(resp. approx_neq) to compare float values instead of plain ==
+	(resp. !=).
+	* oln/convert/rgbhsl.hh (f_rgb_to_hsl::doit, f_hsl_to_rgb::doit):
+	Likewise.
+	* tests/convert/conv.cc: Typo.
+	* oln/makefile.src (OLN_DEP): Add convert/float_cmp.hh.
+
 2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve C++ compliance.

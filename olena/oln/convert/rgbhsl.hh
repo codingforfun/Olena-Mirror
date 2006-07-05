@@ -31,6 +31,7 @@
 
 # include <oln/basics.hh>
 # include <oln/convert/abstract/colorconv.hh>
+# include <oln/convert/float_cmp.hh>
 
 # include <ntg/basics.hh>
 # include <ntg/color/rgb.hh>
@@ -95,10 +96,11 @@ namespace oln {
 	float diff = max_in-min_in;
 
 	out[hsl_L] = (max_in + min_in) / 2;
-	if (std::abs(diff) <= FLT_EPSILON){
-	  out[hsl_S] = 0;
-	  out[hsl_H] = 0; // undefined
-	}
+	if (approx_eq (diff, 0))
+	  {
+	    out[hsl_S] = 0;
+	    out[hsl_H] = 0; // undefined
+	  }
 	else {
 	  if (out[hsl_L] <= 0.5)
 	    out[hsl_S] = diff / (max_in + min_in);
@@ -110,11 +112,11 @@ namespace oln {
 	  float g_dist = (max_in - in[rgb_G]) / diff;
 	  float b_dist = (max_in - in[rgb_B]) / diff;
 
-	  if (in[rgb_R] == max_in)
+ 	  if (approx_eq(in[rgb_R], max_in))
 	    out[hsl_H] = b_dist - g_dist;
-	  else if(in[rgb_G] == max_in)
+ 	  else if(approx_eq(in[rgb_G], max_in))
 	    out[hsl_H] = 2 + r_dist - b_dist;
-	  else if(in[rgb_B] == max_in)
+ 	  else if(approx_eq(in[rgb_B], max_in))
 	    out[hsl_H] = 4 + g_dist - r_dist;
 
 	  out[hsl_H] *= 60;
@@ -187,7 +189,7 @@ namespace oln {
 
  	float p1 = 2 * in[hsl_L] - p2;
 
-	if(in[hsl_S] == 0)
+	if(approx_eq (in[hsl_S], 0))
 	  out[rgb_R] = out[rgb_G] = out[rgb_B] = in[hsl_L];
 	else
 	  {
