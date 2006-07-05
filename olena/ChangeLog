@@ -1,5 +1,14 @@
 2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests using the FFTW.
+
+	* oln/convol/fast_convolution.hh: s/HAVE_LIBfft/HAVE_FFTW/.
+	* tests/convol/tests/fast_convol [HAVE_FFTW]: Invoke
+	convol::fast::convolv and compare its result with
+	convol::slow::convolve only if the FFTW is available.
+
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with new naming conventions w.r.t. operators in geodesic
 	dilation and erosion.
 

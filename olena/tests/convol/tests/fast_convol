@@ -19,10 +19,15 @@ int main() {
   for_all(i)
     f_src[i] = cast::bound<float_d>(src[i]);
 
-  image2d<float_d> tmp = convol::fast::convolve<float_d>(f_src, k);
-  image2d<float_d> tmp2 = convol::slow::convolve<float_d>(f_src, k);
+  image2d<float_d> tmp = convol::slow::convolve<float_d>(f_src, k);
+
+// Compare the slow convolution with the fast one if it is available
+// (i.e., if the FFTW is available).
+#ifdef HAVE_FFTW
+  image2d<float_d> tmp2 = convol::fast::convolve<float_d>(f_src, k);
 
   for_all(i)
     if (tmp[i] != tmp2[i])
       return false;
+#endif
 }

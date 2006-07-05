@@ -1,19 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 234)
-(Parent-Version oln 10 233)
+(Project-Version oln 10 235)
+(Parent-Version oln 10 234)
 (Version-Log "2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
-	Catch up with new naming conventions w.r.t. operators in geodesic
-	dilation and erosion.
+	Fix tests using the FFTW.
 
-	* oln/morpho/geodesic_dilation.hh (oln::morpho::geodesic_dilation)
-	* oln/morpho/geodesic_erosion.hh (oln::morpho::geodesic_erosion):
-	Catch up with the new naming convention w.r.t. operators.
+	* oln/convol/fast_convolution.hh: s/HAVE_LIBfft/HAVE_FFTW/.
+	* tests/convol/tests/fast_convol [HAVE_FFTW]: Invoke
+	convol::fast::convolv and compare its result with
+	convol::slow::convolve only if the FFTW is available.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 05 Jul 2006 18:16:04 +0200")
+(Checkin-Time "Wed, 05 Jul 2006 18:18:59 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -120,7 +120,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.50 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.9 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.10 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.41 600))
 
@@ -1453,8 +1453,8 @@
 
   (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.5 600))
   (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 600))
-  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.4 600))
-  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.2 600))
+  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.5 600))
+  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.3 600))
   (olena/oln/morpher/func_morpher.hh (oln/r/14_func_morph 1.2 600))
   (olena/oln/core/fpoint2d.hh (oln/r/15_fpoint2d.h 1.2 600))
   (olena/oln/core/fdpoint2d.hh (oln/r/16_fdpoint2d. 1.1 600))

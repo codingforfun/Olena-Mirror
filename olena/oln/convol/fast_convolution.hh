@@ -98,7 +98,7 @@ namespace oln {
       ** using namespace ntg;
       **
       ** int main() {
-      ** #ifdef HAVE_LIBfft
+      ** #ifdef HAVE_FFTW
       **   image2d<int_u8> src(IMG_IN "lena.pgm");
       **   float_d sigma = 2.5;
       **   float_d radius = 3;
@@ -126,7 +126,7 @@ namespace oln {
       convolve(const abstract::image< I >& input,
 	       const abstract::image< J >& k)
       {
-# ifdef HAVE_LIBfft
+# ifdef HAVE_FFTW
 	mlc::eq<I::dim, J::dim>::ensure();
 	mlc::eq<I::dim, 2>::ensure();
 
@@ -191,7 +191,7 @@ namespace oln {
 	return output;
 # else
 	assert(0);
-# endif // !HAVE_LIBfft
+# endif // !HAVE_FFTW
       }
 
       /*!
