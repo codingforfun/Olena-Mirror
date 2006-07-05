@@ -27,4 +27,8 @@
 // Public License.
 
 range<int_u8, bounded_u<10, 13>, strict> u = 14; // ABORT
-(void) u;
+/* Make as if `u' is actually used.  As we can't cast `u' to `void'
+   here (since it would produce an error in
+   `ntg::range<T, interval, behavior>::operator U()', we assign `u' to
+   itself.  */
+u = u;

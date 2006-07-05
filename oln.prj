@@ -1,18 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 230)
-(Parent-Version oln 10 229)
-(Version-Log "2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 231)
+(Parent-Version oln 10 230)
+(Version-Log "2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
-	Work around a bug in SWIG 1.3.29.
+	Fix some tests using ntg::range.
 
-	* generate_arith_instantiations.py (write_algorithms)
-	* generate_morpho_instantiations.py (write_algorithms): Work
-	around a bug in SWIG 1.3.29 in the generation of C++ wrappers.
+	* tests/types/tests/float_r2, tests/types/tests/range2,
+	* tests/types/tests/range2b: Fix tests.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 04 Jul 2006 13:44:05 +0200")
+(Checkin-Time "Wed, 05 Jul 2006 18:04:12 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -117,7 +116,7 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.21 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.48 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.49 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.7 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
@@ -481,7 +480,7 @@
   (integre/tests/types/tests/float2 (oln/h/40_float2 1.3 600))
   (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.3 600))
   (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.4 600))
-  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.3 600))
+  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.4 600))
   (integre/tests/types/tests/int1b (oln/g/48_int1b 1.2 600))
   (integre/tests/types/tests/int1 (oln/h/1_int1 1.2 600))
   (integre/tests/types/tests/int2 (oln/h/0_int2 1.2 600))
@@ -520,8 +519,8 @@
   (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.4 600))
   (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.7 600))
   (integre/tests/types/tests/range1 (oln/h/34_range1 1.3 600))
-  (integre/tests/types/tests/range2b (oln/h/36_range2b 1.2 600))
-  (integre/tests/types/tests/range2 (oln/h/33_range2 1.2 600))
+  (integre/tests/types/tests/range2b (oln/h/36_range2b 1.3 600))
+  (integre/tests/types/tests/range2 (oln/h/33_range2 1.3 600))
   (integre/tests/types/tests/range3b (oln/h/32_range3b 1.2 600))
   (integre/tests/types/tests/range3c (oln/h/30_range3c 1.2 600))
   (integre/tests/types/tests/range3d (oln/h/29_range3d 1.2 600))

@@ -28,4 +28,8 @@
 
 typedef range<float_s, bounded_s<10, 20>, strict> sr;
 sr f = 23.0; // ABORT
-(void) f;
+/* Make as if `f' is actually used.  As we can't cast `f' to `void'
+   here (since it would produce an error in
+   `ntg::range<T, interval, behavior>::operator U()', we assign `f' to
+   itself.  */
+f = f;

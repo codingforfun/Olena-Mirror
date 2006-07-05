@@ -1,3 +1,10 @@
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some tests using ntg::range.
+
+	* tests/types/tests/float_r2, tests/types/tests/range2,
+	* tests/types/tests/range2b: Fix tests.
+	
 2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust for G++ 4.0.
