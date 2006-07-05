@@ -94,7 +94,7 @@ namespace ntg {
 		  * out_range / in_range
 		  + float(color_system<n>::lower_bound()));
 
-	// process next componant recursively:
+	// Process next component recursively.
 	_to_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
       }
     };
@@ -138,14 +138,14 @@ namespace ntg {
 	out[n] = cast::rbound<int_u<qbits> >
 	  ((in[n] - float(color_system<n>::lower_bound()))
 	   * out_range / in_range
-	   + float(color_system<n>::lower_bound()));
+	   + float(optraits<T>::min()));
 
-	// process next componant recursively:
+	// Process next component recursively.
 	_from_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
       }
     };
 
-    // stop recursion when n == ncomps.
+    // Stop recursion when n == ncomps.
     template <unsigned ncomps,
 	      unsigned qbits,
 	      template <unsigned> class color_system>

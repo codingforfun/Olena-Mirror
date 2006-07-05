@@ -1,5 +1,12 @@
 2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a color conversion formula.
+
+	* ntg/color/color.hh (_from_float:doit): Fix the conversion
+	formula.
+
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix some tests using ntg::range.
 
 	* tests/types/tests/float_r2, tests/types/tests/range2,
