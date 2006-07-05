@@ -138,6 +138,7 @@ OLN_DEP =					\
   io/pnm_write_data.hh				\
   io/readable.hh				\
   io/se.hh					\
+  io/se_fwd.hh					\
   io/se_neighborhood.hh				\
   io/se_window.hh				\
   io/stream_wrapper.hh				\

@@ -1,5 +1,16 @@
 2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix sanity tests.
+
+	* oln/io/se_fwd.hh: New file.
+	* oln/io/base.hh: Include it, and move the inclusions of
+	oln/io/se_window.hh and oln/io/se_neighborhood.hh at the end of
+	the file to prevent cycles in header inclusions from leading
+	to ill-formed calls to template functions.
+	* oln/makefile.src (OLN_DEP): Add io/se_fwd.hh.
+
+2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix tests using the FFTW.
 
 	* oln/convol/fast_convolution.hh: s/HAVE_LIBfft/HAVE_FFTW/.

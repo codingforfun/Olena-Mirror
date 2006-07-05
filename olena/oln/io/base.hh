@@ -30,9 +30,8 @@
 
 # include <oln/io/image_read.hh>
 # include <oln/io/image_write.hh>
-
-# include <oln/io/se_window.hh>
-# include <oln/io/se_neighborhood.hh>
+/// Forward declarations.
+# include <oln/io/se_fwd.hh>
 
 namespace oln {
 
@@ -133,5 +132,9 @@ namespace oln {
   using io::save;
 
 } // end of namespace oln
+
+// Implementations.
+# include <oln/io/se_window.hh>
+# include <oln/io/se_neighborhood.hh>
 
 #endif // OLENA_IO_BASE_HH
