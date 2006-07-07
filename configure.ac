@@ -388,6 +388,8 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
       AC_CHECK_SWIG_FLAGS
 
+      AC_SHARED_LDFLAGS
+
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
       AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
@@ -438,6 +440,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 					echo $line
     				fi
 			done`"])
+	 save_CPPFLAGS=$CPPFLAGS
 	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
          AC_CHECK_HEADERS([ruby.h],,
 	                  AC_MSG_ERROR(

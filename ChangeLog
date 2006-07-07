@@ -1,3 +1,13 @@
+2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add an Autoconf macro to figure out what are the linker flags for
+	creating a shared library.  This is actually a hack, hopefully
+	replaced by Libtool in a future update.
+
+	* config/oln.m4 (AC_SHARED_LDFLAGS): New macro.
+	* configure.ac: Use it.
+	Save CPPFLAGS before altering them.
+
 2006-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix C++ compiler identification.

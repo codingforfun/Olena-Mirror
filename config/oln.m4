@@ -650,6 +650,54 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
  AC_LANG_POP([C++])
 ])
 
+# AC_SHARED_LDFLAGS
+
+# Queries the linker and set the required LDFLAGS for creating a
+# shared library.
+
+# FIXME: This is a simple hack to have Swilena compile on our main
+# targets (GNU/Linux/IA-32, Mac OS X/PowerPC).  We should obviously
+# use Libtool instead, as it handle a whole lot more
+# linkers and parameters.
+
+AC_DEFUN([AC_SHARED_LDFLAGS],
+[dnl
+ AC_CACHE_CHECK([for linker flags to create a shared library],
+                [ac_cv_ld_style],
+                [ac_cv_ld_style=unknown
+                 # FIXME: We should not use a hard-coded name for the
+                 # linker, but I can't find a means to get the (C++) linker
+                 # from Autoconf.
+                 if ld -v 2>&1 | grep -i "Apple Computer" >/dev/null 2>&1;
+                 then
+                   ac_cv_ld_style=Apple
+                 elif ld -v 2>&1 | grep -i "GNU" >/dev/null 2>&1; then
+                   ac_cv_ld_style=GNU
+                 else
+                   ac_cv_ld_style=other
+                 fi])
+
+ case "$ac_cv_ld_style" in
+   GNU)
+     _SHARED_LDFLAGS="-shared"
+   ;;
+   Apple)
+     # Seen on http://www.penzilla.net/tutorials/python/swig/.
+     _SHARED_LDFLAGS="-bundle -flat_namespace -undefined suppress"
+   ;;
+   other)
+   # Default: assume we're using GNU ld.
+     _SHARED_LDFLAGS="-shared"
+   ;;
+ esac
+
+ if test ! ${SHARED_LDFLAGS+set}; then
+   SHARED_LDFLAGS=$_SHARED_LDFLAGS
+ fi
+
+ AC_SUBST([SHARED_LDFLAGS])
+])
+
 ###
 ### Internal stuff for Olena
 ###
