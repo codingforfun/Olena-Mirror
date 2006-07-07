@@ -1,5 +1,11 @@
 2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing files to the distribution.
+
+	* Makefile.am (EXTRA_DIST): Add bootstrap.sh.
+
+2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add an Autoconf macro to figure out what are the linker flags for
 	creating a shared library.  This is actually a hack, hopefully
 	replaced by Libtool in a future update.

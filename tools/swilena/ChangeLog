@@ -1,3 +1,12 @@
+2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing files to the distribution.
+
+	* Makefile.am (EXTRA_DIST): New.
+	Add expand.sh, generate_arith_instantiations.py,
+	generate_conversions_instantiations.py and
+	generate_morpho_instantiations.py.
+
 2006-07-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use SHARED_LDFLAGS.
