@@ -88,7 +88,7 @@ cat <<EOF
 INCLUDES = \$(PYTHON_CPPFLAGS) -I\$(srcdir)/../src
 AM_CPPFLAGS = -DOLN_EXCEPTIONS
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
-AM_LDFLAGS = -shared \$(ZLIB_LDFLAGS)
+AM_LDFLAGS = \$(SHARED_LDFLAGS) \$(ZLIB_LDFLAGS)
 EOF
 }
 
@@ -180,9 +180,7 @@ cat <<EOF
 INCLUDES = \$(RUBY_CPPFLAGS) -I\$(srcdir)/../src
 AM_CPPFLAGS = -DOLN_EXCEPTIONS
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
-# FIXME: Modern versions of swig don't use libswigpy.
-#AM_LDFLAGS = -shared -lswigrb \$(ZLIB_LDFLAGS)
-AM_LDFLAGS = -shared \$(ZLIB_LDFLAGS)
+AM_LDFLAGS = \$(SHARED_LDFLAGS) \$(ZLIB_LDFLAGS)
 
 EOF
 }
@@ -210,13 +208,8 @@ dump_ruby()
       else
          sdir=meta
       fi
-      # Rule generating a C++ (*_wrap.cc) and a Ruby (*.rb) wrappers from a
-      # SWIG interface.
-      #
-      # FIXME: The generation of the Ruby wrapper is separated from
-      # the one of the C++ wrapper in this version, and that's not good.
-      # We should use Make's trick for multiple outputs (with timestamps)
-      # here.
+      # Rule generating a C++ (*_wrap.cc) wrapper for Ruby from a SWIG
+      # interface.
       base="swilena_${mod}"
       src="\$(srcdir)/../$sdir/$base.i"
       dest="${base}_wrap.cxx"
@@ -230,9 +223,6 @@ $dest: $src
 	fi
 
 @AMDEP_TRUE@@am__include@ @am__quote@./\$(DEPDIR)/${base}_wrap.Pcc@am__quote@
-
-$base.rb: $src
-	\$(MAKE) \$(AM_MAKEFLAGS) $dest
 
 EOF
     done
