@@ -1,3 +1,11 @@
+2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use Libtool.
+
+	* config/oln.m4 (AC_SHARED_LDFLAGS): Remove.
+	* configure.ac: No longer use AC_SHARED_LDFLAGS.
+	Use AC_PROG_LIBTOOL.
+
 2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing files to the distribution.

@@ -23,6 +23,9 @@ AC_WITH_OLN
 AC_PROG_RANLIB
 AC_PROG_CC
 
+# Use Libtool to build Swilena's dynamic modules.
+AC_PROG_LIBTOOL
+
 # If available, use these.
 AC_WITH_CXX_ZLIB
 AC_WITH_CXX_FFTW
@@ -387,8 +390,6 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
      fi
 
       AC_CHECK_SWIG_FLAGS
-
-      AC_SHARED_LDFLAGS
 
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
