@@ -7,6 +7,9 @@ SUBDIRS = . tests
 
 rubydir = $(libdir)/ruby
 
-include makefile.swig
+# ltrequire.rb: Extension of the `require' understanding Libtool libraries.
+EXTRA_DIST = ltrequire.rb
 
-CLEANFILES = *.cxx
+$(srcdir)/makefile.swig: $(top_srcdir)/tools/swilena/expand.sh
+	top_srcdir="$(top_srcdir)" $< $(top_srcdir)/tools/swilena/
+include $(srcdir)/makefile.swig

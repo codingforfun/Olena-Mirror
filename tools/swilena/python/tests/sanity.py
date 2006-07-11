@@ -2,6 +2,7 @@
 
 # Sanity check: include all Python modules, but do nothing.
 
+import ltihooks
 
 # Integre types.
 import swilena_ntg

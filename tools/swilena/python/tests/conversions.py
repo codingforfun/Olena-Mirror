@@ -2,6 +2,7 @@
 
 import os
 import sys
+import ltihooks
 from swilena_all2d import *
 
 imgdir = os.environ['IMGDIR']

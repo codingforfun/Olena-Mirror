@@ -4,8 +4,11 @@
 
 
 # Set swilena_path to the location where swilena ruby modules are.
-$: << ENV["SWILENA_PATH"] if ENV.has_key? "SWILENA_PATH"
+if ENV.has_key? "SWILENA_PATH"
+  $:.concat ENV["SWILENA_PATH"].split(":")
+end
 
+require "ltrequire"
 
 # Integre types.
 require "swilena_ntg"

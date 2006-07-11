@@ -1,3 +1,40 @@
+2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust Swilena to Libtool.
+
+	* expand.sh (INCLUDES): Merge with...
+	(AM_CPPFLAGS): ...this.
+	Add -I\$(srcdir)/../meta.
+	(AM_LDFLAGS): Remove $(SHARED_LDFLAGS).
+	Add -avoid-version -module -shared (for Libtool).
+	(AM_SWIG_FLAGS): New.
+	Adjust the generation of the SWIG wrapper.
+	Create wrappers with extension `.cc' instead of `.cxx'.
+	Build `.la' modules instead of `.so'.
+	(pyexec_PROGRAMS): Rename as...
+	(pyexec_LTLIBRARIES): ...this.
+	(python_PYTHON): Rename as...
+	(nodist_python_PYTHON): ...this.
+	(CLEANFILES): Clean `.pyc' files and Rblena wrappers.
+	(ruby_PROGRAMS): Rename as...
+	(ruby_LTLIBRARIES): ...this.
+	(ruby_DATA): New.
+
+	* python/ltihooks.py: New file.
+	* python/Makefile.am (EXTRA_DIST): Add ltihooks.py.
+	($(srcdir)/makefile.swig): New target.
+	* python/tests/arith.py, python/tests/conversions.py,
+	* python/tests/morpho.py, python/tests/sanity.py,
+	* python/tests/simple1.py: Import ltihooks.
+	* python/tests/Makefile.am (TESTS_ENVIRONMENT): Adjust PYTHONPATH.
+
+	* ruby/ltrequire.rb: New file.
+	* ruby/Makefile.am (EXTRA_DIST): Add ltrequire.rb.
+	($(srcdir)/makefile.swig): New target.
+	* ruby/tests/sanity.rb, ruby/tests/simple1.rb: Adjust `$:'
+	Require ltrequire.
+	* ruby/tests/Makefile.am (TESTS_ENVIRONMENT): Adjust SWILENA_PATH.
+
 2006-07-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing files to the distribution.

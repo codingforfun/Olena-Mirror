@@ -4,7 +4,7 @@
 ##
 
 TESTS_ENVIRONMENT = \
-	SWILENA_PATH=".." \
+	SWILENA_PATH="$(srcdir)/..:..:../.libs" \
 	IMGDIR="$(top_srcdir)/olena/img"
 
 dist_noinst_DATA = sanity.rb simple1.rb

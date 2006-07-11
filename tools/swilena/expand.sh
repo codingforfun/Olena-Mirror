@@ -85,26 +85,28 @@ cat <<EOF
 ## NOTE: this file was generated automatically by expand.sh
 ##
 
-INCLUDES = \$(PYTHON_CPPFLAGS) -I\$(srcdir)/../src
-AM_CPPFLAGS = -DOLN_EXCEPTIONS
+AM_CPPFLAGS = -DOLN_EXCEPTIONS \$(PYTHON_CPPFLAGS) \\
+  -I\$(srcdir)/../src -I\$(srcdir)/../meta
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
-AM_LDFLAGS = \$(SHARED_LDFLAGS) \$(ZLIB_LDFLAGS)
+## We build modules, not plain libs.
+AM_LDFLAGS = -avoid-version -module -shared \$(ZLIB_LDFLAGS)
+AM_SWIG_FLAGS = -c++ -python \$(AM_CPPFLAGS)
 EOF
 }
 
 dump_python()
 {
-    echo -n "pyexec_PROGRAMS ="
+    echo -n "pyexec_LTLIBRARIES ="
     ilist=0
     for mod in $MODULES; do
       if [ `expr $ilist % 4` = 0 ]; then
          echo " \\"; echo -ne "\t"
       fi
-      echo -n " _swilena_$mod.so"
+      echo -n " _swilena_$mod.la"
       ilist=`expr $ilist + 1`
     done
     echo; echo
-    echo -n "python_PYTHON +="
+    echo -n "nodist_python_PYTHON ="
     ilist=0
     for mod in $MODULES; do
       if [ `expr $ilist % 4` = 0 ]; then
@@ -115,19 +117,21 @@ dump_python()
     done
     echo; echo
     for mod in $MODULES; do
-      echo "_swilena_${mod}_so_SOURCES = swilena_${mod}_wrap.cxx"
+      echo "nodist__swilena_${mod}_la_SOURCES = swilena_${mod}_wrap.cc"
     done
     echo; echo
     echo -ne "CLEANFILES= "
-    echo -e " swilena_all1d_wrap.cxx \\"
-    echo -e " swilena_all2d_wrap.cxx \\"
-    echo -e " swilena_all3d_wrap.cxx \\"
-    echo -ne " swilena_display_wrap.cxx"
+    echo -e " swilena_all1d_wrap.cc \\"
+    echo -e " swilena_all2d_wrap.cc \\"
+    echo -e " swilena_all3d_wrap.cc \\"
+    echo -ne " swilena_display_wrap.cc"
     for mod in $MODULES; do
 	echo -e "\\"
 	echo -ne "\t swilena_$mod.py"
 	echo -e "\\"
-	echo -ne "\t swilena_${mod}_wrap.cxx"
+	echo -ne "\t swilena_$mod.pyc"
+	echo -e "\\"
+	echo -ne "\t swilena_${mod}_wrap.cc"
     done
     echo; echo
 
@@ -147,10 +151,10 @@ dump_python()
       # here.
       base="swilena_${mod}"
       src="\$(srcdir)/../$sdir/$base.i"
-      dest="${base}_wrap.cxx"
+      dest="${base}_wrap.cc"
       cat <<EOF
 $dest: $src
-	if \$(SWIG) \$(SWIG_FLAGS) -MD -MF \$(DEPDIR)/${base}_wrap.Tcc -c++ -python -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o $dest $src; \\
+	if \$(SWIG) \$(AM_SWIG_FLAGS) \$(SWIG_FLAGS) -MD -MF \$(DEPDIR)/${base}_wrap.Tcc \$(CPPFLAGS) -o \$@ \$<; \\
 	then \\
 	  mv -f "\$(DEPDIR)/${base}_wrap.Tcc" "\$(DEPDIR)/${base}_wrap.Pcc"; \\
 	else \\
@@ -177,30 +181,45 @@ cat <<EOF
 ## NOTE: this file was generated automatically by expand.sh
 ##
 
-INCLUDES = \$(RUBY_CPPFLAGS) -I\$(srcdir)/../src
-AM_CPPFLAGS = -DOLN_EXCEPTIONS
+AM_CPPFLAGS = -DOLN_EXCEPTIONS \$(RUBY_CPPFLAGS) \\
+  -I\$(srcdir)/../src -I\$(srcdir)/../meta
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
-AM_LDFLAGS = \$(SHARED_LDFLAGS) \$(ZLIB_LDFLAGS)
-
+## We build modules, not plain libs.
+AM_LDFLAGS = -avoid-version -module -shared \$(ZLIB_LDFLAGS)
+AM_SWIG_FLAGS = -c++ -ruby \$(AM_CPPFLAGS)
 EOF
 }
 
 dump_ruby()
 {
-    echo -n "ruby_PROGRAMS ="
+    echo -n "ruby_LTLIBRARIES ="
     ilist=0
     for mod in $MODULES; do
       if [ `expr $ilist % 4` = 0 ]; then
          echo " \\"; echo -ne "\t"
       fi
-      echo -n " swilena_$mod.so"
+      echo -n " swilena_$mod.la"
       ilist=`expr $ilist + 1`
     done
     echo; echo
     for mod in $MODULES; do
-      echo "swilena_${mod}_so_SOURCES = swilena_${mod}_wrap.cxx"
+      echo "nodist_swilena_${mod}_la_SOURCES = swilena_${mod}_wrap.cc"
     done
     echo
+    echo -ne "CLEANFILES= "
+    echo -e " swilena_all1d_wrap.cc \\"
+    echo -e " swilena_all2d_wrap.cc \\"
+    echo -e " swilena_all3d_wrap.cc \\"
+    echo -ne " swilena_display_wrap.cc"
+    for mod in $MODULES; do
+	echo -e "\\"
+	echo -ne "\t swilena_${mod}_wrap.cc"
+    done
+    echo; echo
+
+    echo "ruby_DATA ="
+    echo
+
     ilist=0
     for mod in $MODULES; do
       if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then
@@ -212,10 +231,10 @@ dump_ruby()
       # interface.
       base="swilena_${mod}"
       src="\$(srcdir)/../$sdir/$base.i"
-      dest="${base}_wrap.cxx"
+      dest="${base}_wrap.cc"
       cat <<EOF
 $dest: $src
-	if \$(SWIG) \$(SWIG_FLAGS) -MD -MF \$(DEPDIR)/${base}_wrap.Tcc -c++ -ruby -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o $dest $src; \\
+	if \$(SWIG) \$(AM_SWIG_FLAGS) \$(SWIG_FLAGS) -MD -MF \$(DEPDIR)/${base}_wrap.Tcc \$(CPPFLAGS) -o \$@ \$<; \\
 	then \\
 	  mv -f "\$(DEPDIR)/${base}_wrap.Tcc" "\$(DEPDIR)/${base}_wrap.Pcc"; \\
 	else \\
@@ -225,7 +244,22 @@ $dest: $src
 @AMDEP_TRUE@@am__include@ @am__quote@./\$(DEPDIR)/${base}_wrap.Pcc@am__quote@
 
 EOF
+
+# Work around an issue between Libtool and Ruby on Mac OS X.
+# Libtool generates dynamic modules ending in `.so', but the Ruby
+# interpreter accepts only files ending in `.bundle' (and obviously
+# `.rb') as arguments of the `require' method.  Hence we create
+# aliases for the .so files to make them appear as .bundle's
+# to ruby.
+      cat <<EOF
+ruby_DATA+ = .libs/$base.bundle
+.libs/$base.bundle: .libs/$base.so $base.la
+	cd .libs && \$(LN_S) -f $base.so $base.bundle
+
+EOF
     done
+
+    echo -n "CLEANFILES += \$(ruby_DATA)"
 }
 
 ############ Generic stuff ###########

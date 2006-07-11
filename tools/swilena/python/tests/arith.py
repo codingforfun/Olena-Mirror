@@ -2,6 +2,7 @@
 
 import os
 import sys
+import ltihooks
 from swilena_image2d import *
 from swilena_arith2d import *
 

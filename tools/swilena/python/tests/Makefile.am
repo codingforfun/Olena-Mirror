@@ -6,7 +6,7 @@
 dist_noinst_DATA = sanity.py arith.py conversions.py simple1.py morpho.py
 
 TESTS_ENVIRONMENT = \
-	PYTHONPATH="$(PYTHONPATH):..:$(srcdir)/.." \
+	PYTHONPATH="..:$(srcdir)/..:$(PYTHONPATH):" \
 	IMGDIR="$(top_srcdir)/olena/img"
 
 TESTS = $(dist_noinst_DATA)
