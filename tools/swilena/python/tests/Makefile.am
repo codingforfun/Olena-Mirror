@@ -3,10 +3,10 @@
 ## Makefile.am for swilena/python/tests
 ##
 
-dist_noinst_DATA = sanity.py arith.py conversions.py simple1.py morpho.py
-
 TESTS_ENVIRONMENT = \
 	PYTHONPATH="..:$(srcdir)/..:$(PYTHONPATH):" \
 	IMGDIR="$(top_srcdir)/olena/img"
+
+dist_noinst_DATA = sanity.py arith.py conversions.py morpho.py simple1.py
 
 TESTS = $(dist_noinst_DATA)

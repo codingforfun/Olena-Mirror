@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 
 import os
 import sys
 import ltihooks
-from swilena_all2d import *
+from swilena_image2d import *
+from swilena_conversions2d import *
 
 imgdir = os.environ['IMGDIR']
 

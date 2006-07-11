@@ -1,5 +1,20 @@
 2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete Rblena test suite.
+
+	* ruby/tests/arith.rb, ruby/tests/conversions.rb,
+	* ruby/tests/morpho.rb: New tests	
+	* ruby/tests/Makefile.am (dist_noinst_DATA): Add arith.rb,
+	conversions.rb and morpho.rb.
+
+	* python/tests/conversions.py, python/tests/morpho.py: 
+	* python/tests/simple1.py: Reduce the number of imported modules.
+	* python/tests/Makefile.am, python/tests/arith.py,
+	* python/tests/sanity.py, ruby/tests/conversions.rb,
+	* ruby/tests/simple1.rb: Aesthetic changes.
+
+2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust Swilena to Libtool.
 
 	* expand.sh (INCLUDES): Merge with...

@@ -2,7 +2,6 @@
 
 # Sanity check: include all Ruby modules, but do nothing.
 
-
 # Set swilena_path to the location where swilena ruby modules are.
 if ENV.has_key? "SWILENA_PATH"
   $:.concat ENV["SWILENA_PATH"].split(":")

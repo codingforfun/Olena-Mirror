@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 
 import os
 import sys
 import ltihooks
 from swilena_image2d import *
-from swilena_ntg import *
 
 imgdir = os.environ['IMGDIR']
 

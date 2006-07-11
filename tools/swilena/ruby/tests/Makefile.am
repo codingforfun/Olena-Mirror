@@ -7,6 +7,6 @@ TESTS_ENVIRONMENT = \
 	SWILENA_PATH="$(srcdir)/..:..:../.libs" \
 	IMGDIR="$(top_srcdir)/olena/img"
 
-dist_noinst_DATA = sanity.rb simple1.rb
+dist_noinst_DATA = sanity.rb arith.rb conversions.rb morpho.rb simple1.rb
 
 TESTS = $(dist_noinst_DATA)
