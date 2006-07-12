@@ -1,3 +1,11 @@
+2006-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing SWIG interfaces to the distribution.
+
+	* expand.sh (EXTRA_DIST_MODULES): New.
+	Add modules basics1d, basics2d and basics3d.
+	Include them in the distribution.
+
 2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Complete Rblena test suite.

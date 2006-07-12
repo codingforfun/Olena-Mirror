@@ -10,6 +10,7 @@ mkdir -p "$SWILENA/python"
 mkdir -p "$SWILENA/ruby"
 
 MODULES="$MODULES ntg"
+EXTRA_DIST_MODULES=
 for dim in 1 2 3; do
 
   ## C++ header inclusions for basic types.
@@ -19,6 +20,9 @@ for dim in 1 2 3; do
 %include swilena_basics.i
 decl_basics($dim)
 EOF
+     # Have Automake include these modules in the distribution, but
+     # don't create SWIG wrappers for them.
+     EXTRA_DIST_MODULES="$EXTRA_DIST_MODULES basics${dim}d"
 
   ## {1d,2d,3d} families
   for mod in point structelt w_win imagesize image; do
@@ -277,7 +281,7 @@ EOF
 dump_src() {
     echo -n "EXTRA_DIST ="
     ilist=0
-    for mod in $MODULES; do
+    for mod in $MODULES $EXTRA_DIST_MODULES; do
       if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then
          if [ `expr $ilist % 4` = 0 ]; then
 	    echo " \\"
