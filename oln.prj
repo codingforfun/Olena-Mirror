@@ -1,18 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 243)
-(Parent-Version oln 10 242)
-(Version-Log "2006-07-12  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 244)
+(Parent-Version oln 10 243)
+(Version-Log "2006-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
-	Add missing SWIG interfaces to the distribution.
-
-	* expand.sh (EXTRA_DIST_MODULES): New.
-	Add modules basics1d, basics2d and basics3d.
-	Include them in the distribution.
+	* ruby/ltrequire.rb: Add copyright header.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Jul 2006 12:39:41 +0200")
+(Checkin-Time "Thu, 13 Jul 2006 16:20:10 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -121,7 +117,7 @@
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.11 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.46 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.47 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -1504,7 +1500,7 @@
 ;; Files added by populate at Tue, 11 Jul 2006 15:28:44 +0200,
 ;; to version 10.240(w), by levill_r:
 
-  (tools/swilena/ruby/ltrequire.rb (oln/w/42_ltrequire. 1.1 644))
+  (tools/swilena/ruby/ltrequire.rb (oln/w/42_ltrequire. 1.2 644))
   (tools/swilena/python/ltihooks.py (oln/w/43_ltihooks.p 1.1 644))
 
 ;; Files added by populate at Tue, 11 Jul 2006 17:53:57 +0200,

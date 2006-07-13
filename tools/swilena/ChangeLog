@@ -1,3 +1,7 @@
+2006-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* ruby/ltrequire.rb: Add copyright header.
+
 2006-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing SWIG interfaces to the distribution.
