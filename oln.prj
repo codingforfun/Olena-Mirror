@@ -1,15 +1,32 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 244)
-(Parent-Version oln 10 243)
-(Version-Log "2006-07-13  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 245)
+(Parent-Version oln 10 244)
+(Version-Log "2006-08-03  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
-	* ruby/ltrequire.rb: Add copyright header.
+	Add some first code corresponding to an LRDE publication about
+	union-find and max-tree.
+	
+	* olena/oln/lrde: New directory for code related to LRDE
+	publications.
+	* olena/oln/lrde/ufmt: New directory specific to union-find and
+	max-tree.
+	* olena/oln/lrde/ufmt/log.hh: New.
+	* olena/oln/lrde/ufmt/utils.hh: New.
+	* olena/oln/lrde/ufmt/basic_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/basic_salembier.hh: New.
+	* olena/oln/lrde/ufmt/bin: New directory for corresponding
+	bin source.
+	* olena/oln/lrde/ufmt/bin/basic_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/basic_salembier.cc: New.
+	* olena/oln/lrde/ufmt/img: New directory for tiny test images.
+	* olena/oln/lrde/ufmt/img/lena6.pgm: New image file.
+	* olena/oln/lrde/ufmt/img/lena64.pgm: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 13 Jul 2006 16:20:10 +0200")
-(Checkin-Login levill_r)
+(Checkin-Time "Thu, 03 Aug 2006 16:06:43 +0200")
+(Checkin-Login theo)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -111,7 +128,7 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.24 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.25 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.50 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
@@ -1509,6 +1526,28 @@
   (tools/swilena/ruby/tests/morpho.rb (oln/w/44_morpho.rb 1.1 744))
   (tools/swilena/ruby/tests/conversions.rb (oln/w/45_conversion 1.1 755))
   (tools/swilena/ruby/tests/arith.rb (oln/w/46_arith.rb 1.1 755))
+
+;; Files added by populate at Thu, 03 Aug 2006 15:59:48 +0200,
+;; to version 10.244(w), by theo:
+
+  (libtool (oln/w/47_libtool 1.1 755))
+  (config/ltmain.sh (oln/w/48_ltmain.sh 1.1 644))
+  (config/config.sub (oln/w/49_config.sub 1.1 755))
+  (config/config.guess (oln/w/50_config.gue 1.1 755))
+  (olena/oln/lrde/ufmt/basic_salembier.hh (oln/w/51_basic_sale 1.1 644))
+  (olena/oln/lrde/ufmt/bin/basic_maxtree.cc (oln/x/0_basic_maxt 1.1 644))
+  (olena/oln/lrde/ufmt/bin/basic_salembier.cc (oln/x/1_basic_sale 1.1 644))
+  (olena/oln/lrde/ufmt/bin/gppo (oln/x/2_gppo 1.1 755))
+  (olena/oln/lrde/ufmt/bin/gpp (oln/x/3_gpp 1.1 755))
+  (olena/oln/lrde/ufmt/bin/inc (../../../../../) :symlink)
+  (olena/oln/lrde/ufmt/basic_maxtree.hh (oln/x/4_basic_maxt 1.1 644))
+  (olena/oln/lrde/ufmt/log.hh (oln/x/5_log.hh 1.1 644))
+  (olena/oln/lrde/ufmt/img/lena64.pgm (oln/x/6_lena64.pgm 1.1 644))
+  (olena/oln/lrde/ufmt/img/lena6.pgm (oln/x/7_lena6.pgm 1.1 644))
+  (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.1 644))
+  (doc/ref/exdoc.mk (oln/x/9_exdoc.mk 1.1 644))
+  (doc/ref/doxygen.config (oln/x/10_doxygen.co 1.1 644))
+  (doc/ref/out/exdoc.config (oln/x/11_exdoc.conf 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
