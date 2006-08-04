@@ -1,0 +1,142 @@
+		-*- outline -*-
+
+
+
+
+* to-do
+
+** raster
+
+*** settings
+p as index
+naming: "r_" prefix
+
+*** our versions
+1D ("r1_" prefix)
+nD insert + update ("ru_" prefix)
+nD merge ("rm_" prefix)
+
+*** others
+salembier
+meijster
+
+** FIXME
+
+to be continued
+
+
+* naming
+
+** p encoding
+
+*** p
+p = point2d
+par = image<point>
+
+*** d
+for debug purpose
+p_ref = point2d
+par_ref = image<point>
+dpar_ref = image<dpoint>
+invariant: par_ref[p_ref] = p_ref + dpar_ref[p_ref]
+p = index
+dpar = image<index>
+invariants: p = p_ref and dpar = dpar_ref
+
+*** i
+p = index
+dpar = image<(delta) index>
+par is now a function
+FIXME: we should avoid calling it (instead use dpar)
+
+
+** 1st pass browsing
+
+*** basic
+sorted, simple loop:
+| for all p
+|   union-find
+
+*** s
+sorted, _total_ level compression
+| for all h
+|   for all p fwd
+|     union-find
+|   for all p bkd
+|     compression
+
+*** r
+raster
+
+
+
+* basic_maxtree
+
+** features
+
+union-find
+p as point2d
+p are sorted
+par as image<point2d>
+isproc as image
+level compression
+loop is "for all p"
+
+** anti-features
+
+level compression is not finalized (is not _total_)
+no auxiliary parent data with full (tree) compression to speed-up find_root
+no outer virtual border
+
+** permanent changes
+
+except for this version, we now always perform the following
+optimizations
+
+*** isproc
+nbh is splitted into pre and post
+so isproc is no more aux data
+2 functions: isproc_pre and isproc_post
+benefit: memory gain
+
+*** level compression
+''natural'' algorithm enhancement
+browsing is "for h, for p fwd, for p bkd"
+benefit: usually faster thanx to compression
+
+*** node/levroot counting
+during the compression
+benefit: we need to know nnodes
+
+** further (later) optims
+
+*** point as index
+
+*** virtual border
+
+*** fully compressed 2nd parent
+so remove the inner compression pass!
+
+
+* specializations
+
+** 1D sorted union-find
+level compression
+point as index
+? virtual border
+? 2nd parent
+
+** 2D raster
+FIXME: rup2_maxtree
+FIXME: rui2_maxtree
+
+** 1D raster
+r1_maxtree // is r1i
+
+
+
+* basic_salembier
+
+flooding
+p as point2d
+father as map<pair,pair>

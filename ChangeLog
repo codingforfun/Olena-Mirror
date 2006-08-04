@@ -1,3 +1,20 @@
+2006-08-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Factor some code in oln/lrde/ufmt/; add video raster scan
+	algorithms and some versions with points as indices.
+	
+	* olena/oln/lrde/ufmt/README: New.
+	* olena/oln/lrde/ufmt/basic_maxtree.hh: Move some parts into...
+	* olena/oln/lrde/ufmt/ap_maxtree.hh: ...this new file.
+	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/ai_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/si_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/rup_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/si_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/rup_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/r1_maxtree.cc: New.
+	
 2006-08-03  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some first code corresponding to an LRDE publication about

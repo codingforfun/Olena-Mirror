@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_BASIC_MAXTREE_HH
-# define OLENA_LRDE_UFMT_BASIC_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_SP_MAXTREE_HH
+# define OLENA_LRDE_UFMT_SP_MAXTREE_HH
 
 # include <oln/level/fill.hh>
 # include <oln/lrde/ufmt/utils.hh>
@@ -47,7 +47,7 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct basic_maxtree : public ap_maxtree<I>
+      struct sp_maxtree : public ap_maxtree<I>
       {
 	typedef ap_maxtree<I> super;
 	using super::f;
@@ -55,19 +55,20 @@ namespace oln
 	using super::par;
 	oln_lrde_ufmt_import_ap_maxtree_typedefs;
 
-
 	// aux data
-	typename mute<I, bool>::ret isproc;
 	std::vector<point> S;
+	std::vector<size_t> H;
+	std::vector<dpoint> dp_pre, dp_post;
+	unsigned nb;
+	unsigned nnodes;
 
 
 	// ctor
 
-	basic_maxtree(const abstract::image<I>& f,
-		      const oln_neighborhood_type(I)& nbh)
+	sp_maxtree(const abstract::image<I>& f,
+		   const oln_neighborhood_type(I)& nbh)
 	  :
-	  super(f, nbh),
-	  isproc(f.size())
+	  super(f, nbh)
 	{
 	}
 
@@ -80,23 +81,53 @@ namespace oln
 
 	void init()
 	{
-	  S = histogram_reverse_sort_p(f);
-	  level::fill(isproc, false);
+	  S = histogram_reverse_sort_p(f, H);
+	  nb = split<I>(nbh, dp_pre, dp_post);
+	  nnodes = 0;
 	}
 
 	void compute_parent()
 	{
-	  for (int ip = 0; ip < int(S.size()); ++ip)
+	  int ip = 0;
+	  for (int h = uint_nvalues(f) - 1; h >= 0; --h)
 	    {
-	      point p = S[ip];
-	      make_set(p);
+	      int ip_first = ip;
+	      int ip_last = ip + H[h];
 
-	      oln_neighb_type(Nbh) n(nbh, p);
-	      for_all(n)
-		if (f.hold(n) and isproc[n])
-		  do_union(n, p);
-	      isproc[p] = true;
-	    }
+	      // union-find
+
+	      for (ip = ip_first; ip < ip_last; ++ip)
+		{
+		  point p = S[ip];
+		  make_set(p);
+		  // pre
+		  for (unsigned i = 0; i < nb; ++i)
+		    {
+		      point n = p + dp_pre[i];
+		      if (f.hold(n) and f[n] >= h)
+			do_union(n, p, h);
+		    }
+		  // post
+		  for (unsigned i = 0; i < nb; ++i)
+		    {
+		      point n = p + dp_post[i];
+		      if (f.hold(n) and f[n] > h)
+			do_union(n, p, h);
+		    }
+		}
+
+	      // finalizing level compression
+
+	      for (int i = ip_last - 1; i >= ip_first; --i)
+		{
+		  point p = S[i];
+		  if (is_root(p))
+		    ++nnodes;
+		  else
+		    par[p] = par[par[p]];
+		}
+	      
+	    } // end of "for all h"
 	}
 
 	void extract_maxtree()
@@ -104,22 +135,25 @@ namespace oln
 	  // FIXME: TODO
 	}
 
-	void do_union(const point& n, const point& p)
+	point find_root(point x, value h)
 	{
-	  point r = find_root(n);
+	  while (not is_root(x))
+	    if (f[x] > h)
+	      x = par[x];
+	    else
+	      x = find_level_root(par[x]);
+	  return x;
+	}
+
+	void do_union(const point& n, const point& p, value h)
+	{
+	  point r = find_root(n, h);
 	  if (r != p)
 	    par[r] = p;
 	}
 
-	point find_root(point x)
-	{
-	  while (not is_root(x))
-	    x = find_level_root(par[x]);
-	  return x;
-	}
 
-
-      }; // end of class basic_maxtree
+      }; // end of class sp_maxtree
 
 
 
@@ -130,4 +164,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_BASIC_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_SP_MAXTREE_HH

@@ -32,6 +32,14 @@
 # include <vector>
 
 
+
+
+
+# define oln_neighborhood_type(I) \
+typename oln::lrde::ufmt::internal::neighborhood<I>::ret
+
+
+
 namespace oln
 {
 
@@ -138,6 +146,7 @@ namespace oln
       }
 
 
+
       template <class I>
       std::vector<oln_point_type(I)>
       histogram_reverse_sort_p(const abstract::image<I>& input,
@@ -166,6 +175,56 @@ namespace oln
       }
 
 
+      // _i
+
+      template <class I>
+      std::vector<int>
+      histogram_reverse_sort_i(const abstract::image<I>& input,
+			       size_t N,
+			       std::vector<size_t>& H)
+      {
+	H = histogram(input, N);
+
+	// preparing output data
+
+	unsigned nvalues = uint_nvalues(input);
+	std::vector<int> loc(nvalues);
+	loc[nvalues - 1] = 0;
+	for (int l = int(nvalues) - 2; l >= 0; --l)
+	  loc[l] = loc[l+1] + H[l+1];
+
+	std::vector<int> vec(N);
+
+	// storing output data
+
+	typedef oln_value_type(I) value_t;
+	typedef oln_point_type(I) point_t;
+
+	I& input_ = const_cast<I&>(input.exact());
+	value_t* orig = &(input_[point_t()]);
+	oln_iter_type(I) p(input);
+	size_t count = 0;
+	for_all(p)
+	  {
+	    vec[loc[input[p]]++] = int(&(input_[p]) - orig);
+	    if (++count == N)
+	      return vec;
+	  }
+
+	return vec;
+      }
+
+
+      template <class I>
+      std::vector<int>
+      histogram_reverse_sort_i(const abstract::image<I>& input,
+			       std::vector<size_t>& H)
+      {
+ 	return histogram_reverse_sort_i(input, input.npoints(), H);
+      }
+
+
+
       // Extra traits to get the classical neighborhood types from
       // classical image types.
 
@@ -185,16 +244,65 @@ namespace oln
 
 
 
+      template <class I>
+      unsigned pre(const oln_neighborhood_type(I)& nbh,
+		   std::vector<oln_dpoint_type(I)>& pre)
+      {
+	for (unsigned i = 0; i < nbh.card(); ++i)
+	  {
+	    unsigned d;
+	    for (d = 0; d < I::dim; ++d)
+	      if (nbh.dp(i).nth(d) < 0) {
+		pre.push_back(nbh.dp(i));
+		break;
+	      }
+	      else if (nbh.dp(i).nth(d) > 0)
+		break;
+	  }
+	assert(pre.size() == (nbh.card() / 2));
+	return pre.size();
+      }
+
+
+      template <class I>
+      unsigned split(const oln_neighborhood_type(I)& nbh,
+		     std::vector<oln_dpoint_type(I)>& pre,
+		     std::vector<oln_dpoint_type(I)>& post)
+      {
+	for (unsigned i = 0; i < nbh.card(); ++i)
+	  {
+	    unsigned d;
+	    bool is_post = true;
+	    for (d = 0; d < I::dim; ++d)
+	      if (nbh.dp(i).nth(d) < 0) {
+		pre.push_back(nbh.dp(i));
+		is_post = false;
+		break;
+	      }
+	      else if (nbh.dp(i).nth(d) > 0)
+		break;
+	    if (is_post)
+	      post.push_back(nbh.dp(i));
+	  }
+	if (not ((pre.size() + post.size()) == nbh.card())
+	    or not (pre.size() == post.size()))
+	  {
+	    std::cerr << "pb in oln::lrde::ufmt::split (utils.hh) so abort!" << std::endl;
+	    abort();
+	  }
+	assert((pre.size() + post.size()) == nbh.card());
+	assert(pre.size() == post.size());
+	return pre.size();
+      }
+
+
+
     } // end of namespace oln::lrde::ufmt
 
   } // end of namespace oln::lrde
 
 } // end of namespace oln
 
-
-
-# define oln_neighborhood_type(I) \
-typename oln::lrde::ufmt::internal::neighborhood<I>::ret
 
 
 
