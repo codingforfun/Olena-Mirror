@@ -65,8 +65,8 @@
 
 2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* doc/ref/Makefile.am: Use `clean-local' and `distclean-local' to delete
-	files.
+	* doc/ref/Makefile.am: Use `clean-local' and `distclean-local' to
+	delete files.
 	* doc/ref/out/exdoc.config.in: Add `DOC_CPPFLAGS' to the compilation
 	flags.
 
@@ -151,7 +151,7 @@
 
 2003-08-26  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
 
-        * dev/oln-dev.texi: fix.
+	* dev/oln-dev.texi: fix.
 
 2003-08-25  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -499,7 +499,8 @@
 	* configure.ac: Adjust Olena source path. Use AC_CXX_FLAGS instead
 	of AC_WITH_CXX_WARNINGS. Use AC_CONFIG_FILES again.
 
-	* Makefile.am: Comment. Correct @OLN_DOC_SUBDIRS@ to $(OLN_DOC_SUBDIRS).
+	* Makefile.am: Comment. Correct @OLN_DOC_SUBDIRS@ to
+	$(OLN_DOC_SUBDIRS).
 
 2003-01-15  Akim Demaille  <akim@epita.fr>
 
@@ -525,7 +526,8 @@
 
 2002-12-12  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* demo/Makefile.am (check_PROGRAMS): Now use OLN_CPPFLAGS and OLN_CXXFLAGS.
+	* demo/Makefile.am (check_PROGRAMS): Now use OLN_CPPFLAGS and
+	OLN_CXXFLAGS.
 	* doc/Makefile.am (COMMONGETDEFSFLAGS): Likewise. Use OLN_IMG_DIR
 	and DEFS, too.
 

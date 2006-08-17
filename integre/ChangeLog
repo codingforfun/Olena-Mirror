@@ -11,7 +11,7 @@
 
 	* tests/types/tests/float_r2, tests/types/tests/range2,
 	* tests/types/tests/range2b: Fix tests.
-	
+
 2005-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust for G++ 4.0.
@@ -38,11 +38,11 @@
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.
+	* tests/sanity/Makefile.am: Replace maintainer-check by check.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* integre/ntg/core/internal/traits.hh: Include headers so as to pass
+	* ntg/core/internal/traits.hh: Include headers so as to pass
 	sanity check.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
@@ -64,13 +64,15 @@
 	* ntg/makefile.src: Add file.
 
 2004-03-30  Niels Van Vliet  <niels@lrde.epita.fr>
-	* integre/ntg/core/pred_succ.hh: Add default_less.
-	* integre/ntg/color/color.hh: Add default_less specialization.
+
+	* ntg/core/pred_succ.hh: Add default_less.
+	* ntg/color/color.hh: Add default_less specialization.
 
 2004-03-26  Niels Van Vliet  <niels@lrde.epita.fr>
-	* integre/ntg/core/macros.hh: Add macros ntg_if_vectorial_nb_comp and
+
+	* ntg/core/macros.hh: Add macros ntg_if_vectorial_nb_comp and
 	 ntg_compare_nb_comp.
-	* integre/tests/types/tests/ntg_compare_nb_comp: Add file.
+	* tests/types/tests/ntg_compare_nb_comp: Add file.
 
 2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
@@ -82,13 +84,13 @@
 
 2004-03-19  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* integre/ntg/core/pred_succ.hh: Add file.
-	* integre/ntg/Makefile.am: Add file references.
+	* ntg/core/pred_succ.hh: Add file.
+	* ntg/Makefile.am: Add file references.
 
 2004-03-18  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* integre/ntg/real/behavior.hh: Change the unsafe::get<T>::check().
-	* integre/ntg/utils/cast.hh: Change cast::force().
+	* ntg/real/behavior.hh: Change the unsafe::get<T>::check().
+	* ntg/utils/cast.hh: Change cast::force().
 
 2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
@@ -237,18 +239,18 @@
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * ntg/utils/cast.hh: Fix compilation with g++ 3.4.
-        * ntg/utils/debug.hh: Likewise.
-        * ntg/core/internal/global_ops_defs.hh: Likewise.
-        * ntg/core/internal/global_ops.hh: Likewise.
-        * ntg/color/nrgb.hh: Likewise.
-        * ntg/real/optraits_builtin_int.hh: Likewise.
-        * ntg/real/optraits_scalar.hh: Likewise.
-        * ntg/real/typetraits_builtin_int.hh: Likewise.
-        * tests/utils/tests/debug1: Likewise.
-        * ntg/core/contract.hh: Likewise.
-        * ntg/vect/vec.hh: Likewise.
-        * ntg/vect/cplx.hh: Likewise.
+	* ntg/utils/cast.hh: Fix compilation with g++ 3.4.
+	* ntg/utils/debug.hh: Likewise.
+	* ntg/core/internal/global_ops_defs.hh: Likewise.
+	* ntg/core/internal/global_ops.hh: Likewise.
+	* ntg/color/nrgb.hh: Likewise.
+	* ntg/real/optraits_builtin_int.hh: Likewise.
+	* ntg/real/optraits_scalar.hh: Likewise.
+	* ntg/real/typetraits_builtin_int.hh: Likewise.
+	* tests/utils/tests/debug1: Likewise.
+	* ntg/core/contract.hh: Likewise.
+	* ntg/vect/vec.hh: Likewise.
+	* ntg/vect/cplx.hh: Likewise.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -733,17 +735,16 @@
 
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* integre/ntg/behaviour.hh, integre/ntg/global_ops_traits.hh,
+	* ntg/behaviour.hh, integre/ntg/global_ops_traits.hh,
 	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_int_s.hh,
 	integre/ntg/optraits_vec.hh: Update includes.
 
-	* integre/ntg/cycle.hh, integre/ntg/global_ops.hh,
+	* ntg/cycle.hh, integre/ntg/global_ops.hh,
 	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_cycle.hh,
 	integre/ntg/optraits_int_s.hh, integre/ntg/range.hh,
 	integre/ntg/behaviour.hh, integre/ntg/cplx.hh,
 	integre/ntg/optraits_scalar.hh, integre/ntg/optraits_vec.hh:
 	Likewise.
-
 
 2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
