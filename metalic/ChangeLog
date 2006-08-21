@@ -4,7 +4,7 @@
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* metalic/tests/sanity/Makefile.am: Replace maintainer-check by check.
+	* tests/sanity/Makefile.am: Replace maintainer-check by check.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
@@ -50,25 +50,25 @@
 
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * mlc/contract.hh: Fix coding style.
-        * mlc/objs.hh: Likewise.
-        * mlc/typeadj.hh: Likewise.
-        * mlc/type.hh: Likewise.
-        * mlc/array/1d.hh: Likewise.
-        * mlc/array/1d.hxx: Likewise.
-        * mlc/array/2d.hh: Likewise.
-        * mlc/array/2d.hxx: Likewise.
-        * mlc/array/3d.hh: Likewise.
-        * mlc/array/3d.hxx: Likewise.
-        * mlc/array/nd.hh: Likewise.
-        * mlc/bool.hh: Likewise.
-        * mlc/cmp.hh: Likewise.
-        * mlc/optional.hh: Likewise.
-        * mlc/is_a.hh: Likewise.
-        * mlc/math.hh: Likewise.
-        * mlc/array/objs.hh: Likewise.
-        * tests/main/tests/ensure3: Likewise.
-        * tests/main/tests/ensure2: Likewise.
+	* mlc/contract.hh: Fix coding style.
+	* mlc/objs.hh: Likewise.
+	* mlc/typeadj.hh: Likewise.
+	* mlc/type.hh: Likewise.
+	* mlc/array/1d.hh: Likewise.
+	* mlc/array/1d.hxx: Likewise.
+	* mlc/array/2d.hh: Likewise.
+	* mlc/array/2d.hxx: Likewise.
+	* mlc/array/3d.hh: Likewise.
+	* mlc/array/3d.hxx: Likewise.
+	* mlc/array/nd.hh: Likewise.
+	* mlc/bool.hh: Likewise.
+	* mlc/cmp.hh: Likewise.
+	* mlc/optional.hh: Likewise.
+	* mlc/is_a.hh: Likewise.
+	* mlc/math.hh: Likewise.
+	* mlc/array/objs.hh: Likewise.
+	* tests/main/tests/ensure3: Likewise.
+	* tests/main/tests/ensure2: Likewise.
 
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -267,7 +267,7 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/array1d.hh, mlc/array2d.hh, mlc/array3d.hh: Update
-          includes.
+	  includes.
 
 	* mlc/is_a.hh: Likewise.
 

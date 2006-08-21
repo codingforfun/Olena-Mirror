@@ -27,13 +27,18 @@ int main(int argc, char* argv[])
   image_t input = load(argv[1]);
 
   int c = atoi(argv[2]);
-  if (not (c == 4 or c == 8))
+  if (not (c == 2 or c == 4 or c == 8))
     usage(argv);
 
   typedef lrde::ufmt::basic_salembier<image_t> algorithm_t;
 
-  algorithm_t run(input,
-		  c == 4 ? neighb_c4() : neighb_c8());
+  neighborhood2d nbh;
+  if (c == 2)
+    nbh.add(dpoint2d(0, 1));
+  else
+    nbh = c == 4 ? neighb_c4() : neighb_c8();
+
+  algorithm_t run(input, nbh);
   run.go();
   std::cout << "n level roots = " << run.n_level_roots() << std::endl;
 }

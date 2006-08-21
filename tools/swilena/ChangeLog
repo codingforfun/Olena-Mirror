@@ -15,11 +15,11 @@
 	Complete Rblena test suite.
 
 	* ruby/tests/arith.rb, ruby/tests/conversions.rb,
-	* ruby/tests/morpho.rb: New tests	
+	* ruby/tests/morpho.rb: New tests
 	* ruby/tests/Makefile.am (dist_noinst_DATA): Add arith.rb,
 	conversions.rb and morpho.rb.
 
-	* python/tests/conversions.py, python/tests/morpho.py: 
+	* python/tests/conversions.py, python/tests/morpho.py:
 	* python/tests/simple1.py: Reduce the number of imported modules.
 	* python/tests/Makefile.am, python/tests/arith.py,
 	* python/tests/sanity.py, ruby/tests/conversions.rb,

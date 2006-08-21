@@ -2,74 +2,6 @@
 
 
 
-
-* to-do
-
-** raster
-
-*** settings
-p as index
-naming: "r_" prefix
-
-*** our versions
-1D ("r1_" prefix)
-nD insert + update ("ru_" prefix)
-nD merge ("rm_" prefix)
-
-*** others
-salembier
-meijster
-
-** FIXME
-
-to be continued
-
-
-* naming
-
-** p encoding
-
-*** p
-p = point2d
-par = image<point>
-
-*** d
-for debug purpose
-p_ref = point2d
-par_ref = image<point>
-dpar_ref = image<dpoint>
-invariant: par_ref[p_ref] = p_ref + dpar_ref[p_ref]
-p = index
-dpar = image<index>
-invariants: p = p_ref and dpar = dpar_ref
-
-*** i
-p = index
-dpar = image<(delta) index>
-par is now a function
-FIXME: we should avoid calling it (instead use dpar)
-
-
-** 1st pass browsing
-
-*** basic
-sorted, simple loop:
-| for all p
-|   union-find
-
-*** s
-sorted, _total_ level compression
-| for all h
-|   for all p fwd
-|     union-find
-|   for all p bkd
-|     compression
-
-*** r
-raster
-
-
-
 * basic_maxtree
 
 ** features
@@ -97,42 +29,91 @@ optimizations
 nbh is splitted into pre and post
 so isproc is no more aux data
 2 functions: isproc_pre and isproc_post
-benefit: memory gain
-
-*** level compression
-''natural'' algorithm enhancement
-browsing is "for h, for p fwd, for p bkd"
-benefit: usually faster thanx to compression
+benefit: memory saving
 
 *** node/levroot counting
 during the compression
-benefit: we need to know nnodes
+benefit: we need to know nnodes before the 2nd pass
+without introducing an intermediate pass
+
+
+
+* algorithms deriving from basic_maxtree
+
+
+** browsing
+
+*** s
+when quantization is high
+std::sort
+browsing is:
+| for all p taken with f(p) decreasing
+|   union-find
+
+*** h
+when quantization is low
+counting sort
+browsing is:
+| for all h
+|   for all p fwd s.a. f(p) = h
+|     union-find
+|   for all p bkd s.a. f(p) = h
+|     compression
+benefit: usually faster thanx to compression
+
+*** r
+raster (classic video scan)
+no sorting
+browsing is:
+| for all p fwd
+|   union-find
+benefit: incremental, card(nbh)/2
+use: insert (p->tree) and update (tree is in/out)
+
+
+** point encoding
+
+*** p
+point = point2d = (int, int)
+par[p] = point2d
+
+*** i
+point = int
+par[p] = point
+
+*** d
+point = index = int
+dpar[p] = delta point = delta index = int
+benefit: make_sets() = memset(dpar, 0)
+
+
+** compression
+
+*** c
+level-compression of par (resp. dpar)
+find_root = loop over find_level_root
+
+*** x
+use of aux data: c_par (resp. c_dpar)
+for full compressed access to root
+find_root = quicker
+
 
 ** further (later) optims
 
-*** point as index
-
-*** virtual border
-
-*** fully compressed 2nd parent
-so remove the inner compression pass!
+virtual border...
 
 
-* specializations
+** status
 
-** 1D sorted union-find
-level compression
-point as index
-? virtual border
-? 2nd parent
+hpc  impled
+hpx  impled
+rpc  impled
 
-** 2D raster
-FIXME: rup2_maxtree
-FIXME: rui2_maxtree
+hdc  impled
+hdx  impled
 
-** 1D raster
-r1_maxtree // is r1i
-
+r1ic do not compile (ric specialized for 1D images)
 
 
 * basic_salembier

@@ -1,40 +1,31 @@
-2006-08-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+2006-08-21  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
-	Factor some code in oln/lrde/ufmt/; add video raster scan
-	algorithms and some versions with points as indices.
+	Rename to conform to conventions given in the README file.
 	
-	* olena/oln/lrde/ufmt/README: New.
-	* olena/oln/lrde/ufmt/basic_maxtree.hh: Move some parts into...
-	* olena/oln/lrde/ufmt/ap_maxtree.hh: ...this new file.
-	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/ai_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/si_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/rup_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/si_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/rup_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/r1_maxtree.cc: New.
-	
-2006-08-03  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+	* olena/oln/lrde/ufmt/README: Update.
+	* olena/oln/lrde/ufmt/sp_maxtree.hh: Rename as...
+	* olena/oln/lrde/ufmt/hpc_maxtree.hh: ...this.
+	* olena/oln/lrde/ufmt/ai_maxtree.hh: Rename as...
+	* olena/oln/lrde/ufmt/ad_maxtree.hh: ...this.
+	* olena/oln/lrde/ufmt/si_maxtree.hh: Rename as...
+	* olena/oln/lrde/ufmt/hdc_maxtree.hh: ...this.
+	* olena/oln/lrde/ufmt/rup_maxtree.hh: Rename as...
+	* olena/oln/lrde/ufmt/rpc_maxtree.hh: ...this.
+	* olena/oln/lrde/ufmt/r1_maxtree.hh: Rename as...
+	* olena/oln/lrde/ufmt/r1ic_maxtree.hh: ...this.
+	* olena/oln/lrde/ufmt/bin/: Update.
 
-	Add some first code corresponding to an LRDE publication about
-	union-find and max-tree.
+	New versions with full compressed aux data.
 	
-	* olena/oln/lrde: New directory for code related to LRDE
-	publications.
-	* olena/oln/lrde/ufmt: New directory specific to union-find and
-	max-tree.
-	* olena/oln/lrde/ufmt/log.hh: New.
-	* olena/oln/lrde/ufmt/utils.hh: New.
-	* olena/oln/lrde/ufmt/basic_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/basic_salembier.hh: New.
-	* olena/oln/lrde/ufmt/bin: New directory for corresponding
-	bin source.
-	* olena/oln/lrde/ufmt/bin/basic_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/basic_salembier.cc: New.
-	* olena/oln/lrde/ufmt/img: New directory for tiny test images.
-	* olena/oln/lrde/ufmt/img/lena6.pgm: New image file.
-	* olena/oln/lrde/ufmt/img/lena64.pgm: Likewise.
+	* olena/oln/lrde/ufmt/hdx_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/hpx_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/bin/hdx_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/hpx_maxtree.cc: New.
+
+	Bonus.
+	
+	* olena/oln/lrde/ufmt/bin/basic_salembier.cc: Add c2 case.
+  
 	
 2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
 

@@ -62,6 +62,10 @@ namespace oln
 	typedef oln_neighborhood_type(I) Nbh;
  	typedef oln_iter_type(Nbh) niter;
 
+	// aux typedefs
+	typedef typename mute<I, ntg::bin>::ret bin_image_t;
+	typedef typename mute<I, ntg::int_u8>::ret int_u8_image_t;
+
 	// input
 	const I& f;
 	const Nbh& nbh;
@@ -121,7 +125,7 @@ namespace oln
 
 	// uniformized interface
 
-	const point& parent_(const point& p) const {
+	point parent_(const point& p) const {
 	  return par[p];
 	}
 	const value& f_(const point& p) const {
