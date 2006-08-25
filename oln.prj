@@ -1,26 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 250)
-(Parent-Version oln 10 248)
+(Project-Version oln 10 251)
+(Parent-Version oln 10 250)
 (Version-Log "2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
 
-	Max-tree computation based on Fiorio's and Gustedt's labelling
-	algorithm.
+	Clean up.
 
-	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: New.
-	* oln/lrde/ufmt/bin/fiorio.cc: New.
-	* oln/lrde/ufmt/README: Update.
-
-	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of
-	the autoconfiscated package.
-
-	* oln/lrde/Makefile.am, oln/lrde/ufmt/Makefile.am,
-	* oln/lrde/ufmt/bin/Makefile.am: New.
-	* TODO: New.
+	* oln/lrde/ufmt/bin/fiorio.cc: Remove dead code.
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Likewise.
+	Adjust header guards.
+	Don't use non-ASCII characters.
+	* oln/lrde/ufmt/README (find_root): Don't use non-ASCII
+	characters.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 25 Aug 2006 17:56:35 +0200")
+(Checkin-Time "Fri, 25 Aug 2006 18:19:26 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -137,7 +132,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.13 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.14 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.48 600))
 
@@ -1573,7 +1568,7 @@
   
   
   
-  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.3 644))
+  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.4 644))
 
 ;; Files deleted by depopulate at Fri, 04 Aug 2006 18:41:16 +0200,
 ;; from version 10.245(w), by theo:
@@ -1603,19 +1598,10 @@
   (olena/TODO (oln/x/24_TODO 1.1 644))
   (olena/oln/lrde/Makefile.am (oln/x/25_Makefile.a 1.1 644))
   (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.1 644))
-  (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.1 644))
+  (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.2 644))
+  (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.2 644))
   (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.1 644))
+  (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.2 644))
 )
-(Merge-Parents
-  (10.249 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/oln/lrde/ufmt/bin/basic_salembier.cc olena/oln/lrde/ufmt/bin/basic_salembier.cc olena/oln/lrde/ufmt/bin/basic_salembier.cc r)
-    (olena/oln/lrde/ufmt/log.hh olena/oln/lrde/ufmt/log.hh olena/oln/lrde/ufmt/log.hh r) (olena/oln/lrde/ufmt/ad_maxtree.hh olena/oln/lrde/ufmt/ai_maxtree.hh olena/oln/lrde/ufmt/ad_maxtree.hh r)
-    (olena/oln/lrde/ufmt/hdc_maxtree.hh olena/oln/lrde/ufmt/si_maxtree.hh olena/oln/lrde/ufmt/hdc_maxtree.hh r) (olena/oln/lrde/ufmt/rpc_maxtree.hh olena/oln/lrde/ufmt/rup_maxtree.hh olena/oln/lrde/ufmt/rpc_maxtree.hh r)
-    (olena/oln/lrde/ufmt/hpc_maxtree.hh olena/oln/lrde/ufmt/sp_maxtree.hh olena/oln/lrde/ufmt/hpc_maxtree.hh r) (olena/oln/lrde/ufmt/ap_maxtree.hh olena/oln/lrde/ufmt/ap_maxtree.hh olena/oln/lrde/ufmt/ap_maxtree.hh r)
-    (olena/oln/lrde/ufmt/r1ic_maxtree.hh olena/oln/lrde/ufmt/r1_maxtree.hh olena/oln/lrde/ufmt/r1ic_maxtree.hh r) (olena/oln/lrde/ufmt/bin/rpc_maxtree.cc olena/oln/lrde/ufmt/bin/rup_maxtree.cc olena/oln/lrde/ufmt/bin/rpc_maxtree.cc r)
-    (olena/oln/lrde/ufmt/bin/hdc_maxtree.cc olena/oln/lrde/ufmt/bin/si_maxtree.cc olena/oln/lrde/ufmt/bin/hdc_maxtree.cc r) (olena/oln/lrde/ufmt/bin/hpc_maxtree.cc olena/oln/lrde/ufmt/bin/sp_maxtree.cc olena/oln/lrde/ufmt/bin/hpc_maxtree.cc r)
-    (olena/oln/lrde/ufmt/bin/r1ic_maxtree.cc olena/oln/lrde/ufmt/bin/r1_maxtree.cc olena/oln/lrde/ufmt/bin/r1ic_maxtree.cc r) (olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README m))
-)
+(Merge-Parents)
 (New-Merge-Parents)

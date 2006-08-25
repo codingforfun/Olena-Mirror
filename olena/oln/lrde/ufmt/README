@@ -134,4 +134,4 @@ Fiorio's and Gustedt's algorithm.
 
 ** fiorio-2.hh
 My second implementation of the max-tree computation using Fiorio's and
-Gustedt's algorithm, using routines of Théo's (anc, insert, etc.)
+Gustedt's algorithm, using routines of Theo's (anc, insert, etc.)

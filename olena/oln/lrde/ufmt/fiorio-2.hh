@@ -34,11 +34,11 @@
     Science, 1996.  
 
     \note This is the second version of my implementation, augmented
-    with ThÅÈo's (better) routines and ideas.  */
+    with Theo's (better) routines and ideas.  */
 
 
-#ifndef OLENA_LRDE_UFMT_FIORIO_HH
-# define OLENA_LRDE_UFMT_FIORIO_HH
+#ifndef OLENA_LRDE_UFMT_FIORIO_2_HH
+# define OLENA_LRDE_UFMT_FIORIO_2_HH
 
 # include <algorithm>
 
@@ -59,27 +59,17 @@ namespace oln
 	typedef oln_point_type(I) point;
 	typedef oln_value_type(I) value;
 	typedef oln_iter_type(I) piter;
-	// typedef oln_neighborhood_type(I) Nbh;
-	// typedef oln_iter_type(Nbh) niter;
 	typedef typename mute<I, point>::ret parent_type;
-
-	// FIXME: Should be elsewhere!
-	typedef oln::image2d<unsigned> area_type;
 
       public:
 	fiorio(const abstract::image<I>& ima) :
 	  ima_(ima.exact().clone()), parent_(ima.size())
 	  , n_level_roots_cpt_(ima.npoints())
-//      , area_(ima_.size())
 	{
 	  // Init the image of parents.
 	  piter p (parent_);
 	  for_all (p)
 	    parent_[p] = p;
-
-	  // FIXME: Should be elsewhere!
-	  // Init the image of data.
-// 	  oln::level::fill (area_, 1);
 	}
 
 	/// Entry point of the algorithm.
@@ -144,7 +134,7 @@ namespace oln
 
 
       protected:
-	// Improve to handle other neighborhoods than 4-c.
+	// FIXME: Improve to handle other neighborhoods than 4-c.
 	void scan_line()
 	{
 	  // Special treatment of the first line (no merge).
@@ -204,7 +194,8 @@ namespace oln
 	    }
 	}
 
-	/// Front-end to \a merge_.
+	/// \brief Front-end to \a merge_.
+	/// \note Theo calls this method ``update'.
 	void merge(const point& p, const point& q)
 	{
 	  // The \a merge_ routine assumes that P has a value greater
@@ -216,8 +207,6 @@ namespace oln
 	}
 
 	// FIXME: Turn this recursive method into a loop!
-	// FIXME: Get rid of the swap, using an introductory method.
-	/// \note ThÅÈo calls this method ``update'.
 	void merge_(const point& p, const point& q)
 	{
 	  precondition (p != q);
@@ -231,9 +220,6 @@ namespace oln
 	  if (r == s)
 	    return;
 
-	  // FIXME: Have a look at ThÅÈo's ``update'' routine to see
-	  // if we can improve this method.
-	  // \{
 	  point t = parent_[s];
 
 	  if (ima_[s] == ima_[r])
@@ -251,7 +237,7 @@ namespace oln
 	  merge_(r, t);
 	}
 
-	/// \note ThÅÈo calls this function ``is_root'.
+	/// \note Theo calls this function ``is_root'.
  	bool is_top(const point& p) const
  	{
  	  return parent_[p] == p;
@@ -265,7 +251,7 @@ namespace oln
 	}
 
 	/// \brief Find the level root of the component that P belongs to.
-	/// \note From ThÅÈo.
+	/// \note From Theo.
 	point find_level_root(const point& p)
 	{
 	  // Is P a level root at the end the routine?
@@ -276,8 +262,8 @@ namespace oln
 	    return parent_[p] = find_level_root(parent_[p]);
 	}
 
-	/// \note From ThÅÈo.
-	/// \note ThÅÈo calls this method ``anc''.
+	/// \note From Theo.
+	/// \note Theo calls this method ``anc''.
 	point find_ancestor(point p, const value& level)
 	{
 	  while (not is_top(p) and ima_[parent_[p]] >= level)
@@ -286,60 +272,13 @@ namespace oln
 	}
 
       protected:
-	  /// \note ThÅÈo calls this image ``f''.
+	  /// \note Theo calls this image ``f''.
 	I ima_;
-	  /// \note ThÅÈo calls this image ``par''.
+	  /// \note Theo calls this image ``par''.
 	parent_type parent_;
 	// Counter of level roots (method 1).
  	unsigned n_level_roots_cpt_;
 
-
-
-// ----------------------------------------------------------------
-
-// FIXME: Should be elsewhere!
-
-//       public:
-// 	void area_opening (unsigned size)
-// 	{
-// 	  oln_iter_type_(area_type) p(area_);
-
-// 	  // First pass: sum areas.
-// 	  for_all(p)
-// 	    {
-// 	      point p_parent = parent_[p];
-// 	      while (p != p_parent)
-// 		{
-// 		  area_[p_parent] += 1;
-// 		}
-// 	    }
-
-// 	  // Second pass: cut branches in the max-tree.
-// 	  for_all(p)
-// 	    merge(p, size);
-// 	}
-
-//       protected:
-// 	// Attach P to Q.
-// 	// FIXME: The criterion should be passed as a function object.
-// 	point merge (const point& p, unsigned size)
-// 	{
-// 	  if (not is_top(p) && area_[p] < size)
-// 	    {
-// 	      // Find the component satisfying the criterion.
-// 	      point new_level_root = merge(parent_[p], size);
-// 	      // Attach P to its new component representant (level root).
-// 	      parent_[p] = new_level_root;
-// 	      // Take the color of the new component.
-// 	      ima_[p] = ima_[new_level_root];
-// 	      return new_level_root;
-// 	    }
-// 	  else
-// 	    return p;
-// 	}
-
-//       protected:
-// 	area_type area_;
       };
 
     } // end of namespace oln::lrde::ufmt
@@ -348,4 +287,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLENA_LRDE_UFMT_FIORIO_HH
+#endif // ! OLENA_LRDE_UFMT_FIORIO_2_HH

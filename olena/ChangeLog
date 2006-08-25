@@ -1,5 +1,16 @@
 2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up.
+
+	* oln/lrde/ufmt/bin/fiorio.cc: Remove dead code.
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Likewise.
+	Adjust header guards.
+	Don't use non-ASCII characters.
+	* oln/lrde/ufmt/README (find_root): Don't use non-ASCII
+	characters.
+
+2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Max-tree computation based on Fiorio's and Gustedt's labelling
 	algorithm.
 
