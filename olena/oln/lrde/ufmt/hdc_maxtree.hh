@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_SI_MAXTREE_HH
-# define OLENA_LRDE_UFMT_SI_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_HDC_MAXTREE_HH
+# define OLENA_LRDE_UFMT_HDC_MAXTREE_HH
 
 # include <oln/level/fill.hh>
 # include <oln/lrde/ufmt/utils.hh>
-# include <oln/lrde/ufmt/ai_maxtree.hh>
+# include <oln/lrde/ufmt/ad_maxtree.hh>
+# include <oln/lrde/ufmt/attributes.hh>
 
 
 
@@ -62,12 +63,12 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct si_maxtree : public ai_maxtree<I>
+      struct hdc_maxtree : public ad_maxtree<I>
       {
-	typedef ai_maxtree<I> super;
+	typedef ad_maxtree<I> super;
 	using super::f;
 	using super::dpar;
- 	oln_lrde_ufmt_import_ai_maxtree_typedefs;
+ 	oln_lrde_ufmt_import_ad_maxtree_typedefs;
 
 	const oln_neighborhood_type(I)& nbh;
 
@@ -82,7 +83,7 @@ namespace oln
 
 	// ctor
 
-	si_maxtree(const abstract::image<I>& f,
+	hdc_maxtree(const abstract::image<I>& f,
 		   const oln_neighborhood_type(I)& nbh)
 	  :
 	  super(f),
@@ -90,11 +91,12 @@ namespace oln
 	{
 	}
 
+	template <class A> // void if no attributes
 	void go()
 	{
 	  init();
 	  compute_parent();  // 1st pass
-	  extract_maxtree(); // 2nd pass
+	  extract_maxtree<A>(); // 2nd pass
 	}
 
 	void init()
@@ -150,10 +152,56 @@ namespace oln
 	    } // end of "for all h"
 	}
 
-	void extract_maxtree()
+
+	template <class A> // A for attributes
+	std::vector< node_<A> >
+	extract_maxtree()
 	{
-	  // FIXME: TODO
+	  std::vector< node_<A> > node(nnodes);
+	  dpar_t& label = dpar;
+
+	  // bkd
+	  unsigned cur_l = nnodes - 1;
+	  for (int i = S.size() - 1; i != 0; --i)
+	    {
+	      point p = S[i];
+	      assert(is_level_root(p + dpar[p])); // level compression is total
+	      if (is_level_root(p))
+		{
+		  // node initialization
+		  point par_p = p + dpar[p]; // this value is saved
+		  label[p] = cur_l; // because dpar[p] is modified here
+		  node[cur_l].par = label[par_p]; // so this line is ok
+		  if (is_root(p))
+		    assert(node[cur_l].par == cur_l);
+		  --cur_l;
+		}
+	      else
+		// label propagation
+		label[p] = label[p + dpar[p]];
+	    }
+	  return node;
 	}
+
+
+	template <class A> // A for attributes
+	void compute_attributes(std::vector< node_<A> >& node)
+	  // point-wise version
+	{
+	  dpar_t& label = dpar;
+	  for (int i = S.size() - 1; i != 0; --i)
+	    {
+	      point p = S[i];
+	      if (is_level_root(p))
+		node[label[p]].init(f, p);
+	      else
+		node[label[p]].insert(f, p);
+	    }
+	  for (int l = 0; l < nnodes; ++l)
+	    if (node[l].par != l) // not root node
+	      node[node[l].par].embrace(node[l]);
+	}
+
 
 	point find_root(point x, value h)
 	{
@@ -173,7 +221,7 @@ namespace oln
 	}
 
 
-      }; // end of class si_maxtree
+      }; // end of class hdc_maxtree
 
 
 
@@ -184,4 +232,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_SI_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_HDC_MAXTREE_HH

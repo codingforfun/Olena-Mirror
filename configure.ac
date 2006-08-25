@@ -5,7 +5,7 @@ AC_PREREQ([2.54])
 AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [olena])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_SRCDIR([config/oln.m4])
-AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
+AM_INIT_AUTOMAKE([1.9.5 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # FIXME: maybe not the best way to do this
@@ -462,6 +462,16 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 AC_SUBST([DOC_CPPFLAGS])
 AC_SUBST([TOOLS_LDFLAGS])
+
+## -- FIXME: Improve integration.  ----------------------------------------
+##
+## The contents of `olena/lrde' should be moved to subdirectory of
+## `olena/oln', and the contents of `olena/lrde/ufmt/bin to `olena/tests'
+## or to `tools'.
+AC_CONFIG_FILES([olena/oln/lrde/Makefile
+		 olena/oln/lrde/ufmt/Makefile
+		 olena/oln/lrde/ufmt/bin/Makefile])
+## ---------------------------------------- FIXME: Improve integration.  --
 
 AC_OUTPUT
 

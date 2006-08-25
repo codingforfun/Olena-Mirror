@@ -25,12 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_SP_MAXTREE_HH
-# define OLENA_LRDE_UFMT_SP_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_R1IC_MAXTREE_HH
+# define OLENA_LRDE_UFMT_R1IC_MAXTREE_HH
 
-# include <oln/level/fill.hh>
 # include <oln/lrde/ufmt/utils.hh>
-# include <oln/lrde/ufmt/ap_maxtree.hh>
 
 
 
@@ -47,28 +45,26 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct sp_maxtree : public ap_maxtree<I>
+      struct r1ic_maxtree
       {
-	typedef ap_maxtree<I> super;
-	using super::f;
-	using super::nbh;
-	using super::par;
-	oln_lrde_ufmt_import_ap_maxtree_typedefs;
+	typedef I image;
+	typedef point1d point;
+	typedef oln_value_type(I) value;
+
+	// input
+	const I& f;
 
 	// aux data
-	std::vector<point> S;
-	std::vector<size_t> H;
-	std::vector<dpoint> dp_pre, dp_post;
-	unsigned nb;
-	unsigned nnodes;
+	typename mute<I, point>::ret par;
 
 
 	// ctor
 
-	sp_maxtree(const abstract::image<I>& f,
-		   const oln_neighborhood_type(I)& nbh)
+	r1ic_maxtree(const abstract::image<I>& f)
 	  :
-	  super(f, nbh)
+	  f(f.exact()),
+	  // FIXME: par should NOT be initialized here! (but in "init()")
+	  par(f.size())
 	{
 	}
 
@@ -81,53 +77,18 @@ namespace oln
 
 	void init()
 	{
-	  S = histogram_reverse_sort_p(f, H);
-	  nb = split<I>(nbh, dp_pre, dp_post);
-	  nnodes = 0;
 	}
 
 	void compute_parent()
 	{
-	  int ip = 0;
-	  for (int h = uint_nvalues(f) - 1; h >= 0; --h)
+	  oln_iter_type(I) p(f);
+	  p = mlc::begin;
+	  make_set(p);
+	  for_all_remaining(p)
 	    {
-	      int ip_first = ip;
-	      int ip_last = ip + H[h];
-
-	      // union-find
-
-	      for (ip = ip_first; ip < ip_last; ++ip)
-		{
-		  point p = S[ip];
-		  make_set(p);
-		  // pre
-		  for (unsigned i = 0; i < nb; ++i)
-		    {
-		      point n = p + dp_pre[i];
-		      if (f.hold(n) and f[n] >= h)
-			do_union(n, p, h);
-		    }
-		  // post
-		  for (unsigned i = 0; i < nb; ++i)
-		    {
-		      point n = p + dp_post[i];
-		      if (f.hold(n) and f[n] > h)
-			do_union(n, p, h);
-		    }
-		}
-
-	      // finalizing level compression
-
-	      for (int i = ip_last - 1; i >= ip_first; --i)
-		{
-		  point p = S[i];
-		  if (is_root(p))
-		    ++nnodes;
-		  else
-		    par[p] = par[par[p]];
-		}
-	      
-	    } // end of "for all h"
+	      make_set(p);
+	      insert(p.col() - 1, p);
+	    }
 	}
 
 	void extract_maxtree()
@@ -135,25 +96,75 @@ namespace oln
 	  // FIXME: TODO
 	}
 
-	point find_root(point x, value h)
+	void make_set(const point& x)
 	{
-	  while (not is_root(x))
-	    if (f[x] > h)
-	      x = par[x];
-	    else
-	      x = find_level_root(par[x]);
+	  par[x] = x;
+	}
+
+	bool is_tree_root(const point& x) const
+	{
+	  return par[x] == x;
+	}
+
+	bool is_level_root(const point& x) const
+	{
+	  return is_tree_root(x) or f[par[x]] < f[x];
+	}
+
+	point find_level_root(const point& x)
+	{
+	  if (is_level_root(x))
+	    return x;
+	  else
+	    return par[x] = find_level_root(par[x]);
+	}
+
+	point anc(point x, ntg::int_u8 h)
+	{
+	  while (par[x] != x and h <= f[par[x]])
+	    x = find_level_root(par[x]);
 	  return x;
 	}
 
-	void do_union(const point& n, const point& p, value h)
+	void insert(const point& n, const point& p)
 	{
-	  point r = find_root(n, h);
-	  if (r != p)
-	    par[r] = p;
+	  point r = anc(n, f[p]);
+	  
+	  if (f[r] <= f[p])
+	    par[p] = r;
+	  else
+	    {
+	      if (par[r] != r)
+		par[p] = par[r];
+	      par[r] = p;
+	    }
 	}
 
 
-      }; // end of class sp_maxtree
+
+	// uniformized interface
+
+	const point& parent_(const point& p) const {
+	  return par[p];
+	}
+	const value& f_(const point& p) const {
+	  return f[p];
+	}
+	const I& f_() const {
+	  return f;
+	}
+	bool is_tree_root_(const point& p) const {
+	  return is_tree_root(p);
+	}
+	bool is_level_root_(const point& p) const {
+	  return is_level_root(p);
+	}
+
+	// end of uniformized interface
+
+
+
+      }; // end of class r1ic_maxtree
 
 
 
@@ -164,4 +175,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_SP_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_R1IC_MAXTREE_HH

@@ -25,16 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_AI_MAXTREE_HH
-# define OLENA_LRDE_UFMT_AI_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_AD_MAXTREE_HH
+# define OLENA_LRDE_UFMT_AD_MAXTREE_HH
 
 # include <oln/lrde/ufmt/utils.hh>
 
 
-# define oln_lrde_ufmt_import_ai_maxtree_typedefs	\
+# define oln_lrde_ufmt_import_ad_maxtree_typedefs	\
 	typedef typename super::image image;		\
 	typedef typename super::point point;		\
 	typedef typename super::dpoint dpoint;		\
+	typedef typename super::dparent_t dparent_t;	\
+	typedef typename super::dpar_t dpar_t;		\
 	typedef typename super::value value
 
 
@@ -61,7 +63,7 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct ai_maxtree
+      struct ad_maxtree
       {
 	typedef I image;
 	typedef int point;
@@ -140,16 +142,17 @@ namespace oln
 
 	// aux data
 	typedef typename mute<I, int>::ret dparent_t;
-	dparent_t dpar_;               // proxied
+	typedef indexed_image<dparent_t> dpar_t;
 
-	indexed_image<dparent_t> dpar; // proxy
+	dparent_t dpar_; // proxied
+	dpar_t dpar;     // proxy
 	// input
 	indexed_image<I> f;
 
 
 	// ctor
 
-	ai_maxtree(const abstract::image<I>& f_)
+	ad_maxtree(const abstract::image<I>& f_)
 	  :
 	  dpar_(f_.size())
 	{
@@ -227,7 +230,7 @@ namespace oln
 
 
 
-      }; // end of class ai_maxtree
+      }; // end of class ad_maxtree
 
 
 
@@ -238,4 +241,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_AI_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_AD_MAXTREE_HH

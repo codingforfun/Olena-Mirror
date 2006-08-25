@@ -1,3 +1,47 @@
+2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Max-tree computation based on Fiorio's and Gustedt's labelling
+	algorithm.
+
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: New.
+	* oln/lrde/ufmt/bin/fiorio.cc: New.
+	* oln/lrde/ufmt/README: Update.
+
+	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of
+	the autoconfiscated package.
+
+	* oln/lrde/Makefile.am, oln/lrde/ufmt/Makefile.am,
+	* oln/lrde/ufmt/bin/Makefile.am: New.
+	* TODO: New.
+
+2006-08-21  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Rename to conform to conventions given in the README file.
+
+	* oln/lrde/ufmt/README: Update.
+	* oln/lrde/ufmt/sp_maxtree.hh: Rename as...
+	* oln/lrde/ufmt/hpc_maxtree.hh: ...this.
+	* oln/lrde/ufmt/ai_maxtree.hh: Rename as...
+	* oln/lrde/ufmt/ad_maxtree.hh: ...this.
+	* oln/lrde/ufmt/si_maxtree.hh: Rename as...
+	* oln/lrde/ufmt/hdc_maxtree.hh: ...this.
+	* oln/lrde/ufmt/rup_maxtree.hh: Rename as...
+	* oln/lrde/ufmt/rpc_maxtree.hh: ...this.
+	* oln/lrde/ufmt/r1_maxtree.hh: Rename as...
+	* oln/lrde/ufmt/r1ic_maxtree.hh: ...this.
+	* oln/lrde/ufmt/bin/: Update.
+
+	New versions with full compressed aux data.
+
+	* oln/lrde/ufmt/hdx_maxtree.hh: New.
+	* oln/lrde/ufmt/hpx_maxtree.hh: New.
+	* oln/lrde/ufmt/bin/hdx_maxtree.cc: New.
+	* oln/lrde/ufmt/bin/hpx_maxtree.cc: New.
+
+	Bonus.
+
+	* oln/lrde/ufmt/bin/basic_salembier.cc: Add c2 case.
+
 2006-08-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Factor some code in oln/lrde/ufmt/; add video raster scan

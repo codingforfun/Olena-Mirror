@@ -1,12 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 248)
-(Parent-Version oln 10 247)
-(Version-Log "Clean up ChangeLogs.
+(Project-Version oln 10 250)
+(Parent-Version oln 10 248)
+(Version-Log "2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Max-tree computation based on Fiorio's and Gustedt's labelling
+	algorithm.
+
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: New.
+	* oln/lrde/ufmt/bin/fiorio.cc: New.
+	* oln/lrde/ufmt/README: Update.
+
+	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of
+	the autoconfiscated package.
+
+	* oln/lrde/Makefile.am, oln/lrde/ufmt/Makefile.am,
+	* oln/lrde/ufmt/bin/Makefile.am: New.
+	* TODO: New.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 17 Aug 2006 11:01:04 +0200")
+(Checkin-Time "Fri, 25 Aug 2006 17:56:35 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -36,6 +50,7 @@
                   "stamp-h\\([0-9]\\)\\?$"
                   "CVS/"
                   ".cvsignore$"
+                  "^_build"
                   "obsolete/"
                   "/obsolete/"
                   "autom4te.cache"
@@ -61,12 +76,13 @@
                   "diffs.patch$"
                   "/Makefile.in$"
                   "^Makefile.in$"
-		  "/makefile.swig"
+                  "/makefile.swig"
                   "/\\(py-compile\\|missing\\|install-sh\\|mkinstalldirs\\|depcomp\\|mdate-sh\\)$"
                   "\\(texinfo\\.tex\\)$"
                   "^\\(.*/\\)\\?aclocal.m4$"
                   "/configure$"
                   "^configure$"
+                  "^config\\.site$"
                   "utilities/morpho/morpho-rules.make$"
                   "doc/ref/filelists.make$"
                   "config.h\\(in\\)\\?$"
@@ -96,6 +112,7 @@
                   "olena/img/lena16b.ppgm"
                   "olena/img/lena16b.pgm"
                   "^tools/swilena/src/.*\\.i"
+                  "^tools/swilena/doc/swilena\\.info$"
                   "olena/img/lena1d.ppbm"
                   "olena/img/lena1d128.pgm"
                   "olena/img/lena1d.pppm"
@@ -116,11 +133,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.27 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.29 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.12 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.13 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.48 600))
 
@@ -132,7 +149,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.6 700))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.9 600))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.10 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 600))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 600))
@@ -797,7 +814,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 600))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.7.1.1 600))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.7.1.2 600))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 600))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.4 600))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.4 600))
@@ -1524,12 +1541,12 @@
   
   (olena/oln/lrde/ufmt/basic_salembier.hh (oln/w/51_basic_sale 1.1 644))
   (olena/oln/lrde/ufmt/bin/basic_maxtree.cc (oln/x/0_basic_maxt 1.2 644))
-  (olena/oln/lrde/ufmt/bin/basic_salembier.cc (oln/x/1_basic_sale 1.1 644))
+  (olena/oln/lrde/ufmt/bin/basic_salembier.cc (oln/x/1_basic_sale 1.2 644))
   (olena/oln/lrde/ufmt/bin/gppo (oln/x/2_gppo 1.1 755))
   (olena/oln/lrde/ufmt/bin/gpp (oln/x/3_gpp 1.1 755))
   (olena/oln/lrde/ufmt/bin/inc (../../../../../) :symlink)
   (olena/oln/lrde/ufmt/basic_maxtree.hh (oln/x/4_basic_maxt 1.2 644))
-  (olena/oln/lrde/ufmt/log.hh (oln/x/5_log.hh 1.1 644))
+  (olena/oln/lrde/ufmt/log.hh (oln/x/5_log.hh 1.2 644))
   (olena/oln/lrde/ufmt/img/lena64.pgm (oln/x/6_lena64.pgm 1.1 644))
   (olena/oln/lrde/ufmt/img/lena6.pgm (oln/x/7_lena6.pgm 1.1 644))
   (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.2 644))
@@ -1540,23 +1557,23 @@
 ;; Files added by populate at Fri, 04 Aug 2006 18:38:31 +0200,
 ;; to version 10.245(w), by theo:
 
-  (olena/oln/lrde/ufmt/ai_maxtree.hh (oln/x/12_ai_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/si_maxtree.hh (oln/x/13_si_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/rup_maxtree.hh (oln/x/14_rup_maxtre 1.1 644))
-  (olena/oln/lrde/ufmt/sp_maxtree.hh (oln/x/15_sp_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/ap_maxtree.hh (oln/x/16_ap_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/r1_maxtree.hh (oln/x/17_r1_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/bin/rup_maxtree.cc (oln/x/18_rup_maxtre 1.1 644))
-  (olena/oln/lrde/ufmt/bin/si_maxtree.cc (oln/x/19_si_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/bin/sp_maxtree.cc (oln/x/20_sp_maxtree 1.1 644))
-  (olena/oln/lrde/ufmt/bin/r1_maxtree.cc (oln/x/21_r1_maxtree 1.1 644))
+  (olena/oln/lrde/ufmt/ad_maxtree.hh (oln/x/12_ai_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/hdc_maxtree.hh (oln/x/13_si_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/rpc_maxtree.hh (oln/x/14_rup_maxtre 1.2 644))
+  (olena/oln/lrde/ufmt/hpc_maxtree.hh (oln/x/15_sp_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/ap_maxtree.hh (oln/x/16_ap_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/r1ic_maxtree.hh (oln/x/17_r1_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/bin/rpc_maxtree.cc (oln/x/18_rup_maxtre 1.2 644))
+  (olena/oln/lrde/ufmt/bin/hdc_maxtree.cc (oln/x/19_si_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/bin/hpc_maxtree.cc (oln/x/20_sp_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/bin/r1ic_maxtree.cc (oln/x/21_r1_maxtree 1.2 644))
   
   
   
   
   
   
-  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.1 644))
+  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.3 644))
 
 ;; Files deleted by depopulate at Fri, 04 Aug 2006 18:41:16 +0200,
 ;; from version 10.245(w), by theo:
@@ -1578,6 +1595,27 @@
   ; (doc/ref/exdoc.mk ())
   ; (doc/ref/doxygen.config ())
   ; (doc/ref/out/exdoc.config ())
+
+;; Files added by populate at Fri, 25 Aug 2006 17:30:22 +0200,
+;; to version 10.248(w), by levill_r:
+
+  (TODO (oln/x/23_TODO 1.1 644))
+  (olena/TODO (oln/x/24_TODO 1.1 644))
+  (olena/oln/lrde/Makefile.am (oln/x/25_Makefile.a 1.1 644))
+  (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.1 644))
+  (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.1 644))
+  (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.1 644))
+  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.1 644))
+  (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.249 complete
+    (ChangeLog ChangeLog ChangeLog r) (olena/oln/lrde/ufmt/bin/basic_salembier.cc olena/oln/lrde/ufmt/bin/basic_salembier.cc olena/oln/lrde/ufmt/bin/basic_salembier.cc r)
+    (olena/oln/lrde/ufmt/log.hh olena/oln/lrde/ufmt/log.hh olena/oln/lrde/ufmt/log.hh r) (olena/oln/lrde/ufmt/ad_maxtree.hh olena/oln/lrde/ufmt/ai_maxtree.hh olena/oln/lrde/ufmt/ad_maxtree.hh r)
+    (olena/oln/lrde/ufmt/hdc_maxtree.hh olena/oln/lrde/ufmt/si_maxtree.hh olena/oln/lrde/ufmt/hdc_maxtree.hh r) (olena/oln/lrde/ufmt/rpc_maxtree.hh olena/oln/lrde/ufmt/rup_maxtree.hh olena/oln/lrde/ufmt/rpc_maxtree.hh r)
+    (olena/oln/lrde/ufmt/hpc_maxtree.hh olena/oln/lrde/ufmt/sp_maxtree.hh olena/oln/lrde/ufmt/hpc_maxtree.hh r) (olena/oln/lrde/ufmt/ap_maxtree.hh olena/oln/lrde/ufmt/ap_maxtree.hh olena/oln/lrde/ufmt/ap_maxtree.hh r)
+    (olena/oln/lrde/ufmt/r1ic_maxtree.hh olena/oln/lrde/ufmt/r1_maxtree.hh olena/oln/lrde/ufmt/r1ic_maxtree.hh r) (olena/oln/lrde/ufmt/bin/rpc_maxtree.cc olena/oln/lrde/ufmt/bin/rup_maxtree.cc olena/oln/lrde/ufmt/bin/rpc_maxtree.cc r)
+    (olena/oln/lrde/ufmt/bin/hdc_maxtree.cc olena/oln/lrde/ufmt/bin/si_maxtree.cc olena/oln/lrde/ufmt/bin/hdc_maxtree.cc r) (olena/oln/lrde/ufmt/bin/hpc_maxtree.cc olena/oln/lrde/ufmt/bin/sp_maxtree.cc olena/oln/lrde/ufmt/bin/hpc_maxtree.cc r)
+    (olena/oln/lrde/ufmt/bin/r1ic_maxtree.cc olena/oln/lrde/ufmt/bin/r1_maxtree.cc olena/oln/lrde/ufmt/bin/r1ic_maxtree.cc r) (olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README m))
+)
 (New-Merge-Parents)

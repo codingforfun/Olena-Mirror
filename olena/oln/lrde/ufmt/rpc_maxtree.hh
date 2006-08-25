@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_RUP_MAXTREE_HH
-# define OLENA_LRDE_UFMT_RUP_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_RPC_MAXTREE_HH
+# define OLENA_LRDE_UFMT_RPC_MAXTREE_HH
 
 # include <oln/lrde/ufmt/utils.hh>
 # include <oln/lrde/ufmt/ap_maxtree.hh>
@@ -46,7 +46,7 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct rup_maxtree : public ap_maxtree<I>
+      struct rpc_maxtree : public ap_maxtree<I>
       {
 	typedef ap_maxtree<I> super;
 	using super::f;
@@ -61,7 +61,7 @@ namespace oln
 
 	// ctor
 
-	rup_maxtree(const abstract::image<I>& f,
+	rpc_maxtree(const abstract::image<I>& f,
 		    const oln_neighborhood_type(I)& nbh)
 	  :
 	  super(f, nbh)
@@ -206,7 +206,7 @@ namespace oln
 	}
 
 
-      }; // end of class rup_maxtree
+      }; // end of class rpc_maxtree
 
 
 
@@ -217,4 +217,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_RUP_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_RPC_MAXTREE_HH
