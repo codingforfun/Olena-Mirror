@@ -1,3 +1,12 @@
+2006-08-28  Christophe Berger  <christophe.berger@lrde.epita.fr>
+
+	Add implementation of Najman's component tree computation algorithm.
+
+	* olena/oln/lrde/ufmt/basic_najman.hh: New.
+	* olena/oln/lrde/ufmt/bin/basic_najman.cc: New.
+	* oln/lrde/ufmt/Makefile.am: Add basic_najman.
+	* oln/lrde/ufmt/bin/Makefile.am: Add basic_najman.
+	
 2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some versions for float data.

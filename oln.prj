@@ -1,12 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 254)
-(Parent-Version oln 10 253)
-(Version-Log "Add implementation of Najman's component tree computation algorithm.
+(Project-Version oln 10 255)
+(Parent-Version oln 10 254)
+(Version-Log "Fix ChangeLog and add entries for basic_najman in Makefiles(.am).
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Aug 2006 18:17:59 +0200")
+(Checkin-Time "Mon, 28 Aug 2006 18:31:56 +0200")
 (Checkin-Login berger_c)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -123,7 +123,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.16 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.17 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.48 600))
 
@@ -1575,10 +1575,10 @@
   (TODO (oln/x/23_TODO 1.1 644))
   (olena/TODO (oln/x/24_TODO 1.1 644))
   (olena/oln/lrde/Makefile.am (oln/x/25_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.1 644))
+  (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.2 644))
   (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.2 644))
   (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.2 644))
-  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.1 644))
+  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.2 644))
   (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.2 644))
 ;; Files added by populate at Mon, 28 Aug 2006 10:51:36 +0200,
 ;; to version 10.249(w), by theo:
@@ -1622,6 +1622,6 @@
   (olena/oln/lrde/ufmt/bin/basic_najman.cc (oln/x/43_basic_najm 1.1 644))
 )
 (Merge-Parents
-  (10.253 complete)
+  (10.254 complete)
 )
 (New-Merge-Parents)
