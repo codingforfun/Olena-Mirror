@@ -1,32 +1,14 @@
-2006-08-21  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
 
-	Rename to conform to conventions given in the README file.
-	
-	* olena/oln/lrde/ufmt/README: Update.
-	* olena/oln/lrde/ufmt/sp_maxtree.hh: Rename as...
-	* olena/oln/lrde/ufmt/hpc_maxtree.hh: ...this.
-	* olena/oln/lrde/ufmt/ai_maxtree.hh: Rename as...
-	* olena/oln/lrde/ufmt/ad_maxtree.hh: ...this.
-	* olena/oln/lrde/ufmt/si_maxtree.hh: Rename as...
-	* olena/oln/lrde/ufmt/hdc_maxtree.hh: ...this.
-	* olena/oln/lrde/ufmt/rup_maxtree.hh: Rename as...
-	* olena/oln/lrde/ufmt/rpc_maxtree.hh: ...this.
-	* olena/oln/lrde/ufmt/r1_maxtree.hh: Rename as...
-	* olena/oln/lrde/ufmt/r1ic_maxtree.hh: ...this.
-	* olena/oln/lrde/ufmt/bin/: Update.
+	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of
+	the autoconfiscated package.
 
-	New versions with full compressed aux data.
-	
-	* olena/oln/lrde/ufmt/hdx_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/hpx_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/bin/hdx_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/hpx_maxtree.cc: New.
+	* configure.ac: Require Automake 1.9.5.
+	Configure olena/oln/lrde/Makefile, olena/oln/lrde/ufmt/Makefile
+	and olena/oln/lrde/ufmt/bin/Makefile.
+	(SUBDIRS): Add lrde/ufmt.
+	* TODO: New.
 
-	Bonus.
-	
-	* olena/oln/lrde/ufmt/bin/basic_salembier.cc: Add c2 case.
-  
-	
 2006-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Libtool.

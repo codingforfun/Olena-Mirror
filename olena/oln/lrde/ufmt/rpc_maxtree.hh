@@ -31,6 +31,7 @@
 # include <oln/lrde/ufmt/utils.hh>
 # include <oln/lrde/ufmt/ap_maxtree.hh>
 
+# include <vector>
 
 
 namespace oln
@@ -53,6 +54,8 @@ namespace oln
 	using super::nbh;
 	using super::par;
 	oln_lrde_ufmt_import_ap_maxtree_typedefs;
+
+	unsigned nnodes;
 
 	// aux data
 	std::vector<dpoint> dp;
@@ -78,6 +81,7 @@ namespace oln
 	void init()
 	{
 	  nb = pre<I>(nbh, dp);
+	  nnodes = 0;
 	}
 
 	void compute_parent()
@@ -93,7 +97,10 @@ namespace oln
 		{
 		  n = p + dp[i];
 		  if (f.hold(n))
-		    update(n, p);
+		    if (f[p] >= f[n])
+		      update(p, n);
+		    else
+		      update(n, p);
 		}
 	    }
 	}
@@ -107,6 +114,9 @@ namespace oln
 	{
 	  point r = anc(n, f[p]);
 	  
+	  if (f[p] != f[r])
+	    ++nnodes;
+
 	  if (f[r] <= f[p])
 	    par[p] = r;
 	  else
@@ -117,7 +127,46 @@ namespace oln
 	    }
 	}
 
+
 	void update(point x, point y)
+	{
+	  assert(x != y); // invariant
+	  assert(f[x] >= f[y]); // invariant
+
+	  point a = anc(x, f[y]);
+	  point b = find_level_root(y);
+
+	  assert(f[x] >= f[a] and f[a] >= f[y] and f[y] == f[b]); // invariant
+
+	  if (a == b)
+	    return; // already merged
+
+	  if (f[b] != f[a])
+	    ++nnodes;
+
+	  point memo = par[b];
+
+	  if (f[b] == f[a])
+	    par[b] = a; // simple plug
+	  else
+	    {
+	      if (par[a] != a)
+		par[b] = par[a];
+	      par[a] = b;
+	    }
+
+	  assert(f[memo] <= f[a]); // invariant
+	  update(a, memo);
+
+	  // FIXME: this algo looks ok and seems to work (...?)
+	  // it is very close to the 'insert' algo running with
+	  // "insert(x, find_level_root(y))" after the "if..swap"
+	  // FIXME: so it can be bettered...
+	}
+
+
+
+	void update__primary_version(point x, point y)
 	{
 	  assert(x != y); // invariant
 
@@ -143,7 +192,7 @@ namespace oln
 
 	  if (f[xx] == f[yy])
 	    {
-	      par[yy] = xx; // simple plug
+	      par[yy] = xx; // simple plug => 2 nodes merge
 	      update(xx, memo);
 	    }
 	  else
