@@ -28,8 +28,9 @@
 #ifndef OLENA_LRDE_UFMT_UTILS_HH
 # define OLENA_LRDE_UFMT_UTILS_HH
 
-# include <ntg/real/int_u.hh>
+# include <cstdlib>
 # include <vector>
+# include <ntg/real/int_u.hh>
 
 
 
@@ -295,6 +296,36 @@ namespace oln
 	return pre.size();
       }
 
+
+      
+      template <class I>
+      typename mute<I, float>::ret
+      to_float_with_noise(const abstract::image<I>& input)
+      {
+	const float max = float(RAND_MAX);
+	typename mute<I, float>::ret output(input.size());
+	oln_iter_type(I) p(input);
+	for_all(p)
+	  output[p] = float(input[p]) + float(rand()) / max;
+	return output;
+      }
+
+
+      template <typename I>
+      struct rev_sort
+      {
+	typedef oln_point_type(I) point;
+	const I& f;
+
+	rev_sort(const I& f) :
+	  f(f)
+	{}
+
+	bool operator()(const point& lhs, const point& rhs) const
+	{
+	  return f[lhs] > f[rhs];
+	}
+      };
 
 
     } // end of namespace oln::lrde::ufmt

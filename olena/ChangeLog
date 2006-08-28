@@ -1,5 +1,17 @@
 2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add some versions for float data.
+	
+	* olena/oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
+	(rev_sort): New.
+	* olena/oln/lrde/ufmt/README: Update.
+	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/spx_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/spx_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
+
+2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/lrde/ufmt/rpc_maxtree.hh (nnodes): New attribute.
 	(compute_parent): Sort before calling update.
 	(update): Rename variables and shorten code.

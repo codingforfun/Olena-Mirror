@@ -1,16 +1,22 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 252)
-(Parent-Version oln 10 249)
+(Project-Version oln 10 253)
+(Parent-Version oln 10 252)
 (Version-Log "2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
-	* oln/lrde/ufmt/rpc_maxtree.hh (nnodes): New attribute.
-	(compute_parent): Sort before calling update.
-	(update): Rename variables and shorten code.
+	Add some versions for float data.
+	
+	* olena/oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
+	(rev_sort): New.
+	* olena/oln/lrde/ufmt/README: Update.
+	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/spx_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/spx_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Aug 2006 11:01:51 +0200")
+(Checkin-Time "Mon, 28 Aug 2006 14:48:16 +0200")
 (Checkin-Login theo)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -127,7 +133,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.15 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.16 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.48 600))
 
@@ -1539,7 +1545,7 @@
   (olena/oln/lrde/ufmt/log.hh (oln/x/5_log.hh 1.2 644))
   (olena/oln/lrde/ufmt/img/lena64.pgm (oln/x/6_lena64.pgm 1.1 644))
   (olena/oln/lrde/ufmt/img/lena6.pgm (oln/x/7_lena6.pgm 1.1 644))
-  (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.2 644))
+  (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.3 644))
   
   
   
@@ -1563,7 +1569,7 @@
   
   
   
-  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.4 644))
+  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.5 644))
 
 ;; Files deleted by depopulate at Fri, 04 Aug 2006 18:41:16 +0200,
 ;; from version 10.245(w), by theo:
@@ -1594,16 +1600,26 @@
   (olena/oln/lrde/ufmt/bin/hdx_maxtree.cc (oln/x/35_hdx_maxtre 1.1 644))
   (olena/oln/lrde/ufmt/bin/gen_worst_salembier.cc (oln/x/36_gen_worst_ 1.1 644))
   (olena/oln/lrde/ufmt/bin/hpx_maxtree.cc (oln/x/37_hpx_maxtre 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 14:40:45 +0200,
+;; to version 10.252(w), by theo:
+
+  (olena/oln/lrde/ufmt/bin/sp_maxtree.cc (oln/x/38_sp_maxtree 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 14:40:49 +0200,
+;; to version 10.252(w), by theo:
+
+  (olena/oln/lrde/ufmt/bin/spx_maxtree.cc (oln/x/39_spx_maxtre 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 14:40:54 +0200,
+;; to version 10.252(w), by theo:
+
+  (olena/oln/lrde/ufmt/spx_maxtree.hh (oln/x/40_spx_maxtre 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 14:40:58 +0200,
+;; to version 10.252(w), by theo:
+
+  (olena/oln/lrde/ufmt/sp_maxtree.hh (oln/x/41_sp_maxtree 1.1 644))
 )
-(Merge-Parents
-  (10.251 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (configure.ac configure.ac configure.ac r) (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r)
-    (olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README r) (() () TODO a)
-    (() () olena/TODO a) (() () olena/oln/lrde/Makefile.am a)
-    (() () olena/oln/lrde/ufmt/Makefile.am a) (() () olena/oln/lrde/ufmt/fiorio-1.hh a)
-    (() () olena/oln/lrde/ufmt/fiorio-2.hh a) (() () olena/oln/lrde/ufmt/bin/Makefile.am a)
-    (() () olena/oln/lrde/ufmt/bin/fiorio.cc a) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

@@ -98,6 +98,10 @@ use of aux data: c_par (resp. c_dpar)
 for full compressed access to root
 find_root = quicker
 
+*** .
+no level compression
+no aux data (for full compression)
+
 
 ** further (later) optims
 
@@ -114,6 +118,9 @@ hdc  impled
 hdx  impled
 
 r1ic do not compile (ric specialized for 1D images)
+
+sp   impled
+spx  impled
 
 
 * basic_salembier
