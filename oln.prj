@@ -1,23 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 253)
-(Parent-Version oln 10 252)
-(Version-Log "2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
-
-	Add some versions for float data.
-	
-	* olena/oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
-	(rev_sort): New.
-	* olena/oln/lrde/ufmt/README: Update.
-	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/spx_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/spx_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
+(Project-Version oln 10 254)
+(Parent-Version oln 10 253)
+(Version-Log "Add implementation of Najman's component tree computation algorithm.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Aug 2006 14:48:16 +0200")
-(Checkin-Login theo)
+(Checkin-Time "Mon, 28 Aug 2006 18:17:59 +0200")
+(Checkin-Login berger_c)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -1620,6 +1610,18 @@
 ;; to version 10.252(w), by theo:
 
   (olena/oln/lrde/ufmt/sp_maxtree.hh (oln/x/41_sp_maxtree 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 18:08:07 +0200,
+;; to version 10.253(w), by berger_c:
+
+  (olena/oln/lrde/ufmt/basic_najman.hh (oln/x/42_basic_najm 1.1 644))
+
+;; Files added by populate at Mon, 28 Aug 2006 18:08:14 +0200,
+;; to version 10.253(w), by berger_c:
+
+  (olena/oln/lrde/ufmt/bin/basic_najman.cc (oln/x/43_basic_najm 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.253 complete)
+)
 (New-Merge-Parents)
