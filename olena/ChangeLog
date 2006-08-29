@@ -1,3 +1,46 @@
+2006-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a third version of the computation of a the max-tree based on
+	Fiorio's and Gustedt's labelling algorithm.
+
+	* oln/lrde/ufmt/fiorio-3.hh: New file.
+	* oln/lrde/ufmt/bin/fiorio.cc: Handle fiorio-3.hh.
+	Add copyright notice.
+	* oln/lrde/ufmt/bin/Makefile.am (AM_CXXFLAGS): Add -DNDEBUG.
+	(check_PROGRAMS): Add fiorio-3.
+	(fiorio_3_SOURCES, fiorio_3_CPPFLAGS): New.
+	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add fiorio-3.hh.
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Typo in
+	comment.
+	* oln/lrde/ufmt/README: Update.
+
+2006-08-28  Christophe Berger  <christophe.berger@lrde.epita.fr>
+
+	Add implementation of Najman's component tree computation algorithm.
+
+	* olena/oln/lrde/ufmt/basic_najman.hh: New.
+	* olena/oln/lrde/ufmt/bin/basic_najman.cc: New.
+	* oln/lrde/ufmt/Makefile.am: Add basic_najman.
+	* oln/lrde/ufmt/bin/Makefile.am: Add basic_najman.
+	
+2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add some versions for float data.
+	
+	* olena/oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
+	(rev_sort): New.
+	* olena/oln/lrde/ufmt/README: Update.
+	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/bin/spx_maxtree.cc: New.
+	* olena/oln/lrde/ufmt/spx_maxtree.hh: New.
+	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
+
+2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/lrde/ufmt/rpc_maxtree.hh (nnodes): New attribute.
+	(compute_parent): Sort before calling update.
+	(update): Rename variables and shorten code.
+
 2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up.

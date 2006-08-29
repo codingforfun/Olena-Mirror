@@ -1,21 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 251)
-(Parent-Version oln 10 250)
-(Version-Log "2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 256)
+(Parent-Version oln 10 251)
+(Version-Log "2006-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
-	Clean up.
+	Add a third version of the computation of a the max-tree based on
+	Fiorio's and Gustedt's labelling algorithm.
 
-	* oln/lrde/ufmt/bin/fiorio.cc: Remove dead code.
-	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Likewise.
-	Adjust header guards.
-	Don't use non-ASCII characters.
-	* oln/lrde/ufmt/README (find_root): Don't use non-ASCII
-	characters.
+	* oln/lrde/ufmt/fiorio-3.hh: New file.
+	* oln/lrde/ufmt/bin/fiorio.cc: Handle fiorio-3.hh.
+	Add copyright notice.
+	* oln/lrde/ufmt/bin/Makefile.am (AM_CXXFLAGS): Add -DNDEBUG.
+	(check_PROGRAMS): Add fiorio-3.
+	(fiorio_3_SOURCES, fiorio_3_CPPFLAGS): New.
+	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add fiorio-3.hh.
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Typo in
+	comment.
+	* oln/lrde/ufmt/README: Update.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 25 Aug 2006 18:19:26 +0200")
+(Checkin-Time "Tue, 29 Aug 2006 14:48:46 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -132,7 +137,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.14 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.48 600))
 
@@ -1544,7 +1549,7 @@
   (olena/oln/lrde/ufmt/log.hh (oln/x/5_log.hh 1.2 644))
   (olena/oln/lrde/ufmt/img/lena64.pgm (oln/x/6_lena64.pgm 1.1 644))
   (olena/oln/lrde/ufmt/img/lena6.pgm (oln/x/7_lena6.pgm 1.1 644))
-  (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.2 644))
+  (olena/oln/lrde/ufmt/utils.hh (oln/x/8_utils.hh 1.3 644))
   
   
   
@@ -1554,8 +1559,8 @@
 
   (olena/oln/lrde/ufmt/ad_maxtree.hh (oln/x/12_ai_maxtree 1.2 644))
   (olena/oln/lrde/ufmt/hdc_maxtree.hh (oln/x/13_si_maxtree 1.2 644))
-  (olena/oln/lrde/ufmt/rpc_maxtree.hh (oln/x/14_rup_maxtre 1.2 644))
-  (olena/oln/lrde/ufmt/hpc_maxtree.hh (oln/x/15_sp_maxtree 1.2 644))
+  (olena/oln/lrde/ufmt/rpc_maxtree.hh (oln/x/14_rup_maxtre 1.3 644))
+  (olena/oln/lrde/ufmt/hpc_maxtree.hh (oln/x/15_sp_maxtree 1.3 644))
   (olena/oln/lrde/ufmt/ap_maxtree.hh (oln/x/16_ap_maxtree 1.2 644))
   (olena/oln/lrde/ufmt/r1ic_maxtree.hh (oln/x/17_r1_maxtree 1.2 644))
   (olena/oln/lrde/ufmt/bin/rpc_maxtree.cc (oln/x/18_rup_maxtre 1.2 644))
@@ -1568,7 +1573,7 @@
   
   
   
-  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.4 644))
+  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.6 644))
 
 ;; Files deleted by depopulate at Fri, 04 Aug 2006 18:41:16 +0200,
 ;; from version 10.245(w), by theo:
@@ -1597,11 +1602,43 @@
   (TODO (oln/x/23_TODO 1.1 644))
   (olena/TODO (oln/x/24_TODO 1.1 644))
   (olena/oln/lrde/Makefile.am (oln/x/25_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.2 644))
-  (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.2 644))
-  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.1 644))
-  (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.2 644))
+  (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.3 644))
+  (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.3 644))
+  (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.3 644))
+  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.3 644))
+  (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.3 644))
+
+
+  (olena/oln/lrde/ufmt/hpx_maxtree.hh (oln/x/31_hpx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/attributes.hh (oln/x/32_attributes 1.1 644))
+  (olena/oln/lrde/ufmt/hdx_maxtree.hh (oln/x/33_hdx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/attributes_bis.hh (oln/x/34_attributes 1.1 644))
+  (olena/oln/lrde/ufmt/bin/hdx_maxtree.cc (oln/x/35_hdx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/bin/gen_worst_salembier.cc (oln/x/36_gen_worst_ 1.1 644))
+  (olena/oln/lrde/ufmt/bin/hpx_maxtree.cc (oln/x/37_hpx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/bin/sp_maxtree.cc (oln/x/38_sp_maxtree 1.1 644))
+  (olena/oln/lrde/ufmt/bin/spx_maxtree.cc (oln/x/39_spx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/spx_maxtree.hh (oln/x/40_spx_maxtre 1.1 644))
+  (olena/oln/lrde/ufmt/sp_maxtree.hh (oln/x/41_sp_maxtree 1.1 644))
+  (olena/oln/lrde/ufmt/basic_najman.hh (oln/x/42_basic_najm 1.1 644))
+  (olena/oln/lrde/ufmt/bin/basic_najman.cc (oln/x/43_basic_najm 1.1 644))
+
+;; Files added by populate at Tue, 29 Aug 2006 11:05:19 +0200,
+;; to version 10.251(w), by levill_r:
+
+  (olena/oln/lrde/ufmt/fiorio-3.hh (oln/x/44_fiorio-3.h 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.255 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/lrde/ufmt/utils.hh olena/oln/lrde/ufmt/utils.hh olena/oln/lrde/ufmt/utils.hh r)
+    (olena/oln/lrde/ufmt/rpc_maxtree.hh olena/oln/lrde/ufmt/rpc_maxtree.hh olena/oln/lrde/ufmt/rpc_maxtree.hh r) (olena/oln/lrde/ufmt/hpc_maxtree.hh olena/oln/lrde/ufmt/hpc_maxtree.hh olena/oln/lrde/ufmt/hpc_maxtree.hh r)
+    (olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README olena/oln/lrde/ufmt/README m) (olena/oln/lrde/ufmt/Makefile.am olena/oln/lrde/ufmt/Makefile.am olena/oln/lrde/ufmt/Makefile.am m)
+    (olena/oln/lrde/ufmt/bin/Makefile.am olena/oln/lrde/ufmt/bin/Makefile.am olena/oln/lrde/ufmt/bin/Makefile.am m) (() () olena/oln/lrde/ufmt/hpx_maxtree.hh a)
+    (() () olena/oln/lrde/ufmt/attributes.hh a) (() () olena/oln/lrde/ufmt/hdx_maxtree.hh a)
+    (() () olena/oln/lrde/ufmt/attributes_bis.hh a) (() () olena/oln/lrde/ufmt/bin/hdx_maxtree.cc a)
+    (() () olena/oln/lrde/ufmt/bin/gen_worst_salembier.cc a) (() () olena/oln/lrde/ufmt/bin/hpx_maxtree.cc a)
+    (() () olena/oln/lrde/ufmt/bin/sp_maxtree.cc a) (() () olena/oln/lrde/ufmt/bin/spx_maxtree.cc a)
+    (() () olena/oln/lrde/ufmt/spx_maxtree.hh a) (() () olena/oln/lrde/ufmt/sp_maxtree.hh a)
+    (() () olena/oln/lrde/ufmt/basic_najman.hh a) (() () olena/oln/lrde/ufmt/bin/basic_najman.cc a))
+)
 (New-Merge-Parents)

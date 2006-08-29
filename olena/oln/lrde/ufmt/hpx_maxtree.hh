@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_HPC_MAXTREE_HH
-# define OLENA_LRDE_UFMT_HPC_MAXTREE_HH
+#ifndef OLENA_LRDE_UFMT_HPX_MAXTREE_HH
+# define OLENA_LRDE_UFMT_HPX_MAXTREE_HH
 
 # include <oln/level/fill.hh>
 # include <oln/lrde/ufmt/utils.hh>
@@ -47,7 +47,7 @@ namespace oln
       // FIXME: doc.
 
       template <class I>
-      struct hpc_maxtree : public ap_maxtree<I>
+      struct hpx_maxtree : public ap_maxtree<I>
       {
 	typedef ap_maxtree<I> super;
 	using super::f;
@@ -62,15 +62,17 @@ namespace oln
 	unsigned nb;
 	unsigned nnodes;
 	typename mute<I, unsigned>::ret label;
+	typename mute<I, point>::ret cpar;
 
 
 	// ctor
 
-	hpc_maxtree(const abstract::image<I>& f,
+	hpx_maxtree(const abstract::image<I>& f,
 		   const oln_neighborhood_type(I)& nbh)
 	  :
 	  super(f, nbh),
-	  label(f.size())
+	  label(f.size()),
+	  cpar(f.size())
 	{
 	}
 
@@ -79,14 +81,14 @@ namespace oln
 	{
 	  init();
 	  compute_parent();  // 1st pass
-	  extract_maxtree<A>(); // 2nd pass
+// 	  extract_maxtree<A>(); // 2nd pass
 	}
 
 	void init()
 	{
 	  S = histogram_reverse_sort_p(f, H);
 	  nb = split<I>(nbh, dp_pre, dp_post);
-	  nnodes = 0;
+	  nnodes = 1;
 	}
 
 	void compute_parent()
@@ -102,20 +104,20 @@ namespace oln
 	      for (i = i_first; i < i_last; ++i)
 		{
 		  point p = S[i];
-		  make_set(p);
+		  make_x_set(p);
 		  // pre
 		  for (unsigned j = 0; j < nb; ++j)
 		    {
 		      point n = p + dp_pre[j];
 		      if (f.hold(n) and f[n] >= h)
-			do_union(n, p, h);
+			do_x_union(n, p);
 		    }
 		  // post
 		  for (unsigned j = 0; j < nb; ++j)
 		    {
 		      point n = p + dp_post[j];
 		      if (f.hold(n) and f[n] > h)
-			do_union(n, p, h);
+			do_x_union(n, p);
 		    }
 		}
 
@@ -127,123 +129,44 @@ namespace oln
 	      for (int k = i_last - 1; k >= i_first; --k)
 		{
 		  point p = S[k];
-		  if (is_root(p))
-		    ++nnodes;
-		  else
-		    par[p] = par[par[p]];
+// 		  if (is_root(p))
+// 		    ++nnodes;
+// 		  else
+		    cpar[p] = cpar[cpar[p]];
 		}
+	      
 	    } // end of "for all h"
 	}
 
 
-	template <class A> // A for attributes
-	std::vector< node_<A> >
-	extract_maxtree()
-	{
-	  std::vector< node_<A> > node(nnodes);
-
-	  // bkd
-	  unsigned cur_l = nnodes - 1;
-	  for (int i = S.size() - 1; i != 0; --i)
-	    {
-	      point p = S[i];
-
-	      // nota: level compression is not completed here;
-	      // however, though it is useless to finalize it, the
-	      // code to perform completion is given but commented
-	      if (is_level_root(p))
-		{
-		  /*
-		  // completing level compression:
-
-		  if (not is_level_root(par[p]))
-		  {
-		    // Cf. above comments; here we have
-		    // p @ h+ --> par[p] @ h --> lr @ h
-		    if (not is_root(p))
-		      {
-			assert(f[p] > f[par[p]]);
-			assert(f[par[p]] == f[par[par[p]]]);
-			assert(is_level_root(par[par[p]]));
-		      }
-		    par[p] = par[par[p]];
-		  }
-		  // now the level compression is completed!
-		  assert(is_level_root(par[p]));
-		  */
-
-		  // node initialization
-		  label[p] = cur_l;
-		  node[cur_l].par = label[par[p]];
-		  --cur_l;
-		}
-	      else
-		// label propagation
-		label[p] = label[par[p]];
-	    }
-	  return node;
-	}
-
-
-	template <class A> // A for attributes
-	void compute_attributes(std::vector< node_<A> >& node)
-	  // point-wise version
-	{
-	  for (int i = S.size() - 1; i != 0; --i)
-	    {
-	      point p = S[i];
-	      if (is_level_root(p))
-		node[label[p]].init(f, p);
-	      else
-		node[label[p]].insert(f, p);
-	    }
-	  for (int l = 0; l < nnodes; ++l)
-	    if (node[l].par != l) // not root node
-	      node[node[l].par].embrace(node[l]);
-	}
-
-	void make_set(const point& x)
+	void make_x_set(const point& x)
 	{
 	  par[x] = x;
+	  cpar[x] = x;
 	}
 
-	bool is_root(const point& x) const
+	point find_x_root(point x)
 	{
-	  return par[x] == x;
-	}
-
-	bool is_level_root(const point& x) const
-	{
-	  return is_root(x) or f[par[x]] < f[x];
-	}
-
-	point find_level_root(const point& x)
-	{
-	  if (is_level_root(x))
+	  if (cpar[x] == x)
 	    return x;
 	  else
-	    return par[x] = find_level_root(par[x]);
+	    return cpar[x] = find_x_root(cpar[x]);
 	}
 
-	point find_root(point x, value h)
+	void do_x_union(const point& n, const point& p)
 	{
-	  while (not is_root(x))
-	    if (f[x] > h)
-	      x = par[x];
-	    else
-	      x = find_level_root(par[x]);
-	  return x;
-	}
-
-	void do_union(const point& n, const point& p, value h)
-	{
-	  point r = find_root(n, h);
+	  point r = find_x_root(n);
 	  if (r != p)
-	    par[r] = p;
+	    {
+	      par[r] = p;
+	      cpar[r] = p;
+	      if (f[p] < f[r])
+		++nnodes;
+	    }
 	}
 
 
-      }; // end of class hpc_maxtree
+      }; // end of class hpx_maxtree
 
 
 
@@ -254,4 +177,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_HPC_MAXTREE_HH
+#endif // ! OLENA_LRDE_UFMT_HPX_MAXTREE_HH
