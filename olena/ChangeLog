@@ -1,3 +1,10 @@
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prevent recursive traversals accross directories.
+
+	* oln/lrde/ufmt/bin/inc: Remove this symbolic link.
+	* oln/lrde/ufmt/bin/gpp, oln/lrde/ufmt/bin/gppo: Adjust.
+
 2006-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a third version of the computation of a the max-tree based on
