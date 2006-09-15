@@ -1,3 +1,9 @@
+2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix oln/Makefile.
+
+	* oln/Makefile.am (SUBDIRS): s,lrde/ufmt,lrde,.
+
 2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Prevent recursive traversals accross directories.
