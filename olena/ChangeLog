@@ -1,3 +1,14 @@
+2006-09-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix sanity tests in oln/lrde.
+
+	* oln/lrde/ufmt/attributes.hh, oln/lrde/ufmt/basic_najman.hh: Add
+	missing header inclusions.
+	* oln/lrde/ufmt/attributes_bis.hh: Likewise.
+	Disable irrelevant broken assertions.
+	* oln/lrde/ufmt/utils.hh: Add missing header inclusions.
+	Remove useless forward declarations.
+
 2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix oln/Makefile.

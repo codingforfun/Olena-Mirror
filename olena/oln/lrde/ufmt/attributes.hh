@@ -28,6 +28,8 @@
 #ifndef OLENA_LRDE_UFMT_ATTRIBUTES_HH
 # define OLENA_LRDE_UFMT_ATTRIBUTES_HH
 
+# include <oln/core/abstract/image.hh>
+# include <oln/core/point2d.hh>
 
 
 namespace oln

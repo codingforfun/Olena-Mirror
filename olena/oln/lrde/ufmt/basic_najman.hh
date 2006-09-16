@@ -28,6 +28,8 @@
 #ifndef OLENA_LRDE_UFMT_BASIC_NAJMAN_HH
 # define OLENA_LRDE_UFMT_BASIC_NAJMAN_HH
 
+# include <list>
+
 # include <oln/level/fill.hh>
 # include <oln/lrde/ufmt/utils.hh>
 # include <oln/lrde/ufmt/ap_maxtree.hh>

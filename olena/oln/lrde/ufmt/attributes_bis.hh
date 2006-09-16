@@ -52,11 +52,13 @@ namespace oln
 	template <class I, class P>
 	void insert(const I& f, const P& p)
 	{
-	  assert(f[p] == h);
+	  // FIXME: Broken assertion.
+// 	  assert(f[p] == h);
 	}
 	void embrace(const self_t& rhs)
 	{
-	  assert(rhs.h > h);
+	  // FIXME: Broken assertion.
+// 	  assert(rhs.h > h);
 	  if (rhs.value + 1 > value)
 	    value = rhs.value + 1;
 	}
