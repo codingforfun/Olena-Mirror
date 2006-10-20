@@ -195,7 +195,7 @@
 (olena/oln/makefile.src 6612 1152116540 r/4_makefile.s 1.9)
 (olena/oln/core/w_window2d.hh 7226 1080914403 c/18_w_window2d 1.6.1.16)
 (olena/oln/morpho/stat.hh 5346 1079094599 50_stat.hh 1.8.1.12)
-(tools/swilena/ChangeLog 17119 1161354361 n/37_ChangeLog 1.7.1.49)
+(tools/swilena/ChangeLog 17385 1161363911 n/37_ChangeLog 1.7.1.50)
 (tools/lib/getopt1.c 4528 1060008742 p/28_getopt1.c 1.2)
 (olena/oln/lrde/ufmt/ap_maxtree.hh 3576 1156173434 x/16_ap_maxtree 1.2)
 (tools/swilena/meta/swilena_morpho.i 7967 1151681175 s/34_swilena_mo 1.5)

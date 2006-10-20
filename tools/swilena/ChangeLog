@@ -1,5 +1,14 @@
 2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Rblena installation.
+
+	* ruby/Makefile.am (EXTRA_DIST): Move ltrequire.rb...
+	(dist_ruby_SCRIPT): ...here.
+	(ruby_SCRIPT): Add swilena_display.rb.
+	* ruby/ltrequire.rb: Update to latest version from clspr.
+
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Pylena installation.
 
 	* python/Makefile.am (python_PYTHON): Add ltihooks.py.
