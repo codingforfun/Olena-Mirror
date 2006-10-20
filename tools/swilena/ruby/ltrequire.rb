@@ -35,12 +35,17 @@ def extract_dlname(libtool_library)
   if dlname.empty?
     raise "No dlname found in " + libtool_library
   end
-  if installed
-    filename = File.join(File.dirname(libtool_library), dlname)
+  
+  if $LTREQUIRE_NO_PATH_PREFIX then
+    # Simply return the name of the dynamic module.
+    dlname
   else
-    filename = File.join(File.dirname(libtool_library), '.libs', dlname)
+    if installed
+      File.join(File.dirname(libtool_library), dlname)
+    else
+      File.join(File.dirname(libtool_library), '.libs', dlname)
+    end
   end
-  filename
 end
 
 # Add a hook to Kernel.require to handle Libtool libraries.
