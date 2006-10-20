@@ -11,6 +11,7 @@ SUBDIRS = bin
 noinst_HEADERS =				\
   ad_maxtree.hh					\
   ap_maxtree.hh					\
+  attributes.hh					\
   basic_maxtree.hh				\
   basic_najman.hh				\
   basic_salembier.hh				\
