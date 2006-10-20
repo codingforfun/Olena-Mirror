@@ -1,3 +1,10 @@
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Pylena installation.
+
+	* python/Makefile.am (python_PYTHON): Add ltihooks.py.
+	(EXTRA_DIST): Remove.
+
 2006-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* ruby/ltrequire.rb: Add copyright header.
