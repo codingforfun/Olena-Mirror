@@ -1,15 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 264)
-(Parent-Version oln 10 263)
-(Version-Log "2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 265)
+(Parent-Version oln 10 264)
+(Version-Log "2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
-	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add attributes.hh
+        Fix the distribution.
+
+        * ruby/Makefile.am (dist_ruby_SCRIPT, dist_noinst_ruby_SCRIPT):
+        Remove.
+        (ruby_DATA): New.  Add ltrequire.rb and swilena_display.rb.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 20 Oct 2006 19:13:44 +0200")
+(Checkin-Time "Sat, 21 Oct 2006 22:31:35 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -128,7 +132,7 @@
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.5 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.50 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.51 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -1049,7 +1053,7 @@
 
   (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.9 644))
   (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.6 744))
-  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.9 600))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.10 600))
   (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.8 644))
   (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.6 755))
 

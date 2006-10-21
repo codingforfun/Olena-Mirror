@@ -1,3 +1,11 @@
+2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* ruby/Makefile.am (dist_ruby_SCRIPT, dist_noinst_ruby_SCRIPT):
+	Remove.
+	(ruby_DATA): New.  Add ltrequire.rb and	swilena_display.rb.
+
 2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Rblena installation.
