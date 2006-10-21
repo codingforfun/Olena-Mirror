@@ -1,3 +1,10 @@
+2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* oln/makefile.src (OLN_DEP): Add convol/slow_gaussian.hh and
+	convol/slow_gaussian.hxx.
+
 2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add attributes.hh
