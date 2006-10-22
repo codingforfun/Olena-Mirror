@@ -1,18 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 266)
-(Parent-Version oln 10 265)
-(Version-Log "2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 267)
+(Parent-Version oln 10 266)
+(Version-Log "2006-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
-        Fix the distribution.
+        Fix the distribution (again).
 
-        * oln/makefile.src (OLN_DEP): Add convol/slow_gaussian.hh and
-        convol/slow_gaussian.hxx.
+        * ruby/Makefile.am: s/ruby_DATA/dist_ruby_DATA/g.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 21 Oct 2006 22:32:07 +0200")
+(Checkin-Time "Sun, 22 Oct 2006 11:57:38 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -131,7 +130,7 @@
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.6 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.51 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.52 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -1052,7 +1051,7 @@
 
   (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.9 644))
   (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.6 744))
-  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.10 600))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.11 600))
   (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.8 644))
   (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.6 755))
 

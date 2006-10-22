@@ -1,3 +1,9 @@
+2006-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution (again).
+
+	* ruby/Makefile.am: s/ruby_DATA/dist_ruby_DATA/g.
+
 2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution.
