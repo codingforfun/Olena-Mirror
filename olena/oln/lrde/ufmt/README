@@ -142,3 +142,12 @@ Fiorio's and Gustedt's algorithm.
 ** fiorio-2.hh
 My second implementation of the max-tree computation using Fiorio's and
 Gustedt's algorithm, using routines of Theo's (anc, insert, etc.)
+
+** fiorio-3.hh
+A variation on fiorio-2.hh, which computes a max-tree for each line
+of the image independently, and then merges them column per column.
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:

@@ -6,9 +6,9 @@
 SUBDIRS = . tests
 
 # ltihooks.py: Python import hooks understanding Libtool libraries.
-EXTRA_DIST = ltihooks.py
+python_PYTHON = ltihooks.py
 
-python_PYTHON =						\
+python_PYTHON +=					\
   swilena_display.py					\
   swilena_all1d.py swilena_all2d.py swilena_all3d.py
 

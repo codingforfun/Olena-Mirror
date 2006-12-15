@@ -1,4 +1,4 @@
-##
+##							-*- makefile -*-
 ## List of headers in olena
 ## Include this file to have access to their name.
 ##
@@ -39,6 +39,8 @@ OLN_DEP =					\
   convol/fast_gaussian_coefficient.hh		\
   convol/nagao.hh				\
   convol/nagao.hxx				\
+  convol/slow_gaussian.hh			\
+  convol/slow_gaussian.hxx			\
   core/abstract/binary_image.hh			\
   core/abstract/behavior.hh			\
   core/abstract/dpoint.hh			\

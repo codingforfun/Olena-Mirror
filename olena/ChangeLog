@@ -1,3 +1,73 @@
+2006-12-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add some EFIGI utilities.
+	
+	* olena/oln/lrde/efigi/pfm2pgm.cc,
+	* olena/oln/lrde/efigi/misc.hh,
+	* olena/oln/lrde/efigi/io.hh,
+	* olena/oln/lrde/efigi/req.hh,
+	* olena/oln/lrde/efigi/wst.cc,
+	* olena/oln/lrde/efigi/gaussian.cc,
+	* olena/oln/lrde/efigi/pgm2pfm.cc,
+	* olena/oln/lrde/efigi/wst.hh:
+	New.
+
+2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* oln/makefile.src (OLN_DEP): Add convol/slow_gaussian.hh and
+	convol/slow_gaussian.hxx.
+
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add attributes.hh
+
+2006-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/lrde/ufmt/img/lena64nb.pgm, oln/lrde/ufmt/img/lena64.pbm:
+	New files.
+
+2006-09-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix sanity tests in oln/lrde.
+
+	* oln/lrde/ufmt/attributes.hh, oln/lrde/ufmt/basic_najman.hh: Add
+	missing header inclusions.
+	* oln/lrde/ufmt/attributes_bis.hh: Likewise.
+	Disable irrelevant broken assertions.
+	* oln/lrde/ufmt/utils.hh: Add missing header inclusions.
+	Remove useless forward declarations.
+
+2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix oln/Makefile.
+
+	* oln/Makefile.am (SUBDIRS): s,lrde/ufmt,lrde,.
+
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prevent recursive traversals accross directories.
+
+	* oln/lrde/ufmt/bin/inc: Remove this symbolic link.
+	* oln/lrde/ufmt/bin/gpp, oln/lrde/ufmt/bin/gppo: Adjust.
+
+2006-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a third version of the computation of a the max-tree based on
+	Fiorio's and Gustedt's labelling algorithm.
+
+	* oln/lrde/ufmt/fiorio-3.hh: New file.
+	* oln/lrde/ufmt/bin/fiorio.cc: Handle fiorio-3.hh.
+	Add copyright notice.
+	* oln/lrde/ufmt/bin/Makefile.am (AM_CXXFLAGS): Add -DNDEBUG.
+	(check_PROGRAMS): Add fiorio-3.
+	(fiorio_3_SOURCES, fiorio_3_CPPFLAGS): New.
+	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add fiorio-3.hh.
+	* oln/lrde/ufmt/fiorio-1.hh, oln/lrde/ufmt/fiorio-2.hh: Typo in
+	comment.
+	* oln/lrde/ufmt/README: Update.
+
 2006-08-28  Christophe Berger  <christophe.berger@lrde.epita.fr>
 
 	Add implementation of Najman's component tree computation algorithm.

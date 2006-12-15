@@ -1,3 +1,33 @@
+2006-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution (again).
+
+	* ruby/Makefile.am: s/ruby_DATA/dist_ruby_DATA/g.
+
+2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* ruby/Makefile.am (dist_ruby_SCRIPT, dist_noinst_ruby_SCRIPT):
+	Remove.
+	(ruby_DATA): New.  Add ltrequire.rb and	swilena_display.rb.
+
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Rblena installation.
+
+	* ruby/Makefile.am (EXTRA_DIST): Move ltrequire.rb...
+	(dist_ruby_SCRIPT): ...here.
+	(ruby_SCRIPT): Add swilena_display.rb.
+	* ruby/ltrequire.rb: Update to latest version from clspr.
+
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Pylena installation.
+
+	* python/Makefile.am (python_PYTHON): Add ltihooks.py.
+	(EXTRA_DIST): Remove.
+
 2006-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* ruby/ltrequire.rb: Add copyright header.

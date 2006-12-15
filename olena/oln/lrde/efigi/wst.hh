@@ -25,58 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LRDE_UFMT_ATTRIBUTES_BIS_HH
-# define OLENA_LRDE_UFMT_ATTRIBUTES_BIS_HH
+#ifndef OLENA_LRDE_EFIGI_WST_HH
+# define OLENA_LRDE_EFIGI_WST_HH
 
+#include <iostream>
+#include <cmath>
+#include <oln/basics2d.hh>
+
+#include <oln/lrde/efigi/misc.hh>
 
 
 namespace oln
 {
 
-  namespace lrde
+  namespace efigi
   {
 
-    namespace ufmt
-    {
 
 
-      struct longest_leaf_path_t // longest path to a leaf
-      {
-	typedef longest_leaf_path_t self_t;
-
-	template <class I, class P>
-	void init(const I&, const P&)
-	{
-	  value = 0;
-	}
-	template <class I, class P>
-	void insert(const I& f, const P& p)
-	{
-	  // FIXME: Broken assertion.
-// 	  assert(f[p] == h);
-	}
-	void embrace(const self_t& rhs)
-	{
-	  // FIXME: Broken assertion.
-// 	  assert(rhs.h > h);
-	  if (rhs.value + 1 > value)
-	    value = rhs.value + 1;
-	}
-	operator unsigned() const
-	{
-	  return value;
-	}
-
-      private:
-	unsigned value;
-      };
-
-
-    } // end of namespace oln::lrde::ufmt
-
-  } // end of namespace oln::lrde
+  } // end of namespace oln::efigi
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_LRDE_UFMT_ATTRIBUTES_BIS_HH
+#endif // ! OLENA_LRDE_EFIGI_WST_HH

@@ -26,7 +26,7 @@
 // Public License.
 
 
-/** \brief An adadpatation of Fiorio's and Gustedt's algorithm
+/** \brief An adaptation of Fiorio's and Gustedt's algorithm
     (fiorio.96.tcs).
 
     Ref.: Christophe Fiorio and Jens Gustedt.  Two linear time

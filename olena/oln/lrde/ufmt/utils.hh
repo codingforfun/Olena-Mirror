@@ -30,9 +30,11 @@
 
 # include <cstdlib>
 # include <vector>
+
 # include <ntg/real/int_u.hh>
-
-
+# include <oln/core/image1d.hh>
+# include <oln/core/image2d.hh>
+# include <oln/core/image3d.hh>
 
 
 
@@ -49,9 +51,6 @@ namespace oln
   struct neighborhood1d;
   struct neighborhood2d;
   struct neighborhood3d;
-  template <class T, class E> class image1d;
-  template <class T, class E> class image2d;
-  template <class T, class E> class image3d;
   // end of fwd decls.
 
 

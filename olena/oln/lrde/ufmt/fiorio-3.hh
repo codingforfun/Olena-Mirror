@@ -33,12 +33,13 @@
     Union-Find strategies for image processing.  Theoretical Computer
     Science, 1996.  
 
-    \note This is the second version of my implementation, augmented
-    with Theo's (better) routines and ideas.  */
+    \note This is the third version of my implementation, augmented
+    with Theo's (better) routines and ideas + another merge/update
+    method.  */
 
 
-#ifndef OLENA_LRDE_UFMT_FIORIO_2_HH
-# define OLENA_LRDE_UFMT_FIORIO_2_HH
+#ifndef OLENA_LRDE_UFMT_FIORIO_3_HH
+# define OLENA_LRDE_UFMT_FIORIO_3_HH
 
 # include <algorithm>
 
@@ -63,8 +64,8 @@ namespace oln
 
       public:
 	fiorio(const abstract::image<I>& ima) :
-	  ima_(ima.exact().clone()), parent_(ima.size())
-	  , n_level_roots_cpt_(ima.npoints())
+	  ima_(ima.exact().clone()), parent_(ima.size()),
+	  n_level_roots_cpt_(ima.npoints())
 	{
 	  // Init the image of parents.
 	  piter p (parent_);
@@ -137,14 +138,13 @@ namespace oln
 	// FIXME: Improve to handle other neighborhoods than 4-c.
 	void scan_line()
 	{
-	  // Special treatment of the first line (no merge).
-	  build_tree_of_line(0);
-	  for (coord i = 1; i < ima_.nrows(); ++i)
-	    {
-	      build_tree_of_line(i);
-	      // Merge the tree of the current line with the rest of the image.
-	      merge_line(i);
-	    }
+	  // Build the max-tree of each line separately.
+	  for (coord i = 0; i < ima_.nrows(); ++i)
+	    build_tree_of_line(i);
+	  // Then merge all max-trees, line per line.
+	  for (coord j = 0; j < ima_.ncols(); ++j)
+	    for (coord i = 0; i < ima_.nrows() - 1; ++i)
+	      merge(point(i, j), point(i + 1, j));
 	}
 
 	void build_tree_of_line(coord row)
@@ -156,22 +156,6 @@ namespace oln
 	      point left = find_level_root(point(row, j - 1));
 	      point this_one = point(row, j);
 	      insert(this_one, left);
-	    }
-	}
-
-	void merge_line(coord row)
-	{
-	  precondition(row > 0);
-
-	  for (coord col = 0; col < ima_.ncols(); ++col)
-	    {
-	      point p     (row,     col    );
-	      point upper (row - 1, col    );
-
-	      // Note: merging with the left pixel is useless.
-
-	      // Merge with upper pixel.
-	      merge(p, upper);
 	    }
 	}
 
@@ -237,49 +221,18 @@ namespace oln
 	  merge_(r, t);
 	}
 
-// FIXME: ``New'' Version (iterative, instead of recursive).  To be tested.
-#if 0
-	void merge_(point p, point q)
-	{
-	  precondition (p != q);
-	  precondition (ima_[p] >= ima_[q]);
-
-	  point r = find_ancestor(p, ima_[q]);
-	  point s = find_level_root(q);
-
-	  // Stop the recursion when R and S are equal (i.e., they are
-	  // already merged).
-	  while (r != s)
-	    {
-	      invariant (p != q);
-	      invariant (ima_[p] >= ima_[q]);
-
-	      point t = parent_[s];
-	      if (ima_[s] == ima_[r])
-		{
-		  parent_[s] = r;
-		  // Update the number of level roots.
-		  --n_level_roots_cpt_;
-		}
-	      else
-		{
-		  if (not is_top(r))
-		    parent_[s] = parent_[r];
-		  parent_[r] = s;
-		}
-	      p = r;
-	      q = t;
-	      r = find_ancestor(p, ima_[q]);
-	      s = find_level_root(q);
-	    }
-	}
-#endif
-
 	/// \note Theo calls this function ``is_root'.
  	bool is_top(const point& p) const
  	{
  	  return parent_[p] == p;
  	}
+
+	point find_top(point p) const
+	{
+	  while (not is_top(p))
+	    p = parent_[p];
+	  return p;
+	}
 
 	bool is_level_root(const point& p) const
 	{
@@ -325,4 +278,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLENA_LRDE_UFMT_FIORIO_2_HH
+#endif // ! OLENA_LRDE_UFMT_FIORIO_3_HH
