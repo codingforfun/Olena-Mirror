@@ -1,3 +1,23 @@
+2006-12-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a more generic version of Salembier's algorithm.
+
+	* oln/lrde/ufmt/basic_salembier.hh
+	(oln::lrde::ufmt::hqueue_t::print): New method.
+	* oln/lrde/ufmt/generic_salembier.hh: New.
+	* oln/lrde/ufmt/bin/basic_salembier.cc: Add a timer.
+	* oln/lrde/ufmt/bin/generic_salembier_int_u8.cc,
+	* oln/lrde/ufmt/bin/generic_salembier_float.cc: New.
+	* oln/lrde/Makefile.am (SUBDIRS): Add efigi.
+	* oln/lrde/ufmt/bin/Makefile.am (check_PROGRAMS): Add
+	generic_salembier_int_u8 and generic_salembier_float.
+	(generic_salembier_int_u8_SOURCES)
+	(generic_salembier_float_SOURCES) 
+	(generic_salembier_float_LDFLAGS): New.
+
+	* oln/lrde/efigi/pgm2pfm_wo_noise.cc: New
+	* oln/lrde/efigi/Makefile.am: New.
+
 2006-12-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some EFIGI utilities.

@@ -3,17 +3,24 @@ AM_LDFLAGS = $(ZLIB_LDFLAGS)
 
 check_PROGRAMS =					\
   basic_maxtree basic_najman basic_salembier		\
+  generic_salembier_int_u8 generic_salembier_float	\
   fiorio-1 fiorio-2 fiorio-3				\
   hdc_maxtree hpc_maxtree r1ic_maxtree rpc_maxtree
 
 basic_maxtree_SOURCES = basic_maxtree.cc
 basic_najman_SOURCES = basic_najman.cc
 basic_salembier_SOURCES = basic_salembier.cc
+
+generic_salembier_int_u8_SOURCES = generic_salembier_int_u8.cc
+generic_salembier_float_SOURCES = generic_salembier_float.cc
+generic_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+
 fiorio_1_SOURCES = fiorio.cc
 fiorio_2_SOURCES = fiorio.cc
 fiorio_2_CPPFLAGS = -DFIORIO_VERSION=2
 fiorio_3_SOURCES = fiorio.cc
 fiorio_3_CPPFLAGS = -DFIORIO_VERSION=3
+
 hdc_maxtree_SOURCES = hdc_maxtree.cc
 hpc_maxtree_SOURCES = hpc_maxtree.cc
 r1ic_maxtree_SOURCES = r1ic_maxtree.cc

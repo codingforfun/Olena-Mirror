@@ -1,3 +1,7 @@
+2006-12-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac (olena/oln/lrde/efigi/Makefile): Configure it.
+
 2006-08-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of

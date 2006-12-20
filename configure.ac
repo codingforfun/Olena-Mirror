@@ -469,6 +469,7 @@ AC_SUBST([TOOLS_LDFLAGS])
 ## `olena/oln', and the contents of `olena/lrde/ufmt/bin to `olena/tests'
 ## or to `tools'.
 AC_CONFIG_FILES([olena/oln/lrde/Makefile
+		 olena/oln/lrde/efigi/Makefile
 		 olena/oln/lrde/ufmt/Makefile
 		 olena/oln/lrde/ufmt/bin/Makefile])
 ## ---------------------------------------- FIXME: Improve integration.  --

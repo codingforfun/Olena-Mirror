@@ -36,7 +36,6 @@
 # include <oln/lrde/ufmt/utils.hh>
 
 
-
 namespace oln
 {
 
@@ -46,6 +45,13 @@ namespace oln
     namespace ufmt
     {
 
+      /*-----------------------------------------------------------.
+      | Original version of Salembier's algorithm (working only on |
+      | image of unsigned integers).                               |
+      `-----------------------------------------------------------*/
+
+      /// Version of hqueue for unsigned values, using an array of
+      /// queues, indexed by the gray level.
       template <class P>
       struct hqueue_t
       {
@@ -91,10 +97,29 @@ namespace oln
 	  return s;
 	}
 
+	void print (std::ostream& os)
+	{
+	  os << "hqueue = {";
+	  for (unsigned h = 0; h < nvalues; ++h)
+	    if (not empty(h))
+	      {
+		os << "  " << h << " -> { ";
+		std::queue<P> queue_copy = q[h];
+		while (not queue_copy.empty())
+		  {
+		    os << queue_copy.front () << " ";
+		    queue_copy.pop();
+		  }
+		os << "}";
+	      }
+	  os << " }" << std::endl;
+	}
+
 	std::queue<P>* q;
       };
 
 
+      /// Salembier's algorithm -- Version for images of unsigned integers.
       template <class I>
       struct basic_salembier
       {
@@ -175,6 +200,7 @@ namespace oln
 	  while (not hqueue.empty(h))
 	    {
 	      point p = hqueue.first(h);
+	      
 	      status[p] = number_nodes[h];
 
 	      oln_neighb_type(Nbh) q(nbh, p);
@@ -204,7 +230,7 @@ namespace oln
 	  if (m >= 0)
 	    {
 	      int j = number_nodes[m];
-	      father[pair_t(i, h)] = pair_t(j, m );
+	      father[pair_t(i, h)] = pair_t(j, m);
 	    }
 	  else
 	    {
@@ -221,7 +247,6 @@ namespace oln
 	}
 
       }; // end of struct basic_salembier
-
 
 
     } // end of namespace oln::lrde::ufmt

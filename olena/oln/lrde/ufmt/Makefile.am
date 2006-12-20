@@ -14,7 +14,10 @@ noinst_HEADERS =				\
   attributes.hh					\
   basic_maxtree.hh				\
   basic_najman.hh				\
+						\
   basic_salembier.hh				\
+  generic_salembier.hh				\
+						\
   fiorio-1.hh					\
   fiorio-2.hh					\
   fiorio-3.hh					\
