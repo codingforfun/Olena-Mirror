@@ -115,7 +115,8 @@ namespace oln
       };
 
 
-      template <class I>
+      template < class I,
+		 class Greater = std::greater< oln_value_type(I) > >
       struct generic_salembier
       {
 	typedef oln_point_type(I) point;
@@ -140,11 +141,14 @@ namespace oln
 	generic_hqueue_t<value, point> hqueue;
 	value h_min;
 
-	typedef std::set< value, std::greater<value> > levels_t;
+	typedef std::set< value, Greater > levels_t;
 	typedef typename levels_t::const_iterator level_iterator;
 	// Set of all values present in the input image, sorting in
 	// descending order.
 	levels_t levels;
+
+	// Level comparison function.
+	Greater level_greater;
 
 	typedef std::pair<unsigned, value> pair_t;
 	std::map<pair_t, pair_t> father;
@@ -181,7 +185,7 @@ namespace oln
 	      // Init levels.
 	      levels.insert(f[p]);
 	      // Find the global minimum.
-	      if (f[p] < h_min)
+	      if (level_greater(h_min, f[p])) // Was: f[p] < h_min
 		{
 		  h_min = f[p];
 		  p_min = p;
@@ -215,7 +219,7 @@ namespace oln
 			    m = levels.find(f[q]);
 			    if (m == levels.end())
 			      abort();
- 			    while (*m > h) // err. 2
+ 			    while (m != levels.end() and *m > h) // err. 2
 			      m = flood(*m);
 			  }
 		      }

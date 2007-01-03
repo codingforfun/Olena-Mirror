@@ -25,6 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+
+// FIXME: This version of Salembier et al. algorithm has been
+// superseded by oln::lrde::ufmt::generic_simplified_salembier, and
+// should not be useful anymore.
+
+
 #ifndef OLENA_LRDE_UFMT_NAIVE_GENERIC_SALEMBIER_HH
 # define OLENA_LRDE_UFMT_NAIVE_GENERIC_SALEMBIER_HH
 
@@ -202,7 +208,7 @@ namespace oln
 			    m = levels.find(f[q]);
 			    if (m == levels.end())
 			      abort();
-			    while (*m > h) // err. 2
+			    while (m != levels.end() and *m > h) // err. 2
 			      m = flood(*m);
 			  }
 		      }

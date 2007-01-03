@@ -1,10 +1,12 @@
 AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -ggdb -O3 -DNDEBUG 
 AM_LDFLAGS = $(ZLIB_LDFLAGS)
 
-check_PROGRAMS =					\
-  basic_maxtree basic_najman basic_salembier		\
-  generic_salembier_int_u8 generic_salembier_float	\
-  fiorio-1 fiorio-2 fiorio-3				\
+check_PROGRAMS =							    \
+  basic_maxtree basic_najman basic_salembier				    \
+  generic_salembier_int_u8 generic_salembier_float generic_salembier_float2 \
+  generic_simplified_salembier_float					    \
+  naive_generic_salembier_float						    \
+  fiorio-1 fiorio-2 fiorio-3						    \
   hdc_maxtree hpc_maxtree r1ic_maxtree rpc_maxtree
 
 basic_maxtree_SOURCES = basic_maxtree.cc
@@ -14,6 +16,12 @@ basic_salembier_SOURCES = basic_salembier.cc
 generic_salembier_int_u8_SOURCES = generic_salembier_int_u8.cc
 generic_salembier_float_SOURCES = generic_salembier_float.cc
 generic_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+generic_salembier_float2_SOURCES = generic_salembier_float2.cc
+generic_salembier_float2_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+generic_simplified_salembier_float_SOURCES = generic_simplified_salembier_float.cc
+generic_simplified_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+naive_generic_salembier_float_SOURCES = naive_generic_salembier_float.cc
+naive_generic_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
 
 fiorio_1_SOURCES = fiorio.cc
 fiorio_2_SOURCES = fiorio.cc

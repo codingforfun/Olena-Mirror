@@ -17,6 +17,8 @@ noinst_HEADERS =				\
 						\
   basic_salembier.hh				\
   generic_salembier.hh				\
+  generic_simplified_salembier.hh		\
+  naive_generic_salembier.hh			\
 						\
   fiorio-1.hh					\
   fiorio-2.hh					\

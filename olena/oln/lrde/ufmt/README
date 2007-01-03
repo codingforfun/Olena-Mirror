@@ -123,11 +123,50 @@ sp   impled
 spx  impled
 
 
-* basic_salembier
+* algorithms deriving from Salembier et al. algorithm
+
+** basic_salembier
 
 flooding
 p as point2d
-father as map<pair,pair>
+father as std::map<pair_t, pair_t>
+hqueue as an array of std::queue<point>
+works only on image of unsigned integers (unsigned int or ntg::int_u8
+  for instance)
+
+** generic_salembier
+
+flooding
+p as point2d
+father as std::map<pair, pair>
+hqueue as std::map<value, std::queue<point> >
+modifiable comparison function on values (defaulting to
+  std::greater< oln_value_type(I) >)
+works only on any kind of image whose values are comparable
+
+** generic_simplified_salembier
+
+flooding
+the algorithm consider that each site (pixel) has a unique ``value''
+  within the image (the algorithm no longer works on levels, only on
+  points, which are totally ordered)
+p as point2d
+father as std::map<point, point, point_less<I, point> >
+no hqueue, but a set of points instead
+works on any kind of image whose values are comparable
+
+** naive_generic_salembier
+
+A previous version of generic_simplified_salembier, probablt no longer
+useful.
+
+flooding
+the algorithm doesn't really handle flat zones (i.e., contiguous
+pixels having the same value).
+p as point2d
+father as std::map<pair, pair>
+hqueue as std::map<V, P>
+works on any kind of image whose values are comparable
 
 
 

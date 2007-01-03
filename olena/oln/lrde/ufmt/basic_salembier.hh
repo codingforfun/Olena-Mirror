@@ -119,7 +119,47 @@ namespace oln
       };
 
 
-      /// Salembier's algorithm -- Version for images of unsigned integers.
+      /** \brief Salembier's algorithm -- Version for images of
+          unsigned integers.
+
+          The (corrected) algorithm, as written in the original
+          article, is as follows:
+
+          \verbatim
+
+            flood (h)
+   
+              while not hqueue-empty (h)
+                p <- hqueue-first (h)
+                STATUS(p) <- number-nodes (h)
+                for every neighbor q of p
+                  if STATUS(q) == "Not analyzed"
+                    hqueue-add(ORI(q), q)
+                    STATUS(q) <- "In the queue"
+                    node-at-level(ORI(q)) <- true
+                    if (ORI(q) > ORI(p))
+                      m = ORI(q)
+                      repeat
+                        m <- flood(m)
+                      until m <= h
+              number-nodes(h) <- number-nodes(h) + 1
+   
+              m <- h - 1
+              while m >= 0 and node-at-level(m) == false
+                m <- m - 1
+              i <- number-nodes(h) - 1
+              if m >= 0
+                j <- number-nodes(m)
+                father of C(i, h) <- node C(j, m)
+              else
+                C(i, h) has no father		// C(i, h) is root node.
+              node-at-level(h) <- false
+              return m
+
+          \endverbatim
+
+          \ref salembier.98.itip.  */
+
       template <class I>
       struct basic_salembier
       {

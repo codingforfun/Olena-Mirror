@@ -11,7 +11,8 @@
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0] << " input.pgm c" << std::endl;
-  std::cerr << "basic max-tree computation with union-find" << std::endl;
+  std::cerr << "basic max-tree computation with Najman et al. algorithm"
+	    << std::endl;
   // FIXME: get precise description...
   exit(1);
 }

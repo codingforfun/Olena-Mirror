@@ -1,3 +1,39 @@
+2007-01-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	New versions of Salembier et al. algorithm.
+
+	* oln/lrde/ufmt/generic_salembier.hh
+	(oln::lrde::ufmt::generic_salembier): Add a second template
+	parameter, defaulting to std::greater< oln_value_type(I) >.  Use
+	this parameter for comparisons, to have the algorithm be more
+	flexible.
+	* oln/lrde/ufmt/bin/generic_salembier_float2.cc: New.
+	Use the second template parameter of
+	oln::lrde::ufmt::generic_salembier to create a more flexible
+	version of generic_salembier_float where float comparisons are
+	performed using a maxium relative error and a maximum absolute
+	error.
+	* oln/lrde/ufmt/generic_simplified_salembier.hh: New.
+	A simplified version of oln::lrde::ufmt::generic_salembier,
+	specially useful on float images.
+	* oln/lrde/ufmt/bin/generic_simplified_salembier_float.cc: New.
+	* oln/lrde/ufmt/naive_generic_salembier.hh: New.
+	A previous attempt before generic_simplified_salembier.
+	* oln/lrde/ufmt/basic_salembier.hh: More documentation.
+	* oln/lrde/ufmt/bin/basic_najman.cc: Typo.
+	* oln/lrde/ufmt/README: Document Salembier et al. algorithm variants.
+	* oln/lrde/ufmt/bin/Makefile.am (check_PROGRAMS): Add
+	generic_salembier_float2, generic_simplified_salembier_float
+	and naive_generic_salembier_float.
+	(generic_salembier_float2_SOURCES)
+	(generic_salembier_float2_LDFLAGS)
+	(generic_simplified_salembier_float_SOURCES)
+	(generic_simplified_salembier_float_LDFLAGS)
+	(naive_generic_salembier_float_SOURCES)
+	(naive_generic_salembier_float_LDFLAGS): New.
+	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add
+	generic_simplified_salembier.hh and naive_generic_salembier.hh.
+
 2006-12-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a more generic version of Salembier's algorithm.
