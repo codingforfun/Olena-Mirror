@@ -465,9 +465,9 @@ AC_SUBST([TOOLS_LDFLAGS])
 
 ## -- FIXME: Improve integration.  ----------------------------------------
 ##
-## The contents of `olena/lrde' should be moved to subdirectory of
-## `olena/oln', and the contents of `olena/lrde/ufmt/bin to `olena/tests'
-## or to `tools'.
+## The contents of `olena/oln/lrde' should be moved to another subdirectory
+## of `olena/oln/', and the contents of `olena/lrde/ufmt/bin to
+## `olena/tests' or to `tools'.
 AC_CONFIG_FILES([olena/oln/lrde/Makefile
 		 olena/oln/lrde/efigi/Makefile
 		 olena/oln/lrde/ufmt/Makefile

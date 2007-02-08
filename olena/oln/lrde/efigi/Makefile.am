@@ -21,12 +21,14 @@ noinst_HEADERS =				\
 
 check_PROGRAMS =				\
   gaussian					\
+  pfm-crop					\
   pfm2pgm					\
   pgm2pfm					\
   pgm2pfm_wo_noise				\
   wst
 
 gaussian_SOURCES = gaussian.cc
+pfm_crop_SOURCES = pfm-crop.cc
 pfm2pgm_SOURCES  = pfm2pgm.cc
 pgm2pfm_wo_noise_SOURCES = pgm2pfm_wo_noise.cc
 pgm2pfm_SOURCES  = pgm2pfm.cc

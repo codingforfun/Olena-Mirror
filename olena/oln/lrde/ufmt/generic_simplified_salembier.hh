@@ -251,6 +251,9 @@ namespace oln
 
 	std::map<point, point, point_less<I, point> > father;
 
+# ifdef OLN_DEBUG
+	unsigned npoints;
+# endif // OLN_DEBUG
 
 	generic_simplified_salembier(const abstract::image<I>& f,
 			  const oln_neighborhood_type(I)& nbh) :
@@ -261,6 +264,9 @@ namespace oln
 	  pset(point_less<I, point>(f.exact())),
 	  sites(point_greater<I, point>(f.exact())),
 	  father(point_less<I, point>(f.exact()))
+# ifdef OLN_DEBUG
+	  , npoints(f.npoints())
+# endif // OLN_DEBUG
 	{
 	}
 
@@ -306,6 +312,26 @@ namespace oln
 // 	  // --------------------------------------------------- DEBUG --
 	}
 
+# ifdef OLN_DEBUG
+	void update_status (std::ostream& ostr)
+	{
+	  static unsigned nupdates = 0;
+	  static const unsigned step = 1;
+	  static unsigned next_step = step;
+	  ++nupdates;
+	  unsigned percent = nupdates * 100 / npoints;
+	  if (percent >= next_step)
+	    {
+	      // Print.
+	      std::cerr << percent << "% points processed" << std::endl;
+	      // Increase the next step.
+	      while (percent >= next_step)
+		next_step += step;
+	    }
+	}
+# endif // OLN_DEBUG
+
+
 	// H is a point here, not a level!
 	// FIXME: Change the name of this argument, as it's confusing.
 	site_iterator flood(const point& h)
@@ -343,6 +369,9 @@ namespace oln
 	      pset.erase(i);
 
 	      status[p] = true;
+#ifdef OLN_DEBUG
+	      update_status(std::cerr);
+#endif // OLN_DEBUG
 
 // 	      // -- DEBUG -----------------------------------------------
 // 	      std::cerr << "  status = " << std::endl;

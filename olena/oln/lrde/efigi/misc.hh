@@ -150,6 +150,24 @@ namespace oln
     }
 
 
+    // Crop a 2-D image.
+    template <typename T>
+    image2d<T>
+    crop(const image2d<T>& input, coord x, coord y, coord dx, coord dy)
+    {
+      assertion (dx > 0);
+      assertion (dy > 0);
+      assertion(ima.hold(point2d(x, y)));
+      assertion(ima.hold(point2d(x + dx, y + dy)));
+
+      image2d<float> output(dx, dy);
+      for (coord row = 0; row < dx; ++row)
+	for (coord col = 0; col < dy; ++col)
+	  output(row, col) = input(x + row, y + col);
+      return output;
+    }
+
+
   } // end of namespace oln::efigi
 
 } // end of namespace oln

@@ -153,6 +153,9 @@ namespace oln
 	typedef std::pair<unsigned, value> pair_t;
 	std::map<pair_t, pair_t> father;
 
+# ifdef OLN_DEBUG
+	unsigned npoints;
+# endif // OLN_DEBUG
 
 	generic_salembier(const abstract::image<I>& f,
 			  const oln_neighborhood_type(I)& nbh) :
@@ -161,6 +164,9 @@ namespace oln
 	  // FIXME: status should NOT be initialized here!
 	  // (but in "init()") (??)
   	  status(f.size())
+# ifdef OLN_DEBUG
+	  , npoints(f.npoints())
+# endif // OLN_DEBUG
 	{
 	}
 
@@ -195,6 +201,25 @@ namespace oln
 	}
 
 
+# ifdef OLN_DEBUG
+	void update_status (std::ostream& ostr)
+	{
+	  static unsigned nupdates = 0;
+	  static const unsigned step = 1;
+	  static unsigned next_step = step;
+	  ++nupdates;
+	  unsigned percent = nupdates * 100 / npoints;
+	  if (percent >= next_step)
+	    {
+	      // Print.
+	      std::cerr << percent << "% points processed" << std::endl;
+	      // Increase the next step.
+	      while (percent >= next_step)
+		next_step += step;
+	    }
+	}
+# endif // OLN_DEBUG
+	
 	level_iterator flood(const value& h)
 	{
 	  level_iterator m;
@@ -203,6 +228,9 @@ namespace oln
 	      point p = hqueue.first(h);
 
 	      status[p] = get(number_nodes, h, 0u);
+# ifdef OLN_DEBUG
+	      update_status(std::cerr);
+# endif // OLN_DEBUG
 
 	      oln_neighb_type(Nbh) q(nbh, p);
 	      for_all(q)

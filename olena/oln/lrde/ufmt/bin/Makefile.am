@@ -6,14 +6,19 @@ check_PROGRAMS =							    \
   generic_salembier_int_u8 generic_salembier_float generic_salembier_float2 \
   generic_simplified_salembier_float					    \
   naive_generic_salembier_float						    \
+  basic_salembier_float_via_16b						    \
+  generic_salembier_float_via_16b					    \
   fiorio-1 fiorio-2 fiorio-3						    \
   hdc_maxtree hpc_maxtree r1ic_maxtree rpc_maxtree
 
 basic_maxtree_SOURCES = basic_maxtree.cc
 basic_najman_SOURCES = basic_najman.cc
-basic_salembier_SOURCES = basic_salembier.cc
 
+# Salembier - Unsigned integer versions.
+basic_salembier_SOURCES = basic_salembier.cc
 generic_salembier_int_u8_SOURCES = generic_salembier_int_u8.cc
+
+# Salembier - Float versions.
 generic_salembier_float_SOURCES = generic_salembier_float.cc
 generic_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
 generic_salembier_float2_SOURCES = generic_salembier_float2.cc
@@ -22,6 +27,13 @@ generic_simplified_salembier_float_SOURCES = generic_simplified_salembier_float.
 generic_simplified_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
 naive_generic_salembier_float_SOURCES = naive_generic_salembier_float.cc
 naive_generic_salembier_float_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+
+# Salembier - Float versions, using a 16-bits equalization step.
+basic_salembier_float_via_16b_SOURCES = basic_salembier_float_via_16b.cc
+basic_salembier_float_via_16b_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+generic_salembier_float_via_16b_SOURCES = generic_salembier_float_via_16b.cc
+generic_salembier_float_via_16b_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
+
 
 fiorio_1_SOURCES = fiorio.cc
 fiorio_2_SOURCES = fiorio.cc

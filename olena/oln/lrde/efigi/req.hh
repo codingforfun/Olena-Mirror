@@ -160,6 +160,30 @@ namespace oln
       return output;
     }
 
+    image2d<unsigned short>
+    equalize_16(const image2d<float>& input)
+    {
+      std::vector<pix> v = efigi::sort(input);
+      const int nrows = input.nrows(), ncols = input.ncols();
+      image2d<unsigned short> output(nrows, ncols);
+
+      unsigned n = unsigned((nrows * ncols) / 65536.f + 1.f);
+      unsigned l = 0;
+      for (;;)
+	{
+	  for (unsigned i = 0; i < n; ++i)
+	    {
+	      unsigned j = l * n + i;
+	      if (j >= v.size())
+		return output;
+	      pix& p = v[l * n + i];
+	      output(p.row, p.col) = l;
+	    }
+	  ++l;
+	}
+      return output;
+    }
+
     
     image2d<bool>
     lab2bin(const image2d<unsigned char>& input)

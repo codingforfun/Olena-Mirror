@@ -1,47 +1,46 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 270)
-(Parent-Version oln 10 269)
-(Version-Log "2007-01-03  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 271)
+(Parent-Version oln 10 270)
+(Version-Log "2007-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
-	New versions of Salembier et al. algorithm.
+	Add new binaries for Salembier et al. algorithm.
 
 	* oln/lrde/ufmt/generic_salembier.hh
-	(oln::lrde::ufmt::generic_salembier): Add a second template
-	parameter, defaulting to std::greater< oln_value_type(I) >.  Use
-	this parameter for comparisons, to have the algorithm be more
-	flexible.
-	* oln/lrde/ufmt/bin/generic_salembier_float2.cc: New.
-	Use the second template parameter of
-	oln::lrde::ufmt::generic_salembier to create a more flexible
-	version of generic_salembier_float where float comparisons are
-	performed using a maxium relative error and a maximum absolute
-	error.
-	* oln/lrde/ufmt/generic_simplified_salembier.hh: New.
-	A simplified version of oln::lrde::ufmt::generic_salembier,
-	specially useful on float images.
-	* oln/lrde/ufmt/bin/generic_simplified_salembier_float.cc: New.
-	* oln/lrde/ufmt/naive_generic_salembier.hh: New.
-	A previous attempt before generic_simplified_salembier.
-	* oln/lrde/ufmt/basic_salembier.hh: More documentation.
-	* oln/lrde/ufmt/bin/basic_najman.cc: Typo.
-	* oln/lrde/ufmt/README: Document Salembier et al. algorithm variants.
+	(generic_salembier::npoints) [DEBUG]: New attribute.
+	(generic_salembier::generic_salembier) [DEBUG]: Initialize it.
+	(generic_salembier::update_status) [DEBUG]: New function.
+	(generic_salembier::flood) [DEBUG]: Use it.
+	* oln/lrde/ufmt/generic_simplified_salembier.hh
+	(generic_simplified_salembier::npoints) [DEBUG]: New attribute.
+	(generic_simplified_salembier::generic_simplified_salembier)
+	[DEBUG]: Initialize it.
+	(generic_simplified_salembier::update_status) [DEBUG]: New
+	function.
+	(generic_simplified_salembier::flood) [DEBUG]: Use it.
+	* oln/lrde/ufmt/bin/basic_salembier_float_via_16b.cc,
+	* oln/lrde/ufmt/bin/generic_salembier_float_via_16b.cc: New.
 	* oln/lrde/ufmt/bin/Makefile.am (check_PROGRAMS): Add
-	generic_salembier_float2, generic_simplified_salembier_float
-	and naive_generic_salembier_float.
-	(generic_salembier_float2_SOURCES)
-	(generic_salembier_float2_LDFLAGS)
-	(generic_simplified_salembier_float_SOURCES)
-	(generic_simplified_salembier_float_LDFLAGS)
-	(naive_generic_salembier_float_SOURCES)
-	(naive_generic_salembier_float_LDFLAGS): New.
-	* oln/lrde/ufmt/Makefile.am (noinst_HEADERS): Add
-	generic_simplified_salembier.hh and naive_generic_salembier.hh.
+	basic_salembier_float_via_16b and generic_salembier_float_via_16b.
+	(basic_salembier_float_via_16b_SOURCES)
+	(basic_salembier_float_via_16b_LDFLAGS)
+	(generic_salembier_float_via_16b_SOURCES)
+	(generic_salembier_float_via_16b_LDFLAGS): New.
+	* oln/lrde/ufmt/README: Typo.
+
+
+	New tool: pfm-crop.
+
+	* oln/lrde/efigi/misc.hh (crop): New function.
+	* oln/lrde/efigi/req.hh (equalize_16): New function.
+	* oln/lrde/efigi/pfm-crop.cc: New.
+	* oln/lrde/efigi/Makefile.am (check_PROGRAMS): Add pfm-crop.
+	(pfm_crop_SOURCES): New.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 03 Jan 2007 15:17:57 +0100")
+(Checkin-Time "Thu, 08 Feb 2007 12:40:28 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -154,11 +153,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.30 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.31 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.17 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.9 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.10 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.52 600))
 
@@ -170,7 +169,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.6 700))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.11 600))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.12 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 600))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 600))
@@ -1594,7 +1593,7 @@
   
   
   
-  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.7 644))
+  (olena/oln/lrde/ufmt/README (oln/x/22_README 1.8 644))
 
 ;; Files deleted by depopulate at Fri, 04 Aug 2006 18:41:16 +0200,
 ;; from version 10.245(w), by theo:
@@ -1613,7 +1612,7 @@
   (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.6 644))
   (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.3 644))
   (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.3 644))
-  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.5 644))
+  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.6 644))
   (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.3 644))
 ;; Files added by populate at Mon, 28 Aug 2006 10:51:36 +0200,
 ;; to version 10.249(w), by theo:
@@ -1660,9 +1659,9 @@
 ;; to version 10.255(w), by theo:
 
   (olena/oln/lrde/efigi/pfm2pgm.cc (oln/x/49_pfm2pgm.cc 1.1 644))
-  (olena/oln/lrde/efigi/misc.hh (oln/x/50_misc.hh 1.1 644))
+  (olena/oln/lrde/efigi/misc.hh (oln/x/50_misc.hh 1.2 644))
   (olena/oln/lrde/efigi/io.hh (oln/x/51_io.hh 1.1 644))
-  (olena/oln/lrde/efigi/req.hh (oln/y/0_req.hh 1.1 644))
+  (olena/oln/lrde/efigi/req.hh (oln/y/0_req.hh 1.2 644))
   (olena/oln/lrde/efigi/wst.cc (oln/y/1_wst.cc 1.1 644))
   (olena/oln/lrde/efigi/gaussian.cc (oln/y/2_gaussian.c 1.1 644))
   (olena/oln/lrde/efigi/pgm2pfm.cc (oln/y/3_pgm2pfm.cc 1.1 644))
@@ -1676,9 +1675,9 @@
 ;; to version 10.268(w), by levill_r:
 
   (olena/oln/lrde/efigi/pgm2pfm_wo_noise.cc (oln/y/5_pgm2pfm_wo 1.1 644))
-  (olena/oln/lrde/efigi/Makefile.am (oln/y/6_Makefile.a 1.1 644))
+  (olena/oln/lrde/efigi/Makefile.am (oln/y/6_Makefile.a 1.2 644))
   (olena/oln/lrde/ufmt/naive_generic_salembier.hh (oln/y/7_naive_gene 1.2 644))
-  (olena/oln/lrde/ufmt/generic_salembier.hh (oln/y/8_generic_sa 1.2 644))
+  (olena/oln/lrde/ufmt/generic_salembier.hh (oln/y/8_generic_sa 1.3 644))
   (olena/oln/lrde/ufmt/bin/generic_salembier_int_u8.cc (oln/y/9_generic_sa 1.1 644))
   (olena/oln/lrde/ufmt/bin/generic_salembier_float.cc (oln/y/10_generic_sa 1.1 644))
 
@@ -1688,7 +1687,14 @@
   (olena/oln/lrde/ufmt/bin/generic_salembier_float2.cc (oln/y/11_generic_sa 1.1 644))
   (olena/oln/lrde/ufmt/bin/generic_simplified_salembier_float.cc (oln/y/12_generic_si 1.1 644))
   (olena/oln/lrde/ufmt/bin/naive_generic_salembier_float.cc (oln/y/13_naive_gene 1.1 644))
-  (olena/oln/lrde/ufmt/generic_simplified_salembier.hh (oln/y/14_generic_si 1.1 644))
+  (olena/oln/lrde/ufmt/generic_simplified_salembier.hh (oln/y/14_generic_si 1.2 644))
+
+;; Files added by populate at Thu, 08 Feb 2007 12:31:43 +0100,
+;; to version 10.270(w), by levill_r:
+
+  (olena/oln/lrde/efigi/pfm-crop.cc (oln/y/15_pfm-crop.c 1.1 644))
+  (olena/oln/lrde/ufmt/bin/basic_salembier_float_via_16b.cc (oln/y/16_basic_sale 1.1 644))
+  (olena/oln/lrde/ufmt/bin/generic_salembier_float_via_16b.cc (oln/y/17_generic_sa 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,3 +1,38 @@
+2007-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add new binaries for Salembier et al. algorithm.
+
+	* oln/lrde/ufmt/generic_salembier.hh
+	(generic_salembier::npoints) [DEBUG]: New attribute.
+	(generic_salembier::generic_salembier) [DEBUG]: Initialize it.
+	(generic_salembier::update_status) [DEBUG]: New function.
+	(generic_salembier::flood) [DEBUG]: Use it.
+	* oln/lrde/ufmt/generic_simplified_salembier.hh
+	(generic_simplified_salembier::npoints) [DEBUG]: New attribute.
+	(generic_simplified_salembier::generic_simplified_salembier)
+	[DEBUG]: Initialize it.
+	(generic_simplified_salembier::update_status) [DEBUG]: New
+	function.
+	(generic_simplified_salembier::flood) [DEBUG]: Use it.
+	* oln/lrde/ufmt/bin/basic_salembier_float_via_16b.cc,
+	* oln/lrde/ufmt/bin/generic_salembier_float_via_16b.cc: New.
+	* oln/lrde/ufmt/bin/Makefile.am (check_PROGRAMS): Add
+	basic_salembier_float_via_16b and generic_salembier_float_via_16b.
+	(basic_salembier_float_via_16b_SOURCES)
+	(basic_salembier_float_via_16b_LDFLAGS)
+	(generic_salembier_float_via_16b_SOURCES)
+	(generic_salembier_float_via_16b_LDFLAGS): New.
+	* oln/lrde/ufmt/README: Typo.
+
+
+	New tool: pfm-crop.
+
+	* oln/lrde/efigi/misc.hh (crop): New function.
+	* oln/lrde/efigi/req.hh (equalize_16): New function.
+	* oln/lrde/efigi/pfm-crop.cc: New.
+	* oln/lrde/efigi/Makefile.am (check_PROGRAMS): Add pfm-crop.
+	(pfm_crop_SOURCES): New.
+
 2007-01-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	New versions of Salembier et al. algorithm.
