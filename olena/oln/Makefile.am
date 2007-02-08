@@ -11,10 +11,12 @@ olndir = $(includedir)/oln
 
 nobase_oln_HEADERS = $(OLN_DEP)
 
-## -- FIXME: Improve integration.  ----------------------------------------
+SUBDIRS = .
+#<<lrde
+## FIXME: Improve integration.
 ##
-## The contents of `olena/lrde' should be moved to subdirectory of
-## `olena/oln', and the contents of `olena/lrde/ufmt/bin to `olena/tests'
-## or to `tools'.
-SUBDIRS = . lrde
-## ---------------------------------------- FIXME: Improve integration.  --
+## The directory `olena/oln/lrde' is a place where we work on algorithms
+## not mature enough to integrate the distribution.  Hence it is only
+## available from the Subversion repository, not from the distribution.
+SUBDIRS += lrde
+#>>

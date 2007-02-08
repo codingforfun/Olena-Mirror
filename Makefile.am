@@ -19,7 +19,8 @@ dist_m4data_DATA = config/oln.m4
 ### Development files.
 ###
 
-EXTRA_DIST = bootstrap.sh config/oln-local.m4 contrib/runtests
+EXTRA_DIST = bootstrap.sh config/oln-local.m4 contrib/runtests \
+  config/strip-lrde
 
 ###
 ### Basic doc files generation.
@@ -64,3 +65,20 @@ maintainer-check:
 	else \
 	  echo "$@: GNU cppi is required" >&2; \
 	fi
+
+#<<lrde
+## FIXME: Improve integration.
+# Remove any trace of olena/oln/lrde from the distribution and reset
+# the GNU Build system for the distdir layout.
+dist-hook:
+	$(top_srcdir)/config/strip-lrde $(distdir)/configure.ac &&	    \
+	$(top_srcdir)/config/strip-lrde $(distdir)/Makefile.am &&	    \
+	$(top_srcdir)/config/strip-lrde $(distdir)/olena/oln/Makefile.am && \
+	rm -rf $(distdir)/olena/oln/lrde &&				    \
+	(								    \
+	  cd $(distdir);						    \
+	  set -evx;							    \
+	  ./bootstrap.sh;						    \
+	  find . -name autom4te.cache | xargs rm -rf			    \
+	)
+#>>

@@ -463,16 +463,17 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 AC_SUBST([DOC_CPPFLAGS])
 AC_SUBST([TOOLS_LDFLAGS])
 
-## -- FIXME: Improve integration.  ----------------------------------------
-##
-## The contents of `olena/oln/lrde' should be moved to another subdirectory
-## of `olena/oln/', and the contents of `olena/lrde/ufmt/bin to
-## `olena/tests' or to `tools'.
+#<<lrde
+# FIXME: Improve integration.
+#
+# The directory `olena/oln/lrde' is a place where we work on algorithms
+# not mature enough to integrate the distribution.  Hence it is only
+# available from the repository, not from the distribution.
 AC_CONFIG_FILES([olena/oln/lrde/Makefile
 		 olena/oln/lrde/efigi/Makefile
 		 olena/oln/lrde/ufmt/Makefile
 		 olena/oln/lrde/ufmt/bin/Makefile])
-## ---------------------------------------- FIXME: Improve integration.  --
+#>>
 
 AC_OUTPUT
 
