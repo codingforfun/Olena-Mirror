@@ -1,3 +1,14 @@
+2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers, and fix the dates of existing ones.
+
+	* ntg/bin.hh, ntg/color/color.hh, ntg/color/hsi.hh,
+	* ntg/color/nrgb.hh, ntg/color/rgb.hh, ntg/color/xyz.hh,
+	* ntg/color/yiq.hh, ntg/color/yuv.hh, ntg/core/predecls.hh,
+	* ntg/vect/vec.hh, ntg/vect/cplx.hh: Fix date in copyright header.
+	* Makefile.am, ntg/Makefile.am, ntg/makefile.src:
+	Add copyright header.
+
 2006-07-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a color conversion formula.

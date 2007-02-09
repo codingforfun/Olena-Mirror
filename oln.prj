@@ -1,12 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 274)
-(Parent-Version oln 10 273)
-(Version-Log "Fix ChangeLogs.
+(Project-Version oln 10 275)
+(Parent-Version oln 10 274)
+(Version-Log "2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers, and fix the dates of existing ones.
+
+	* ntg/bin.hh, ntg/color/color.hh, ntg/color/hsi.hh,
+	* ntg/color/nrgb.hh, ntg/color/rgb.hh, ntg/color/xyz.hh,
+	* ntg/color/yiq.hh, ntg/color/yuv.hh, ntg/core/predecls.hh,
+	* ntg/vect/vec.hh, ntg/vect/cplx.hh: Fix date in copyright header.
+	* Makefile.am, ntg/Makefile.am, ntg/makefile.src:
+	Add copyright header.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 09 Feb 2007 16:35:16 +0100")
+(Checkin-Time "Fri, 09 Feb 2007 17:48:56 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -121,7 +130,7 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.33 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.19 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.52 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.10 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 600))
@@ -364,50 +373,50 @@
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.14 600))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.11 600))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 600))
-  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 600))
-  (integre/ntg/real/behavior.hh (oln/g/31_behaviour. 1.13.1.15.1.2 600))
+  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 644))
+  (integre/ntg/real/behavior.hh (oln/g/31_behaviour. 1.13.1.15.1.2 644))
 
-  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.14 600))
-  (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 600))
-  (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.8 600))
-  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.17 600))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.15 600))
-  (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.10 600))
-  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.7 600))
-  (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 600))
-  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.5 600))
-  (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 600))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.2 600))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.2 600))
-  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.6 600))
-
-
-
-
-
-  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.8.1.2 600))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.14 644))
+  (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 644))
+  (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.8 644))
+  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.17 644))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.15 644))
+  (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.10 644))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.8 644))
+  (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 644))
+  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.5 644))
+  (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 644))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.2 644))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.2 644))
+  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.7 644))
 
 
 
 
 
-
-  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.2 600))
-  (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 600))
-
-  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 600))
-  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8.1.1 600))
-  (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 600))
-
-  (integre/ntg/core/type.hh (oln/g/6_type.hh 1.10 600))
+  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.8.1.2 644))
 
 
 
-  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.11.1.2 600))
 
-  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.7 600))
-  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 600))
-  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 600))
+
+
+  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.2 644))
+  (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 644))
+
+  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2.1.1 644))
+  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8.1.1 644))
+  (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.5 644))
+
+  (integre/ntg/core/type.hh (oln/g/6_type.hh 1.10 644))
+
+
+
+  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.11.1.2 644))
+
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.8 644))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.8 644))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.8 644))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 600))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.16 600))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 600))
@@ -465,81 +474,81 @@
   (olena/tests/transforms/tests/fft (oln/i/37_fft.cc 1.6.1.5 600))
   (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.12 600))
 ;;  (oln/tests/transforms/output () :directory)
-  (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 600))
-  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.7 700))
-  (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.2 600))
-  (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.3 600))
-  (integre/tests/types/tests/bin3 (oln/o/46_bin3 1.2 600))
-  (integre/tests/types/tests/comp1 (oln/h/9_comp1 1.2 600))
-  (integre/tests/types/tests/comp2 (oln/h/8_comp2 1.2 600))
-  (integre/tests/types/tests/comp3 (oln/h/7_comp3 1.2 600))
-  (integre/tests/types/tests/conv1 (oln/g/49_conv1 1.4 600))
-  (integre/tests/types/tests/conv2 (oln/g/42_conv2 1.4 600))
-  (integre/tests/types/tests/cplx1 (oln/i/2_cplx1 1.3 600))
-  (integre/tests/types/tests/cplx2 (oln/i/1_cplx2 1.3 600))
-  (integre/tests/types/tests/cplx3 (oln/i/0_cplx3 1.3 600))
-  (integre/tests/types/tests/cplx4 (oln/h/51_cplx4 1.3 600))
-  (integre/tests/types/tests/cplx5 (oln/i/7_cplx5 1.2 600))
-  (integre/tests/types/tests/cplx6 (oln/i/6_cplx6 1.5 600))
-  (integre/tests/types/tests/float1 (oln/h/12_float1 1.3 600))
-  (integre/tests/types/tests/float2 (oln/h/40_float2 1.3 600))
-  (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.3 600))
-  (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.4 600))
-  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.4 600))
-  (integre/tests/types/tests/int1b (oln/g/48_int1b 1.2 600))
-  (integre/tests/types/tests/int1 (oln/h/1_int1 1.2 600))
-  (integre/tests/types/tests/int2 (oln/h/0_int2 1.2 600))
-  (integre/tests/types/tests/int3 (oln/g/51_int3 1.2 600))
-  (integre/tests/types/tests/int4b (oln/h/35_int4b 1.2 600))
-  (integre/tests/types/tests/int4 (oln/g/50_int4 1.2 600))
-  (integre/tests/types/tests/int5 (oln/g/47_int5 1.2 600))
-  (integre/tests/types/tests/int6b (oln/g/45_int6b 1.2 600))
-  (integre/tests/types/tests/int6c (oln/g/44_int6c 1.2 600))
-  (integre/tests/types/tests/int6d (oln/g/43_int6d 1.2 600))
-  (integre/tests/types/tests/int6 (oln/g/46_int6 1.2 600))
-  (integre/tests/types/tests/int7 (oln/h/14_int7 1.2 600))
-  (integre/tests/types/tests/int_s1 (oln/g/40_int_s1 1.2 600))
-  (integre/tests/types/tests/int_s2b (oln/g/38_int_s2b 1.2 600))
-  (integre/tests/types/tests/int_s2 (oln/g/39_int_s2 1.2 600))
-  (integre/tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.3 600))
-  (integre/tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.2 600))
-  (integre/tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.2 600))
-  (integre/tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.3 600))
-  (integre/tests/types/tests/int_u1 (oln/h/22_int_u1 1.2 600))
-  (integre/tests/types/tests/int_u2a (oln/h/17_int_u2a 1.2 600))
-  (integre/tests/types/tests/int_u2b (oln/h/20_int_u2b 1.2 600))
-  (integre/tests/types/tests/int_u2c (oln/h/21_int_u2c 1.2 600))
-  (integre/tests/types/tests/int_u2d (oln/h/16_int_u2d 1.2 600))
-  (integre/tests/types/tests/int_u2e (oln/h/38_int_u2e 1.2 600))
-  (integre/tests/types/tests/int_u2f (oln/h/41_int_u2f 1.2 600))
-  (integre/tests/types/tests/int_u3a (oln/h/18_int_u3a 1.2 600))
-  (integre/tests/types/tests/int_u3b (oln/h/23_int_u3b 1.2 600))
-  (integre/tests/types/tests/int_u4 (oln/h/19_int_u4 1.2 600))
-  (integre/tests/types/tests/int_u6 (oln/h/37_int_u6 1.3 600))
-  (integre/tests/types/tests/op1 (oln/h/15_op1 1.3 600))
-  (integre/tests/types/tests/op2 (oln/h/6_op2 1.3 600))
-  (integre/tests/types/tests/optrait1a (oln/h/25_optrait1a 1.4 600))
-  (integre/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.4 600))
-  (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.5 600))
-  (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.4 600))
-  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.7 600))
-  (integre/tests/types/tests/range1 (oln/h/34_range1 1.3 600))
-  (integre/tests/types/tests/range2b (oln/h/36_range2b 1.3 600))
-  (integre/tests/types/tests/range2 (oln/h/33_range2 1.3 600))
-  (integre/tests/types/tests/range3b (oln/h/32_range3b 1.2 600))
-  (integre/tests/types/tests/range3c (oln/h/30_range3c 1.2 600))
-  (integre/tests/types/tests/range3d (oln/h/29_range3d 1.2 600))
-  (integre/tests/types/tests/range3 (oln/h/31_range3 1.2 600))
-  (integre/tests/types/tests/sizes (oln/i/15_sizes 1.2 600))
-  (integre/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.2 600))
-  (integre/tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.2 600))
-  (integre/tests/types/tests/vec1 (oln/h/49_vec1 1.2 600))
-  (integre/tests/types/tests/vec2 (oln/h/48_vec2 1.2 600))
-  (integre/tests/types/tests/vec3 (oln/h/47_vec3 1.2 600))
-  (integre/tests/types/tests/vec4 (oln/h/46_vec4 1.2 600))
-  (integre/tests/types/tests/vec5 (oln/h/45_vec5 1.3 600))
-  (integre/tests/types/tests/vec6 (oln/h/44_vec6 1.2 600))
-  (integre/tests/types/tests/vec7 (oln/h/50_vec7 1.2 600))
+  (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 644))
+  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.7 755))
+  (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.2 755))
+  (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.3 755))
+  (integre/tests/types/tests/bin3 (oln/o/46_bin3 1.2 755))
+  (integre/tests/types/tests/comp1 (oln/h/9_comp1 1.2 755))
+  (integre/tests/types/tests/comp2 (oln/h/8_comp2 1.2 755))
+  (integre/tests/types/tests/comp3 (oln/h/7_comp3 1.2 755))
+  (integre/tests/types/tests/conv1 (oln/g/49_conv1 1.4 755))
+  (integre/tests/types/tests/conv2 (oln/g/42_conv2 1.4 755))
+  (integre/tests/types/tests/cplx1 (oln/i/2_cplx1 1.3 755))
+  (integre/tests/types/tests/cplx2 (oln/i/1_cplx2 1.3 755))
+  (integre/tests/types/tests/cplx3 (oln/i/0_cplx3 1.3 755))
+  (integre/tests/types/tests/cplx4 (oln/h/51_cplx4 1.3 755))
+  (integre/tests/types/tests/cplx5 (oln/i/7_cplx5 1.2 755))
+  (integre/tests/types/tests/cplx6 (oln/i/6_cplx6 1.5 755))
+  (integre/tests/types/tests/float1 (oln/h/12_float1 1.3 755))
+  (integre/tests/types/tests/float2 (oln/h/40_float2 1.3 755))
+  (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.3 755))
+  (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.4 755))
+  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.4 755))
+  (integre/tests/types/tests/int1b (oln/g/48_int1b 1.2 755))
+  (integre/tests/types/tests/int1 (oln/h/1_int1 1.2 755))
+  (integre/tests/types/tests/int2 (oln/h/0_int2 1.2 755))
+  (integre/tests/types/tests/int3 (oln/g/51_int3 1.2 755))
+  (integre/tests/types/tests/int4b (oln/h/35_int4b 1.2 755))
+  (integre/tests/types/tests/int4 (oln/g/50_int4 1.2 755))
+  (integre/tests/types/tests/int5 (oln/g/47_int5 1.2 755))
+  (integre/tests/types/tests/int6b (oln/g/45_int6b 1.2 755))
+  (integre/tests/types/tests/int6c (oln/g/44_int6c 1.2 755))
+  (integre/tests/types/tests/int6d (oln/g/43_int6d 1.2 755))
+  (integre/tests/types/tests/int6 (oln/g/46_int6 1.2 755))
+  (integre/tests/types/tests/int7 (oln/h/14_int7 1.2 755))
+  (integre/tests/types/tests/int_s1 (oln/g/40_int_s1 1.2 755))
+  (integre/tests/types/tests/int_s2b (oln/g/38_int_s2b 1.2 755))
+  (integre/tests/types/tests/int_s2 (oln/g/39_int_s2 1.2 755))
+  (integre/tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.3 755))
+  (integre/tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.2 755))
+  (integre/tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.2 755))
+  (integre/tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.3 755))
+  (integre/tests/types/tests/int_u1 (oln/h/22_int_u1 1.2 755))
+  (integre/tests/types/tests/int_u2a (oln/h/17_int_u2a 1.2 755))
+  (integre/tests/types/tests/int_u2b (oln/h/20_int_u2b 1.2 755))
+  (integre/tests/types/tests/int_u2c (oln/h/21_int_u2c 1.2 755))
+  (integre/tests/types/tests/int_u2d (oln/h/16_int_u2d 1.2 755))
+  (integre/tests/types/tests/int_u2e (oln/h/38_int_u2e 1.2 755))
+  (integre/tests/types/tests/int_u2f (oln/h/41_int_u2f 1.2 755))
+  (integre/tests/types/tests/int_u3a (oln/h/18_int_u3a 1.2 755))
+  (integre/tests/types/tests/int_u3b (oln/h/23_int_u3b 1.2 755))
+  (integre/tests/types/tests/int_u4 (oln/h/19_int_u4 1.2 755))
+  (integre/tests/types/tests/int_u6 (oln/h/37_int_u6 1.3 755))
+  (integre/tests/types/tests/op1 (oln/h/15_op1 1.3 755))
+  (integre/tests/types/tests/op2 (oln/h/6_op2 1.3 755))
+  (integre/tests/types/tests/optrait1a (oln/h/25_optrait1a 1.4 755))
+  (integre/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.4 755))
+  (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.5 755))
+  (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.4 755))
+  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.7 755))
+  (integre/tests/types/tests/range1 (oln/h/34_range1 1.3 755))
+  (integre/tests/types/tests/range2b (oln/h/36_range2b 1.3 755))
+  (integre/tests/types/tests/range2 (oln/h/33_range2 1.3 755))
+  (integre/tests/types/tests/range3b (oln/h/32_range3b 1.2 755))
+  (integre/tests/types/tests/range3c (oln/h/30_range3c 1.2 755))
+  (integre/tests/types/tests/range3d (oln/h/29_range3d 1.2 755))
+  (integre/tests/types/tests/range3 (oln/h/31_range3 1.2 755))
+  (integre/tests/types/tests/sizes (oln/i/15_sizes 1.2 755))
+  (integre/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.2 755))
+  (integre/tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.2 755))
+  (integre/tests/types/tests/vec1 (oln/h/49_vec1 1.2 755))
+  (integre/tests/types/tests/vec2 (oln/h/48_vec2 1.2 755))
+  (integre/tests/types/tests/vec3 (oln/h/47_vec3 1.2 755))
+  (integre/tests/types/tests/vec4 (oln/h/46_vec4 1.2 755))
+  (integre/tests/types/tests/vec5 (oln/h/45_vec5 1.3 755))
+  (integre/tests/types/tests/vec6 (oln/h/44_vec6 1.2 755))
+  (integre/tests/types/tests/vec7 (oln/h/50_vec7 1.2 755))
 
   (prj (oln.prj) :symlink)
 
@@ -675,7 +684,7 @@
 ;; Files added by populate at Tue, 21 Jan 2003 09:12:30 +0100,
 ;; to version 7.29(w), by raph:
 
-  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.6 600))
+  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.6 644))
 
 ;; Files deleted by depopulate at Wed, 22 Jan 2003 13:34:58 +0100,
 ;; from version 7.31(w), by raph:
@@ -790,18 +799,18 @@
   (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.7.1.1 600))
   (integre () :directory)
   (integre/ntg () :directory)
-  (integre/Makefile.am (oln/q/34_Makefile.a 1.3 600))
-  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.2.1.1 600))
+  (integre/Makefile.am (oln/q/34_Makefile.a 1.4 644))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.2.1.2 644))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.4 600))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4.1.2 600))
   (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.5 600))
-  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.4 600))
-  (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
+  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.4 644))
+  (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 755))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 600))
   (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.7.1.4 600))
-  (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 600))
+  (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 644))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.4 600))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.4 600))
   (metalic/tests/main/tests/ensure2 (oln/r/19_ensure2 1.4 600))
@@ -851,11 +860,11 @@
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.4 600))
 
 
-  (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.2 600))
+  (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.2 755))
   (olena/tests/core/tests/w_window (oln/s/8_w_window 1.2 600))
   
   (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.7.1.2 600))
-  (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.2 600))
+  (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.2 755))
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
@@ -885,52 +894,52 @@
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 600))
 
 
-  (integre/ntg/int.hh (oln/s/0_int.hh 1.3 600))
-  (integre/ntg/float.hh (oln/s/1_float.hh 1.3 600))
-  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2.1.1 600))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.2 600))
-  (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.3 600))
-  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 600))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.13 600))
-  (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 600))
-  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 600))
-  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 600))
-  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1.1.1 600))
-  (integre/tests/types/tests/range4 (oln/s/24_range4 1.2 600))
-  (integre/tests/utils/tests/debug1 (oln/s/41_debug1 1.4 600))
+  (integre/ntg/int.hh (oln/s/0_int.hh 1.3 644))
+  (integre/ntg/float.hh (oln/s/1_float.hh 1.3 644))
+  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2.1.1 644))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.2 644))
+  (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.3 644))
+  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 644))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.13 644))
+  (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 644))
+  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 644))
+  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 644))
+  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1.1.1 644))
+  (integre/tests/types/tests/range4 (oln/s/24_range4 1.2 755))
+  (integre/tests/utils/tests/debug1 (oln/s/41_debug1 1.4 755))
   
-  (integre/tests/utils/Makefile.am (oln/s/43_Makefile.a 1.3 600))
+  (integre/tests/utils/Makefile.am (oln/s/43_Makefile.a 1.3 644))
 
-  (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.3 600))
-  (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 600))
-  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2.1.2 600))
-  (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 600))
-  (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4.1.1 600))
-  (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 700))
-  (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.2 600))
+  (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.3 644))
+  (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 644))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2.1.2 644))
+  (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 644))
+  (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4.1.1 644))
+  (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 755))
+  (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.2 644))
   (metalic/tests/sanity/includes.test (oln/t/1_includes.t 1.1 700))
   (metalic/tests/sanity/Makefile.am (oln/t/2_Makefile.a 1.2 600))
-  (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.3 600))
+  (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.3 755))
 
 ;; Files added by populate at Mon, 02 Jun 2003 17:20:22 +0200,
 ;; to version 9.5(w), by burrus_n:
 
-  (integre/ntg/vec.hh (oln/t/10_vec.hh 1.1 600))
-  (integre/ntg/range.hh (oln/t/11_range.hh 1.1 600))
-  (integre/ntg/cycle.hh (oln/t/12_cycle.hh 1.1 600))
-  (integre/ntg/cplx.hh (oln/t/13_cplx.hh 1.1 600))
-  (integre/ntg/color.hh (oln/t/14_color.hh 1.1 600))
-  (integre/ntg/bin.hh (oln/t/15_bin.hh 1.1 600))
+  (integre/ntg/vec.hh (oln/t/10_vec.hh 1.1 644))
+  (integre/ntg/range.hh (oln/t/11_range.hh 1.1 644))
+  (integre/ntg/cycle.hh (oln/t/12_cycle.hh 1.1 644))
+  (integre/ntg/cplx.hh (oln/t/13_cplx.hh 1.1 644))
+  (integre/ntg/color.hh (oln/t/14_color.hh 1.1 644))
+  (integre/ntg/bin.hh (oln/t/15_bin.hh 1.2 644))
 
 ;; Files added by populate at Mon, 02 Jun 2003 17:25:14 +0200,
 ;; to version 9.7(w), by burrus_n:
 
-  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.3.1.1 600))
-  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2.1.1 600))
-  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7.1.2 600))
-  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.6 600))
-  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.9 600))
-  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.5.1.2 600))
+  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.3.1.1 644))
+  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2.1.1 644))
+  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7.1.3 644))
+  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.7 644))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.10 644))
+  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.5.1.2 644))
 
 ;; Files deleted by populate at Mon, 30 Jun 2003 20:01:55 +0200,
 ;; from version 9.10(w), by nes:
@@ -945,7 +954,7 @@
 ;; Files added by populate at Sat, 12 Jul 2003 20:10:15 +0200,
 ;; to version 9.14(w), by burrus_n:
 
-  (integre/tests/types/tests/char1 (oln/t/23_char1 1.2 600))
+  (integre/tests/types/tests/char1 (oln/t/23_char1 1.2 755))
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 600))
 
 
@@ -982,7 +991,7 @@
   (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.10 600))
   (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.10 600))
   (olena/tests/core/tests/traverse (oln/u/7_traverse 1.2 600))
-  (integre/tests/types/tests/int_u7 (oln/u/8_int_u7 1.2 600))
+  (integre/tests/types/tests/int_u7 (oln/u/8_int_u7 1.2 755))
   (olena/oln/io/pnm_read_data.hh (oln/u/9_pnm_read_d 1.6 600))
   (olena/oln/io/pnm_write_data.hh (oln/u/10_pnm_write_ 1.7 600))
   (olena/oln/io/image.hh (oln/u/11_image.hh 1.2 600))
@@ -1003,8 +1012,8 @@
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.3 600))
   (contrib/runtests (oln/u/33_runtests 1.4 700))
   (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.1 600))
-  (integre/tests/check/Makefile.runtests (oln/u/35_Makefile.r 1.2 600))
-  (integre/tests/check/Makefile.flags (oln/u/36_Makefile.f 1.1 600))
+  (integre/tests/check/Makefile.runtests (oln/u/35_Makefile.r 1.2 644))
+  (integre/tests/check/Makefile.flags (oln/u/36_Makefile.f 1.1 644))
   (olena/tests/math/tests/macros (oln/u/37_macros 1.3 600))
   (olena/tests/math/Makefile.am (oln/u/38_Makefile.a 1.1 600))
   (olena/tests/io/tests/1d (oln/u/39_1d 1.3 600))
@@ -1137,7 +1146,7 @@
 ;; Files added by populate at Wed, 26 Nov 2003 11:35:29 +0100,
 ;; to version 10.41(w), by burrus_n:
 
-  (integre/tests/types/tests/int_u8 (oln/w/6_int_u8 1.2 600))
+  (integre/tests/types/tests/int_u8 (oln/w/6_int_u8 1.2 755))
 
 ;; Files added by populate at Mon, 08 Dec 2003 10:54:08 +0100,
 ;; to version 10.45(w), by david:
@@ -1236,7 +1245,7 @@
   ; (doc/ref/html () :directory)
 
 
-  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.3 600))
+  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.3 644))
 ;; Files added by populate at Fri, 19 Mar 2004 15:49:20 +0100,
 ;; to version 10.97(w), by palma_g:
 
@@ -1403,7 +1412,7 @@
 
   (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.6 600))
   (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.3 600))
-  (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.2 600))
+  (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.2 755))
   (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 600))
   (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
@@ -1442,7 +1451,7 @@
   (olena/tests/morpher/tests/slicing (oln/q/44_slicing 1.2 600))
 
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
-  (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 600))
+  (integre/ntg/makefile.src (oln/r/2_makefile.s 1.2 644))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.10 600))
 
