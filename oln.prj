@@ -1,29 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 273)
-(Parent-Version oln 10 272)
-(Version-Log "2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
-
-	Add missing copyright header.
-
-	* bootstrap.sh, cleanup.sh, config/oln.m4, config/oln-local.m4,
-	* config/strip-lrde, configure.ac, Makefile.am: Add copyright
-	header.
-	* demo/Makefile.am, demo/convol-gaussian.cc, demo/image.cc,
-	* demo/morpholena-base.cc, demo/morpholena-grad.cc,
-	* demo/morpholena-hats.cc, demo/morpholena-hit-miss.cc,
-	* demo/morpholena-minima.cc, demo/morpholena-ops.cc,
-	* demo/morpholena-wshed-beucher.cc, demo/morpholena-wshed.cc,
-	* demo/morpholena.cc, demo/tour.cc: Likewise.
-	* ref/doxygen.config.in, ref/exdoc.mk.in, ref/gen_filelists.sh
-	* ref/integre-ref.tex: Likewise.
-	* ref/exdoc.pl, ref/img_conv.pl: Update the address of the FSF in
-	the copyright header.
-	* ref/oln-ref.tex: Fix copyright header.
+(Project-Version oln 10 274)
+(Parent-Version oln 10 273)
+(Version-Log "Fix ChangeLogs.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 09 Feb 2007 16:25:42 +0100")
+(Checkin-Time "Fri, 09 Feb 2007 16:35:16 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -136,8 +119,8 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.32 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.18 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.33 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.19 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.51 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.44 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.10 600))
@@ -165,10 +148,10 @@
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.6 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.4 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.13 600))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.14 600))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.15 600))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 600))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.10 644))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.11 644))
   (NEWS (oln/0_NEWS 1.24 600))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 600) :no-keywords)

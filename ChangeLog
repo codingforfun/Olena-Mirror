@@ -1,3 +1,11 @@
+2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add more missing copyright header.
+
+	* bootstrap.sh, cleanup.sh, config/oln.m4, config/oln-local.m4,
+	* config/strip-lrde, configure.ac, Makefile.am: Add copyright
+	header.
+
 2007-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove olena/oln/lrde from the distribution.

@@ -1,3 +1,5 @@
+## Process this file through Automake to produce Makefile.in -*- Makefile -*-
+
 ## Copyright (C) 2002, 2003, 2006, 2007 EPITA Research and Development
 ## Laboratory
 ##
@@ -26,7 +28,6 @@
 ## reasons why the executable file might be covered by the GNU General
 ## Public License.
 
-## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
 # OLN_TOP_SUBDIRS is set when "configure" is run.
 SUBDIRS = metalic integre olena $(OLN_TOP_SUBDIRS)
