@@ -1,3 +1,22 @@
+2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright header.
+
+	* bootstrap.sh, cleanup.sh, config/oln.m4, config/oln-local.m4,
+	* config/strip-lrde, configure.ac, Makefile.am: Add copyright
+	header.
+	* demo/Makefile.am, demo/convol-gaussian.cc, demo/image.cc,
+	* demo/morpholena-base.cc, demo/morpholena-grad.cc,
+	* demo/morpholena-hats.cc, demo/morpholena-hit-miss.cc,
+	* demo/morpholena-minima.cc, demo/morpholena-ops.cc,
+	* demo/morpholena-wshed-beucher.cc, demo/morpholena-wshed.cc,
+	* demo/morpholena.cc, demo/tour.cc: Likewise.
+	* ref/doxygen.config.in, ref/exdoc.mk.in, ref/gen_filelists.sh
+	* ref/integre-ref.tex: Likewise.
+	* ref/exdoc.pl, ref/img_conv.pl: Update the address of the FSF in
+	the copyright header.
+	* ref/oln-ref.tex: Fix copyright header.
+
 2004-07-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* dev/build.texi: Use @item in doc.
