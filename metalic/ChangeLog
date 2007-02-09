@@ -1,3 +1,26 @@
+2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers, and fix the dates of existing ones.
+
+	* Makefile.am, mlc/Makefile.am, mlc/makefile.src
+	* tests/array/gen_test.cc, tests/check/check.hh,
+	* tests/check/main.cc, tests/check/Makefile.am,
+	* tests/check/Makefile.check, tests/check/Makefile.flags,
+	* tests/check/srcdir.cc, tests/check/srcdir.hh,
+	* tests/check/verbose.cc, tests/check/verbose.hh,
+	* tests/array/gen_test_utils/errors.cc,
+	* tests/array/gen_test_utils/errors.hh, tests/array/Makefile.am,
+	* tests/array/test_array1d.cc, tests/array/test_array2d.cc,
+	* tests/array/test_array3d.cc, tests/check/compile.cc,
+	* tests/check/compile.hh, tests/Makefile.am,
+	* tests/main/Makefile.am, tests/check/defs.in,
+	* tests/sanity/includes.test, tests/sanity/Makefile.am,
+	* tests/check/Makefile.runtests: Add copyright header.
+	* tests/main/tests/is_a1, tests/main/tests/ensure1,
+	* tests/main/tests/ensure2, tests/main/tests/ensure3,
+	* tests/main/tests/pow2sup1, tests/main/tests/pow2sup2:	Fix the
+	dates in copyright headers.
+
 2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* mlc/type.hh: Make compliant to g++-3.4.

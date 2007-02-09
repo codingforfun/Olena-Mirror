@@ -1,3 +1,5 @@
+# Process this file with autoconf to produce a configure script.
+
 # Copyright (C) 2002, 2003, 2004, 2006, 2007 EPITA Research and
 # Development Laboratory
 #
@@ -26,7 +28,6 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-# Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.54])
 
