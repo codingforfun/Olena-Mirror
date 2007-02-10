@@ -1,49 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 279)
-(Parent-Version oln 10 278)
+(Project-Version oln 10 280)
+(Parent-Version oln 10 279)
 (Version-Log "2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing copyright headers.
 
-	* src/copyright.template: New.
-	* copyright.py: New.
-	Use it...
-	* generate_arith_instantiations.py,
-	* generate_conversions_instantiations.py,	
-	* generate_morpho_instantiations.py: ...here to insert copyright
-	notices in generated files.
-	Add copyright header.
-	* Makefile.am, configure.ac, doc/Makefile.am,
-	* doc/examples/python/simple.py, doc/examples/ruby/simple.rb,
-	* meta/Makefile.am, meta/swilena_arith.i, meta/swilena_basics.i,
-	* meta/swilena_config.i, meta/swilena_conversions.i,
-	* meta/swilena_core.i, meta/swilena_decl.i, meta/swilena_describe.i,
-	* meta/swilena_exception.i, meta/swilena_image.i,
-	* meta/swilena_imagesize.i, meta/swilena_morpho.i,
-	* meta/swilena_ntg.i, meta/swilena_ntg_macros.i,
-	* meta/swilena_point.i, meta/swilena_structelt.i,
-	* meta/swilena_w_win.i, python/Makefile.am, python/swilena_all1d.py,
-	* python/swilena_all2d.py, python/swilena_all3d.py,
-	* python/swilena_display.py, python/tests/Makefile.am,
-	* python/tests/arith.py, python/tests/conversions.py,
-	* python/tests/morpho.py, python/tests/sanity.py,
-	* python/tests/simple1.py, ruby/Makefile.am,
-	* ruby/swilena_display.rb, ruby/tests/Makefile.am,
-	* ruby/tests/arith.rb, ruby/tests/conversions.rb,
-	* ruby/tests/morpho.rb, ruby/tests/sanity.rb, ruby/tests/simple1.rb,
-	* src/Makefile.am: Add copyright header.
-	* expand.sh: Likewise.
-	(copyright_notice_cxx, copyright_notice_shell): New functions.
-	Use them to insert copyright notices in generated files.
-	* doc/swilena.texi: s/L\\.R\\.D\\.E\\./LRDE/.
-	* Makefile.am (EXTRA_DIST): Add copyright.py.
-	* src/Makefile.am (EXTRA_DIST): New.
-	Add copyright.template.
+	* Makefile.am, lib/Makefile.am, utilities/Makefile.am,
+	* utilities/configure.ac, utilities/convert/Makefile.am,
+	* utilities/morpho/Makefile.am,
+	* utilities/morpho/generate_morpho.sh: Add copyright
+	headers.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 10 Feb 2007 16:31:23 +0100")
+(Checkin-Time "Sat, 10 Feb 2007 16:35:03 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -161,7 +132,7 @@
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.54 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.46 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.12 644))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.18 644))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.19 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.53 644))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 644))
@@ -583,7 +554,7 @@
 
 
   (tools () :directory)
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.7 644))
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.8 644))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.3 644))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.4 644))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.6 644))
@@ -630,10 +601,10 @@
   (tools/swilena/meta/attic/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 644))
 ;  (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
   (tools/swilena/TODO (oln/n/36_TODO 1.3 644))
-  (tools/utilities/configure.ac (oln/o/27_configure. 1.2 644))
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.5 644))
-  (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 744))
-  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.6 644))
+  (tools/utilities/configure.ac (oln/o/27_configure. 1.3 644))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.6 644))
+  (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.3 744))
+  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.7 644))
   (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.5 644))
   (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.4 644))
   (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.5 644))
@@ -690,7 +661,7 @@
 ;; Files added by populate at Tue, 21 Jan 2003 00:25:46 +0100,
 ;; to version 7.29(w), by raph:
 
-  (tools/lib/Makefile.am (oln/p/27_Makefile.a 1.2 644))
+  (tools/lib/Makefile.am (oln/p/27_Makefile.a 1.3 644))
 
 ;; Files added by populate at Tue, 21 Jan 2003 00:25:52 +0100,
 ;; to version 7.29(w), by raph:
@@ -1503,7 +1474,7 @@
   (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.3 644))
   (olena/tests/morpher/tests/border (oln/u/16_border 1.2 644))
   (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.4 644))
-  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.4 644))
+  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.5 644))
 ;; Files deleted by depopulate at Fri, 09 Jul 2004 17:22:25 +0200,
 ;; from version 10.202(w), by palma_g:
 

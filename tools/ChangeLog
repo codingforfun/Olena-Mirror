@@ -1,5 +1,15 @@
 2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing copyright headers.
+
+	* Makefile.am, lib/Makefile.am, utilities/Makefile.am,
+	* utilities/configure.ac, utilities/convert/Makefile.am,
+	* utilities/morpho/Makefile.am,
+	* utilities/morpho/generate_morpho.sh: Add copyright
+	headers.
+
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the address of the Free Software Foundation in copyright
 	headers.
 
