@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; see the file COPYING.  If not, write to
 # the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-# Boston, MA 02111-1307, USA.
+# Boston, Boston, MA 02110-1301, USA.
 
 # Extension of the Kernel.require method understanding Libtool libraries.
 # Inspired by ltihooks.py.

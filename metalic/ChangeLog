@@ -1,3 +1,18 @@
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the address of the Free Software Foundation in copyright
+	headers.
+
+	* mlc/array/1d.hh, mlc/array/1d.hxx, mlc/array/2d.hh,
+	* mlc/array/2d.hxx, mlc/array/3d.hh, mlc/array/3d.hxx,
+	* mlc/array/all.hh, mlc/array/nd.hh, mlc/array/objs.hh,
+	* mlc/bool.hh, mlc/cmp.hh, mlc/config/system.hh,
+	* mlc/contract.hh, mlc/is_a.hh, mlc/loop.hh, mlc/math.hh,
+	* mlc/objs.hh, mlc/optional.hh, mlc/type.hh, mlc/typeadj.hh,
+	* tests/main/tests/ensure1, tests/main/tests/ensure2,
+	* tests/main/tests/ensure3, tests/main/tests/is_a1,
+	* tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: Do it.
+
 2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing copyright headers, and fix the dates of existing ones.

@@ -1,3 +1,20 @@
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the address of the Free Software Foundation in copyright
+	headers.
+
+	* lib/getopt.c, lib/getopt1.c, lib/gettext.h, lib/oln_getopt.h,
+	* swilena/python/ltihooks.py, swilena/ruby/ltrequire.rb,
+	* utilities/convert/color_space.cc,
+	* utilities/morpho/morpho_template.cc,
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc,
+	* utilities/mosaic.cc: Do it.
+
 2004-07-07  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* utilities/convert/color_space.cc: Remove warnings.
