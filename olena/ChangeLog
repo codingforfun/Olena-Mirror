@@ -1,5 +1,30 @@
 2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing copyright headers, and fix the dates in existing ones.
+
+	* conf/configure.ac, conf/gen-scripts.sh, conf/oln-config.shin,
+	* Makefile.am, oln/Makefile.am, oln/makefile.src,
+	* oln/transforms/shapelets.hh, tests/check/Makefile.am,
+	* tests/check/Makefile.check, tests/check/Makefile.flags,
+	* tests/check/Makefile.runtests, tests/convert/Makefile.am,
+	* tests/convol/Makefile.am, tests/core/Makefile.am,
+	* tests/io/Makefile.am, tests/level/Makefile.am,
+	* tests/Makefile.am, tests/sanity/includes.test,
+	* tests/sanity/Makefile.am, tests/transforms/Makefile.am: Add
+	copyright header.
+	* oln/transforms/shapelets.hh: Likewise.
+	Add header guards.
+	* oln/arith/logic.hh, oln/convert/rgbhsl.hh,
+	* oln/convert/rgbhsv.hh, oln/convol/fast_convolution.hh,
+	* oln/core/abstract/image.hh, oln/core/window2d.hh,
+	* oln/io/base.hh, oln/io/gz_stream.hh,
+	* oln/morpho/geodesic_dilation.hh, oln/morpho/geodesic_erosion.hh,
+	* oln/topo/dmap.hh, oln/topo/dmap.hxx,
+	* oln/topo/tarjan/tarjan_with_attr.hh: Fix the dates in copyright
+	headers.
+
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the address of the Free Software Foundation in copyright
 	headers.
 
