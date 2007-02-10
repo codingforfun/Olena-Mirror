@@ -75,7 +75,6 @@
 	* mlc/array/2d.hh: Likewise.
 	* mlc/array/3d.hh: Likewise.
 
-
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh (any_with_diamond): Use the static offset technique.
@@ -215,17 +214,17 @@
 	* mlc/typeadj.hh: Update namespaces and header guards.
 
 	* mlc/array/1d.hh, mlc/array/1d.hxx,
-	mlc/array/2d.hh, mlc/array/2d.hxx, mlc/array/3d.hh,
-	mlc/array/3d.hxx, mlc/array/all.hh, mlc/array/nd.hh,
-	mlc/array/objs.hh, mlc/bool.hh, mlc/cmp.hh, mlc/contract.hh,
-	mlc/is_a.hh, mlc/loop.hh, mlc/math.hh, mlc/objs.hh,
-	mlc/optional.hh, mlc/type.hh,
-	tests/array/gen_test_utils/prelude,
-	tests/array/test_array1d.cc, tests/array/test_array2d.cc,
-	tests/array/test_array3d.cc, tests/main/tests/ensure1,
-	tests/main/tests/ensure2, tests/main/tests/ensure3,
-	tests/main/tests/is_a1, tests/main/tests/pow2sup1,
-	tests/main/tests/pow2sup2: Update namespaces. Update header
+	* mlc/array/2d.hh, mlc/array/2d.hxx, mlc/array/3d.hh,
+	* mlc/array/3d.hxx, mlc/array/all.hh, mlc/array/nd.hh,
+	* mlc/array/objs.hh, mlc/bool.hh, mlc/cmp.hh, mlc/contract.hh,
+	* mlc/is_a.hh, mlc/loop.hh, mlc/math.hh, mlc/objs.hh,
+	* mlc/optional.hh, mlc/type.hh,
+	* tests/array/gen_test_utils/prelude,
+	* tests/array/test_array1d.cc, tests/array/test_array2d.cc,
+	* tests/array/test_array3d.cc, tests/main/tests/ensure1,
+	* tests/main/tests/ensure2, tests/main/tests/ensure3,
+	* tests/main/tests/is_a1, tests/main/tests/pow2sup1,
+	* tests/main/tests/pow2sup2: Update namespaces. Update header
 	guards.
 
 2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -238,8 +237,8 @@
 	* tests/check/defs.in: New file.
 
 	* tests/main/tests/ensure1, tests/main/tests/ensure2,
-	tests/main/tests/ensure3, tests/main/tests/is_a1,
-	tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: New tests.
+	* tests/main/tests/ensure3, tests/main/tests/is_a1,
+	* tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: New tests.
 
 2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -293,7 +292,7 @@
 	* mlc/array/all.hh: ... this.
 
 	* mlc/array/1d.hh, mlc/array/1d.hh, mlc/array/2d.hh,
-	mlc/array/3d.hh, mlc/array/all.hh: Update includes.
+	* mlc/array/3d.hh, mlc/array/all.hh: Update includes.
 
 	* mlc/config/system.hh: New file.
 
@@ -305,7 +304,7 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/array1d.hh, mlc/array2d.hh, mlc/array3d.hh: Update
-	  includes.
+	includes.
 
 	* mlc/is_a.hh: Likewise.
 
@@ -345,7 +344,7 @@
 	useless paths.
 
 	* tests/check/check.hh, tests/check/Makefile.am,
-	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
+	* tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
 	tests split.
 
 2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -362,7 +361,7 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am,
-	tests/Makefile.am,
-	tests/array/Makefile.am: New files.
+	* tests/Makefile.am,
+	* tests/array/Makefile.am: New files.
 
 	* ChangeLog: New file.

@@ -381,7 +381,7 @@
 	* oln/lrde/ufmt/bin/Makefile.am (check_PROGRAMS): Add
 	generic_salembier_int_u8 and generic_salembier_float.
 	(generic_salembier_int_u8_SOURCES)
-	(generic_salembier_float_SOURCES) 
+	(generic_salembier_float_SOURCES)
 	(generic_salembier_float_LDFLAGS): New.
 
 	* oln/lrde/efigi/pgm2pfm_wo_noise.cc: New
@@ -390,15 +390,15 @@
 2006-12-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some EFIGI utilities.
-	
-	* olena/oln/lrde/efigi/pfm2pgm.cc,
-	* olena/oln/lrde/efigi/misc.hh,
-	* olena/oln/lrde/efigi/io.hh,
-	* olena/oln/lrde/efigi/req.hh,
-	* olena/oln/lrde/efigi/wst.cc,
-	* olena/oln/lrde/efigi/gaussian.cc,
-	* olena/oln/lrde/efigi/pgm2pfm.cc,
-	* olena/oln/lrde/efigi/wst.hh:
+
+	* oln/lrde/efigi/pfm2pgm.cc,
+	* oln/lrde/efigi/misc.hh,
+	* oln/lrde/efigi/io.hh,
+	* oln/lrde/efigi/req.hh,
+	* oln/lrde/efigi/wst.cc,
+	* oln/lrde/efigi/gaussian.cc,
+	* oln/lrde/efigi/pgm2pfm.cc,
+	* oln/lrde/efigi/wst.hh:
 	New.
 
 2006-10-21  Roland Levillain  <roland@lrde.epita.fr>
@@ -461,22 +461,22 @@
 
 	Add implementation of Najman's component tree computation algorithm.
 
-	* olena/oln/lrde/ufmt/basic_najman.hh: New.
-	* olena/oln/lrde/ufmt/bin/basic_najman.cc: New.
+	* oln/lrde/ufmt/basic_najman.hh: New.
+	* oln/lrde/ufmt/bin/basic_najman.cc: New.
 	* oln/lrde/ufmt/Makefile.am: Add basic_najman.
 	* oln/lrde/ufmt/bin/Makefile.am: Add basic_najman.
-	
+
 2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some versions for float data.
-	
-	* olena/oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
+
+	* oln/lrde/ufmt/utils.hh (to_float_with_noise): New.
 	(rev_sort): New.
-	* olena/oln/lrde/ufmt/README: Update.
-	* olena/oln/lrde/ufmt/bin/sp_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/bin/spx_maxtree.cc: New.
-	* olena/oln/lrde/ufmt/spx_maxtree.hh: New.
-	* olena/oln/lrde/ufmt/sp_maxtree.hh: New.
+	* oln/lrde/ufmt/README: Update.
+	* oln/lrde/ufmt/bin/sp_maxtree.cc: New.
+	* oln/lrde/ufmt/bin/spx_maxtree.cc: New.
+	* oln/lrde/ufmt/spx_maxtree.hh: New.
+	* oln/lrde/ufmt/sp_maxtree.hh: New.
 
 2006-08-28  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
@@ -504,7 +504,7 @@
 	* oln/lrde/ufmt/bin/fiorio.cc: New.
 	* oln/lrde/ufmt/README: Update.
 
-	Make the the olena/oln/lrde/ufmt hierarchy a full-fledged part of
+	Make the the oln/lrde/ufmt hierarchy a full-fledged part of
 	the autoconfiscated package.
 
 	* oln/lrde/Makefile.am, oln/lrde/ufmt/Makefile.am,
@@ -932,8 +932,6 @@
 	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13:
 	Disable test.
 
-
-
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/morpho/tests/md5_morpho_reconstruction_hh5: Fix to make
@@ -1138,8 +1136,6 @@
 	* tests/morpher/tests/gmorph: Likewise.
 	* tests/morpher/tests/color_sq_morph: Likewise.
 	* tests/morpher/tests/bmorph: Likewise.
-
-
 
 2004-03-29  Giovanni Palma  <giovanni@lrde.epita.fr>
 
@@ -1871,6 +1867,7 @@
 	* oln/morpho/watershed.hxx: Likewise.
 
 2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/core/abstract/image.hh: Add comments.
 	* oln/core/abstract/image_with_dim.hh: Correct comments.
 
@@ -1880,6 +1877,7 @@
 	'template' keyword.
 
 2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/core/abstract/dpoint.hh: Add comments.
 	* oln/core/abstract/image_size.hh: Add comments.
 	* oln/core/abstract/point.hh: Add comments.
@@ -2031,7 +2029,6 @@
 	* oln/core/image2.hh: Likewise.
 	* oln/core/image3.hh: Likewise.
 	* Makefile.am: Include convert/value_to_point.hh
-
 
 2004-01-30  Giovanni Palma  <giovanni@lrde.epita.fr>
 
@@ -2475,15 +2472,15 @@
 2003-08-06  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/impl/image_impl.hh,
-	oln/core/impl/image_array.hh,
-	oln/core/impl/image_array1d.hh,
-	oln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array3d.hh: Remove image type
+	* oln/core/impl/image_array.hh,
+	* oln/core/impl/image_array1d.hh,
+	* oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array3d.hh: Remove image type
 	parameterization.
 
 	* oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh: Adjust consequently. Move calls to
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh: Adjust consequently. Move calls to
 	data->ref()...
 
 	* oln/core/abstract/image_with_impl.hh: ...here.
@@ -2531,40 +2528,40 @@
 2003-08-05  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/combinatorial-map/cmap.hh,
-	oln/topo/combinatorial-map/cmap.hxx: Adjust files. New
+	* oln/topo/combinatorial-map/cmap.hxx: Adjust files. New
 	version of combinatorial maps.
 
 	* oln/topo/combinatorial-map/internal/zeta.hh,
-	oln/topo/combinatorial-map/internal/allfunc.hh,
-	oln/topo/combinatorial-map/internal/alpha.hh,
-	oln/topo/combinatorial-map/internal/anyfunc.hh,
-	oln/topo/combinatorial-map/internal/anyfunc.hxx,
-	oln/topo/combinatorial-map/internal/beta.hh,
-	oln/topo/combinatorial-map/internal/lambda.hh,
-	oln/topo/combinatorial-map/internal/level.hh,
-	oln/topo/combinatorial-map/internal/level.hxx,
-	oln/topo/combinatorial-map/internal/sigma.hh: New files.
+	* oln/topo/combinatorial-map/internal/allfunc.hh,
+	* oln/topo/combinatorial-map/internal/alpha.hh,
+	* oln/topo/combinatorial-map/internal/anyfunc.hh,
+	* oln/topo/combinatorial-map/internal/anyfunc.hxx,
+	* oln/topo/combinatorial-map/internal/beta.hh,
+	* oln/topo/combinatorial-map/internal/lambda.hh,
+	* oln/topo/combinatorial-map/internal/level.hh,
+	* oln/topo/combinatorial-map/internal/level.hxx,
+	* oln/topo/combinatorial-map/internal/sigma.hh: New files.
 
 	* oln/topo/combinatorial-map/internal/cmap-functor.hh,
-	oln/topo/combinatorial-map/internal/cmap-functor.hxx: Remove
+	* oln/topo/combinatorial-map/internal/cmap-functor.hxx: Remove
 	files.
 
 2003-08-04  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/window1d.hh, oln/core/window2d.hh,
-	oln/core/window3d.hh, oln/core/abstract/window.hh: Remove get_se.
+	* oln/core/window3d.hh, oln/core/abstract/window.hh: Remove get_se.
 
 	* oln/convert/conversion_ng_se.hh,
-	oln/level/connected.hh,
-	oln/morpho/reconstruction.hh: Adapt in consequence.
+	* oln/level/connected.hh,
+	* oln/morpho/reconstruction.hh: Adapt in consequence.
 
 	* oln/core/abstract/w_window.hh: Add add(dp) with default weight
 	to 1. Fix interface. Remove Weight(WinType) macro. Add inter() and
 	uni() functions.
 
 	* oln/core/abstract/struct_elt.hh,
-	oln/morpho/fast_morpho.hxx,
-	oln/morpho/hit_or_miss.inc: Minor change.
+	* oln/morpho/fast_morpho.hxx,
+	* oln/morpho/hit_or_miss.inc: Minor change.
 
 2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -2816,9 +2813,9 @@
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/gradient.inc,
-	oln/morpho/hit_or_miss.inc,
-	oln/morpho/laplacian.inc,
-	oln/morpho/top_hat.inc: Fix comments.
+	* oln/morpho/hit_or_miss.inc,
+	* oln/morpho/laplacian.inc,
+	* oln/morpho/top_hat.inc: Fix comments.
 
 2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -2844,9 +2841,9 @@
 2003-07-31  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* oln/convol/convolution.hh,
-	oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh: Remove Exact_cref.
+	* oln/convol/fast_gaussian.hh,
+	* oln/convol/fast_gaussian.hxx,
+	* oln/convol/fast_gaussian_coefficient.hh: Remove Exact_cref.
 	Fix coding style.
 
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
@@ -2859,68 +2856,68 @@
 2003-07-31  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/dpoint1d.hh,
-	oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
-	oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
-	oln/core/fwd_iter3d.hh, oln/core/image1d.hh,
-	oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/image.hh, oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
-	oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
-	oln/core/neighborhood3d.hh, oln/core/point1d.hh,
-	oln/core/point2d.hh, oln/core/point3d.hh,
-	oln/core/window1d.hh, oln/core/window2d.hh,
-	oln/core/window3d.hh, oln/core/w_window1d.hh,
-	oln/core/w_window2d.hh, oln/core/w_window3d.hh,
-	oln/core/abstract/image_with_dim.hh,
-	oln/core/abstract/image_with_impl.hh,
-	oln/core/impl/image_impl.hh, oln/core/impl/image_array.hh,
-	oln/core/impl/image_array3d.hh, oln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array1d.hh, oln/core/abstract/window_base.hh,
-	oln/core/abstract/windownd.hh, oln/core/abstract/w_windownd.hh,
-	oln/core/abstract/neighborhoodnd.hh: Fix method visibility.
+	* oln/core/bkd_iter3d.hh, oln/core/dpoint1d.hh,
+	* oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
+	* oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
+	* oln/core/fwd_iter3d.hh, oln/core/image1d.hh,
+	* oln/core/image2d.hh, oln/core/image3d.hh,
+	* oln/core/image.hh, oln/core/abstract/iter1d.hh,
+	* oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	* oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
+	* oln/core/neighborhood3d.hh, oln/core/point1d.hh,
+	* oln/core/point2d.hh, oln/core/point3d.hh,
+	* oln/core/window1d.hh, oln/core/window2d.hh,
+	* oln/core/window3d.hh, oln/core/w_window1d.hh,
+	* oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	* oln/core/abstract/image_with_dim.hh,
+	* oln/core/abstract/image_with_impl.hh,
+	* oln/core/impl/image_impl.hh, oln/core/impl/image_array.hh,
+	* oln/core/impl/image_array3d.hh, oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array1d.hh, oln/core/abstract/window_base.hh,
+	* oln/core/abstract/windownd.hh, oln/core/abstract/w_windownd.hh,
+	* oln/core/abstract/neighborhoodnd.hh: Fix method visibility.
 
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/convert/abstract/colorconv.hh,
-	oln/convert/nrgbyuv.hh,
-	oln/convert/stretch.hh,
-	oln/morpho/gradient.inc,
-	oln/morpho/hit_or_miss.inc,
-	oln/morpho/laplacian.inc,
-	oln/morpho/top_hat.inc: Fix convert usage.
+	* oln/convert/nrgbyuv.hh,
+	* oln/convert/stretch.hh,
+	* oln/morpho/gradient.inc,
+	* oln/morpho/hit_or_miss.inc,
+	* oln/morpho/laplacian.inc,
+	* oln/morpho/top_hat.inc: Fix convert usage.
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convert/abstract/colorconv.hh,
-	oln/convert/nrgbyuv.hh,
-	oln/convert/stretch.hh: Minor update.
+	* oln/convert/nrgbyuv.hh,
+	* oln/convert/stretch.hh: Minor update.
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh,
-	oln/convert/conversion.hh,
-	oln/convert/conversion_ng_se.hh: Fix namespaces.
+	* oln/convert/conversion.hh,
+	* oln/convert/conversion_ng_se.hh: Fix namespaces.
 
 	* oln/convert/force.hh,
-	oln/convert/stretch.hh: Minor update.
+	* oln/convert/stretch.hh: Minor update.
 
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convert/basics.hh,
-	oln/convert/bound.hh,
-	oln/convert/conversion.hh,
-	oln/convert/force.hh,
-	oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh,
-	oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh,
-	oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh,
-	oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh,
-	oln/convert/stretch.hh: Rewrite using the new design to avoid
+	* oln/convert/bound.hh,
+	* oln/convert/conversion.hh,
+	* oln/convert/force.hh,
+	* oln/convert/nrgbhsi.hh,
+	* oln/convert/nrgbhsl.hh,
+	* oln/convert/nrgbhsv.hh,
+	* oln/convert/nrgbxyz.hh,
+	* oln/convert/nrgbyiq.hh,
+	* oln/convert/nrgbyuv.hh,
+	* oln/convert/rgbnrgb.hh,
+	* oln/convert/rgbxyz.hh,
+	* oln/convert/stretch.hh: Rewrite using the new design to avoid
 	the use of exact_cref.
 
 	* oln/convert/abstract/conversion.hh: New.
@@ -2932,33 +2929,33 @@
 	* oln/convert/abstract/colorconv.hh: ... here.
 
 	* oln/arith/internal/opdecls.hh,
-	tests/convert/conv.cc: Adjust according to previous changes.
+	* tests/convert/conv.cc: Adjust according to previous changes.
 
 	* oln/convert/conversion_ng_se.hh: Remove exact_cref.
 
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/closing.inc,
-	oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh,
-	oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh,
-	oln/morpho/gradient.inc,
-	oln/morpho/hit_or_miss.inc,
-	oln/morpho/laplacian.inc,
-	oln/morpho/reconstruction.hh,
-	oln/morpho/top_hat.inc,
-	oln/morpho/watershed.hh,
-	oln/morpho/attribute_closing_opening.hh: Fix comments.
+	* oln/morpho/dilation.hh,
+	* oln/morpho/erosion.hh,
+	* oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/geodesic_erosion.hh,
+	* oln/morpho/gradient.inc,
+	* oln/morpho/hit_or_miss.inc,
+	* oln/morpho/laplacian.inc,
+	* oln/morpho/reconstruction.hh,
+	* oln/morpho/top_hat.inc,
+	* oln/morpho/watershed.hh,
+	* oln/morpho/attribute_closing_opening.hh: Fix comments.
 
 	* oln/morpho/extrema.hxx,
-	oln/morpho/fast_morpho.hxx,
-	oln/morpho/stat.hh,
-	oln/morpho/watershed.hxx,
-	oln/morpho/attribute_union_find.hh: Fix coding style.
+	* oln/morpho/fast_morpho.hxx,
+	* oln/morpho/stat.hh,
+	* oln/morpho/watershed.hxx,
+	* oln/morpho/attribute_union_find.hh: Fix coding style.
 
 	* oln/morpho/extrema_killer.hh,
-	oln/morpho/opening.inc: Fix coding style. Fix comments.
+	* oln/morpho/opening.inc: Fix coding style. Fix comments.
 
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
@@ -2971,14 +2968,14 @@
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/dmap.hxx,
-	oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
+	* oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
 
 	* tests/topo/test-tarjan.cc: New test.
 
 	* tests/topo/Makefile.am: Adjust.
 
 	* tests/topo/test-inter-pixel.cc,
-	tests/topo/test-cmap.cc, tests/topo/test-dmap.cc:
+	* tests/topo/test-cmap.cc, tests/topo/test-dmap.cc:
 	Change outer stream cerr to cout.
 
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
@@ -3047,14 +3044,14 @@
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* tests/topo/test.sh, tests/topo/test-cmap.ref,
-	tests/topo/test-inter-pixel.ref: Delete files.
+	* tests/topo/test-inter-pixel.ref: Delete files.
 
 	* tests/topo/Makefile.am: Adjust.
 
 	* tests/topo/test-dmap.cc: Add new test.
 
 	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc,
-	oln/topo/dmap.hxx: Fix bugs.
+	* oln/topo/dmap.hxx: Fix bugs.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -3064,7 +3061,7 @@
 	* oln/io/pnm_write.hh: Make pnm_write_header2d static.
 
 	* tests/core/multiple_sources_1.cc,
-	tests/core/multiple_sources_2.cc: New test.
+	* tests/core/multiple_sources_2.cc: New test.
 	* tests/core/Makefile.am: Adjust.
 
 	* oln/io/pnm3d.hh: Disable until complete rewrite.
@@ -3134,32 +3131,32 @@
 2003-07-30  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/core/box.hh,
-	oln/core/box.hxx: Fix typedefs.
+	* oln/core/box.hxx: Fix typedefs.
 
 	* oln/level/cc.hh, oln/level/compare.hh,
-	oln/level/connected.hh, oln/level/lut.hh,
-	oln/level/set_level.hh: Remove some Exact_cref.
+	* oln/level/connected.hh, oln/level/lut.hh,
+	* oln/level/set_level.hh: Remove some Exact_cref.
 
 2003-07-30  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/apply.hh,
-	oln/core/abstract/dpoint.hh,
-	oln/core/fold.hh,
-	oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh,
-	oln/core/image.hh,
-	oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh,
-	oln/core/abstract/iter3d.hh,
-	oln/core/abstract/neighborhood.hh,
-	oln/io/se_neighborhood.hh,
-	oln/io/se_window.hh,
-	oln/core/abstract/image.hh,
-	oln/core/abstract/image_with_impl.hh,
-	oln/core/impl/image_array3d.hh,
-	oln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array1d.hh: Fix includes for sanity check.
+	* oln/core/abstract/dpoint.hh,
+	* oln/core/fold.hh,
+	* oln/core/image1d.hh,
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh,
+	* oln/core/image.hh,
+	* oln/core/abstract/iter1d.hh,
+	* oln/core/abstract/iter2d.hh,
+	* oln/core/abstract/iter3d.hh,
+	* oln/core/abstract/neighborhood.hh,
+	* oln/io/se_neighborhood.hh,
+	* oln/io/se_window.hh,
+	* oln/core/abstract/image.hh,
+	* oln/core/abstract/image_with_impl.hh,
+	* oln/core/impl/image_array3d.hh,
+	* oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array1d.hh: Fix includes for sanity check.
 
 	* oln/topo/dmap.hh, oln/topo/dmap.hxx: Fix typedefs and coding
 	style. Remove some Exact_cref.
@@ -3182,28 +3179,28 @@
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
-	oln/core/abstract/iter3d.hh: Remove virtual inheritance.
+	* oln/core/abstract/iter3d.hh: Remove virtual inheritance.
 
 	* oln/morpho/fast_morpho.hxx: Fix typo.
 
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* oln/convol/fast_gaussian.hxx,
-	oln/core/dpoint3d.hh,
-	oln/core/abstract/dpoint.hh,
-	oln/core/abstract/neighborhood.hh,
-	oln/morpho/closing.inc,
-	oln/morpho/thickening.inc,
-	oln/morpho/thinning.inc,
-	oln/core/abstract/image_with_dim.hh,
-	oln/core/impl/image_impl.hh,
-	oln/core/impl/image_array1d.hh: Fix includes and various bugs.
+	* oln/core/dpoint3d.hh,
+	* oln/core/abstract/dpoint.hh,
+	* oln/core/abstract/neighborhood.hh,
+	* oln/morpho/closing.inc,
+	* oln/morpho/thickening.inc,
+	* oln/morpho/thinning.inc,
+	* oln/core/abstract/image_with_dim.hh,
+	* oln/core/impl/image_impl.hh,
+	* oln/core/impl/image_array1d.hh: Fix includes and various bugs.
 
 2003-07-29  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh,
-	oln/transforms/fft.hh: Adapt to new paradigm.
+	* oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh,
+	* oln/transforms/fft.hh: Adapt to new paradigm.
 
 	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
 	AM_CXXFLAGS definitions.
@@ -3221,9 +3218,9 @@
 	* doc/ref/integre-ref.tex: Remove includeimage.
 
 	* oln/morpho/gradient.inc,
-	oln/morpho/laplacian.inc,
-	oln/morpho/top_hat.inc,
-	oln/morpho/attribute_union_find.hh: Add some "abstract".
+	* oln/morpho/laplacian.inc,
+	* oln/morpho/top_hat.inc,
+	* oln/morpho/attribute_union_find.hh: Add some "abstract".
 
 	* oln/morpho/hit_or_miss.inc: Add some "abstract".
 	Add to_exact to "inter" calls.
@@ -3238,23 +3235,23 @@
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
-	oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/image.hh, oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
-	oln/core/window1d.hh, oln/core/window2d.hh,
-	oln/core/window3d.hh, oln/core/winneighb.hh,
-	oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh, oln/utils/stat.hh,
-	oln/core/abstract/image_with_dim.hh,
-	oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
-	oln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array1d.hh,
-	oln/core/abstract/window_base.hh,
-	oln/core/abstract/windownd.hh,
-	oln/core/abstract/w_windownd.hh,
-	oln/core/abstract/neighborhoodnd.hh: Fix problems raised by
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
+	* oln/core/image.hh, oln/core/abstract/iter1d.hh,
+	* oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	* oln/core/window1d.hh, oln/core/window2d.hh,
+	* oln/core/window3d.hh, oln/core/winneighb.hh,
+	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	* oln/core/w_window3d.hh, oln/utils/stat.hh,
+	* oln/core/abstract/image_with_dim.hh,
+	* oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
+	* oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array1d.hh,
+	* oln/core/abstract/window_base.hh,
+	* oln/core/abstract/windownd.hh,
+	* oln/core/abstract/w_windownd.hh,
+	* oln/core/abstract/neighborhoodnd.hh: Fix problems raised by
 	g++-3.4.
 
 	* tests/core/tests/image1: Test size accessors.
@@ -3278,10 +3275,10 @@
 	* oln/morpho/fast_morpho.hxx: Fix.
 
 	* oln/core/impl/image_impl.hh,
-	oln/core/impl/image_array.hh,
-	oln/core/impl/image_array3d.hh,
-	oln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array1d.hh: Fix memory leak.
+	* oln/core/impl/image_array.hh,
+	* oln/core/impl/image_array3d.hh,
+	* oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array1d.hh: Fix memory leak.
 
 	* oln/core/abstract/window_base.hh: Fix constructors.
 
@@ -3311,44 +3308,44 @@
 
 	* tests/check/Makefile.flags: Add zlib to compilation flags.
 	* tests/core/Makefile.am, tests/arith/Makefile.am,
-	tests/io/Makefile.am: Fix flags.
+	* tests/io/Makefile.am: Fix flags.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
-	oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
+	* oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
 	Disable output on std::clog.
 
 2003-07-28  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
 
 	* oln/convert/conversion.hh,
-	oln/morpho/opening.inc,
-	oln/morpho/splitse.hh,
-	oln/morpho/watershed.hh,
-	oln/utils/histogram.hh,
-	oln/level/connected.hh,
-	oln/convert/conversion_ng_se.hh,
-	oln/morpho/closing.inc,
-	oln/morpho/fast_morpho.hh: Add some "abstract".
+	* oln/morpho/opening.inc,
+	* oln/morpho/splitse.hh,
+	* oln/morpho/watershed.hh,
+	* oln/utils/histogram.hh,
+	* oln/level/connected.hh,
+	* oln/convert/conversion_ng_se.hh,
+	* oln/morpho/closing.inc,
+	* oln/morpho/fast_morpho.hh: Add some "abstract".
 
 	* oln/level/fill.hh,
-	oln/morpho/hit_or_miss.inc,
-	oln/morpho/thickening.inc,
-	oln/morpho/thinning.inc,
-	oln/morpho/watershed.hxx,
-	oln/morpho/attribute_closing_opening.hh,
-	oln/morpho/attribute_union_find.hh,
-	oln/morpho/extrema.hxx
-	oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh: Add some "abstract". Remove cref.
+	* oln/morpho/hit_or_miss.inc,
+	* oln/morpho/thickening.inc,
+	* oln/morpho/thinning.inc,
+	* oln/morpho/watershed.hxx,
+	* oln/morpho/attribute_closing_opening.hh,
+	* oln/morpho/attribute_union_find.hh,
+	* oln/morpho/extrema.hxx
+	* oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/geodesic_erosion.hh: Add some "abstract". Remove cref.
 
 	* oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh
-	oln/morpho/fast_morpho.hxx: Add some "abstract". Remove cref.
+	* oln/morpho/erosion.hh
+	* oln/morpho/fast_morpho.hxx: Add some "abstract". Remove cref.
 	Correct border calls.
 
 	* oln/morpho/extrema_killer.hh,
-	oln/morpho/reconstruction.hh: Add some "abstract".
+	* oln/morpho/reconstruction.hh: Add some "abstract".
 	Rename some used types. Remove cref.
 
 	* oln/morpho/stat.hh: Add some "abstract". Remove cref.
@@ -3381,22 +3378,22 @@
 
 	* oln/core/abstract/point.hh: Implement point_ref.
 	* oln/core/point1d.hh, oln/core/point1d.hxx,
-	oln/core/point2d.hh, oln/core/point2d.hxx,
-	oln/core/point3d.hh, oln/core/point3d.hxx: Remove point_ref member
+	* oln/core/point2d.hh, oln/core/point2d.hxx,
+	* oln/core/point3d.hh, oln/core/point3d.hxx: Remove point_ref member
 	function.
 
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
-	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
-	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
-	oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
+	* oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
+	* oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
+	* oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
 	interfaces.
 
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/neighborhood.hh,
-	oln/core/abstract/struct_elt.hh: Add typedefs.
+	* oln/core/abstract/struct_elt.hh: Add typedefs.
 
 	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
 
@@ -3407,8 +3404,8 @@
 	* oln/core/abstract/struct_elt.hh: ...this.
 
 	* oln/core/abstract/window.hh,
-	oln/core/abstract/w_window.hh,
-	oln/Makefile.am: Adapt in consequence.
+	* oln/core/abstract/w_window.hh,
+	* oln/Makefile.am: Adapt in consequence.
 
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
@@ -3419,16 +3416,16 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Add typedefs.
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Add typedefs.
 
 	* oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh,
-	oln/core/abstract/iter3d.hh: Add default constructor.
+	* oln/core/abstract/iter2d.hh,
+	* oln/core/abstract/iter3d.hh: Add default constructor.
 
 	* oln/topo/inter-pixel/fwd-dir-iter.hh,
-	oln/topo/inter-pixel/bkd-dir-iter.hh,
-	oln/topo/inter-pixel/internal/dir-iter.hh: Adapt to get it working
+	* oln/topo/inter-pixel/bkd-dir-iter.hh,
+	* oln/topo/inter-pixel/internal/dir-iter.hh: Adapt to get it working
 	with the new hierarchy of iterators.
 
 	* oln/topo/tarjan/flat-zone.hh: Adapt.
@@ -3438,15 +3435,15 @@
 	* oln/core/abstract/dpoint.hh: Implement the interface.
 
 	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
-	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
-	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Rename member
+	* oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
+	* oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Rename member
 	functions.
 
 	* oln/core/abstract/point.hh: Implement the interface.
 
 	* oln/core/point1d.hh, oln/core/point1d.hxx,
-	oln/core/point2d.hh, oln/core/point2d.hxx,
-	oln/core/point3d.hh, oln/core/point3d.hxx: Rename member
+	* oln/core/point2d.hh, oln/core/point2d.hxx,
+	* oln/core/point3d.hh, oln/core/point3d.hxx: Rename member
 	functions.
 
 2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -3456,19 +3453,19 @@
 2003-07-27  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/apply.hh, oln/core/fold.hh,
-	oln/core/generate.hh, oln/core/traverse.hh: Avoid using Exact
+	* oln/core/generate.hh, oln/core/traverse.hh: Avoid using Exact
 	macros.
 
 2003-07-27  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
-	oln/core/abstract/image_size.hh,
-	oln/core/abstract/neighborhood.hh,
-	oln/core/abstract/structelt.hh,
-	oln/core/abstract/window.hh,
-	oln/core/abstract/window_base.hh: Fix bugs.
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/abstract/image_size.hh,
+	* oln/core/abstract/neighborhood.hh,
+	* oln/core/abstract/structelt.hh,
+	* oln/core/abstract/window.hh,
+	* oln/core/abstract/window_base.hh: Fix bugs.
 
 	* oln/core/image2d.hh: Remove commented code.
 
@@ -3510,8 +3507,8 @@
 	* oln/core/internal/rec_operable.hh: Remove.
 
 	* oln/basics.hh, oln/core/apply.hh,
-	oln/core/fold.hh, oln/core/generate.hh,
-	oln/core/traverse.hh, oln/core/winneighb.hh: Adjust according to
+	* oln/core/fold.hh, oln/core/generate.hh,
+	* oln/core/traverse.hh, oln/core/winneighb.hh: Adjust according to
 	previous changes.
 
 	* oln/Makefile.am: Adjust according to previous changes.
@@ -3519,11 +3516,11 @@
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/image1d.hh, oln/core/image2d.hh,
-	oln/core/image3d.hh, oln/core/image.hh,
-	oln/core/abstract/image.hh,
-	oln/core/abstract/image_with_dim.hh,
-	oln/core/abstract/image_with_impl.hh,
-	oln/core/abstract/image_with_type.hh: Fix constructors.
+	* oln/core/image3d.hh, oln/core/image.hh,
+	* oln/core/abstract/image.hh,
+	* oln/core/abstract/image_with_dim.hh,
+	* oln/core/abstract/image_with_impl.hh,
+	* oln/core/abstract/image_with_type.hh: Fix constructors.
 
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
@@ -3543,8 +3540,8 @@
 	* oln/core/abstract/neighborhood.hh: ...here. Modify the interface.
 
 	* oln/core/neighborhood1d.hh,
-	oln/core/neighborhood2d.hh,
-	oln/core/neighborhood3d.hh: Adjust in consequence.
+	* oln/core/neighborhood2d.hh,
+	* oln/core/neighborhood3d.hh: Adjust in consequence.
 
 	* tests/core/tests/neighborhood: New test.
 
@@ -3557,8 +3554,8 @@
 	* oln/core/abstract/window.hh: ...here. Modify the interface.
 
 	* oln/core/window1d.hh,
-	oln/core/window2d.hh,
-	oln/core/window3d.hh: Adjust in consequence.
+	* oln/core/window2d.hh,
+	* oln/core/window3d.hh: Adjust in consequence.
 
 	* tests/core/tests/window: New test.
 
@@ -3571,8 +3568,8 @@
 	* oln/core/abstract/w_window.hh: ...here. Modify the interface.
 
 	* oln/core/w_window1d.hh,
-	oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh: Adjust in consequence.
+	* oln/core/w_window2d.hh,
+	* oln/core/w_window3d.hh: Adjust in consequence.
 
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
@@ -3584,8 +3581,8 @@
 	imagend_size interface.
 
 	* oln/core/image1d_size.hh,
-	oln/core/image2d_size.hh,
-	oln/core/image3d_size.hh: Adjust in consequence.
+	* oln/core/image2d_size.hh,
+	* oln/core/image3d_size.hh: Adjust in consequence.
 
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
@@ -3595,16 +3592,18 @@
 	iterators. Remove fwd_iter and bkd_iter unused classes.
 
 	* oln/core/internal/iter1d.hh,
-	oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh: Move...
+	* oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh: Move...
 
 	* oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh,
-	oln/core/abstract/iter3d.hh: ...here, respectively. Adjust inheritance.
+	* oln/core/abstract/iter2d.hh,
+	* oln/core/abstract/iter3d.hh: ...here, respectively. Adjust
+	inheritance.
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Adjust in consequence.
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Adjust in
+	consequence.
 
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
@@ -3616,8 +3615,8 @@
 	interface.
 
 	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
-	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
-	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Adjust in consequence.
+	* oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
+	* oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Adjust in consequence.
 
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
@@ -3629,15 +3628,15 @@
 	interface.
 
 	* oln/core/point1d.hh,
-	oln/core/point2d.hh,
-	oln/core/point3d.hh: Adjust in consequence.
+	* oln/core/point2d.hh,
+	* oln/core/point3d.hh: Adjust in consequence.
 
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* tests/level/threshold.cc, tests/level/set_level.cc,
-	tests/level/invert.cc, tests/level/connected.cc,
-	tests/level/compare.cc, tests/level/cc.cc, tests/level/Makefile.am
-	: Add tests for level directory.
+	* tests/level/invert.cc, tests/level/connected.cc,
+	* tests/level/compare.cc, tests/level/cc.cc,
+	* tests/level/Makefile.am: Add tests for level directory.
 
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
@@ -3647,11 +3646,12 @@
 	* oln/basics2d.hh: Uncomment io files includes.
 
 	* oln/arith/internal/opdecls.hh, oln/level/cc.hh,
-	oln/level/compare.hh, oln/level/connected.hh, oln/level/fill.hh,
-	oln/level/invert.hh, oln/level/set_level.hh,
-	oln/level/threshold.hh, oln/topo/tarjan/union.hh,
-	oln/topo/inter-pixel/inter-pixel.hh, oln/topo/tarjan/flat-zone.hh,
-	oln/topo/combinatorial-map/cmap.hh, : Fix files to match new paradigm.
+	* oln/level/compare.hh, oln/level/connected.hh, oln/level/fill.hh,
+	* oln/level/invert.hh, oln/level/set_level.hh,
+	* oln/level/threshold.hh, oln/topo/tarjan/union.hh,
+	* oln/topo/inter-pixel/inter-pixel.hh, oln/topo/tarjan/flat-zone.hh,
+	* oln/topo/combinatorial-map/cmap.hh, : Fix files to match new
+	paradigm.
 
 2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -3676,7 +3676,7 @@
 	* oln/io/pnm_write.hh: ...this.
 
 	* oln/io/pnm_commmon.hh, oln/io/image_base.hh,
-	oln/io/image_read.hh, oln/io/image_write.hh: New.
+	* oln/io/image_read.hh, oln/io/image_write.hh: New.
 
 	* oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx: Merge
 	into...
@@ -3719,8 +3719,8 @@
 2003-07-23  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh,
-	oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
+	* oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh,
+	* oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
 	as Exact.
 
 	* oln/core/neighborhood.hh, oln/core/impl/image_array2d.hh: Remove
@@ -3750,8 +3750,8 @@
 2003-07-22  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh: Rename clone() as clone_().
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh: Rename clone() as clone_().
 
 	* oln/core/abstract/image_with_dim.hh: Delete border(). Delete
 	size(). Delete hold(point). Delete has_impl_(). Rename npoints()
@@ -3774,8 +3774,8 @@
 2003-07-22  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh: Implement clone() procedures.
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh: Implement clone() procedures.
 
 	* oln/core/imagend_size.hh: Add write access to border.
 
@@ -3789,8 +3789,8 @@
 	procedure.
 
 	* oln/core/impl/image_array1d.hh,
-	oln/core/impl/image_array2d.hh
-	oln/core/impl/image_array3d.hh: Correct bugs in the procedures on
+	* oln/core/impl/image_array2d.hh
+	* oln/core/impl/image_array3d.hh: Correct bugs in the procedures on
 	borders.
 
 	* tests/core/tests/borders: New.
@@ -3800,8 +3800,8 @@
 2003-07-21  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh: Modify inheritance. Add image_id
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh: Modify inheritance. Add image_id
 	structure.
 
 	* oln/core/image.hh: Add image_id structure.
@@ -3816,7 +3816,7 @@
 2003-07-18  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/border1d.hh, oln/core/border2d.hh,
-	oln/core/border3d.hh, oln/core/border.hh: Remove.
+	* oln/core/border3d.hh, oln/core/border.hh: Remove.
 
 	* oln/core/abstract/image_with_impl.hh: Implement the interface
 	for operations on borders.
@@ -3827,17 +3827,17 @@
 	* oln/core/impl/image_array.hh: Split into...
 
 	* oln/core/impl/image_array1d.hh,
-	ln/core/impl/image_array2d.hh,
-	oln/core/impl/image_array3d.hh: ...these files. Implement
+	* oln/core/impl/image_array2d.hh,
+	* oln/core/impl/image_array3d.hh: ...these files. Implement
 	operations on borders.
 
 	* oln/core/image1d.hh,
-	oln/core/image2d.hh,
-	oln/core/image3d.hh: Modify constructors and includes in
+	* oln/core/image2d.hh,
+	* oln/core/image3d.hh: Modify constructors and includes in
 	consequence.
 
 	* oln/core/image1d_size.hh, oln/core/image2d_size.hh,
-	oln/core/image3d_size.hh, oln/core/imagend_size.hh: Add write
+	* oln/core/image3d_size.hh, oln/core/imagend_size.hh: Add write
 	access to sizes.
 
 	* oln/core/abstract/image_with_dim.hh: Modify constructor.
@@ -3845,10 +3845,10 @@
 2003-07-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
-	oln/basics.hh, oln/core/apply.hh, oln/core/bkd_iter1d.hh,
-	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
-	oln/core/traverse.hh, oln/core/fold.hh,
-	oln/core/generate.hh: Adjust.
+	* oln/basics.hh, oln/core/apply.hh, oln/core/bkd_iter1d.hh,
+	* oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
+	* oln/core/traverse.hh, oln/core/fold.hh,
+	* oln/core/generate.hh: Adjust.
 
 	* tests/core/tests/image1: New test.
 
@@ -3857,9 +3857,9 @@
 	Major changes, redesign the image hierarchy.
 
 	* oln/core/image1d.hh, oln/core/image1d_size.hh,
-	oln/core/image2d.hh, oln/core/image2d_size.hh,
-	oln/core/image3d.hh, oln/core/image3d_size.hh,
-	oln/core/image.hh, oln/core/imagend_size.hh: Rewrite using the
+	* oln/core/image2d.hh, oln/core/image2d_size.hh,
+	* oln/core/image3d.hh, oln/core/image3d_size.hh,
+	* oln/core/image.hh, oln/core/imagend_size.hh: Rewrite using the
 	new design.
 
 	* oln/core/pred_image.hh: Rename as...
@@ -3867,38 +3867,38 @@
 	using the new design.
 
 	* oln/core/abstract/image.hh,
-	oln/core/abstract/image_with_dim.hh,
-	oln/core/abstract/image_with_impl.hh,
-	oln/core/abstract/image_with_type.hh,
-	oln/core/impl/image_impl.hh,
-	oln/core/impl/image_array.hh: New.
+	* oln/core/abstract/image_with_dim.hh,
+	* oln/core/abstract/image_with_impl.hh,
+	* oln/core/abstract/image_with_type.hh,
+	* oln/core/impl/image_impl.hh,
+	* oln/core/impl/image_array.hh: New.
 
 	* oln/core/internal/image1d_data.hh,
-	oln/core/internal/image1d.hh,
-	oln/core/internal/image2d_data.hh,
-	oln/core/internal/image2d.hh,
-	oln/core/internal/image3d_data.hh,
-	oln/core/internal/image3d.hh,
-	oln/core/internal/real_image1d.hh,
-	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh,
-	oln/core/regular_image.hh: Remove.
+	* oln/core/internal/image1d.hh,
+	* oln/core/internal/image2d_data.hh,
+	* oln/core/internal/image2d.hh,
+	* oln/core/internal/image3d_data.hh,
+	* oln/core/internal/image3d.hh,
+	* oln/core/internal/real_image1d.hh,
+	* oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh,
+	* oln/core/regular_image.hh: Remove.
 
 2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh: Fix pretty print.
+	* oln/core/internal/real_image3d.hh: Fix pretty print.
 
 	* tests/core/tests/print_image: New test.
 
 2003-07-05  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/inter-pixel/inter-pixel.hxx,
-	oln/topo/inter-pixel/inter-pixel.hh,
-	oln/topo/combinatorial-map/cmap.hxx, oln/topo/tarjan/union.hh,
-	oln/topo/tarjan/flat-zone.hh,
-	oln/topo/combinatorial-map/cmap.hh,
-	oln/topo/inter-pixel/node.hh: Fix MacOSX complilation bug.
+	* oln/topo/inter-pixel/inter-pixel.hh,
+	* oln/topo/combinatorial-map/cmap.hxx, oln/topo/tarjan/union.hh,
+	* oln/topo/tarjan/flat-zone.hh,
+	* oln/topo/combinatorial-map/cmap.hh,
+	* oln/topo/inter-pixel/node.hh: Fix MacOSX complilation bug.
 
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -3920,9 +3920,9 @@
 	includes and namespaces.
 
 	* oln/convert/stretch.hh, oln/convert/conversion.hh,
-	oln/convert/bound.hh, oln/convert/force.hh, oln/core/dpointnd.hh,
-	oln/core/imagend_size.hh, oln/core/pointnd.hh,
-	oln/level/threshold.hh: Adapt to integre's changes.
+	* oln/convert/bound.hh, oln/convert/force.hh, oln/core/dpointnd.hh,
+	* oln/core/imagend_size.hh, oln/core/pointnd.hh,
+	* oln/level/threshold.hh: Adapt to integre's changes.
 
 	* oln/io/pnm_write_common.hxx, oln/convert/nrgbhsi.hh: Update
 	includes.
@@ -3936,31 +3936,31 @@
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm_read_common.hxx, oln/io/pnm_read.hxx,
-	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx,
-	oln/level/cc.hh: Fix typos.
+	* oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx,
+	* oln/level/cc.hh: Fix typos.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh, oln/math/macros.hh,
-	oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
-	oln/utils/stat.hh: Modify according to integre's changes.
+	* oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
+	* oln/utils/stat.hh: Modify according to integre's changes.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/ops.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, /oln/convert/stretch.hh, oln/core/box.hxx,
-	oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, oln/io/pnm_write3d.hxx,
-	oln/io/pnm_write.hxx, oln/level/connected.hh, oln/level/invert.hh,
-	oln/math/macros.hh, oln/morpho/extrema.hxx,
-	oln/morpho/extrema_killer.hh, oln/morpho/watershed.hxx,
-	oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh,
-	oln/topo/inter-pixel/inter-pixel.hh: Modify according to integre's
+	* oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	* oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	* oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	* oln/convert/rgbxyz.hh, /oln/convert/stretch.hh, oln/core/box.hxx,
+	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
+	* oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh, oln/io/pnm_write3d.hxx,
+	* oln/io/pnm_write.hxx, oln/level/connected.hh, oln/level/invert.hh,
+	* oln/math/macros.hh, oln/morpho/extrema.hxx,
+	* oln/morpho/extrema_killer.hh, oln/morpho/watershed.hxx,
+	* oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	* oln/utils/histogram.hh, oln/utils/stat.hh,
+	* oln/topo/inter-pixel/inter-pixel.hh: Modify according to integre's
 	changes.
 
 	* tests/io/loadsave.hh: Minor fix.
@@ -3968,16 +3968,16 @@
 	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/math/macros.hh,
-	oln/utils/histogram.hh: Rename real_value() calls.
+	* oln/utils/histogram.hh: Rename real_value() calls.
 
 	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* conf/configure.ac, oln/arith/internal/opdecls.hh,
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
-	oln/math/macros.hh, oln/transforms/dwt.hh,
-	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
-	oln/utils/stat.hh, tests/convert/convcomp.cc,
+	* oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	* oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
+	* oln/math/macros.hh, oln/transforms/dwt.hh,
+	* oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
+	* oln/utils/stat.hh, tests/convert/convcomp.cc,
 	tests/convert/convcomp.hh, tests/transforms/dwt.cc,
 	tests/transforms/fft.cc: Rename sfloat and dfloat.
 
@@ -3988,24 +3988,24 @@
 	2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/ops.hh, oln/convert/bound.hh,
-	oln/convert/colorconv.hh, oln/convert/conversion.hh,
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
-	oln/convol/fast_gaussian_coefficient.hh,
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
-	oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
-	oln/core/imagend_size.hh, oln/core/point1d.hh,
-	oln/core/point3d.hh, oln/core/pointnd.hh,
-	oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
-	oln/io/pnm_write.hxx, oln/level/connected.hh,
-	oln/level/invert.hh, oln/level/threshold.hh,
-	oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
+	* oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	* oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	* oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	* oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	* oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	* oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	* oln/convol/fast_gaussian_coefficient.hh,
+	* oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	* oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
+	* oln/core/imagend_size.hh, oln/core/point1d.hh,
+	* oln/core/point3d.hh, oln/core/pointnd.hh,
+	* oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
+	* oln/io/pnm_write.hxx, oln/level/connected.hh,
+	* oln/level/invert.hh, oln/level/threshold.hh,
+	* oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
+	* oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	* oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
 
 	* tests/io/loadsave.hh: Likewise.
 
@@ -4031,7 +4031,7 @@
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh: Restore a corrected version of set
+	* oln/core/w_window3d.hh: Restore a corrected version of set
 	methods.
 	* tests/core/Makefile.am, tests/core/runtests: New files.
 	* tests/core/tests/w_window: New test.
@@ -4039,7 +4039,7 @@
 2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh: Remove useless and broken set methods.
+	* oln/core/w_window3d.hh: Remove useless and broken set methods.
 
 2003-04-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -4065,12 +4065,12 @@
 2003-03-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/inter-pixel/internal/dir.hxx,
-	oln/topo/inter-pixel/internal/dir.hh,
-	oln/topo/inter-pixel/internal/dir-iter.hh,
-	oln/topo/inter-pixel/node.hh,
-	oln/topo/inter-pixel/bkd-dir-iter.hh,
-	oln/topo/inter-pixel/fwd-dir-iter.hh,
-	oln/topo/combinatorial-map/internal/zeta.hh: New files in
+	* oln/topo/inter-pixel/internal/dir.hh,
+	* oln/topo/inter-pixel/internal/dir-iter.hh,
+	* oln/topo/inter-pixel/node.hh,
+	* oln/topo/inter-pixel/bkd-dir-iter.hh,
+	* oln/topo/inter-pixel/fwd-dir-iter.hh,
+	* oln/topo/combinatorial-map/internal/zeta.hh: New files in
 	order to provide iterators upon node's directions.
 
 	* tests/topo/test-inter-pixel.ref, tests/topo/test-cmap.ref,
@@ -4079,11 +4079,11 @@
 	test suite.
 
 	* oln/topo/combinatorial-map/cmap.hh,
-	oln/topo/tarjan/flat-zone.hh, oln/topo/inter-pixel/inter-pixel.hh,
-	oln/topo/combinatorial-map/cmap.hxx,
-	oln/topo/inter-pixel/inter-pixel.hxx,
-	oln/topo/combinatorial-map/internal/cmap-functor.hxx,
-	oln/topo/combinatorial-map/internal/cmap-functor.hh: Fix some
+	* oln/topo/tarjan/flat-zone.hh, oln/topo/inter-pixel/inter-pixel.hh,
+	* oln/topo/combinatorial-map/cmap.hxx,
+	* oln/topo/inter-pixel/inter-pixel.hxx,
+	* oln/topo/combinatorial-map/internal/cmap-functor.hxx,
+	* oln/topo/combinatorial-map/internal/cmap-functor.hh: Fix some
 	bugs and simplify code.
 
 2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -4106,9 +4106,9 @@
 	* tests/topo/test.sh: Add new file.
 
 	* oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
-	oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx,
-	oln/topo/union.hh, oln/topo/inter-pixel.hh,
-	oln/topo/flat-zone.hh, oln/topo/cmap.hh:
+	* oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx,
+	* oln/topo/union.hh, oln/topo/inter-pixel.hh,
+	* oln/topo/flat-zone.hh, oln/topo/cmap.hh:
 	Modify guards lines, fix namespaces and comments.
 
 	* tests/topo/test-cmap.cc, tests/topo/test-inter-pixel.cc: Adjust.
@@ -4121,8 +4121,8 @@
 	tests/topo/test-cmap.cc: New tests.
 
 	* oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
-	oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx, oln/topo/union.hh,
-	oln/topo/inter-pixel.hh, oln/topo/flat-zone.hh, oln/topo/cmap.hh:
+	* oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx, oln/topo/union.hh,
+	* oln/topo/inter-pixel.hh, oln/topo/flat-zone.hh, oln/topo/cmap.hh:
 	New files.
 
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -4132,7 +4132,7 @@
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/Makefile.flags, tests/sanity/Makefile.am: Remove
-	  useless flags.
+	useless flags.
 
 	* Makefile.am: Adjust consequently.
 
@@ -4225,64 +4225,64 @@
 	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh, oln/arith/logic.hh,
-	oln/convert/bound.hh, oln/convert/colorconv.hh,
-	oln/convert/conversion.hh, oln/convert/force.hh,
-	oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
-	oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh,
-	oln/convert/nrgbyiq.hh, oln/convert/nrgbyuv.hh,
-	oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
-	oln/convert/stretch.hh, oln/convol/convolution.hh,
-	oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh, oln/core/bkd_iter1d.hh,
-	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh, oln/core/box.hxx,
-	oln/core/dpoint.hh, oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
-	oln/core/dpoint3d.hh, oln/core/dpointnd.hh,
-	oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
-	oln/core/fwd_iter3d.hh, oln/core/generate.hh, oln/core/image.hh,
-	oln/core/image1d.hh, oln/core/image1d_size.hh,
-	oln/core/image2d.hh, oln/core/image2d_size.hh,
-	oln/core/image3d.hh, oln/core/image3d_size.hh,
-	oln/core/image_size.hh, oln/core/imagend_size.hh,
-	oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
-	oln/core/internal/image3d.hh, oln/core/internal/iter1d.hh,
-	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
-	oln/core/internal/neighborhood.hh,
-	oln/core/internal/real_image1d.hh,
-	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, oln/core/internal/w_window.hh,
-	oln/core/internal/window.hh, oln/core/iter.hh,
-	oln/core/neighborhood.hh, oln/core/neighborhood1d.hh,
-	oln/core/neighborhood2d.hh, oln/core/neighborhood3d.hh,
-	oln/core/point.hh, oln/core/point1d.hh, oln/core/point2d.hh,
-	oln/core/point3d.hh, oln/core/pointnd.hh, oln/core/pred_image.hh,
-	oln/core/regular_image.hh, oln/core/structelt.hh,
-	oln/core/w_window.hh, oln/core/w_window1d.hh,
-	oln/core/w_window2d.hh, oln/core/w_window3d.hh,
-	oln/core/window.hh, oln/core/window1d.hh, oln/core/window2d.hh,
-	oln/core/window3d.hh, oln/core/winiter.hh, oln/core/winneighb.hh,
-	oln/io/pnm_read.hxx, oln/io/pnm_read3d.hxx,
-	oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
-	oln/io/pnm_write3d.hxx, oln/io/pnm_write_common.hxx,
-	oln/io/se_neighborhood.hxx, oln/io/se_window.hxx, oln/level/cc.hh,
-	oln/level/connected.hh, oln/level/invert.hh,
-	oln/level/threshold.hh, oln/math/macros.hh,
-	oln/morpho/closing.inc, oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh, oln/morpho/extrema.hxx,
-	oln/morpho/extrema_killer.hh, oln/morpho/fast_morpho.hxx,
-	oln/morpho/geodesic_dilation.hh, oln/morpho/geodesic_erosion.hh,
-	oln/morpho/hit_or_miss.inc, oln/morpho/opening.inc,
-	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
-	oln/morpho/thickening.inc, oln/morpho/thinning.inc,
-	oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/transforms/wavelet_coeffs.hh, oln/utils/copy.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh, tests/arith/tests/min1,
-	tests/convert/convcomp.hh, tests/convol/slow_sum_2d_1.cc,
-	tests/convol/slow_sum_2d_2.cc, tests/convol/sobel_gradient.cc,
-	tests/io/2d.cc, tests/io/loadsave.hh, tests/morpho/edoc.cc,
-	tests/morpho/extrkiller.cc, tests/morpho/reconstruction.cc,
-	tests/transforms/dwt.cc, tests/transforms/fft.cc: Update
-	namespaces.
+	* oln/convert/bound.hh, oln/convert/colorconv.hh,
+	* oln/convert/conversion.hh, oln/convert/force.hh,
+	* oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh,
+	* oln/convert/nrgbyiq.hh, oln/convert/nrgbyuv.hh,
+	* oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
+	* oln/convert/stretch.hh, oln/convol/convolution.hh,
+	* oln/convol/fast_gaussian.hxx,
+	* oln/convol/fast_gaussian_coefficient.hh, oln/core/bkd_iter1d.hh,
+	* oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh, oln/core/box.hxx,
+	* oln/core/dpoint.hh, oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
+	* oln/core/dpoint3d.hh, oln/core/dpointnd.hh,
+	* oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
+	* oln/core/fwd_iter3d.hh, oln/core/generate.hh, oln/core/image.hh,
+	* oln/core/image1d.hh, oln/core/image1d_size.hh,
+	* oln/core/image2d.hh, oln/core/image2d_size.hh,
+	* oln/core/image3d.hh, oln/core/image3d_size.hh,
+	* oln/core/image_size.hh, oln/core/imagend_size.hh,
+	* oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	* oln/core/internal/image3d.hh, oln/core/internal/iter1d.hh,
+	* oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
+	* oln/core/internal/neighborhood.hh,
+	* oln/core/internal/real_image1d.hh,
+	* oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh, oln/core/internal/w_window.hh,
+	* oln/core/internal/window.hh, oln/core/iter.hh,
+	* oln/core/neighborhood.hh, oln/core/neighborhood1d.hh,
+	* oln/core/neighborhood2d.hh, oln/core/neighborhood3d.hh,
+	* oln/core/point.hh, oln/core/point1d.hh, oln/core/point2d.hh,
+	* oln/core/point3d.hh, oln/core/pointnd.hh, oln/core/pred_image.hh,
+	* oln/core/regular_image.hh, oln/core/structelt.hh,
+	* oln/core/w_window.hh, oln/core/w_window1d.hh,
+	* oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	* oln/core/window.hh, oln/core/window1d.hh, oln/core/window2d.hh,
+	* oln/core/window3d.hh, oln/core/winiter.hh, oln/core/winneighb.hh,
+	* oln/io/pnm_read.hxx, oln/io/pnm_read3d.hxx,
+	* oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
+	* oln/io/pnm_write3d.hxx, oln/io/pnm_write_common.hxx,
+	* oln/io/se_neighborhood.hxx, oln/io/se_window.hxx, oln/level/cc.hh,
+	* oln/level/connected.hh, oln/level/invert.hh,
+	* oln/level/threshold.hh, oln/math/macros.hh,
+	* oln/morpho/closing.inc, oln/morpho/dilation.hh,
+	* oln/morpho/erosion.hh, oln/morpho/extrema.hxx,
+	* oln/morpho/extrema_killer.hh, oln/morpho/fast_morpho.hxx,
+	* oln/morpho/geodesic_dilation.hh, oln/morpho/geodesic_erosion.hh,
+	* oln/morpho/hit_or_miss.inc, oln/morpho/opening.inc,
+	* oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
+	* oln/morpho/thickening.inc, oln/morpho/thinning.inc,
+	* oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
+	* oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	* oln/transforms/wavelet_coeffs.hh, oln/utils/copy.hh,
+	* oln/utils/histogram.hh, oln/utils/stat.hh, tests/arith/tests/min1,
+	* tests/convert/convcomp.hh, tests/convol/slow_sum_2d_1.cc,
+	* tests/convol/slow_sum_2d_2.cc, tests/convol/sobel_gradient.cc,
+	* tests/io/2d.cc, tests/io/loadsave.hh, tests/morpho/edoc.cc,
+	* tests/morpho/extrkiller.cc, tests/morpho/reconstruction.cc,
+	* tests/transforms/dwt.cc, tests/transforms/fft.cc: Update
+	* namespaces.
 
 	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -4302,13 +4302,13 @@
 	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics.hh, oln/core/internal/iter1d.hh,
-	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
-	oln/core/winiter.hh, oln/core/winneighb.hh: Update includes.
+	* oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
+	* oln/core/winiter.hh, oln/core/winneighb.hh: Update includes.
 
 	* Makefile.am: Adjust consequently.
 
 	* oln/convol/convolution.hh, oln/core/w_window2d.hh,
-	oln/transforms/dwt.hh: Update includes.
+	* oln/transforms/dwt.hh: Update includes.
 
 	* oln/core/objs.hh, oln/core/internal/objs.hxx: Move and merge into
 	$top_srcdir/metalic/mlc/objs.hh.
@@ -4321,26 +4321,26 @@
 	* Makefile.am: Adapt consequently.
 
 	* oln/basics.hh, oln/core/apply.hh, oln/core/border.hh,
-	oln/core/generate.hh, oln/core/image1d_size.hh,
-	oln/core/image2d_size.hh, oln/core/image3d_size.hh,
-	oln/core/internal/image1d.hh,
-	oln/core/internal/image1d_data.hh,
-	oln/core/internal/image2d.hh,
-	oln/core/internal/image2d_data.hh,
-	oln/core/internal/image3d.hh,
-	oln/core/internal/image3d_data.hh,
-	oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh, oln/core/internal/w_window.hh,
-	oln/core/internal/window.hh, oln/core/traverse.hh,
-	oln/utils/timer.hh: Update includes.
+	* oln/core/generate.hh, oln/core/image1d_size.hh,
+	* oln/core/image2d_size.hh, oln/core/image3d_size.hh,
+	* oln/core/internal/image1d.hh,
+	* oln/core/internal/image1d_data.hh,
+	* oln/core/internal/image2d.hh,
+	* oln/core/internal/image2d_data.hh,
+	* oln/core/internal/image3d.hh,
+	* oln/core/internal/image3d_data.hh,
+	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh, oln/core/internal/w_window.hh,
+	* oln/core/internal/window.hh, oln/core/traverse.hh,
+	* oln/utils/timer.hh: Update includes.
 
 	* oln/basics.hh, oln/convert/conversion.hh,
-	oln/convert/stretch.hh, oln/core/border.hh,
-	oln/core/dpoint.hh, oln/core/image.hh, oln/core/image_size.hh,
-	oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh, oln/core/iter.hh,
-	oln/core/neighborhood.hh, oln/core/point.hh,
-	oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
+	* oln/convert/stretch.hh, oln/core/border.hh,
+	* oln/core/dpoint.hh, oln/core/image.hh, oln/core/image_size.hh,
+	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh, oln/core/iter.hh,
+	* oln/core/neighborhood.hh, oln/core/point.hh,
+	* oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
 
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -4350,7 +4350,7 @@
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
-	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
+	* tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
 	new oln location.
 
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -4370,91 +4370,91 @@
 	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/defs.in, tests/check/Makefile.am,
-	tests/check/Makefile.check, tests/check/Makefile.flags: New
+	* tests/check/Makefile.check, tests/check/Makefile.flags: New
 	directory.
 
 	* tests/Makefile.am: Add check directory.
 
 	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
-	tests/convol/sobel_gradient.cc: Include data.hh.
+	* tests/convol/sobel_gradient.cc: Include data.hh.
 
 	* tests/convert/convcomp.hh: Likewise.
 
 	* tests/io/loadsave.hh: Likewise.
 
 	* tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
-	tests/morpho/reconstruction.cc: Likewise.
+	* tests/morpho/reconstruction.cc: Likewise.
 
 	* tests/transforms/fft.cc, tests/transforms/dwt.cc: Likewise.
 
 	* tests/arith/Makefile.am, tests/convert/Makefile.am,
-	tests/convol/Makefile.am tests/io/Makefile.am,
-	tests/morpho/Makefile.am, tests/sanity/Makefile.am,
-	tests/transforms/Makefile.am, tests/types/Makefile.am : Adapt to
+	* tests/convol/Makefile.am tests/io/Makefile.am,
+	* tests/morpho/Makefile.am, tests/sanity/Makefile.am,
+	* tests/transforms/Makefile.am, tests/types/Makefile.am : Adapt to
 	new tests location.
 
 	* tests/arith/runtests, tests/types/runtests,
-	tests/sanity/includes.test: Likewise.
+	* tests/sanity/includes.test: Likewise.
 
 	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
-	oln/types/builtins_properties.hh, oln/types/cast.hh,
-	oln/types/color.hh, oln/types/cplx.hh,
-	oln/types/cplx_representation.hh, oln/types/cycle.hh,
-	oln/types/debug.hh, oln/types/global_ops.hh,
-	oln/types/global_ops_defs.hh, oln/types/global_ops_traits.hh,
-	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh,
-	oln/types/int_s.hh, oln/types/int_u.hh, oln/types/interval.hh,
-	oln/types/nrgb.hh, oln/types/optraits.hh,
-	oln/types/optraits_bin.hh, oln/types/optraits_builtins.hh,
-	oln/types/optraits_builtins_bool.hh,
-	oln/types/optraits_builtins_float.hh,
-	oln/types/optraits_builtins_int.hh,
-	oln/types/optraits_builtins_int_defs.hh,
-	oln/types/optraits_cplx.hh, oln/types/optraits_cycle.hh,
-	oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh,
-	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
-	oln/types/optraits_scalar_defs.hh, oln/types/optraits_vec.hh,
-	oln/types/predecls.hh, oln/types/range.hh,
-	oln/types/rec_value.hh, oln/types/rgb.hh, oln/types/to_oln.hh,
-	oln/types/type.hh, oln/types/typetraits.hh,
-	oln/types/typetraits_builtins.hh,
-	oln/types/typetraits_builtins_bool.hh,
-	oln/types/typetraits_builtins_float.hh,
-	oln/types/typetraits_builtins_int.hh, oln/types/vec.hh,
-	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: Move to
+	* oln/types/builtins_properties.hh, oln/types/cast.hh,
+	* oln/types/color.hh, oln/types/cplx.hh,
+	* oln/types/cplx_representation.hh, oln/types/cycle.hh,
+	* oln/types/debug.hh, oln/types/global_ops.hh,
+	* oln/types/global_ops_defs.hh, oln/types/global_ops_traits.hh,
+	* oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh,
+	* oln/types/int_s.hh, oln/types/int_u.hh, oln/types/interval.hh,
+	* oln/types/nrgb.hh, oln/types/optraits.hh,
+	* oln/types/optraits_bin.hh, oln/types/optraits_builtins.hh,
+	* oln/types/optraits_builtins_bool.hh,
+	* oln/types/optraits_builtins_float.hh,
+	* oln/types/optraits_builtins_int.hh,
+	* oln/types/optraits_builtins_int_defs.hh,
+	* oln/types/optraits_cplx.hh, oln/types/optraits_cycle.hh,
+	* oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh,
+	* oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
+	* oln/types/optraits_scalar_defs.hh, oln/types/optraits_vec.hh,
+	* oln/types/predecls.hh, oln/types/range.hh,
+	* oln/types/rec_value.hh, oln/types/rgb.hh, oln/types/to_oln.hh,
+	* oln/types/type.hh, oln/types/typetraits.hh,
+	* oln/types/typetraits_builtins.hh,
+	* oln/types/typetraits_builtins_bool.hh,
+	* oln/types/typetraits_builtins_float.hh,
+	* oln/types/typetraits_builtins_int.hh, oln/types/vec.hh,
+	* oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: Move to
 	../integre/ntg.
 
 	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh,
-	oln/convert/colorconv.hh, oln/convert/conversion.hh,
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
-	oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh, oln/core/dpoint1d.hh,
-	oln/core/dpointnd.hh, oln/core/image1d.hh,
-	oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/imagend_size.hh, oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, oln/core/point1d.hh,
-	oln/core/point3d.hh, oln/core/pointnd.hh, oln/io/pnm_read.hxx,
-	oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
-	oln/io/pnm_write_common.hxx, oln/level/cc.hh,
-	oln/level/connected.hh, oln/level/invert.hh,
-	oln/level/threshold.hh, oln/math/macros.hh,
-	oln/morpho/extrema_killer.hh, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
-	oln/morpho/watershed.hxx, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh: Update
+	* oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	* oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	* oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	* oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	* oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	* oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
+	* oln/convol/fast_gaussian.hxx,
+	* oln/convol/fast_gaussian_coefficient.hh, oln/core/dpoint1d.hh,
+	* oln/core/dpointnd.hh, oln/core/image1d.hh,
+	* oln/core/image2d.hh, oln/core/image3d.hh,
+	* oln/core/imagend_size.hh, oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh, oln/core/point1d.hh,
+	* oln/core/point3d.hh, oln/core/pointnd.hh, oln/io/pnm_read.hxx,
+	* oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
+	* oln/io/pnm_write_common.hxx, oln/level/cc.hh,
+	* oln/level/connected.hh, oln/level/invert.hh,
+	* oln/level/threshold.hh, oln/math/macros.hh,
+	* oln/morpho/extrema_killer.hh, oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
+	* oln/morpho/watershed.hxx, oln/topo/dmap.hxx,
+	* oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	* oln/utils/histogram.hh, oln/utils/stat.hh: Update
 	"<oln/types/" to "<ntg/".
 
 	* tests/arith/tests/min1, tests/io/loadsave.hh,
-	tests/morpho/edoc.cc, tests/transforms/dwt.cc,
-	tests/transforms/fft.cc, tests/types/runtests : Likewise.
+	* tests/morpho/edoc.cc, tests/transforms/dwt.cc,
+	* tests/transforms/fft.cc, tests/types/runtests : Likewise.
 
 	* conf/configure.ac: Likewise.
 
@@ -4465,7 +4465,7 @@
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (nobase_include_HEADERS): Remove references to
-	oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
+	* oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
 
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
@@ -4474,17 +4474,17 @@
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am, tests/check/Makefile.check,
-	tests/check/Makefile.flags, tests/check/Makefile.in,
-	tests/check/check.hh, tests/check/compile.cc,
-	tests/check/compile.hh, tests/check/data.cc, tests/check/data.hh,
-	tests/check/defs.in, tests/check/main.cc, tests/check/srcdir.cc,
-	tests/check/srcdir.hh, tests/check/verbose.cc,
-	tests/check/verbose.hh: Move to ../lib/check.
+	* tests/check/Makefile.flags, tests/check/Makefile.in,
+	* tests/check/check.hh, tests/check/compile.cc,
+	* tests/check/compile.hh, tests/check/data.cc, tests/check/data.hh,
+	* tests/check/defs.in, tests/check/main.cc, tests/check/srcdir.cc,
+	* tests/check/srcdir.hh, tests/check/verbose.cc,
+	* tests/check/verbose.hh: Move to ../lib/check.
 
 	* tests/Makefile.am, tests/transforms/Makefile.am,
-	tests/morpho/Makefile.am, tests/meta/Makefile.am,
-	tests/io/Makefile.am, tests/convol/Makefile.am,
-	tests/convert/Makefile.am: Update accordingly.
+	* tests/morpho/Makefile.am, tests/meta/Makefile.am,
+	* tests/io/Makefile.am, tests/convol/Makefile.am,
+	* tests/convert/Makefile.am: Update accordingly.
 
 	* tests/types/runtests, tests/arith/runtests: Likewise.
 
@@ -4497,36 +4497,36 @@
 	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
 
 	* oln/meta/array.hh, oln/meta/array1d.hh, oln/meta/array1d.hxx,
-	oln/meta/array2d.hh, oln/meta/array2d.hxx, oln/meta/array3d.hh,
-	oln/meta/array3d.hxx, oln/meta/arraynd.hh, oln/meta/basics.hh,
-	oln/meta/cmp.hh, oln/meta/control.hh, oln/meta/logic.hh,
-	oln/meta/optional.hh, oln/meta/type.hh, oln/meta/ucmp.hh,
-	oln/meta/ufuncs.hh: Move to ../metalic/mlc.
+	* oln/meta/array2d.hh, oln/meta/array2d.hxx, oln/meta/array3d.hh,
+	* oln/meta/array3d.hxx, oln/meta/arraynd.hh, oln/meta/basics.hh,
+	* oln/meta/cmp.hh, oln/meta/control.hh, oln/meta/logic.hh,
+	* oln/meta/optional.hh, oln/meta/type.hh, oln/meta/ucmp.hh,
+	* oln/meta/ufuncs.hh: Move to ../metalic/mlc.
 
 	* oln/convol/convolution.hh, oln/convol/convolution.hh,
-	oln/core/generate.hh, oln/core/w_window2d.hh, oln/level/cc.hh,
-	oln/morpho/closing.hh, oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh, oln/morpho/gradient.hh,
-	oln/morpho/hit_or_miss.hh, oln/morpho/laplacian.hh,
-	oln/morpho/opening.hh, oln/morpho/stat.hh,
-	oln/morpho/thickening.hh, oln/morpho/thinning.hh,
-	oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/types/behaviour.hh,
-	oln/types/behaviour.hh, oln/types/builtins_properties.hh,
-	oln/types/color.hh, oln/types/cplx.hh, oln/types/cplx.hh,
-	oln/types/cycle.hh, oln/types/global_ops.hh,
-	oln/types/global_ops_traits.hh, oln/types/int_s.hh,
-	oln/types/int_u.hh, oln/types/optraits_builtins_float.hh,
-	oln/types/optraits_cplx.hh, oln/types/optraits_cplx.hh,
-	oln/types/optraits_cycle.hh, oln/types/optraits_int_s.hh,
-	oln/types/optraits_int_s.hh, oln/types/optraits_int_s.hh,
-	oln/types/optraits_int_u.hh, oln/types/optraits_scalar.hh,
-	oln/types/optraits_vec.hh, oln/types/optraits_vec.hh,
-	oln/types/optraits_vec.hh, oln/types/range.hh, oln/types/vec.hh:
+	* oln/core/generate.hh, oln/core/w_window2d.hh, oln/level/cc.hh,
+	* oln/morpho/closing.hh, oln/morpho/dilation.hh,
+	* oln/morpho/erosion.hh, oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/geodesic_erosion.hh, oln/morpho/gradient.hh,
+	* oln/morpho/hit_or_miss.hh, oln/morpho/laplacian.hh,
+	* oln/morpho/opening.hh, oln/morpho/stat.hh,
+	* oln/morpho/thickening.hh, oln/morpho/thinning.hh,
+	* oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/types/behaviour.hh,
+	* oln/types/behaviour.hh, oln/types/builtins_properties.hh,
+	* oln/types/color.hh, oln/types/cplx.hh, oln/types/cplx.hh,
+	* oln/types/cycle.hh, oln/types/global_ops.hh,
+	* oln/types/global_ops_traits.hh, oln/types/int_s.hh,
+	* oln/types/int_u.hh, oln/types/optraits_builtins_float.hh,
+	* oln/types/optraits_cplx.hh, oln/types/optraits_cplx.hh,
+	* oln/types/optraits_cycle.hh, oln/types/optraits_int_s.hh,
+	* oln/types/optraits_int_s.hh, oln/types/optraits_int_s.hh,
+	* oln/types/optraits_int_u.hh, oln/types/optraits_scalar.hh,
+	* oln/types/optraits_vec.hh, oln/types/optraits_vec.hh,
+	* oln/types/optraits_vec.hh, oln/types/range.hh, oln/types/vec.hh:
 	Update "<oln/meta/" to "<mlc/".
 
 	* tests/meta/gen_test_utils/prelude, tests/meta/test_array1d.cc,
-	tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
+	* tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
 
 2003-03-04  Jerome Darbon  <jerome@epita.fr>
 
@@ -4608,18 +4608,18 @@
 	* tests/check/data.hh, tests/check/data.cc (data): Remove. (wdata,
 	rdata): Add.  Fix prototypes.
 	* tests/transforms/fft.cc,
-	tests/transforms/dwt.cc,
-	tests/morpho/reconstruction.cc,
-	tests/morpho/extrkiller.cc,
-	tests/morpho/edoc.cc,
-	tests/io/se_fail.cc,
-	tests/io/2d.cc,
-	tests/io/pretty.cc,
-	tests/io/se_pass.cc,
-	tests/convol/sobel_gradient.cc,
-	tests/convol/slow_sum_2d_2.cc,
-	tests/convol/slow_sum_2d_1.cc,
-	tests/convert/convcomp.cc (check): Update accordingly.
+	* tests/transforms/dwt.cc,
+	* tests/morpho/reconstruction.cc,
+	* tests/morpho/extrkiller.cc,
+	* tests/morpho/edoc.cc,
+	* tests/io/se_fail.cc,
+	* tests/io/2d.cc,
+	* tests/io/pretty.cc,
+	* tests/io/se_pass.cc,
+	* tests/convol/sobel_gradient.cc,
+	* tests/convol/slow_sum_2d_2.cc,
+	* tests/convol/slow_sum_2d_1.cc,
+	* tests/convert/convcomp.cc (check): Update accordingly.
 
 
 	* tests/convol/Makefile.am (XFAIL_TESTS): use $(EXEEXT) in
@@ -4661,7 +4661,7 @@
 	* tests/check/Makefile.check (LDADD): Fix path to libcheck.
 
 	* tests/check/compile.hh,
-	tests/check/compile.cc: Add.
+	* tests/check/compile.cc: Add.
 
 	* tests/meta/gen_test.cc (write_postlude_and_test): Use
 	compile_cmd() instead of manual string construction.
@@ -4678,8 +4678,8 @@
 	* tests/types/runtests: Likewise.
 
 	* tests/transforms/Makefile.am, tests/morpho/Makefile.am,
-	tests/meta/Makefile.am, tests/convert/Makefile.am,
-	tests/convol/Makefile.am, tests/io/Makefile.am: Fix path to
+	* tests/meta/Makefile.am, tests/convert/Makefile.am,
+	* tests/convol/Makefile.am, tests/io/Makefile.am: Fix path to
 	Makefile.check.
 
 	* tests/defs.in (CPPFLAGS): Fix path to Olena headers. Move to ...
@@ -4753,27 +4753,27 @@
 	* Makefile.am: Add a section pertaining to per-compiler
 	configuration.
 	* conf/configure.ac,
-	conf/oln-config.shin,
-	conf/gen-scripts.sh,
-	conf/compilers.def: Add.
+	* conf/oln-config.shin,
+	* conf/gen-scripts.sh,
+	* conf/compilers.def: Add.
 
 	* oln/convert/conversion.hh, oln/convert/conversion_ng_se.hh,
-	oln/convol/convolution.hh, oln/convol/fast_gaussian.hxx,
-	oln/core/apply.hh, oln/core/border.hh, oln/core/fold.hh,
-	oln/core/generate.hh, oln/core/neighborhood.hh,
-	oln/core/traverse.hh, oln/level/cc.hh, oln/level/compare.hh,
-	oln/level/connected.hh, oln/level/fill.hh, oln/level/set_level.hh,
-	oln/meta/array1d.hh, oln/meta/array2d.hh, oln/meta/array3d.hh,
-	oln/morpho/dilation.hh, oln/morpho/erosion.hh,
-	oln/morpho/extrema.hxx, oln/morpho/extrema_killer.hh,
-	oln/morpho/fast_morpho.hxx, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
-	oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
-	oln/morpho/splitse.hh, oln/morpho/stat.hh,
-	oln/morpho/thickening.inc, oln/morpho/thinning.inc,
-	oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/utils/histogram.hh,
-	tests/convert/convcomp.hh: Rename _X template parameters to X_,
+	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hxx,
+	* oln/core/apply.hh, oln/core/border.hh, oln/core/fold.hh,
+	* oln/core/generate.hh, oln/core/neighborhood.hh,
+	* oln/core/traverse.hh, oln/level/cc.hh, oln/level/compare.hh,
+	* oln/level/connected.hh, oln/level/fill.hh, oln/level/set_level.hh,
+	* oln/meta/array1d.hh, oln/meta/array2d.hh, oln/meta/array3d.hh,
+	* oln/morpho/dilation.hh, oln/morpho/erosion.hh,
+	* oln/morpho/extrema.hxx, oln/morpho/extrema_killer.hh,
+	* oln/morpho/fast_morpho.hxx, oln/morpho/geodesic_dilation.hh,
+	* oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
+	* oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
+	* oln/morpho/splitse.hh, oln/morpho/stat.hh,
+	* oln/morpho/thickening.inc, oln/morpho/thinning.inc,
+	* oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
+	* oln/transforms/dwt.hh, oln/utils/histogram.hh,
+	* tests/convert/convcomp.hh: Rename _X template parameters to X_,
 	for single-letters identifiers prepended with an underscore are
 	reserved for POSIX internal use, and actually are defined in
 	ctype.h on BSD and cygwin systems.
@@ -4876,10 +4876,10 @@
 	* ChangeLog: Clean.
 
 	* oln/types/typetraits_builtins_int.hh, oln/types/range.hh,
-	oln/types/optraits_builtins_int.hh, oln/types/int_u.hh,
-	oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh,
-	oln/types/bin.hh, oln/types/vec.hh, oln/types/cplx.hh,
-	oln/types/optraits_cplx.hh, oln/types/color.hh: Fix includes.
+	* oln/types/optraits_builtins_int.hh, oln/types/int_u.hh,
+	* oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh,
+	* oln/types/bin.hh, oln/types/vec.hh, oln/types/cplx.hh,
+	* oln/types/optraits_cplx.hh, oln/types/color.hh: Fix includes.
 
 2003-01-16  Akim Demaille  <akim@epita.fr>
 
@@ -4934,7 +4934,7 @@
 2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/level/set_level.hh, oln/types/range.hh,
-	oln/types/cplx.hh: Add missing includes.
+	* oln/types/cplx.hh: Add missing includes.
 
 2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -4946,13 +4946,13 @@
 	optraits_top.
 
 	* oln/types/bin.hh, oln/types/optraits_bin.hh,
-	oln/types/cplx.hh, oln/types/optraits_cplx.hh,
-	oln/types/cycle.hh, oln/types/optraits_cycle.hh,
-	oln/types/int_u.hh, oln/types/optraits_int_u.hh,
-	oln/types/int_s.hh, oln/types/optraits_int_s.hh,
-	oln/types/range.hh, oln/types/optraits_range.hh,
-	oln/types/vec.hh, oln/types/optraits_vec.hh,
-	oln/types/behaviour.hh, oln/types/all.hh: Temporarily fix
+	* oln/types/cplx.hh, oln/types/optraits_cplx.hh,
+	* oln/types/cycle.hh, oln/types/optraits_cycle.hh,
+	* oln/types/int_u.hh, oln/types/optraits_int_u.hh,
+	* oln/types/int_s.hh, oln/types/optraits_int_s.hh,
+	* oln/types/range.hh, oln/types/optraits_range.hh,
+	* oln/types/vec.hh, oln/types/optraits_vec.hh,
+	* oln/types/behaviour.hh, oln/types/all.hh: Temporarily fix
 	includes.
 
 	* oln/types/optraits_vec.hh: Fix zero() return type.

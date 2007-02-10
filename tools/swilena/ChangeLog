@@ -6,7 +6,7 @@
 	* copyright.py: New.
 	Use it...
 	* generate_arith_instantiations.py,
-	* generate_conversions_instantiations.py,	
+	* generate_conversions_instantiations.py,
 	* generate_morpho_instantiations.py: ...here to insert copyright
 	notices in generated files.
 	Add copyright header.
@@ -208,15 +208,15 @@
 
 2004-04-28  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/ruby/Makefile.am: Replace clean-local by CLEANFILES.
-	* tools/swilena/src/Makefile.am: Replace distclean-local by
+	* ruby/Makefile.am: Replace clean-local by CLEANFILES.
+	* src/Makefile.am: Replace distclean-local by
 	DISTCLEANFILES.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
+	* expand.sh (generation of makefile.swig): Add cxx
 	files to CLEANFILES.
-	* tools/swilena/python/Makefile.am (CLEANFILES): Remove.
+	* python/Makefile.am (CLEANFILES): Remove.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
@@ -234,7 +234,7 @@
 
 2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/meta/Makefile.am: Add swilena_ntg_macros.i to
+	* meta/Makefile.am: Add swilena_ntg_macros.i to
 	the dist.
 
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
@@ -256,8 +256,8 @@
 
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* tools/swilena/ruby/tests/Makefile.am: Add comments.
-	* tools/swilena/python/tests/Makefile.am: Likewise.
+	* ruby/tests/Makefile.am: Add comments.
+	* python/tests/Makefile.am: Likewise.
 
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
@@ -271,11 +271,11 @@
 
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* tools/swilena/ruby/Makefile.am: Remove `ruby_DATA' variable.
+	* ruby/Makefile.am: Remove `ruby_DATA' variable.
 
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/generate_morpho_instantiations.py: Remove
+	* generate_morpho_instantiations.py: Remove
 	maxima_killer minima_killer from swilena_morpho1d_* and
 	swilena_morpho3d_*.
 
@@ -288,17 +288,17 @@
 
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/generate_morpho_instantiations.py: Fix and add
+	* generate_morpho_instantiations.py: Fix and add
 	some algorithms.
 
 2004-04-11  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/swilena/meta/swilena_ntg.i: Remove "(do_nothing)".
+	* meta/swilena_ntg.i: Remove "(do_nothing)".
 	Since swig 1.3 '%define foo() bar' must be replace by
 	'%define foo bar'.
-	* tools/swilena/meta/swilena_morpho.i: Likewise.
-	* tools/swilena/meta/swilena_exception.i: Likewise.
-	* tools/swilena/generate_morpho_instantiations.py: Remove debug info.
+	* meta/swilena_morpho.i: Likewise.
+	* meta/swilena_exception.i: Likewise.
+	* generate_morpho_instantiations.py: Remove debug info.
 
 2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 
@@ -328,7 +328,7 @@
 
 	* python/swilena_all1d.py: New.
 	* python/swilena_all2d.py: New.
-	* python/swilena_all2d.py: New.
+	* python/swilena_all3d.py: New.
 	* python/Makefile.am: New.
 
 2003-11-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -398,7 +398,7 @@
 	creation functions.
 
 	* meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
-	meta/swilena_ntg_cplx.i: Merge into...
+	* meta/swilena_ntg_cplx.i: Merge into...
 	* meta/swilena_ntg.i: ... this file. Declare only usual types.
 	* meta/Makefile.am: Adjust consequently.
 
@@ -478,10 +478,10 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* swilena/meta/swilena_w_win.i,
-	swilena/meta/swilena_structelt.i,
-	swilena/meta/swilena_point.i,
-	swilena/meta/swilena_imagesize.i,
-	swilena/meta/swilena_image.i: Fix.
+	* swilena/meta/swilena_structelt.i,
+	* swilena/meta/swilena_point.i,
+	* swilena/meta/swilena_imagesize.i,
+	* swilena/meta/swilena_image.i: Fix.
 
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -494,9 +494,9 @@
 	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* doc/swilena.texi, python/typedefs.hh, src/swilena.i,
-	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
-	src/swilena_dim.i, src/swilena_morpho_dim.i,
-	src/swilena_typedefs.i: Rename sfloat and dfloat.
+	* src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+	* src/swilena_dim.i, src/swilena_morpho_dim.i,
+	* src/swilena_typedefs.i: Rename sfloat and dfloat.
 
 2003-05-12  Raphaël Poss  <raph@lrde.epita.fr>
 
@@ -507,26 +507,26 @@
 	* doc/swilena.texi (Top): Add off-sync notice.
 
 	* meta/Makefile.am, meta/swilena_w_win.i, meta/swilena_point.i,
-	meta/swilena_morpho.i, meta/swilena_structelt.i,
-	meta/swilena_ntg.i, meta/swilena_ntg_cplx.i,
-	meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
-	meta/swilena_imagesize.i, meta/swilena_image.i,
-	meta/swilena_exception.i, meta/swilena_describe.i,
-	meta/swilena_decl.i, meta/swilena_core.i: Add.
+	* meta/swilena_morpho.i, meta/swilena_structelt.i,
+	* meta/swilena_ntg.i, meta/swilena_ntg_cplx.i,
+	* meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
+	* meta/swilena_imagesize.i, meta/swilena_image.i,
+	* meta/swilena_exception.i, meta/swilena_describe.i,
+	* meta/swilena_decl.i, meta/swilena_core.i: Add.
 
 	* meta/attic: New directory.
 
 	* src/swilena.i, src/swilena1d.i, src/swilena1d_convert.i,
-	src/swilena1d_morpho.i, src/swilena2d.i, src/swilena2d_convert.i,
-	src/swilena2d_morpho.i, src/swilena3d.i, src/swilena3d_convert.i,
-	src/swilena3d_morpho.i, src/swilena_conversions.i,
-	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
-	src/swilena_dim.i, src/swilena_dpoint.i, src/swilena_exceptions.i,
-	src/swilena_image.i, src/swilena_meta_win.i,
-	src/swilena_morpho_dim.i, src/swilena_morphodefs.i,
-	src/swilena_neighborhood.i, src/swilena_point.i,
-	src/swilena_typedefs.i, src/swilena_types.i,
-	src/swilena_w_window.i, src/swilena_window.i: Move to `meta/attic'.
+	* src/swilena1d_morpho.i, src/swilena2d.i, src/swilena2d_convert.i,
+	* src/swilena2d_morpho.i, src/swilena3d.i, src/swilena3d_convert.i,
+	* src/swilena3d_morpho.i, src/swilena_conversions.i,
+	* src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+	* src/swilena_dim.i, src/swilena_dpoint.i, src/swilena_exceptions.i,
+	* src/swilena_image.i, src/swilena_meta_win.i,
+	* src/swilena_morpho_dim.i, src/swilena_morphodefs.i,
+	* src/swilena_neighborhood.i, src/swilena_point.i,
+	* src/swilena_typedefs.i, src/swilena_types.i,
+	* src/swilena_w_window.i, src/swilena_window.i: Move to `meta/attic'.
 
 	* expand.sh: Add. Most files are now generated from this script.
 
@@ -553,7 +553,7 @@
 	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,
-	swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
+	* swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
 
 2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
 

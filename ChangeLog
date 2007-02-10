@@ -390,10 +390,10 @@
 	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* lib/check/Makefile.am, lib/check/Makefile.check,
-	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
-	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
-	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
-	lib/check/verbose.hh: Move to metalic/tests/check.
+	* lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
+	* lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
+	* lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
+	* lib/check/verbose.hh: Move to metalic/tests/check.
 
 	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
 
@@ -415,11 +415,11 @@
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* doc/demo/Makefile.am, doc/ref/Makefile.am, oln/config/oln.m4,
-	oln/tests/check/Makefile.am, oln/tests/check/Makefile.flags,
-	oln/tests/check/defs.in, tools/swilena/python/Makefile.am,
-	tools/utilities/Makefile.am, tools/utilities/morpho/Makefile.am,
-	oln/conf/configure.ac, oln/conf/oln-config.shin,
-	oln/oln/config/math.hh, doc/dev/faq.texi, doc/dev/conf.texi: Get
+	* oln/tests/check/Makefile.am, oln/tests/check/Makefile.flags,
+	* oln/tests/check/defs.in, tools/swilena/python/Makefile.am,
+	* tools/utilities/Makefile.am, tools/utilities/morpho/Makefile.am,
+	* oln/conf/configure.ac, oln/conf/oln-config.shin,
+	* oln/oln/config/math.hh, doc/dev/faq.texi, doc/dev/conf.texi: Get
 	rid of OLN_CPPFLAGS and OLN_CXXFLAGS. Update accordingly. Rename
 	some m4 macros not specific to Olena.
 

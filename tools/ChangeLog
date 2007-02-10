@@ -36,16 +36,16 @@
 
 2004-06-28  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* tools/utilities/convert/color_space.cc: Make the file compliant with
+	* utilities/convert/color_space.cc: Make the file compliant with
 	g++-3.4.
-	* tools/utilities/convert/Makefile.am: Add missing library include to
+	* utilities/convert/Makefile.am: Add missing library include to
 	the compilation flags.
 
 2004-06-23  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* tools/utilities/convert/color_space.cc: New file. Convert
+	* utilities/convert/color_space.cc: New file. Convert
 	from a color space to another.
-	* tools/utilities/convert/Makefile.am: New file.
+	* utilities/convert/Makefile.am: New file.
 
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
@@ -63,13 +63,13 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* utilities/morpho/Makefile.am,
-	utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc: Fix.
+	* utilities/morpho/morpho_template.cc,
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc: Fix.
 
 	* utilities/Makefile.am: Deactivate mosaic tool.
 
@@ -107,13 +107,13 @@
 	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc,
-	utilities/mosaic.cc: Replace <oln/types by <ntg/.
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc,
+	* utilities/mosaic.cc: Replace <oln/types by <ntg/.
 
 2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
 
@@ -138,12 +138,12 @@
 	* utilities/mosaic.cc: Add copyright information. Modify to use
 	with help2man.
 	* utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_twowin.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_functor.cc: Likewise.
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_functor.cc: Likewise.
 
 
 2003-02-07  Raphaël Poss  <raph@lrde.epita.fr>
@@ -173,12 +173,12 @@
 	of getopt.h, to prevent type errors due to bad prototyping
 	behavior of getopt.h.
 	* utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc,
-	utilities/mosaic.cc: Likewise.
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc,
+	* utilities/mosaic.cc: Likewise.
 
 	* utilities/Makefile.am (INCLUDES, LDADD): Link with
 	libolntools.a, which now provides, if necessary, getopt_long.
@@ -202,12 +202,12 @@
 2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc: Replace NULL by 0.
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc: Replace NULL by 0.
 
 2003-01-15  Akim Demaille  <akim@epita.fr>
 
