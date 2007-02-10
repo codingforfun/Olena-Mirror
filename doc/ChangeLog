@@ -1,3 +1,9 @@
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up doc/.
+
+	* hierarchies/implementation.dia: Remove (erroneous file).
+
 2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add more missing copyright header.

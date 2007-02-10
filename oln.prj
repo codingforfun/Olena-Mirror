@@ -1,20 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 280)
-(Parent-Version oln 10 279)
+(Project-Version oln 10 281)
+(Parent-Version oln 10 280)
 (Version-Log "2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
-	Add missing copyright headers.
+	Clean up doc/.
 
-	* Makefile.am, lib/Makefile.am, utilities/Makefile.am,
-	* utilities/configure.ac, utilities/convert/Makefile.am,
-	* utilities/morpho/Makefile.am,
-	* utilities/morpho/generate_morpho.sh: Add copyright
-	headers.
+	* hierarchies/implementation.dia: Remove (erroneous file).
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 10 Feb 2007 16:35:03 +0100")
+(Checkin-Time "Sat, 10 Feb 2007 17:01:27 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -128,7 +124,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.34 644))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.19 644))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.20 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.54 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.46 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.12 644))
@@ -1156,7 +1152,7 @@
   (doc/hierarchies/misc.dia (oln/w/10_misc.dia 1.1 644) :no-keywords)
   (doc/hierarchies/labels.dia (oln/w/11_labels.dia 1.1 644) :no-keywords)
   (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 644) :no-keywords)
-  (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 644))
+  
 
 ;; Files deleted by depopulate at Thu, 22 Jan 2004 21:08:59 +0100,
 ;; from version 10.48(w), by palma_g:
@@ -1685,6 +1681,11 @@
 
   (tools/swilena/copyright.py (oln/y/21_copyright. 1.1 644))
   (tools/swilena/src/copyright.template (oln/y/22_copyright. 1.1 644))
+
+;; Files deleted by depopulate at Sat, 10 Feb 2007 16:51:24 +0100,
+;; from version 10.280(w), by levill_r:
+
+  ; (doc/hierarchies/implementation.dia ())
 )
 (Merge-Parents)
 (New-Merge-Parents)
