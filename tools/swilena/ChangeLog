@@ -1,3 +1,42 @@
+2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers.
+
+	* src/copyright.template: New.
+	* copyright.py: New.
+	Use it...
+	* generate_arith_instantiations.py,
+	* generate_conversions_instantiations.py,	
+	* generate_morpho_instantiations.py: ...here to insert copyright
+	notices in generated files.
+	Add copyright header.
+	* Makefile.am, configure.ac, doc/Makefile.am,
+	* doc/examples/python/simple.py, doc/examples/ruby/simple.rb,
+	* meta/Makefile.am, meta/swilena_arith.i, meta/swilena_basics.i,
+	* meta/swilena_config.i, meta/swilena_conversions.i,
+	* meta/swilena_core.i, meta/swilena_decl.i, meta/swilena_describe.i,
+	* meta/swilena_exception.i, meta/swilena_image.i,
+	* meta/swilena_imagesize.i, meta/swilena_morpho.i,
+	* meta/swilena_ntg.i, meta/swilena_ntg_macros.i,
+	* meta/swilena_point.i, meta/swilena_structelt.i,
+	* meta/swilena_w_win.i, python/Makefile.am, python/swilena_all1d.py,
+	* python/swilena_all2d.py, python/swilena_all3d.py,
+	* python/swilena_display.py, python/tests/Makefile.am,
+	* python/tests/arith.py, python/tests/conversions.py,
+	* python/tests/morpho.py, python/tests/sanity.py,
+	* python/tests/simple1.py, ruby/Makefile.am,
+	* ruby/swilena_display.rb, ruby/tests/Makefile.am,
+	* ruby/tests/arith.rb, ruby/tests/conversions.rb,
+	* ruby/tests/morpho.rb, ruby/tests/sanity.rb, ruby/tests/simple1.rb,
+	* src/Makefile.am: Add copyright header.
+	* expand.sh: Likewise.
+	(copyright_notice_cxx, copyright_notice_shell): New functions.
+	Use them to insert copyright notices in generated files.
+	* doc/swilena.texi: s/L\.R\.D\.E\./LRDE/.
+	* Makefile.am (EXTRA_DIST): Add copyright.py.
+	* src/Makefile.am (EXTRA_DIST): New.
+	Add copyright.template.
+
 2006-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution (again).

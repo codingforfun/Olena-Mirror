@@ -1,35 +1,49 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 278)
-(Parent-Version oln 10 277)
+(Project-Version oln 10 279)
+(Parent-Version oln 10 278)
 (Version-Log "2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
-	Add missing copyright headers, and fix the dates in existing ones.
+	Add missing copyright headers.
 
-	* conf/configure.ac, conf/gen-scripts.sh, conf/oln-config.shin,
-	* Makefile.am, oln/Makefile.am, oln/makefile.src,
-	* oln/transforms/shapelets.hh, tests/check/Makefile.am,
-	* tests/check/Makefile.check, tests/check/Makefile.flags,
-	* tests/check/Makefile.runtests, tests/convert/Makefile.am,
-	* tests/convol/Makefile.am, tests/core/Makefile.am,
-	* tests/io/Makefile.am, tests/level/Makefile.am,
-	* tests/Makefile.am, tests/sanity/includes.test,
-	* tests/sanity/Makefile.am, tests/transforms/Makefile.am: Add
-	copyright header.
-	* oln/transforms/shapelets.hh: Likewise.
-	Add header guards.
-	* oln/arith/logic.hh, oln/convert/rgbhsl.hh,
-	* oln/convert/rgbhsv.hh, oln/convol/fast_convolution.hh,
-	* oln/core/abstract/image.hh, oln/core/window2d.hh,
-	* oln/io/base.hh, oln/io/gz_stream.hh,
-	* oln/morpho/geodesic_dilation.hh, oln/morpho/geodesic_erosion.hh,
-	* oln/topo/dmap.hh, oln/topo/dmap.hxx,
-	* oln/topo/tarjan/tarjan_with_attr.hh: Fix the dates in copyright
-	headers.
+	* src/copyright.template: New.
+	* copyright.py: New.
+	Use it...
+	* generate_arith_instantiations.py,
+	* generate_conversions_instantiations.py,	
+	* generate_morpho_instantiations.py: ...here to insert copyright
+	notices in generated files.
+	Add copyright header.
+	* Makefile.am, configure.ac, doc/Makefile.am,
+	* doc/examples/python/simple.py, doc/examples/ruby/simple.rb,
+	* meta/Makefile.am, meta/swilena_arith.i, meta/swilena_basics.i,
+	* meta/swilena_config.i, meta/swilena_conversions.i,
+	* meta/swilena_core.i, meta/swilena_decl.i, meta/swilena_describe.i,
+	* meta/swilena_exception.i, meta/swilena_image.i,
+	* meta/swilena_imagesize.i, meta/swilena_morpho.i,
+	* meta/swilena_ntg.i, meta/swilena_ntg_macros.i,
+	* meta/swilena_point.i, meta/swilena_structelt.i,
+	* meta/swilena_w_win.i, python/Makefile.am, python/swilena_all1d.py,
+	* python/swilena_all2d.py, python/swilena_all3d.py,
+	* python/swilena_display.py, python/tests/Makefile.am,
+	* python/tests/arith.py, python/tests/conversions.py,
+	* python/tests/morpho.py, python/tests/sanity.py,
+	* python/tests/simple1.py, ruby/Makefile.am,
+	* ruby/swilena_display.rb, ruby/tests/Makefile.am,
+	* ruby/tests/arith.rb, ruby/tests/conversions.rb,
+	* ruby/tests/morpho.rb, ruby/tests/sanity.rb, ruby/tests/simple1.rb,
+	* src/Makefile.am: Add copyright header.
+	* expand.sh: Likewise.
+	(copyright_notice_cxx, copyright_notice_shell): New functions.
+	Use them to insert copyright notices in generated files.
+	* doc/swilena.texi: s/L\\.R\\.D\\.E\\./LRDE/.
+	* Makefile.am (EXTRA_DIST): Add copyright.py.
+	* src/Makefile.am (EXTRA_DIST): New.
+	Add copyright.template.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 10 Feb 2007 12:07:40 +0100")
+(Checkin-Time "Sat, 10 Feb 2007 16:31:23 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -148,7 +162,7 @@
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.46 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.12 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.18 644))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.52 644))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.53 644))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 644))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 644))
@@ -570,12 +584,12 @@
 
   (tools () :directory)
   (tools/Makefile.am (oln/o/37_Makefile.a 1.7 644))
-  (tools/swilena/configure.ac (oln/o/26_configure. 1.2 644))
-  (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.3 644))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.5 644))
+  (tools/swilena/configure.ac (oln/o/26_configure. 1.3 644))
+  (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.4 644))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.6 644))
   
   ; (tools/swilena/java/Makefile.in ())
-  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.6 644))
+  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.7 644))
 ;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
 ;  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
   (tools/swilena/README (oln/n/35_README 1.1 644))
@@ -882,30 +896,30 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.21 744))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.22 744))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.5 644))
+  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.6 644))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:43 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.3 644))
-  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.5 644))
-  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.4 644))
+  (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.4 644))
+  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.6 644))
+  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.5 644))
   
   
   
-  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.10 644))
-  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.5 644))
-  (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.3 644))
-  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.8 644))
-  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.5 644))
-  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.4 644))
-  (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.2 644))
-  (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 644))
+  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.11 644))
+  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.6 644))
+  (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.4 644))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.9 644))
+  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.6 644))
+  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.5 644))
+  (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.3 644))
+  (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.2 644))
 
 
   (integre/ntg/int.hh (oln/s/0_int.hh 1.4 644))
@@ -1067,29 +1081,29 @@
 ;; Files added by populate at Sun, 21 Sep 2003 22:59:15 +0200,
 ;; to version 10.19(w), by nes:
 
-  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.9 644))
-  (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.6 744))
-  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.11 644))
-  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.8 644))
-  (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.6 755))
+  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.10 644))
+  (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.7 744))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.12 644))
+  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.9 644))
+  (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.7 755))
 
 ;; Files added by populate at Mon, 22 Sep 2003 00:03:13 +0200,
 ;; to version 10.21(w), by nes:
 
-  (tools/swilena/python/swilena_display.py (oln/v/20_swilena_di 1.1 644))
-  (tools/swilena/ruby/swilena_display.rb (oln/v/21_swilena_di 1.1 744))
+  (tools/swilena/python/swilena_display.py (oln/v/20_swilena_di 1.2 644))
+  (tools/swilena/ruby/swilena_display.rb (oln/v/21_swilena_di 1.2 744))
 
 ;; Files added by populate at Mon, 22 Sep 2003 00:32:14 +0200,
 ;; to version 10.21(w), by nes:
 
-  (tools/swilena/doc/examples/ruby/simple.rb (oln/v/22_simple.rb 1.4 744))
-  (tools/swilena/doc/examples/python/simple.py (oln/v/23_simple.py 1.4 744))
+  (tools/swilena/doc/examples/ruby/simple.rb (oln/v/22_simple.rb 1.5 744))
+  (tools/swilena/doc/examples/python/simple.py (oln/v/23_simple.py 1.5 744))
 
 
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8.1.2 744))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8.1.3 744))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1101,7 +1115,7 @@
 ;; Files added by populate at Mon, 29 Sep 2003 19:17:53 +0200,
 ;; to version 10.26(w), by nes:
 
-  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.4 644))
+  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.5 644))
 
 ;; Files added by populate at Wed, 08 Oct 2003 11:13:23 +0200,
 ;; to version 10.27(w), by burrus_n:
@@ -1132,30 +1146,30 @@
 ;; Files added by populate at Sun, 09 Nov 2003 02:01:01 +0100,
 ;; to version 10.38(w), by burrus_n:
 
-  (tools/swilena/meta/swilena_ntg_macros.i (oln/v/39_swilena_nt 1.2 644))
+  (tools/swilena/meta/swilena_ntg_macros.i (oln/v/39_swilena_nt 1.3 644))
 
 ;; Files added by populate at Mon, 10 Nov 2003 11:23:59 +0100,
 ;; to version 10.39(w), by burrus_n:
 
-  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.4 744))
-  (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.2 644))
-  (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.2 644))
-  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1.1.1 744))
-  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1.1.2 744))
+  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.5 744))
+  (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.3 644))
+  (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.3 644))
+  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1.1.2 744))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1.1.3 744))
 
 ;; Files added by populate at Mon, 10 Nov 2003 14:06:22 +0100,
 ;; to version 10.39(w), by burrus_n:
 
-  (tools/swilena/python/tests/arith.py (oln/w/0_arith.py 1.4 744))
-  (tools/swilena/python/tests/conversions.py (oln/w/1_conversion 1.3 744))
+  (tools/swilena/python/tests/arith.py (oln/w/0_arith.py 1.5 744))
+  (tools/swilena/python/tests/conversions.py (oln/w/1_conversion 1.4 744))
 
 ;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
 ;; to version 10.40(w), by burrus_n:
 
-  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.9 644))
-  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.2 644))
-  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.2 644))
-  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.2 644))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.10 644))
+  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.3 644))
+  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.3 644))
+  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.3 644))
 
 ;; Files added by populate at Wed, 26 Nov 2003 11:35:29 +0100,
 ;; to version 10.41(w), by burrus_n:
@@ -1513,10 +1527,10 @@
 ;; Files added by populate at Fri, 30 Jun 2006 17:41:53 +0200,
 ;; to version 10.226(w), by levill_r:
 
-  (tools/swilena/meta/swilena_config.i (oln/w/36_swilena_co 1.1 644))
-  (tools/swilena/meta/swilena_basics.i (oln/w/37_swilena_ba 1.1 644))
-  (tools/swilena/ruby/tests/sanity.rb (oln/w/38_sanity.rb 1.3 755))
-  (tools/swilena/python/tests/sanity.py (oln/w/39_sanity.py 1.3 744))
+  (tools/swilena/meta/swilena_config.i (oln/w/36_swilena_co 1.2 644))
+  (tools/swilena/meta/swilena_basics.i (oln/w/37_swilena_ba 1.2 644))
+  (tools/swilena/ruby/tests/sanity.rb (oln/w/38_sanity.rb 1.4 755))
+  (tools/swilena/python/tests/sanity.py (oln/w/39_sanity.py 1.4 744))
 
 ;; Files added by populate at Wed, 05 Jul 2006 18:09:53 +0200,
 ;; to version 10.232(w), by levill_r:
@@ -1537,9 +1551,9 @@
 ;; Files added by populate at Tue, 11 Jul 2006 17:53:57 +0200,
 ;; to version 10.241(w), by levill_r:
 
-  (tools/swilena/ruby/tests/morpho.rb (oln/w/44_morpho.rb 1.1 744))
-  (tools/swilena/ruby/tests/conversions.rb (oln/w/45_conversion 1.1 755))
-  (tools/swilena/ruby/tests/arith.rb (oln/w/46_arith.rb 1.1 755))
+  (tools/swilena/ruby/tests/morpho.rb (oln/w/44_morpho.rb 1.2 744))
+  (tools/swilena/ruby/tests/conversions.rb (oln/w/45_conversion 1.2 755))
+  (tools/swilena/ruby/tests/arith.rb (oln/w/46_arith.rb 1.2 755))
 
 ;; Files added by populate at Thu, 03 Aug 2006 15:59:48 +0200,
 ;; to version 10.244(w), by theo:
@@ -1694,6 +1708,12 @@
 ;; from version 10.275(w), by levill_r:
 
   ; (metalic/m4 () :directory)
+
+;; Files added by populate at Sat, 10 Feb 2007 16:07:53 +0100,
+;; to version 10.278(w), by levill_r:
+
+  (tools/swilena/copyright.py (oln/y/21_copyright. 1.1 644))
+  (tools/swilena/src/copyright.template (oln/y/22_copyright. 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
