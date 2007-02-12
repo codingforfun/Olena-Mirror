@@ -1,3 +1,10 @@
+2007-02-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix sanity tests.
+
+	* oln/lrde/efigi/misc.hh (oln::efigi::crop): Fix erroneous
+	argument name.
+
 2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing copyright headers, and fix the dates in existing ones.

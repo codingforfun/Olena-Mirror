@@ -157,8 +157,8 @@ namespace oln
     {
       assertion (dx > 0);
       assertion (dy > 0);
-      assertion(ima.hold(point2d(x, y)));
-      assertion(ima.hold(point2d(x + dx, y + dy)));
+      assertion(input.hold(point2d(x, y)));
+      assertion(input.hold(point2d(x + dx, y + dy)));
 
       image2d<float> output(dx, dy);
       for (coord row = 0; row < dx; ++row)
