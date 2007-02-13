@@ -1,3 +1,11 @@
+2007-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix bootstrap.sh.
+
+	* bootstrap.sh: Refresh the timestamps of the documentation.
+	* Makefile.am (dist-hook): Prune this ``refresh'' action from
+	bootstrap.sh when distributing.
+
 2007-02-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure: Aesthetic changes.

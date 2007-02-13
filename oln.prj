@@ -1,20 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 284)
-(Parent-Version oln 10 283)
+(Project-Version oln 10 285)
+(Parent-Version oln 10 284)
 (Version-Log "2007-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
-	Fix the distribution of Swilena.
+	Fix bootstrap.sh.
 
-	* src/Makefile.am (EXTRA_DIST): Append copyright.template, instead
-	of simply assigning it.
-	* swilena/generate_arith_instantiations.py,
-	* swilena/generate_morpho_instantiations.py: Update comment
-	w.r.t. an old SWIG bug.
+	* bootstrap.sh: Refresh the timestamps of the documentation.
+	* Makefile.am (dist-hook): Prune this ``refresh'' action from
+	bootstrap.sh when distributing.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 13 Feb 2007 19:00:25 +0100")
+(Checkin-Time "Tue, 13 Feb 2007 19:04:39 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -127,7 +125,7 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.35 644))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.36 644))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.21 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
@@ -139,7 +137,7 @@
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 644))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 644))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.12 755))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.13 755))
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.7 755))
 
@@ -159,7 +157,7 @@
   (doc/Makefile.am (oln/e/0_Makefile.a 1.15 644))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 644))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.11 644))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.12 644))
   (NEWS (oln/0_NEWS 1.24 644))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 644) :no-keywords)

@@ -34,5 +34,15 @@ sh ./cleanup.sh
 ( cd doc/ref && sh ./gen_filelists.sh filelists.make ../../olena/oln )
 autoreconf -v -f -i
 ( cd olena/conf && aclocal -I ../../config && autoconf -f )
+
+#<<lrde
+# Now that configure was recreated, the documentation timestamps
+# are outdated (they depend on it).  Refresh them brutally.
+# (Technique inspired from TC.)
+if test -f doc/dev/stamp-vti; then
+  touch doc/dev/stamp-vti
+fi
+#>>
+
 echo
 echo "Reconfiguration done."

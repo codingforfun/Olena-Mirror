@@ -100,6 +100,7 @@ maintainer-check:
 # Remove any trace of olena/oln/lrde from the distribution and reset
 # the GNU Build system for the distdir layout.
 dist-hook:
+	$(top_srcdir)/config/strip-lrde $(distdir)/bootstrap.sh &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/configure.ac &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/Makefile.am &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/olena/oln/Makefile.am && \
