@@ -93,12 +93,13 @@ def write_algorithms():
 		      "ntg_int_u8", "ntg_int_u32",
 		      "ntg_int_s8", "ntg_int_s32",
 		      "ntg_float" ]:
-            # FIXME: SWIG 1.3.29 Bug.  We used to refer to `oln::image' from
-            # the global (top-level) namespace, i.e. `::oln::image',
-            # but it makes swig 1.3.29 generate invalid C++ code when
-            # used ad a template argument: the space between `<' and
-            # `::' is eaten by swig, and `<:' is understood as a
-            # trigraph (for `[') by the C++ compiler.
+            # Work around a bug in SWIG 1.3.29 (fixed since).  We used
+            # to refer to `oln::image' from the global (top-level)
+            # namespace, i.e. `::oln::image', but it makes swig 1.3.29
+            # generate invalid C++ code when used ad a template
+            # argument: the space between `<' and `::' is eaten by
+            # swig, and `<:' is understood as a trigraph (for `[') by
+            # the C++ compiler.
 	    img_type = "oln::image%(dim)sd< %(type)s >" % vars()
 	    bigger_type = get_bigger_type(type)
 	    return_img_type = "oln::image%(dim)sd< %(bigger_type)s >" % vars()

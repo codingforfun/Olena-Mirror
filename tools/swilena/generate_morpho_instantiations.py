@@ -91,12 +91,13 @@ def write_algorithms():
 		      "ntg_int_u8", "ntg_int_u32",
 		      "ntg_int_s8", "ntg_int_s32",
 		      "ntg_float" ]:
-            # FIXME: SWIG 1.3.29 Bug.  We used to refer to `oln::image' from
-            # the global (top-level) namespace, i.e. `::oln::image',
-            # but it makes swig 1.3.29 generate invalid C++ code when
-            # used ad a template argument: the space between `<' and
-            # `::' is eaten by swig, and `<:' is understood as a
-            # trigraph (for `[') by the C++ compiler.
+            # Work around a bug in SWIG 1.3.29 (fixed since).  We used
+            # to refer to `oln::image' from the global (top-level)
+            # namespace, i.e. `::oln::image', but it makes swig 1.3.29
+            # generate invalid C++ code when used ad a template
+            # argument: the space between `<' and `::' is eaten by
+            # swig, and `<:' is understood as a trigraph (for `[') by
+            # the C++ compiler.
 	    img_type = "oln::image%(dim)sd< %(type)s >" % vars()
 	    win_type = "::oln::window%(dim)sd" % vars()
 	    neighb_type = "::oln::neighborhood%(dim)sd" % vars()
@@ -175,11 +176,11 @@ def write_algorithms():
                     instantiate(idx, "top_hat_contrast_op", img_type, img_type, win_type)
                     instantiate(idx, "fast_top_hat_contrast_op", img_type, img_type, win_type)
                     # Watershed
-                    # FIXME: SWIG 1.3.29 Bug (same as above).
+                    # Same workaround as above.
                     img_ret_type = "oln::image%(dim)sd< ntg_int_u32 >" % vars()
                     instantiate(idx, "watershed_seg", img_ret_type, img_type, neighb_type)
                     instantiate(idx, "watershed_con", img_ret_type, img_type, neighb_type)
-                    # FIXME: SWIG 1.3.29 Bug (same as above).
+                    # Same workaround as above.
                     bin_img_type = "oln::image%(dim)sd< ntg_bin >" % vars()
                     instantiate(idx, "sure_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
                     instantiate(idx, "sequential_minima_imposition", img_type, img_type, bin_img_type, neighb_type)

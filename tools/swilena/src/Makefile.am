@@ -31,8 +31,8 @@
 ## Public License.
 
 
-EXTRA_DIST = copyright.template
-
 DISTCLEANFILES = $(srcdir)/*.i makefile.swig
 
 include makefile.swig
+
+EXTRA_DIST += copyright.template
