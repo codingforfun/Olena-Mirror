@@ -1,23 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 289)
-(Parent-Version oln 10 288)
+(Project-Version oln 10 290)
+(Parent-Version oln 10 289)
 (Version-Log "2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
-	ICC 9.1 compatibility.
+	Fix initializations in oln/utils/stat.hh.
 
-	* oln/morpher/piece_morpher.hh
-	(oln::morpher::super_piece_morpher::super_piece_morpher)
-	(oln::morpher::piece_morpher::piece_morpher)
-	* oln/morpher/slicing_morpher.hh
-	(oln::morpher::super_slicing_morpher::super_slicing_morpher)
-	* oln/morpher/border_morpher.hh
-	(oln::morpher::super_border_morpher::super_border_morpher)
-	Initialize members in ctors to pacify ICC.
+	* oln/utils/stat.hh (oln::utils::f_minmax:f_minmax)
+	Initialize the members with
+	dummy values in ctors to prevent the compiler from emitting
+	warnings about uninitialized values.
+	(oln::utils::f_moments::f_moments): Likewise.
+	Fix call to f_minmax::reset.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Feb 2007 17:44:58 +0100")
+(Checkin-Time "Wed, 14 Feb 2007 18:01:03 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -134,7 +132,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.23 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.15 644))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.16 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.20 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.55 644))
 
@@ -421,7 +419,7 @@
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.9 644))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.10 644))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.17 644))
-  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.11 644))
+  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.12 644))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.11 644))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 644))
   

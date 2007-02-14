@@ -39,7 +39,10 @@ namespace oln {
     template< class T >
     struct f_minmax : std::unary_function< const T&, void >
     {
-      f_minmax()
+      f_minmax() :
+	// Initialize the members with dummy values to prevent the
+	// compiler from emitting warnings about uninitialized values.
+	min_(0), max_(0)
       {
         reset();
       }
@@ -101,6 +104,14 @@ namespace oln {
     template< class T, class C = ntg::float_s >
     struct f_moments : f_minmax<T>
     {
+      f_moments() :
+	// Initialize the members with dummy values to prevent the
+	// compiler from emitting warnings about uninitialized values.
+	f_minmax<T>(), sum1_(0), sum2_(0)
+      {
+        this->reset();
+      }
+
       typedef f_minmax<T> super;
 
       void

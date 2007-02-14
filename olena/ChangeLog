@@ -1,5 +1,16 @@
 2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix initializations in oln/utils/stat.hh.
+
+	* oln/utils/stat.hh (oln::utils::f_minmax:f_minmax)
+	Initialize the members with
+	dummy values in ctors to prevent the compiler from emitting
+	warnings about uninitialized values.
+	(oln::utils::f_moments::f_moments): Likewise.
+	Fix call to f_minmax::reset.
+
+2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	ICC 9.1 compatibility.
 
 	* oln/morpher/piece_morpher.hh
