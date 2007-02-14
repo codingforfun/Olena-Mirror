@@ -1,14 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 286)
-(Parent-Version oln 10 285)
-(Version-Log "2007-02-13  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 287)
+(Parent-Version oln 10 286)
+(Version-Log "2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
-	* NEWS: Update.
+	Disable the LaTeX output for the reference documentation.
+
+	* ref/doxygen.config.in (GENERATE_LATEX): Set to NO.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 13 Feb 2007 19:35:14 +0100")
+(Checkin-Time "Wed, 14 Feb 2007 15:41:12 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -122,7 +124,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.37 644))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.21 644))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.22 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.14 644))
@@ -1218,7 +1220,7 @@
 
 
   (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.7 744))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.6 644))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.7 644))
   (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.2 644))
   
   (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.4 744))
@@ -1574,7 +1576,7 @@
   ; (olena/oln/lrde/ufmt/bin/exe/basic_maxtree () :no-keywords)
 
 
-  (TODO (oln/x/23_TODO 1.1 644))
+  (TODO (oln/x/23_TODO 1.2 644))
   (olena/TODO (oln/x/24_TODO 1.1 644))
   (olena/oln/lrde/Makefile.am (oln/x/25_Makefile.a 1.2 644))
   (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.6 644))

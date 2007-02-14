@@ -1,4 +1,4 @@
-# Doxyfile 1.3.2
+# Doxyfile 1.3.2						-*- Makefile -*-
 
 # Copyright (C) 2004  EPITA Research and Development Laboratory
 # 
@@ -142,7 +142,7 @@ TREEVIEW_WIDTH         = 250
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 LATEX_OUTPUT           = latex
 LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex

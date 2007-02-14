@@ -1,3 +1,9 @@
+2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable the LaTeX output for the reference documentation.
+
+	* ref/doxygen.config.in (GENERATE_LATEX): Set to NO.
+
 2007-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up doc/.
