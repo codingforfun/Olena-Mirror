@@ -24,7 +24,7 @@ be what it is today without their work.
 @item numerous hours spent on Olena to make it better.
 @end itemize
 
-@item Reda Dehak
+@item R@'eda Dehak
 @itemize @minus
 @item management of the project,
 @item color conversions,
@@ -54,6 +54,8 @@ be what it is today without their work.
 @itemize @minus
 @item contributions to document the code,
 @item generic morphers,
+@item shapelets transform,
+@item G++ 4.0 compatibility,
 @item configuration system.
 @end itemize
 
@@ -94,7 +96,6 @@ be what it is today without their work.
 @itemize @minus
 @item color system.
 @end itemize
-
 
 @item Jean Chalard
 @itemize @minus
@@ -172,6 +173,14 @@ be what it is today without their work.
 @item Renaud Fran@,cois
 @itemize @minus
 @item bibliographic research.
+@end itemize
+
+@item Roland Levillain
+@itemize @minus
+@item renovation of Swilena,
+@item G++ 4.0 and 4.1 compatibility
+@item integration of GNU Libtool,
+@item release manager for Olena 0.11.
 @end itemize
 
 @item Simon Odou
