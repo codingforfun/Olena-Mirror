@@ -1,3 +1,16 @@
+2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	ICC 9.1 compatibility.
+
+	* oln/morpher/piece_morpher.hh
+	(oln::morpher::super_piece_morpher::super_piece_morpher)
+	(oln::morpher::piece_morpher::piece_morpher)
+	* oln/morpher/slicing_morpher.hh
+	(oln::morpher::super_slicing_morpher::super_slicing_morpher)
+	* oln/morpher/border_morpher.hh
+	(oln::morpher::super_border_morpher::super_border_morpher)
+	Initialize members in ctors to pacify ICC.
+
 2007-02-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix sanity tests.

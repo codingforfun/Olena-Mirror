@@ -136,7 +136,8 @@ namespace oln {
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
-      super_border_morpher() : width(0)
+      super_border_morpher()
+	: super_type(), width(0), be()
       {}
 
     public:

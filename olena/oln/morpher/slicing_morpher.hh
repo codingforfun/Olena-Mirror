@@ -215,6 +215,7 @@ namespace oln {
       ** \todo create empty constructors for impl_, ...
       */
       super_slicing_morpher()
+	: super_type(), slice_(), size_(), impl_()
       {}
 
       coord slice_; ///< The last coordinate.

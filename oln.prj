@@ -1,18 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 288)
-(Parent-Version oln 10 287)
+(Project-Version oln 10 289)
+(Parent-Version oln 10 288)
 (Version-Log "2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
-	Disable the LaTeX output for the reference documentation (cont.)
+	ICC 9.1 compatibility.
 
-	* ref/Makefile.am (CLEANFILES, dist_noinst_DATA): Comment
-	oln-ref.pdf.
-	(doc, oln-ref.pdf): Likewise.
+	* oln/morpher/piece_morpher.hh
+	(oln::morpher::super_piece_morpher::super_piece_morpher)
+	(oln::morpher::piece_morpher::piece_morpher)
+	* oln/morpher/slicing_morpher.hh
+	(oln::morpher::super_slicing_morpher::super_slicing_morpher)
+	* oln/morpher/border_morpher.hh
+	(oln::morpher::super_border_morpher::super_border_morpher)
+	Initialize members in ctors to pacify ICC.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Feb 2007 17:41:47 +0100")
+(Checkin-Time "Wed, 14 Feb 2007 17:44:58 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -129,7 +134,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.23 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.14 644))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.15 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.20 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.55 644))
 
@@ -1429,9 +1434,9 @@
   
   
   
-  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.4 644))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.5 644))
   (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.3 644))
-  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.5 644))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.6 644))
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.3 644))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.3 644))
@@ -1469,7 +1474,7 @@
   (olena/oln/core/fdpoint2d.hh (oln/r/16_fdpoint2d. 1.2 644))
   (olena/oln/geom/translate.hh (oln/s/6_translate. 1.2 644))
   (olena/oln/geom/rotate.hh (oln/u/14_rotate.hh 1.2 644))
-  (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.3 644))
+  (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.4 644))
   (olena/tests/morpher/tests/border (oln/u/16_border 1.2 644))
   (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.4 644))
   (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.5 644))

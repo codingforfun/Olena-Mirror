@@ -127,6 +127,7 @@ namespace oln {
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
       super_piece_morpher()
+	: super_type(), size_(), p_()
       {}
 
     public:
@@ -195,6 +196,7 @@ namespace oln {
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
       piece_morpher()
+	: super_type()
       {}
 
       /*!
