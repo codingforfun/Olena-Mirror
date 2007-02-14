@@ -1,16 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 287)
-(Parent-Version oln 10 286)
+(Project-Version oln 10 288)
+(Parent-Version oln 10 287)
 (Version-Log "2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
-	Disable the LaTeX output for the reference documentation.
+	Disable the LaTeX output for the reference documentation (cont.)
 
-	* ref/doxygen.config.in (GENERATE_LATEX): Set to NO.
+	* ref/Makefile.am (CLEANFILES, dist_noinst_DATA): Comment
+	oln-ref.pdf.
+	(doc, oln-ref.pdf): Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Feb 2007 15:41:12 +0100")
+(Checkin-Time "Wed, 14 Feb 2007 17:41:47 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -124,7 +126,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.37 644))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.22 644))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.23 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.14 644))
@@ -148,7 +150,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.14 644))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.5 644))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.6 644))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.6 644))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.4 644))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.13 644))
