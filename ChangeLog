@@ -1,3 +1,7 @@
+2007-02-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* config/oln.m4: Relax ICC messages on debatable remarks.
+
 2007-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* NEWS: Update.

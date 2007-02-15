@@ -566,8 +566,19 @@ AC_DEFUN([AC_CXX_FLAGS],
      Intel)
       _CXXFLAGS_OPTIMIZE="-O3"
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_STRICT="-w1"
-      _CXXFLAGS_STRICT_ERRORS="-w1"
+      # Ignore some remarks from ICC.
+      #
+      #   remark #383: value copied to temporary, reference to temporary used.
+      #
+      #   remark #810: conversion from "double" to "const float &" may lose
+      #   significant bits.
+      #
+      #   remark #981: operands are evaluated in unspecified order
+      #
+      #   remark #1418: external definition with no prior declaration
+      #
+      _CXXFLAGS_STRICT="-w1 -wd383,810,981,1418"
+      _CXXFLAGS_STRICT_ERRORS="-w1 -wd383,810,981,1418"
       ;;
    esac
 
