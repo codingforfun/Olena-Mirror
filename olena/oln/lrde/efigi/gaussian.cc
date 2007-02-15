@@ -7,7 +7,6 @@
 #include <oln/convol/fast_gaussian.hh>
 
 
-
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0]
@@ -25,7 +24,8 @@ int main(int argc, char* argv[])
   if (argc != 4)
     usage(argv);
 
-  float sigma = std::atof(argv[2]);
+  // Use an explicit cast pacify ICC 9.1.
+  float sigma = static_cast<float>(std::atof(argv[2]));
   assert(sigma > 0);
   image2d<float> ima = efigi::load_pfm(argv[1]);
   image2d<float> imaG = convol::fast::gaussian(ima, sigma);

@@ -1,4 +1,7 @@
-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -ggdb -O3 -DNDEBUG 
+## Process this file with Automake to produce Makefile.in.
+
+AM_CXXFLAGS = \
+  $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS) -DNDEBUG
 AM_LDFLAGS = $(ZLIB_LDFLAGS)
 
 check_PROGRAMS =							    \
@@ -46,4 +49,4 @@ hpc_maxtree_SOURCES = hpc_maxtree.cc
 r1ic_maxtree_SOURCES = r1ic_maxtree.cc
 rpc_maxtree_SOURCES = rpc_maxtree.cc
 
-# FIXME: Write (runtime) tests!
+# FIXME: Write runtime tests (using input/output data)!

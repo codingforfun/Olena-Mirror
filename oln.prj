@@ -1,15 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 291)
-(Parent-Version oln 10 290)
-(Version-Log "2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 292)
+(Parent-Version oln 10 291)
+(Version-Log "2007-02-15  Roland Levillain  <roland@lrde.epita.fr>
 
-	* dev/thanks.texi (Acknowledgements): Update the list of
-	contributors.
+	Have Olena tests pass with ICC 9.1.
+
+	* oln/transforms/dwt.hh (oln::transforms::dwt::dwt): Initalize
+	dwt::coeffs in ctor to pacify ICC.
+	* tests/utils/tests/stat: Be more tolerant on comparisons of
+	floating point values.
+
+	* oln/lrde/efigi/Makefile.am,
+	* oln/lrde/ufmt/bin/Makefile.am (AM_CXXFLAGS): Set to
+	$(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS)
+	-DNDEBUG.
+	* oln/lrde/efigi/gaussian.cc (main): Use an eplicit
+	double-to-float conversion to pacify ICC.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Feb 2007 18:39:03 +0100")
+(Checkin-Time "Thu, 15 Feb 2007 16:50:48 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -126,7 +137,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.24 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.16 644))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.17 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.20 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.55 644))
 
@@ -364,7 +375,7 @@
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.8 644))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.14 644))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.14 644))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.15 644))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.16 644))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.12 644))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.9 644))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.9 644))
@@ -999,7 +1010,7 @@
   (olena/tests/core/multiple_sources_1.cc (oln/u/25_multiple_s 1.1 644))
   (olena/tests/utils/Makefile.am (oln/u/26_Makefile.a 1.2 644))
   (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.6 644))
-  (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.4 644))
+  (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.5 644))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.7 644))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.4 644))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6.1.1 644))
@@ -1581,7 +1592,7 @@
   (olena/oln/lrde/ufmt/Makefile.am (oln/x/26_Makefile.a 1.6 644))
   (olena/oln/lrde/ufmt/fiorio-1.hh (oln/x/27_fiorio-1.h 1.4 644))
   (olena/oln/lrde/ufmt/fiorio-2.hh (oln/x/28_fiorio-2.h 1.4 644))
-  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.6 644))
+  (olena/oln/lrde/ufmt/bin/Makefile.am (oln/x/29_Makefile.a 1.7 644))
   (olena/oln/lrde/ufmt/bin/fiorio.cc (oln/x/30_fiorio.cc 1.4 644))
 ;; Files added by populate at Mon, 28 Aug 2006 10:51:36 +0200,
 ;; to version 10.249(w), by theo:
@@ -1632,7 +1643,7 @@
   (olena/oln/lrde/efigi/io.hh (oln/x/51_io.hh 1.2 644))
   (olena/oln/lrde/efigi/req.hh (oln/y/0_req.hh 1.3 644))
   (olena/oln/lrde/efigi/wst.cc (oln/y/1_wst.cc 1.1 644))
-  (olena/oln/lrde/efigi/gaussian.cc (oln/y/2_gaussian.c 1.1 644))
+  (olena/oln/lrde/efigi/gaussian.cc (oln/y/2_gaussian.c 1.2 644))
   (olena/oln/lrde/efigi/pgm2pfm.cc (oln/y/3_pgm2pfm.cc 1.1 644))
   (olena/oln/lrde/efigi/wst.hh (oln/y/4_wst.hh 1.2 644))
 
@@ -1644,7 +1655,7 @@
 ;; to version 10.268(w), by levill_r:
 
   (olena/oln/lrde/efigi/pgm2pfm_wo_noise.cc (oln/y/5_pgm2pfm_wo 1.1 644))
-  (olena/oln/lrde/efigi/Makefile.am (oln/y/6_Makefile.a 1.2 644))
+  (olena/oln/lrde/efigi/Makefile.am (oln/y/6_Makefile.a 1.3 644))
   (olena/oln/lrde/ufmt/naive_generic_salembier.hh (oln/y/7_naive_gene 1.3 644))
   (olena/oln/lrde/ufmt/generic_salembier.hh (oln/y/8_generic_sa 1.4 644))
   (olena/oln/lrde/ufmt/bin/generic_salembier_int_u8.cc (oln/y/9_generic_sa 1.2 644))

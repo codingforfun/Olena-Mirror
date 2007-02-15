@@ -483,7 +483,11 @@ namespace oln {
       **
       ** \arg im Image to process.
       */
-      dwt(const original_im_t& im) : original_im(im)
+      dwt(const original_im_t& im) :
+	original_im(im),
+	// Initialize coeffs to pacify ICC.
+	// FIXME: Is that right?
+	coeffs()
       {
 	ntg_is_a(original_im_value_t, ntg::real)::ensure();
 

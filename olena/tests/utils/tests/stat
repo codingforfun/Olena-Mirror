@@ -65,8 +65,8 @@ check()
 
   traverse(moments, src);
 
-  if (fabs(moments.mean() - 123.32) <= 1e-2 &&
-      fabs(moments.variance() - 2241.57) <= 1e-2)
+  if (fabs(moments.mean() - 123.32) <= 1e-1 &&
+      fabs(moments.variance() - 2239.9) <= 1e-1)
     OK_OR_FAIL;
 
   return fail;

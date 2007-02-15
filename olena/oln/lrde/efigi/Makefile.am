@@ -6,7 +6,8 @@
 ## `olena/oln', and the contents of `olena/lrde/ufmt/bin to `olena/tests'
 ## or to `tools'.
 
-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -ggdb -O3 -DNDEBUG 
+AM_CXXFLAGS = \
+  $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS) -DNDEBUG
 AM_LDFLAGS = -lcfitsio $(ZLIB_LDFLAGS)
 
 noinst_HEADERS =				\

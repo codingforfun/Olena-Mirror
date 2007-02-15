@@ -1,3 +1,19 @@
+2007-02-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Olena tests pass with ICC 9.1.
+
+	* oln/transforms/dwt.hh (oln::transforms::dwt::dwt): Initalize
+	dwt::coeffs in ctor to pacify ICC.
+	* tests/utils/tests/stat: Be more tolerant on comparisons of
+	floating point values.
+
+	* oln/lrde/efigi/Makefile.am,
+	* oln/lrde/ufmt/bin/Makefile.am (AM_CXXFLAGS): Set to
+	$(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS)
+	-DNDEBUG.
+	* oln/lrde/efigi/gaussian.cc (main): Use an eplicit
+	double-to-float conversion to pacify ICC.
+
 2007-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix initializations in oln/utils/stat.hh.
