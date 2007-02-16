@@ -1,0 +1,476 @@
+		-*- outline -*-
+
+* jour 1
+
+
+** conseils
+
+- limitez le nombre de fichiers (inutile d'en avoir 1 par classe)
+
+- faites-vous un fichier pour prédéclarer tous les types
+
+- codez le corps des méthodes directement dans les classes
+  (et de façon dense pour les méthodes abstraites)
+
+- pour le jour 1, n'ajoutez pas dans vos classes :
+  = de constructeur par copie
+  = d'opérateur d'affectation (noté (:=) en SCOOL)
+  = de destructeur
+
+- rien n'est protected ni private (c'est bcp plus simple)
+
+
+** préparation
+
+
+*** lecture (1 h)
+
+Relire très rapidement les transparents (~theo/pub/static.pdf) à trois
+et expliquez-vous mutuellemnt ce que vous ne comprennez pas.
+
+
+*** récup (5 min)
+
+Récupérer le projet olena-1.0:
+% mkdir mon_espace_olena_1
+% cd mon_espace_olena_1
+% svn co https://svn.lrde.epita.fr/svn/oln/trunk/ .
+% ls
+% echo "c'est beau quand meme"
+% ./bootstrap
+% ./configure
+
+Vous avez bcp de choses sous les yeux mais le but n'est pas de
+chercher à comprendre le code (ne regardez surtout pas le fichier
+metalic/mlc/case.hh).  Ce serait bcp de temps perdu car il s'agit
+d'avancer !  Tout ce qui vous sera utile vous sera indiqué dans le
+sujet.
+
+
+*** lecture II (15 min)
+
+1/4 d'heure, c'est court, mais vous connaissez le contenu des slides...
+
+**** 1
+
+% cd static/doc/tiny/a_la_scoop_2/
+% ./gpp main.cc
+% ./a.out
+% emacs main.cc&
+
+lire le code, le comprendre (à 3, entraidez-vous !)  Idem avec la version
+dé-sucrée (fichier desugar.cc)
+
+**** 2
+
+% cd ../design/
+% emacs main.cc&
+
+habituez-vous à ce nouveau langage et comprenez qu'il exprime le même
+programme que précédemment !  elle est pas cool la vie ?
+
+**** 3
+
+% cd ../more_scoop_2/
+% ls
+concepts.hh  gpp*  identity.hh  main.cc  reverse_iterator.hh
+
+lire les fichiers et les comprendre
+
+  +------------------------------------------+
+  | VOUS AVEZ DEVANT VOUS DES CODES-EXAMPLES |
+  +------------------------------------------+
+
+profitez-en, vous allez devoir coder des choses qui ressemblent beaucoup
+à ce code.   n'oubliez pas que "copier-coller" c'est mal donc à ne pas
+faire ; en revanche, rien ne vous empêche d'avoir ce code sous vos yeux
+pour en écrire un autre.
+
+
+** tour de chauffe
+
+
+*** exo (15 min)
+
+On s'intéresse au répertoire atelier/static/doc/tiny/more_scoop_2/
+
+Dessinez la modélisation des classes d'implémentation [1] en UML comme
+dans la slide 30 (intitulée "The Need for Virtual Types (2/2)").  Les
+types virtuels doivent apparaître dans la classe (comme "value : type"
+dans "Iterator" et en italique si abstrait).  Inutile de faire
+apparaître le paramètre Exact (puisque c'est un artefact du passage en
+statique).  La relation de composition (par exemple, 'reverse'
+contient un attribut 'delegatee_') doit figurer comme dans la slide 53
+("Intrinsically an OO Problem (1/3)" où 'Iterator_Decorator' contient
+'iter' de type 'Iterator').
+
+[1] iterator_base, lightweight_iterator, hello_iterator<I> et reverse<T>.
+
+Par la suite on va raisonner sur ce type de modélisation.  On mettra une
+majuscule aux noms des classes abstraites (comme 'Iterator') mais pas pour
+les classes concrêtes.
+
+Vous devez pouvoir comprendre A FOND comment fonctionne cette
+modélisation  -->  sollicitez-nous pour lever toute ambiguité !
+
+
+*** coding session (2 h)
+
+Nota bene : aujourd'hui, vous n'avez pas à coder des choses
+comme automatic::set_impl.
+
+**** 1
+
+Implémenter ces classes vides ; ce sont des types "drapeaux" (flags /
+tags / une sorte d'enum) qui représentent le fait qu'on a des
+topologies de grilles (1D pour les signaux, 2D pour les images 2D).
+
+Grid : class = {}
+grid1d : class < Grid = {}
+grid2d : class < Grid = {}
+
+ici pas besoin d' "any", ni de "top", ni du méta-code poilu qui plug
+une classe d'impl vers des classes abstraites ; les classes sont vides
+donc on écrit directement "struct grid2d : Grid<grid2d>".
+
+**** 2
+
+Maintenant une hiérarchie avec 'any' (mais sans 'top', ni 'category',
+ni code poilu).
+
+Point : class =
+{
+  grid  : type
+  coord : type
+  dim   : type < unsigned  // on peut encoder un entier par un type...
+
+  n : unsigned const = dim.value  // enum { n = mlc_value(dim) }
+
+  (=) : const (rhs : @exact const&) -> bool;  
+  (<) : const (rhs : @exact const&) -> bool;  
+  // ajouter ici (!=), (>), (>=) et (<=)
+}
+
+point2d_ : [C : type] -> class < Point =
+{
+  grid  : type = grid2d
+  coord : type = C  
+  dim   : type = mlc::uint_<2>    // mlc signifie metalic
+
+  // deux attributs ci-dessous, en public svp
+  row : C
+  col : C
+
+  (=) : const (rhs : current const&) -> bool = {
+    return row = rhs.row and col = rhs.col
+  }
+  (<) : const (rhs : current const&) -> bool = {
+    return row < rhs.row or (row = rhs.row and col < rhs.col)
+  }
+  // ajouter ici (!=), (>), (>=) et (<=)
+}
+
+// un typedef pour raccourcir
+point2d : type = point2d_[int]
+
+// ajouter une routine bidon :
+
+bidon : [P : type < Point] (p1 : P const&, p2 : P const&) -> bool =
+{
+  return p1 = p2
+}
+
+// aide : bool bidon(const Point<P>& p1, ...
+
+pour tester votre code (important : si ça compile, ça ne suffit pas ;
+il faut toujours ajouter du code de test !)
+
+Ici, vous avez des types virtuels (grid et coord) et deux méthodes
+abstraites (les opérateurs) donc on commence vraiment à entrer dans le
+paradigme.
+
+Faites 2 (DEUX, TWO, ZWEI) codes :
+-  un code sans les macros (sans current, super, templ et classname) ;
+   une fois que ça marche passer au second :
+-  un code en utilisant les macros.
+
+**** 3
+
+Avant de passer aux classes d'images, il nous faut définir d'autres
+classes outils.
+
+Déjà vu :
+
+Iterator : class =
+{
+  start      : () -> void
+  next       : () -> void
+  invalidate : () -> void
+  is_valid   : const () -> bool
+}
+
+
+Nouveau :
+
+Iterator_on_Points : class < Iterator =
+{
+  point   : type < Point       // [2]
+  (point) : const () -> point  // [3]
+  to_point : const () -> point = { return (point)(@) }  // [5]
+  point_adr : const () -> point const*
+}
+
+
+aide :
+
+[2] "< Point" signifie la contrainte "point is-a Point" ;
+    faites comme s'il n'y n'avait d'écrit que "point : type"
+    donc écrivez "typedef std::abstract point" dans vtypes
+
+[3] opérateur de conversion en C++ ; exemple :
+    struct dest {};
+    struct src { operator dest() const { dest tmp; return tmp; } };
+
+[5] utilisation de l'opérateur de conversion ; '@' signifie "this"
+
+
+Maintenant ajoutez un code de test pipo pour Iterator_on_Points,
+genre une classe dummy_iterator_on_point2d qui en dérive (directement)
+et qui implémente ce qui va bien.
+
+(vous avez committez votre code avec son test ?)
+
+**** 4
+
+Une boîte :
+
+box_ : [P : type < Point] -> class =
+{
+  point : type = P
+  // attributs
+  pmin  : P
+  pmax  : P
+  // rien de plus ici pour l'instant
+}
+
+box2d : type = box_[point2d]
+
+Un objet de type box2d est un rectangle dont le point (intérieur)
+supérieur gauche est pmin et dont le point (intérieur) inférieur
+droit est pmax.
+
+(test... commit)
+
+**** 5
+
+Enfin la notion d'ensemble de points :
+
+Point_Set : class =
+{
+  point : type < Point                // [2]
+  grid  : final type = @point.grid    // [4]
+  iter  : type < Iterator
+  box   : final type = box_[@point]   // [5]
+
+  // methods
+  npoints  : const () -> unsigned               // combien y'a de points ?
+  includes : const (p : point const&) -> bool   // est-ce que p est dedans ?
+  bbox     : const () -> box                    // sa "bounding box"       
+}
+
+
+aide :
+
+[4] final modifie l'écriture de "typedef int toto" en
+    'typedef stc::final<int> toto"
+
+[4] "@point.grid" signifie que l'on résoud le type point pour
+    accéder à son type de grille ; on est dans la structure vtypes,
+    c'est éminemment récursif ; on s'en sort comme ça :
+        typedef stc::abstract point;
+        typedef stc_type(stc_deferred(point), grid) grid;
+    et avec le 'final' et en 2 temps :
+        typedef stc_deferred(point) point__;
+        typedef stc::final<stc_type(point__, grid)> grid;
+
+[5] Cf. un peu plus loin, on aça va être récursif ici
+
+Par un ensemble de points, on entend un objet qui, à la fois,
+représente cet ensemble, mais surtout nous permet de définir /
+construire cet ensemble.  Pour certaines classes, la construction
+pourra être instantannée (exemple : une ligne horizontale de points à
+"row = 51" avec "col variant de -4 à 7") ou progressive (exemple : en
+ajoutant itérativement des points à l'ensemble).
+
+
+** on implémente maintenant !
+
+Une première classe d' "ensemble de points"
+
+*** box_[P] le retour (30 min)
+
+On veut que box_[P] soit un (dérive de) ensemble de points donc il
+faut modifier box_ pour qu'elle se conforme à l'interface attendue
+(celle de Point_Set).  En particulier, il .
+
+Remarques :
+
+- on doit lire dans la classe
+
+    enum { n = ... };  // comme dans point_
+    stc_using(box);
+    const box& impl_bbox() const { return *this; }
+    // sa boîte englobante c'est elle-même
+
+- on veut pouvoir écrire
+
+    bool impl_includes(const point& p) const {
+      for (unsigned i = 0; i < n; ++i)
+        if (p[i] < pmin[i] or p[i] > pmax[i])
+          return false;
+      return true;
+    }
+
+  ce qui signifie qu'il faut équiper les classes de point
+  d'opérateurs ([]), une version 'const', une non-const
+
+- il faut ajouter une classe d'itérateur : box_iterator_[P]
+
+  inspirez-vous très fortement du code de
+    olena/oln/core/internal/bbox_fwd_piter.hh
+
+  ajouter l'alias de type
+    iter2d : type = box_iterator_[point2d]
+
+(code de test ; commit)
+
+*** pset_std_[P] (15 min)
+
+on veut une classe d'ensemble de points qui stocke ses données à
+l'aide d'un std::set<P>.
+
+oui oui, il lui faut un itérateur, pset_std_iterator_[P], qui a
+un attribut de type std::set<P>::iterator
+
+*** Image et Image_2D (30 min)
+
+Image : class =
+{
+  // types
+  point : type < Point
+  value : type;
+  box   : final type = box_[@point]
+  iter  : type < Iterator_on_Points
+
+  // methods
+  (()) : const (p : point const&) -> value
+          // precondition { @owns(p) }
+  owns : const (p : point const&) -> bool
+          // invariant { @owns(p) => @bbox().includes(p) }
+  bbox : const () -> box
+}
+
+2 remarques :
+- (()) signifie "operator()"
+- implémentez la précondition et l'invariant !
+
+Image_2D : class < Image =
+{
+  rule { @point.grid = grid2d }     // [6]
+  coord : final type = @point.coord
+
+  (()) : const (row : coord, col : coord) -> value
+           // default { assert(owns(p)); return point(row, col) }
+           // [7]
+}
+
+[6] ici vous avez la règle à appliquer pour brancher l'héritage 
+    vous devez définir un premier sélecteur (basé sur la grille)
+    et donc, pour l'instant, un seul cas à gérer (si grid2d alors
+    Image_2D)
+
+[7] codez ce comportement par défaut !
+    réfléchissez bien à "comment le coder" et commentez en donnant
+    vos "justifications"  (c'est votre première question de génie
+    logiciel)  en particulier, expliquez "pourquoi ne pas le coder
+    différemment"...
+
+*** image2d[T] (30 min)
+
+cette classe dérive de 'top'
+
+image2d : [T : type] -> class < top =
+{
+  category : type = Image
+  point    : type = point2d
+  value    : type = T
+  iter     : type = iter2d   // [8]
+  ...
+  array_   : T**             // [9]
+}
+
+à vous de remplir correctement cette classe ; ça doit marcher !
+bien sûr : tests, commits...  vous y penser toujours.
+
+[8] vous ne rêvez pas, l'itérateur sur cette image est déjà
+    codé ; pour savoir quoi/comment faire, vous devez pouvoir
+    compiler et exécuter le code de la section suivante
+
+[9] l'allocation doit se faire comme dans :
+       olena/oln/trunk/olena/oln/core/2d/array2d.hh
+    c-a-d d'abord via un buffer linéaire
+
+*** algo (...)
+
+"make" désigne la construction d'un objet
+
+print : [I : type < Image] (input : I const&) =
+{
+  I.iter it := make(input)
+  for (it.start(); it.is_valid(); it.next())
+    cout << input(it) << ' '
+  cout << endl
+}
+
+main : () -> int =
+{
+  p1  : point2d := make(0, 0)
+  p2  : point2d := make(3, 3)
+  bb  : box2d   := make(p1, p2)
+  ima : image2d[int] := make(bb);
+  println(ima);
+}
+
+*** idem en 1D (15 min)
+
+On veut une nouvelle classe d'image : signal[T] ; elle correspond à
+une image 1d.  Comme on avait point2d avec 2 attributs row et col, on
+a maintenant point1d avec un attribut 'ind' (raccourci pour "index").
+Bien sûr, il faut donc Signal (meilleur nom qu'Image_1D) etc.  Au final,
+on doit pouvoir écrire (le faire !) :
+
+main : () -> int =
+{
+  p1  : point1d := make(0)
+  p2  : point1d := make(3)
+  bb  : box1d   := make(p1, p2)
+  sig : signal[int] := make(bb);
+  println(sig);
+}
+
+
+** on prend du recul
+
+on va travailler cette modélisation par la suite donc...
+
+*** dessin (10 min)
+
+prenez du papier et un crayon et dessinez plusieurs diagrammes de
+classes UML, ce sera notre _outil_ de travail
+
+diagramme 1 : une classe = un rectangle avec le nom de la classe et
+rien dedans (on ne montre pas les types et méthodes)
+
+les autres diagrammes : on fait maintenant apparaître le contenu des
+classes ; un diagramme = une partie (module) du programme
+

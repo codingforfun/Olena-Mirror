@@ -1,0 +1,271 @@
+		-*- outline -*-
+
+
+* jour 2
+
+
+** avant-propos
+
+on veut exploiter à fond le paradigme SCOOP 2 => avoir une belle
+hiérarchie d'implémentation + de nombreuses abstractions orthogonales ;
+c'est pas le cas pour l'instant, voire... il y a déjà des erreurs de
+conception !
+
+
+** hiérarchie d'implémentation des images
+
+
+*** séparation image / données (1 h)
+
+vous devez retirer de la classe image2d[T] la gestion des
+données.
+
+// avant :
+
+image2d : [T : type] -> class =
+{
+  make : (bb : const bbox2d&) =
+  {
+    /* initialisation de buffer_ et de array_ */
+  }
+  ...
+  buffer_  : T*
+  array_   : T**
+}
+
+
+// après :
+
+image2d : [T : type] -> class =
+{
+  data : type = array2d[T,coord]
+
+  make : (bb : const bbox2d&) =
+  {
+    data_ := new make(bb.pmin.row, bb.pmin.col, 
+                      bb.pmax.row, bb.pmax.col)
+  }
+  ...
+  data_ : data*
+}
+
+où la classe array2d[T,C] ressemble à :
+
+array2d : [T : type, C : type] -> class =
+{
+  make : (imin, jmin, imax, jmax : C) = { /* initialisation */ }
+  ...
+  buffer_  : T*
+  array_   : T**
+}
+
+Vous pouvez vous inspirer très fortement de
+olena/oln/core/2d/array2d.hh (mais pas de copier-coller svp ; vous
+lisez le code exemple et vous essayez de le reproduire) !
+
+Cette fois-ci, on veut un équipement complet pour la classe
+array2d[T,C] : constructeur par copie, opérateur d'affectation et
+destructeur.  En revanche, on ne veut surtout pas encore équiper la
+classe image2d[T] (ça serait du code kleenex).
+
+Test, commit, comme d'hab.
+
+
+*** factorisation (1 h)
+
+Vous récupérez le fichier olena/oln/core/internal/tracked_ptr.hh
+que vous insérer dans votre dépôt.  Ce fichier définit la
+classe générique "tracked_ptr[T]" dont le comportement général est
+celui d'un pointeur mais qui possède des propriétés sympathiques
+en plus...  Pour comprendre à quoi ça sert, compilez et tournez
+le code suivant (mais surtout ne lisez pas le code de tracked_ptr,
+ça serait du temps perdu) :
+
+#include <string>
+#include <iostream>
+#include <mlc/contract.hh>
+#include <oln/core/internal/tracked_ptr.hh>
+
+namespace oln
+{
+  struct array2d { int i; };
+
+  struct image2d
+  {
+    image2d() { // ctor
+    }
+    image2d(int i) { // ctor
+      data_ = new array2d; // réalise : data_.ptr_ = new array2d
+      data_-> i = i; // correspond à : data_.operator->().i
+                     // réalise      : data_.ptr_->i = i
+    }
+    // l'attribut :
+    internal::tracked_ptr<array2d> data_;
+
+    void echo(const std::string& name) const {
+      std::cout << name << " = { data_ -> "
+		<< data_.ptr_ << " }" << std::endl;
+    }
+  };
+
+}
+
+int main()
+{
+  typedef oln::image2d ima_t;
+  ima_t ima0;       ima0.echo("ima0");
+  ima_t ima1(1);    ima1.echo("ima1");
+  ima_t ima2(ima1); ima2.echo("ima2");
+  // donc ima2 est "normalement" une copie de ima1...
+
+  std::cout << std::endl
+	    <<ima0.data_ << std::endl
+	    <<ima1.data_ << std::endl
+	    <<ima2.data_ << std::endl;
+}
+
+On se dit qu'on veut profiter à fond de cet outil donc on
+adopte la modélisation suivante :
+
+
+image_base : class < top =
+{
+  category : final type = Image  // [1]
+  data : type                    // [2]
+
+  // l'attribut pour le stockage des données qui seront
+  // donc toujours partagées :-)
+  data_ : data                   // [3]
+}
+
+
+[1] donc "typedef stc::final< stc::is<Image> > category"
+
+[2] donc "typedef stc::abstract data" dans vtypes
+
+[3] pour avoir ça, il faut d'abord résoudre le type virtuel 'data' ;
+    ça s'écrit :
+      typedef stc_lookup(data) data_t;
+    on peut alors déclarer :
+      data_t data_; // mon attribut tout beau
+
+
+Maintenant, on pourrait faire dériver image2d[T] directement de image_base
+mais non !  On préfère dire clairement les choses :
+
+    image2d[T] est un type d'image ''primitif'' c-a-d "de base" pour
+    l'utilisateur ; genre, j'instancie d'abord toujours une image
+    primitive...
+
+    On verra qu'il y aura des types d'images "plus évolués", qui
+    seront appelés ''morphers'' ou, synonyme (comme dans les slides),
+    des ''fonctions génériques de types'' (comme hello_iterator).
+    Par exemple, le type de "une image + son voisinage", précisemment,
+    oln::plus<I,N> où I est un type d'image et N un type de voisinage.
+
+Y'a pu qu'à !
+
+// le type d'images primitives :
+
+primary_image : class < image_base =
+{
+  // rien
+}
+
+// finalement :
+
+image2d : [T : type] -> class < primary_image =
+{
+  // ici vous gardez le contenu du jour 1...
+
+  category : type = Image    // [4]
+  point    : type = point2d
+  value    : type = T
+  iter     : type = iter2d
+  ...
+
+  // ...mais vous devez modifier ce qui est relatif aux données
+  // puisque qu'elles sont maintenant gérées dans image_base !
+}
+
+
+[4] tout d'abord commentez cette ligne, faites que ça compile,
+    test, commit, puis décommentez, compilez ; normalement,
+    vous avez un magnifique message d'erreur que vous devez vous
+    expliquer.
+
+
+*** debug session (2 h)
+
+Oui oui, cette session doit vous prendre deux heures ; la leçon (que l'on
+apprend par la pratique) : ces 2 heures vous permettront d'en gagner
+beaucoup plus par la suite !
+ 
+Il faut savoir ne pas se planter et aussi... savoir s'en sortir quand on
+s'est planté.
+
+Conclusion :
+
+**** batterie
+
+Ecrivez une batterie de tests _complète_ pour votre classe concrète
+image2d[T] ; tout ce qui vous passe par la tête doit maintenant être
+testé.  Soyez vicieux.
+
+La batterie doit pouvoir être lancée et donc maintenant on...
+
+**** ...débogue !
+
+ATTENTION : si vous n'avez rien trouvé d'extraordinaire à l'issue des
+tests, ce n'est pas normal !  Vraiment !  On parie une bouteille de
+Pastis ?  =>  Venez nous voir et on (Roland et Bibi) vous pousse à finir
+cet exercice.
+
+**** c'est pas fini
+
+Ajoutez des préconditions, postconditions et invariants (contrats)
+partout dans le code.  Regardez metalic/mlc/contracts.hh
+
+A partir de maintenant, vous ne codez plus de bouts de code sans y
+ajouter des contrats.
+
+Au fait : quand avez-vous committé la dernière fois ?
+
+
+*** Rafinement (1 h)
+
+La classe image_base est là pour que l'on ait de la place pour du code
+intelligent (pas comme en GP de base).  Rappel, l'abstraction image
+ressemble à ça :
+
+Image : class =
+{
+  // types
+  point : type < Point
+  value : type;
+  box   : final type = box_[@point]
+  iter  : type < Iterator_on_Points
+  ...
+}
+
+Toute image_base sera une Image donc on peut y spécifier ce que l'on
+attend :
+
+image_base : class < top =
+{
+  // déjà vu :
+  category : final type = Image
+  data : type
+
+  // les spécs qui vont bien :
+  point : type  // donc stc::abstract dans vtypes
+  value : type  // idem
+  iter  : type  // idem
+}
+
+Vous devez comprendre pourquoi on a l'impression que le code est
+redondant et aussi pourquoi ce n'est en fait pas pareil (donc ce
+n'est pas redondant).
+
+=> On interagit pour vérifier que vous saisissez.
+

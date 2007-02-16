@@ -1,0 +1,62 @@
+		-*- outline -*-
+
+* introduction
+
+Le but de l'atelier est que vous codiez à 3 le coeur d'Olena en 7 jours.
+
+** pourquoi
+
+Dans l'archive olena-1.0 on utilise une version de SCOOP qui a
+plusieurs mois.  Le coeur, présent dans l'archive, a été vomi très
+vite (+ de 20 Klignes en 3 mois) et sur le modèle du prototype d'oln
+(datant de 2004) qui nous servi à expérimenter avec SCOOP.  Une phase
+de "re-factoring" est nécessaire, surtout que maintenant, le SCOOP
+actuel est mieux que le vieux !
+
+** restons zen
+
+Ne pas paniquer !  La montée en puissance est prévue pour être
+progressive.  Aucune connaissance en traitement d'images
+n'est requise et il ne s'agit pas de tout recoder...  De plus on est là
+pour vous aider.  Néanmoins, y'a du taf.
+
+** mode opératoire
+
+Le sujet est donné dans la suite du document.  Considérez que vous
+avez des rendus journaliers.  Précisemment, vous *devez* commiter
+régulièrement, typiquement toutes les heures !
+
+Olena est un projet => vous travaillez donc avec un *esprit* de groupe
+c-a-d vous vous entraidez.  ATTENTION : chacun doit néanmoins faire la
+totalité des exercices, indépendamment des 2 autres ; vous pouvez vous
+parler, regarder le code des autres, mais vous avez 3 emacs et 3
+rendus pour un même exercice.  Conclusion : vous disposez de 3
+sous-répertoires (alex, nico, ugo) dans le dépôt ; et vous bossez
+chacun dans votre répertoire.
+
+Mode opératoire (pour chacun d'entre vous, remplacez toto par votre
+nom court) :
+% mkdir mon_atelier
+% cd mon_atelier
+% svn co https://svn.lrde.epita.fr/svn/oln/prototypes/atelier/sujet .
+% svn co https://svn.lrde.epita.fr/svn/oln/prototypes/atelier/toto .
+
+Vous devez donc travaillez localement dans mon_atelier/toto/
+Premier réflexe :
+% cd toto
+% emacs ChangeLog &!
+...
+% svn add ChangeLog
+% svn ci
+
+
+Le temp nécessaire à l'exécution de chaque tâche est donné à titre
+indicatif ; essayez de respecter le timing.
+
+Jour après jour, le sujet vous laisse plus de liberté ou, dit
+autrement, est moins directif et moins précis.  On commence assez
+scolaire pour assurer votre mise à niveau (montée en puissance)
+en C++ / SCOOP, puis ça devient moins bête.
+
+Le but de cette semaine est aussi d'apprendre des notions de traitement
+d'images !
