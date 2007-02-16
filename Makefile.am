@@ -48,8 +48,10 @@ dist_m4data_DATA = config/oln.m4
 ### Development files.
 ###
 
-EXTRA_DIST = bootstrap.sh config/oln-local.m4 contrib/runtests \
-  config/strip-lrde
+#<<lrde
+# config/strip-lrde is not distributed.
+#>>
+EXTRA_DIST = bootstrap.sh config/oln-local.m4 contrib/runtests
 
 ###
 ### Basic doc files generation.
@@ -99,8 +101,10 @@ maintainer-check:
 ## FIXME: Improve integration.
 # Remove any trace of olena/oln/lrde from the distribution and reset
 # the GNU Build system for the distdir layout.
+#
+# bootstrap.sh is processed last by config/strip-lrde, because we need
+# it to reset the build system after the pruning.
 dist-hook:
-	$(top_srcdir)/config/strip-lrde $(distdir)/bootstrap.sh &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/configure.ac &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/Makefile.am &&	    \
 	$(top_srcdir)/config/strip-lrde $(distdir)/olena/oln/Makefile.am && \
@@ -110,5 +114,6 @@ dist-hook:
 	  set -evx;							    \
 	  ./bootstrap.sh;						    \
 	  find . -name autom4te.cache | xargs rm -rf			    \
-	)
+	) &&								    \
+	$(top_srcdir)/config/strip-lrde $(distdir)/bootstrap.sh
 #>>
