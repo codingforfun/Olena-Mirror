@@ -1,5 +1,13 @@
 2007-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix test `stat' in tests/utils.
+
+	* tests/utils/tests/stat: Be more tolerant on comparisons of
+	floating point values for the variance.
+	Revert to the previous comparison for the mean.
+
+2007-02-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/check/Makefile.runtests (check-runtests): Pass the
 	C++ compiler chosen at configuration time to contrib/runtests.
 

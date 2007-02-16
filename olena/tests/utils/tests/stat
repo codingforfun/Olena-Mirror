@@ -65,8 +65,11 @@ check()
 
   traverse(moments, src);
 
-  if (fabs(moments.mean() - 123.32) <= 1e-1 &&
-      fabs(moments.variance() - 2239.9) <= 1e-1)
+  if (fabs(moments.mean() - 123.32) <= 1e-2 &&
+      /* Be more tolerant with the variance: the result can be
+         slightly different depending on whether the test is compiled
+         with g++ or icpc.  */
+      fabs(moments.variance() - 2240) <= 3)
     OK_OR_FAIL;
 
   return fail;
