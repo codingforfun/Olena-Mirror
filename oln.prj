@@ -1,14 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 293)
-(Parent-Version oln 10 292)
-(Version-Log "2007-02-15  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 294)
+(Parent-Version oln 10 293)
+(Version-Log "2007-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
-	* config/oln.m4: Relax ICC messages on debatable remarks.
+	* tests/check/Makefile.runtests (check-runtests): Pass the
+	C++ compiler chosen at configuration time to contrib/runtests.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 15 Feb 2007 16:52:46 +0100")
+(Checkin-Time "Fri, 16 Feb 2007 10:49:36 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -123,9 +124,9 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.38 644))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.24 644))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.55 755))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.47 644))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.17 644))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.56 755))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.48 644))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.18 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.20 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.55 644))
 
@@ -1002,10 +1003,10 @@
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.7 644))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.4 644))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6.1.1 644))
-  (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.4 644))
+  (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.5 644))
   (contrib/runtests (oln/u/33_runtests 1.4 744))
-  (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.2 644))
-  (integre/tests/check/Makefile.runtests (oln/u/35_Makefile.r 1.2 644))
+  (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.3 644))
+  (integre/tests/check/Makefile.runtests (oln/u/35_Makefile.r 1.3 644))
   (integre/tests/check/Makefile.flags (oln/u/36_Makefile.f 1.1 644))
   (olena/tests/math/tests/macros (oln/u/37_macros 1.4 644))
   (olena/tests/math/Makefile.am (oln/u/38_Makefile.a 1.1 644))

@@ -41,6 +41,7 @@ LDADD_RUNTESTS = ../check/libolncheck.a $(ZLIB_LDFLAGS)
 check-runtests:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
+	CXX="$(CXX)" \
 	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
 	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
 	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
