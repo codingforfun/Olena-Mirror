@@ -49,6 +49,10 @@ Premier réflexe :
 % svn add ChangeLog
 % svn ci
 
+Chacun d'entre vous a maintenant un fichier ChangeLog personnel.
+Sur la première ligne vierge (donc CR si besoin) du fichier :
+Ctrl-x 4a  pour créer une nouvelle entrée.
+ 
 Le temp nécessaire à l'exécution de chaque tâche est donné à titre
 indicatif ; essayez de respecter le timing.
 

@@ -65,7 +65,7 @@ Pour kravailler :
 
 **** 1
 
-% cd static/doc/tiny/a_la_scoop_2/
+% cd $HOME/olena_1/static/doc/tiny/a_la_scoop_2/
 % ./gpp main.cc
 % ./a.out
 % emacs main.cc&
@@ -104,7 +104,7 @@ pour en écrire un autre.
 
 *** exo (15 min)
 
-On s'intéresse au répertoire atelier/static/doc/tiny/more_scoop_2/
+On s'intéresse au répertoire $HOME/olena_1/static/doc/tiny/more_scoop_2/
 
 Dessinez la modélisation des classes d'implémentation [1] en UML comme
 dans la slide 30 (intitulée "The Need for Virtual Types (2/2)").  Les
@@ -128,6 +128,9 @@ modélisation  -->  sollicitez-nous pour lever toute ambiguité !
 
 *** coding session (2 h)
 
+Maintenant vous vous placez dans votre espace de travail :
+mon_atelier/toto/
+ 
 Nota bene : aujourd'hui, vous n'avez pas à coder des choses
 comme automatic::set_impl.
 

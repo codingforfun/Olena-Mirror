@@ -44,8 +44,6 @@
 # include <mlc/is_a.hh>
 # include <mlc/case.hh>
 
-# include <stc/any.hh>
-
 
 
 
