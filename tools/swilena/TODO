@@ -1,15 +1,124 @@
-
+							-*- outline -*-
 * Top
 
-** Simplify algorithm declaration (in the same spirit than
-   generate_morpho_instantiations.py)
+** Avoid template instantiation directly in SWIG wrappers.
+(And hence avoid re-compiling the same things over and over!)
+Because :
+- it's a waste of time;
+- and even more important, it creates duplicated code (and symbols) in
+  generated wrappers, sometimes causing real pain at load time.
+
+
+FIXME: Move the following diagrams into Swilena's doc.
+
+Let's see how SWIG was meant to be used, with e.g., Python or Ruby and
+C++ libraries.
+
+----------------------------------------------------------------------
+      Client       |       SWIG wrapper       |    Wrapped library
+----------------------------------------------------------------------
+                   |                          |   
+                          SWIG interface    read     Library header
+                   |         (foo.i)      -------->     (foo.hh)
+                                |
+                   |            v             |
+                        ,----------------.
+                   |    | SWIG generator |    |
+                        |     (swig)     |
+                   |    `----------------'    |
+                                |
+                   |            v             |
+                           C++ wrapper
+                   |      (foo_wrap.cc)       |
+                         and optionally a
+                   |     script wrapper[1]    |
+                                |
+                   |            v             |
+                         ,--------------.
+                   |     | C++ compiler |   link     Library code, as
+                         |  and linker  |  ------>   a dynamic library
+                   |     |    (g++)     |     |	       (foo.so[2])
+                         `--------------'
+                   |            |             |
+                                v
+   interpreter   load    Compiled wrapper,    |
+  (python/ruby)  ---->  as a dynamic module
+     	           |     (foo_wrap.so[3])     |
+
+----------------------------------------------------------------------
+
+
+But with Olena, as everything is generic and expressed as templates,
+there are no actual compiled library code provided (i.e., foo.so)!  In
+fact, the SWIG interface file does these instantiations of the wrapped
+templates _inside_ the C++ wrapper itself!
+
+----------------------------------------------------------------------
+      Client       |       SWIG wrapper       |    Wrapped library
+----------------------------------------------------------------------
+                   |                       read &   
+                          SWIG interface   include   Library header
+                   |         (foo.i)      -------->    (foo.hh,
+                                |                       foo.hxx)
+                   |            v             |
+                        ,----------------.
+                   |    | SWIG generator |    |
+                        |     (swig)     |
+                   |    `----------------'    |
+                                |
+                   |            v             |
+                           C++ wrapper[4]
+                   |      (foo_wrap.cc)       |
+                         and optionally a
+                   |     script wrapper[1]    |
+                                |
+                   |            v             |
+                         ,--------------.
+                   |     | C++ compiler |     |
+                         |  and linker  |
+                   |     |    (g++)     |     |
+                         `--------------'
+                   |            |             |
+                                v
+   interpreter   load    Compiled wrapper,    |
+  (python/ruby)  ---->  as a dynamic module
+     	           |     (foo_wrap.so[3])     |
+
+----------------------------------------------------------------------
+
+This is quite annoying, since each generated wrapper (*_wrap.cc) may
+share some class or function definitions, which get in turn compiled
+several times (once per wrapper), and might even cause load errors
+when used together (this is the case by default with Ruby on Mac OS X,
+unless the linkage of the wrapper is done carefully -- see how
+`expand.sh' handles this with AM_LDFLAGS).
+
+
+=> So, it would be wise to create C++ dynamic libraries in Swilena,
+   and then to wrap them with swig.
+
+
+Notes:
+[1]   Swig creates a small glue in Python in addition to the C++
+wrapper, and this wrapper serves as an interface between the Python
+interpreter and the dynamic module.
+As for Ruby, the interpreter directly uses the dynamic module.
+
+[2]   foo.dylib on Mac OS X.
+
+[3]   foo_wrap.bundle on Mac OS X.
+
+[4]   Contains the wrapped code, in addition to the wrapper!
+
+
+** Simplify algorithm declaration
+ (in the same spirit as generate_morpho_instantiations.py)
 ** Bind other stuff from Olena.
-** Typemaps for integre types
+** Typemaps for Integre types
 ** Document.
 ** More examples.
 
 * Medium
 
-** Improve ruby support
 ** Compile to Perl.
 ** Think about compiling to Caml.

@@ -255,8 +255,73 @@ cat <<EOF
 AM_CPPFLAGS = -DOLN_EXCEPTIONS \$(RUBY_CPPFLAGS) \\
   -I\$(srcdir)/../src -I\$(srcdir)/../meta
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
+
 ## We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared \$(ZLIB_LDFLAGS)
+
+# On Mac OS X, the Ruby interpreter accepts only files ending in
+# \`.bundle\' (and \`.rb\' of course).  Tell Libtool to use the
+# \`.bundle\' extension instead of the default \`.so\'.
+#
+# Moreover, the way the Ruby interpreter uses dynamic module (on Mac
+# OS X) is far less tolerant than Python w.r.t. multiply defined
+# symbols.  The thing is, unless told to do otherwise, Libtool creates
+# flat-namespace modules, which produce name clashes, because some
+# symbols are defined multiple times (for instance, the symbol for
+# \`oln::image2d\' is provided by \`swilena_image2.la\' and
+# \`swilena_arith2d.la').
+#
+# The nightmare of dynamic modules with multiply defined symbols on Mac OS X.
+# ---------------------------------------------------------------------------
+#
+# To avoid errors on multiply defined symbols, we can use two-level
+# namespaces (see the man page of \`ld\' on Mac OS X).  The drawback is
+# that until Mac OS X 10.3 (Panther), two-level namespaces
+# libraries/modules do not allow undefined symbols, which is a pain in
+# our case, since our modules needs symbols provided by the Ruby
+# environment.  Anyway, Mac OS X 10.3 solved this with the linker flag
+# \`-undefined dynamic_lookup\', postponing the resolution of undefined
+# symbols at runtime Since this flag breaks the compatibility with
+# previous versions of Mac OS X, the linker requires the environment
+# variable MACOSX_DEPLOYMENT_TARGET to be to \`10.3\'. Another glitch is
+# the way Libtool interprets the options it gets passed.  One could
+# imagine that adding
+#
+#   -twolevel_namespace -undefined dynamic_lookup
+#
+# or
+#
+#   -Wl,-twolevel_namespace -Wl,-undefined -Wl,dynamic_lookup
+#
+# to AM_LDFLAGS would be sufficient for Libtool to understand that we
+# want to create a two-level namespace module with dynamic lookup.
+# Alas, things are not that simple.  In fact Libtool still forces the
+# creation of a flat namespace module, in spite of the
+# \`-twolevel_namespace\' option.
+#
+# The solution is to insert the flag \`-no-undefined\' first, which turns
+# off flat namespaces, then to pass the options above.  And it works,
+# at last!
+#
+# Just remember:
+#
+#               You must set MACOSX_DEPLOYMENT_TARGET=10.3
+#                  in the environment for this to work!
+#
+# (Setting it to 10.4 on Mac OS X 10.4 (Tiger) might work as well,
+# but it has not been tested yet.)
+#
+# This solution was set up thanks to clues from the Libtool mailing list:
+#
+#   http://www.mail-archive.com/libtool@gnu.org/msg05785.html
+#   http://www.mail-archive.com/libtool@gnu.org/msg06952.html
+#   http://lists.gnu.org/archive/html/libtool/2004-10/msg00090.html
+#   http://lists.gnu.org/archive/html/libtool/2005-03/msg00061.html
+#
+if DARWIN
+  AM_LDFLAGS += -shrext .bundle \\
+    -no-undefined -Wl,-twolevel_namespace -Wl,-undefined -Wl,dynamic_lookup
+endif DARWIN
 AM_SWIG_FLAGS = -c++ -ruby \$(AM_CPPFLAGS)
 EOF
 }

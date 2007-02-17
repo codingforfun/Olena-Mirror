@@ -1,3 +1,15 @@
+2007-02-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Rblena on Mac OS X.
+	Note that you have to set the envvar MACOSX_DEPLOYMENT_TARGET to
+	10.3 for this to work.
+
+	* expand.sh (AM_LDFLAGS) [DARWIN]: Add`-no-undefined
+	-Wl,-twolevel_namespace -Wl,-undefined -Wl,dynamic_lookup' for
+	Ruby wrappers, so as to generate two-level namespace (to avoid
+	name clashes at load time).
+	* TODO: Update.
+
 2007-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution of Swilena.

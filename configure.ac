@@ -54,6 +54,9 @@ AC_PROG_CC
 
 # Use Libtool to build Swilena's dynamic modules.
 AC_PROG_LIBTOOL
+# Check for Darwin to help Libtool use the right dynamic module
+# extension on this system.
+AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 
 # If available, use these.
 AC_WITH_CXX_ZLIB

@@ -1,17 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 296)
-(Parent-Version oln 10 295)
-(Version-Log "2007-02-16  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 297)
+(Parent-Version oln 10 296)
+(Version-Log "2007-02-17  Roland Levillain  <roland@lrde.epita.fr>
 
-	Fix the distribution mechanism.
+        Fix Rblena on Mac OS X.
+        Note that you have to set the envvar MACOSX_DEPLOYMENT_TARGET to
+        10.3 for this to work.
 
-	* Makefile.am (EXTRA_DIST): Remove config/strip-lrde.
-	(dist-hook): Prune bootstrap.sh *after* using it.
+        * expand.sh (AM_LDFLAGS) [DARWIN]: Add`-no-undefined
+        -Wl,-twolevel_namespace -Wl,-undefined -Wl,dynamic_lookup' for
+        Ruby wrappers, so as to generate two-level namespace (to avoid
+        name clashes at load time).
+        * TODO: Update.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 16 Feb 2007 19:44:00 +0100")
+(Checkin-Time "Sat, 17 Feb 2007 11:33:33 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -124,13 +130,13 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.39 644))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.40 644))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.24 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.56 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.48 644))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.2.18.1.19 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.20 644))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.55 644))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.56 644))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 644))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 644))
@@ -140,7 +146,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.7 755))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.15 644))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.16 644))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.9 644))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.3 644))
@@ -597,7 +603,7 @@
   (tools/swilena/meta/attic/swilena_window.i (oln/o/9_swilena_wi 1.1 644))
   (tools/swilena/meta/attic/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 644))
 ;  (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
-  (tools/swilena/TODO (oln/n/36_TODO 1.3 644))
+  (tools/swilena/TODO (oln/n/36_TODO 1.4 644))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.3 644))
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.6 644))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.3 744))
@@ -864,7 +870,7 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.22 744))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.23 744))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
