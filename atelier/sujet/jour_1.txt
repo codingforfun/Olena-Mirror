@@ -31,9 +31,11 @@ et expliquez-vous mutuellemnt ce que vous ne comprennez pas.
 
 *** récup (5 min)
 
-Récupérer le projet olena-1.0:
-% mkdir mon_espace_olena_1
-% cd mon_espace_olena_1
+Récupérer le projet olena-1.0, quelquepart sur votre compte,
+de préférence PAS dans votre répertoire de travail pour l'atelier :
+% cd $HOME
+% mkdir olena_1
+% cd olena_1
 % svn co https://svn.lrde.epita.fr/svn/oln/trunk/ .
 % ls
 % echo "c'est beau quand meme"
@@ -45,6 +47,16 @@ chercher à comprendre le code (ne regardez surtout pas le fichier
 metalic/mlc/case.hh).  Ce serait bcp de temps perdu car il s'agit
 d'avancer !  Tout ce qui vous sera utile vous sera indiqué dans le
 sujet.
+
+Pour kravailler :
+  o  compilo  =  g++-4.0 ou 4.1
+  o  options  =  -W -Wall -Werror -ansi -pedantic
+  o  la lib   =  -I$HOME/olena_1/metalic
+     car vous n'avez pas besoin d'olena, ni d'extended, ni de la
+     version actuelle de static !
+  o  dans votre code, vous devez inclure les fichiers locaux :
+        "../local/scoop.hh"
+     et "../local/undefs.hh"
 
 
 *** lecture II (15 min)

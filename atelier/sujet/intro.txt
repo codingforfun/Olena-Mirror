@@ -49,7 +49,6 @@ Premier réflexe :
 % svn add ChangeLog
 % svn ci
 
-
 Le temp nécessaire à l'exécution de chaque tâche est donné à titre
 indicatif ; essayez de respecter le timing.
 
@@ -57,6 +56,9 @@ Jour après jour, le sujet vous laisse plus de liberté ou, dit
 autrement, est moins directif et moins précis.  On commence assez
 scolaire pour assurer votre mise à niveau (montée en puissance)
 en C++ / SCOOP, puis ça devient moins bête.
+
+A la fin de la semaine, vous devez que C++ et SCOOP sont de simples
+outils ; clairement, les difficultés sont ailleurs...
 
 Le but de cette semaine est aussi d'apprendre des notions de traitement
 d'images !

@@ -135,7 +135,7 @@ image_base : class < top =
 
   // l'attribut pour le stockage des données qui seront
   // donc toujours partagées :-)
-  data_ : data                   // [3]
+  data_ : tracked_ptr[data]      // [3]
 }
 
 
@@ -147,7 +147,7 @@ image_base : class < top =
     ça s'écrit :
       typedef stc_lookup(data) data_t;
     on peut alors déclarer :
-      data_t data_; // mon attribut tout beau
+      internal::tracked_ptr<data_t> data_;  // mon attribut tout beau
 
 
 Maintenant, on pourrait faire dériver image2d[T] directement de image_base
@@ -167,14 +167,14 @@ Y'a pu qu'à !
 
 // le type d'images primitives :
 
-primary_image : class < image_base =
+primitive_image : class < image_base =
 {
   // rien
 }
 
 // finalement :
 
-image2d : [T : type] -> class < primary_image =
+image2d : [T : type] -> class < primitive_image =
 {
   // ici vous gardez le contenu du jour 1...
 
@@ -232,7 +232,7 @@ ajouter des contrats.
 Au fait : quand avez-vous committé la dernière fois ?
 
 
-*** Rafinement (1 h)
+*** Raffinement (1 h)
 
 La classe image_base est là pour que l'on ait de la place pour du code
 intelligent (pas comme en GP de base).  Rappel, l'abstraction image
@@ -247,6 +247,8 @@ Image : class =
   iter  : type < Iterator_on_Points
   ...
 }
+
+**** base
 
 Toute image_base sera une Image donc on peut y spécifier ce que l'on
 attend :
@@ -268,4 +270,25 @@ redondant et aussi pourquoi ce n'est en fait pas pareil (donc ce
 n'est pas redondant).
 
 => On interagit pour vérifier que vous saisissez.
+
+**** non primitive
+
+On ajoute :
+
+image_morpher : class < image_base =
+{
+  delegatee  : type
+  delegatee_ : @delegatee &
+  // plus le constructeur qui va bien...
+}
+
+simple_image_morpher : class < image_morpher =
+{
+  image : () -> delegatee
+}
+
+image_extension : class < single_morpher_image =
+{
+  behavior : type = identity  // le tag comme dans les slides
+}
 
