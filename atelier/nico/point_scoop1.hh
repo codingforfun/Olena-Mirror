@@ -115,8 +115,8 @@ namespace oln_point
     bool impl_inf(self const& rhs)  const      { return row < rhs.row or (row == rhs.row and col < rhs.col); }
     bool impl_diff(self const& rhs) const      { return row != rhs.row or col != rhs.col; }
     bool impl_sup(self const& rhs)  const      { return row > rhs.row or (row == rhs.row and col < rhs.col); }
-    bool impl_sup_egal(self const& rhs)  const { return row >= rhs.row or (row == rhs.row and col < rhs.col); }
-    bool impl_inf_egal(self const& rhs)  const { return row <= rhs.row or (row == rhs.row and col <= rhs.col); }
+    bool impl_sup_egal(self const& rhs) const  { return row >= rhs.row or (row == rhs.row and col < rhs.col); }
+    bool impl_inf_egal(self const& rhs) const  { return row <= rhs.row or (row == rhs.row and col <= rhs.col); }
   };
 
 # include "../local/undefs.hh"
@@ -127,12 +127,118 @@ namespace oln_point
 
 
   /////////////////////////////////////////////////////////////
-  //Test procedure
+  //Point Test procedure
   template <typename Exact>
   bool bidon(const Point<Exact>& p1, const Point<Exact>& p2)
   {
     return p1 == p2;
   }
+
+  ////////////////////////////////////////////////////////////
+  //Iterator
+
+  // abstract world
+
+
+  //Properties
+  stc_decl_associated_type(value);
+  stc_decl_associated_type(point);
+
+
+  template <typename Exact>
+  struct Iterator : public any <Exact>
+  {
+    stc_typename(value);
+
+    void start() { this->exact().impl_start(); }
+    void next() { this->exact().impl_next(); }
+    void invalidate() { this->exact().impl_invalidate(); }
+    bool is_valid() const { return this->exact().impl_is_valid(); }
+  };
+
+# include "../local/undefs.hh"
+
+  template <typename Exact>
+  struct Iterator_on_Points;
+
+
+# define current   Iterator_on_Points<Exact>
+# define super     Iterator <Exact>
+# define templ      template <typename Exact>
+# define classname  Iterator_on_Points
+
+
+
+
+
+  template <typename Exact>
+  struct Iterator_on_Points : public super
+  {
+    stc_typename(point);
+
+    typedef Iterator_on_Points<Exact> self;
+
+    operator stc_type(Exact, point)() const { return this->exact().impl_cast(); }
+    stc_type(Exact, point) to_point() const { return this->exact().impl_to_point(); }
+    stc_type(Exact, point) const* point_adr() const { return this->exact().impl_point_adr(); }
+  };
+
+# include "../local/undefs.hh"
+
+
+  // Concret world
+
+
+# define current    simple_iter<C>
+# define super      top <current>
+# define templ      template <typename C>
+# define classname  simple_iter
+
+
+  stc_Header;
+  typedef stc::is<Iterator> category;
+  typedef C value;
+  typedef point2d_<C> point;
+  stc_End;
+
+
+  template < typename C >
+  class simple_iter : public top < simple_iter<C> >
+  {
+  public:
+    //FIX IT
+//     stc_using(point);
+    typedef point2d_<C> point;
+
+    simple_iter(const point& init) : i_(0)
+    {
+      for (int i = 0; i < 15; ++i)
+	v_[i] = init;
+    }
+
+    void impl_start() { i_ = 0; }
+    void impl_next() { ++i_; }
+    void impl_invalidate() { i_ = 42; }
+    bool impl_is_valid() const { return i_ < 15; }
+    point impl_to_point() const { return (point) *this; }
+    point const* point_adr() const { return v_; }
+
+    operator point const()
+    {
+      if (i_ < 16)
+	return v_[i_];
+      return (v_[0]);
+    }
+
+  protected:
+    int		  i_;
+    point v_[15];
+  };
+
+# include "../local/undefs.hh"
+
+  //End Iterator
+  /////////////////////////////////////////////////////
 
 }
 #endif /* !POINT_HH_ */
