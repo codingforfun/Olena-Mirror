@@ -240,5 +240,58 @@ namespace oln_point
   //End Iterator
   /////////////////////////////////////////////////////
 
+  ////////////////////////////////////////////////////
+  /// start box
+
+
+
+  template <typename P>
+  class box_: any< box_<P> >
+  {
+  public:
+    P pmin;
+    P pmax;
+
+  };
+
+
+
+  template <typename P>
+  class box2d: public box_< P >
+  {
+  public:
+    box2d(int i, int j) : row_max_(i), col_max_(j)
+    {
+      tab_ = new point2d_<P>* [i];
+      for (int k = 0; k < j; ++k)
+	tab_[k] = new point2d_<P> [j];
+    }
+    ~box2d()
+    {
+      for (int k = 0; k < row_max_; ++k)
+	delete[] tab_[k];
+      delete[] tab_;
+    }
+
+    void set(int i,  int j, point2d_<P> new_point)
+    {
+      if (i < row_max_ && j < col_max_)
+	tab_[i][j] = new_point;
+      if (i == 0 && j == 0)
+	box_< point2d_<P> >::pmin = tab_[0][0];
+      if (i == row_max_ - 1 && j == col_max_ - 1)
+	box_< point2d_<P> >::pmax = tab_[i - 1][j - 1];
+    }
+    point2d_<P>& get(int i, int j) { return tab_[i][j]; }
+  protected:
+    point2d_<P> **tab_;
+    int row_max_;
+    int col_max_;
+  };
+
+  /// end box
+  ///////////////////////////////////////////////////
+
+
 }
 #endif /* !POINT_HH_ */
