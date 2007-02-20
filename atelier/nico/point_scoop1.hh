@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef POINT_HH_
-# define POINT_HH_
+#ifndef POINT_SCOOP1_HH_
+# define POINT_SCOOP1_HH_
 
-
-# include "../local/scoop.hh"
 # include <mlc/int.hh>
+# include <cassert>
+# include "../local/scoop.hh"
 
 namespace oln_point
 {
@@ -62,7 +62,7 @@ namespace oln_point
 
 
 #define stc_simple_typename(Type)  typedef typename vtypes<Exact>::Type Type
-
+#define stc_simple_using(Type, Where)  typedef typename vtypes<Where>::Type Type
 
   template < typename Exact >
   class Point : public any<Exact>
@@ -78,11 +78,13 @@ namespace oln_point
 
 
     bool operator==(self const& rhs) const  { return this->exact().impl_egal(rhs.exact()); }
-    bool operator<(self const& rhs) const  { return this->exact().impl_inf(rhs.exact()); }
-    bool operator!=(self const& rhs) const { return this->exact().impl_diff(rhs.exact()); }
-    bool operator>(self const& rhs) const  { return this->exact().impl_sup(rhs.exact()); }
-    bool operator>=(self const& rhs) const { return this->exact().impl_sup_egal(rhs.exact()); }
-    bool operator<=(self const& rhs) const { return this->exact().impl_inf_egal(rhs.exact()); }
+    bool operator<(self const& rhs) const   { return this->exact().impl_inf(rhs.exact()); }
+    bool operator!=(self const& rhs) const  { return this->exact().impl_diff(rhs.exact()); }
+    bool operator>(self const& rhs) const   { return this->exact().impl_sup(rhs.exact()); }
+    bool operator>=(self const& rhs) const  { return this->exact().impl_sup_egal(rhs.exact()); }
+    bool operator<=(self const& rhs) const  { return this->exact().impl_inf_egal(rhs.exact()); }
+    coord operator[](unsigned i) const      { return this->exact().impl_acces(i); }
+    coord& operator[](unsigned i)           { return this->exact().impl_acces(i); }
   protected:
     Point() {}
   };
@@ -106,6 +108,7 @@ namespace oln_point
   class point2d_ : public Point< point2d_<C> >
   {
   public:
+    stc_simple_using(coord, point2d_);
 
     C col;
     C row;
@@ -117,13 +120,20 @@ namespace oln_point
     bool impl_sup(self const& rhs)  const      { return row > rhs.row or (row == rhs.row and col < rhs.col); }
     bool impl_sup_egal(self const& rhs) const  { return row >= rhs.row or (row == rhs.row and col < rhs.col); }
     bool impl_inf_egal(self const& rhs) const  { return row <= rhs.row or (row == rhs.row and col <= rhs.col); }
+    coord operator[](unsigned i) const         {
+                                                 if (i == 0) return  row;
+                                                 return col;
+                                               }
+    coord& operator[](unsigned i)               {
+                                                 if (i == 0) return  row;
+                                                 return col;
+                                               }
   };
 
 # include "../local/undefs.hh"
 
 
-  //End point class
-  /////////////////////////////////////////////////////////////
+
 
 
   /////////////////////////////////////////////////////////////
@@ -133,18 +143,55 @@ namespace oln_point
   {
     return p1 == p2;
   }
+  //
+  ///////////////////////////////////////////////////////////
 
-  ////////////////////////////////////////////////////////////
-  //Iterator
-
-  // abstract world
+  //End point class
+  /////////////////////////////////////////////////////////////
 
 
+  ///////////////////////////////////////////////////////////
+  // Point set class
   //Properties
   stc_decl_associated_type(value);
   stc_decl_associated_type(point);
+  stc_decl_associated_type(grid);
+  stc_decl_associated_type(iter);
 
 
+# define current   Point_set<Exact>
+# define super      any<Exact>
+# define templ      template <typename Exact>
+# define classname  Point_set
+
+  stc_Header;
+  //   typedef stc::abstract point;
+
+//   typedef stc_type((typename  stc_deferred(point)), grid) grid
+//   typedef stc_deferred(point) point__;
+//   typedef stc::final<typename (stc_type(point__, grid))> grid;
+  stc_End;
+
+
+  template <typename Exact>
+  class Point_Set : super
+  {
+    typedef stc_type(Point_set<Exact>, grid) grid;
+    typedef stc_type(Point_set<Exact>, point) point;
+    typedef stc_type(Point_set<Exact>, iter) iter;
+
+    unsigned int npoint() const { return this->exact().impl_npoint();  };
+    bool includes() const { return this->exact().impl_includes();  };
+  };
+
+# include "../local/undefs.hh"
+  // End Point class
+  //////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////
+  //Iterator
+
+  // abstract world
   template <typename Exact>
   struct Iterator : public any <Exact>
   {
@@ -198,17 +245,17 @@ namespace oln_point
   stc_Header;
   typedef stc::is<Iterator> category;
   typedef C value;
-  typedef point2d_<C> point;
+  typedef oln_point::point2d_<C> point;
   stc_End;
 
 
   template < typename C >
-  class simple_iter : public top < simple_iter<C> >
+  class simple_iter : public super
   {
   public:
     //FIX IT
 //     stc_using(point);
-    typedef point2d_<C> point;
+    typedef stc_type(simple_iter<C>, point) point;
 
     simple_iter(const point& init) : i_(0)
     {
@@ -237,61 +284,110 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
-  //End Iterator
-  /////////////////////////////////////////////////////
 
-  ////////////////////////////////////////////////////
-  /// start box
-
-
-
-  template <typename P>
-  class box_: any< box_<P> >
-  {
-  public:
-    P pmin;
-    P pmax;
-
-  };
+// # define current    box_iterator_<P>
+// # define super      top <current>
+// # define templ      template <typename P>
+// # define classname  box_iterator_
 
 
+//   stc_Header;
+//   typedef stc::is<Iterator> category;
+//   stc_End;
 
-  template <typename P>
-  class box2d: public box_< P >
-  {
-  public:
-    box2d(int i, int j) : row_max_(i), col_max_(j)
-    {
-      tab_ = new point2d_<P>* [i];
-      for (int k = 0; k < j; ++k)
-	tab_[k] = new point2d_<P> [j];
-    }
-    ~box2d()
-    {
-      for (int k = 0; k < row_max_; ++k)
-	delete[] tab_[k];
-      delete[] tab_;
-    }
 
-    void set(int i,  int j, point2d_<P> new_point)
-    {
-      if (i < row_max_ && j < col_max_)
-	tab_[i][j] = new_point;
-      if (i == 0 && j == 0)
-	box_< point2d_<P> >::pmin = tab_[0][0];
-      if (i == row_max_ - 1 && j == col_max_ - 1)
-	box_< point2d_<P> >::pmax = tab_[i - 1][j - 1];
-    }
-    point2d_<P>& get(int i, int j) { return tab_[i][j]; }
-  protected:
-    point2d_<P> **tab_;
-    int row_max_;
-    int col_max_;
-  };
+//   template < typename C >
+//   class box_iterator_ : public super
+//   {
+//   public:
+//     typedef bbox_.point point;
+
+//   protected:
+//     box_<P> bbox_;
+//   };
+
+// # include "../local/undefs.hh"
+
+
+
+//End Iterator
+//////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////
+/// start box
+
+
+// # define current    box_<P>
+// # define super      top <current>
+// # define templ      template <typename P>
+// # define classname  box_
+
+
+//   stc_Header;
+//   typedef stc::is<Point_set> category;
+//   stc_End;
+
+//   template <typename P>
+//   class box_: super
+//   {
+//   public:
+//     enum { n = mlc_value(typename P::dim) };
+
+    //    stc_using(box);
+//     P pmin;
+//     P pmax;
+
+
+//     const box_& impl_bbox() const { return *this; }
+//     bool impl_includes(const point& p) const
+//     {
+//       for (unsigned i = 0; i < n; ++i)
+// 	if (p[i] < pmin[i] or p[i] > pmax[i])
+// 	  return false;
+//       return true;
+//     }
+//   };
+
+
+
+//   template <typename P>
+//   class box2d: public box_< point2d_< P > >
+//   {
+//   public:
+//     box2d(point2d_<P> p1, point2d_<P> p2) { box_<point2d_< P > >::pmin = p1; box_<point2d_< P > >::pmax = p2; }
+//     box2d(int i, int j) : row_max_(i), col_max_(j)
+//     {
+//       tab_ = new  oln_point::point2d_<P>* [i];
+//       for (int k = 0; k < j; ++k)
+// 	tab_[k] = new  oln_point::point2d_<P> [j];
+//     }
+//     ~box2d()
+//     {
+//       for (int k = 0; k < row_max_; ++k)
+// 	delete[] tab_[k];
+//       delete[] tab_;
+//     }
+
+//     void set(int i,  int j, oln_point::point2d_<P> new_point)
+//     {
+//       if (i < row_max_ && j < col_max_)
+// 	tab_[i][j] = new_point;
+//       if (i == 0 && j == 0)
+// 	box_<  oln_point::point2d_<P> >::pmin = tab_[0][0];
+//       if (i == row_max_ - 1 && j == col_max_ - 1)
+// 	box_<  oln_point::point2d_<P> >::pmax = tab_[i - 1][j - 1];
+//     }
+//      oln_point::point2d_<P>& get(int i, int j) { return tab_[i][j]; }
+//   protected:
+//      oln_point::point2d_<P> **tab_;
+//     int row_max_;
+//     int col_max_;x
+//   };
+}
 
   /// end box
-  ///////////////////////////////////////////////////
+  ////////////////////////////////////////////////
 
-
-}
-#endif /* !POINT_HH_ */
+#endif /* !POINT_SCOOP1_HH_ */
