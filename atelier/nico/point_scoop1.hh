@@ -202,7 +202,6 @@ namespace oln_point
   stc_Header;
   typedef stc::is<Point_Set> category;
   typedef stc::abstract point;
-  //  typedef stc_type((typename stc_deferred(point)), grid) grid;
   typedef stc::abstract grid;
   typedef stc::abstract box;
   stc_End;
@@ -213,8 +212,7 @@ namespace oln_point
   {
   public:
     stc_using(point);
-//     stc_using(grid);
-     stc_using(box);
+    stc_using(box);
 
 
     // unsigned int npoint() const { return this->exact().impl_npoint();  };
@@ -325,29 +323,74 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
-
-// # define current    box_iterator_<P>
-// # define super      top <current>
-// # define templ      template <typename P>
-// # define classname  box_iterator_
+  template <typename P>
+  class box_;
 
 
-//   stc_Header;
-//   typedef stc::is<Iterator> category;
-//   stc_End;
+
+# define current    box_iterator_<P>
+# define super      top  <current>
+# define templ      template <typename P>
+# define classname  box_iterator_
 
 
-//   template < typename P >
-//   class box_iterator_ : public super
-//   {
-//   public:
-//     typedef bbox_.point point;
 
-//   protected:
-//     box_<P> bbox_;
-//   };
+  stc_Header;
+  typedef stc::is<Iterator> category;
+  typedef P point;
+  typedef P value;
+  stc_End;
 
-// # include "../local/undefs.hh"
+
+  template <typename P>
+  class box_;
+
+
+  template < typename P >
+  class box_iterator_ : public super
+  {
+  public:
+    typedef stc_type(box_iterator_, point) point;
+
+    box_iterator_(box_<point> &box) : bb_(box)
+    {
+      nop_ = box.pmax;
+      ++nop_[0];
+    }
+
+    void impl_start() { p_ = bb_.pmin; }
+    void impl_next();
+    void impl_invalidate() { p_ = nop_; }
+    bool impl_is_valid() const { return p_ != nop_; }
+    point impl_to_point() const { return p_; }
+    point const* point_adr() const { return &p_; }
+
+  protected:
+    point p_;
+    point nop_;
+    box_<point> &bb_;
+  };
+
+  //// methode implementation
+  template < typename P >
+  void box_iterator_< P >::impl_next()
+  {
+    typedef typename box_iterator_<P>::point point;
+    for (int i = point::n - 1; i >= 0; --i)
+      if (p_[i] == bb_.pmax(i))
+	p_[i] = bb_.pmin(i);
+      else
+      {
+	++p_[i];
+	break;
+      }
+    if (p_ == bb_.pmin())
+      p_ = nop_;
+  }
+
+  typedef box_iterator_< point2d_<int> > iter2d;
+
+# include "../local/undefs.hh"
 
 
 
