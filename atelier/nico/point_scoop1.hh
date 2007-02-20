@@ -152,37 +152,68 @@ namespace oln_point
 
   ///////////////////////////////////////////////////////////
   // Point set class
+
   //Properties
   stc_decl_associated_type(value);
   stc_decl_associated_type(point);
   stc_decl_associated_type(grid);
   stc_decl_associated_type(iter);
+  stc_decl_associated_type(box);
 
 
-# define current   Point_set<Exact>
+
+  //abstract world
+
+# define current   Point_Set<Exact>
 # define super      any<Exact>
 # define templ      template <typename Exact>
-# define classname  Point_set
-
-  stc_Header;
-  //   typedef stc::abstract point;
-
-//   typedef stc_type((typename  stc_deferred(point)), grid) grid
-//   typedef stc_deferred(point) point__;
-//   typedef stc::final<typename (stc_type(point__, grid))> grid;
-  stc_End;
-
+# define classname  Point_Set
 
   template <typename Exact>
   class Point_Set : super
   {
-    typedef stc_type(Point_set<Exact>, grid) grid;
-    typedef stc_type(Point_set<Exact>, point) point;
-    typedef stc_type(Point_set<Exact>, iter) iter;
+    stc_typename(point);
+    stc_typename(grid);
+    stc_typename(box);
+
 
     unsigned int npoint() const { return this->exact().impl_npoint();  };
     bool includes() const { return this->exact().impl_includes();  };
+    box bbox() const { return this->exact().impl_includes(); }
   };
+
+# include "../local/undefs.hh"
+
+  // concrete world
+
+# define current   point_set_base<Exact>
+# define super      top <Exact>
+# define templ      template <typename Exact>
+# define classname  point_set_base
+
+  stc_Header;
+  typedef stc::is<Point_Set> category;
+  typedef stc::abstract point;
+  typedef stc::abstract grid;
+  typedef stc::abstract box;
+  stc_End;
+
+
+  template <typename Exact>
+  class point_set_base : super
+  {
+//     stc_using(point);
+//     stc_using(grid);
+//     stc_using(box);
+
+
+    // unsigned int npoint() const { return this->exact().impl_npoint();  };
+//     bool includes() const { return this->exact().impl_includes();  };
+//     box bbox () const  { return this->exact().impl_includes(); }
+  protected:
+    point_set_base() {}
+  };
+
 
 # include "../local/undefs.hh"
   // End Point class
@@ -296,7 +327,7 @@ namespace oln_point
 //   stc_End;
 
 
-//   template < typename C >
+//   template < typename P >
 //   class box_iterator_ : public super
 //   {
 //   public:
@@ -319,44 +350,44 @@ namespace oln_point
 /// start box
 
 
-// # define current    box_<P>
-// # define super      top <current>
-// # define templ      template <typename P>
-// # define classname  box_
+# define current    box_<P>
+# define super      top <current>
+# define templ      template <typename P>
+# define classname  box_
 
 
-//   stc_Header;
-//   typedef stc::is<Point_set> category;
-//   stc_End;
+  stc_Header;
+  typedef stc::is<Point_Set> category;
+  stc_End;
 
-//   template <typename P>
-//   class box_: super
-//   {
-//   public:
-//     enum { n = mlc_value(typename P::dim) };
+  template <typename P>
+  class box_: super
+  {
+  public:
+    enum { n = mlc_value(typename P::dim) };
 
-    //    stc_using(box);
-//     P pmin;
-//     P pmax;
+    stc_using(box);
+    P pmin;
+    P pmax;
 
 
-//     const box_& impl_bbox() const { return *this; }
-//     bool impl_includes(const point& p) const
+    const box_& impl_bbox() const { return *this; }
+    // bool impl_includes(const point& p) const
 //     {
 //       for (unsigned i = 0; i < n; ++i)
 // 	if (p[i] < pmin[i] or p[i] > pmax[i])
 // 	  return false;
 //       return true;
 //     }
-//   };
+  };
 
 
 
-//   template <typename P>
-//   class box2d: public box_< point2d_< P > >
-//   {
-//   public:
-//     box2d(point2d_<P> p1, point2d_<P> p2) { box_<point2d_< P > >::pmin = p1; box_<point2d_< P > >::pmax = p2; }
+  template <typename P>
+  class box2d: public box_< point2d_< P > >
+  {
+  public:
+    box2d(point2d_<P> p1, point2d_<P> p2) { box_<point2d_< P > >::pmin = p1; box_<point2d_< P > >::pmax = p2; }
 //     box2d(int i, int j) : row_max_(i), col_max_(j)
 //     {
 //       tab_ = new  oln_point::point2d_<P>* [i];
@@ -383,8 +414,8 @@ namespace oln_point
 //   protected:
 //      oln_point::point2d_<P> **tab_;
 //     int row_max_;
-//     int col_max_;x
-//   };
+//     int col_max_;
+  };
 }
 
   /// end box
