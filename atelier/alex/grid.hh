@@ -1,8 +1,8 @@
 #ifndef GRID_HH_
 # define GRID_HH_
 
-# include <mlc/int.hh> 
-# include <mlc/uint.hh> 
+# include <mlc/int.hh>
+# include <mlc/uint.hh>
 # include "../local/scoop.hh"
 # include "../local/undefs.hh "
 
@@ -16,19 +16,19 @@ namespace glg
   stc_decl_associated_type(dim);
 
   template <typename Exact> class Grid;
- 
+
   class grid1d;
   class grid2d;
 
   // Grids
-  
+
   template <typename Exact>
   class Grid : public stc::any <Exact>
   {};
-  
+
   class grid1d : public Grid <grid1d>
   {};
-  
+
   class grid2d : public Grid <grid2d>
   {};
 
@@ -82,7 +82,7 @@ namespace glg
   class point2d_ : public Point < point2d_ <C> >
   {
   public:
-    
+
     typedef typename Point< point2d_<C> >::grid grid;
     typedef typename Point< point2d_<C> >::coord coord;
     typedef typename Point< point2d_<C> >::dim dim;
