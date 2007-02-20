@@ -32,6 +32,7 @@
 # include <cassert>
 # include <set>
 # include <algorithm>
+
 # include "../local/scoop.hh"
 
 namespace oln_point
@@ -59,7 +60,7 @@ namespace oln_point
   {
   };
 
-  struct grid2d : public Grid< grid2d>
+  struct grid2d : public Grid< grid2d >
   {
   };
 
@@ -169,6 +170,8 @@ namespace oln_point
   stc_decl_associated_type(grid);
   stc_decl_associated_type(iter);
   stc_decl_associated_type(box);
+  stc_decl_associated_type(coord);
+
 
 
 
@@ -521,9 +524,79 @@ namespace oln_point
 
   typedef box_< point2d_<int> > box2d;
 
-}
 
   /// end set
   ////////////////////////////////////////////////
+  ///////////////////////////////////////////////
+  // Image
+
+  // Properties
+
+# define current    Image<Exact>
+# define super      any<Exact>
+# define templ      template <typename Exact>
+# define classname  Image
+
+  template <typename Exact>
+  struct Image : super
+  {
+    stc_typename(point);
+    stc_typename(value);
+    stc_typename(box);
+    stc_typename(iter);
+    stc_typename(grid);
+
+    value operator() (const point& p)
+    {
+      assert(owns(p));
+      return this->exact().impl_value_acces(p);
+    }
+    bool owns(const point& p) const { return this->exact().impl_owns(p); }
+    box bbox() const { return this->exact().impl_bbox(); }
+  };
+
+# include "../local/undefs.hh"
+
+
+# define current    Image2d<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Image2d
+
+  template <typename Exact>
+  struct Image2d : super
+  {
+    stc_typename(coord);
+
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(iter);
+    stc_using(grid);
+
+    value operator() (coord row, coord col)
+    {
+      point2d_<coord> p;
+      p.row = row;
+      p.col = col;
+      assert(owns(p));
+      return this->exact().impl_value_acces(p);
+    }
+    bool owns(const point& p) const { return this->exact().impl_owns(p); }
+    box bbox() const { return this->exact().impl_bbox(); }
+  };
+
+# include "../local/undefs.hh"
+
+  // Abstract world
+
+  // Concret World
+
+  // End Image
+  //////////////////////////////////////////////
+}
+
+# include "plug.hh"
+
 
 #endif /* !POINT_SCOOP1_HH_ */
