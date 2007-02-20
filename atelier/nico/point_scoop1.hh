@@ -175,8 +175,8 @@ namespace oln_point
     bool impl_sup(self const& rhs)  const      { return col < rhs.col; }
     bool impl_sup_egal(self const& rhs) const  { return col < rhs.col; }
     bool impl_inf_egal(self const& rhs) const  { return col <= rhs.col; }
-    coord operator[](unsigned i) const         { return col; }
-    coord& operator[](unsigned i)              { return col; }
+    coord operator[](unsigned i) const         { i = i; return col; }
+    coord& operator[](unsigned i)              { i = i; return col; }
   };
 
   typedef point1d_<int> point1d;
@@ -731,7 +731,7 @@ namespace oln_point
 
 
   template <typename T>
-  class image1d : public super
+  class signal : public super
   {
   public:
     stc_using(point);
@@ -740,7 +740,7 @@ namespace oln_point
     stc_using(iter);
     stc_using(grid);
 
-    image1d(box &box_ref) : bb_(box_ref) {}
+    signal(box &box_ref) : bb_(box_ref) {}
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
     value imp_value_acces(const point& p) { return T_[p.col]; }
