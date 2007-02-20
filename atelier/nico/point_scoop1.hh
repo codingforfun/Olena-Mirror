@@ -35,6 +35,14 @@
 namespace oln_point
 {
 
+  //macro for scoop1 paradigm
+#define stc_simple_typename(Type)     typedef typename vtypes<Exact>::Type Type
+#define stc_simple_using(Type, Where) typedef typename vtypes<Where>::Type Type
+#define stc_simple_find(Type, Where)  typename vtypes<Where>::Type
+
+
+
+
   //mandatory for using scoop 2 mecanism
   stc_equip_namespace;
 
@@ -61,8 +69,6 @@ namespace oln_point
 
 
 
-#define stc_simple_typename(Type)  typedef typename vtypes<Exact>::Type Type
-#define stc_simple_using(Type, Where)  typedef typename vtypes<Where>::Type Type
 
   template < typename Exact >
   class Point : public any<Exact>
@@ -99,6 +105,8 @@ namespace oln_point
   template<typename C>
   struct vtypes<point2d_< C > >
   {
+    typedef stc::is<Point> category;
+    typedef mlc::none super_type;
     typedef grid2d grid;
     typedef C coord;
     typedef mlc::uint_<2> dim;
@@ -170,7 +178,7 @@ namespace oln_point
 # define classname  Point_Set
 
   template <typename Exact>
-  class Point_Set : super
+  struct Point_Set : super
   {
     stc_typename(point);
     stc_typename(grid);
@@ -194,6 +202,7 @@ namespace oln_point
   stc_Header;
   typedef stc::is<Point_Set> category;
   typedef stc::abstract point;
+  //  typedef stc_type((typename stc_deferred(point)), grid) grid;
   typedef stc::abstract grid;
   typedef stc::abstract box;
   stc_End;
@@ -202,9 +211,10 @@ namespace oln_point
   template <typename Exact>
   class point_set_base : super
   {
-//     stc_using(point);
+  public:
+    stc_using(point);
 //     stc_using(grid);
-//     stc_using(box);
+     stc_using(box);
 
 
     // unsigned int npoint() const { return this->exact().impl_npoint();  };
@@ -351,71 +361,43 @@ namespace oln_point
 
 
 # define current    box_<P>
-# define super      top <current>
+# define super      point_set_base< current >
 # define templ      template <typename P>
 # define classname  box_
 
-
   stc_Header;
-  typedef stc::is<Point_Set> category;
+  typedef P point;
+ //  typedef stc_deferred(point) point__;
+  typedef stc::final<stc_type(point, grid)> grid;
+  typedef current box;
   stc_End;
 
   template <typename P>
   class box_: super
   {
   public:
-    enum { n = mlc_value(typename P::dim) };
-
     stc_using(box);
-    P pmin;
-    P pmax;
+    stc_using(point);
 
+    enum { n = mlc_value(typename point::dim) };
+    point pmin;
+    point pmax;
 
+    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {}
     const box_& impl_bbox() const { return *this; }
-    // bool impl_includes(const point& p) const
-//     {
-//       for (unsigned i = 0; i < n; ++i)
-// 	if (p[i] < pmin[i] or p[i] > pmax[i])
-// 	  return false;
-//       return true;
-//     }
+    bool impl_includes(const point& p) const
+    {
+      for (unsigned i = 0; i < n; ++i)
+	if (p[i] < pmin[i] or p[i] > pmax[i])
+	  return false;
+      return true;
+    }
   };
 
+# include "../local/undefs.hh"
 
+  typedef box_< point2d_<int> > box2d;
 
-  template <typename P>
-  class box2d: public box_< point2d_< P > >
-  {
-  public:
-    box2d(point2d_<P> p1, point2d_<P> p2) { box_<point2d_< P > >::pmin = p1; box_<point2d_< P > >::pmax = p2; }
-//     box2d(int i, int j) : row_max_(i), col_max_(j)
-//     {
-//       tab_ = new  oln_point::point2d_<P>* [i];
-//       for (int k = 0; k < j; ++k)
-// 	tab_[k] = new  oln_point::point2d_<P> [j];
-//     }
-//     ~box2d()
-//     {
-//       for (int k = 0; k < row_max_; ++k)
-// 	delete[] tab_[k];
-//       delete[] tab_;
-//     }
-
-//     void set(int i,  int j, oln_point::point2d_<P> new_point)
-//     {
-//       if (i < row_max_ && j < col_max_)
-// 	tab_[i][j] = new_point;
-//       if (i == 0 && j == 0)
-// 	box_<  oln_point::point2d_<P> >::pmin = tab_[0][0];
-//       if (i == row_max_ - 1 && j == col_max_ - 1)
-// 	box_<  oln_point::point2d_<P> >::pmax = tab_[i - 1][j - 1];
-//     }
-//      oln_point::point2d_<P>& get(int i, int j) { return tab_[i][j]; }
-//   protected:
-//      oln_point::point2d_<P> **tab_;
-//     int row_max_;
-//     int col_max_;
-  };
 }
 
   /// end box
