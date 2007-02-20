@@ -30,6 +30,8 @@
 
 # include <mlc/int.hh>
 # include <cassert>
+# include <set>
+# include <algorithm>
 # include "../local/scoop.hh"
 
 namespace oln_point
@@ -292,8 +294,6 @@ namespace oln_point
   class simple_iter : public super
   {
   public:
-    //FIX IT
-//     stc_using(point);
     typedef stc_type(simple_iter<C>, point) point;
 
     simple_iter(const point& init) : i_(0)
@@ -371,6 +371,8 @@ namespace oln_point
     box_<point> &bb_;
   };
 
+
+
   //// methode implementation
   template < typename P >
   void box_iterator_< P >::impl_next()
@@ -393,6 +395,42 @@ namespace oln_point
 # include "../local/undefs.hh"
 
 
+  template <typename P>
+  class pset_std;
+
+# define current    pset_std_iterator_<P>
+# define super      top  <current>
+# define templ      template <typename P>
+# define classname  pset_std_iterator_
+
+  stc_Header;
+  typedef stc::is<Iterator> category;
+  typedef P point;
+  typedef P value;
+  stc_End;
+
+  template < typename P >
+  class pset_std_iterator_ : public super
+  {
+  public:
+    typedef stc_type(pset_std_iterator_, point) point;
+
+    pset_std_iterator_(std::set<P> &box) : bb_(box) {}
+
+    void impl_start() { iter = bb_.begin(); }
+    void impl_next() { ++iter;  }
+    void impl_invalidate() { iter = bb_.end(); }
+    bool impl_is_valid() const { return *iter != bb_.end(); }
+    point impl_to_point() const { return *iter; }
+    point const* point_adr() const { return iter; }
+
+  protected:
+    typename std::set<P> &bb_;
+    typename std::set< P >::iterator iter;
+  };
+
+
+# include "../local/undefs.hh"
 
 //End Iterator
 //////////////////////////////////////////////////
@@ -400,7 +438,49 @@ namespace oln_point
 
 
 //////////////////////////////////////////////////
-/// start box
+/// set
+
+# define current    pset_std<P>
+# define super      point_set_base< current >
+# define templ      template <typename P>
+# define classname  pset_std
+
+  stc_Header;
+  typedef P point;
+  typedef stc::final<stc_type(point, grid)> grid;
+  typedef current box;
+  stc_End;
+
+  template <typename P>
+  class pset_std : public super
+  {
+  public:
+    stc_using(box);
+    stc_using(point);
+    point pmin;
+    point pmax;
+
+    enum { n = mlc_value(typename point::dim) };
+
+
+    pset_std(const P& p1, const P& p2) : pmin(p1), pmax(p2) { set_.insert(pmin); set_.insert(pmax); }
+    const pset_std& impl_bbox() const { return *this; }
+    bool impl_includes(const point& p) const
+    {
+      for (unsigned i = 0; i < n; ++i)
+	if (p[i] < pmin[i] or p[i] > pmax[i])
+	  return false;
+      return true;
+    }
+  protected:
+    std::set<point> set_;
+  };
+
+
+# include "../local/undefs.hh"
+
+
+//// start box
 
 
 # define current    box_<P>
@@ -416,7 +496,7 @@ namespace oln_point
   stc_End;
 
   template <typename P>
-  class box_: super
+  class box_: public super
   {
   public:
     stc_using(box);
@@ -426,7 +506,7 @@ namespace oln_point
     point pmin;
     point pmax;
 
-    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {}
+    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {  }
     const box_& impl_bbox() const { return *this; }
     bool impl_includes(const point& p) const
     {
@@ -443,7 +523,7 @@ namespace oln_point
 
 }
 
-  /// end box
+  /// end set
   ////////////////////////////////////////////////
 
 #endif /* !POINT_SCOOP1_HH_ */
