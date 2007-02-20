@@ -74,6 +74,29 @@ namespace stc
     any() {}
   };
 
+
+
+  /// Equality test between a couple of types.
+  /// \{
+  template <typename T>
+  struct is_found : public mlc::bexpr_<true>
+  {};
+
+  template <>
+  struct is_found< mlc::not_found > : public mlc::bexpr_<false>
+  {};
+
+  template <typename T>
+  struct is_not_found : public mlc::bexpr_<false>
+  {};
+
+  template <>
+  struct is_not_found< mlc::not_found > : public mlc::bexpr_<true>
+  {};
+  /// \}
+  
+
+
 } // end of namespace stc
 
 
@@ -96,8 +119,8 @@ namespace stc
 # define stc_find_type(From, Type) typename stc_find_type_(From, Type)
 
 // Boolean expression counterpart of stc_find_type
-# define stc_is_found(Type)      mlc::is_found_< stc_deferred(Type) >
-# define stc_is_not_found(Type)  mlc::is_not_found_< stc_deferred(Type) >
+# define stc_type_is_found(Type)      stc::is_found< stc_deferred(Type) >
+# define stc_type_is_not_found(Type)  stc::is_not_found< stc_deferred(Type) >
 
 
 
@@ -312,7 +335,7 @@ namespace stc
 	       typename stm = typename get_stm<curr, target>::ret >				\
     struct check_no_stm_inherited								\
 												\
-      : mlc::assert_< mlc::is_not_found_<stm>,							\
+      : mlc::assert_< stc::is_not_found<stm>,							\
 		      ERROR::vtype_declared_but_already_set_< orig,				\
 							      mlc::pair_<curr, stm>,		\
 							      target >				\
@@ -333,8 +356,8 @@ namespace stc
 												\
     template <typename curr, typename target>							\
     struct check_delegatee_inherited								\
-      : mlc::assert_< mlc::is_found_< typename first_stm<curr,					\
-				      typedef_::delegatee>::ret::second_elt >,			\
+      : mlc::assert_< stc::is_found< typename first_stm<curr,					\
+				     typedef_::delegatee>::ret::second_elt >,			\
 		      ERROR::no_delegatee_declared_ >						\
     {												\
     };												\
@@ -702,7 +725,7 @@ namespace stc
     {												\
       typedef typename delegator_find<from, target>::ret res_d;					\
       struct check_										\
-	: mlc::assert_< mlc::is_found_<res_d>,							\
+	: mlc::assert_< stc::is_found<res_d>,							\
 			ERROR::vtype_declared_but_not_defined					\
 			<  ERROR::_for_vtype_<target>,						\
 			   ERROR::_declaration_is_in_<where>,					\
@@ -787,7 +810,7 @@ namespace stc
   struct vtype											\
   {												\
     typedef typename find_vtype<from, target>::ret res;						\
-    struct check_ : mlc::assert_< mlc::is_found_<res>,						\
+    struct check_ : mlc::assert_< stc::is_found<res>,						\
                                   ERROR::vtype_not_defined<from, target> >			\
     {												\
       typedef res ret;										\
@@ -1001,6 +1024,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 // For concepts.
 # define stc_typename(Type) typedef stc_type(Exact, Type) Type
 # define stc_using(Type)    typedef typename super::Type Type
+# define stc_deduce_typename(Src, Type) typedef stc_type(Src, Type) Type
 
 
 // For impl classes.

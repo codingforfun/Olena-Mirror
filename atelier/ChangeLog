@@ -1,3 +1,11 @@
+2007-02-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* local/scoop.hh (is_found, is_not_found): New in stc.  Do not
+	rely on mlc::eq_, mlc::neq_, or mlc::is_a_.
+	(stc_equip_namespace): Decouple from mlc::is_found_ and
+	mlc::is_not_found_ that have the inconvenient property of forcing
+	some templated class instanciation.
+	
 2007-02-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* sujet/intro.txt: Update.
