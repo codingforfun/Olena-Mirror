@@ -32,6 +32,7 @@
 # include <cassert>
 # include <set>
 # include <algorithm>
+# include <iostream>
 
 # include "../local/scoop.hh"
 
@@ -145,8 +146,42 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
+  template <typename C>
+  class point1d_;
 
 
+  template<typename C>
+  struct vtypes<point1d_< C > >
+  {
+    typedef stc::is<Point> category;
+    typedef mlc::none super_type;
+    typedef grid1d grid;
+    typedef C coord;
+    typedef mlc::uint_<1> dim;
+  };
+
+  template < typename C >
+  class point1d_ : public Point< point1d_<C> >
+  {
+  public:
+    stc_simple_using(coord, point1d_);
+
+    C col;
+
+    typedef point1d_<C> self;
+    bool impl_egal(self const& rhs) const      { return col == rhs.col; }
+    bool impl_inf(self const& rhs)  const      { return col < rhs.col; }
+    bool impl_diff(self const& rhs) const      { return col != rhs.col; }
+    bool impl_sup(self const& rhs)  const      { return col < rhs.col; }
+    bool impl_sup_egal(self const& rhs) const  { return col < rhs.col; }
+    bool impl_inf_egal(self const& rhs) const  { return col <= rhs.col; }
+    coord operator[](unsigned i) const         { return col; }
+    coord& operator[](unsigned i)              { return col; }
+  };
+
+  typedef point1d_<int> point1d;
+
+# include "../local/undefs.hh"
 
 
   /////////////////////////////////////////////////////////////
@@ -396,6 +431,7 @@ namespace oln_point
   }
 
   typedef box_iterator_< point2d_<int> > iter2d;
+  typedef box_iterator_< point1d_<int> > iter1d;
 
 # include "../local/undefs.hh"
 
@@ -495,7 +531,6 @@ namespace oln_point
 
   stc_Header;
   typedef P point;
- //  typedef stc_deferred(point) point__;
   typedef stc::final<stc_type(point, grid)> grid;
   typedef current box;
   stc_End;
@@ -525,6 +560,7 @@ namespace oln_point
 # include "../local/undefs.hh"
 
   typedef box_< point2d_<int> > box2d;
+  typedef box_< point1d_<int> > box1d;
 
 
   /// end set
@@ -561,6 +597,23 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
+
+# define current    Signal<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Signal
+
+  template <typename Exact>
+  struct Signal : super
+  {
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(iter);
+    stc_using(grid);
+  };
+
+# include "../local/undefs.hh"
 
 # define current    Image2d<Exact>
 # define super      Image<Exact>
@@ -611,7 +664,7 @@ namespace oln_point
   class image : super
   {
   public:
-    stc_using(coord);
+    //    stc_using(coord);
     stc_using(point);
     stc_using(value);
     stc_using(box);
@@ -643,15 +696,65 @@ namespace oln_point
   class image2d : super
   {
   public:
-    stc_using(coord);
     stc_using(point);
     stc_using(value);
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
 
-    bool imp_owns(const point& p) const { return  bb_.imp_includes(p); }
+    image2d(box &box_ref) : bb_(box_ref) {}
+
+    bool imp_owns(const point& p) const   { return  bb_.includes(p); }
     value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
+
+  protected:
+    value** T_;
+    box &bb_;
+  };
+
+  // template <typename Ima>
+//   void print(const Ima& I)
+//   {
+//     typename I.iter it;
+
+//     for (it.start; it.is_valid; ++it)
+//       std::cout << it.to_point << ' ' << std::endl;
+//   }
+
+
+# include "../local/undefs.hh"
+
+
+# define current    signal<T>
+# define super      image <current>
+# define templ      template <typename T>
+# define classname  signal
+
+  stc_Header;
+  typedef T value;
+  typedef iter1d iter;
+  typedef point1d point;
+  typedef point::coord coord;
+  typedef grid1d grid;
+  typedef box1d box;
+  stc_End;
+
+
+  template <typename T>
+  class image1d : super
+  {
+  public:
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(iter);
+    stc_using(grid);
+
+    image1d(box &box_ref) : bb_(box_ref) {}
+
+    bool imp_owns(const point& p) const   { return  bb_.includes(p); }
+    value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
+
   protected:
     value** T_;
     box &bb_;

@@ -62,6 +62,12 @@ namespace oln_point
     {
       typedef Image2d<Exact> ret;
     };
+
+    template <typename Exact>
+    struct case_< Image_kind, Exact,  2 > : where_< mlc_eq(typename Exact::grid, grid1d) >
+    {
+      typedef Signal<Exact> ret;
+    };
   }
 }
 
