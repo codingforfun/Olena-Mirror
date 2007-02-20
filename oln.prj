@@ -1,23 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 297)
-(Parent-Version oln 10 296)
-(Version-Log "2007-02-17  Roland Levillain  <roland@lrde.epita.fr>
+(Project-Version oln 10 298)
+(Parent-Version oln 10 297)
+(Version-Log "2007-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
-        Fix Rblena on Mac OS X.
-        Note that you have to set the envvar MACOSX_DEPLOYMENT_TARGET to
-        10.3 for this to work.
+	Fix config/strip-lrde.
 
-        * expand.sh (AM_LDFLAGS) [DARWIN]: Add`-no-undefined
-        -Wl,-twolevel_namespace -Wl,-undefined -Wl,dynamic_lookup' for
-        Ruby wrappers, so as to generate two-level namespace (to avoid
-        name clashes at load time).
-        * TODO: Update.
-
+	* config/strip-lrde: Have the regexp be less greedy, since it
+	strips too much lines when a files has several `<<lrde', `>>'
+	tags.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 17 Feb 2007 11:33:33 +0100")
+(Checkin-Time "Tue, 20 Feb 2007 11:30:15 +0100")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -130,7 +125,7 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.40 644))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.41 644))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.24 644))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.56 755))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.48 644))
@@ -1676,7 +1671,7 @@
 ;; Files added by populate at Thu, 08 Feb 2007 14:59:08 +0100,
 ;; to version 10.271(w), by levill_r:
 
-  (config/strip-lrde (oln/y/18_strip-lrde 1.2 755))
+  (config/strip-lrde (oln/y/18_strip-lrde 1.3 755))
 
 ;; Files deleted by depopulate at Fri, 09 Feb 2007 17:53:54 +0100,
 ;; from version 10.275(w), by levill_r:

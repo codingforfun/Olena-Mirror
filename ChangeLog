@@ -1,3 +1,11 @@
+2007-02-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix config/strip-lrde.
+
+	* config/strip-lrde: Have the regexp be less greedy, since it
+	strips too much lines when a files has several `<<lrde', `>>'
+	tags.
+
 2007-02-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac (DARWIN): New Automake conditional.

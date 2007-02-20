@@ -30,5 +30,5 @@
 # Remove everything between `<<lrde' and `>>'.
 # This is awful, but it's working.
 exec perl -0777 -pi -e \
-  's/\n\s*#\s*<<lrde(.|\n)+\n\s*#\s*>>\s*\n/\n\n\n/g' \
+  's/\n\s*#\s*<<lrde(.|\n)+?\n\s*#\s*>>\s*\n/\n\n/g' \
   "$@"
