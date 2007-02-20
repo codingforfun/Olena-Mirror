@@ -141,6 +141,8 @@ namespace oln_point
                                                }
   };
 
+  typedef point2d_<int> point2d;
+
 # include "../local/undefs.hh"
 
 
@@ -532,6 +534,8 @@ namespace oln_point
 
   // Properties
 
+  // Abstract world
+
 # define current    Image<Exact>
 # define super      any<Exact>
 # define templ      template <typename Exact>
@@ -588,9 +592,72 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
-  // Abstract world
-
   // Concret World
+
+# define current    image<Exact>
+# define super      top <Exact>
+# define templ      template <typename Exact>
+# define classname  image
+
+  stc_Header;
+  typedef stc::is<Image> category;
+  typedef stc::abstract point;
+  typedef stc::abstract grid;
+  typedef stc::abstract box;
+  stc_End;
+
+
+  template <typename Exact>
+  class image : super
+  {
+  public:
+    stc_using(coord);
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(iter);
+    stc_using(grid);
+  protected:
+    image() {}
+  };
+
+# include "../local/undefs.hh"
+
+
+# define current    image2d<T>
+# define super      image <current>
+# define templ      template <typename T>
+# define classname  image2d
+
+  stc_Header;
+  typedef T value;
+  typedef iter2d iter;
+  typedef point2d point;
+  typedef point::coord coord;
+  typedef grid2d grid;
+  typedef box2d box;
+  stc_End;
+
+
+  template <typename T>
+  class image2d : super
+  {
+  public:
+    stc_using(coord);
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(iter);
+    stc_using(grid);
+
+    bool imp_owns(const point& p) const { return  bb_.imp_includes(p); }
+    value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
+  protected:
+    value** T_;
+    box &bb_;
+  };
+
+# include "../local/undefs.hh"
 
   // End Image
   //////////////////////////////////////////////
