@@ -390,9 +390,9 @@ namespace oln_point
   class box_iterator_ : public super
   {
   public:
-    typedef stc_type(box_iterator_, point) point;
+    typedef P point;
 
-    box_iterator_(box_<point> &box) : bb_(box)
+    box_iterator_(box_<point> box) : bb_(box)
     {
       nop_ = box.pmax;
       ++nop_[0];
@@ -419,14 +419,14 @@ namespace oln_point
   {
     typedef typename box_iterator_<P>::point point;
     for (int i = point::n - 1; i >= 0; --i)
-      if (p_[i] == bb_.pmax(i))
-	p_[i] = bb_.pmin(i);
+      if (p_[i] == bb_.pmax[i])
+	p_[i] = bb_.pmin[i];
       else
       {
 	++p_[i];
 	break;
       }
-    if (p_ == bb_.pmin())
+    if (p_ == bb_.pmin)
       p_ = nop_;
   }
 
@@ -661,7 +661,7 @@ namespace oln_point
 
 
   template <typename Exact>
-  class image : super
+  class image : public super
   {
   public:
     //    stc_using(coord);
@@ -693,7 +693,7 @@ namespace oln_point
 
 
   template <typename T>
-  class image2d : super
+  class image2d : public super
   {
   public:
     stc_using(point);
@@ -706,21 +706,11 @@ namespace oln_point
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
     value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
-
+    box impl_bbox() const {return bb_;}
   protected:
     value** T_;
     box &bb_;
   };
-
-  // template <typename Ima>
-//   void print(const Ima& I)
-//   {
-//     typename I.iter it;
-
-//     for (it.start; it.is_valid; ++it)
-//       std::cout << it.to_point << ' ' << std::endl;
-//   }
-
 
 # include "../local/undefs.hh"
 
@@ -741,7 +731,7 @@ namespace oln_point
 
 
   template <typename T>
-  class image1d : super
+  class image1d : public super
   {
   public:
     stc_using(point);
@@ -753,12 +743,22 @@ namespace oln_point
     image1d(box &box_ref) : bb_(box_ref) {}
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
-
+    value imp_value_acces(const point& p) { return T_[p.col]; }
+    box impl_bbox() const {return bb_;}
   protected:
     value** T_;
     box &bb_;
   };
+
+  template <typename Image>
+  void print(const Image& ima)
+  {
+    typename Image::iter it (ima.bbox());
+
+    for (it.start(); it.is_valid(); it.next())
+      std::cout << 'a' <<  std::endl;
+//          std::cout << it.to_point << ' ' << std::endl;
+  }
 
 # include "../local/undefs.hh"
 
