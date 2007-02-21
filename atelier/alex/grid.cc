@@ -14,6 +14,7 @@ int main ()
   point2d p1(3, 2), p2(7,5), p3(5,4);
   box2d   b(p1, p2);
   box_iterator2d bb(b);
+  pset_std_<point2d> tst;
   //  box2d<int> bo(p1, p2);
 
   std::cout << b.includes(p3) << std::endl;
