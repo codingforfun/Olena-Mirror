@@ -44,6 +44,7 @@ namespace ugo
       bool operator> (Point<Exact> const& rhs) const	{ return this->exact().impl_sup ( rhs.exact () );    }
       bool operator>= (Point<Exact> const& rhs) const	{ return this->exact().impl_supeq ( rhs.exact () );  }
       bool operator<= (Point<Exact> const& rhs) const	{ return this->exact().impl_infequ ( rhs.exact () ); }
+      bool operator[] (Point<Exact> const& rhs) const	{ return this->exact().impl_croch ( rhs.exact () ); }
     protected:
       Point() {}
   };
@@ -63,12 +64,14 @@ namespace ugo
       void invalidate()		{ this->exact().impl_invalidate();	}
       bool is_valid() const	{ return this->exact().impl_is_valid(); }
       void set(const value& v)	{ this->exact().impl_set(v);		}
+    protected:
+      Iterator() {}
   };
 
 
   //--Point_set-------------------
 
-    template <typename Exact>
+  template <typename Exact>
   class Point_set : public virtual any< Exact >,
 		    public automatic::get_impl<Point_set, Exact>
   {
@@ -86,5 +89,9 @@ namespace ugo
 
   //--
 }
+
+//--implementations
+
+#include "5-set.hh"
 
 #endif	    /* !CONCEPT_HH_ */

@@ -1,6 +1,4 @@
-#include "../local/scoop.hh"
-#include <mlc/int.hh>
-
+//#include "concept.hh"
 /* MELANGE SCOOP 1 - 2 qui ne marche surrement pas */
 
 namespace pts
@@ -45,6 +43,7 @@ namespace pts
   {
       typedef point2d_<T>	current;
       typedef Point< current >	super_type;
+
       typedef grid2d		grid;
       typedef T			coord;
       typedef mlc::uint_<2>	dim;
