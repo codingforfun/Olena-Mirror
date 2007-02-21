@@ -145,6 +145,12 @@ namespace oln_point
                                                }
   };
 
+  template <typename C>
+  std::ostream& operator<<(std::ostream& ostr, const point2d_<C> p)
+  {
+    return ostr << "p[" << p.row << "][" << p.col << "]";
+  }
+
   typedef point2d_<int> point2d;
 
 # include "../local/undefs.hh"
@@ -181,6 +187,8 @@ namespace oln_point
     coord operator[](unsigned i) const         { i = i; return col; }
     coord& operator[](unsigned i)              { i = i; return col; }
   };
+
+
 
   typedef point1d_<int> point1d;
 
@@ -408,6 +416,7 @@ namespace oln_point
     bool impl_is_valid() const { return p_ != nop_; }
     point impl_to_point() const { return p_; }
     point const* point_adr() const { return &p_; }
+    operator point const() { return p_; }
 
   protected:
     point p_;
@@ -799,8 +808,8 @@ namespace oln_point
     typename Image::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
-      std::cout << 'a' <<  std::endl;
-//          std::cout << it.to_point << ' ' << std::endl;
+      //      std::cout << 'a' <<  std::endl;
+      std::cout << (typename Image::point) it << ' ' << std::endl;
   }
 
 # include "../local/undefs.hh"
