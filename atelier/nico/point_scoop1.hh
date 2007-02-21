@@ -590,6 +590,7 @@ namespace oln_point
     stc_typename(iter);
     stc_typename(grid);
     stc_typename(data);
+    stc_typename(coord);
 
     value operator() (const point& p)
     {
@@ -617,6 +618,7 @@ namespace oln_point
     stc_using(iter);
     stc_using(grid);
     stc_using(data);
+    stc_using(coord);
   };
 
 # include "../local/undefs.hh"
@@ -629,14 +631,13 @@ namespace oln_point
   template <typename Exact>
   struct Image2d : super
   {
-    stc_typename(coord);
-
     stc_using(point);
     stc_using(value);
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
     stc_using(data);
+    stc_using(coord);
 
     value operator() (coord row, coord col)
     {
@@ -677,7 +678,7 @@ namespace oln_point
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
-    //stc_using(data);
+    stc_using(coord);
 
     stc_lookup(data);
     typedef data data_t;
@@ -709,6 +710,7 @@ namespace oln_point
 //     stc_using(box);
 //     stc_using(iter);
 //     stc_using(grid);
+    stc_using(coord);
 
   protected:
     primitive_image() {}
@@ -741,8 +743,9 @@ namespace oln_point
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
+    stc_using(coord);
 
-    image2d(box &box_ref) : bb_(box_ref) {}
+    image2d(box &box_ref) : bb_(box_ref) { /*T_ = array2d<value, coord>(bb_.pmin.row, bb_.pmin.col, bb_.pmax.row, bb_.pmax.col);*/ }
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
     value imp_value_acces(const point& p) { return T_(p.row, p.col); }
@@ -763,7 +766,7 @@ namespace oln_point
   typedef T value;
   typedef iter1d iter;
   // fix it
-  //typedef array2d<T, coord>  data;
+  //  typedef array1d<T, coord>  data;
   typedef point1d point;
   typedef point::coord coord;
   typedef grid1d grid;
@@ -781,10 +784,10 @@ namespace oln_point
     stc_using(iter);
     stc_using(grid);
 
-    signal(box &box_ref) : bb_(box_ref) {}
+    signal(box &box_ref) : bb_(box_ref) { }
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    //  value imp_value_acces(const point& p) { return T_[p.col]; }
+    //value imp_value_acces(const point& p) { return T_[p.col]; }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
