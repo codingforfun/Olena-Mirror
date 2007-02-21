@@ -1,0 +1,65 @@
+------------------------------------------------------------------------
+r775 | jardonnet | 2007-02-21 16:29:14 +0100 (mer, 21 fév 2007) | 5 lines
+
+2007-02-21  Ugo Jardonnet  <jardonnet@saint-tropez.lrde.epita.fr>
+
+	* Point_set OK
+
+
+------------------------------------------------------------------------
+r772 | jardonnet | 2007-02-21 11:22:59 +0100 (mer, 21 fév 2007) | 2 lines
+
+	File reorganisation.
+
+------------------------------------------------------------------------
+r771 | jardonnet | 2007-02-21 11:21:13 +0100 (mer, 21 fév 2007) | 4 lines
+
+2007-02-21  Ugo Jardonnet  <jardonnet@saint-tropez.lrde.epita.fr>
+
+	File reorganisation.
+
+------------------------------------------------------------------------
+r762 | jardonnet | 2007-02-20 17:36:29 +0100 (mar, 20 fév 2007) | 6 lines
+
+2007-02-20  Ugo Jardonnet  <jardonnet@saint-tropez.lrde.epita.fr>
+
+	Exercises : Day 1.
+
+	*concept.hh: New.
+
+------------------------------------------------------------------------
+r761 | jardonnet | 2007-02-20 16:52:19 +0100 (mar, 20 fév 2007) | 7 lines
+
+2007-02-20  Ugo Jardonnet  <jardonnet@saint-tropez.lrde.epita.fr>
+
+	Exercises : Day 1.
+
+	* ugo/4-box.hh: Finally useless.
+
+
+------------------------------------------------------------------------
+r760 | jardonnet | 2007-02-20 16:48:49 +0100 (mar, 20 fév 2007) | 14 lines
+
+2007-02-20  Ugo Jardonnet  <jardonnet@saint-tropez.lrde.epita.fr>
+
+	Exercises : Day 1.
+
+	* ugo/2-scoop2.hh,
+	* ugo/2-truc.cc,
+	* ugo/3-iterator.hh,
+	* ugo/4-box.hh,
+	* ugo/5-set.hh,
+	* ugo/ChangeLog,
+	* ugo/main.cc,
+	* ugo/Makefile: New.
+
+
+------------------------------------------------------------------------
+r741 | theo | 2007-02-16 11:58:26 +0100 (ven, 16 fév 2007) | 5 lines
+
+2007-02-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* atelier: New directory for the 2007 C++/Olena atelier.
+
+
+------------------------------------------------------------------------
