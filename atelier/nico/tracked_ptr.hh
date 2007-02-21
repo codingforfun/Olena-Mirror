@@ -30,9 +30,11 @@
 
 # include <set>
 # include <ostream>
+# include <cassert>
+# include <mlc/contract.hh>
 
 
-namespace oln
+namespace oln_point
 {
 
   namespace internal
@@ -220,7 +222,6 @@ namespace oln
     void tracked_ptr<T>::invariant_() const
     {
       typedef std::set<tracked_ptr<T>*> holders_t;
-
       invariant((ptr_ and holders_) or (not ptr_ and not holders_));
       if (ptr_ == 0)
 	return;

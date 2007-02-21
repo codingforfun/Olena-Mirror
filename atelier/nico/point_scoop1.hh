@@ -36,9 +36,10 @@
 
 # include "../local/scoop.hh"
 
+
 #include "init_oln_point.hh"
 # include "array.hh"
-
+# include "tracked_ptr.hh"
 
 
 namespace oln_point
@@ -210,6 +211,7 @@ namespace oln_point
   stc_decl_associated_type(iter);
   stc_decl_associated_type(box);
   stc_decl_associated_type(coord);
+  stc_decl_associated_type(data);
 
 
 
@@ -587,6 +589,7 @@ namespace oln_point
     stc_typename(box);
     stc_typename(iter);
     stc_typename(grid);
+    stc_typename(data);
 
     value operator() (const point& p)
     {
@@ -613,6 +616,7 @@ namespace oln_point
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
+    stc_using(data);
   };
 
 # include "../local/undefs.hh"
@@ -632,6 +636,7 @@ namespace oln_point
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
+    stc_using(data);
 
     value operator() (coord row, coord col)
     {
@@ -659,6 +664,7 @@ namespace oln_point
   typedef stc::abstract point;
   typedef stc::abstract grid;
   typedef stc::abstract box;
+  typedef stc::abstract data;
   stc_End;
 
 
@@ -666,14 +672,19 @@ namespace oln_point
   class image_base : public super
   {
   public:
-    //    stc_using(coord);
     stc_using(point);
     stc_using(value);
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
+    //stc_using(data);
+
+    stc_lookup(data);
+    typedef data data_t;
+
   protected:
     image_base() {}
+    internal::tracked_ptr<data_t> T_;
   };
 
 # include "../local/undefs.hh"
@@ -692,12 +703,12 @@ namespace oln_point
   class classname : public super
   {
   public:
-    //    stc_using(coord);
-    //     stc_using(point);
-    //     stc_using(value);
-    //     stc_using(box);
-    //     stc_using(iter);
-    //     stc_using(grid)
+//     stc_using(data);
+//     stc_using(point);
+//     stc_using(value);
+//     stc_using(box);
+//     stc_using(iter);
+//     stc_using(grid);
 
   protected:
     primitive_image() {}
@@ -714,7 +725,8 @@ namespace oln_point
   typedef iter2d iter;
   typedef point2d point;
   typedef point::coord coord;
-  typedef array2d<T, coord>  value;
+  typedef array2d<T, coord>  data;
+  typedef T value;
   typedef grid2d grid;
   typedef box2d box;
   stc_End;
@@ -736,7 +748,6 @@ namespace oln_point
     value imp_value_acces(const point& p) { return T_(p.row, p.col); }
     box impl_bbox() const {return bb_;}
   protected:
-    value* T_;
     box &bb_;
   };
 
@@ -751,6 +762,8 @@ namespace oln_point
   stc_Header;
   typedef T value;
   typedef iter1d iter;
+  // fix it
+  //typedef array2d<T, coord>  data;
   typedef point1d point;
   typedef point::coord coord;
   typedef grid1d grid;
@@ -771,10 +784,9 @@ namespace oln_point
     signal(box &box_ref) : bb_(box_ref) {}
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    value imp_value_acces(const point& p) { return T_[p.col]; }
+    //  value imp_value_acces(const point& p) { return T_[p.col]; }
     box impl_bbox() const {return bb_;}
   protected:
-    value** T_;
     box &bb_;
   };
 
@@ -798,5 +810,4 @@ namespace oln_point
 
 
 #endif /* !POINT_SCOOP1_HH_ */
-
 
