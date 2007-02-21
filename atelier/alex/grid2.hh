@@ -18,6 +18,7 @@ namespace glg
   stc_decl_associated_type(coord);
   stc_decl_associated_type(dim);
   stc_decl_associated_type(point);
+  stc_decl_associated_type(value);
   stc_decl_associated_type(box_);
 
   // ====================
@@ -120,8 +121,45 @@ namespace glg
      bool includes (point const& p) const { return this->exact().impl_includes(p); }
    };
 
+  // Image
+  // -----
 
+  template < typename Exact >
+  class Image : public any < Exact >
+  {
+    stc_typename(point);
+    stc_typename(value);
+    typedef box_<point> box;
+    typedef Iterator_on_Points<point> iter;
 
+    value operator() (point const& p) const;
+    bool owns (point const& p) const;
+    box bbox() const;
+  };
+
+  // Image_2D
+  // --------
+
+  // Ici on ne definit que les types et les proto.
+  // On va faire une class concrete de base pour les preconditions etc...
+  // C'est une 1ere idee, je vais aller voir comment c'est fait dans Olena
+  // * quelques minutes plus tard *
+  // Bon, j'ai pas trop compris comment fait Olena, c'est plein de macros oln_*
+  // On va intuiter...
+
+  // Bon la classe concrete image2d doit deriver de top...
+  // Adieu le image_base_ donc...
+
+  template < typename Exact >
+  class Image_2D : public Image < Exact >
+  {
+    stc_typename(point);
+    stc_typename(value);
+    stc_typename(coord);
+    value operator() (coord row, coord col);
+  };
+
+# include "../local/undefs.hh"
 
   // ===============
   // IMPLEMENTATIONS
