@@ -10,7 +10,7 @@ int		main()
 
   ugo::point2d	p;
 
-  ugo::box2d  box;
+//  ugo::box2d  box;
 
   typedef ugo::point2d_<int> point_t;
 

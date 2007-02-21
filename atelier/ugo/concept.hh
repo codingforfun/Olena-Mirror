@@ -92,6 +92,6 @@ namespace ugo
 
 //--implementations
 
-#include "5-set.hh"
+#include "implementation.hh"
 
 #endif	    /* !CONCEPT_HH_ */
