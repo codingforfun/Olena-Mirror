@@ -1,4 +1,4 @@
-Olena 0.10a	unknown date
+Olena 0.11	February 20, 2007
 
 	* The whole Olena distribution compiles with the GNU C++
 	  Compiler (G++) 4.0 and 4.1.  The compatibility with previous

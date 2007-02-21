@@ -1,3 +1,10 @@
+2007-02-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Version 0.11.
+
+	* config/oln.m4 (OLN_VERSION): Set to 0.11.
+	* NEWS: Update.
+
 2007-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix config/strip-lrde.
