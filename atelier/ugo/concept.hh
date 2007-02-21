@@ -120,14 +120,41 @@ namespace ugo
       value operator() (const point& p)
       {
 	assert(owns(p));
-	return this->exact().impl_value_acces(p);
+	return this->exact().impl_includes(p);
       }
       bool owns(const point& p) const { return this->exact().impl_owns(p); }
-      box bbox() const { return this->exact().impl_bbox(); }
+      box bbox() const                { return this->exact().impl_bbox();  }
 
     protected:
       Image() {}
   };
+
+
+
+  //--Image2d-------------------Macro-Mode
+
+# define current    Image2d<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Image2d
+
+  template <typename Exact>
+  struct Image2d : super
+  {
+      stc_typename(coord);
+
+      stc_using( point );
+      stc_using( value );
+      stc_using( box   );
+      stc_using( iter  );
+      stc_using( grid  );
+
+      value operator() (coord row, coord col) {	return this->exact().impl_point(row, col); }
+      bool owns(const point& p) const         { return this->exact().impl_owns(p);         }
+      box bbox() const                        { return this->exact().impl_bbox();          }
+  };
+
+# include "../local/undefs.hh"
 
 }
 

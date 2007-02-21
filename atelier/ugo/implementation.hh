@@ -145,11 +145,13 @@ namespace ugo
 
   template <typename P> struct box_;
 
-  template <typename T>
-  struct vtypes< box_<T> >
+  template <typename P>
+  struct vtypes< box_<P> >
   {
-      typedef box_<T>		         current;
-      typedef point_set_base< current >  super_type;
+      typedef box_<P>			current;
+      typedef point_set_base<current>	super_type;
+
+      typedef P point;
   };
 
   template <typename P>
@@ -158,11 +160,20 @@ namespace ugo
       typedef box_<P>			current;
       typedef point_set_base< current >	super;
 
-      stc_using(box);
-
-      P pmin, pmax;
+      stc_using( point );
 
       enum { n = mlc_value(typename P::dim) };
+      const box_& impl_bbox() const { return *this; }
+      bool impl_includes(const point& p) const
+      {
+	for (unsigned i = 0; i < n; ++i)
+	  if (p[i] < pmin[i] or p[i] > pmax[i])
+	    return false;
+	return true;
+      }
+
+    private:
+      P pmin, pmax;
   };
 
   //-----
@@ -272,36 +283,45 @@ namespace ugo
   //              IMAGES
   //----------------------------------------------------------------------------
 
-  //--image-------------------
+  //--image2d-------------------
 
-  template <typename P> struct image;
+# define current    image2d<T>
+# define super      top<current>
+# define templ      template <typename T>
+# define classname  image2d
 
-  template <typename P>
-  struct vtypes<image<P> >
+  stc_Header;
+  typedef iter2d	iter;
+  typedef point2d	point;
+  typedef point::coord	coord;
+  typedef T		value;
+  typedef grid2d	grid;
+  typedef box2d		box;
+
+  typedef stc::is<Image2d> category;
+  stc_End;
+
+
+  template <typename T>
+  class image2d : public super
   {
-      typedef image<P>			current;
-      typedef point_set_base<current>	super_type;
-
-      typedef P				point;
-      typedef grid2d			grid;
-  };
-
-  template <typename P>
-  struct image : public point_set_base< image<P> >
-  {
-      typedef image<P>			current;
-      typedef point_set_base< current > super;
-
-      stc_using(grid);
+    public:
       stc_using(point);
+      stc_using(value);
+      stc_using(box);
+      stc_using(iter);
+      stc_using(grid);
 
-      unsigned	impl_npoints()                 { return nb;     }
-      bool impl_includes(const point& p) const { return false;  }
+      image2d(box &box_ref) : bb_(box_ref) {}
 
-    private:
-      int	nb;
+      bool imp_owns(const point& p) const   { return  bb_.includes(p); }
+      value imp_value_acces(const point& p) { return T_(p.row, p.col); }
+      box impl_bbox() const		    { return bb_;              }
+    protected:
+      box &bb_;
   };
 
+# include "../local/undefs.hh"
   //--
 }
 
