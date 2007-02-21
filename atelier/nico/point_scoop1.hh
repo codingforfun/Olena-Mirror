@@ -36,6 +36,11 @@
 
 # include "../local/scoop.hh"
 
+#include "init_oln_point.hh"
+# include "array.hh"
+
+
+
 namespace oln_point
 {
 
@@ -46,9 +51,6 @@ namespace oln_point
 
 
 
-
-  //mandatory for using scoop 2 mecanism
-  stc_equip_namespace;
 
   /////////////////////////////////////////////////////////////
   //all Grid class
@@ -647,10 +649,10 @@ namespace oln_point
 
   // Concret World
 
-# define current    image<Exact>
+# define current    image_base<Exact>
 # define super      top <Exact>
 # define templ      template <typename Exact>
-# define classname  image
+# define classname  image_base
 
   stc_Header;
   typedef stc::is<Image> category;
@@ -661,7 +663,7 @@ namespace oln_point
 
 
   template <typename Exact>
-  class image : public super
+  class image_base : public super
   {
   public:
     //    stc_using(coord);
@@ -671,22 +673,48 @@ namespace oln_point
     stc_using(iter);
     stc_using(grid);
   protected:
-    image() {}
+    image_base() {}
   };
 
 # include "../local/undefs.hh"
 
 
+# define current    primitive_image<Exact>
+# define super      image_base <Exact>
+# define templ      template <typename Exact>
+# define classname  primitive_image
+
+  stc_Header;
+  stc_End;
+
+
+  template <typename Exact>
+  class classname : public super
+  {
+  public:
+    //    stc_using(coord);
+    //     stc_using(point);
+    //     stc_using(value);
+    //     stc_using(box);
+    //     stc_using(iter);
+    //     stc_using(grid)
+
+  protected:
+    primitive_image() {}
+  };
+
+# include "../local/undefs.hh"
+
 # define current    image2d<T>
-# define super      image <current>
+# define super      primitive_image<current>
 # define templ      template <typename T>
 # define classname  image2d
 
   stc_Header;
-  typedef T value;
   typedef iter2d iter;
   typedef point2d point;
   typedef point::coord coord;
+  typedef array2d<T, coord>  value;
   typedef grid2d grid;
   typedef box2d box;
   stc_End;
@@ -705,10 +733,10 @@ namespace oln_point
     image2d(box &box_ref) : bb_(box_ref) {}
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    value imp_value_acces(const point& p) { return T_[p.row][p.col]; }
+    value imp_value_acces(const point& p) { return T_(p.row, p.col); }
     box impl_bbox() const {return bb_;}
   protected:
-    value** T_;
+    value* T_;
     box &bb_;
   };
 
@@ -716,7 +744,7 @@ namespace oln_point
 
 
 # define current    signal<T>
-# define super      image <current>
+# define super      primitive_image<current>
 # define templ      template <typename T>
 # define classname  signal
 
@@ -770,3 +798,5 @@ namespace oln_point
 
 
 #endif /* !POINT_SCOOP1_HH_ */
+
+
