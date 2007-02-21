@@ -10,9 +10,9 @@ int		main()
 
   ugo::point2d	p;
 
-//  ugo::box2d  box;
+  ugo::point_set_2d<ugo::point2d> sp;
 
-  typedef ugo::point2d_<int> point_t;
+  typedef ugo::point2d point_t;
 
 //  mlc::assert_<mlc_eq(point_t::grid, ugo::grid2d)>::check();
 

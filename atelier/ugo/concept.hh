@@ -22,8 +22,7 @@ namespace ugo
   stc_decl_associated_type( value );
   stc_decl_associated_type( point );
   stc_decl_associated_type( iter  );
-
-
+  stc_decl_associated_type( box   );
 
 
   //--Point------------------------
@@ -69,11 +68,32 @@ namespace ugo
   };
 
 
+
+  //--Iterator_on_Points------------------
+
+  template <typename Exact>
+  struct Iterator_on_Points : public Iterator<Exact>,
+			      public automatic::get_impl<Iterator_on_Points, Exact>
+  {
+      stc_typename(point);
+
+      Iterator_on_Points();
+      ~Iterator_on_Points();
+
+      operator stc_type(Exact, point)() const         { return this->exact().impl_cast();      }
+      stc_type(Exact, point) to_point() const         { return this->exact().impl_to_point();  }
+      stc_type(Exact, point) const* point_adr() const { return this->exact().impl_point_adr(); }
+    protected:
+      Iterator_on_Points() {}
+  };
+
+
+
   //--Point_set-------------------
 
   template <typename Exact>
-  class Point_set : public virtual any< Exact >,
-		    public automatic::get_impl<Point_set, Exact>
+  struct Point_set : public virtual any< Exact >,
+		     public automatic::get_impl<Point_set, Exact>
   {
       stc_typename( point );
       stc_typename( grid  );
@@ -85,9 +105,30 @@ namespace ugo
       Point_set() {}
   };
 
+  //--Image----------------------
 
+  template <typename Exact>
+  struct Image : public virtual any< Exact >,
+		 public automatic::get_impl<Image, Exact>
+  {
+      stc_typename( point );
+      stc_typename( value );
+      stc_typename( box   );
+      stc_typename( iter  );
+      stc_typename( grid  );
 
-  //--
+      value operator() (const point& p)
+      {
+	assert(owns(p));
+	return this->exact().impl_value_acces(p);
+      }
+      bool owns(const point& p) const { return this->exact().impl_owns(p); }
+      box bbox() const { return this->exact().impl_bbox(); }
+
+    protected:
+      Image() {}
+  };
+
 }
 
 //--implementations

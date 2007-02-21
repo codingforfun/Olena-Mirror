@@ -30,11 +30,11 @@ namespace ugo
       typedef point2d_<T>	current;
       typedef top< current >	super_type;
 
-      typedef stc::is<Point>	category;
-
       typedef grid2d		grid;
       typedef T			coord;
       typedef mlc::uint_<2>	dim;
+
+      typedef stc::is<Point>	category;
   };
 
   template <typename T>
@@ -55,7 +55,7 @@ namespace ugo
       bool impl_infeq(point2d_<T> const& rhs) const  { return not impl_sup(rhs);				   }
       bool impl_croch(point2d_<T> const& i) const    { if (i == 1) return x; else return y;             	   }
 
-      point2d_() : row(0), col(0), x(0), y(0) {}
+      point2d_() : row(0), col(0) {}
 
       int	row, col;
       coord	x, y;
@@ -90,57 +90,53 @@ namespace ugo
   struct vtypes< point_set_base<Exact> >
   {
       typedef point_set_base<Exact>	current;
-      typedef top< current >		super_type;
+      typedef top<Exact>		super_type;
 
-      typedef stc::is<Point_set>	category;
-
-      typedef stc::abstract point;
-
+      typedef stc::abstract		point;
       typedef stc_deferred(point) point__;
       typedef stc::final<stc_type(point__, grid)> grid;
+      typedef Iterator<grid>		iter;
 
-      typedef Iterator<grid>	 iter;
+      typedef stc::is<Point_set>	category;
   };
 
   template <typename Exact>
-  class point_set_base : public top< point_set_base<Exact> >
+  class point_set_base : public top<Exact>
   {
-      typedef point_set_base<Exact>	current;
-      typedef top< current >		super;
     protected:
       point_set_base() {}
   };
 
 
 
-
   //--point_set_2d-------------------
 
-  template < typename T > struct point_set_2d;
+  template <typename P> struct point_set_2d;
 
-  template <typename T>
-  struct vtypes<point_set_2d<T> >
+  template <typename P>
+  struct vtypes< point_set_2d<P> >
   {
-      typedef point_set_2d<T>		current;
-      typedef point_set_base< current >	super_type;
+      typedef point_set_2d<P>		current;
+      typedef point_set_base<current>	super_type;
 
-      typedef stc::is<Point_set> category;
+      typedef point2d			point;
   };
 
-  template <typename T>
-  struct point_set_2d : public point_set_base< point_set_2d<T> >
+  template <typename P>
+  struct point_set_2d : public point_set_base< point_set_2d<P> >
   {
-      typedef point_set_2d<T>		current;
-      typedef point_set_base< current > super;
+      typedef point_set_2d<P>		current;
+      typedef point_set_base<current>	super;
 
+      stc_using(grid);
       stc_using(point);
 
-      unsigned	impl_npoints()                 { return nb;     }
-      bool impl_includes(const point& p) const { return false;  }
+      unsigned	impl_npoints()                 { return nb;				}
+      bool impl_includes(const point& p) const { if (p) return true; else return false; }
 
     private:
       int	nb;
-      T		truc;
+      P		plus;
   };
 
 
@@ -154,7 +150,6 @@ namespace ugo
   {
       typedef box_<T>		         current;
       typedef point_set_base< current >  super_type;
-
   };
 
   template <typename P>
@@ -181,41 +176,6 @@ namespace ugo
   //              ITERATORS
   //----------------------------------------------------------------------------
 
-
-  //--Iterator_on_Points------------------
-
-  template <typename T>  struct iterator_on_Points;
-
-  template <typename T>
-  struct vtypes< iterator_on_Points<T> >
-  {
-      typedef iterator_on_Points<T> current;
-      typedef top< current >	    super_type;
-
-      typedef stc::abstract	point;
-      typedef stc::is<Iterator> category;
-
-      typedef T value;
-  };
-
-  template <typename Exact>
-  struct iterator_on_Points : public top < iterator_on_Points<Exact> >
-  {
-      typedef iterator_on_Points<Exact>	current;
-      typedef top< current >		super;
-
-      stc_typename(point);
-
-      iterator_on_Points();
-      ~iterator_on_Points();
-
-      operator point () const		{ return this->exact().impl_cast();  }
-      point to_point() const		{ return *this;                      }
-      const point point_adr()		{ return this->exact().impl_adr();   }
-  };
-
-
-
   //--box_iterator_----------------
 
   template <typename E> struct box_iterator_;
@@ -223,12 +183,14 @@ namespace ugo
   template <typename T>
   struct vtypes< box_iterator_<T> >
   {
-      typedef box_iterator_<T>	             current;
-      typedef iterator_on_Points< current >  super_type;
+      typedef box_iterator_<T>		current;
+      typedef top< current >		super_type;
+
+      typedef stc::is<Point_set>	category;
   };
 
   template <typename P>
-  struct box_iterator_ : public iterator_on_Points< box_iterator_<P> >
+  struct box_iterator_ : public top< box_iterator_<P> >
   {
       typedef  P point_t;
 
@@ -273,14 +235,14 @@ namespace ugo
       typedef dummy_iterator_on_point2d<T> current;
       typedef top< current >	           super_type;
 
-      typedef stc::abstract	point;
-      typedef stc::is<Iterator> category;
+      typedef T		                   point;
+      typedef T				   value;
 
-      typedef T value;
+      typedef stc::is<Iterator_on_Points> category;
   };
 
   template <typename T>
-  struct dummy_iterator_on_point2d : public iterator_on_Points< dummy_iterator_on_point2d<T> >
+  struct dummy_iterator_on_point2d : public top< dummy_iterator_on_point2d<T> >
   {
     public:
       typedef dummy_iterator_on_point2d<T> current;
@@ -306,6 +268,41 @@ namespace ugo
 
   //-----
 
+  //----------------------------------------------------------------------------
+  //              IMAGES
+  //----------------------------------------------------------------------------
+
+  //--image-------------------
+
+  template <typename P> struct image;
+
+  template <typename P>
+  struct vtypes<image<P> >
+  {
+      typedef image<P>			current;
+      typedef point_set_base<current>	super_type;
+
+      typedef P				point;
+      typedef grid2d			grid;
+  };
+
+  template <typename P>
+  struct image : public point_set_base< image<P> >
+  {
+      typedef image<P>			current;
+      typedef point_set_base< current > super;
+
+      stc_using(grid);
+      stc_using(point);
+
+      unsigned	impl_npoints()                 { return nb;     }
+      bool impl_includes(const point& p) const { return false;  }
+
+    private:
+      int	nb;
+  };
+
+  //--
 }
 
 #endif
