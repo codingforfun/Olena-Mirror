@@ -1,10 +1,23 @@
 #ifndef GRID_HH_
 # define GRID_HH_
 
+# include <cassert>
 # include <set>
 # include <mlc/int.hh>
 # include <mlc/uint.hh>
 # include "../local/scoop.hh"
+
+# include <mlc/flags.hh>
+# include <mlc/typedef.hh>
+# include <mlc/ret.hh>
+# include <mlc/assert.hh>
+# include <mlc/abort.hh>
+# include <mlc/bool.hh>
+# include <mlc/pair.hh>
+# include <mlc/cmp.hh>
+# include <mlc/if.hh>
+# include <mlc/is_a.hh>
+# include <mlc/case.hh>
 
 namespace glg
 {
@@ -33,6 +46,22 @@ namespace glg
   template <typename C> class point2d_;
   template < typename Exact > class Iterator_on_Points;
   template < typename P > class pset_std_iterator_;
+
+  template < typename Exact >
+  class Image;
+  template < typename Exact >
+  class Image_2D;
+  template < typename T >
+  class image2d;
+
+
+
+  // =======
+  // ALIASES
+  // =======
+
+  typedef point2d_<int> point2d;
+  typedef box_<point2d> box2d;
 
   // ========
   // CONCEPTS
@@ -127,8 +156,11 @@ namespace glg
   template < typename Exact >
   class Image : public any < Exact >
   {
+  public:
     stc_typename(point);
     stc_typename(value);
+    stc_typename(coord);
+    stc_typename(grid);
     typedef box_<point> box;
     typedef Iterator_on_Points<point> iter;
 
@@ -150,16 +182,49 @@ namespace glg
   // Bon la classe concrete image2d doit deriver de top...
   // Adieu le image_base_ donc...
 
+  // Je ne vois pas comment m'affranchir du header (notamment pour les types
+  // finaux), je vais donc faire une classe concrete image_base_ finalement
+
+  // Roland m'a aide a sortir du probleme sur lequel je bloque depuis ce matin:
+  // MERCI ROLAND
+
+  // \o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
+  //  |\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
+  // /\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
+  //   | \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \.
+  //  / \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \.
+
+  //                   ON FAIT TOUS UNE OLA POUR ROLAND!
+
   template < typename Exact >
   class Image_2D : public Image < Exact >
   {
+  public:
     stc_typename(point);
     stc_typename(value);
     stc_typename(coord);
+    stc_typename(grid);
     value operator() (coord row, coord col);
   };
 
 # include "../local/undefs.hh"
+
+  // ========
+  // SELECTOR
+  // ========
+
+  namespace internal
+  {
+    typedef selector<Image, 1> Image_dimension;
+
+    template < typename Exact >
+    struct case_<Image_dimension, Exact, 1> :
+      where_< mlc_eq(stc_type(Exact, grid), grid2d) >
+    {
+      typedef Image_2D<Exact> ret;
+    };
+  }
+
 
   // ===============
   // IMPLEMENTATIONS
@@ -234,6 +299,7 @@ namespace glg
   template < typename C >
   class dummy_iterator_on_point2d : public super
   {
+  public:
     stc_using(point);
     point& impl_cast() { return point_; }
     point const* point_adr () const { return &point_; }
@@ -269,26 +335,26 @@ namespace glg
   {
   public:
     stc_using(point);
-    point impl_cast() { return point_; }
+    point& impl_cast() { return point_; }
+    point impl_cast() const { return point_; }
     point const* point_adr () const { return &point_; }
 
-    void start () { point_ = bb_.pmin(); }
+    void start () { point_ = bb_.pmin; }
     void next () {
       for (int i = point::n - 1; i >= 0; --i)
-	if (point_[i] == bb_.pmax(i))
-	  point_[i] = bb_.pmin(i);
+	if (point_[i] == bb_.pmax[i])
+	  point_[i] = bb_.pmin[i];
 	else
 	  {
 	    ++point_[i];
 	    break;
 	  }
-      if (point_ == bb_.pmin())
+      if (point_ == bb_.pmin)
 	point_ = nop_;
     }
     void invalidate () { point_ = nop_; }
     bool is_valid () const { return point_ != nop_; }
-
-    box_iterator_(const box_<point>& bb) : point_(), bb_(bb) { nop_ = bb_.pmax; ++nop_[0];}
+    box_iterator_(const box_<point>& bb) : point_(), bb_(bb) { nop_ = bb_.pmax; ++nop_[1];}
 
   private:
     point point_;
@@ -426,6 +492,90 @@ namespace glg
 
 # include "../local/undefs.hh"
 
+  // images
+  // ------
+
+# define templ template < typename Exact >
+# define classname image_base_
+# define current image_base_< Exact >
+# define super top< Exact >
+
+  stc_Header;
+  typedef stc::is<Image> category;
+  typedef stc::abstract box_;
+  typedef stc::final<box_> box;
+  stc_End;
+
+  template < typename Exact >
+  class image_base_ : public super
+  {
+  public:
+    stc_using(point);
+    stc_using(value);
+    stc_using(box);
+    stc_using(grid);
+
+    value operator() (point const& p) const
+      { assert(owns(p)); return this->exact().impl_par(p); }
+    bool owns (point const& p) const { return bbox().includes(p); }
+    box bbox() const { return this->exact().impl_bbox(); }
+
+  };
+# include "../local/undefs.hh"
+
+  // image2d
+  // -------
+
+# define templ template < typename T >
+# define classname image2d
+# define current image2d< T >
+# define super image_base_< current >
+
+  stc_Header;
+  //  typedef stc::is<Image> category;
+  typedef grid2d grid;
+  typedef point2d point;
+  typedef point::coord coord;
+  typedef box2d box;
+  typedef T value;
+  stc_End;
+
+  template < typename T >
+  class image2d : public super
+  {
+  public:
+    stc_using(point);
+    stc_using(coord);
+    stc_using(grid);
+    stc_using(value);
+    stc_using(box);
+    typedef box_iterator_<point> iter;
+    value& impl_par(const point& p) { return (mat_[p[0]][p[1]]); }
+    value impl_par(const point& p) const { return (mat_[p[0]][p[1]]); }
+    image2d(box bb) : box_(bb)
+    {
+      coord row = bb.pmax.row - bb.pmin.row;
+      coord col = bb.pmax.col - bb.pmin.col;
+
+      pixs_ = new value[row * col];
+      mat_ = new value*[row];
+      value* buf = pixs_ - bb.pmin.col;
+      for (coord i = 0; i < row; ++i)
+      {
+	mat_[i] = buf;
+	buf += col;
+      }
+    }
+    box impl_bbox() const { return box_; };
+    box& impl_bbox() { return box_; };
+    ~image2d() { delete [] mat_; delete [] pixs_; }
+  private:
+    box     box_;
+    value*  pixs_;
+    value** mat_;
+  };
+
+# include "../local/undefs.hh"
 
   // ==========================
   // EXPERIMENTAL (NON WORKING)
@@ -445,5 +595,14 @@ bool bidon (const glg::Point<Exact>& p1, const glg::Point<Exact>& p2)
   return p1 == p2;
 }
 
+
+template <typename Image>
+void print (const Image& input)
+{
+  typename Image::iter it(input.bbox());
+  for (it.start(); it.is_valid(); it.next())
+    std::cout << input(it) << ' ';
+  std::cout << std::endl;
+}
 
 #endif // !GRID_HH_
