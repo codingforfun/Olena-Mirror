@@ -417,7 +417,7 @@ namespace oln_point
   public:
     typedef P point;
 
-    box_iterator_(box_<point> box) : bb_(box)
+    box_iterator_(const box_<point>& box) : bb_(box)
     {
       nop_ = box.pmax;
       ++nop_[0];
@@ -434,7 +434,7 @@ namespace oln_point
   protected:
     point p_;
     point nop_;
-    box_<point> &bb_;
+    const box_<point> &bb_;
   };
 
 
@@ -823,7 +823,7 @@ namespace oln_point
     typename Image::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
-      std::cout << "a" << std::endl;//(typename Image::point) it;//std::cout << (typename Image::point) it << ' ' << std::endl;
+      std::cout << (typename Image::point) it << ' ' << std::endl;
   }
 
 # include "../local/undefs.hh"
