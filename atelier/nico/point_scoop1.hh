@@ -70,8 +70,7 @@ namespace oln_point
 
 
   //End Grid
-
-  //////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
   //all Point class
 
 
@@ -245,7 +244,7 @@ namespace oln_point
 # define classname  Point_Set
 
   template <typename Exact>
-  struct Point_Set : super
+  struct Point_Set : public super
   {
     stc_typename(point);
     stc_typename(grid);
@@ -253,7 +252,7 @@ namespace oln_point
 
 
     unsigned int npoint() const { return this->exact().impl_npoint();  };
-    bool includes() const { return this->exact().impl_includes();  };
+    bool includes(const point& p) const { return this->exact().impl_includes(p);  };
     box bbox() const { return this->exact().impl_includes(); }
   };
 
@@ -275,7 +274,7 @@ namespace oln_point
 
 
   template <typename Exact>
-  class point_set_base : super
+  class point_set_base : public super
   {
   public:
     stc_using(point);
@@ -312,7 +311,7 @@ namespace oln_point
 # include "../local/undefs.hh"
 
   template <typename Exact>
-  struct Iterator_on_Points;
+  struct Iterator_on_Pointss;
 
 
 # define current   Iterator_on_Points<Exact>
@@ -331,9 +330,9 @@ namespace oln_point
 
     typedef Iterator_on_Points<Exact> self;
 
-    operator stc_type(Exact, point)() const { return this->exact().impl_cast(); }
-    stc_type(Exact, point) to_point() const { return this->exact().impl_to_point(); }
-    stc_type(Exact, point) const* point_adr() const { return this->exact().impl_point_adr(); }
+    operator point() const { return this->exact().impl_cast(); }
+    point to_point() const { return this->exact().impl_to_point(); }
+    point const* point_adr() const { return this->exact().impl_point_adr(); }
   };
 
 # include "../local/undefs.hh"
@@ -401,7 +400,7 @@ namespace oln_point
 
 
   stc_Header;
-  typedef stc::is<Iterator> category;
+  typedef stc::is<Iterator_on_Points> category;
   typedef P point;
   typedef P value;
   stc_End;
@@ -606,7 +605,7 @@ namespace oln_point
 # define classname  Image
 
   template <typename Exact>
-  struct Image : super
+  struct Image : public super
   {
     stc_typename(point);
     stc_typename(value);
@@ -616,10 +615,11 @@ namespace oln_point
     stc_typename(data);
     stc_typename(coord);
 
-    value operator() (const point& p)
+
+    value operator() (const point& p) const
     {
       assert(owns(p));
-      return this->exact().impl_value_acces(p);
+      return this->exact().impl_value_access(p);
     }
     bool owns(const point& p) const { return this->exact().impl_owns(p); }
     box bbox() const { return this->exact().impl_bbox(); }
@@ -634,7 +634,7 @@ namespace oln_point
 # define classname  Signal
 
   template <typename Exact>
-  struct Signal : super
+  struct Signal : public super
   {
     stc_using(point);
     stc_using(value);
@@ -653,7 +653,7 @@ namespace oln_point
 # define classname  Image2d
 
   template <typename Exact>
-  struct Image2d : super
+  struct Image2d : public super
   {
     stc_using(point);
     stc_using(value);
@@ -662,6 +662,7 @@ namespace oln_point
     stc_using(grid);
     stc_using(data);
     stc_using(coord);
+
 
     value operator() (coord row, coord col)
     {
@@ -709,7 +710,7 @@ namespace oln_point
 
   protected:
     image_base() {}
-    internal::tracked_ptr<data_t> T_;
+    internal::tracked_ptr<data_t> data_;
   };
 
 # include "../local/undefs.hh"
@@ -742,6 +743,32 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
+# define classname  image_morpher
+# define current    image_morpher<Exact>
+# define super      image_base <Exact>
+# define templ      template <typename Exact>
+
+
+  stc_Header;
+  typedef stc::abstract delegatee;
+  stc_End;
+
+
+  template <typename Exact>
+  class classname : public super
+  {
+  public:
+    stc_typename(delegatee);
+
+
+    image_morpher(delegatee& init) : delegatee_(init) {}
+
+  protected:
+    delegatee& delegatee_;
+  };
+
+# include "../local/undefs.hh"
+
 # define current    image2d<T>
 # define super      primitive_image<current>
 # define templ      template <typename T>
@@ -768,11 +795,13 @@ namespace oln_point
     stc_using(iter);
     stc_using(grid);
     stc_using(coord);
+    stc_using(data);
 
-    image2d(box &box_ref) : bb_(box_ref) { /*T_ = array2d<value, coord>(bb_.pmin.row, bb_.pmin.col, bb_.pmax.row, bb_.pmax.col);*/ }
+    image2d(box &box_ref) : bb_(box_ref) {
+      super::data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmin.col_); }
 
-    bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    value imp_value_acces(const point& p) { return T_(p.row, p.col); }
+    bool impl_owns(const point& p) const   { return  bb_.includes(p); }
+    value impl_value_access(const point& p) const  { return (super::data_.ptr_)->operator()(p.row_, p.col_); }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
@@ -811,7 +840,7 @@ namespace oln_point
     signal(box &box_ref) : bb_(box_ref) { }
 
     bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-    //value imp_value_acces(const point& p) { return T_[p.col]; }
+    //value imp_value_acces(const point& p) { return data_[p.col]; }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
@@ -823,7 +852,10 @@ namespace oln_point
     typename Image::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
-      std::cout << (typename Image::point) it << ' ' << std::endl;
+    {
+      std::cout << (typename Image::point) it << std::endl;
+      std::cout << ima.operator()(it.to_point()) << std::endl;
+    }
   }
 
 # include "../local/undefs.hh"

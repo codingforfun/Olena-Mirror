@@ -62,7 +62,7 @@ namespace oln_point
   array2d<value_t, coord_t>::array2d(coord_t imin, coord_t jmin, coord_t imax, coord_t jmax) :
     imin_(imin), imax_(imax), jmin_(jmin), jmax_(jmax)
   {
-    assert(imin < imax && jmin < jmax);
+    assert(imin <= imax && jmin <= jmax);
 
     ilen_ = imax_ - imin_ + 1;
     jlen_ = jmax_ - jmin_ + 1;
