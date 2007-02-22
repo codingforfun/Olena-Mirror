@@ -775,9 +775,9 @@ namespace oln_point
 
 
 # define classname  single_image_morpher
-# define current    single_image_morpher<T>
-# define super      image_morpher<current>
-# define templ      template <typename T>
+# define current    single_image_morpher<Exact>
+# define super      image_morpher<Exact>
+# define templ      template <typename Exact>
 
 
   stc_Header;
@@ -796,16 +796,36 @@ namespace oln_point
     delegatee& image() {//fixme --> invariant(hasdata())
       return this->exact().impl_image(); }
     delegatee image() const { //fixme --> invariant(hasdata())
-      return this->exact().impl_image_const(); }
+      return this->exact().impl_image(); }
   };
 
 # include "../local/undefs.hh"
 
 
-# define classname  multiple_image_morpher
-# define current    multiple_image_morpher<T>
-# define super      image_morpher<current>
+# define classname  image_extansion
+# define current    image_extansion<T>
+# define super      single_image_morpher<current>
 # define templ      template <typename T>
+
+
+  stc_Header;
+  typedef stc::abstract delegatee;
+  typedef stc::not_delegated data;
+  stc_End;
+
+
+  templ
+  struct classname : public super
+  {
+    typedef identity behaviour;
+  };
+
+# include "../local/undefs.hh"
+
+# define classname  multiple_image_morpher
+# define current    multiple_image_morpher<Exact>
+# define super      image_morpher<Exact>
+# define templ      template <typename Exact>
 
 
   stc_Header;
@@ -824,7 +844,7 @@ namespace oln_point
     delegatee& image() {//fixme --> invariant(hasdata() && i < n)
       return this->exact().impl_image(); }
     delegatee image() const { //fixme --> invariant(hasdata() && i < n)
-      return this->exact().impl_image_const(); }
+      return this->exact().impl_image(); }
   };
 
 # include "../local/undefs.hh"

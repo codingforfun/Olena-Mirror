@@ -30,10 +30,7 @@
 namespace oln_point
 {
 
-  namespace behavior
-  {
     struct identity;
-  }
 
 
   //needed for get_imp
@@ -42,7 +39,7 @@ namespace oln_point
 
     //default behaviour identity
     template <template <class> class abstraction, typename Exact>
-    struct set_impl< abstraction, behavior::identity, Exact> : impl< abstraction, behavior::identity, Exact >
+    struct set_impl< abstraction, identity, Exact> : impl< abstraction, identity, Exact >
     {};
 
   }
