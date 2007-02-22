@@ -125,30 +125,38 @@ namespace oln_point
   public:
     stc_simple_using(coord, point2d_);
 
-    C col;
-    C row;
+    point2d_() {}
+    point2d_(C row, C col) : row_(row), col_(col) {}
+
+    C row_;
+    C col_;
 
     typedef point2d_<C> self;
-    bool impl_egal(self const& rhs) const      { return row == rhs.row and col == rhs.col; }
-    bool impl_inf(self const& rhs)  const      { return row < rhs.row or (row == rhs.row and col < rhs.col); }
-    bool impl_diff(self const& rhs) const      { return row != rhs.row or col != rhs.col; }
-    bool impl_sup(self const& rhs)  const      { return row > rhs.row or (row == rhs.row and col < rhs.col); }
-    bool impl_sup_egal(self const& rhs) const  { return row >= rhs.row or (row == rhs.row and col < rhs.col); }
-    bool impl_inf_egal(self const& rhs) const  { return row <= rhs.row or (row == rhs.row and col <= rhs.col); }
+
+    //point2d_() {}
+
+    //point2d_(const point2d_<C> &rhs) { col_ =  rhs.col_; row_ = rhs.row_; }
+
+    bool impl_egal(self const& rhs) const      { return row_ == rhs.row_ and col_ == rhs.col_; }
+    bool impl_inf(self const& rhs)  const      { return row_ < rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
+    bool impl_diff(self const& rhs) const      { return row_ != rhs.row_ or col_ != rhs.col_; }
+    bool impl_sup(self const& rhs)  const      { return row_ > rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
+    bool impl_sup_egal(self const& rhs) const  { return row_ >= rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
+    bool impl_inf_egal(self const& rhs) const  { return row_ <= rhs.row_ or (row_ == rhs.row_ and col_ <= rhs.col_); }
     coord operator[](unsigned i) const         {
-                                                 if (i == 0) return  row;
-                                                 return col;
-                                               }
+      if (i == 0) return  row_;
+      return col_;
+    }
     coord& operator[](unsigned i)               {
-                                                 if (i == 0) return  row;
-                                                 return col;
-                                               }
+      if (i == 0) return  row_;
+      return col_;
+    }
   };
 
   template <typename C>
   std::ostream& operator<<(std::ostream& ostr, const point2d_<C> p)
   {
-    return ostr << "p[" << p.row << "][" << p.col << "]";
+    return ostr << "p[" << p.row_ << "][" << p.col_ << "]";
   }
 
   typedef point2d_<int> point2d;
@@ -410,7 +418,7 @@ namespace oln_point
       ++nop_[0];
     }
 
-    void impl_start() { p_ = bb_.pmin; }
+    void impl_start() { std::cout << "start: " << bb_.pmin << std::endl; p_ = bb_.pmin; }
     void impl_next();
     void impl_invalidate() { p_ = nop_; }
     bool impl_is_valid() const { return p_ != nop_; }
@@ -431,14 +439,16 @@ namespace oln_point
   void box_iterator_< P >::impl_next()
   {
     typedef typename box_iterator_<P>::point point;
+    std::cout << "min: " << bb_.pmin << " cur: " << p_ << std::endl;
     for (int i = point::n - 1; i >= 0; --i)
       if (p_[i] == bb_.pmax[i])
-	p_[i] = bb_.pmin[i];
+      	p_[i] = bb_.pmin[i];
       else
       {
 	++p_[i];
 	break;
       }
+
     if (p_ == bb_.pmin)
       p_ = nop_;
   }
@@ -556,8 +566,8 @@ namespace oln_point
     stc_using(point);
 
     enum { n = mlc_value(typename point::dim) };
-    point pmin;
-    point pmax;
+    const point pmin;
+    const point pmax;
 
     box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {  }
     const box_& impl_bbox() const { return *this; }
@@ -808,8 +818,7 @@ namespace oln_point
     typename Image::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
-      //      std::cout << 'a' <<  std::endl;
-      std::cout << (typename Image::point) it << ' ' << std::endl;
+      (typename Image::point) it;//std::cout << (typename Image::point) it << ' ' << std::endl;
   }
 
 # include "../local/undefs.hh"
