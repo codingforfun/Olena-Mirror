@@ -38,6 +38,7 @@
 
 
 # include "init_oln_point.hh"
+# include "tools.hh"
 # include "impl_deleg.hh"
 # include "array.hh"
 # include "tracked_ptr.hh"
@@ -775,7 +776,7 @@ namespace oln_point
 
 # define classname  single_image_morpher
 # define current    single_image_morpher<T>
-# define super      image_base <current>
+# define super      image_morpher<current>
 # define templ      template <typename T>
 
 
@@ -791,11 +792,44 @@ namespace oln_point
   public:
     stc_using(delegatee);
 
-    delegatee& image() { return super::delegatee_; }
-    delegatee image() const { return super::delegatee_; }
+
+    delegatee& image() {//fixme --> invariant(hasdata())
+      return this->exact().impl_image(); }
+    delegatee image() const { //fixme --> invariant(hasdata())
+      return this->exact().impl_image_const(); }
   };
 
 # include "../local/undefs.hh"
+
+
+# define classname  multiple_image_morpher
+# define current    multiple_image_morpher<T>
+# define super      image_morpher<current>
+# define templ      template <typename T>
+
+
+  stc_Header;
+  typedef stc::abstract delegatee;
+  typedef stc::not_delegated data;
+  stc_End;
+
+
+  templ
+  class classname : public super
+  {
+  public:
+    stc_using(delegatee);
+
+
+    delegatee& image() {//fixme --> invariant(hasdata() && i < n)
+      return this->exact().impl_image(); }
+    delegatee image() const { //fixme --> invariant(hasdata() && i < n)
+      return this->exact().impl_image_const(); }
+  };
+
+# include "../local/undefs.hh"
+
+
 
 # define current    image2d<T>
 # define super      primitive_image<current>
