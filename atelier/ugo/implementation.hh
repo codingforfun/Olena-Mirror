@@ -47,19 +47,66 @@ namespace ugo
       stc_using( coord );
       stc_using( dim   );
 
+      point2d_(coord x, coord y) : row(x), col(y) {}
+
       bool impl_equal(point2d_<T> const& rhs) const  { return row == rhs.row and col == rhs.col;		   }
       bool impl_inf(point2d_<T> const& rhs) const    { return row < rhs.row or (row == rhs.row and col < rhs.col); }
       bool impl_dif(point2d_<T> const& rhs) const    { return not impl_equal(rhs);				   }
       bool impl_sup(point2d_<T> const& rhs) const    { return not impl_inf(rhs) and not impl_equal(rhs);	   }
       bool impl_supeq(point2d_<T> const& rhs) const  { return not impl_inf(rhs);				   }
       bool impl_infeq(point2d_<T> const& rhs) const  { return not impl_sup(rhs);				   }
-      bool impl_croch(point2d_<T> const& i) const    { if (i == 1) return x; else return y;             	   }
+      bool impl_croch(point2d_<T> const& i) const    { if (i == 1) return row; else return col;             	   }
 
       point2d_() : row(0), col(0) {}
 
-      int	row, col;
-      coord	x, y;
+      coord	row, col;
   };
+
+
+
+  //--Point1d_------------------
+
+  template <typename T> struct point1d_;
+
+  template <typename T>
+  struct vtypes< point1d_<T> >
+  {
+      typedef point1d_<T>	current;
+      typedef top< current >	super_type;
+
+      typedef grid1d		grid;
+      typedef T			coord;
+      typedef mlc::uint_<2>	dim;
+
+      typedef stc::is<Point>	category;
+  };
+
+  template <typename T>
+  struct point1d_ : public top< point1d_<T> >
+  {
+      typedef point1d_<T>	current;
+      typedef top< current >	super;
+
+      stc_using( grid  );
+      stc_using( coord );
+      stc_using( dim   );
+
+      point1d_(coord x) : i(x) {}
+
+      bool impl_equal(point1d_<T> const& rhs) const  { return i == rhs.i ;		                   }
+      bool impl_inf(point1d_<T> const& rhs) const    { return i < rhs.i ;                                  }
+      bool impl_dif(point1d_<T> const& rhs) const    { return not impl_equal(rhs);			   }
+      bool impl_sup(point1d_<T> const& rhs) const    { return not impl_inf(rhs) and not impl_equal(rhs);   }
+      bool impl_supeq(point1d_<T> const& rhs) const  { return not impl_inf(rhs);			   }
+      bool impl_infeq(point1d_<T> const& rhs) const  { return not impl_sup(rhs);			   }
+      bool impl_croch(point1d_<T> const& x) const    { if (x) return true; else return false;              }
+
+      point1d_() : i(0) {}
+
+      coord	i;
+  };
+
+
 
   //--Functions-------------------------
 
@@ -162,6 +209,9 @@ namespace ugo
 
       stc_using( point );
 
+      box_() : pmin(0, 0), pmax(0, 0) {}
+      box_(point p1, point p2) : pmin(p1), pmax(p2) {}
+
       enum { n = mlc_value(typename P::dim) };
       const box_& impl_bbox() const { return *this; }
       bool impl_includes(const point& p) const
@@ -173,7 +223,7 @@ namespace ugo
       }
 
     private:
-      P pmin, pmax;
+      point pmin, pmax;
   };
 
   //-----
@@ -205,7 +255,11 @@ namespace ugo
   {
       typedef  P point_t;
 
-      box_iterator_(const box2d& bb);
+      box_iterator_(box_<point_t> box) : bb_(box)
+      {
+	nop_ = box.pmax;
+	++nop_[0];
+      }
 
       void impl_start();
 
@@ -306,13 +360,55 @@ namespace ugo
   class image2d : public super
   {
     public:
-      stc_using(point);
-      stc_using(value);
-      stc_using(box);
-      stc_using(iter);
-      stc_using(grid);
+      stc_using( point );
+      stc_using( value );
+      stc_using( box   );
+      stc_using( iter  );
+      stc_using( grid  );
 
-      image2d(box &box_ref) : bb_(box_ref) {}
+      image2d(box &box_init) : bb_(box_init) {}
+
+      bool  imp_owns(const point& p) const   { return  bb_.includes(p); }
+      value imp_value_acces(const point& p)  { return T_(p.row, p.col); }
+      box   impl_bbox() const		     { return bb_;              }
+    protected:
+      box &bb_;
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--signal-------------------
+
+# define current    signal<T>
+# define super      top<current>
+# define templ      template <typename T>
+# define classname  signal
+
+  stc_Header;
+  typedef iter2d	iter;
+  typedef point2d	point;
+  typedef point::coord	coord;
+  typedef T		value;
+  typedef grid1d		grid;
+  typedef box_<point1d_<T> >	box;
+
+  typedef stc::is<Image> category;
+  stc_End;
+
+
+  template <typename T>
+  class signal : public super
+  {
+    public:
+      stc_using( point );
+      stc_using( value );
+      stc_using( box   );
+      stc_using( iter  );
+      stc_using( grid  );
+
+      signal(box &box_init) : bb_(box_init) {}
 
       bool imp_owns(const point& p) const   { return  bb_.includes(p); }
       value imp_value_acces(const point& p) { return T_(p.row, p.col); }
@@ -320,9 +416,6 @@ namespace ugo
     protected:
       box &bb_;
   };
-
-# include "../local/undefs.hh"
-  //--
 }
 
 #endif
