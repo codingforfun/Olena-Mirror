@@ -90,6 +90,7 @@ namespace oln_point
     typedef Point<Exact> self;
 
 
+
     bool operator==(self const& rhs) const  { return this->exact().impl_egal(rhs.exact()); }
     bool operator<(self const& rhs) const   { return this->exact().impl_inf(rhs.exact()); }
     bool operator!=(self const& rhs) const  { return this->exact().impl_diff(rhs.exact()); }
@@ -133,9 +134,8 @@ namespace oln_point
 
     typedef point2d_<C> self;
 
-    //point2d_() {}
 
-    //point2d_(const point2d_<C> &rhs) { col_ =  rhs.col_; row_ = rhs.row_; }
+    //    point2d_(const point2d_<C> &rhs) { row_ = rhs.row_; col_ =  rhs.col_; }
 
     bool impl_egal(self const& rhs) const      { return row_ == rhs.row_ and col_ == rhs.col_; }
     bool impl_inf(self const& rhs)  const      { return row_ < rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
@@ -196,6 +196,11 @@ namespace oln_point
     coord& operator[](unsigned i)              { i = i; return col; }
   };
 
+  template <typename C>
+  std::ostream& operator<<(std::ostream& ostr, const point1d_<C> p)
+  {
+    return ostr << "p[" << p.col << "]";
+  }
 
 
   typedef point1d_<int> point1d;
@@ -418,7 +423,7 @@ namespace oln_point
       ++nop_[0];
     }
 
-    void impl_start() { std::cout << "start: " << bb_.pmin << std::endl; p_ = bb_.pmin; }
+    void impl_start() { std::cout << "start: box min:" << bb_.pmin << std::endl; p_ = bb_.pmin; }
     void impl_next();
     void impl_invalidate() { p_ = nop_; }
     bool impl_is_valid() const { return p_ != nop_; }
@@ -439,7 +444,7 @@ namespace oln_point
   void box_iterator_< P >::impl_next()
   {
     typedef typename box_iterator_<P>::point point;
-    std::cout << "min: " << bb_.pmin << " cur: " << p_ << std::endl;
+    std::cout << "next: box min:" << bb_.pmin << " cur: " << p_ << std::endl;
     for (int i = point::n - 1; i >= 0; --i)
       if (p_[i] == bb_.pmax[i])
       	p_[i] = bb_.pmin[i];
@@ -729,7 +734,7 @@ namespace oln_point
 //     stc_using(box);
 //     stc_using(iter);
 //     stc_using(grid);
-    stc_using(coord);
+//    stc_using(coord);
 
   protected:
     primitive_image() {}
@@ -785,7 +790,7 @@ namespace oln_point
   typedef T value;
   typedef iter1d iter;
   // fix it
-  //  typedef array1d<T, coord>  data;
+  typedef T  data;
   typedef point1d point;
   typedef point::coord coord;
   typedef grid1d grid;
@@ -818,7 +823,7 @@ namespace oln_point
     typename Image::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
-      (typename Image::point) it;//std::cout << (typename Image::point) it << ' ' << std::endl;
+      std::cout << "a" << std::endl;//(typename Image::point) it;//std::cout << (typename Image::point) it << ' ' << std::endl;
   }
 
 # include "../local/undefs.hh"
@@ -829,6 +834,4 @@ namespace oln_point
 
 # include "plug.hh"
 
-
 #endif /* !POINT_SCOOP1_HH_ */
-
