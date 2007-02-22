@@ -5,6 +5,9 @@
 # include <set>
 # include <mlc/int.hh>
 # include <mlc/uint.hh>
+# include <mlc/contract.hh>
+# include <oln/core/internal/tracked_ptr.hh>
+
 # include "../local/scoop.hh"
 
 # include <mlc/flags.hh>
@@ -33,6 +36,7 @@ namespace glg
   stc_decl_associated_type(point);
   stc_decl_associated_type(value);
   stc_decl_associated_type(box_);
+  stc_decl_associated_type(data);
 
   // ====================
   // FORWARD DECLARATIONS
@@ -568,7 +572,8 @@ namespace glg
 # define super top< Exact >
 
   stc_Header;
-  typedef stc::is<Image> category;
+  typedef stc::final< stc::is<Image> > category;
+  typedef stc::abstract data;
   typedef stc::abstract box_;
   typedef stc::final<box_> box;
   stc_End;
@@ -587,6 +592,9 @@ namespace glg
     bool owns (point const& p) const { return bbox().includes(p); }
     box bbox() const { return this->exact().impl_bbox(); }
 
+    stc_lookup(data);
+    typedef data data_t;
+    typename ::oln::internal::tracked_ptr<data_t> data_;  // mon attribut tout beau tout chaud!
   };
 # include "../local/undefs.hh"
 
@@ -623,13 +631,31 @@ namespace glg
 
 # include "../local/undefs.hh"
 
+  // image primitive
+  // ---------------
+
+# define templ template < typename Exact >
+# define classname primitive_image
+# define current primitive_image< Exact >
+# define super image_base_< Exact >
+
+  stc_Header;
+  stc_End;
+
+  template < typename Exact >
+  class primitive_image : public image_base_< Exact >
+  {
+  };
+
+# include "../local/undefs.hh"
+
   // image2d
   // -------
 
 # define templ template < typename T >
 # define classname image2d
 # define current image2d< T >
-# define super image_base_< current >
+# define super primitive_image< current >
 
   stc_Header;
   typedef grid2d grid;
@@ -637,6 +663,7 @@ namespace glg
   typedef point::coord coord;
   typedef box2d box;
   typedef T value;
+  typedef array2d < T, coord > data;
   stc_End;
 
   template < typename T >
@@ -648,7 +675,8 @@ namespace glg
     stc_using(grid);
     stc_using(value);
     stc_using(box);
-    typedef array2d < T, coord > data;
+    stc_using(data);
+
     typedef box_iterator_<point> iter;
     value& impl_par(const point& p) { return data_->access(p[0], p[1]); }
     value impl_par(const point& p) const { return data_->get(p[0], p[1]); }
@@ -679,6 +707,7 @@ namespace glg
   typedef point::coord coord;
   typedef box_<point1d> box;
   typedef T value;
+  typedef value data;
   stc_End;
 
   template < typename T >
