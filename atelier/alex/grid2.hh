@@ -54,7 +54,8 @@ namespace glg
   class Image_2D;
   template < typename T >
   class image2d;
-
+  template < typename T, typename C >
+  class array2d;
 
 
   // =======
@@ -470,7 +471,7 @@ namespace glg
   template < typename P >
   class pset_std_ : public super
   {
-  public:
+    public:
     stc_using(point);
     stc_using(grid);
 
@@ -589,6 +590,39 @@ namespace glg
   };
 # include "../local/undefs.hh"
 
+  // array2d
+  // -------
+
+
+  template < typename T, typename C >
+  class array2d
+  {
+  public:
+    array2d(C imin, C imax, C jmin, C jmax) : imin(imin) {
+      C row = imax - imin;
+      C col = jmax - jmin;
+
+      buffer_ = new T[row * col];
+      array_ = new T*[row];
+      T* buf = buffer_ - jmin;
+      for (C i = 0; i < row; ++i)
+      {
+	array_[i] = buf;
+	buf += col;
+      }
+      array_ -= imin;
+    }
+    ~array2d() { delete [] buffer_; delete [] (array_ + imin); }
+    T& get (C row, C col) {return array_[row][col]; }
+    T get (C row, C col) const { return array_[row][col]; }
+
+    C imin;
+    T* buffer_;
+    T** array_;
+  };
+
+# include "../local/undefs.hh"
+
   // image2d
   // -------
 
@@ -614,30 +648,19 @@ namespace glg
     stc_using(grid);
     stc_using(value);
     stc_using(box);
+    typedef array2d < T, coord > data;
     typedef box_iterator_<point> iter;
-    value& impl_par(const point& p) { return (mat_[p[0]][p[1]]); }
-    value impl_par(const point& p) const { return (mat_[p[0]][p[1]]); }
-    image2d(box bb) : box_(bb)
-    {
-      coord row = bb.pmax.row - bb.pmin.row;
-      coord col = bb.pmax.col - bb.pmin.col;
-
-      pixs_ = new value[row * col];
-      mat_ = new value*[row];
-      value* buf = pixs_ - bb.pmin.col;
-      for (coord i = 0; i < row; ++i)
-      {
-	mat_[i] = buf;
-	buf += col;
-      }
-    }
+    value& impl_par(const point& p) { return data_->access(p[0], p[1]); }
+    value impl_par(const point& p) const { return data_->get(p[0], p[1]); }
+    image2d(const box& bb) : box_(bb) {
+      data_ = new data(bb.pmin.row, bb.pmax.row,
+		       bb.pmin.col, bb.pmax.col) ;}
     box impl_bbox() const { return box_; };
     box& impl_bbox() { return box_; };
-    ~image2d() { delete [] mat_; delete [] pixs_; }
+    ~image2d() { delete data_; }
   private:
     box     box_;
-    value*  pixs_;
-    value** mat_;
+    data*   data_;
   };
 
 # include "../local/undefs.hh"
@@ -673,7 +696,6 @@ namespace glg
     signal(box bb) : box_(bb)
     {
       coord ind = bb.pmax[0] - bb.pmin[0];
-
       pixs_ = new value[ind];
       pixs_ -= bb.pmin[0];
     }
