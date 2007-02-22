@@ -37,7 +37,8 @@
 # include "../local/scoop.hh"
 
 
-#include "init_oln_point.hh"
+# include "init_oln_point.hh"
+# include "impl_deleg.hh"
 # include "array.hh"
 # include "tracked_ptr.hh"
 
@@ -751,6 +752,7 @@ namespace oln_point
 
   stc_Header;
   typedef stc::abstract delegatee;
+  typedef stc::not_delegated data;
   stc_End;
 
 
@@ -765,6 +767,32 @@ namespace oln_point
 
   protected:
     delegatee& delegatee_;
+  };
+
+# include "../local/undefs.hh"
+
+
+
+# define classname  single_image_morpher
+# define current    single_image_morpher<T>
+# define super      image_base <current>
+# define templ      template <typename T>
+
+
+  stc_Header;
+  typedef stc::abstract delegatee;
+  typedef stc::not_delegated data;
+  stc_End;
+
+
+  templ
+  class classname : public super
+  {
+  public:
+    stc_using(delegatee);
+
+    delegatee& image() { return super::delegatee_; }
+    delegatee image() const { return super::delegatee_; }
   };
 
 # include "../local/undefs.hh"
