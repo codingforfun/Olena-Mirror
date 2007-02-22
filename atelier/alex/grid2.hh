@@ -44,6 +44,7 @@ namespace glg
   template < typename P > class box_;
   template <typename Exact> class Point;
   template <typename C> class point2d_;
+  template <typename C> class point1d_;
   template < typename Exact > class Iterator_on_Points;
   template < typename P > class pset_std_iterator_;
 
@@ -61,7 +62,9 @@ namespace glg
   // =======
 
   typedef point2d_<int> point2d;
+  typedef point1d_<int> point1d;
   typedef box_<point2d> box2d;
+  typedef box_<point1d> box1d;
 
   // ========
   // CONCEPTS
@@ -209,6 +212,22 @@ namespace glg
 
 # include "../local/undefs.hh"
 
+  // Signal
+  // ------
+
+  template < typename Exact >
+  class Signal : public Image < Exact >
+  {
+  public:
+    stc_typename(point);
+    stc_typename(value);
+    stc_typename(coord);
+    stc_typename(grid);
+    value operator() (coord ind);
+  };
+
+# include "../local/undefs.hh"
+
   // ========
   // SELECTOR
   // ========
@@ -223,6 +242,15 @@ namespace glg
     {
       typedef Image_2D<Exact> ret;
     };
+
+    template < typename Exact >
+    struct case_<Image_dimension, Exact, 2> :
+      where_< mlc_eq(stc_type(Exact, grid), grid1d) >
+    {
+      typedef Signal<Exact> ret;
+    };
+
+
   }
 
 
@@ -282,6 +310,44 @@ namespace glg
 
 # include "../local/undefs.hh"
 
+
+# define templ template <typename C>
+# define classname point1d_
+# define current point1d_<C>
+# define super top< current >
+
+  stc_Header;
+  typedef stc::is<Point> category;
+  typedef grid1d grid;
+  typedef C coord;
+  typedef mlc::uint_<1> dim;
+  stc_End;
+
+  template <typename C>
+  class point1d_ : public super
+  {
+  public:
+    stc_using(grid);
+    stc_using(coord);
+    stc_using(dim);
+
+    point1d_ () {}
+    point1d_ (int x) : ind(x) {}
+
+    C ind;
+
+    bool impl_eq(point1d_<C> const& rhs) const { return ind == rhs.ind; }
+    bool impl_lt(point1d_<C> const& rhs) const { return ind < rhs.ind; }
+    bool impl_ne(point1d_<C> const& rhs) const { return !(ind == rhs.ind); }
+    bool impl_gt(point1d_<C> const& rhs) const { return ind > rhs.ind; }
+    bool impl_ge(point1d_<C> const& rhs) const { return ind >= rhs.ind; }
+    bool impl_le(point1d_<C> const& rhs) const { return ind <= rhs.ind; }
+
+    coord operator[](unsigned i) const { assert(!i); return ind; }
+    coord& operator[](unsigned i) { assert(!i); return ind; }
+  };
+
+# include "../local/undefs.hh"
 
 
   // Dummy iterator
@@ -345,16 +411,16 @@ namespace glg
 	if (point_[i] == bb_.pmax[i])
 	  point_[i] = bb_.pmin[i];
 	else
-	  {
-	    ++point_[i];
-	    break;
-	  }
+	{
+	  ++point_[i];
+	  break;
+	}
       if (point_ == bb_.pmin)
 	point_ = nop_;
     }
     void invalidate () { point_ = nop_; }
     bool is_valid () const { return point_ != nop_; }
-    box_iterator_(const box_<point>& bb) : point_(), bb_(bb) { nop_ = bb_.pmax; ++nop_[1];}
+    box_iterator_(const box_<point>& bb) : point_(), bb_(bb) { nop_ = bb_.pmax; ++nop_[point::n - 1];}
 
   private:
     point point_;
@@ -532,7 +598,6 @@ namespace glg
 # define super image_base_< current >
 
   stc_Header;
-  //  typedef stc::is<Image> category;
   typedef grid2d grid;
   typedef point2d point;
   typedef point::coord coord;
@@ -576,6 +641,54 @@ namespace glg
   };
 
 # include "../local/undefs.hh"
+
+  // signal
+  // ------
+
+# define templ template < typename T >
+# define classname signal
+# define current signal< T >
+# define super image_base_< current >
+
+  stc_Header;
+  typedef grid1d grid;
+  typedef point1d point;
+  typedef point::coord coord;
+  typedef box_<point1d> box;
+  typedef T value;
+  stc_End;
+
+  template < typename T >
+  class signal : public super
+  {
+  public:
+    stc_using(point);
+    stc_using(coord);
+    stc_using(grid);
+    stc_using(value);
+    stc_using(box);
+    typedef box_iterator_<point> iter;
+    value& impl_par(const point& p) { return pixs_[p[0]]; }
+    value impl_par(const point& p) const { return pixs_[p[0]]; }
+    signal(box bb) : box_(bb)
+    {
+      coord ind = bb.pmax[0] - bb.pmin[0];
+
+      pixs_ = new value[ind];
+      pixs_ -= bb.pmin[0];
+    }
+    box impl_bbox() const { return box_; };
+    box& impl_bbox() { return box_; };
+    ~signal() { delete [] (pixs_ + box_.pmin[0]); }
+  private:
+    box     box_;
+    value*  pixs_;
+  };
+
+# include "../local/undefs.hh"
+
+
+
 
   // ==========================
   // EXPERIMENTAL (NON WORKING)
