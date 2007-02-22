@@ -798,7 +798,7 @@ namespace oln_point
     stc_using(data);
 
     image2d(box &box_ref) : bb_(box_ref) {
-      super::data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmin.col_); }
+      super::data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmax.col_); }
 
     bool impl_owns(const point& p) const   { return  bb_.includes(p); }
     value impl_value_access(const point& p) const  { return (super::data_.ptr_)->operator()(p.row_, p.col_); }
