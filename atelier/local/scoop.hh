@@ -1024,12 +1024,19 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 // For concepts.
 # define stc_typename(Type) typedef stc_type(Exact, Type) Type
 # define stc_using(Type)    typedef typename super::Type Type
+# define stc_using_from(Abstraction, Type)    typedef typename Abstraction<Exact>::Type Type
 # define stc_deduce_typename(Src, Type) typedef stc_type(Src, Type) Type
 
 
 // For impl classes.
 # define stc_deferred(Type)  typename deferred_vtype<Exact, typedef_::Type >::ret
 # define stc_lookup(Type) typedef typename vtype< stc_type(current, exact_type), typedef_::Type>::ret Type
+
+// For set_impl classes.
+# define stc_deferred_typename(Type)  typedef stc_deferred(Type) Type
+
+
+# define stc_deferred_type(From, Type)  typename deferred_vtype< From, typedef_::Type >::ret
 
 
 

@@ -259,6 +259,11 @@ image_base : class < top =
   category : final type = Image
   data : type
 
+  data_ : tracked_ptr[data] // l'attribut
+
+  // on ajoute:
+  has_data : const () -> bool = { return data_ != 0 }
+
   // les spécs qui vont bien :
   point : type  // donc stc::abstract dans vtypes
   value : type  // idem
@@ -278,17 +283,68 @@ On ajoute :
 image_morpher : class < image_base =
 {
   delegatee  : type
-  delegatee_ : @delegatee &
-  // plus le constructeur qui va bien...
+  data : type = stc::not_delegated  // tel quel
 }
 
-simple_image_morpher : class < image_morpher =
+single_image_morpher : class < image_morpher =
 {
-  image : () -> delegatee
+  image : () -> delegatee&
+  image : const () -> delegatee const&  // [5]
 }
+
+
+[5] ce sont des méthodes pseudo-abstraites !  le code doit d'abord
+    tester que has_data() est vrai puis appeler impl_image()
+
+
+multiple_image_morpher : class < image_morpher =
+{
+  n : type
+  image : (i : unsigned) -> delegatee&
+  image : const (i : unsigned) -> delegatee const&  // [6]
+}
+
+[6] Cf. [5] avec le test supplémentaire (i < n)
+
+
+
+*** petits outils
+
+singleton : [T : type] -> class =
+{
+  value : T  // attribute
+  make  : () = {}
+  make  : (val : T) = { value := val }
+}
+
+vec : [n : unsigned, T : type] -> class =
+{
+  comp : T[n]  // attribute
+  ([]) : const (i : unsigned) -> T  = { assert(i < n) ; return comp[i] }
+  ([]) :       (i : unsigned) -> T& = { assert(i < n) ; return comp[i] }
+}
+
+et ajouter un "operator<<" pour vec[n,T]
+
+
+*** on étend maintenant
 
 image_extension : class < single_morpher_image =
 {
   behavior : type = identity  // le tag comme dans les slides
+  // et c'est tout
 }
 
+polite_image : [I : type < Image] -> class < image_extension =
+{
+  delegatee : type = I
+  data : type = singleton[I]
+
+  make : (ima : I&) = { @data_ := new data(ima) }  // ctor
+  talk : const () -> void = { print("nice!") }
+
+  image : () -> I&             = { return @data_->value }
+  image : const () -> I const& = { return @data_->value }
+}
+
+il s'agit bien sûr ici d' "impl_image" en fait

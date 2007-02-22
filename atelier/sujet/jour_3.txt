@@ -1,0 +1,86 @@
+	-*- outline -*-
+
+
+*
+
+image_stack : [n_ : unsigned, T : type] -> class < multiple_image_morpher =
+{
+  delegatee : type = I
+  FIXME
+}
+
+
+
+*
+
+on différencie value, rvalue et lvalue
+
+on a :
+
+Image
+{
+  site   : type
+  point  : type
+  value  : type
+  rvalue : type
+  // ...
+  (())  : const (s : site const&) -> rvalue
+  owns_ : const (s : site const&) -> bool
+}
+
+PWA_Image
+{
+  rule { site = point }
+  has : (p : point const&) -> bool // theoretical
+}
+
+Mutable_Image
+{
+  lvalue : type
+  (()) : (s : site const&) -> lvalue
+}
+
+
+Proxy : class =
+{
+}
+
+
+rw : [I : type < Mutable_Image, L : type] -> class < Proxy =
+{
+  ima_ : I
+  s_   : I.site
+  log_ : L
+
+  // constructor
+  make : (ima : I,
+          s   : I.site const&,
+	  log : L) =
+  {
+    ima_ := ima
+    s_   := s
+    log_ := log
+  }
+
+  site : () -> I.site& =
+  {
+    return s_
+  }
+
+  // read
+  ()   : const [T : type] -> T =
+  {
+    log_.read(ima_, s_)
+    tmp : I.value := ima_(s_)
+    return tmp
+  }
+
+  // write
+  (:=) : const [T : type] (t : T const&) -> self const& =
+  {
+    log_.write(ima_, s_, t)
+    ima_(s_) := t
+    return @
+  }
+}
+

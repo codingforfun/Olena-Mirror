@@ -1,3 +1,11 @@
+2007-02-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* sujet/jour_3.txt: New.
+	* sujet/jour_2.txt: Update.
+	* local/scoop.hh (stc_using_from): New.
+	(stc_deferred_typename): New.
+	(stc_deferred_type): New.
+
 2007-02-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* local/scoop.hh (is_found, is_not_found): New in stc.  Do not
