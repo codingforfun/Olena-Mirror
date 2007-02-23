@@ -42,5 +42,8 @@ namespace oln_point
     struct set_impl< abstraction, identity, Exact> : impl< abstraction, identity, Exact >
     {};
 
+    // template <template <class> class abstraction, typename Exact>
+//     struct set_impl< , identity, Exact> : impl< abstraction, identity, Exact > : public virtual any<Exact>
+//     {};
   }
 }

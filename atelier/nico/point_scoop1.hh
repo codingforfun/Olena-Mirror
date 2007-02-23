@@ -822,6 +822,9 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
+
+
+
 # define classname  multiple_image_morpher
 # define current    multiple_image_morpher<Exact>
 # define super      image_morpher<Exact>
@@ -849,7 +852,36 @@ namespace oln_point
 
 # include "../local/undefs.hh"
 
+# define classname  polite_image
+# define current    polite_image<I>
+# define super      single_image_morpher<current>
+# define templ      template <typename I>
 
+
+  stc_Header;
+  typedef I delegatee;
+  typedef singleton<I> data;
+  stc_End;
+
+  templ
+  class classname : public super
+  {
+  public:
+    stc_using(delegatee);
+    stc_using(data);
+
+    polite_image(I& ima) { data_ = new data (image); }
+    ~polite_image() { delete data_; }
+
+    void talk() const { std::cout << "Nice" << std::endl; }
+
+    delegatee& impl_image() { return data_->value; }
+    delegatee image() const { return data_->value; }
+  protected:
+    singleton<I>* data_;
+  };
+
+# include "../local/undefs.hh"
 
 # define current    image2d<T>
 # define super      primitive_image<current>
