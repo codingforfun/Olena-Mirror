@@ -3,6 +3,8 @@
 
 * concepts d'images
 
+** but
+
 On veut différencier :
 
 - value, rvalue et lvalue
@@ -63,6 +65,8 @@ On veut différencier :
                   au lieu de point !
 
 
+** les concepts
+
 Finalement, on veut :
 
 Image
@@ -120,30 +124,10 @@ Point_Wise_Accessible_Image : class < Image
 
 Boxed_Image : class < Image =
 {
-  box : const () -> box_[point]
+  bbox : const () -> box_[point]
 }
 
-
-Point_Wise_Accessible_2D_Image : class
-  < Point_Wise_Accessible_Image,
-    Image_2D =
-{
-  has : const (row : coord, col : coord) -> bool
-  at  : const (row : coord, col : coord) -> rvalue
-}
-
-"has" et "at" peuvent avoir une implémentation par défaut :
-on construit un point avec row et col puis on appelle has(p) ou op()(p)
-
-
-Point_Wise_Mutable_2D_Image : class
-  < Point_Wise_Accessible_2D_Image,
-    Mutable_Image =
-{
-  at : (row : coord, col : coord) -> lvalue
-}
-
-même remarque que précédemment
+bbox est l'abrégé de "bouding box"
 
 
 Random_Accessible_Image : class < Image =
@@ -158,10 +142,18 @@ Random_Mutable_Image : class < Random_Accessible_Image =
 }
 
 
+** la mise à jour
 
-* image2d[T]
+Etant donné les nouveaux raffinements, vous devez :
 
-on a maintenant :
+ 1.  modifier les concepts existants
+ 1b. modifier les set_impl (behavior::identity)
+
+ 2.  ajouter les nouveaux concepts
+ 2b. ajouter les set_impl correspondants
+
+ 3.  adapter vos classes concrètes dont image2d[T] qui ressemble
+     maintenant à :
 
 image2d : [T : type] -> class =
 {
@@ -177,3 +169,354 @@ image2d : [T : type] -> class =
 
   ...
 }
+
+
+
+
+* value_cast
+
+On veut un type d'image qui caste à la volée ses valeurs.  C'est
+utile pour pouvoir écrire :
+
+  image2d<int> ima;
+  ima(p) = 3;
+  std::cout << value_cast<float>(ima)(p) / 2 << std::endl;
+  // donne : 1.5
+
+on a :
+
+  template <typename T, typename I>
+  value_cast_image<T, I> value_cast(const Image<I>& input)
+  {
+    value_cast_image<T, I> tmp(input.exact());
+    return tmp;
+  }
+
+une telle image n'est pas modifiable :
+
+  typedef image2d<int> I;
+  image2d<int> ima;
+  value_cast_image<float, I> imaf(ima);
+  imaf(p) = 0;  // ne compile pas
+
+Normal car la conversion crée un objet temporaire (donc non
+left-value) ; la classe value_cast_image[I] ne doit posséder que la
+version const (lecture) de l'op().  Le comportement de cette classe
+est donc (presque) l'identité.  Ainsi on aura /automatiquement/ :
+
+   value_cast_image[I].point = I.point
+
+(pas besoin de l'écrire puisque behavior = identity et delegatee = I)
+
+En revanche, si I définit lvalue, et si l'on ne fait rien, alors
+on aura également value_cast_image[I].lvalue = I.lvalue donc...
+notre morpheur sera équippé automatique d'un "op() NON const"
+qu'on ne veut vraiment pas.
+
+L'astuce :
+
+value_cast_image : [I : type < Image] -> class =
+{
+  lvalue = stc::not_delegated
+  ...
+}
+
+Cela permet d'ignorer la délégation dans le cas de cette propriété.
+
+
+
+
+* stack
+
+** but
+
+On veut une classe image_stack<n,I> qui fait croire à son utilisateur
+que l'image contient des vecteurs :
+
+    s(p) "ressemble à" un vec<n,T>
+    lorsque s est une instance d'image_stack<n,I> et T = I.value
+
+tandis qu'elle ne fait qu'enrober n images dont les donnees sont de type T.
+On a donc :
+
+  image_stack[n,I].value = vec[n, I.value]
+
+Mais rien ne dit pour l'instant ce que vaut 'lvalue' et 'rvalue'
+(ces types peuvent être différents de 'value').
+
+Son utilisation doit etre la suivante :
+
+  {
+    typedef image2d<int> I;
+
+    point2d p(0, 0), q(1, 1);
+    box2d b(p, q);
+
+    I ima_0(b), ima_1(b);
+    ima_0(p) = 5;
+    ima_1(p) = 1;
+
+    println(ima_0);
+    println(ima_1);
+
+    image_stack<2,I> s;
+    s.image(0) = ima_0;
+    s.image(1) = ima_1;
+    //  ou directement :
+    //  image_stack<2,I> s = make_stack(ima_0, ima_1);
+
+    println(s);
+
+    s(p) = make_vec(6, 9);
+    std::cout << s(p) << ' '
+	      << ima_0(p) << ' '
+	      << ima_1(p) << ' ' << std::endl;
+  }
+
+Les routines make_stack et make_vec sont bien pratiques pour
+construire les objets à la volée.
+
+
+** la difficulté
+
+Le problème vient du code suivant :
+
+     // s est NON const => on peut lire et/ou écrire
+     s(p) = make_vec(6, 9);          // ici écriture
+     std::cout << s(p) << std::endl; // ici lecture
+
+Dans les 2 cas, l'op() appelé est la version "NON const" puisque
+l'objet est "non const".
+
+On veut donc que l'operator() NON const puisse être utilisé pour lire
+et/ou écrire.  En fait (la ruse !), le type image_stack[n,I] est
+définit avec :
+
+                  lvalue = value_proxy_[I]
+
+On a :
+
+ lvalue operator()(const psite& p) /* PAS const */
+ {
+   value_proxy_<I> tmp(*this, p);
+   return tmp;
+ } 
+
+L'objet temporaire connaît l'image ciblée ainsi que le point ciblé.
+
+value_proxy_ : [I : type < Image] -> class =
+{
+  // attributs
+  ima_ : I
+  p_   : I.psite
+
+  // ctor
+  make : (ima : I, p : I.psite) = { ima_ := ima; p_ := p }
+
+  // conversion == lecture !
+  () : [U : type] -> U =
+  {
+    return ima_.read(p) // la lecture effective
+  }
+
+  // affectation == ecriture !
+  (:=) : [U : type] (u : U) -> @type =
+  {
+    ima_.write(p_, u) // l'écriture effective
+    return @
+  }
+
+}
+
+=> le type d'image image_stack[n,I] doit être equipé
+   des methodes read_ et write_ qui réalisent effectivement
+   la lecture et l'écriture
+
+En revanche, lorsque c'est l'opérateur const qui est appelé,
+on est sûr qu'il s'agit d'une lecture, donc :
+
+ rvalue operator()(const psite& p) const
+ {
+   return this->read_(p);
+ } 
+
+Au final, la lecture (via read_) et l'écriture (via write_) sont
+bien différenciées.
+
+** yapuka
+
+...
+
+On remarque aisément que image_stack[n,I].iter = I.iter
+c'est normal puisqu'on ne change pas la topologie de l'image
+(même domaine de définition).
+
+
+* subset
+
+** et d'une définition, une (1)
+
+*** explications
+
+Soit une image de taille 3 lignes x 5 colonnes :
+
+row
+ v  0 1 2 3 4 < col
+ 0  . . . . .
+ 1  . . . . .
+ 2  . . . . .
+
+
+avec ima étant :
+
+1 2 3 4 5
+6 7 8 9 0
+5 4 3 2 1
+
+une telle image est rectangulaire (son domaine est une box_[point2d],
+pas très original...) ; on veut pouvoir restreindre son domaine à
+celui-ci :
+
+.   .   .
+  .   .  
+.   .   .
+
+Pour ça, on veut un nouveau type d'images :
+
+       subset_image_1[I,F]
+
+où F est le type d'une fonction qui à un point p associe un booléen
+qui dit si p fait partie du domaine (ou non).
+
+Vous définissez le type de ces fonctions en SCOOP 2 :
+
+fp2b : [Exact : type] -> class =
+{
+  point : type
+  (()) : const (p : const point&) -> bool
+}
+
+"fp2b" signifie "function : point -> bool"
+
+Et vous pouvez en dériver une concrète à l'aide de SCOOP 1+ (donc sans
+la classe top !)
+
+chessboard_t : class < fp2b[chessboard_t] =
+{
+  point = point2d
+  (()) : const (p : const point&) -> bool =
+  {
+    return (p.row + p.col) modulo 2 = 0
+  }
+}
+
+On veut pouvoir écrire "(ima | chessboard2d)" pour créer à la volée
+l'image :
+
+1 x 3   5   // le 'x' désigne le trésor
+  7   9  
+5   3   1
+
+qui ne comporte plus que 8 pixels.  On a :
+
+  point2d x(0, 1);
+  assert(ima.has(x) == true);
+  assert((ima | chessboard2d).has(x) == false);
+
+*** to-do
+
+On veut surcharger '|' :
+
+(|) : [I : type < Image, F : type < fp2b] (ima : I, f : F) -> subset_image_1[I,F] =
+{
+   // on construit ici
+}
+
+On veut que "subset_image_1[I,F]" ait un comportement correct !  On doit
+pouvoir le vérifier avec println (qui affichera : 1 3 5 7 9 5 3 1).  Il
+faut donc un itérateur approprié pour ce nouveau type d'images.
+La définition de cet itérateur doit s'appuyer sur celle de I.iter
+Typiquement :
+
+subset_image_1_iterator_ : [I,F] -> class =
+{
+  f_ : F
+  p_ : I.iter
+
+  ...
+
+  start : () -> void =
+  {
+    p_.start()
+    while (p_.is_valid() and f(p_) == false)
+      p_.next()
+  }
+  next : () -> void =
+  {
+    do
+       p_.next()
+    while (p_.is_valid() and f(p_) == false)
+  }
+}
+
+
+** et d'une autre définition (2)
+
+*** hop
+
+On veut aussi pouvoir écrire "(ima | ps)" pour dire qu'on restreint le
+domaine de l'image 'ima' à l'ensemble de points 'ps' (une instance de
+Point_Set).
+
+Exemple :
+
+  point2d p(1,1), q(2,3);
+  box2d b(p, q);
+
+Le domaine de 'ima' :
+
+row
+ v  0 1 2 3 4 < col
+ 0  . . . . .
+ 1  . . . . .
+ 2  . . . . .
+
+Le domaine de "(ima | b)" :
+
+row
+ v  0 1 2 3 4 < col
+ 0           
+ 1    . . .  
+ 2    . . .  
+
+Mais on ne supposera PAS que le domaine de 'ps' est inclus dans
+celui de 'ima'.  On n'a PAS toujours : ps.has(p) => ima.has(p).
+
+Remarque : pour le premier cas, on avait :
+  ima.has(p) => p in D(f)  // p dans le domaine de définition de f
+
+*** to-do
+
+On veut définir une surcharge pour l'op (|) et une nouvelle classe :
+
+  subset_image_2[I,Ps]
+
+On s'attend à ce que :
+
+  subset_image_2[I,Ps].iter soit défini à partir de I.iter
+
+mais on n'a PAS "subset_image_2[I,Ps].iter est I.iter".
+En effet, il faut toujours tester qu'on reste bien dans l'image !
+Le code ressemble à du déjà-vu genre :
+
+  start : () -> void =
+  {
+    p_.start()
+    while (p_.is_valid() and not ima.has(p_))
+      p_.next()
+  }
+
+
+* map_image
+
+Cf. bla-bla en début de sujet
