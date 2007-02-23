@@ -663,6 +663,11 @@ namespace oln
       assert(owns_(p));
       return this->exact().impl_lvalue_access(p);
     }
+    lvalue affect(const psite& p)
+    {
+    assert(owns_(p));
+    return this->exact().impl_lvalue_access(p);
+    }
   };
 
 # include "../local/undefs.hh"
@@ -865,6 +870,42 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+// # define classname  value_cast_image
+// # define current    value_cast_image<I>
+// # define super      image_extansion<current>
+// # define templ      template <typename T, typename I>
+
+//   stc_Header;
+//   typedef T rvalue;
+//   typedef T value;
+//   typedef stc::not_delegated lvalue;
+//   stc_End;
+
+  template <typename T, typename I>
+  class value_cast_image //: public super
+  {
+  public:
+    typedef T rvalue;
+    typedef T value;
+    typedef stc::not_delegated lvalue;
+
+//     value_cast_image(I& ima) : delegatee_(ima) { this->data_ = new data (ima); }
+
+    value_cast_image<T, I> value_cast(const Image<I>& input)
+    {
+      value_cast<T, I> tmp(input.exact());
+      return tmp;
+    }
+
+//     delegatee& impl_image() { return this->data_->value_; }
+//     delegatee impl_image() const { return this->data_->value_; }
+//     protected:
+//     delegatee& delegatee_;
+  };
+
+
+# include "../local/undefs.hh"
+
 # define current    image2d<T>
 # define super      primitive_image<current>
 # define templ      template <typename T>
@@ -953,6 +994,8 @@ namespace oln
   protected:
     box &bb_;
   };
+
+# include "../local/undefs.hh"
 
   template <typename I>
   void print(const Image<I>& ima)

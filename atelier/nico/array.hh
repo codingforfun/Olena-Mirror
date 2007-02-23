@@ -45,7 +45,7 @@ namespace oln
 
     bool has(coord_t i, coord_t j) const ;
     value_t operator() (coord_t i, coord_t j) const;
-    value_t &operator() (coord_t i, coord_t j);
+    value_t& operator() (coord_t i, coord_t j);
   private:
     void allocate_();
     void desallocate_();
