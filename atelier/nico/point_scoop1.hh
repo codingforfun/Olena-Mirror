@@ -596,7 +596,7 @@ namespace oln
 # define classname  Image
 
   template <typename Exact>
-  struct Image : public super
+  struct Image : public virtual super, automatic::get_impl<Image, Exact>
   {
     stc_typename(point);
     stc_typename(value);
@@ -626,7 +626,7 @@ namespace oln
 # define classname  Signal
 
   template <typename Exact>
-  struct Signal : public super
+  struct Signal : public virtual super, automatic::get_impl<Signal, Exact>
   {
     stc_using(point);
     stc_using(value);
@@ -645,7 +645,7 @@ namespace oln
 # define classname  Image2d
 
   template <typename Exact>
-  struct Image2d : public super
+  struct Image2d : public virtual super, automatic::get_impl<Image2d, Exact>
   {
     stc_using(point);
     stc_using(value);
@@ -664,8 +664,8 @@ namespace oln
       assert(owns(p));
       return this->exact().impl_value_acces(p);
     }
-    bool owns(const point& p) const { return this->exact().impl_owns(p); }
-    box bbox() const { return this->exact().impl_bbox(); }
+    //    bool owns(const point& p) const { return this->exact().impl_owns(p); }
+    //box bbox() const { return this->exact().impl_bbox(); }
   };
 
 # include "../local/undefs.hh"
@@ -702,7 +702,7 @@ namespace oln
     bool impl_has_data() const { return data_ != 0; }
 
   protected:
-    image_base() {}
+    image_base() { data_ = 0; }
     internal::tracked_ptr<data_t> data_;
   };
 
@@ -741,25 +741,18 @@ namespace oln
 # define super      image_base <Exact>
 # define templ      template <typename Exact>
 
-
   stc_Header;
   typedef stc::abstract delegatee;
   typedef stc::not_delegated data;
   stc_End;
-
 
   template <typename Exact>
   class classname : public super
   {
   public:
     stc_typename(delegatee);
-
-
-
-
   protected:
-    delegatee& delegatee_;
-    image_morpher(delegatee& init) : delegatee_(init) {}
+    image_morpher() {}
   };
 
 # include "../local/undefs.hh"
@@ -771,24 +764,19 @@ namespace oln
 # define super      image_morpher<Exact>
 # define templ      template <typename Exact>
 
-
   stc_Header;
   stc_End;
 
-
   template <typename Exact>
-  class classname : public super
+  class single_image_morpher : public super
   {
   public:
     stc_using(delegatee);
 
-
     delegatee& image() { assert(this->has_data());
       return this->exact().impl_image(); }
     delegatee image() const { assert(this->has_data());
-      return this->exact().impl_image(); }
-  protected:
-    single_image_morpher(delegatee& init) {}
+    return this->exact().impl_image(); }
   };
 
 # include "../local/undefs.hh"
@@ -799,14 +787,12 @@ namespace oln
 # define super      single_image_morpher<Exact>
 # define templ      template <typename Exact>
 
-
   stc_Header;
-  typedef identity behaviour;
+  typedef behavior::identity behavior;
   stc_End;
 
-
   template <typename Exact>
-  struct classname : public super
+  struct image_extansion : public super
   {
     stc_typename(behavior);
   };
@@ -821,17 +807,14 @@ namespace oln
 # define super      image_morpher<Exact>
 # define templ      template <typename Exact>
 
-
   stc_Header;
   stc_End;
-
 
   template <typename Exact>
   class classname : public super
   {
   public:
     stc_using(delegatee);
-
 
     delegatee& image(unsigned i) { assert(this->has_data() && i < n);
       return this->exact().impl_image(); }
@@ -845,9 +828,8 @@ namespace oln
 
 # define classname  polite_image
 # define current    polite_image<I>
-# define super      single_image_morpher<current>
+# define super      image_extansion<current>
 # define templ      template <typename I>
-
 
   stc_Header;
   typedef I delegatee;
@@ -855,21 +837,20 @@ namespace oln
   stc_End;
 
   template <typename I>
-  class classname : public super
+  class polite_image : public super
   {
   public:
     stc_using(delegatee);
     stc_using(data);
 
-    polite_image(I& ima) { data_ = new data (image); }
-    ~polite_image() { delete data_; }
+    polite_image(I& ima) : delegatee_(ima) { this->data_ = new data (ima); }
 
     void talk() const { std::cout << "Nice" << std::endl; }
 
-    delegatee& impl_image() { return data_->value; }
-    delegatee image() const { return data_->value; }
+    delegatee& impl_image() { return this->data_->value_; }
+    delegatee impl_image() const { return this->data_->value_; }
   protected:
-    singleton<I>* data_;
+    delegatee& delegatee_;
   };
 
 # include "../local/undefs.hh"
@@ -951,14 +932,14 @@ namespace oln
     box &bb_;
   };
 
-  template <typename Image>
-  void print(const Image& ima)
+  template <typename I>
+  void print(const Image<I>& ima)
   {
-    typename Image::iter it (ima.bbox());
+    typename I::iter it (ima.bbox());
 
     for (it.start(); it.is_valid(); it.next())
     {
-      std::cout << (typename Image::point) it << std::endl;
+      std::cout << (typename I::point) it << std::endl;
       std::cout << ima.operator()(it.to_point()) << std::endl;
     }
   }

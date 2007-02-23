@@ -30,24 +30,37 @@
 namespace oln
 {
 
-  struct identity;
-
-  template <typename I>
-  struct polite_image;
 
   //needed for get_imp
   namespace automatic
   {
-
-
     //default behaviour identity
     template <template <class> class abstraction, typename Exact>
-    struct set_impl< abstraction, identity, Exact> : impl< abstraction, identity, Exact >
+    struct set_impl< abstraction, behavior::identity, Exact> : impl< abstraction, behavior::identity, Exact >
     {};
 
 
     template <typename Exact>
     struct set_impl<Image, behavior::identity, Exact> : public virtual any<Exact>
-    {};
+    {
+      stc_typename(point);
+      stc_typename(value);
+      stc_typename(box);
+      value impl_value_access (const point& p) const { return this->exact().image()(p) ;}
+      bool impl_owns(const point& p) const { return this->exact().image().owns(p); }
+      bool impl_has_data() const { return this->exact().image().has_data(); }
+      box impl_bbox() const { return this->exact().image().bbox(); }
+    };
+
+    template <typename Exact>
+    struct set_impl<Image2d, behavior::identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(value);
+      stc_typename(coord);
+      value impl_value_access (coord  row, coord col)
+      {
+	return this->exact().image().operator()(row, col);
+      }
+    };
   }
 }
