@@ -891,11 +891,11 @@ namespace oln
 
 //     value_cast_image(I& ima) : delegatee_(ima) { this->data_ = new data (ima); }
 
-    value_cast_image<T, I> value_cast(const Image<I>& input)
-    {
-      value_cast<T, I> tmp(input.exact());
-      return tmp;
-    }
+   //  value_cast_image<T, I> value_cast(const Image<I>& input)
+//     {
+//       value_cast< T, I> tmp(input.exact());
+//       return tmp;
+//     }
 
 //     delegatee& impl_image() { return this->data_->value_; }
 //     delegatee impl_image() const { return this->data_->value_; }
