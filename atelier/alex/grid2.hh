@@ -42,25 +42,45 @@ namespace glg
   // FORWARD DECLARATIONS
   // ====================
 
-  template <typename Exact> class Grid;
+  template <typename Exact>
+  class Grid;
+
   class grid1d;
+
   class grid2d;
-  template < typename P > class box_;
-  template <typename Exact> class Point;
-  template <typename C> class point2d_;
-  template <typename C> class point1d_;
-  template < typename Exact > class Iterator_on_Points;
-  template < typename P > class pset_std_iterator_;
+
+  template < typename P >
+  class box_;
+
+  template <typename Exact>
+  class Point;
+
+  template <typename C>
+  class point2d_;
+
+  template <typename C>
+  class point1d_;
+
+  template < typename Exact >
+  class Iterator_on_Points;
+
+  template < typename P >
+  class pset_std_iterator_;
 
   template < typename Exact >
   class Image;
+
   template < typename Exact >
   class Image_2D;
+
   template < typename T >
   class image2d;
+
   template < typename T, typename C >
   class array2d;
 
+  template < typename Exact >
+  class image_morpher;
 
   // =======
   // ALIASES
@@ -173,6 +193,7 @@ namespace glg
     typedef Iterator_on_Points<point> iter;
 
     value operator() (point const& p) const;
+    value& operator() (point const& p);
     bool owns (point const& p) const;
     box bbox() const;
   };
@@ -212,7 +233,8 @@ namespace glg
     stc_typename(value);
     stc_typename(coord);
     stc_typename(grid);
-    value operator() (coord row, coord col);
+    value& operator() (coord row, coord col);
+    value operator() (coord row, coord col) const;
   };
 
 # include "../local/undefs.hh"
@@ -228,7 +250,8 @@ namespace glg
     stc_typename(value);
     stc_typename(coord);
     stc_typename(grid);
-    value operator() (coord ind);
+    value& operator() (coord ind);
+    value operator() (coord ind) const;
   };
 
 # include "../local/undefs.hh"
@@ -262,6 +285,10 @@ namespace glg
   // ===============
   // IMPLEMENTATIONS
   // ===============
+
+  // My sexy tools
+  // -------------
+
 
   // Grids
   // -----
@@ -589,12 +616,15 @@ namespace glg
 
     value operator() (point const& p) const
       { assert(owns(p)); return this->exact().impl_par(p); }
+    value& operator() (point const& p)
+      { assert(owns(p)); return this->exact().impl_par(p); }
+
     bool owns (point const& p) const { return bbox().includes(p); }
     box bbox() const { return this->exact().impl_bbox(); }
+    bool has_data () const { return data_ != 0; }
 
     stc_lookup(data);
-    typedef data data_t;
-    typename ::oln::internal::tracked_ptr<data_t> data_;  // mon attribut tout beau tout chaud!
+    typename oln::internal::tracked_ptr<data> data_;  // mon attribut tout beau tout chaud!
   };
 # include "../local/undefs.hh"
 
@@ -606,9 +636,10 @@ namespace glg
   class array2d
   {
   public:
-    array2d(C imin, C imax, C jmin, C jmax) : imin(imin) {
-      C row = imax - imin;
-      C col = jmax - jmin;
+    array2d(C imin, C imax, C jmin, C jmax)
+      : imin(imin), jmin(jmin), imax(imax), jmax(jmax) {
+      C row = imax - imin + 1;
+      C col = jmax - jmin + 1;
 
       buffer_ = new T[row * col];
       array_ = new T*[row];
@@ -621,10 +652,10 @@ namespace glg
       array_ -= imin;
     }
     ~array2d() { delete [] buffer_; delete [] (array_ + imin); }
-    T& get (C row, C col) {return array_[row][col]; }
+    T& get (C row, C col) { return array_[row][col]; }
     T get (C row, C col) const { return array_[row][col]; }
 
-    C imin;
+    C imin, jmin, imax, jmax;
     T* buffer_;
     T** array_;
   };
@@ -678,17 +709,15 @@ namespace glg
     stc_using(data);
 
     typedef box_iterator_<point> iter;
-    value& impl_par(const point& p) { return data_->access(p[0], p[1]); }
-    value impl_par(const point& p) const { return data_->get(p[0], p[1]); }
+    value& impl_par(const point& p) { return this->data_->get(p[0], p[1]); }
+    value impl_par(const point& p) const { return this->data_->get(p[0], p[1]); }
     image2d(const box& bb) : box_(bb) {
-      data_ = new data(bb.pmin.row, bb.pmax.row,
+      this->data_ = new data(bb.pmin.row, bb.pmax.row,
 		       bb.pmin.col, bb.pmax.col) ;}
     box impl_bbox() const { return box_; };
     box& impl_bbox() { return box_; };
-    ~image2d() { delete data_; }
   private:
     box     box_;
-    data*   data_;
   };
 
 # include "../local/undefs.hh"
@@ -724,7 +753,7 @@ namespace glg
     value impl_par(const point& p) const { return pixs_[p[0]]; }
     signal(box bb) : box_(bb)
     {
-      coord ind = bb.pmax[0] - bb.pmin[0];
+      coord ind = bb.pmax[0] - bb.pmin[0] + 1;
       pixs_ = new value[ind];
       pixs_ -= bb.pmin[0];
     }
@@ -734,6 +763,91 @@ namespace glg
   private:
     box     box_;
     value*  pixs_;
+  };
+
+# include "../local/undefs.hh"
+
+
+  // My first image morpher
+  // ----------------------
+
+# define templ template < typename Exact >
+# define classname image_morpher
+# define current image_morpher < Exact >
+# define super image_base_< Exact >
+
+  stc_Header;
+  typedef stc::abstract delegatee;
+  typedef stc::not_delegated data;
+  stc_End;
+
+  template < typename Exact >
+  class image_morpher : public super
+  {
+  public:
+    stc_typename(delegatee);
+    stc_using(data);
+
+  protected:
+    delegatee delegatee_;
+  };
+
+# include "../local/undefs.hh"
+
+
+  // Single image
+  // ------------
+
+# define templ template < typename Exact >
+# define classname single_image_morpher
+# define current single_image_morpher < Exact >
+# define super image_morpher< Exact >
+
+  stc_Header;
+  stc_End;
+
+  template < typename Exact >
+  class single_image_morpher : public super
+  {
+  public:
+    stc_using(delegatee);
+
+    delegatee& image() {
+      precondition(this->exact().has_data()); return this->exact.impl_image();}
+    const delegatee& image() const {
+      precondition(this->exact().has_data()); return this->exact.impl_image();}
+  };
+
+# include "../local/undefs.hh"
+
+
+  // Multiple image
+  // --------------
+
+# define templ template < typename Exact >
+# define classname multiple_image_morpher
+# define current multiple_image_morpher < Exact >
+# define super image_morpher< Exact >
+
+  stc_Header;
+  stc_End;
+
+  template < typename Exact >
+  class multiple_image_morpher : public super
+  {
+  public:
+    stc_using(delegatee);
+
+    delegatee& image(unsigned i) {
+      precondition(this->exact().has_data() && i < n);
+      return this->exact.impl_image(i);}
+
+    const delegatee& image(unsigned i) const {
+      precondition(this->exact().has_data() && i < n);
+      return this->exact.impl_image(i);}
+
+  protected:
+    unsigned n;
   };
 
 # include "../local/undefs.hh"

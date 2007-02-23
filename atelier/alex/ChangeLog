@@ -1,3 +1,11 @@
+2007-02-23  Alexandre Abraham  <abraham@floreal.lrde.epita.fr>
+
+	added pseudo abstract class for morphers
+
+2007-02-22  Alexandre Abraham  <abraham@floreal.lrde.epita.fr>
+
+	awakening the Changelog xD
+
 2007-02-20  Alexandre Abraham  <abraham@floreal.lrde.epita.fr>
 
 	grid.hh updated with exercises until Point Set
