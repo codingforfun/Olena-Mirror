@@ -37,7 +37,10 @@
 # include "../local/scoop.hh"
 
 
+
 # include "init_oln_point.hh"
+# include "forward.hh"
+# include "plug.hh"
 # include "tools.hh"
 # include "impl_deleg.hh"
 # include "array.hh"
@@ -73,7 +76,7 @@ namespace oln
 
   //End Grid
   ////////////////////////////////////////////////////////////
-  //all Point class
+  //all Poin class
 
 
 
@@ -604,15 +607,15 @@ namespace oln
     stc_typename(iter);
     stc_typename(grid);
     stc_typename(data);
-    stc_typename(coord);
+    stc_typename(rvalue);
+    stc_typename(psite);
 
-
-    value operator() (const point& p) const
+    rvalue operator() (const psite& p) const
     {
-      assert(owns(p));
-      return this->exact().impl_value_access(p);
+      assert(owns_(p));
+      return this->exact().impl_rvalue_access(p);
     }
-    bool owns(const point& p) const { return this->exact().impl_owns(p); }
+    bool owns_(const psite& p) const { return this->exact().impl_owns(p); }
     bool has_data() const { return this->exact().impl_has_data(); }
     box bbox() const { return this->exact().impl_bbox(); }
   };
@@ -620,22 +623,13 @@ namespace oln
 # include "../local/undefs.hh"
 
 
-# define current    Signal<Exact>
+# define current    Signal<Exact>1
 # define super      Image<Exact>
 # define templ      template <typename Exact>
 # define classname  Signal
 
   template <typename Exact>
-  struct Signal : public virtual super, automatic::get_impl<Signal, Exact>
-  {
-    stc_using(point);
-    stc_using(value);
-    stc_using(box);
-    stc_using(iter);
-    stc_using(grid);
-    stc_using(data);
-    stc_using(coord);
-  };
+  struct Signal : public virtual super, automatic::get_impl<Signal, Exact> {};
 
 # include "../local/undefs.hh"
 
@@ -647,29 +641,46 @@ namespace oln
   template <typename Exact>
   struct Image2d : public virtual super, automatic::get_impl<Image2d, Exact>
   {
-    stc_using(point);
-    stc_using(value);
-    stc_using(box);
-    stc_using(iter);
-    stc_using(grid);
-    stc_using(data);
-    stc_using(coord);
-
-
-    value operator() (coord row, coord col)
-    {
-      point2d_<coord> p;
-      p.row = row;
-      p.col = col;
-      assert(owns(p));
-      return this->exact().impl_value_acces(p);
-    }
-    //    bool owns(const point& p) const { return this->exact().impl_owns(p); }
-    //box bbox() const { return this->exact().impl_bbox(); }
+    stc_typename(coord);
   };
 
 # include "../local/undefs.hh"
 
+
+# define current    Mutable_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Mutable_Image
+
+  template <typename Exact>
+  struct Mutable_Image : public virtual super, automatic::get_impl<Mutable_Image, Exact>
+  {
+    stc_using(psite);
+    stc_typename(lvalue);
+
+    lvalue operator() (const psite& p)
+    {
+      assert(owns_(p));
+      return this->exact().impl_lvalue_access(p);
+    }
+  };
+
+# include "../local/undefs.hh"
+
+# define current    Point_Wise_Accessible_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Point_Wise_Accessible_Image
+
+  template <typename Exact>
+  struct Point_Wise_Accessible_Image : public virtual super, automatic::get_impl<Point_Wise_Accessible_Image, Exact>
+  {
+    stc_using(point);
+
+    bool has(const point& pt) { return this->exact().impl_has(pt); }
+  };
+
+# include "../local/undefs.hh"
   // Concret World
 
 # define current    image_base<Exact>
@@ -695,7 +706,6 @@ namespace oln
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
-    stc_using(coord);
 
     stc_lookup(data);
     typedef data data_t;
@@ -719,7 +729,7 @@ namespace oln
 
 
   template <typename Exact>
-  class classname : public super
+  class primitive_image : public super
   {
   public:
 //     stc_using(data);
@@ -861,11 +871,15 @@ namespace oln
 # define classname  image2d
 
   stc_Header;
+  // typedef stc::is<Image2d> category;
   typedef iter2d iter;
   typedef point2d point;
   typedef point::coord coord;
+  typedef point psite;
   typedef array2d<T, coord>  data;
   typedef T value;
+  typedef const value& rvalue;
+  typedef value& lvalue;
   typedef grid2d grid;
   typedef box2d box;
   stc_End;
@@ -882,12 +896,17 @@ namespace oln
     stc_using(grid);
     stc_using(coord);
     stc_using(data);
+    stc_using(rvalue);
+    stc_using(lvalue);
+    stc_using(psite);
 
     image2d(box &box_ref) : bb_(box_ref) {
       this->data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmax.col_); }
 
-    bool impl_owns(const point& p) const   { return  bb_.includes(p); }
-    value impl_value_access(const point& p) const  { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
+    bool impl_owns(const psite& p) const { return  bb_.includes(p); }
+    bool impl_has(const point& p) { return  bb_.includes(p); }
+    lvalue impl_lvalue_access(const psite& p) { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
+    rvalue impl_rvalue_access(const psite& p) const  { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
@@ -896,6 +915,7 @@ namespace oln
 # include "../local/undefs.hh"
 
 
+  //break, don't use this class
 # define current    signal<T>
 # define super      primitive_image<current>
 # define templ      template <typename T>
@@ -903,15 +923,16 @@ namespace oln
 
   stc_Header;
   typedef T value;
+  typedef const value& rvalue;
+  typedef value& lvalue;
   typedef iter1d iter;
-  // fix it
-  typedef T  data;
+  typedef T*  data;
   typedef point1d point;
+  typedef point psite;
   typedef point::coord coord;
   typedef grid1d grid;
   typedef box1d box;
   stc_End;
-
 
   template <typename T>
   class signal : public super
@@ -922,10 +943,11 @@ namespace oln
     stc_using(box);
     stc_using(iter);
     stc_using(grid);
+    stc_using(psite);
 
     signal(box &box_ref) : bb_(box_ref) { }
 
-    bool imp_owns(const point& p) const   { return  bb_.includes(p); }
+    bool imp_owns(const psite& p) const  { return  bb_.includes(p); }
     //value imp_value_acces(const point& p) { return data_[p.col]; }
     box impl_bbox() const {return bb_;}
   protected:
@@ -949,7 +971,5 @@ namespace oln
   // End Image
   //////////////////////////////////////////////
 }
-
-# include "plug.hh"
 
 #endif /* !POINT_SCOOP1_HH_ */

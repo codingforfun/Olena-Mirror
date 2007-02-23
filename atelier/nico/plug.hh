@@ -42,31 +42,40 @@
 # include <mlc/is_a.hh>
 # include <mlc/case.hh>
 
+# include "forward.hh"
+
 namespace oln
 {
+
   namespace internal
   {
-
-    //Forward declarations
-    template <typename Exact>
-    struct Image;
-
-    template <typename Exact>
-    struct Image2d;
-
     // first selector  -> Image kind
-    typedef selector<Image, 1>  Image_kind;
+    typedef selector<Image, 1> Image_dim;
+    typedef selector<Image, 2> Image_Mut;
+    typedef selector<Image, 3> Image_Access;
 
-    template <typename Exact>
-    struct case_< Image_kind, Exact,  1 > : where_< mlc_eq(typename Exact::grid, grid2d) >
+    template <typename E>
+    struct case_< Image_dim, E,  1 > : where_< mlc_eq(stc_type(E, grid), grid2d) >
     {
-      typedef Image2d<Exact> ret;
+      typedef Image2d<E> ret;
+    };
+
+    template <typename E>
+    struct case_< Image_dim, E,  2 > : where_< mlc_eq(stc_type(E, grid), grid1d) >
+    {
+      typedef Signal<E> ret;
     };
 
     template <typename Exact>
-    struct case_< Image_kind, Exact,  2 > : where_< mlc_eq(typename Exact::grid, grid1d) >
+    struct case_< Image_Mut, Exact,  1 > : where_< stc_type_is_found(lvalue) >
     {
-      typedef Signal<Exact> ret;
+      typedef Mutable_Image<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_Access, Exact,  1 > : where_< mlc_eq(stc_type(Exact, psite), stc_type(Exact, psite)) >
+    {
+      typedef Point_Wise_Accessible_Image<Exact> ret;
     };
   }
 }

@@ -44,23 +44,42 @@ namespace oln
     struct set_impl<Image, behavior::identity, Exact> : public virtual any<Exact>
     {
       stc_typename(point);
-      stc_typename(value);
+      stc_typename(rvalue);
+      stc_typename(psite);
       stc_typename(box);
-      value impl_value_access (const point& p) const { return this->exact().image()(p) ;}
-      bool impl_owns(const point& p) const { return this->exact().image().owns(p); }
-      bool impl_has_data() const { return this->exact().image().has_data(); }
+
+      rvalue impl_rvalue_access(const psite& p) const { return this->exact().image()(p) ;}
+      bool impl_owns(const psite& p) const { return this->exact().image().owns_(p); }
+      //      bool impl_has_data() const { return this->exact().image().has_data(); }
       box impl_bbox() const { return this->exact().image().bbox(); }
     };
 
     template <typename Exact>
     struct set_impl<Image2d, behavior::identity, Exact> : public virtual any<Exact>
     {
-      stc_typename(value);
-      stc_typename(coord);
-      value impl_value_access (coord  row, coord col)
-      {
-	return this->exact().image().operator()(row, col);
-      }
+    };
+
+    template <typename Exact>
+    struct set_impl<Signal, behavior::identity, Exact> : public virtual any<Exact>
+    {
+    };
+
+
+    template <typename Exact>
+    struct set_impl<Mutable_Image, behavior::identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(lvalue);
+      stc_typename(psite);
+
+      lvalue impl_lvalue_access(const psite& p) { return this->exact().image()(p) ;}
+    };
+
+    template <typename Exact>
+    struct set_impl<Point_Wise_Accessible_Image, behavior::identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(point);
+
+      bool impl_has(const point& pt) { return this->exact().image().has(pt); }
     };
   }
 }
