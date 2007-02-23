@@ -1,86 +1,179 @@
 	-*- outline -*-
 
 
-*
+* concepts d'images
 
-image_stack : [n_ : unsigned, T : type] -> class < multiple_image_morpher =
-{
-  delegatee : type = I
-  FIXME
-}
+On veut différencier :
+
+- value, rvalue et lvalue
+
+  pas dur : value est le type des valeurs associées aux pixels
+            rvalue est le type de retour de l'op() const
+            lvalue celui de l'op() pas const
+
+  exemple : pour image2d[T], on a
+            value = T ; rvalue = const T& ; lvalue = T&
+
+  conclusion : les type de retour des op() apparaissent sans 'const'
+               ni '&' et ce sont rvalue et lvalue qui portent
+               éventuellement le 'const' ou la '&'
+
+- point et psite
+
+  certaines images ne sont pas accessibles via ima(p) où 'p' est un
+  point ; en revanche, il doit toujours être possible d'avoir un
+  accès via op() mais l'argument ne sera pas un point, mais un
+  "point site" (psite en abrégé)
+
+  exemple : map_image[P,T] contient map_ de type std::map<P,T>
+            où point = P et value = T.
+            on pourrait penser à :
+              
+            T op()(point p) const { return map_[p]; }
+
+	    mais ça ne compile pas car map_ est const et l'accés
+            op[] pour les std::map n'existe que "non const" car
+            il crée une nouvelle entrée clef-valeur (std::pair<P,T>)
+
+            il faudrait écrire en fait :
+
+           T op()(P p) const
+           {
+             typename std::map<P,T>::const_iterator i
+               = this->map_.find(p);
+             assert(i != map_.end());
+             return *i;
+           }
+
+           ce qui serait non acceptable (trop lent !)
+
+           map_image[P] a une méthode spéciale pour insérer un
+           couple de point/valeur: .insert(P p, T t) et un
+           psite ressemble à :
+
+           map_image_psite_[P,T] = {
+             typename std::map<P,T>::const_iterator i;
+             ...
+           }
+
+           on en déduit :
+
+           T op()(psite p) const { return (p.i)->second; }
+                  ^^^^^
+                  au lieu de point !
 
 
-
-*
-
-on différencie value, rvalue et lvalue
-
-on a :
+Finalement, on veut :
 
 Image
 {
-  site   : type
+  psite  : type
   point  : type
   value  : type
   rvalue : type
   // ...
-  (())  : const (s : site const&) -> rvalue
-  owns_ : const (s : site const&) -> bool
+  (())  : const (p : psite const&) -> rvalue
+  owns_ : const (p : psite const&) -> bool
 }
 
-PWA_Image
+Notez que "owns_" a maintenant un "_" final
+
+
+
+Image_2D : class < Image =
 {
-  rule { site = point }
-  has : (p : point const&) -> bool // theoretical
+  rule { @point.grid = grid2d }
+  coord : type
+  // et rien d'autre maintenant !
 }
 
-Mutable_Image
+
+
+Mutable_Image : class < Image
 {
+  rule { stc_type_is_found(lvalue) }
   lvalue : type
-  (()) : (s : site const&) -> lvalue
+  (()) : (p : psite const&) -> lvalue  [1]
+
+  // ajouter la ligne de C++ suivante :
+  // using Image<Exact>::operator();
 }
 
+[1] pour pouvoir utiliser "psite", vous devez l'importer de la sur-classe
+    via stc_using_from(Image, psite);
 
-Proxy : class =
+
+Constant_Image : class < Image
 {
+  rule { stc_type_is_not_found(lvalue) }
 }
 
 
-rw : [I : type < Mutable_Image, L : type] -> class < Proxy =
+Point_Wise_Accessible_Image : class < Image
 {
-  ima_ : I
-  s_   : I.site
-  log_ : L
-
-  // constructor
-  make : (ima : I,
-          s   : I.site const&,
-	  log : L) =
-  {
-    ima_ := ima
-    s_   := s
-    log_ := log
-  }
-
-  site : () -> I.site& =
-  {
-    return s_
-  }
-
-  // read
-  ()   : const [T : type] -> T =
-  {
-    log_.read(ima_, s_)
-    tmp : I.value := ima_(s_)
-    return tmp
-  }
-
-  // write
-  (:=) : const [T : type] (t : T const&) -> self const& =
-  {
-    log_.write(ima_, s_, t)
-    ima_(s_) := t
-    return @
-  }
+  rule { psite = point }
+  has : (p : point const&) -> bool // [2]
 }
 
+[2] Ajouter l'invariant : @has(p) => @owns_(p)
+
+
+Boxed_Image : class < Image =
+{
+  box : const () -> box_[point]
+}
+
+
+Point_Wise_Accessible_2D_Image : class
+  < Point_Wise_Accessible_Image,
+    Image_2D =
+{
+  has : const (row : coord, col : coord) -> bool
+  at  : const (row : coord, col : coord) -> rvalue
+}
+
+"has" et "at" peuvent avoir une implémentation par défaut :
+on construit un point avec row et col puis on appelle has(p) ou op()(p)
+
+
+Point_Wise_Mutable_2D_Image : class
+  < Point_Wise_Accessible_2D_Image,
+    Mutable_Image =
+{
+  at : (row : coord, col : coord) -> lvalue
+}
+
+même remarque que précédemment
+
+
+Random_Accessible_Image : class < Image =
+{
+  index : type
+  ([]) : const (i : index) -> rvalue
+}
+
+Random_Mutable_Image : class < Random_Accessible_Image =
+{
+  ([]) : (i : index) -> lvalue
+}
+
+
+
+* image2d[T]
+
+on a maintenant :
+
+image2d : [T : type] -> class =
+{
+  point : type = point2d
+  psite : type = point
+  coord : type = int
+   value : type = T
+  rvalue : type = const T&
+  lvalue : type = T&
+
+  iter : type = image_iterator_[point]
+  data : type = array2d_[value, coord]
+
+  ...
+}
