@@ -23,7 +23,7 @@ namespace ugo
   stc_decl_associated_type( point );
   stc_decl_associated_type( iter  );
   stc_decl_associated_type( box   );
-
+  stc_decl_associated_type( data  );
 
   //--Point------------------------
 
@@ -31,9 +31,9 @@ namespace ugo
   struct Point : public virtual any<Exact>,
 		 public automatic::get_impl<Point, Exact>
   {
-      stc_typename(grid);
-      stc_typename(coord);
-      stc_typename(dim);
+      stc_typename( grid  );
+      stc_typename( coord );
+      stc_typename( dim   );
 
       enum { n = mlc_value(dim) };
 
@@ -78,6 +78,7 @@ namespace ugo
       stc_typename(point);
 
       operator point() const			      { return this->exact().impl_cast();      }
+      operator point()	 			      { return this->exact().impl_cast();      }
       stc_type(Exact, point) to_point() const         { return this->exact().impl_to_point();  }
       stc_type(Exact, point) const* point_adr() const { return this->exact().impl_point_adr(); }
     protected:
@@ -112,9 +113,10 @@ namespace ugo
   {
       stc_typename( point );
       stc_typename( value );
+      stc_typename( grid  );
+      stc_typename( data  );
       stc_typename( box   );
       stc_typename( iter  );
-      stc_typename( grid  );
 
       value operator() (const point& p) {
 	assert(owns(p));
@@ -146,6 +148,7 @@ namespace ugo
       stc_using( box   );
       stc_using( iter  );
       stc_using( grid  );
+      stc_using( data  );
 
       value operator() (coord row, coord col)	    { return this->exact().impl_point(row, col); }
       bool  owns(const point& p) const		    { return this->exact().impl_owns(p);         }

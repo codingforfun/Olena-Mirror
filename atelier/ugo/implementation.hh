@@ -422,6 +422,7 @@ namespace ugo
       point impl_to_point() const  	  { return p;        }
       point const* impl_point_adr() const { return &p;	     }
       point impl_cast() const             { return p;        }
+      point impl_cast()		          { return p;        }
 
     protected:
       point		p;
@@ -490,6 +491,7 @@ namespace ugo
   typedef T		value;
   typedef grid2d	grid;
   typedef box2d		box;
+  typedef array2d<T, coord>  data;
 
   typedef stc::is<Image2d> category;
   stc_End;
@@ -504,6 +506,7 @@ namespace ugo
       stc_using( box   );
       stc_using( iter  );
       stc_using( grid  );
+      stc_using( data  );
 
       image2d(box &box_init) : bb_(box_init) {}
 
@@ -511,7 +514,9 @@ namespace ugo
       value imp_value_acces(const point& p)  { return T_(p.row, p.col); }
       box   impl_bbox() const		     { return bb_;              }
     protected:
-      box &bb_;
+      box	&bb_;
+      T*	buffer_;
+      T**	array_;
   };
 
 # include "../local/undefs.hh"
