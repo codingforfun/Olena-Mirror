@@ -34,7 +34,7 @@
 # include <mlc/contract.hh>
 
 
-namespace oln_point
+namespace oln
 {
 
   namespace internal

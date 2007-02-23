@@ -31,7 +31,7 @@
 
 # include <cassert>
 
-namespace oln_point
+namespace oln
 {
   template <typename value_t,
 	    typename coord_t>

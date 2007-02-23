@@ -32,7 +32,7 @@
 # include "../local/scoop.hh"
 # include <mlc/int.hh>
 
-namespace oln_point
+namespace oln
 {
 
   //mandatory for using scoop 2 mecanism

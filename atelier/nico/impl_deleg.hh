@@ -27,23 +27,27 @@
 
 #include "../local/scoop.hh"
 
-namespace oln_point
+namespace oln
 {
 
-    struct identity;
+  struct identity;
 
+  template <typename I>
+  struct polite_image;
 
   //needed for get_imp
   namespace automatic
   {
+
 
     //default behaviour identity
     template <template <class> class abstraction, typename Exact>
     struct set_impl< abstraction, identity, Exact> : impl< abstraction, identity, Exact >
     {};
 
-    // template <template <class> class abstraction, typename Exact>
-//     struct set_impl< , identity, Exact> : impl< abstraction, identity, Exact > : public virtual any<Exact>
-//     {};
+
+    template <typename Exact>
+    struct set_impl<Image, behavior::identity, Exact> : public virtual any<Exact>
+    {};
   }
 }

@@ -42,7 +42,7 @@
 # include <mlc/is_a.hh>
 # include <mlc/case.hh>
 
-namespace oln_point
+namespace oln
 {
   namespace internal
   {

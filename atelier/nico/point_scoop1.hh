@@ -44,7 +44,7 @@
 # include "tracked_ptr.hh"
 
 
-namespace oln_point
+namespace oln
 {
 
   //macro for scoop1 paradigm
@@ -226,18 +226,6 @@ namespace oln_point
   ///////////////////////////////////////////////////////////
   // Point set class
 
-  //Properties
-  stc_decl_associated_type(value);
-  stc_decl_associated_type(point);
-  stc_decl_associated_type(grid);
-  stc_decl_associated_type(iter);
-  stc_decl_associated_type(box);
-  stc_decl_associated_type(coord);
-  stc_decl_associated_type(data);
-
-
-
-
   //abstract world
 
 # define current   Point_Set<Exact>
@@ -352,7 +340,7 @@ namespace oln_point
   stc_Header;
   typedef stc::is<Iterator> category;
   typedef C value;
-  typedef oln_point::point2d_<C> point;
+  typedef oln::point2d_<C> point;
   stc_End;
 
 
@@ -594,6 +582,7 @@ namespace oln_point
 
   /// end set
   ////////////////////////////////////////////////
+
   ///////////////////////////////////////////////
   // Image
 
@@ -624,6 +613,7 @@ namespace oln_point
       return this->exact().impl_value_access(p);
     }
     bool owns(const point& p) const { return this->exact().impl_owns(p); }
+    bool has_data() const { return this->exact().impl_has_data(); }
     box bbox() const { return this->exact().impl_bbox(); }
   };
 
@@ -709,6 +699,7 @@ namespace oln_point
 
     stc_lookup(data);
     typedef data data_t;
+    bool impl_has_data() const { return data_ != 0; }
 
   protected:
     image_base() {}
@@ -764,10 +755,11 @@ namespace oln_point
     stc_typename(delegatee);
 
 
-    image_morpher(delegatee& init) : delegatee_(init) {}
+
 
   protected:
     delegatee& delegatee_;
+    image_morpher(delegatee& init) : delegatee_(init) {}
   };
 
 # include "../local/undefs.hh"
@@ -781,43 +773,42 @@ namespace oln_point
 
 
   stc_Header;
-  typedef stc::abstract delegatee;
-  typedef stc::not_delegated data;
   stc_End;
 
 
-  templ
+  template <typename Exact>
   class classname : public super
   {
   public:
     stc_using(delegatee);
 
 
-    delegatee& image() {//fixme --> invariant(hasdata())
+    delegatee& image() { assert(this->has_data());
       return this->exact().impl_image(); }
-    delegatee image() const { //fixme --> invariant(hasdata())
+    delegatee image() const { assert(this->has_data());
       return this->exact().impl_image(); }
+  protected:
+    single_image_morpher(delegatee& init) {}
   };
 
 # include "../local/undefs.hh"
 
 
 # define classname  image_extansion
-# define current    image_extansion<T>
-# define super      single_image_morpher<current>
-# define templ      template <typename T>
+# define current    image_extansion<Exact>
+# define super      single_image_morpher<Exact>
+# define templ      template <typename Exact>
 
 
   stc_Header;
-  typedef stc::abstract delegatee;
-  typedef stc::not_delegated data;
+  typedef identity behaviour;
   stc_End;
 
 
-  templ
+  template <typename Exact>
   struct classname : public super
   {
-    typedef identity behaviour;
+    stc_typename(behavior);
   };
 
 # include "../local/undefs.hh"
@@ -832,22 +823,22 @@ namespace oln_point
 
 
   stc_Header;
-  typedef stc::abstract delegatee;
-  typedef stc::not_delegated data;
   stc_End;
 
 
-  templ
+  template <typename Exact>
   class classname : public super
   {
   public:
     stc_using(delegatee);
 
 
-    delegatee& image() {//fixme --> invariant(hasdata() && i < n)
+    delegatee& image(unsigned i) { assert(this->has_data() && i < n);
       return this->exact().impl_image(); }
-    delegatee image() const { //fixme --> invariant(hasdata() && i < n)
+    delegatee image(unsigned i) const {assert(this->has_data() && i < n);
       return this->exact().impl_image(); }
+  protected:
+    unsigned n;
   };
 
 # include "../local/undefs.hh"
@@ -863,7 +854,7 @@ namespace oln_point
   typedef singleton<I> data;
   stc_End;
 
-  templ
+  template <typename I>
   class classname : public super
   {
   public:
@@ -912,10 +903,10 @@ namespace oln_point
     stc_using(data);
 
     image2d(box &box_ref) : bb_(box_ref) {
-      super::data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmax.col_); }
+      this->data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmax.col_); }
 
     bool impl_owns(const point& p) const   { return  bb_.includes(p); }
-    value impl_value_access(const point& p) const  { return (super::data_.ptr_)->operator()(p.row_, p.col_); }
+    value impl_value_access(const point& p) const  { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
