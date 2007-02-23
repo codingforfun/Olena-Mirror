@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "concept.hh"
 
@@ -5,7 +6,14 @@ typedef ugo::point2d_<int> point2d;
 typedef ugo::signal<int> signal;
 typedef ugo::point1d_<int> point1d;
 
-int					main()
+template <typename I>
+void   println(const ugo::Image<I>& input)      {
+  typename I::iter it(input.bbox);
+  for (it.start(); it.is_valid(); it.next())
+    std::cout << input(it) << ' ' << std::endl;
+}
+
+int			        main()
 {
   point2d			p1;
   point2d			p2;
@@ -25,6 +33,8 @@ int					main()
   signal	s2(box2);
 
   mlc::assert_<mlc_eq(point2d::grid, ugo::grid2d)>::check();
+
+  println(s1);
 
   assert (ugo::bidon(p1, p2));
 

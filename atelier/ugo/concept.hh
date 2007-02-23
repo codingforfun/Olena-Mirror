@@ -50,10 +50,10 @@ namespace ugo
 
 
 
-  //--Iterator---------------------
+  //--Iterator----------------------
 
   template <typename Exact>
-  struct Iterator : public any<Exact>,
+  struct Iterator : public virtual any<Exact>,
 		    public automatic::get_impl<Iterator, Exact>
   {
       stc_typename(value);
@@ -61,8 +61,8 @@ namespace ugo
       void start()		{ this->exact().impl_start();		}
       void next()		{ this->exact().impl_next();		}
       void invalidate()		{ this->exact().impl_invalidate();	}
-      bool is_valid() const	{ return this->exact().impl_is_valid(); }
       void set(const value& v)	{ this->exact().impl_set(v);		}
+      bool is_valid() const	{ return this->exact().impl_is_valid(); }
     protected:
       Iterator() {}
   };
@@ -77,10 +77,7 @@ namespace ugo
   {
       stc_typename(point);
 
-      Iterator_on_Points();
-      ~Iterator_on_Points();
-
-      operator stc_type(Exact, point)() const         { return this->exact().impl_cast();      }
+      operator point() const			      { return this->exact().impl_cast();      }
       stc_type(Exact, point) to_point() const         { return this->exact().impl_to_point();  }
       stc_type(Exact, point) const* point_adr() const { return this->exact().impl_point_adr(); }
     protected:
@@ -105,6 +102,8 @@ namespace ugo
       Point_set() {}
   };
 
+
+
   //--Image----------------------
 
   template <typename Exact>
@@ -117,13 +116,12 @@ namespace ugo
       stc_typename( iter  );
       stc_typename( grid  );
 
-      value operator() (const point& p)
-      {
+      value operator() (const point& p) {
 	assert(owns(p));
-	return this->exact().impl_includes(p);
+	return this->exact().impl_value_acces(p);
       }
       bool owns(const point& p) const { return this->exact().impl_owns(p); }
-      box bbox() const                { return this->exact().impl_bbox();  }
+      box  bbox() const               { return this->exact().impl_bbox();  }
 
     protected:
       Image() {}
@@ -149,9 +147,9 @@ namespace ugo
       stc_using( iter  );
       stc_using( grid  );
 
-      value operator() (coord row, coord col) {	return this->exact().impl_point(row, col); }
-      bool owns(const point& p) const         { return this->exact().impl_owns(p);         }
-      box bbox() const                        { return this->exact().impl_bbox();          }
+      value operator() (coord row, coord col)	    { return this->exact().impl_point(row, col); }
+      bool  owns(const point& p) const		    { return this->exact().impl_owns(p);         }
+      box   bbox() const			    { return this->exact().impl_bbox();          }
   };
 
 # include "../local/undefs.hh"

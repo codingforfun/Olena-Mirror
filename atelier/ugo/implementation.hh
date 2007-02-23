@@ -6,6 +6,131 @@
 namespace ugo
 {
 
+//----------------------------------------------------------------------------
+//              ARRAY
+//----------------------------------------------------------------------------
+
+  template <typename value_t, typename coord_t = int>
+  struct array2d
+  {
+      array2d(coord_t imin, coord_t jmin, coord_t imax, coord_t jmax);
+      array2d(coord_t ilen, coord_t jlen);
+
+      ~array2d();
+
+      value_t  operator()(coord_t i, coord_t j) const;
+      value_t& operator()(coord_t i, coord_t j);
+
+      bool has(coord_t i, coord_t j) const;
+
+      std::size_t memsize() const;
+
+    protected:
+
+      coord_t   imin_, jmin_, imax_, jmax_;
+      coord_t   ilen_, jlen_;
+      value_t*  buffer_;
+      value_t** array_;
+
+    private:
+
+      void allocate_();
+      void deallocate_();
+  };
+
+  template <typename value_t, typename coord_t>
+  array2d<value_t, coord_t>::array2d(coord_t imin, coord_t jmin,
+				     coord_t imax, coord_t jmax) :
+    imin_(imin),
+    jmin_(jmin),
+    imax_(imax),
+    jmax_(jmax)
+  {
+    precondition(imax >= imin and jmax >= jmin);
+    ilen_ = imax - imin + 1;
+    jlen_ = jmax - jmin + 1;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  array2d<value_t, coord_t>::array2d(coord_t ilen, coord_t jlen) :
+    imin_(0),
+    jmin_(0),
+    ilen_(ilen),
+    jlen_(jlen)
+  {
+    precondition(ilen > 0 and jlen > 0);
+    imax_ = imin_ + ilen_;
+    jmax_ = jmin_ + ilen_;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  array2d<value_t, coord_t>::~array2d()
+  {
+    deallocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t array2d<value_t, coord_t>::operator()(coord_t i, coord_t j) const
+  {
+    precondition(has(i, j));
+    return array_[i][j];
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t& array2d<value_t, coord_t>::operator()(coord_t i, coord_t j)
+  {
+    precondition(has(i, j));
+    return array_[i][j];
+  }
+
+  template <typename value_t, typename coord_t>
+  bool array2d<value_t, coord_t>::has(coord_t i, coord_t j) const
+  {
+    return
+      i >= imin_ and i <= imax_ and
+      j >= jmin_ and j <= jmax_;
+  }
+
+  template <typename value_t, typename coord_t>
+  size_t array2d<value_t, coord_t>::memsize() const
+  {
+    return
+      // buffer_
+      size_t(ilen_) * size_t(jlen_) * sizeof(value_t)
+      +
+      // array_
+      size_t(ilen_) * sizeof(value_t*);
+  }
+
+  template <typename value_t, typename coord_t>
+  void array2d<value_t, coord_t>::allocate_()
+  {
+    buffer_ = new value_t[size_t(ilen_) * size_t(jlen_)];
+    array_ = new value_t*[size_t(ilen_)];
+    value_t* buf = buffer_ - jmin_;
+    for (coord_t i = 0; i < ilen_; ++i)
+    {
+      array_[i] = buf;
+      buf += jlen_;
+    }
+    array_ -= imin_;
+  }
+
+  template <typename value_t, typename coord_t>
+  void array2d<value_t, coord_t>::deallocate_()
+  {
+    precondition(buffer_ != 0 and array_ != 0);
+    delete[] buffer_;
+    buffer_ = 0; // safety
+    array_ += imin_;
+    delete[] array_;
+    array_ = 0;  // safety
+  }
+
+
+
   //----------------------------------------------------------------------------
   //              POINT
   //----------------------------------------------------------------------------
@@ -47,6 +172,7 @@ namespace ugo
       stc_using( coord );
       stc_using( dim   );
 
+      enum { n = mlc_value(dim) };
       point2d_(coord x, coord y) : row(x), col(y) {}
 
       bool impl_equal(point2d_<T> const& rhs) const  { return row == rhs.row and col == rhs.col;		   }
@@ -55,8 +181,16 @@ namespace ugo
       bool impl_sup(point2d_<T> const& rhs) const    { return not impl_inf(rhs) and not impl_equal(rhs);	   }
       bool impl_supeq(point2d_<T> const& rhs) const  { return not impl_inf(rhs);				   }
       bool impl_infeq(point2d_<T> const& rhs) const  { return not impl_sup(rhs);				   }
-      bool impl_croch(point2d_<T> const& i) const    { if (i == 1) return row; else return col;             	   }
-
+      T impl_croch(T const& i) const {
+	switch (i)
+	{
+	  case 0: return row;
+	    break;
+	  case 1: return col;
+	    break;
+	  default: abort(); return T();
+	}
+      }
       point2d_() : row(0), col(0) {}
 
       coord	row, col;
@@ -72,7 +206,7 @@ namespace ugo
   struct vtypes< point1d_<T> >
   {
       typedef point1d_<T>	current;
-      typedef top< current >	super_type;
+      typedef top<current>	super_type;
 
       typedef grid1d		grid;
       typedef T			coord;
@@ -99,7 +233,7 @@ namespace ugo
       bool impl_sup(point1d_<T> const& rhs) const    { return not impl_inf(rhs) and not impl_equal(rhs);   }
       bool impl_supeq(point1d_<T> const& rhs) const  { return not impl_inf(rhs);			   }
       bool impl_infeq(point1d_<T> const& rhs) const  { return not impl_sup(rhs);			   }
-      bool impl_croch(point1d_<T> const& x) const    { if (x) return true; else return false;              }
+      T impl_croch(T const& x) const { assert(x == 0); return i;              }
 
       point1d_() : i(0) {}
 
@@ -178,8 +312,8 @@ namespace ugo
       stc_using(grid);
       stc_using(point);
 
-      unsigned	impl_npoints()                 { return nb;				}
-      bool impl_includes(const point& p) const { if (p) return true; else return false; }
+      unsigned	impl_npoints()                      { return nb;		       	     }
+      bool      impl_includes(const point& p) const { if (p) return true; else return false; }
 
     private:
       int	nb;
@@ -222,7 +356,6 @@ namespace ugo
 	return true;
       }
 
-    private:
       point pmin, pmax;
   };
 
@@ -239,53 +372,61 @@ namespace ugo
 
   //--box_iterator_----------------
 
-  template <typename E> struct box_iterator_;
+  template <typename P> struct box_iterator_;
 
-  template <typename T>
-  struct vtypes< box_iterator_<T> >
+  template <typename P>
+  struct vtypes< box_iterator_<P> >
   {
-      typedef box_iterator_<T>		current;
-      typedef top< current >		super_type;
+      typedef box_iterator_<P>		current;
+      typedef top<current>		super_type;
 
-      typedef stc::is<Point_set>	category;
+      typedef P	point;
+      typedef P value;
+
+      typedef stc::is<Iterator_on_Points>	category;
   };
 
   template <typename P>
+  // P = type de point
   struct box_iterator_ : public top< box_iterator_<P> >
   {
-      typedef  P point_t;
+      typedef box_iterator_<P>	current;
+      typedef top<current>	super;
 
-      box_iterator_(box_<point_t> box) : bb_(box)
-      {
-	nop_ = box.pmax;
-	++nop_[0];
+      stc_using(value);
+      stc_using(point);
+
+      box_iterator_(const box_<point>& box) : bbox(box)  {
+	nop = box.pmax;
+	++nop[0];
       }
 
-      void impl_start();
+      void impl_start() { p =  bbox.pmin; }
 
       void impl_next()
       {
-	for (int i = point_t::n - 1; i >= 0; --i)
-	  if (p_[i] == bb_.pmax(i))
-	    p_[i] = bb_.pmin(i);
+	for (int i = point::n - 1; i >= 0; --i)
+	  if (p[i] == bbox.pmax(i))
+	    p[i] = bbox.pmin(i);
 	  else
           {
-            ++p_[i];
+            ++p[i];
             break;
           }
-	if (p_ == bb_.pmin())
-	  p_ = nop_;
+	if (p == bbox.pmin())
+	  p = nop;
       }
 
-      void impl_invalidate();
-
-      bool impl_is_valid() const;
+      void  impl_invalidate()             { p = nop;         }
+      bool  impl_is_valid() const         { return p != nop; }
+      point impl_to_point() const  	  { return p;        }
+      point const* impl_point_adr() const { return &p;	     }
+      point impl_cast() const             { return p;        }
 
     protected:
-      point_t		p_;
-      box_<point_t>	bb_;
-      point_t		nop_;
-
+      point		p;
+      box_<point>	bbox;
+      point		nop;
   };
 
 
@@ -314,9 +455,7 @@ namespace ugo
       typedef top< current >		   super;
 
       stc_using(value);
-
-      dummy_iterator_on_point2d();
-      ~dummy_iterator_on_point2d();
+      stc_using(point);
 
       void impl_start()		  { return; }
       void impl_next()		  { return; }
@@ -387,10 +526,10 @@ namespace ugo
 # define classname  signal
 
   stc_Header;
-  typedef iter2d	iter;
-  typedef point2d	point;
-  typedef point::coord	coord;
-  typedef T		value;
+  typedef point1d_<T>		point;
+  typedef T			coord;
+  typedef box_iterator_<point>	iter;
+  typedef T			value;
   typedef grid1d		grid;
   typedef box_<point1d_<T> >	box;
 
@@ -399,9 +538,8 @@ namespace ugo
 
 
   template <typename T>
-  class signal : public super
+  struct signal : public super
   {
-    public:
       stc_using( point );
       stc_using( value );
       stc_using( box   );
@@ -410,9 +548,10 @@ namespace ugo
 
       signal(box &box_init) : bb_(box_init) {}
 
-      bool imp_owns(const point& p) const   { return  bb_.includes(p); }
-      value imp_value_acces(const point& p) { return T_(p.row, p.col); }
-      box impl_bbox() const		    { return bb_;              }
+      bool  impl_owns(const point& p) const  { return  bb_.includes(p); }
+      value impl_value_acces(const point& p) { return T_(p.row, p.col); }
+      box   impl_bbox() const	 	     { return bb_;              }
+      value impl_includes(const point& p)    { return p.value;		}
     protected:
       box &bb_;
   };
