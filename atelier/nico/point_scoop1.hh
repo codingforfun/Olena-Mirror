@@ -584,22 +584,54 @@ namespace oln
 
   typedef box_< point2d_<int> > box2d;
   typedef box_< point1d_<int> > box1d;
-
-
   /// end set
   ////////////////////////////////////////////////
 
   ////////////////////////////////////////////////
   // function point to bool
 
-// # define classname  fp2b
-// # define current    fp2b<Exact>
-// # define super      any<Exact>
-// # define templ      template <typename Exact>
+# define classname  fp2b
+# define current    fp2b<Exact>
+# define super      any<Exact>
+# define templ      template <typename Exact>
 
-// class
+  template <typename Exact> struct fp2b;
 
-// # include "../local/undefs.hh"
+  template <typename Exact>
+  struct vtypes<fp2b<Exact> >
+  {
+    typedef mlc::none super_type;
+  };
+
+  template <typename Exact>
+  struct fp2b : any<Exact>
+  {
+    stc_typename(point);
+
+    bool operator()(const point& p) { return this->exact().impl_valid_access(p); }
+  };
+# include "../local/undefs.hh"
+
+# define classname  chessboard_t
+# define current    chessboard_t
+# define super      fp2b<chessboard_t>
+  struct chessboard_t;
+
+  template <>
+  struct vtypes<chessboard_t>
+  {
+    typedef mlc::none super_type;
+    typedef point2d point;
+  };
+
+  struct  chessboard_t : super
+  {
+    typedef point2d point;
+
+    bool operator()(const point& p) { return (p.row_ + p.col_) % 2 == 0; }
+  };
+# include "../local/undefs.hh"
+
   //
   ////////////////////////////////////////////////
 
@@ -902,6 +934,46 @@ namespace oln
   };
 
 # include "../local/undefs.hh"
+
+# define classname  subset_image_1
+# define current    subset_image_1<I, F>
+# define super      image_extansion<current>
+# define templ      template <typename I, typename F>
+
+  stc_Header;
+  typedef I delegatee_;
+  stc_End;
+
+  template <typename I, typename F>
+  class subset_image_1 : public super
+  {
+  public:
+    stc_using(delegatee);
+    stc_using(data);
+    stc_using(psite);
+    stc_using(lvalue);
+    stc_using(rvalue);
+
+    subset_image_1(I& ima, F fun) : fun_(fun) { this->data_ = new data (ima); }
+
+    delegatee& impl_image() { return this->data_->value_; }
+    delegatee impl_image() const { return this->data_->value_; }
+    rvalue impl_rvalue_access(const psite& p) const { assert(fun_(p));
+      return this->exact().image()(p) ;}
+    lvalue impl_rvalue_access(const psite& p) { assert(fun_(p));
+      return this->exact().image()(p) ;}
+  protected:
+    F fun_;
+  };
+
+# include "../local/undefs.hh"
+
+  template <typename I, typename F>
+  subset_image_1<I, F> operator| (I& ima, F& fun)
+  {
+    subset_image_1<I, F> masked(ima, fun);
+    return (masked);
+  }
 
 // # define classname  value_cast_image
 // # define current    value_cast_image<I>
