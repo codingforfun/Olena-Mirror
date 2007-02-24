@@ -1,7 +1,8 @@
-#ifndef _5_SET_HH_
-#define _5_SET_HH_
+#ifndef IMPLEMENTATION_HH_
+#define _HH_
 
 #include "concept.hh"
+
 
 namespace ugo
 {
