@@ -465,6 +465,7 @@ namespace oln
   stc_Header;
   typedef stc::is<Iterator_on_Points> category;
   typedef typename I::point point;
+  typedef typename I::value value;
   stc_End;
 
 
@@ -476,6 +477,7 @@ namespace oln
     typedef typename I::point point;
     typedef typename I::iter iter;
     typedef typename I::box  box;
+    typedef typename I::value value;
 
 
     void impl_invalidate() { p_.invalidate(); }
@@ -487,7 +489,7 @@ namespace oln
     {
       p_.start();
       while (p_.is_valid() && !(f_(p_)))
-	p_.next;
+	p_.next();
     }
     void impl_next()
     {
@@ -656,7 +658,7 @@ namespace oln
   {
     stc_typename(point);
 
-    bool operator()(const point& p) { return this->exact().impl_valid_access(p); }
+    bool operator()(const point& p) const { return this->exact().impl_valid_access(p); }
   };
 # include "../local/undefs.hh"
 
@@ -676,7 +678,7 @@ namespace oln
   {
     typedef point2d point;
 
-    bool operator()(const point& p) { return (p.row_ + p.col_) % 2 == 0; }
+    bool operator()(const point& p) const { return (p.row_ + p.col_) % 2 == 0; }
   };
 # include "../local/undefs.hh"
 
@@ -1014,7 +1016,7 @@ namespace oln
     lvalue impl_rvalue_access(const psite& p) { assert(fun_(p));
     return this->exact().image()(p) ;}
 
-    bool impl_has(const psite& p) { return fun_(p) && this->exact().image().has(p) ;}
+    bool impl_has(const psite& p) const { return fun_(p) && this->exact().image().has(p) ;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
@@ -1217,7 +1219,7 @@ namespace oln
     signal(box &box_ref) : bb_(box_ref) { }
 
     bool imp_owns(const psite& p) const  { return  bb_.includes(p); }
-    //value imp_value_acces(const point& p) { return data_[p.col]; }
+    //  value imp_value_acces(const point& p) { return thisdata_[p.col]; }
     box impl_bbox() const {return bb_;}
   protected:
     box &bb_;
