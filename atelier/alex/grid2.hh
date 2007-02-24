@@ -34,9 +34,12 @@ namespace glg
   stc_decl_associated_type(coord);
   stc_decl_associated_type(dim);
   stc_decl_associated_type(point);
+  stc_decl_associated_type(psite);
   stc_decl_associated_type(value);
   stc_decl_associated_type(box_);
   stc_decl_associated_type(data);
+  stc_decl_associated_type(lvalue);
+  stc_decl_associated_type(rvalue);
 
   // ====================
   // FORWARD DECLARATIONS
@@ -73,6 +76,15 @@ namespace glg
   template < typename Exact >
   class Image_2D;
 
+  template < typename Exact >
+  class Signal;
+
+  template < typename Exact >
+  class Mutable_Image;
+
+  template < typename Exact >
+  class Point_Wise_Accessible_Image;
+
   template < typename T >
   class image2d;
 
@@ -99,27 +111,7 @@ namespace glg
   // SET_IMPL
   // ========
 
-  namespace behavior { struct identity; }
-
-  namespace automatic
-  {
-    // Image
-
-    template <typename Exact>
-    struct set_impl< Image, behavior::identity, Exact > : public virtual any<Exact>
-    {
-    };
-
-
-    // Image_2D
-
-    template <typename Exact>
-    struct set_impl< Image_2D, behavior::identity, Exact > : public virtual any<Exact>
-    {
-    };
-
-
-  }
+# include "identity.hh"
 
   // ========
   // CONCEPTS
@@ -224,12 +216,14 @@ namespace glg
     stc_typename(value);
     stc_typename(coord);
     stc_typename(grid);
+    stc_typename(psite);
+    stc_typename(lvalue);
+    stc_typename(rvalue);
     typedef box_<point> box;
     typedef Iterator_on_Points<point> iter;
 
-    value operator() (point const& p) const;
-    value& operator() (point const& p);
-    bool owns (point const& p) const;
+    value operator() (psite const& p) const;
+    bool owns_ (psite const& p) const;
     box bbox() const;
   };
 
@@ -253,16 +247,16 @@ namespace glg
   // MERCI ROLAND
 
   template < typename Exact >
-  class Image_2D : public Image < Exact >,
+  class Image_2D : public virtual Image < Exact >,
 		   public automatic::get_impl<Image_2D, Exact>
   {
   public:
-    stc_typename(point);
-    stc_typename(value);
+    //    stc_typename(point);
+    //   stc_typename(value);
     stc_typename(coord);
-    stc_typename(grid);
-    value& operator() (coord row, coord col);
-    value operator() (coord row, coord col) const;
+    //   stc_typename(grid);
+    //    value& operator() (coord row, coord col);
+    //    value operator() (coord row, coord col) const;
   };
 
 # include "../local/undefs.hh"
@@ -271,19 +265,66 @@ namespace glg
   // ------
 
   template < typename Exact >
-  class Signal : public Image < Exact >,
+  class Signal : public virtual Image < Exact >,
 		 public automatic::get_impl<Signal, Exact>
   {
   public:
-    stc_typename(point);
-    stc_typename(value);
+    //    stc_typename(point);
+    //    stc_typename(value);
     stc_typename(coord);
-    stc_typename(grid);
-    value& operator() (coord ind);
-    value operator() (coord ind) const;
+    //    stc_typename(grid);
+    //    value& operator() (coord ind);
+    //    value operator() (coord ind) const;
   };
 
 # include "../local/undefs.hh"
+
+  // Mutable Image (Tchernobyl comes back)
+  // -------------------------------------
+
+  template < typename Exact >
+  class Mutable_Image : public virtual Image < Exact >,
+			public automatic::get_impl<Mutable_Image, Exact>
+  {
+  public:
+    stc_typename(lvalue);
+    stc_typename(psite);   //Fixme
+    //typedef stc_type(Image< Exact >, psite) psite;
+
+    lvalue operator() (psite const& p);
+  };
+
+# include "../local/undefs.hh"
+
+
+  // Constant Image
+  // --------------
+
+  template < typename Exact >
+  class Constant_Image : public virtual Image < Exact >,
+			 public automatic::get_impl<Constant_Image, Exact>
+  {
+  };
+
+# include "../local/undefs.hh"
+
+
+  // Point Wise Accessible Image (80 cols explosion)
+  // -----------------------------------------------
+
+  template < typename Exact >
+  class Point_Wise_Accessible_Image : public virtual Image < Exact >,
+				      public automatic::get_impl<Point_Wise_Accessible_Image, Exact>
+  {
+  public:
+    stc_typename(point);
+    bool has(point const& p) const {
+      invariant(this->owns(p)); return this->exact().impl_has(p); }
+  };
+
+# include "../local/undefs.hh"
+
+
 
   // ========
   // SELECTOR
@@ -291,6 +332,9 @@ namespace glg
 
   namespace internal
   {
+
+    // Dimension
+
     typedef selector<Image, 1> Image_dimension;
 
     template < typename Exact >
@@ -307,6 +351,36 @@ namespace glg
       typedef Signal<Exact> ret;
     };
 
+
+    // Mutability
+
+    typedef selector<Image, 2> Image_mutability;
+
+    template < typename Exact >
+    struct case_<Image_mutability, Exact, 1> :
+      where_< stc_is_found(lvalue) >
+    {
+      typedef Mutable_Image<Exact> ret;
+    };
+
+    template < typename Exact >
+    struct case_<Image_mutability, Exact, 2> :
+      where_< stc_is_not_found(lvalue) >
+    {
+      typedef Constant_Image<Exact> ret;
+    };
+
+
+    // Point Wise Accessibility
+
+    typedef selector<Image, 3> Image_PWA;
+
+    template < typename Exact >
+    struct case_<Image_PWA, Exact, 1> :
+      where_< mlc_eq(stc_type(Exact, psite), stc_type(Exact, point)) >
+    {
+      typedef Point_Wise_Accessible_Image<Exact> ret;
+    };
 
   }
 
@@ -747,9 +821,12 @@ namespace glg
   stc_Header;
   typedef grid2d grid;
   typedef point2d point;
+  typedef point psite;
   typedef point::coord coord;
   typedef box2d box;
   typedef T value;
+  typedef const value& rvalue;
+  typedef value& lvalue;
   typedef array2d < T, coord > data;
   stc_End;
 
@@ -758,9 +835,12 @@ namespace glg
   {
   public:
     stc_using(point);
+    stc_using(psite);
     stc_using(coord);
     stc_using(grid);
     stc_using(value);
+    stc_using(rvalue);
+    stc_using(lvalue);
     stc_using(box);
     stc_using(data);
 
@@ -784,14 +864,18 @@ namespace glg
 # define templ template < typename T >
 # define classname signal
 # define current signal< T >
-# define super image_base_< current >
+# define super primitive_image< current >
 
   stc_Header;
+
   typedef grid1d grid;
   typedef point1d point;
+  typedef point psite;
   typedef point::coord coord;
   typedef box_<point1d> box;
   typedef T value;
+  typedef const value& rvalue;
+  typedef value& lvalue;
   typedef value data;
   stc_End;
 
@@ -800,9 +884,12 @@ namespace glg
   {
   public:
     stc_using(point);
+    stc_using(psite);
     stc_using(coord);
     stc_using(grid);
     stc_using(value);
+    stc_using(rvalue);
+    stc_using(lvalue);
     stc_using(box);
     typedef box_iterator_<point> iter;
     value& impl_par(const point& p) { return pixs_[p[0]]; }
