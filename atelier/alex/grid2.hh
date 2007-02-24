@@ -82,6 +82,9 @@ namespace glg
   template < typename Exact >
   class image_morpher;
 
+  template < typename I >
+  class polite_image;
+
   // =======
   // ALIASES
   // =======
@@ -91,6 +94,33 @@ namespace glg
   typedef box_<point2d> box2d;
   typedef box_<point1d> box1d;
 
+
+  // ========
+  // SET_IMPL
+  // ========
+
+  namespace behavior { struct identity; }
+
+  namespace automatic
+  {
+    // Image
+
+    template <typename Exact>
+    struct set_impl< Image, behavior::identity, Exact > : public virtual any<Exact>
+    {
+    };
+
+
+    // Image_2D
+
+    template <typename Exact>
+    struct set_impl< Image_2D, behavior::identity, Exact > : public virtual any<Exact>
+    {
+    };
+
+
+  }
+
   // ========
   // CONCEPTS
   // =======-
@@ -99,14 +129,15 @@ namespace glg
   // -----
 
   template <typename Exact>
-  class Grid : public stc::any <Exact>
+  class Grid : public virtual any <Exact>
   {};
 
   // Points
   // ------
 
   template <typename Exact>
-  class Point : public any < Exact >
+  class Point : public virtual any < Exact >,
+		public automatic::get_impl<Point, Exact>
   {
   public :
     stc_typename(grid);
@@ -135,7 +166,8 @@ namespace glg
   // ---------
 
   template < typename Exact >
-  class Iterator : public any < Exact >
+  class Iterator : public virtual any < Exact >,
+		   public automatic::get_impl<Iterator, Exact>
   {
   public:
     void start ();
@@ -152,7 +184,8 @@ namespace glg
   // ------------------
 
   template < typename Exact >
-  class Iterator_on_Points : public any < Exact >
+  class Iterator_on_Points : public virtual any < Exact >,
+			     public automatic::get_impl<Iterator_on_Points, Exact>
   {
   public:
     stc_typename(point);
@@ -166,7 +199,8 @@ namespace glg
   // ---------
 
    template < typename Exact >
-   class Point_Set : public any < Exact >
+   class Point_Set : public virtual any < Exact >,
+		     public automatic::get_impl<Point_Set, Exact>
    {
    public:
      stc_typename(point);
@@ -182,7 +216,8 @@ namespace glg
   // -----
 
   template < typename Exact >
-  class Image : public any < Exact >
+  class Image : public virtual any < Exact >,
+		public automatic::get_impl<Image, Exact>
   {
   public:
     stc_typename(point);
@@ -217,16 +252,9 @@ namespace glg
   // Roland m'a aide a sortir du probleme sur lequel je bloque depuis ce matin:
   // MERCI ROLAND
 
-  // \o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
-  //  |\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
-  // /\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/\o/
-  //   | \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \| \.
-  //  / \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \.
-
-  //                   ON FAIT TOUS UNE OLA POUR ROLAND!
-
   template < typename Exact >
-  class Image_2D : public Image < Exact >
+  class Image_2D : public Image < Exact >,
+		   public automatic::get_impl<Image_2D, Exact>
   {
   public:
     stc_typename(point);
@@ -243,7 +271,8 @@ namespace glg
   // ------
 
   template < typename Exact >
-  class Signal : public Image < Exact >
+  class Signal : public Image < Exact >,
+		 public automatic::get_impl<Signal, Exact>
   {
   public:
     stc_typename(point);
@@ -288,6 +317,33 @@ namespace glg
 
   // My sexy tools
   // -------------
+
+  template < typename T >
+  class singleton
+  {
+  public:
+    T value;
+    singleton () {}
+    singleton (T value) : value(value) {}
+  };
+
+  template < unsigned n, typename T >
+  class vec
+  {
+  public:
+    T comp[n];
+    T operator[] (unsigned i) const { assertion(i < n) ; return comp[i]; }
+    T& operator[] (unsigned i) { assertion(i < n) ; return comp[i]; }
+  };
+
+  template < unsigned n, typename T >
+  std::ostream& operator<<(std::ostream& ostr, const vec<n, T>& vect)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      ostr << vect.comp[i] << " ";
+    ostr << "<end of list>" << std::endl;
+    return ostr;
+  }
 
 
   // Grids
@@ -789,7 +845,6 @@ namespace glg
     stc_using(data);
 
   protected:
-    delegatee delegatee_;
   };
 
 # include "../local/undefs.hh"
@@ -838,11 +893,11 @@ namespace glg
   public:
     stc_using(delegatee);
 
-    delegatee& image(unsigned i) {
+    delegatee& image(unsigned i = 0) {
       precondition(this->exact().has_data() && i < n);
       return this->exact.impl_image(i);}
 
-    const delegatee& image(unsigned i) const {
+    const delegatee& image(unsigned i = 0) const {
       precondition(this->exact().has_data() && i < n);
       return this->exact.impl_image(i);}
 
@@ -853,7 +908,55 @@ namespace glg
 # include "../local/undefs.hh"
 
 
+  // Image extension
+  // ---------------
 
+# define templ template < typename Exact >
+# define classname image_extension
+# define current image_extension < Exact >
+# define super single_image_morpher < Exact >
+
+  stc_Header;
+  typedef behavior::identity behavior;
+  stc_End;
+
+  template < typename Exact >
+  class image_extension : public super
+  {};
+
+# include "../local/undefs.hh"
+
+  // Polite image (at last!)
+  // -----------------------
+
+# define templ template < typename I >
+# define classname polite_image
+# define current polite_image < I >
+# define super image_extension < current >
+
+  stc_Header;
+  typedef I delegatee;
+  typedef singleton < I > data;
+  stc_End;
+
+  template < typename I >
+  class polite_image : public super
+  {
+  public:
+    stc_using(data);
+    stc_using(delegatee);
+
+    polite_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
+    void talk () const { std::cout << "nice!"; }
+
+    I& impl_image () { return this->data_->value; }
+    const I& impl_image () const { return this->data_->value; }
+
+  protected:
+    delegatee& delegatee_;
+  };
+
+# include "../local/undefs.hh"
 
   // ==========================
   // EXPERIMENTAL (NON WORKING)

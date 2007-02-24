@@ -21,7 +21,6 @@ int main ()
   image2d<int> cocopy(aie);;
   image2d<int>::iter it(aie.bbox());
   signal<int> ouille(c);
-//  box2d<int> bo(p1, p2);
 
   std::cout << "[32mParcours simple image2d[m" << std::endl;
 
@@ -44,6 +43,36 @@ int main ()
   print(aie);
 
   std::cout << "[35m~~~[m" << std::endl << std::endl;
+
+  // dummy instanciations
+
+  std::cout << "[32mInstanciation de variables de divers types[m" << std::endl;
+
+  glg::singleton<int> sing;
+  glg::vec<3, int> vec; // voir avec Theo le comportement louche de g++
+			// reponse : g++ c'est gland!
+
+  std::cout << "If you can see this message, instanciations worked!" << std::endl;
+
+  std::cout << "[35m~~~[m" << std::endl << std::endl;
+
+  std::cout << "[32mVec fullfillment + display[m" << std::endl;
+  vec[0] = 0;
+  vec[1] = 5;
+  vec[2] = 1;
+
+  std::cout << vec;
+
+  std::cout << "[35m~~~[m" << std::endl << std::endl;
+
+
+  std::cout << "[32mPolite image[m" << std::endl;
+
+  polite_image< image2d<int> > drucker(aie);
+  drucker.talk();
+
+  std::cout << std::endl << "[35m~~~[m" << std::endl << std::endl;
+
 
   return bidon (p1, p2);
 }
