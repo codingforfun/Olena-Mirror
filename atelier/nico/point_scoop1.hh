@@ -475,6 +475,7 @@ namespace oln
   public:
     typedef typename I::point point;
     typedef typename I::iter iter;
+    typedef typename I::box  box;
 
 
     void impl_invalidate() { p_.invalidate(); }
@@ -495,7 +496,7 @@ namespace oln
       while (p_.is_valid() && !(f_(p_)));
     }
 
-    subset_image_1_iterator_(const iter& p) : p_(p)  {}
+    subset_image_1_iterator_(const box& bb) : p_(bb) {}
 
   protected:
     iter p_;
@@ -990,6 +991,7 @@ namespace oln
   stc_Header;
   typedef I delegatee;
   typedef singleton<I> data;
+  typedef subset_image_1_iterator_<I, F> iter;
   stc_End;
 
   template <typename I, typename F>
@@ -1011,6 +1013,8 @@ namespace oln
 
     lvalue impl_rvalue_access(const psite& p) { assert(fun_(p));
     return this->exact().image()(p) ;}
+
+    bool impl_has(const psite& p) { return fun_(p) && this->exact().image().has(p) ;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
