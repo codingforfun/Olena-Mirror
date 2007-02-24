@@ -43,7 +43,7 @@ namespace ugo
       bool operator> (Point<Exact> const& rhs) const	{ return this->exact().impl_sup ( rhs.exact () );    }
       bool operator>= (Point<Exact> const& rhs) const	{ return this->exact().impl_supeq ( rhs.exact () );  }
       bool operator<= (Point<Exact> const& rhs) const	{ return this->exact().impl_infequ ( rhs.exact () ); }
-      bool operator[] (Point<Exact> const& rhs) const	{ return this->exact().impl_croch ( rhs.exact () ); }
+      bool operator[] (Point<Exact> const& rhs) const	{ return this->exact().impl_croch ( rhs.exact () );  }
     protected:
       Point() {}
   };

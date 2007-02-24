@@ -146,6 +146,8 @@ namespace ugo
 
 
   //--Point2d_------------------
+  //  is a Point
+  // mathematical point in 2 dimension
 
   template <typename T> struct point2d_;
 
@@ -175,31 +177,15 @@ namespace ugo
       enum { n = mlc_value(dim) };
       point2d_(coord x, coord y) : row(x), col(y) {}
 
-      bool impl_equal(point2d_<T> const& rhs) const  {
-	return row == rhs.row and col == rhs.col;
-      }
+      bool impl_equal(point2d_<T> const& rhs) const  { return row == rhs.row and col == rhs.col;		   }
+      bool impl_inf(point2d_<T> const& rhs) const    { return row < rhs.row or (row == rhs.row and col < rhs.col); }
+      bool impl_dif(point2d_<T> const& rhs) const    { return not impl_equal(rhs);				   }
+      bool impl_sup(point2d_<T> const& rhs) const    { return not impl_inf(rhs) and not impl_equal(rhs);	   }
+      bool impl_supeq(point2d_<T> const& rhs) const  { return not impl_inf(rhs);				   }
+      bool impl_infeq(point2d_<T> const& rhs) const  { return not impl_sup(rhs);				   }
 
-      bool impl_inf(point2d_<T> const& rhs) const    {
-	return row < rhs.row or (row == rhs.row and col < rhs.col);
-      }
-
-      bool impl_dif(point2d_<T> const& rhs) const    {
-	return not impl_equal(rhs);
-      }
-
-      bool impl_sup(point2d_<T> const& rhs) const    {
-	return not impl_inf(rhs) and not impl_equal(rhs);
-      }
-
-      bool impl_supeq(point2d_<T> const& rhs) const  {
-	return not impl_inf(rhs);
-      }
-
-      bool impl_infeq(point2d_<T> const& rhs) const  {
-	return not impl_sup(rhs);
-      }
-
-      T impl_croch(T const& i) const {
+      T impl_croch(int i) const
+      {
 	switch (i)
 	{
 	  case 0: return row;
@@ -209,6 +195,20 @@ namespace ugo
 	  default: abort(); return T();
 	}
       }
+
+
+      T impl_croch(int i)
+      {
+	switch (i)
+	{
+	  case 0: return row;
+	    break;
+	  case 1: return col;
+	    break;
+	  default: abort(); return T();
+	}
+      }
+
 
       point2d_() : row(), col() {}
 
@@ -226,6 +226,8 @@ namespace ugo
   //----------------------------------------------------------------------------
 
   //-point_set_base------------------
+  //  is a Point-Set
+  // Point-set factorisation.
 
   template <typename T> struct point_set_base;
 
@@ -253,6 +255,8 @@ namespace ugo
 
 
   //--box_------------------------
+  //  is a Point-Set.
+  // Bounding box
 
   template <typename P> struct box_;
 
@@ -299,17 +303,19 @@ namespace ugo
   //----------------------------------------------------------------------------
 
   //--box_iterator_----------------
+  //  is an iterator_on_point
+  // iterator on Box
 
   template <typename P> struct box_iterator_;
 
   template <typename P>
   struct vtypes< box_iterator_<P> >
   {
-      typedef box_iterator_<P>		current;
-      typedef top<current>		super_type;
+      typedef box_iterator_<P>	current;
+      typedef top<current>	super_type;
 
-      typedef P	point;
-      typedef P value;
+      typedef P			point;
+      typedef P			value;
 
       typedef stc::is<Iterator_on_Points>	category;
   };
@@ -321,41 +327,34 @@ namespace ugo
       typedef box_iterator_<P>	current;
       typedef top<current>	super;
 
-      stc_using(value);
-      stc_using(point);
+      stc_using( value );
+      stc_using( point );
 
-      box_iterator_(const box_<point>& box) : bbox(box)  {
-	nop = box.pmax;
-	++nop[0];
+      box_iterator_(const box_<point>& box)
+      {
+	bbox_ = box;
+	nop_  = bbox_.pmax;
+	p_    = bbox_.pmin;
       }
 
-      void impl_start() { p =  bbox.pmin; }
+      void impl_start() { p_ =  bbox_.pmin; }
 
       void impl_next()
       {
-	for (int i = point::n - 1; i >= 0; --i)
-	  if (p[i] == bbox.pmax(i))
-	    p[i] = bbox.pmin(i);
-	  else
-          {
-            ++p[i];
-            break;
-          }
-	if (p == bbox.pmin())
-	  p = nop;
+	return;
       }
 
-      void  impl_invalidate()             { p = nop;         }
-      bool  impl_is_valid() const         { return p != nop; }
-      point impl_to_point() const  	  { return p;        }
-      point const* impl_point_adr() const { return &p;	     }
-      point impl_cast() const             { return p;        }
-      point impl_cast()		          { return p;        }
+      void  impl_invalidate()             { p_ = nop_;         }
+      bool  impl_is_valid() const         { return p_ != nop_; }
+      point impl_to_point() const  	  { return p_;         }
+      point const* impl_point_adr() const { return &p_;	       }
+      point impl_cast()	const             { return p_;         }
+      point impl_cast()		          { return p_;         }
 
     protected:
-      point		p;
-      box_<point>	bbox;
-      point		nop;
+      point		p_;
+      box_<point>	bbox_;
+      point		nop_;
   };
 
 
@@ -390,12 +389,12 @@ namespace ugo
   template <typename Exact>
   class image_base : public super
   {
-      stc_using(point);
-      stc_using(value);
-      stc_using(box);
-      stc_using(iter);
-      stc_using(grid);
-      stc_using(coord);
+      stc_using( point );
+      stc_using( value );
+      stc_using( box   );
+      stc_using( iter  );
+      stc_using( grid  );
+      stc_using( coord );
 
       stc_lookup(data);
       typedef data data_t;
@@ -424,13 +423,13 @@ namespace ugo
   typedef box2d		box;
   typedef array2d<T, coord>  data;
 
-  typedef stc::is<Image2d> category;
+  typedef stc::is<Image> category;
 
   stc_End;
 
 
   template <typename T>
-  class image2d_ : public super
+  struct image2d_ : public super
   {
     public:
       stc_using( point );
@@ -440,16 +439,17 @@ namespace ugo
       stc_using( grid  );
       stc_using( data  );
 
-      image2d_(box &box_init) : bb_(box_init) {
-	data_ = new data(bb_.pmin.row, bb_.pmin.col,
-			 bb_.pmax.row, bb_.pmax.col);
-	  }
+      image2d_(box &box_init) : bbox(box_init) {
+	data_ = new data(bbox.pmin.row, bbox.pmin.col,
+			 bbox.pmax.row, bbox.pmax.col);
+      }
 
-      bool  imp_owns(const point& p) const   { return  bb_.includes(p); }
-      value imp_value_acces(const point& p)  { return T_(p.row, p.col); }
-      box   impl_bbox() const		     { return bb_;              }
+      bool  impl_owns(const point& p) const   { return bbox.includes(p); }
+      value impl_value_acces(const point& p)  { return T(p.row, p.col);  }
+      box   impl_bbox() const		      { return bbox;             }
+
+      box&	bbox;
     protected:
-      box&	bb_;
       data*	data_;
   };
 
