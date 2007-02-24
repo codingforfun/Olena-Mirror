@@ -81,5 +81,55 @@ namespace oln
 
       bool impl_has(const point& pt) { return this->exact().image().has(pt); }
     };
+
+    //behavior  mult_identity
+    template <template <class> class abstraction, typename Exact>
+    struct set_impl< abstraction, behavior::mult_identity, Exact> : impl< abstraction, behavior::identity, Exact >
+    {};
+
+
+    template <typename Exact>
+    struct set_impl<Image, behavior::mult_identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(point);
+      stc_typename(rvalue);
+      stc_typename(psite);
+      stc_typename(box);
+
+      //fix it
+      //rvalue impl_rvalue_access(const psite& p) const { return this->exact().image()(p) ;}
+      bool impl_owns(const psite& p) const { return this->exact().image(0).owns_(p); }
+      //      bool impl_has_data() const { return this->exact().image().has_data(); }
+      box impl_bbox() const { return this->exact().image(0).bbox(); }
+    };
+
+    template <typename Exact>
+    struct set_impl<Image2d, behavior::mult_identity, Exact> : public virtual any<Exact>
+    {
+    };
+
+    template <typename Exact>
+    struct set_impl<Signal, behavior::mult_identity, Exact> : public virtual any<Exact>
+    {
+    };
+
+
+    template <typename Exact>
+    struct set_impl<Mutable_Image, behavior::mult_identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(lvalue);
+      stc_typename(psite);
+
+      //fix it
+      //lvalue impl_lvalue_access(const psite& p) { return this->exact().image()(p) ;}
+    };
+
+    template <typename Exact>
+    struct set_impl<Point_Wise_Accessible_Image, behavior::mult_identity, Exact> : public virtual any<Exact>
+    {
+      stc_typename(point);
+
+      bool impl_has(const point& pt) { return this->exact().image(0).has(pt); }
+    };
   }
 }

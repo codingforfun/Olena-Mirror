@@ -44,6 +44,7 @@
 # include "tools.hh"
 # include "impl_deleg.hh"
 # include "array.hh"
+# include "proxy.hh"
 # include "tracked_ptr.hh"
 
 
@@ -285,6 +286,7 @@ namespace oln
 # include "../local/undefs.hh"
   // End Point class
   //////////////////////////////////////////////////////////
+
 
   //////////////////////////////////////////////////////////
   //Iterator
@@ -563,9 +565,10 @@ namespace oln
     stc_using(point);
 
     enum { n = mlc_value(typename point::dim) };
-    const point pmin;
-    const point pmax;
+    point pmin;
+    point pmax;
 
+    box_()  {}
     box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {  }
     const box_& impl_bbox() const { return *this; }
     bool impl_includes(const point& p) const
@@ -586,7 +589,21 @@ namespace oln
   /// end set
   ////////////////////////////////////////////////
 
-  ///////////////////////////////////////////////
+  ////////////////////////////////////////////////
+  // function point to bool
+
+// # define classname  fp2b
+// # define current    fp2b<Exact>
+// # define super      any<Exact>
+// # define templ      template <typename Exact>
+
+// class
+
+// # include "../local/undefs.hh"
+  //
+  ////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////
   // Image
 
   // Properties
@@ -831,12 +848,30 @@ namespace oln
   public:
     stc_using(delegatee);
 
-    delegatee& image(unsigned i) { assert(this->has_data() && i < n);
-      return this->exact().impl_image(); }
-    delegatee image(unsigned i) const {assert(this->has_data() && i < n);
-      return this->exact().impl_image(); }
+    delegatee& image(unsigned i) { assert(/*this->has_data() &&*/ i < n);
+    return this->exact().impl_image(i); }
+  delegatee image(unsigned i) const {assert(/*this->has_data() &&*/ i < n);
+    return this->exact().impl_image(i); }
   protected:
     unsigned n;
+  };
+
+# include "../local/undefs.hh"
+
+
+# define classname  images_extansion
+# define current    images_extansion<Exact>
+# define super      multiple_image_morpher<Exact>
+# define templ      template <typename Exact>
+
+  stc_Header;
+  typedef behavior::mult_identity behavior;
+  stc_End;
+
+  template <typename Exact>
+  struct images_extansion : public super
+  {
+    stc_typename(behavior);
   };
 
 # include "../local/undefs.hh"
@@ -858,14 +893,12 @@ namespace oln
     stc_using(delegatee);
     stc_using(data);
 
-    polite_image(I& ima) : delegatee_(ima) { this->data_ = new data (ima); }
+    polite_image(I& ima) { this->data_ = new data (ima); }
 
     void talk() const { std::cout << "Nice" << std::endl; }
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
-  protected:
-    delegatee& delegatee_;
   };
 
 # include "../local/undefs.hh"
@@ -906,6 +939,71 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+
+# define classname  image_stack
+# define current    image_stack<n, I>
+# define super      images_extansion<current>
+# define templ      template <unsigned n, typename I>
+
+  stc_Header;
+  typedef vec<n, I> data;
+  typedef I delegatee;
+  typedef vec<n, typename I::value> value;
+  typedef const value rvalue;
+  typedef value_proxy_<I> lvalue;
+  stc_End;
+
+  template <unsigned n, typename I>
+  class image_stack : public super
+  {
+  public:
+    stc_using(rvalue);
+    stc_using(lvalue);
+    stc_using(value);
+    stc_using(delegatee);
+    stc_using(psite);
+//     stc_lookup(psite);
+    stc_using(data);
+
+    //Ctor
+    image_stack() { this->data_ = 0;
+    this->n = n; }
+
+    //Methodes
+    lvalue operator()(const psite& p)
+    {
+      value_proxy_<I> tmp (*this, p);
+      return tmp;
+    }
+    rvalue impl_rvalue_access(const psite& p) const { return this->read_(p); }
+    lvalue impl_lvalue_access(const psite& p) { return this->write_(p) ;}
+    delegatee& impl_image(unsigned i) { return this->delegatee_[i]; }
+    delegatee impl_image(unsigned i) const { return this->delegatee_[i]; }
+
+    //Internal methodes
+    rvalue read_(const psite& p) const
+    {
+      value v;
+
+      for (unsigned i = 0; i < n; ++i)
+	v[i] = this->delegatee_[i](p);
+      return v;
+    }
+
+    lvalue write_(const psite& p)
+    {
+      vec<n, typename I::value&>& v;
+
+      for (unsigned i = 0; i < n; ++i)
+	v[i] = this->delegatee_[i](p);
+      return v;
+    }
+  protected:
+    vec<n, I> delegatee_;
+  };
+
+# include "../local/undefs.hh"
+
 # define current    image2d<T>
 # define super      primitive_image<current>
 # define templ      template <typename T>
@@ -941,6 +1039,7 @@ namespace oln
     stc_using(lvalue);
     stc_using(psite);
 
+    image2d() {}
     image2d(box &box_ref) : bb_(box_ref) {
       this->data_ = new data (box_ref.pmin.row_, box_ref.pmin.col_, box_ref.pmax.row_, box_ref.pmax.col_); }
 
@@ -950,7 +1049,7 @@ namespace oln
     rvalue impl_rvalue_access(const psite& p) const  { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
     box impl_bbox() const {return bb_;}
   protected:
-    box &bb_;
+    box bb_;
   };
 
 # include "../local/undefs.hh"
