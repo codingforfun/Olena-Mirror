@@ -457,6 +457,52 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+# define classname subset_image_1_iterator_
+# define current subset_image_1_iterator_<I, F>
+# define super  top  <current>
+# define templ template <typename I, typename F>
+
+  stc_Header;
+  typedef stc::is<Iterator_on_Points> category;
+  typedef typename I::point point;
+  stc_End;
+
+
+
+  template < typename I, typename F >
+  class subset_image_1_iterator_ : public super
+  {
+  public:
+    typedef typename I::point point;
+    typedef typename I::iter iter;
+
+
+    void impl_invalidate() { p_.invalidate(); }
+    bool impl_is_valid() const {  return p_.is_valid(); }
+    point impl_to_point() const { return p_.to_point(); }
+    point const* point_adr() const { return p_.point_adr(); }
+    operator point const() { return p_.to_point(); }
+    void impl_start()
+    {
+      p_.start();
+      while (p_.is_valid() && !(f_(p_)))
+	p_.next;
+    }
+    void impl_next()
+    {
+      do
+	p_.next();
+      while (p_.is_valid() && !(f_(p_)));
+    }
+
+    subset_image_1_iterator_(const iter& p) : p_(p)  {}
+
+  protected:
+    iter p_;
+    F f_;
+  };
+
+# include "../local/undefs.hh"
 
   template <typename P>
   class pset_std;
@@ -602,6 +648,7 @@ namespace oln
   {
     typedef mlc::none super_type;
   };
+
 
   template <typename Exact>
   struct fp2b : any<Exact>
@@ -941,7 +988,8 @@ namespace oln
 # define templ      template <typename I, typename F>
 
   stc_Header;
-  typedef I delegatee_;
+  typedef I delegatee;
+  typedef singleton<I> data;
   stc_End;
 
   template <typename I, typename F>
@@ -956,17 +1004,22 @@ namespace oln
 
     subset_image_1(I& ima, F fun) : fun_(fun) { this->data_ = new data (ima); }
 
+    // void talk() const { std::cout << "Nice" << std::endl; }
+
+    rvalue impl_rvalue_access(const psite& p) const { assert(fun_(p));
+    return this->exact().image()(p); }
+
+    lvalue impl_rvalue_access(const psite& p) { assert(fun_(p));
+    return this->exact().image()(p) ;}
+
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
-    rvalue impl_rvalue_access(const psite& p) const { assert(fun_(p));
-      return this->exact().image()(p) ;}
-    lvalue impl_rvalue_access(const psite& p) { assert(fun_(p));
-      return this->exact().image()(p) ;}
   protected:
     F fun_;
   };
 
 # include "../local/undefs.hh"
+
 
   template <typename I, typename F>
   subset_image_1<I, F> operator| (I& ima, F& fun)
