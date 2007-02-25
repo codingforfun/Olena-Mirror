@@ -5,10 +5,15 @@
 #include "concept2.hh"
 
 template <typename I>
-void   println(const ugo::Image<I>& input)      {
-  typename I::iter it(input.bbox);
+void   println(I& img)
+{
+  typename I::iter it(img.bbox);
   for (it.start(); it.is_valid(); it.next())
-    std::cout << input(it) << ' ' << std::endl;
+  {
+    std::cout << img(it) << ' ';
+    if (((ugo::point2d)it)[0] == img.bbox.pmax[0])
+      std::cout << std::endl;
+  }
 }
 
 int main()
@@ -20,8 +25,13 @@ int main()
 
   ugo::image2d::iter		it(box);
 
-  for (it.start(); it.is_valid(); it.next())
-    std::cout << img(it) << ' ' << std::endl;
+
+  img(ugo::point2d(3, 3)) = 5;
+  img(ugo::point2d(2, 3)) = 4;
+  img(ugo::point2d(4, 4)) = 7;
+  img(ugo::point2d(1, 2)) = 4;
+
+  println<ugo::image2d>(img);
 
   return(0);
 }
