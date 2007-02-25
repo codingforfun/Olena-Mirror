@@ -4,6 +4,17 @@
 #include	"concept2.hh"
 #include	"tracked_ptr.hh"
 
+namespace behavior
+{
+  struct identity;
+  struct mult_identity;
+}
+
+
+#define stc_simple_typename(Type)     typedef typename vtypes<Exact>::Type Type
+#define stc_simple_using(Type, Where) typedef typename vtypes<Where>::Type Type
+#define stc_simple_find(Type, Where)  typename vtypes<Where>::Type
+
 namespace ugo
 {
 
@@ -540,7 +551,7 @@ namespace ugo
 
 
 
- //--multiple_image_morpher----------------------
+  //--multiple_image_morpher----------------------
 
 # define classname  multiple_image_morpher
 # define current    multiple_image_morpher<Exact>
@@ -574,7 +585,58 @@ namespace ugo
 
 
 
+  //--image_extension-------------------
 
+# define classname  image_extension
+# define current    image_extension<Exact>
+# define super      single_image_morpher<Exact>
+# define templ      template <typename Exact>
+
+  stc_Header;
+
+  typedef behavior::identity behavior;
+
+  stc_End;
+
+  template <typename Exact>
+  struct image_extansion : public super
+  {
+      stc_typename(behavior);
+  };
+
+# include "../local/undefs.hh"
+
+
+  //--impl_image------------------------
+
+# define classname  polite_image
+# define current    polite_image<I>
+# define super      image_extension<current>
+# define templ      template <typename I>
+
+  stc_Header;
+
+  typedef I		delegatee;
+  typedef singleton<I>	data;
+
+  stc_End;
+
+  template <typename I>
+  struct polite_image : public super
+  {
+      stc_using(data);
+      stc_using(delegatee);
+
+      polite_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
+
+      void	talk () const		{ std::cout << "Thou art great!" <<  std::endl; }
+      I&	impl_image ()		{ return this->data_->value; }
+      const I&	impl_image () const	{ return this->data_->value; }
+    protected:
+      delegatee& delegatee_;
+  };
+
+# include "../local/undefs.hh"
 }
 
 #endif	    /* !IMPLEMENTATION2_HH_ */
