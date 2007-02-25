@@ -40,6 +40,7 @@ namespace glg
   stc_decl_associated_type(data);
   stc_decl_associated_type(lvalue);
   stc_decl_associated_type(rvalue);
+  stc_decl_associated_type(index);
 
   // ====================
   // FORWARD DECLARATIONS
@@ -84,6 +85,15 @@ namespace glg
 
   template < typename Exact >
   class Point_Wise_Accessible_Image;
+
+  template < typename Exact >
+  class Boxed_Image;
+
+  template < typename Exact >
+  class Random_Accessible_Image;
+
+  template < typename Exact >
+  class Random_Mutable_Image;
 
   template < typename T >
   class image2d;
@@ -214,7 +224,6 @@ namespace glg
   public:
     stc_typename(point);
     stc_typename(value);
-    stc_typename(coord);
     stc_typename(grid);
     stc_typename(psite);
     stc_typename(lvalue);
@@ -222,9 +231,10 @@ namespace glg
     typedef box_<point> box;
     typedef Iterator_on_Points<point> iter;
 
-    value operator() (psite const& p) const;
-    bool owns_ (psite const& p) const;
-    box bbox() const;
+    value operator() (psite const& p) const
+    { return this->exact().impl_par(p); }
+    bool owns_ (psite const& p) const
+    { return this->exact().impl_owns_(p); }
   };
 
   // Image_2D
@@ -251,12 +261,7 @@ namespace glg
 		   public automatic::get_impl<Image_2D, Exact>
   {
   public:
-    //    stc_typename(point);
-    //   stc_typename(value);
     stc_typename(coord);
-    //   stc_typename(grid);
-    //    value& operator() (coord row, coord col);
-    //    value operator() (coord row, coord col) const;
   };
 
 # include "../local/undefs.hh"
@@ -269,12 +274,7 @@ namespace glg
 		 public automatic::get_impl<Signal, Exact>
   {
   public:
-    //    stc_typename(point);
-    //    stc_typename(value);
     stc_typename(coord);
-    //    stc_typename(grid);
-    //    value& operator() (coord ind);
-    //    value operator() (coord ind) const;
   };
 
 # include "../local/undefs.hh"
@@ -287,11 +287,13 @@ namespace glg
 			public automatic::get_impl<Mutable_Image, Exact>
   {
   public:
-    stc_typename(lvalue);
-    stc_typename(psite);   //Fixme
-    //typedef stc_type(Image< Exact >, psite) psite;
+    typedef Image <Exact> super;
 
-    lvalue operator() (psite const& p);
+    stc_typename(lvalue);
+    stc_using(psite);
+
+    lvalue operator() (psite const& p)
+    { return this->exact().impl_par(p); }
   };
 
 # include "../local/undefs.hh"
@@ -309,7 +311,7 @@ namespace glg
 # include "../local/undefs.hh"
 
 
-  // Point Wise Accessible Image (80 cols explosion)
+  // Point Wise Accessible Image (not 80 cols friendly)
   // -----------------------------------------------
 
   template < typename Exact >
@@ -317,14 +319,65 @@ namespace glg
 				      public automatic::get_impl<Point_Wise_Accessible_Image, Exact>
   {
   public:
-    stc_typename(point);
+    typedef Image <Exact> super;
+    stc_using(point);
+
     bool has(point const& p) const {
       invariant(this->owns(p)); return this->exact().impl_has(p); }
   };
 
 # include "../local/undefs.hh"
 
+  // Boxed Image
+  // -----------
 
+  template < typename Exact >
+  class Boxed_Image : public virtual Image < Exact >,
+		      public automatic::get_impl<Boxed_Image, Exact>
+  {
+  public:
+    typedef Image <Exact> super;
+    stc_using(point);
+
+    box_<point> bbox () const
+    { return this->exact().impl_bbox() ; }
+  };
+
+# include "../local/undefs.hh"
+
+  // RAI
+  // ---
+
+  template < typename Exact >
+  class Random_Accessible_Image : public virtual Image < Exact >,
+				  public automatic::get_impl<Random_Accessible_Image, Exact>
+  {
+  public:
+    typedef Image <Exact> super;
+    stc_typename(index);
+    stc_using(rvalue);
+    rvalue operator[] (index i) const
+    { return this->exact().impl_bra(i); }
+  };
+
+# include "../local/undefs.hh"
+
+  // Random Mutable Image
+
+
+  template < typename Exact >
+  class Random_Mutable_Image : public virtual Image < Exact >,
+			       public automatic::get_impl<Random_Mutable_Image, Exact>
+  {
+  public:
+    stc_typename(lvalue);
+    stc_typename(index);
+    lvalue operator[] (index i)
+    { return this->exact().impl_bra(i); }
+  };
+
+# include "../local/undefs.hh"
+  
 
   // ========
   // SELECTOR
@@ -749,7 +802,7 @@ namespace glg
     value& operator() (point const& p)
       { assert(owns(p)); return this->exact().impl_par(p); }
 
-    bool owns (point const& p) const { return bbox().includes(p); }
+    bool owns_ (point const& p) const { return bbox().includes(p); }
     box bbox() const { return this->exact().impl_bbox(); }
     bool has_data () const { return data_ != 0; }
 
