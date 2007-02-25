@@ -7,7 +7,7 @@
 template <typename I>
 void   println(I& img)
 {
-  typename I::iter it(img.bbox);
+  typename I::iter it(img);
   for (it.start(); it.is_valid(); it.next())
   {
     std::cout << img(it) << ' ';
@@ -25,6 +25,7 @@ int main()
 
   ugo::image2d::iter		it(box);
 
+//  ugo::polite_image<ugo::image2d>	a(img);
 
   img(ugo::point2d(3, 3)) = 5;
   img(ugo::point2d(2, 3)) = 4;

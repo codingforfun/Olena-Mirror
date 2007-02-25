@@ -1,7 +1,7 @@
 #ifndef   	IMPLEMENTATION2_HH_
 # define   	IMPLEMENTATION2_HH_
 
-#include	"concept2.hh"
+#include	"concept3.hh"
 #include	"tracked_ptr.hh"
 
 namespace behavior
@@ -478,7 +478,6 @@ namespace ugo
       value  impl_point_value(const point& p) const { return (*data_)(p.row, p.col);  }
       value& impl_point_value(const point& p)       { return (*data_)(p.row, p.col);  }
       box    impl_bbox() const		            { return bbox;		      }
-      operator box()				    { return bbox;                    }
 
       box&	bbox;
     protected:

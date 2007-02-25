@@ -1,6 +1,9 @@
 2:
 	g++ -W -Wall -Werror -ansi -pedantic -I$(HOME)/olena_1/metalic main2.cc -o atelier
 
+3:
+	g++ -W -Wall -Werror -ansi -pedantic -I$(HOME)/olena_1/metalic main3.cc -o atelier
+
 all:
 	g++ -W -Wall -Werror -ansi -pedantic -I$(HOME)/olena_1/metalic main.cc -o j1
 
