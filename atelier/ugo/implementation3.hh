@@ -449,6 +449,9 @@ namespace ugo
   typedef point2d	 point;
   typedef point::coord	 coord;
   typedef T		 value;
+  typedef const T&	 rvalue;
+  typedef T&		 lvalue;
+  typedef point		 psite;
   typedef grid2d	 grid;
   typedef box2d		 box;
   typedef array2d<value> data;
@@ -468,6 +471,9 @@ namespace ugo
       stc_using( iter  );
       stc_using( grid  );
       stc_using( data  );
+      stc_using( rvalue  );
+      stc_using( lvalue  );
+      stc_using( psite  );
 
       image2d_(box &box_init) : bbox(box_init) {
 	data_ = new data(bbox.pmin.row, bbox.pmin.col,

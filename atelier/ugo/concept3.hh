@@ -23,7 +23,10 @@ namespace ugo
   stc_decl_associated_type( box   );
   stc_decl_associated_type( coord );
   stc_decl_associated_type( data  );
-  stc_decl_associated_type( dim  );
+  stc_decl_associated_type( dim   );
+  stc_decl_associated_type( rvalue );
+  stc_decl_associated_type( lvalue );
+  stc_decl_associated_type( psite  );
 
   //--Point------------------------
 
@@ -113,11 +116,12 @@ namespace ugo
   struct Image : public virtual super, automatic::get_impl<Image, Exact>
   {
       stc_typename(point);
-      stc_typename(value);
       stc_typename(box);
       stc_typename(iter);
       stc_typename(grid);
       stc_typename(data);
+      stc_typename(value);
+      stc_typename(lvalue);
       stc_typename(rvalue);
       stc_typename(psite);
 
@@ -126,9 +130,9 @@ namespace ugo
 	assert(owns_(p));
 	return this->exact().impl_rvalue_access(p);
       }
-      bool owns_(const psite& p) const { return this->exact().impl_owns(p); }
-      bool has_data() const { return this->exact().impl_has_data(); }
-      box bbox() const { return this->exact().impl_bbox(); }
+      bool owns_(const psite& p) const { return this->exact().impl_owns(p);    }
+      bool has_data() const            { return this->exact().impl_has_data(); }
+      box  bbox() const                { return this->exact().impl_bbox();     }
   };
 
 # include "../local/undefs.hh"
