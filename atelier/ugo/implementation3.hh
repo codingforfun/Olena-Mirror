@@ -480,10 +480,10 @@ namespace ugo
 			 bbox.pmax.row, bbox.pmax.col);
       }
 
-      bool   impl_owns(const point& p) const        { return bbox.includes(p);        }
-      value  impl_point_value(const point& p) const { return (*data_)(p.row, p.col);  }
-      value& impl_point_value(const point& p)       { return (*data_)(p.row, p.col);  }
-      box    impl_bbox() const		            { return bbox;		      }
+      bool   impl_owns(const psite& p) const          { return bbox.includes(p);        }
+      lvalue impl_lvalue_access(const psite& p)       { return (*data_)(p.row_, p.col_); }
+      rvalue impl_rvalue_access(const psite& p) const { return (*data_)(p.row_, p.col_); }
+      box    impl_bbox() const		              { return bbox;		      }
 
       box&	bbox;
     protected:
@@ -643,6 +643,8 @@ namespace ugo
   };
 
 # include "../local/undefs.hh"
+
+
 }
 
 #endif	    /* !IMPLEMENTATION2_HH_ */

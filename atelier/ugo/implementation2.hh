@@ -10,7 +10,6 @@ namespace behavior
   struct mult_identity;
 }
 
-
 #define stc_simple_typename(Type)     typedef typename vtypes<Exact>::Type Type
 #define stc_simple_using(Type, Where) typedef typename vtypes<Where>::Type Type
 #define stc_simple_find(Type, Where)  typename vtypes<Where>::Type

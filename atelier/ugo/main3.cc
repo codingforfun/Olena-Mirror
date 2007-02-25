@@ -11,7 +11,5 @@ int main ()
   ugo::box_<ugo::point2d>	box(p1, p2);
   ugo::image2d			img(box);
 
-  
-
   return (0);
 }

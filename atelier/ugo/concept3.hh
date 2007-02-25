@@ -113,7 +113,8 @@ namespace ugo
 # define classname  Image
 
   template <typename Exact>
-  struct Image : public virtual super, automatic::get_impl<Image, Exact>
+  struct Image : public virtual super,
+		 public automatic::get_impl<Image, Exact>
   {
       stc_typename(point);
       stc_typename(box);
@@ -166,6 +167,54 @@ namespace ugo
   };
 
 # include "../local/undefs.hh"
+
+
+
+
+  //--Mutable-image---------------------
+
+# define current    Mutable_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Mutable_Image
+
+  template <typename Exact>
+  struct Mutable_Image : public virtual super,
+			 public automatic::get_impl<Mutable_Image, Exact>
+  {
+      stc_using_from(Image, psite);		//difference avec
+						//stc_using ?
+
+      stc_typename(lvalue);
+      lvalue operator() (const psite& p)     {	return this->exact().impl_lvalue_access(p);      }
+      lvalue affect(const psite& p)          {	return this->exact().impl_lvalue_access(p);      }
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--Point-Wise-Accessible-image-------
+
+# define current    Point_Wise_Accessible_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Point_Wise_Accessible_Image
+
+  <typename Exact>
+  struct Point_Wise_Accessible_Image : public virtual super, automatic::get_impl<Point_Wise_Accessible_Image, Exact>
+  {
+      stc_using(point);
+      bool has(const point& pt) { return this->exact().impl_has(pt); }
+  };
+
+# include "../local/undefs.hh"
+
+
+
+
+  //--
+
 
 }
 
