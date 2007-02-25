@@ -507,6 +507,58 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+# define classname subset_image_2_iterator_
+# define current subset_image_2_iterator_<I, F>
+# define super  top  <current>
+# define templ template <typename I, typename F>
+
+  stc_Header;
+  typedef stc::is<Iterator_on_Points> category;
+  typedef typename I::point point;
+  typedef typename I::value value;
+  stc_End;
+
+
+
+  template < typename I, typename F >
+  class subset_image_2_iterator_ : public super
+  {
+  public:
+    typedef typename I::point point;
+    typedef typename I::iter iter;
+    typedef typename I::box  box;
+    typedef typename I::value value;
+
+
+    void impl_invalidate() { p_.invalidate(); }
+    bool impl_is_valid() const {  return p_.is_valid(); }
+    point impl_to_point() const { return p_.to_point(); }
+    point const* point_adr() const { return p_.point_adr(); }
+    operator point const() { return p_.to_point(); }
+    void impl_start()
+    {
+      p_.start();
+      while (p_.is_valid() && !(ima_.has(p_)))
+	p_.next();
+    }
+    void impl_next()
+    {
+      do
+	p_.next();
+      while (p_.is_valid() && !(ima_.has(p_)));
+    }
+
+    subset_image_2_iterator_(const box& bb, const I& ima) : p_(bb), ima_(ima)  {}
+
+  protected:
+    I ima_;
+    iter p_;
+    F f_;
+  };
+
+# include "../local/undefs.hh"
+
+
   template <typename P>
   class pset_std;
 
@@ -835,15 +887,6 @@ namespace oln
   template <typename Exact>
   class primitive_image : public super
   {
-  public:
-//     stc_using(data);
-//     stc_using(point);
-//     stc_using(value);
-//     stc_using(box);
-//     stc_using(iter);
-//     stc_using(grid);
-//    stc_using(coord);
-
   protected:
     primitive_image() {}
   };
@@ -1026,13 +1069,60 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+# define classname  subset_image_2
+# define current    subset_image_2<I, Ps>
+# define super      image_extansion<current>
+# define templ      template <typename I, typename Ps>
 
+  stc_Header;
+  typedef I delegatee;
+  typedef singleton<I> data;
+  typedef subset_image_2_iterator_<I, Ps> iter;
+  stc_End;
+
+  template <typename I, typename Ps>
+  class subset_image_2 : public super
+  {
+  public:
+    stc_using(delegatee);
+    stc_using(data);
+    stc_using(psite);
+    stc_using(lvalue);
+    stc_using(rvalue);
+
+    subset_image_2(I& ima, Ps ps) : ps_(ps) { this->data_ = new data (ima); }
+
+    rvalue impl_rvalue_access(const psite& p) const { assert(ps_.includes(p));
+    return this->exact().image()(p); }
+
+    lvalue impl_rvalue_access(const psite& p) { assert(ps_.includes(p));
+    return this->exact().image()(p) ;}
+
+    bool impl_has(const psite& p) const { return ps_.includes(p) && this->exact().image().has(p) ;}
+
+    delegatee& impl_image() { return this->data_->value_; }
+    delegatee impl_image() const { return this->data_->value_; }
+  protected:
+    Ps ps_;
+  };
+
+# include "../local/undefs.hh"
+
+
+  //redefinitions of operator |
   template <typename I, typename F>
   subset_image_1<I, F> operator| (I& ima, F& fun)
   {
     subset_image_1<I, F> masked(ima, fun);
     return (masked);
   }
+
+//   template <typename I, typename Ps>
+//   subset_image_2<I, Ps> operator| (I& ima, Ps& ps)
+//   {
+//     subset_image_2<I, Ps> masked(ima, ps);
+//     return (masked);
+//   }
 
 // # define classname  value_cast_image
 // # define current    value_cast_image<I>
