@@ -466,7 +466,7 @@ namespace ugo
       bool   impl_owns(const point& p) const        { return bbox.includes(p);        }
       value  impl_point_value(const point& p) const { return (*data_)(p.row, p.col);  }
       value& impl_point_value(const point& p)       { return (*data_)(p.row, p.col);  }
-      box    impl_bbox() const		            { return bbox;		     }
+      box    impl_bbox() const		            { return bbox;		      }
 
       box&	bbox;
     protected:
@@ -476,6 +476,105 @@ namespace ugo
   typedef	image2d_<int>	image2d;
 
 # include "../local/undefs.hh"
+
+
+
+  //--image-morpher---------------------------
+
+# define classname  image_morpher
+# define current    image_morpher<Exact>
+# define super      image_base <Exact>
+# define templ      template <typename Exact>
+
+  stc_Header;
+
+  typedef stc::abstract		delegatee;
+  typedef stc::not_delegated	data;
+
+  stc_End;
+
+  template <typename Exact>
+  struct classname : public super
+  {
+      stc_typename(delegatee);
+    protected:
+      image_morpher() {}
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--simple-image-morpher--------------------
+
+# define classname  single_image_morpher
+# define current    single_image_morpher<Exact>
+# define super      image_morpher<Exact>
+# define templ      template <typename Exact>
+
+  stc_Header;
+
+  stc_End;
+
+  template <typename Exact>
+  struct single_image_morpher : public super
+  {
+      stc_using(delegatee);
+
+      delegatee& image()
+      {
+	precondition(this->exact().has_data());
+	return this->exact().impl_image();
+      }
+
+      delegatee image() const
+      {
+	precondition(this->exact().has_data());
+	return this->exact().impl_image();
+      }
+    protected:
+      single_image_morpher() {}
+  };
+
+# include "../local/undefs.hh"
+
+
+
+ //--multiple_image_morpher----------------------
+
+# define classname  multiple_image_morpher
+# define current    multiple_image_morpher<Exact>
+# define super      image_morpher<Exact>
+# define templ      template <typename Exact>
+
+  stc_Header;
+  stc_End;
+
+  template <typename Exact>
+  struct multiple_image_morpher : public super
+  {
+      stc_using(delegatee);
+      delegatee& image(unsigned i)
+      {
+	precondition(this->exact().has_data() && i < n);
+	return this->exact.impl_image(i);
+      }
+
+      const delegatee& image(unsigned i = 0) const
+      {
+	precondition(this->exact().has_data() && i < n);
+	return this->exact.impl_image(i);
+      }
+    protected:
+      multiple_image_morpher() {}
+      unsigned n;
+  };
+
+# include "../local/undefs.hh"
+
+
+
+
 }
 
 #endif	    /* !IMPLEMENTATION2_HH_ */
