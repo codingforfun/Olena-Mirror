@@ -328,6 +328,7 @@ namespace oln
     operator point() const { return this->exact().impl_cast(); }
     point to_point() const { return this->exact().impl_to_point(); }
     point const* point_adr() const { return this->exact().impl_point_adr(); }
+    operator point const() { return this->exact().impl_to_point(); }
   };
 
 # include "../local/undefs.hh"
@@ -423,7 +424,7 @@ namespace oln
     bool impl_is_valid() const { return p_ != nop_; }
     point impl_to_point() const { return p_; }
     point const* point_adr() const { return &p_; }
-    operator point const() { return p_; }
+    //    operator point const() { return p_; }
 
   protected:
     point p_;
@@ -769,6 +770,7 @@ namespace oln
     bool owns_(const psite& p) const { return this->exact().impl_owns(p); }
     bool has_data() const { return this->exact().impl_has_data(); }
     box bbox() const { return this->exact().impl_bbox(); }
+    operator box const() const  { return this->exact().impl_bbox(); }
   };
 
 # include "../local/undefs.hh"
@@ -1051,8 +1053,6 @@ namespace oln
 
     subset_image_1(I& ima, F fun) : fun_(fun) { this->data_ = new data (ima); }
 
-    // void talk() const { std::cout << "Nice" << std::endl; }
-
     rvalue impl_rvalue_access(const psite& p) const { assert(fun_(p));
     return this->exact().image()(p); }
 
@@ -1320,12 +1320,12 @@ namespace oln
   template <typename I>
   void print(const Image<I>& ima)
   {
-    typename I::iter it (ima.bbox());
+    typename I::iter it (ima);
 
     for (it.start(); it.is_valid(); it.next())
     {
       std::cout << (typename I::point) it << std::endl;
-      std::cout << ima.operator()(it.to_point()) << std::endl;
+      std::cout << ima.operator()(it) << std::endl;
     }
   }
 

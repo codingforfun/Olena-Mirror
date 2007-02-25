@@ -31,11 +31,16 @@
 namespace oln
 {
   //Forward declaration
+
+  //abstract
   template <typename Exact> struct Image;
   template <typename Exact> struct Image2d;
   template <typename Exact> struct Signal;
   template <typename Exact> struct Mutable_Image;
   template <typename Exact> struct Point_Wise_Accessible_Image;
+
+  //concret
+//   template <typename Exact> s
 
   template < class Exact > struct Grid;
   struct grid1d;
