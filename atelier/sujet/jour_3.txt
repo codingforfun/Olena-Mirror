@@ -292,7 +292,7 @@ On veut donc que l'operator() NON const puisse être utilisé pour lire
 et/ou écrire.  En fait (la ruse !), le type image_stack[n,I] est
 définit avec :
 
-                  lvalue = value_proxy_[I]
+      lvalue = value_proxy_[ image_stack[n,I] ]
 
 On a :
 
