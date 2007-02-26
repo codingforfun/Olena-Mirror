@@ -243,6 +243,7 @@ namespace oln
     stc_typename(point);
     stc_typename(grid);
     stc_typename(box);
+    stc_typename(iter);
 
 
     unsigned int npoint() const { return this->exact().impl_npoint();  };
@@ -264,6 +265,7 @@ namespace oln
   typedef stc::abstract point;
   typedef stc::abstract grid;
   typedef stc::abstract box;
+  typedef stc::abstract iter;
   stc_End;
 
 
@@ -429,7 +431,7 @@ namespace oln
   protected:
     point p_;
     point nop_;
-    const box_<point> &bb_;
+    box_<point> bb_;
   };
 
 
@@ -509,9 +511,9 @@ namespace oln
 # include "../local/undefs.hh"
 
 # define classname subset_image_2_iterator_
-# define current subset_image_2_iterator_<I, F>
+# define current subset_image_2_iterator_<I>
 # define super  top  <current>
-# define templ template <typename I, typename F>
+# define templ template <typename I>
 
   stc_Header;
   typedef stc::is<Iterator_on_Points> category;
@@ -521,13 +523,13 @@ namespace oln
 
 
 
-  template < typename I, typename F >
+  template < typename I >
   class subset_image_2_iterator_ : public super
   {
   public:
     typedef typename I::point point;
-    typedef typename I::iter iter;
     typedef typename I::box  box;
+    typedef typename box::iter iter;
     typedef typename I::value value;
 
 
@@ -539,22 +541,21 @@ namespace oln
     void impl_start()
     {
       p_.start();
-      while (p_.is_valid() && !(ima_.has(p_)))
+      while (p_.is_valid() && !(ima_.owns_(p_)))
 	p_.next();
     }
     void impl_next()
     {
       do
 	p_.next();
-      while (p_.is_valid() && !(ima_.has(p_)));
+      while (p_.is_valid() && !(ima_.owns_(p_)));
     }
 
-    subset_image_2_iterator_(const box& bb, const I& ima) : p_(bb), ima_(ima)  {}
+    subset_image_2_iterator_(const I& ima) : ima_(ima), p_(ima.bbox()) {}
 
   protected:
     I ima_;
     iter p_;
-    F f_;
   };
 
 # include "../local/undefs.hh"
@@ -614,6 +615,7 @@ namespace oln
   typedef P point;
   typedef stc::final<stc_type(point, grid)> grid;
   typedef current box;
+  typedef pset_std_iterator_<P> iter;
   stc_End;
 
   template <typename P>
@@ -657,6 +659,7 @@ namespace oln
   typedef P point;
   typedef stc::final<stc_type(point, grid)> grid;
   typedef current box;
+  typedef box_iterator_<P> iter;
   stc_End;
 
   template <typename P>
@@ -1060,6 +1063,7 @@ namespace oln
     return this->exact().image()(p) ;}
 
     bool impl_has(const psite& p) const { return fun_(p) && this->exact().image().has(p) ;}
+    bool impl_owns(const psite& p) const { return fun_(p) && this->exact().image().has(p) ;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
@@ -1077,9 +1081,11 @@ namespace oln
   stc_Header;
   typedef I delegatee;
   typedef singleton<I> data;
-  typedef subset_image_2_iterator_<I, Ps> iter;
+  typedef Ps box;
+  typedef subset_image_2_iterator_<Image< subset_image_2<I, box> > >  iter;
   stc_End;
 
+  // note: I_iter is the iter type of I
   template <typename I, typename Ps>
   class subset_image_2 : public super
   {
@@ -1089,6 +1095,7 @@ namespace oln
     stc_using(psite);
     stc_using(lvalue);
     stc_using(rvalue);
+    //    stc_using(iter);
 
     subset_image_2(I& ima, Ps ps) : ps_(ps) { this->data_ = new data (ima); }
 
@@ -1099,6 +1106,7 @@ namespace oln
     return this->exact().image()(p) ;}
 
     bool impl_has(const psite& p) const { return ps_.includes(p) && this->exact().image().has(p) ;}
+    bool impl_owns(const psite& p) const  { return ps_.includes(p) && this->exact().image().has(p) ;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
@@ -1232,7 +1240,6 @@ namespace oln
 
   stc_Header;
   // typedef stc::is<Image2d> category;
-  typedef iter2d iter;
   typedef point2d point;
   typedef point::coord coord;
   typedef point psite;
@@ -1242,6 +1249,7 @@ namespace oln
   typedef value& lvalue;
   typedef grid2d grid;
   typedef box2d box;
+  typedef box::iter iter;
   stc_End;
 
 
@@ -1335,4 +1343,4 @@ namespace oln
   //////////////////////////////////////////////
 }
 
-#endif /* !POINT_SCOOP1_HH_ */
+#endif /* !POINT_OOP1_HH_ */
