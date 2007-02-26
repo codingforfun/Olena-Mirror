@@ -3,12 +3,7 @@
 
 #include	"concept2.hh"
 #include	"tracked_ptr.hh"
-
-namespace behavior
-{
-  struct identity;
-  struct mult_identity;
-}
+#include	"set_impl.hh"
 
 #define stc_simple_typename(Type)     typedef typename vtypes<Exact>::Type Type
 #define stc_simple_using(Type, Where) typedef typename vtypes<Where>::Type Type
@@ -426,12 +421,11 @@ namespace ugo
       stc_using( coord );
 
       stc_lookup(data);
-      typedef data data_t;
 
       bool has_data() const { return data_ != 0; }
     protected:
       image_base() { }
-      oln::internal::tracked_ptr<data_t> data_;
+      oln::internal::tracked_ptr<data> data_;
   };
 
 # include "../local/undefs.hh"
@@ -599,12 +593,15 @@ namespace ugo
   stc_End;
 
   template <typename Exact>
-  struct image_extansion : public super
+  struct image_extension : public super
   {
       stc_typename(behavior);
+    protected:
+      image_extension() {}
   };
 
 # include "../local/undefs.hh"
+
 
 
   //--impl_image------------------------
@@ -632,6 +629,7 @@ namespace ugo
       void	talk () const		{ std::cout << "Thou art great!" <<  std::endl; }
       I&	impl_image ()		{ return this->data_->value; }
       const I&	impl_image () const	{ return this->data_->value; }
+
     protected:
       delegatee& delegatee_;
   };

@@ -25,7 +25,7 @@ int main()
 
   ugo::image2d::iter		it(box);
 
-//  ugo::polite_image<ugo::image2d>	a(img);
+  ugo::polite_image<ugo::image2d>	a(img);
 
   img(ugo::point2d(3, 3)) = 5;
   img(ugo::point2d(2, 3)) = 4;

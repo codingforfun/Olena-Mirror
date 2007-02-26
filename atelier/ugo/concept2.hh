@@ -114,6 +114,7 @@ namespace ugo
       stc_typename( box   );
       stc_typename( iter  );
       stc_typename( data  );
+      stc_typename( coord );
 
       value operator() (const point& p) const {
 	assert(owns(p));

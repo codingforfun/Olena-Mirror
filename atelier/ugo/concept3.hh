@@ -201,8 +201,9 @@ namespace ugo
 # define templ      template <typename Exact>
 # define classname  Point_Wise_Accessible_Image
 
-  <typename Exact>
-  struct Point_Wise_Accessible_Image : public virtual super, automatic::get_impl<Point_Wise_Accessible_Image, Exact>
+  template<typename Exact>
+  struct Point_Wise_Accessible_Image : public virtual super,
+				       public automatic::get_impl<Point_Wise_Accessible_Image, Exact>
   {
       stc_using(point);
       bool has(const point& pt) { return this->exact().impl_has(pt); }
