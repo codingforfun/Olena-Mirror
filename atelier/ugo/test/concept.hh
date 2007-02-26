@@ -11,21 +11,22 @@ namespace automaton
   stc_decl_associated_type( state_set_t );
   stc_decl_associated_type( symbole_set_t );
   stc_decl_associated_type( symbole_t );
+  stc_decl_associated_type( etiquette_t );
 
   template <typename Exact>
   struct Symbole_Set : public virtual any<Exact>,
 		       public automatic::get_impl<Symbole_Set, Exact>
   {
-    protected:
-      Symbole_Set() {}
+//    protected:
+//      Symbole_Set() {}
   };
 
   template <typename Exact>
   struct State : public virtual any<Exact>,
 		 public automatic::get_impl<State, Exact>
   {
-    protected:
-      State() {}
+//    protected:
+//      State() {}
   };
 
   template <typename Exact>
@@ -35,7 +36,7 @@ namespace automaton
       stc_typename( symbole_t  );
       stc_typename( state_t  );
 
-      state_t trans(state_t s, symbole_t a) { return this->exact().impl_trans ( s.exact(), a.exact() );  }
+      State<state_t> trans(State<state_t> s, Symbole_Set<symbole_t> a) { return this->exact().impl_trans ( s.exact(), a.exact() );  }
     protected:
       Trans_functor() {}
   };
@@ -45,7 +46,7 @@ namespace automaton
   struct State_Set : public virtual any<Exact>,
 		     public automatic::get_impl<State_Set, Exact>
   {
-
+      stc_typename(etiquette_t);
     protected:
       State_Set() {}
   };
@@ -59,8 +60,8 @@ namespace automaton
       stc_typename( state_set_t	  );
       stc_typename( symbole_set_t );
 
-      state_set_t		state_set;
-      symbole_set_t		alpha;
+      State<state_set_t>	  state_set;
+     Symbole_Set<symbole_set_t>  alpha;
 
     protected:
       GNFA() {}
@@ -84,8 +85,7 @@ namespace automaton
     protected:
       DFA() {}
   };
-
-#include "automaton.hh"
 }
+#include "automaton.hh"
 
 #endif	    /* !CONCEPT_HH_ */

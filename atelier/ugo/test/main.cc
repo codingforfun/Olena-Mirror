@@ -3,5 +3,7 @@
 
 int	 main()
 {
+  automaton::dfa<char>	a;
+
   return (0);
 }

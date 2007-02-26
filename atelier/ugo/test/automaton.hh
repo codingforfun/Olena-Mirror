@@ -5,19 +5,69 @@
 
 namespace automaton
 {
-  //--automate_deterministe----------------------
 
-# define classname  automate_det
-# define current    automate_det<T>
-# define super      top<T>
+  //--symbole_set----------------------
+
+# define classname  symbole_set
+# define current    symbole_set<T>
+# define super      top<current>
 # define templ      template <typename T>
 
   stc_Header;
 
+  typedef T			etiquette_t;
+  typedef stc::is<Symbole_Set>	category;
+
   stc_End;
 
   template <typename T>
-  struct automate_det : public super
+  struct symbole_set : public super
+  {
+  };
+
+# include "./local/undefs.hh"
+
+
+
+  //--state----------------------
+
+# define classname  state
+# define current    state<T>
+# define super      top<current>
+# define templ      template <typename T>
+
+  stc_Header;
+
+  typedef T			etiquette_t;
+  typedef stc::is<State>	category;
+
+  stc_End;
+
+  template <typename T>
+  struct state : public super
+  {
+  };
+
+# include "./local/undefs.hh"
+
+
+  //--automate_deterministe----------------------
+
+# define classname  dfa
+# define current    dfa<T>
+# define super      top<current>
+# define templ      template <typename T>
+
+  stc_Header;
+
+  typedef symbole_set<T>	symbole_set_t;
+  typedef state<T>		state_set_t;
+  typedef stc::is<DFA>		category;
+
+  stc_End;
+
+  template <typename T>
+  struct dfa : public super
   {
   };
 
