@@ -1169,6 +1169,8 @@ namespace oln
   };
 
 
+
+
 # include "../local/undefs.hh"
 
 
@@ -1202,13 +1204,13 @@ namespace oln
     this->n = n; }
 
     //Methodes
-    lvalue operator()(const psite& p)
+    lvalue impl_lvalue_access(const psite& p)
     {
-      value_proxy_<I> tmp (*this, p);
+      value_proxy_< image_stack<n, I> > tmp (*this, p);
       return tmp;
     }
     rvalue impl_rvalue_access(const psite& p) const { return this->read_(p); }
-    lvalue impl_lvalue_access(const psite& p) { return this->write_(p) ;}
+    //    lvalue impl_lvalue_access(const psite& p) { return this->write_(p) ;}
     delegatee& impl_image(unsigned i) { return this->delegatee_[i]; }
     delegatee impl_image(unsigned i) const { return this->delegatee_[i]; }
 
@@ -1328,22 +1330,40 @@ namespace oln
 
 # include "../local/undefs.hh"
 
+# define classname  map_image
+# define current    map_image<P, T>
+# define super      primitive_image<current>
+# define templ      template <typename P, typename T>
+
+//   stc_Header;
+//   stc_End;
+
+//   template <typename P, typename T>
+//   class map_image : super
+//   {
+//     typedef std::map<P, T> map_;
+//   }
+
+
+# include "../local/undefs.hh"
+
   template <typename I>
-  void print(const Image<I>& ima)
+  void print(I& ima)
   {
     typename I::iter it (ima);
 
     for (it.start(); it.is_valid(); it.next())
     {
       std::cout << (typename I::point) it << std::endl;
-      std::cout << ima.operator()(it) << std::endl;
+      //std::cout << ima.operator()(it) << std::endl;
+      //ima.affect(it) = 5;
+      std::cout << ima(it) << std::endl;
     }
   }
 
 # include "../local/undefs.hh"
 
-  // End Image
-  //////////////////////////////////////////////
+  // End Image  //////////////////////////////////////////////
 }
 
 #endif /* !POINT_OOP1_HH_ */

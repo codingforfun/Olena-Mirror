@@ -38,13 +38,13 @@ namespace oln
     value_proxy_(I ima, typename I::psite p) : ima_(ima), p_(p) {}
 
     template <typename U>
-    operator U () { return ima_.read(p_); }
+    operator U () { return ima_.read_(p_); }
 
     template <typename U>
     U& operator= (U u)
     {
-      ima_.write(p_, u);
-      return &u;
+      ima_.write_(p_, u);
+      return u;
     }
   protected:
     I ima_;
