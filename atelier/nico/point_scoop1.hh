@@ -430,8 +430,8 @@ namespace oln
 
   protected:
     point p_;
-    point nop_;
     box_<point> bb_;
+    point nop_;
   };
 
 
@@ -441,7 +441,7 @@ namespace oln
   void box_iterator_< P >::impl_next()
   {
     typedef typename box_iterator_<P>::point point;
-    std::cout << "next: box min:" << bb_.pmin << " cur: " << p_ << std::endl;
+    std::cout << "next: box min:" << bb_.pmin << " max:" <<  bb_.pmax <<" cur: " << p_ << std::endl;
     for (int i = point::n - 1; i >= 0; --i)
       if (p_[i] == bb_.pmax[i])
       	p_[i] = bb_.pmin[i];
@@ -674,10 +674,11 @@ namespace oln
     point pmax;
 
     box_()  {}
-    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {  }
+    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {}
     const box_& impl_bbox() const { return *this; }
     bool impl_includes(const point& p) const
     {
+      //  std::cout << "includes: min " << pmin << " out:" << pmax << std::endl;
       for (unsigned i = 0; i < n; ++i)
 	if (p[i] < pmin[i] or p[i] > pmax[i])
 	  return false;
@@ -1063,7 +1064,7 @@ namespace oln
     return this->exact().image()(p) ;}
 
     bool impl_has(const psite& p) const { return fun_(p) && this->exact().image().has(p) ;}
-    bool impl_owns(const psite& p) const { return fun_(p) && this->exact().image().has(p) ;}
+    bool impl_owns(const psite& p) const { return fun_(p) && this->exact().image().owns_(p) ;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
@@ -1082,7 +1083,7 @@ namespace oln
   typedef I delegatee;
   typedef singleton<I> data;
   typedef Ps box;
-  typedef subset_image_2_iterator_<Image< subset_image_2<I, box> > >  iter;
+  typedef subset_image_2_iterator_<Image < subset_image_2<I, box> > >  iter;
   stc_End;
 
   // note: I_iter is the iter type of I
@@ -1096,6 +1097,7 @@ namespace oln
     stc_using(lvalue);
     stc_using(rvalue);
     //    stc_using(iter);
+    stc_using(box);
 
     subset_image_2(I& ima, Ps ps) : ps_(ps) { this->data_ = new data (ima); }
 
@@ -1106,7 +1108,8 @@ namespace oln
     return this->exact().image()(p) ;}
 
     bool impl_has(const psite& p) const { return ps_.includes(p) && this->exact().image().has(p) ;}
-    bool impl_owns(const psite& p) const  { return ps_.includes(p) && this->exact().image().has(p) ;}
+    bool impl_owns(const psite& p) const { return ps_.includes(p) /*&& this->exact().image().owns_(p)*/ ;}
+    Ps impl_bbox() const { return ps_;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
