@@ -125,7 +125,6 @@ namespace automaton
 	       public automatic::get_impl<DFA, Exact>
   {
       typedef NFA<Exact> super;
-      enum { n = mlc_value(dim) };
 
     protected:
       DFA() {}
