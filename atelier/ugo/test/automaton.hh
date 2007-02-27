@@ -74,6 +74,7 @@ namespace automaton
 # include "./local/undefs.hh"
 
 
+
   //--automate_deterministe----------------------
 
 # define classname  dfa
@@ -83,20 +84,24 @@ namespace automaton
 
   stc_Header;
 
+  typedef state<T>		state_t;
   typedef symbole_set<T>	symbole_set_t;
   typedef state_set<T>		state_set_t;
   typedef stc::is<DFA>		category;
+  typedef mlc::uint_<2>		nbtrans;
 
   stc_End;
 
   template <typename T>
   struct dfa : public super
   {
+      enum { n = mlc_value(n) };
   };
 
 # include "./local/undefs.hh"
 
-}
 
+
+}
 
 #endif	    /* !AUTOMATON_HH_ */

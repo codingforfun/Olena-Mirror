@@ -341,8 +341,6 @@ namespace ugo
 
       void impl_start() { p_ =  bbox_.pmin; }
 
-      // implementation modifee pour que la totalite de l image soit
-      // parcourue (pmax inclu).
       void impl_next()
       {
 	if (p_ == bbox_.pmax)
@@ -405,6 +403,10 @@ namespace ugo
   typedef stc::abstract         value;
   typedef stc::abstract         iter;
 
+  typedef stc_deferred(point) point__;
+  typedef stc::final< box_<point__> > box;
+  typedef stc::final<stc_type(point__, grid)> grid;
+
   typedef stc::final< stc::is<Image> > category;
 
   stc_End;
@@ -413,14 +415,7 @@ namespace ugo
   template <typename Exact>
   class image_base : public super
   {
-      stc_using( point );
-      stc_using( value );
-      stc_using( box   );
-      stc_using( iter  );
-      stc_using( grid  );
-      stc_using( coord );
-
-      stc_lookup(data);
+      stc_lookup( data );
 
       bool has_data() const { return data_ != 0; }
     protected:
@@ -429,6 +424,30 @@ namespace ugo
   };
 
 # include "../local/undefs.hh"
+
+
+
+//--primitive-image------------
+
+# define current    primitive_image <Exact>
+# define super      image_base <Exact>
+# define templ      template <typename Exact>
+# define classname  primitive_image
+
+  stc_Header;
+
+  stc_End;
+
+  template <typename Exact>
+  struct primitive_image : super
+  {
+    private:
+      primitive_image() {}
+  };
+
+# include "../local/undefs.hh"
+
+
 
   //--image2d-------------------
 
@@ -528,13 +547,13 @@ namespace ugo
 
       delegatee& image()
       {
-	precondition(this->exact().has_data());
+	precondition(this->has_data());
 	return this->exact().impl_image();
       }
 
       delegatee image() const
       {
-	precondition(this->exact().has_data());
+	precondition(this->has_data());
 	return this->exact().impl_image();
       }
     protected:
@@ -595,7 +614,6 @@ namespace ugo
   template <typename Exact>
   struct image_extension : public super
   {
-      stc_typename(behavior);
     protected:
       image_extension() {}
   };
@@ -627,9 +645,8 @@ namespace ugo
       polite_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
 
       void	talk () const		{ std::cout << "Thou art great!" <<  std::endl; }
-      I&	impl_image ()		{ return this->data_->value; }
       const I&	impl_image () const	{ return this->data_->value; }
-
+      I&	impl_image ()		{ return this->data_->value; }
     protected:
       delegatee& delegatee_;
   };

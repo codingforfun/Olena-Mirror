@@ -109,11 +109,8 @@ namespace ugo
   size_t array2d<value_t, coord_t>::memsize() const
   {
     return
-      // buffer_
       size_t(ilen_) * size_t(jlen_) * sizeof(value_t)
-      +
-      // array_
-      size_t(ilen_) * sizeof(value_t*);
+      + size_t(ilen_) * sizeof(value_t*);
   }
 
   template <typename value_t, typename coord_t>
@@ -140,6 +137,7 @@ namespace ugo
     delete[] array_;
     array_ = 0;  // safety
   }
+
 
 
   //----------------------------------------------------------------------------
@@ -229,7 +227,6 @@ namespace ugo
 
 
 
-
   //----------------------------------------------------------------------------
   //              POINT_SET
   //----------------------------------------------------------------------------
@@ -303,6 +300,7 @@ namespace ugo
   };
 
 
+
   //-----
 
   typedef box_<point2d>	         box2d;
@@ -347,8 +345,7 @@ namespace ugo
 
       void impl_start() { p_ =  bbox_.pmin; }
 
-      // implementation modifee pour que la totalite de l image soit
-      // parcourue (pmax inclu).
+      // arf nop
       void impl_next()
       {
 	if (p_ == bbox_.pmax)
@@ -377,6 +374,7 @@ namespace ugo
 	    return (false);
 	return (true);
       }
+
       point impl_to_point() const  	  { return p_;         }
       point const* impl_point_adr() const { return &p_;	       }
       point impl_cast()	const             { return p_;         }
@@ -414,7 +412,6 @@ namespace ugo
   typedef stc::final< stc::is<Image> > category;
 
   stc_End;
-
 
   template <typename Exact>
   class image_base : public super
@@ -471,8 +468,8 @@ namespace ugo
       stc_using( iter  );
       stc_using( grid  );
       stc_using( data  );
-      stc_using( rvalue  );
-      stc_using( lvalue  );
+      stc_using( rvalue );
+      stc_using( lvalue );
       stc_using( psite  );
 
       image2d_(box &box_init) : bbox(box_init) {
