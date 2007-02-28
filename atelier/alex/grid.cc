@@ -70,8 +70,17 @@ int main ()
 
   polite_image< image2d<int> > drucker(aie);
   drucker.talk();
+  print(drucker);
 
   std::cout << std::endl << "[35m~~~[m" << std::endl << std::endl;
+
+  std::cout << "[32mValue cast image[m" << std::endl;
+
+  value_cast_image<float, image2d<int> > imaf(aie);
+  //  print(imaf);
+
+  std::cout << std::endl << "[35m~~~[m" << std::endl << std::endl;
+
 
 
   return bidon (p1, p2);

@@ -6,7 +6,7 @@
 # include <mlc/int.hh>
 # include <mlc/uint.hh>
 # include <mlc/contract.hh>
-# include <oln/core/internal/tracked_ptr.hh>
+# include "tracked_ptr.hh"
 
 # include "../local/scoop.hh"
 
@@ -41,6 +41,8 @@ namespace glg
   stc_decl_associated_type(lvalue);
   stc_decl_associated_type(rvalue);
   stc_decl_associated_type(index);
+  stc_decl_associated_type(iter);
+  stc_decl_associated_type(box);
 
   // ====================
   // FORWARD DECLARATIONS
@@ -207,7 +209,8 @@ namespace glg
    public:
      stc_typename(point);
      stc_typename(grid);
-     typedef Iterator_on_Points<point> iter;
+     stc_typename(iter);
+
      typedef box_<point> box;
 
      unsigned npoints () const { return this->exact().impl_npoints; }
@@ -228,8 +231,9 @@ namespace glg
     stc_typename(psite);
     stc_typename(lvalue);
     stc_typename(rvalue);
-    typedef box_<point> box;
-    typedef Iterator_on_Points<point> iter;
+    stc_typename(iter);
+
+    //    typedef box_<point> box;
 
     value operator() (psite const& p) const
     { return this->exact().impl_par(p); }
@@ -312,7 +316,7 @@ namespace glg
 
 
   // Point Wise Accessible Image (not 80 cols friendly)
-  // -----------------------------------------------
+  // --------------------------------------------------
 
   template < typename Exact >
   class Point_Wise_Accessible_Image : public virtual Image < Exact >,
@@ -411,14 +415,14 @@ namespace glg
 
     template < typename Exact >
     struct case_<Image_mutability, Exact, 1> :
-      where_< stc_is_found(lvalue) >
+      where_< stc_type_is_found(lvalue) >
     {
       typedef Mutable_Image<Exact> ret;
     };
 
     template < typename Exact >
     struct case_<Image_mutability, Exact, 2> :
-      where_< stc_is_not_found(lvalue) >
+      where_< stc_type_is_not_found(lvalue) >
     {
       typedef Constant_Image<Exact> ret;
     };
@@ -433,6 +437,17 @@ namespace glg
       where_< mlc_eq(stc_type(Exact, psite), stc_type(Exact, point)) >
     {
       typedef Point_Wise_Accessible_Image<Exact> ret;
+    };
+
+    // Boxed Image
+
+    typedef selector<Image, 4> Image_Boxed;
+
+    template < typename Exact >
+    struct case_<Image_Boxed, Exact, 1> :
+      where_< stc_type_is_found(box) >
+    {
+      typedef Boxed_Image<Exact> ret;
     };
 
   }
@@ -680,6 +695,7 @@ namespace glg
 
   stc_Header;
   typedef P point;
+  typedef pset_std_iterator_< P > iter;
   stc_End;
 
   template < typename P >
@@ -688,8 +704,8 @@ namespace glg
     public:
     stc_using(point);
     stc_using(grid);
+    stc_using(iter);
 
-    typedef pset_std_iterator_< P > iter;
     unsigned npoints () const { return set_.size(); }
     bool includes (point const& p) const { return 1; }
 
@@ -747,6 +763,7 @@ namespace glg
 
   stc_Header;
   typedef P point;
+  typedef box_iterator_<P> iter;
   stc_End;
 
   template < typename P >
@@ -784,26 +801,29 @@ namespace glg
   stc_Header;
   typedef stc::final< stc::is<Image> > category;
   typedef stc::abstract data;
+  typedef stc::abstract point;
   typedef stc::abstract box_;
-  typedef stc::final<box_> box;
+  //  typedef stc::final<box_> box;
   stc_End;
 
   template < typename Exact >
   class image_base_ : public super
   {
   public:
-    stc_using(point);
+    //    stc_using(point);
+    stc_typename(point);
     stc_using(value);
-    stc_using(box);
+    //    stc_using(box);
+    stc_typename(box);
     stc_using(grid);
 
     value operator() (point const& p) const
-      { assert(owns(p)); return this->exact().impl_par(p); }
+      { assert(owns_(p)); return this->exact().impl_par(p); }
     value& operator() (point const& p)
-      { assert(owns(p)); return this->exact().impl_par(p); }
+      { assert(owns_(p)); return this->exact().impl_par(p); }
 
-    bool owns_ (point const& p) const { return bbox().includes(p); }
     box bbox() const { return this->exact().impl_bbox(); }
+    bool owns_ (point const& p) const { return bbox().includes(p); }
     bool has_data () const { return data_ != 0; }
 
     stc_lookup(data);
@@ -880,7 +900,8 @@ namespace glg
   typedef T value;
   typedef const value& rvalue;
   typedef value& lvalue;
-  typedef array2d < T, coord > data;
+  typedef array2d < value, coord > data;
+  typedef box_iterator_<point>/*FIXME*/ iter;
   stc_End;
 
   template < typename T >
@@ -896,8 +917,8 @@ namespace glg
     stc_using(lvalue);
     stc_using(box);
     stc_using(data);
+    stc_using(iter);
 
-    typedef box_iterator_<point> iter;
     value& impl_par(const point& p) { return this->data_->get(p[0], p[1]); }
     value impl_par(const point& p) const { return this->data_->get(p[0], p[1]); }
     image2d(const box& bb) : box_(bb) {
@@ -905,8 +926,9 @@ namespace glg
 		       bb.pmin.col, bb.pmax.col) ;}
     box impl_bbox() const { return box_; };
     box& impl_bbox() { return box_; };
+
   private:
-    box     box_;
+    box   box_;
   };
 
 # include "../local/undefs.hh"
@@ -930,6 +952,7 @@ namespace glg
   typedef const value& rvalue;
   typedef value& lvalue;
   typedef value data;
+  typedef box_iterator_<point>/*FIXME*/ iter;
   stc_End;
 
   template < typename T >
@@ -944,7 +967,6 @@ namespace glg
     stc_using(rvalue);
     stc_using(lvalue);
     stc_using(box);
-    typedef box_iterator_<point> iter;
     value& impl_par(const point& p) { return pixs_[p[0]]; }
     value impl_par(const point& p) const { return pixs_[p[0]]; }
     signal(box bb) : box_(bb)
@@ -981,7 +1003,7 @@ namespace glg
   class image_morpher : public super
   {
   public:
-    stc_typename(delegatee);
+    stc_lookup(delegatee);
     stc_using(data);
 
   protected:
@@ -1086,17 +1108,61 @@ namespace glg
     stc_using(data);
     stc_using(delegatee);
 
-    polite_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
+    polite_image(I& ima) : delegatee_(ima) 
+    { this->data_ = new data(ima); }
     void talk () const { std::cout << "nice!"; }
 
     I& impl_image () { return this->data_->value; }
     const I& impl_image () const { return this->data_->value; }
+
+    //  protected:
+    delegatee& delegatee_;
+  };
+
+# include "../local/undefs.hh"
+
+  // Value Cast
+  // ----------
+
+# define templ template < typename T, typename I >
+# define classname value_cast_image
+# define current value_cast_image < T, I >
+# define super image_extension < current >
+
+  stc_Header;
+  typedef I delegatee;
+  typedef singleton < I > data;
+
+  //  typedef stc::not_delegated lvalue;
+  stc_End;
+
+  template <typename T, typename I>
+  class value_cast_image : public super
+  {
+  public:
+    stc_using(data);
+    stc_using(delegatee);
+    stc_using(point);
+    //    typedef stc::not_delegated lvalue;
+
+    value_cast_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
+    T impl_par(const point& p) const { return (T) delegatee_->impl_par(p); }
 
   protected:
     delegatee& delegatee_;
   };
 
 # include "../local/undefs.hh"
+
+  // Value casting
+  // -------------
+
+  template <typename T, typename I>
+  value_cast_image<T, I> value_cast(const Image<I>& input)
+  {
+    value_cast_image<T, I> tmp(input.exact());
+    return tmp;
+  }
 
   // ==========================
   // EXPERIMENTAL (NON WORKING)
@@ -1117,10 +1183,10 @@ bool bidon (const glg::Point<Exact>& p1, const glg::Point<Exact>& p2)
 }
 
 
-template <typename Image>
-void print (const Image& input)
+template <typename I>
+void print (const glg::Boxed_Image<I>& input)
 {
-  typename Image::iter it(input.bbox());
+  typename I::iter it(input.bbox());
   for (it.start(); it.is_valid(); it.next())
     std::cout << input(it) << ' ';
   std::cout << std::endl;
