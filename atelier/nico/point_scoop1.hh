@@ -1135,26 +1135,28 @@ namespace oln
 //     return (masked);
 //   }
 
-// # define classname  value_cast_image
-// # define current    value_cast_image<I>
-// # define super      image_extansion<current>
-// # define templ      template <typename T, typename I>
+# define classname  value_cast_image
+# define current    value_cast_image<T, I>
+# define super      image_extansion<current>
+# define templ      template <typename T, typename I>
 
-//   stc_Header;
-//   typedef T rvalue;
-//   typedef T value;
-//   typedef stc::not_delegated lvalue;
-//   stc_End;
+  stc_Header;
+  typedef T rvalue;
+  typedef T value;
+  typedef stc::not_delegated lvalue;
+  typedef I delegatee;
+  stc_End;
 
   template <typename T, typename I>
-  class value_cast_image //: public super
+  class value_cast_image : public super
   {
   public:
-    typedef T rvalue;
-    typedef T value;
-    typedef stc::not_delegated lvalue;
+    stc_using(delegatee);
+    stc_using(data);
+    stc_using(rvalue);
+    stc_using(psite);
 
-//     value_cast_image(I& ima) : delegatee_(ima) { this->data_ = new data (ima); }
+    value_cast_image(I& ima) { this->data_ = new data (ima); }
 
    //  value_cast_image<T, I> value_cast(const Image<I>& input)
 //     {
@@ -1162,8 +1164,9 @@ namespace oln
 //       return tmp;
 //     }
 
-//     delegatee& impl_image() { return this->data_->value_; }
-//     delegatee impl_image() const { return this->data_->value_; }
+    rvalue impl_rvalue_access(const psite& p) const { return this->data_->value_(p); }
+    delegatee& impl_image() { return this->data_->value_; }
+    delegatee impl_image() const { return this->data_->value_; }
 //     protected:
 //     delegatee& delegatee_;
   };
@@ -1172,7 +1175,6 @@ namespace oln
 
 
 # include "../local/undefs.hh"
-
 
 # define classname  image_stack
 # define current    image_stack<n, I>
