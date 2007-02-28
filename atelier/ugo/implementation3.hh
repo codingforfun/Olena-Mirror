@@ -642,6 +642,25 @@ namespace ugo
 # include "../local/undefs.hh"
 
 
+//--value_proxy--------------------------------
+
+template<typename I>
+struct value_proxy_
+{
+
+    value_proxy_(I ima, typename I::psite p) : ima_(ima), p_(p) {}
+
+    template<typename U>
+    operator U () const { return ima_.read_(p_); }
+    template<typename U>
+    U& operator=(U u)   { return ima_.write_(p_, u); }
+
+  protected:
+    I		ima_;
+    typename I::psite p_;
+};
+
+
 
   //--stack_image-----------------------------------
 
@@ -653,10 +672,10 @@ namespace ugo
   stc_Header;
 
   typedef vec<n, I>	data;
-  typedef const value	rvalue;
+  typedef const typename I::value	    rvalue;
   typedef I		delegatee;
   typedef vec<n, typename I::value>	    value;
-  typedef value_proxy_<image_stack<n, I> > lvalue;
+  typedef value_proxy_<image_stack<n, I> >  lvalue;
 
   stc_End;
 
@@ -704,9 +723,5 @@ namespace ugo
       vec<n, I> delegatee_;
   };
 }
-
-
-//--value_proxy--------------------------------
-
 
 #endif	    /* !IMPLEMENTATION2_HH_ */
