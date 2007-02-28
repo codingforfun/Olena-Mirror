@@ -421,7 +421,6 @@ namespace ugo
       stc_using( box   );
       stc_using( iter  );
       stc_using( grid  );
-      stc_using( coord );
 
       stc_lookup(data);
       typedef data data_t;
@@ -477,10 +476,10 @@ namespace ugo
 			 bbox.pmax.row, bbox.pmax.col);
       }
 
-      bool   impl_owns(const psite& p) const          { return bbox.includes(p);        }
-      lvalue impl_lvalue_access(const psite& p)       { return (*data_)(p.row_, p.col_); }
-      rvalue impl_rvalue_access(const psite& p) const { return (*data_)(p.row_, p.col_); }
-      box    impl_bbox() const		              { return bbox;		      }
+      bool   impl_owns(const psite& p) const          {return bbox.includes(p);      }
+      lvalue impl_lvalue_access(const psite& p)       {return (*data_)(p.row, p.col);}
+      rvalue impl_rvalue_access(const psite& p) const {return (*data_)(p.row, p.col);}
+      box    impl_bbox() const		              {return bbox;		     }
 
       box&	bbox;
     protected:
@@ -602,7 +601,7 @@ namespace ugo
   stc_End;
 
   template <typename Exact>
-  struct image_extansion : public super
+  struct image_extension : public super
   {
       stc_typename(behavior);
   };
@@ -700,7 +699,7 @@ struct value_proxy_
       }
       rvalue impl_rvalue_access(const psite& p) const { return this->read_(p);      }
       delegatee& impl_image(unsigned i)               { return this->delegatee_[i]; }
-      delegatee impl_image(unsigned i) const          { return this->delegatee_[i]; }
+      delegatee  impl_image(unsigned i) const         { return this->delegatee_[i]; }
 
       rvalue read_(const psite& p) const
       {

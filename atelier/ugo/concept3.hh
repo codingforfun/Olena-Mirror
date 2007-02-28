@@ -131,6 +131,13 @@ namespace ugo
 	assert(owns_(p));
 	return this->exact().impl_rvalue_access(p);
       }
+
+      lvalue operator() (const psite& p)
+      {
+	assert(owns_(p));
+	return this->exact().impl_lvalue_access(p);
+      }
+
       bool owns_(const psite& p) const { return this->exact().impl_owns(p);    }
       bool has_data() const            { return this->exact().impl_has_data(); }
       box  bbox() const                { return this->exact().impl_bbox();     }
