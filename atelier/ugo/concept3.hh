@@ -182,12 +182,12 @@ namespace ugo
   struct Mutable_Image : public virtual super,
 			 public automatic::get_impl<Mutable_Image, Exact>
   {
-      stc_using_from(Image, psite);		//difference avec
-						//stc_using ?
-
+      stc_using_from(Image, psite); //stc_using non ?
       stc_typename(lvalue);
-      lvalue operator() (const psite& p)     {	return this->exact().impl_lvalue_access(p);      }
-      lvalue affect(const psite& p)          {	return this->exact().impl_lvalue_access(p);      }
+
+      lvalue operator() (const psite& p) { return this->exact().impl_lvalue_access(p);}
+      lvalue affect(const psite& p)      { return this->exact().impl_lvalue_access(p);}
+      using Image<Exact>::operator();
   };
 
 # include "../local/undefs.hh"
@@ -214,7 +214,78 @@ namespace ugo
 
 
 
-  //--
+  //--Constant-image--------------------
+
+# define current    Constant_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Constant_Image
+
+  template<typename Exact>
+  struct Constant_Image : public virtual super,
+			  public automatic::get_impl<Constant_Image, Exact>
+  {
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--Boxed-image--------------------
+
+  template <typename P>  struct box_;
+
+# define current    Boxed_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Boxed_Image
+
+  template<typename Exact>
+  struct Boxed_Image : public virtual super,
+		       public automatic::get_impl<Boxed_Image, Exact>
+  {
+      stc_using(point);
+
+      box_<point>  bbox() const {}
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--Random_Accessible_Image--------------------
+
+# define current    Random_Accessible_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Random_Accessible_Image
+
+  template<typename Exact>
+  struct Random_Accessible_Image : public virtual super,
+				   public automatic::get_impl<Random_Accessible_Image,
+							      Exact>
+  {
+  };
+
+# include "../local/undefs.hh"
+
+
+
+  //--Random_Multiple_Image--------------------
+
+# define current    Random_Mutable_Image<Exact>
+# define super      Image<Exact>
+# define templ      template <typename Exact>
+# define classname  Random_Mutable_Image
+
+  template<typename Exact>
+  struct Random_Mutable_Image : public virtual super,
+				public automatic::get_impl<Random_Mutable_Image,
+							   Exact>
+  {
+  };
+
+# include "../local/undefs.hh"
 
 
 }

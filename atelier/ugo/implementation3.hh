@@ -610,7 +610,7 @@ namespace ugo
 # include "../local/undefs.hh"
 
 
-  //--impl_image------------------------
+  //--polite_image------------------------
 
 # define classname  polite_image
 # define current    polite_image<I>
@@ -632,9 +632,9 @@ namespace ugo
 
       polite_image(I& ima) : delegatee_(ima) { this->data_ = new data(ima); }
 
-      void	talk () const		{ std::cout << "Thou art great!" <<  std::endl; }
-      I&	impl_image ()		{ return this->data_->value; }
-      const I&	impl_image () const	{ return this->data_->value; }
+      void	talk () const	    { std::cout << "Thou art great!" <<  std::endl; }
+      I&	impl_image ()	    { return this->data_->value; }
+      const I&	impl_image () const { return this->data_->value; }
     protected:
       delegatee& delegatee_;
   };
@@ -642,6 +642,71 @@ namespace ugo
 # include "../local/undefs.hh"
 
 
+
+  //--stack_image-----------------------------------
+
+# define classname  image_stack
+# define current    image_stack<n, I>
+# define super      image_extension<current>
+# define templ      template <unsigned n, typename I>
+
+  stc_Header;
+
+  typedef vec<n, I>	data;
+  typedef const value	rvalue;
+  typedef I		delegatee;
+  typedef vec<n, typename I::value>	    value;
+  typedef value_proxy_<image_stack<n, I> > lvalue;
+
+  stc_End;
+
+  template <unsigned n, typename I>
+  struct image_stack : public super
+  {
+    public:
+      stc_using( data   );
+      stc_using( psite  );
+      stc_using( value  );
+      stc_using( rvalue );
+      stc_using( lvalue );
+
+      stc_using(delegatee);
+
+      image_stack() { this->data_ = 0;  this->n = n; }
+
+      lvalue impl_lvalue_access(const psite& p)
+      {
+	value_proxy_< image_stack<n, I> > tmp (*this, p);
+	return tmp;
+      }
+      rvalue impl_rvalue_access(const psite& p) const { return this->read_(p);      }
+      delegatee& impl_image(unsigned i)               { return this->delegatee_[i]; }
+      delegatee impl_image(unsigned i) const          { return this->delegatee_[i]; }
+
+      rvalue read_(const psite& p) const
+      {
+	value v;
+
+	for (unsigned i = 0; i < n; ++i)
+	  v[i] = this->delegatee_[i](p);
+	return v;
+      }
+
+      lvalue write_(const psite& p)
+      {
+	vec<n, typename I::value&>& v;
+
+	for (unsigned i = 0; i < n; ++i)
+	  v[i] = this->delegatee_[i](p);
+	return v;
+      }
+    protected:
+      vec<n, I> delegatee_;
+  };
 }
+
+
+//--value_proxy--------------------------------
+
 
 #endif	    /* !IMPLEMENTATION2_HH_ */
