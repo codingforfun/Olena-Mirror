@@ -1184,7 +1184,7 @@ namespace oln
   typedef I delegatee;
   typedef vec<n, typename I::value> value;
   typedef const value rvalue;
-  typedef value_proxy_<I> lvalue;
+  typedef value_proxy_< image_stack<n, I> > lvalue;
   stc_End;
 
   template <unsigned n, typename I>
@@ -1196,7 +1196,6 @@ namespace oln
     stc_using(value);
     stc_using(delegatee);
     stc_using(psite);
-//     stc_lookup(psite);
     stc_using(data);
 
     //Ctor
@@ -1210,7 +1209,6 @@ namespace oln
       return tmp;
     }
     rvalue impl_rvalue_access(const psite& p) const { return this->read_(p); }
-    //    lvalue impl_lvalue_access(const psite& p) { return this->write_(p) ;}
     delegatee& impl_image(unsigned i) { return this->delegatee_[i]; }
     delegatee impl_image(unsigned i) const { return this->delegatee_[i]; }
 
@@ -1355,9 +1353,9 @@ namespace oln
     for (it.start(); it.is_valid(); it.next())
     {
       std::cout << (typename I::point) it << std::endl;
-      //std::cout << ima.operator()(it) << std::endl;
+      std::cout << ima.operator()(it) << std::endl;
       //ima.affect(it) = 5;
-      std::cout << ima(it) << std::endl;
+      //     std::cout << ima(it) << std::endl;
     }
   }
 

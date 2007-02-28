@@ -30,7 +30,6 @@
 namespace oln
 {
   // I : type < Image
-
   template <typename I>
   class value_proxy_
   {
@@ -41,11 +40,7 @@ namespace oln
     operator U () { return ima_.read_(p_); }
 
     template <typename U>
-    U& operator= (U u)
-    {
-      ima_.write_(p_, u);
-      return u;
-    }
+    U& operator= (U u) { return ima_.write_(p_, u); }
   protected:
     I ima_;
     typename I::psite p_;
