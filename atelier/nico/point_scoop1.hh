@@ -1353,9 +1353,10 @@ namespace oln
     for (it.start(); it.is_valid(); it.next())
     {
       std::cout << (typename I::point) it << std::endl;
-      std::cout << ima.operator()(it) << std::endl;
+  //     std::cout << ima.operator()(it) << std::endl;
       //ima.affect(it) = 5;
-      //     std::cout << ima(it) << std::endl;
+      //std::cout << (typename I::rvalue) ima(it) << std::endl;
+      std::cout << ima(it) << std::endl;
     }
   }
 

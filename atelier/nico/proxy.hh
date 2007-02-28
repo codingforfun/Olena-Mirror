@@ -37,12 +37,20 @@ namespace oln
     value_proxy_(I ima, typename I::psite p) : ima_(ima), p_(p) {}
 
     template <typename U>
-    operator U () { return ima_.read_(p_); }
+    operator U () const { return ima_.read_(p_); }
 
     template <typename U>
     U& operator= (U u) { return ima_.write_(p_, u); }
+
+    typename I::value value() const { return ima_.read_(p_); }
   protected:
     I ima_;
     typename I::psite p_;
   };
+
+  template <typename I>
+  std::ostream& operator<< (std::ostream& ost, const value_proxy_<I>& v)
+  {
+    return ost << v.value();
+  }
 }
