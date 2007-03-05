@@ -469,7 +469,7 @@ namespace ugo
       stc_using( lvalue );
       stc_using( psite  );
 
-      image2d_() {}
+      image2d_() { bbox = box(); }
 
       image2d_(box &box_init) : bbox(box_init) {
 	data_ = new data(bbox.pmin.row, bbox.pmin.col,
@@ -644,22 +644,28 @@ namespace ugo
 
 //--value_proxy--------------------------------
 
-template<typename I>
-struct value_proxy_
-{
+  template <typename I>
+  struct value_proxy_
+  {
+      value_proxy_(Image<I>& ima, typename I::psite& p)
+	: image(ima.exact()),
+	  p_(p)
+      { }
 
-    value_proxy_(I ima, typename I::psite p) : ima_(ima), p_(p) {}
+      template <typename U>
+      value_proxy_<I>& operator=(const U& val)  {
+	image.write_(p_, val);
+	return *this;
+      }
 
-    template<typename U>
-    operator U () const { return ima_.read_(p_); }
-    template<typename U>
-    U& operator=(U u)   { return ima_.write_(p_, u); }
+      template <typename U>
+      operator U() const { return U(image.impl_read(p_));      }
 
-  protected:
-    I		ima_;
-    typename I::psite p_;
-};
-
+      typename I::value  value() const { return image.impl_read(p_); }
+    protected:
+      I&		image;
+      typename I::psite p_;
+  };
 
 
   //--stack_image-----------------------------------
