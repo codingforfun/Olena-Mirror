@@ -559,7 +559,7 @@ namespace ugo
       box   impl_bbox() const	 	     { return bb_;              }
       value impl_includes(const point& p)    { return p.value;		}
     protected:
-      box &bb_;
+      box& bb_;
   };
 }
 

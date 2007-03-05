@@ -122,6 +122,7 @@ namespace ugo
 	assert(owns(p));
 	return this->exact().impl_value_acces(p);
       }
+
       bool owns(const point& p) const { return this->exact().impl_owns(p); }
       box  bbox() const               { return this->exact().impl_bbox();  }
 

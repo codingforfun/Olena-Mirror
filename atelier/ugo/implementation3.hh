@@ -409,6 +409,10 @@ namespace ugo
   typedef stc::abstract         value;
   typedef stc::abstract         iter;
 
+  typedef stc_deferred(point) point__;
+  typedef stc::final< box_<point__> > box;
+  typedef stc::final<stc_type(point__, grid)> grid;
+
   typedef stc::final< stc::is<Image> > category;
 
   stc_End;
@@ -416,22 +420,16 @@ namespace ugo
   template <typename Exact>
   class image_base : public super
   {
-      stc_using( point );
-      stc_using( value );
-      stc_using( box   );
-      stc_using( iter  );
-      stc_using( grid  );
-
-      stc_lookup(data);
-      typedef data data_t;
+      stc_typename(data);
 
       bool has_data() const { return data_ != 0; }
     protected:
       image_base() { }
-      oln::internal::tracked_ptr<data_t> data_;
+      oln::internal::tracked_ptr<data> data_;
   };
 
 # include "../local/undefs.hh"
+
 
   //--image2d-------------------
 
@@ -471,15 +469,18 @@ namespace ugo
       stc_using( lvalue );
       stc_using( psite  );
 
+      image2d_() {}
+
       image2d_(box &box_init) : bbox(box_init) {
 	data_ = new data(bbox.pmin.row, bbox.pmin.col,
 			 bbox.pmax.row, bbox.pmax.col);
       }
 
-      bool   impl_owns(const psite& p) const          {return bbox.includes(p);      }
-      lvalue impl_lvalue_access(const psite& p)       {return (*data_)(p.row, p.col);}
-      rvalue impl_rvalue_access(const psite& p) const {return (*data_)(p.row, p.col);}
-      box    impl_bbox() const		              {return bbox;		     }
+      bool    impl_owns(const psite& p) const  { return bbox.includes(p);       }
+      rvalue  impl_read(const psite& p) const  { return (*data_)(p.row, p.col); }
+      lvalue  impl_rw(const psite& p)          { return (*data_)(p.row, p.col); }
+      box     impl_bbox() const		       { return bbox;		         }
+      operator box()			       { return bbox;                    }
 
       box&	bbox;
     protected:
@@ -670,34 +671,29 @@ struct value_proxy_
 
   stc_Header;
 
-  typedef vec<n, I>	data;
-  typedef const typename I::value	    rvalue;
-  typedef I		delegatee;
-  typedef vec<n, typename I::value>	    value;
-  typedef value_proxy_<image_stack<n, I> >  lvalue;
+  //typedef mlc::uint_<n_>			n;
+  typedef vec<n, I>				data;
+  typedef const typename I::value		rvalue;
+  typedef I					delegatee;
+  typedef vec<n, typename I::value>		value;
+  typedef value_proxy_<image_stack<n, I> >	lvalue;
+
+  typedef behavior::stack			behavior;
 
   stc_End;
 
   template <unsigned n, typename I>
   struct image_stack : public super
   {
-    public:
       stc_using( data   );
       stc_using( psite  );
       stc_using( value  );
       stc_using( rvalue );
-      stc_using( lvalue );
 
       stc_using(delegatee);
 
-      image_stack() { this->data_ = 0;  this->n = n; }
+      image_stack() { this->data_ = 0; }
 
-      lvalue impl_lvalue_access(const psite& p)
-      {
-	value_proxy_< image_stack<n, I> > tmp (*this, p);
-	return tmp;
-      }
-      rvalue impl_rvalue_access(const psite& p) const { return this->read_(p);      }
       delegatee& impl_image(unsigned i)               { return this->delegatee_[i]; }
       delegatee  impl_image(unsigned i) const         { return this->delegatee_[i]; }
 
@@ -710,7 +706,7 @@ struct value_proxy_
 	return v;
       }
 
-      lvalue write_(const psite& p)
+      void write_(const psite& p)
       {
 	vec<n, typename I::value&>& v;
 
@@ -723,4 +719,4 @@ struct value_proxy_
   };
 }
 
-#endif	    /* !IMPLEMENTATION2_HH_ */
+#endif	    /* !IMPLEMENTATION3_HH_ */

@@ -2,11 +2,17 @@
 #include "concept3.hh"
 
 template <typename I>
-void   println(const ugo::Image<I>& input)      {
-  typename I::iter it(input);
+void   println(I& img)
+{
+  typename I::iter it(img);
   for (it.start(); it.is_valid(); it.next())
-    std::cout << input(it) << ' ' << std::endl;
+  {
+    std::cout << img(it) << ' ';
+    if (((ugo::point2d)it)[0] == img.bbox.pmax[0])
+      std::cout << std::endl;
+  }
 }
+
 
 int main ()
 {
@@ -32,17 +38,17 @@ int main ()
   println(ima_1);
 
   ugo::image_stack<2,I> s;
-  s.image(0) = ima_0;
-  s.image(1) = ima_1;
+//  s.image(0) = ima_0;
+//  s.image(1) = ima_1;
   //  ou directement :
-  //  image_stack<2,I> s = make_stack(ima_0, ima_1);
+  //image_stack<2,I> s = make_stack(ima_0, ima_1);
 
   //  println(s);
 
-  s(p) = make_vec(6, 9);
-  std::cout << s(p)     << ' '
-	    << ima_0(p) << ' '
-	    << ima_1(p) << ' ' << std::endl;
+//  s(p) = make_vec(6, 9);
+//  std::cout << s(p)     << ' '
+//	    << ima_0(p) << ' '
+//	    << ima_1(p) << ' ' << std::endl;
 
   return (0);
 }

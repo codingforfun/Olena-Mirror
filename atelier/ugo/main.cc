@@ -7,7 +7,7 @@ typedef ugo::signal<int> signal;
 typedef ugo::point1d_<int> point1d;
 
 template <typename I>
-void   println(const ugo::Image<I>& input)      {
+void   println(const I& input)      {
   typename I::iter it(input.bbox);
   for (it.start(); it.is_valid(); it.next())
     std::cout << input(it) << ' ' << std::endl;

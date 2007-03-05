@@ -129,18 +129,21 @@ namespace ugo
       rvalue operator() (const psite& p) const
       {
 	assert(owns_(p));
-	return this->exact().impl_rvalue_access(p);
+	return this->exact().impl_read(p);
       }
 
       lvalue operator() (const psite& p)
       {
 	assert(owns_(p));
-	return this->exact().impl_lvalue_access(p);
+	return this->exact().impl_rw(p);
       }
 
       bool owns_(const psite& p) const { return this->exact().impl_owns(p);    }
       bool has_data() const            { return this->exact().impl_has_data(); }
       box  bbox() const                { return this->exact().impl_bbox();     }
+
+    protected:
+      Image() {}
   };
 
 # include "../local/undefs.hh"
@@ -297,6 +300,8 @@ namespace ugo
 
 }
 
+#include "set_impl.hh"
 #include "implementation3.hh"
+
 
 #endif	    /* !CONCEPT2_HH_ */
