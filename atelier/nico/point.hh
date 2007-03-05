@@ -29,7 +29,8 @@
 # define POINT_HH_
 
 
-#include "forward.hh"
+# include "forward.hh"
+# include <mlc/int.hh>
 
 namespace oln
 {

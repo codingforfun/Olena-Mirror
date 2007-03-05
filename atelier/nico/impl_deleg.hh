@@ -25,6 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef IMPL_DELEG_HH_
+# define IMPL_DELEG_HH_
+
 #include "../local/scoop.hh"
 
 namespace oln
@@ -133,3 +136,5 @@ namespace oln
     };
   }
 }
+
+#endif /* !IMPL_DELEG_HH_ */

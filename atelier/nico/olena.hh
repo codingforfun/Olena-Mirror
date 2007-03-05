@@ -25,37 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROXY_HH_
-# define PROXY_HH_
+#ifndef OLENA_HH_
+# define OLENA_HH_
 
+# include "init_oln_point.hh"
 # include "forward.hh"
+# include "point.hh"
+# include "point_set.hh"
+# include  "iterator.hh"
+# include "plug.hh"
+# include "tools.hh"
+# include "impl_deleg.hh"
+# include "array.hh"
+# include "proxy.hh"
+# include "tracked_ptr.hh"
+# include "image.hh"
+# include "fp2b.hh"
 
-namespace oln
-{
-  // I : type < Image
-  template <typename I>
-  class value_proxy_
-  {
-  public:
-    value_proxy_(I ima, typename I::psite p) : ima_(ima), p_(p) {}
 
-    template <typename U>
-    operator U () const { return ima_.read_(p_); }
-
-    template <typename U>
-    U& operator= (U u) { return ima_.write_(p_, u); }
-
-    typename I::value value() const { return ima_.read_(p_); }
-  protected:
-    I ima_;
-    typename I::psite p_;
-  };
-
-  template <typename I>
-  std::ostream& operator<< (std::ostream& ost, const value_proxy_<I>& v)
-  {
-    return ost << v.value();
-  }
-}
-
-#endif /* !PROXY_HH_ */
+#endif /* !OLENA_HH_ */

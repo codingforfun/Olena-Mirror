@@ -25,31 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef POINT_SCOOP1_HH_
-# define POINT_SCOOP1_HH_
+#ifndef IMAGE_HH_
+# define IMAGE_HH_
 
-
-# include <mlc/int.hh>
 # include <cassert>
-# include <set>
-# include <algorithm>
 # include <iostream>
 
 # include "../local/scoop.hh"
 
 
 
-# include "init_oln_point.hh"
 # include "forward.hh"
 # include "point.hh"
-# include "point_set.hh"
 # include "plug.hh"
-# include "tools.hh"
 # include "impl_deleg.hh"
 # include "array.hh"
 # include "proxy.hh"
 # include "tracked_ptr.hh"
-# include "fp2b.hh"
 
 
 namespace oln
@@ -70,355 +62,6 @@ namespace oln
   //End Grid
   ////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-
-  //////////////////////////////////////////////////////////
-  //Iterator
-
-  // abstract world
-
-  /*!
-  ** \class Iterator
-  ** top abstract class for Iterator
-  **
-  */
-  template <typename Exact>
-  struct Iterator : public any <Exact>
-  {
-    stc_typename(value);
-
-    void start() { this->exact().impl_start(); }
-    void next() { this->exact().impl_next(); }
-    void invalidate() { this->exact().impl_invalidate(); }
-    bool is_valid() const { return this->exact().impl_is_valid(); }
-  };
-
-# include "../local/undefs.hh"
-
-  template <typename Exact>
-  struct Iterator_on_Pointss;
-
-
-# define current   Iterator_on_Points<Exact>
-# define super     Iterator <Exact>
-# define templ      template <typename Exact>
-# define classname  Iterator_on_Points
-
-
-
-
-  /*!
-  ** \class Iterator_on_Points
-  ** abstract class of Iterator which is specialize for a Point_set
-  **
-  */
-  template <typename Exact>
-  struct Iterator_on_Points : public super
-  {
-    stc_typename(point);
-
-    typedef Iterator_on_Points<Exact> self;
-
-    operator point() const { return this->exact().impl_cast(); }
-    point to_point() const { return this->exact().impl_to_point(); }
-    point const* point_adr() const { return this->exact().impl_point_adr(); }
-    operator point const() { return this->exact().impl_to_point(); }
-  };
-
-# include "../local/undefs.hh"
-
-
-  // Concret world
-
-
-# define current    simple_iter<C>
-# define super      top <current>
-# define templ      template <typename C>
-# define classname  simple_iter
-
-
-  stc_Header;
-  typedef stc::is<Iterator> category;
-  typedef C value;
-  typedef oln::point2d_<C> point;
-  stc_End;
-
-  /*!
-  ** \class simple_iter
-  ** testing class, nothing interessting.
-  **
-  */
-  template < typename C >
-  class simple_iter : public super
-  {
-  public:
-    typedef stc_type(simple_iter<C>, point) point;
-
-    simple_iter(const point& init) : i_(0)
-    {
-      for (int i = 0; i < 15; ++i)
-	v_[i] = init;
-    }
-
-    void impl_start() { i_ = 0; }
-    void impl_next() { ++i_; }
-    void impl_invalidate() { i_ = 42; }
-    bool impl_is_valid() const { return i_ < 15; }
-    point impl_to_point() const { return (point) *this; }
-    point const* point_adr() const { return v_; }
-
-    operator point const()
-    {
-      if (i_ < 16)
-	return v_[i_];
-      return (v_[0]);
-    }
-
-  protected:
-    int		  i_;
-    point v_[15];
-  };
-
-# include "../local/undefs.hh"
-
-  template <typename P>
-  class box_;
-
-
-
-# define current    box_iterator_<P>
-# define super      top  <current>
-# define templ      template <typename P>
-# define classname  box_iterator_
-
-
-
-  stc_Header;
-  typedef stc::is<Iterator_on_Points> category;
-  typedef P point;
-  typedef P value;
-  stc_End;
-
-
-  template <typename P>
-  class box_;
-
-  /*!
-  ** \class box_iterator_
-  ** concrete Iterator fox box_ class
-  **
-  */
-  template < typename P >
-  class box_iterator_ : public super
-  {
-  public:
-    typedef P point;
-
-    box_iterator_(const box_<point>& box) : bb_(box)
-    {
-      nop_ = box.pmax;
-      ++nop_[0];
-    }
-
-    void impl_start() { std::cout << "start: box min:" << bb_.pmin << std::endl; p_ = bb_.pmin; }
-    void impl_next();
-    void impl_invalidate() { p_ = nop_; }
-    bool impl_is_valid() const { return p_ != nop_; }
-    point impl_to_point() const { return p_; }
-    point const* point_adr() const { return &p_; }
-    //    operator point const() { return p_; }
-
-  protected:
-    point p_;
-    box_<point> bb_;
-    point nop_;
-  };
-
-
-
-  //// methode implementation
-
-  /*!
-  ** set the iterator to the next point
-  */
-  template < typename P >
-  void box_iterator_< P >::impl_next()
-  {
-    typedef typename box_iterator_<P>::point point;
-    std::cout << "next: box min:" << bb_.pmin << " max:" <<  bb_.pmax <<" cur: " << p_ << std::endl;
-    for (int i = point::n - 1; i >= 0; --i)
-      if (p_[i] == bb_.pmax[i])
-      	p_[i] = bb_.pmin[i];
-      else
-      {
-	++p_[i];
-	break;
-      }
-
-    if (p_ == bb_.pmin)
-      p_ = nop_;
-  }
-
-  //definitions
-  typedef box_iterator_< point2d_<int> > iter2d;
-  typedef box_iterator_< point1d_<int> > iter1d;
-
-# include "../local/undefs.hh"
-
-# define classname subset_image_1_iterator_
-# define current subset_image_1_iterator_<I, F>
-# define super  top  <current>
-# define templ template <typename I, typename F>
-
-  stc_Header;
-  typedef stc::is<Iterator_on_Points> category;
-  typedef typename I::point point;
-  typedef typename I::value value;
-  stc_End;
-
-
-  /*!
-  ** \class subset_image_1_iterator_
-  ** concrete Iterator fox su class
-  **
-  */
-  template < typename I, typename F >
-  class subset_image_1_iterator_ : public super
-  {
-  public:
-    typedef typename I::point point;
-    typedef typename I::iter iter;
-    typedef typename I::box  box;
-    typedef typename I::value value;
-
-
-    void impl_invalidate() { p_.invalidate(); }
-    bool impl_is_valid() const {  return p_.is_valid(); }
-    point impl_to_point() const { return p_.to_point(); }
-    point const* point_adr() const { return p_.point_adr(); }
-    operator point const() { return p_.to_point(); }
-    void impl_start()
-    {
-      p_.start();
-      while (p_.is_valid() && !(f_(p_)))
-	p_.next();
-    }
-    void impl_next()
-    {
-      do
-	p_.next();
-      while (p_.is_valid() && !(f_(p_)));
-    }
-
-    subset_image_1_iterator_(const box& bb) : p_(bb) {}
-
-  protected:
-    iter p_;
-    F f_;
-  };
-
-# include "../local/undefs.hh"
-
-# define classname subset_image_2_iterator_
-# define current subset_image_2_iterator_<I>
-# define super  top  <current>
-# define templ template <typename I>
-
-  stc_Header;
-  typedef stc::is<Iterator_on_Points> category;
-  typedef typename I::point point;
-  typedef typename I::value value;
-  stc_End;
-
-
-
-  template < typename I >
-  class subset_image_2_iterator_ : public super
-  {
-  public:
-    typedef typename I::point point;
-    typedef typename I::box  box;
-    typedef typename box::iter iter;
-    typedef typename I::value value;
-
-
-    void impl_invalidate() { p_.invalidate(); }
-    bool impl_is_valid() const {  return p_.is_valid(); }
-    point impl_to_point() const { return p_.to_point(); }
-    point const* point_adr() const { return p_.point_adr(); }
-    operator point const() { return p_.to_point(); }
-    void impl_start()
-    {
-      p_.start();
-      while (p_.is_valid() && !(ima_.owns_(p_)))
-	p_.next();
-    }
-    void impl_next()
-    {
-      do
-	p_.next();
-      while (p_.is_valid() && !(ima_.owns_(p_)));
-    }
-
-    subset_image_2_iterator_(const I& ima) : ima_(ima), p_(ima.bbox()) {}
-
-  protected:
-    I ima_;
-    iter p_;
-  };
-
-# include "../local/undefs.hh"
-
-
-  template <typename P>
-  class pset_std;
-
-# define current    pset_std_iterator_<P>
-# define super      top  <current>
-# define templ      template <typename P>
-# define classname  pset_std_iterator_
-
-  stc_Header;
-  typedef stc::is<Iterator> category;
-  typedef P point;
-  typedef P value;
-  stc_End;
-
-  template < typename P >
-  class pset_std_iterator_ : public super
-  {
-  public:
-    typedef stc_type(pset_std_iterator_, point) point;
-
-    pset_std_iterator_(std::set<P> &box) : bb_(box) {}
-
-    void impl_start() { iter = bb_.begin(); }
-    void impl_next() { ++iter;  }
-    void impl_invalidate() { iter = bb_.end(); }
-    bool impl_is_valid() const { return *iter != bb_.end(); }
-    point impl_to_point() const { return *iter; }
-    point const* point_adr() const { return iter; }
-
-  protected:
-    typename std::set<P> &bb_;
-    typename std::set< P >::iterator iter;
-  };
-
-
-# include "../local/undefs.hh"
-
-//End Iterator
-//////////////////////////////////////////////////
-
-
-
-
-
   ////////////////////////////////////////////////
   // Image
 
@@ -431,18 +74,30 @@ namespace oln
 # define templ      template <typename Exact>
 # define classname  Image
 
+  /*!
+  ** \class Image
+  ** \brief top abstract class for image hierarchy
+  **
+  ** defines base methods and properties for an image
+  ** methods:
+  ** bool has_data() const      : return true if image has data
+  ** box bbox() const           : return the box associated with the image
+  ** operator box const() const : return the box associated with the image
+  ** (internal method) bool owns_(const psite& p) const : return true if p belong to the image
+  */
   template <typename Exact>
   struct Image : public virtual super, automatic::get_impl<Image, Exact>
   {
-    stc_typename(point);
-    stc_typename(value);
-    stc_typename(box);
-    stc_typename(iter);
-    stc_typename(grid);
-    stc_typename(data);
-    stc_typename(rvalue);
-    stc_typename(psite);
+    stc_typename(point);	/*!< Image point type*/
+    stc_typename(value);	/*!< Image value type*/
+    stc_typename(box);		/*!< Image box type*/
+    stc_typename(iter);		/*!< Image iterator type (depend on box type) */
+    stc_typename(grid);		/*!< Image grid type*/
+    stc_typename(data);		/*!< Image data type (structure that contains value)*/
+    stc_typename(rvalue);	/*!< right value type of the image (type of right operande in affectation)*/
+    stc_typename(psite);	/*!< Image psite type (is able to access to image value)*/
 
+    //method declaration
     rvalue operator() (const psite& p) const
     {
       assert(owns_(p));
@@ -462,6 +117,10 @@ namespace oln
 # define templ      template <typename Exact>
 # define classname  Signal
 
+  /*!
+  ** \class Signal
+  ** \brief specialisation of Image class for images in one dimension
+  */
   template <typename Exact>
   struct Signal : public virtual super, automatic::get_impl<Signal, Exact> {};
 
@@ -472,10 +131,14 @@ namespace oln
 # define templ      template <typename Exact>
 # define classname  Image2d
 
+  /*!
+  ** \class Image2d
+  ** \brief Specialization of Image for images in two dimension
+  */
   template <typename Exact>
   struct Image2d : public virtual super, automatic::get_impl<Image2d, Exact>
   {
-    stc_typename(coord);
+    stc_typename(coord);	/*!< type of coordinate of point*/
   };
 
 # include "../local/undefs.hh"
@@ -486,22 +149,26 @@ namespace oln
 # define templ      template <typename Exact>
 # define classname  Mutable_Image
 
+
+  /*!
+  ** \class Mutable_Image
+  ** \brief Specialization of Image for images which have values that can be modified
+  **
+  ** method:
+  ** lvalue operator() (const psite& p) : return value associated to psite p
+  */
   template <typename Exact>
   struct Mutable_Image : public virtual super, automatic::get_impl<Mutable_Image, Exact>
   {
     stc_using(psite);
-    stc_typename(lvalue);
+    stc_typename(lvalue);	/*!< type of left operand in affectation*/
 
     lvalue operator() (const psite& p)
     {
       assert(owns_(p));
       return this->exact().impl_lvalue_access(p);
     }
-    lvalue affect(const psite& p)
-    {
-    assert(owns_(p));
-    return this->exact().impl_lvalue_access(p);
-    }
+
   };
 
 # include "../local/undefs.hh"
@@ -511,6 +178,13 @@ namespace oln
 # define templ      template <typename Exact>
 # define classname  Point_Wise_Accessible_Image
 
+  /*!
+  ** \class Point_Wise_Accessible_Image
+  ** \brief Specialization of Image for point wise accessible image
+  **
+  ** method:
+  ** bool has(const point& pt) : true if image has pt
+  */
   template <typename Exact>
   struct Point_Wise_Accessible_Image : public virtual super, automatic::get_impl<Point_Wise_Accessible_Image, Exact>
   {
@@ -536,10 +210,16 @@ namespace oln
   stc_End;
 
 
+  /*!
+  ** \class image_base
+  ** \brief top concret image class
+  **
+  */
   template <typename Exact>
   class image_base : public super
   {
   public:
+    //properties
     stc_using(point);
     stc_using(value);
     stc_using(box);
@@ -547,12 +227,14 @@ namespace oln
     stc_using(grid);
 
     stc_lookup(data);
+
+    //methods implementaion
     typedef data data_t;
     bool impl_has_data() const { return data_ != 0; }
 
   protected:
     image_base() { data_ = 0; }
-    internal::tracked_ptr<data_t> data_;
+    internal::tracked_ptr<data_t> data_; /*!< data of image (structure which contains value of the image) */
   };
 
 # include "../local/undefs.hh"
@@ -566,7 +248,11 @@ namespace oln
   stc_Header;
   stc_End;
 
-
+  /*!
+  ** \class primitive_image
+  ** \brief simple image class
+  **
+  */
   template <typename Exact>
   class primitive_image : public super
   {
@@ -586,11 +272,16 @@ namespace oln
   typedef stc::not_delegated data;
   stc_End;
 
+  /*!
+  ** \class image_morpher
+  ** \brief morpher image class
+  **
+  */
   template <typename Exact>
   class classname : public super
   {
   public:
-    stc_typename(delegatee);
+    stc_typename(delegatee);	/*!< delegatee type */
   protected:
     image_morpher() {}
   };
@@ -607,6 +298,11 @@ namespace oln
   stc_Header;
   stc_End;
 
+  /*!
+  ** \class single_image_morpher
+  ** \brief has just one delegatee
+  **
+  */
   template <typename Exact>
   class single_image_morpher : public super
   {
@@ -631,6 +327,11 @@ namespace oln
   typedef behavior::identity behavior;
   stc_End;
 
+  /*!
+  ** \class image_extansion
+  ** \brief extension of simple image
+  **
+  */
   template <typename Exact>
   struct image_extansion : public super
   {
@@ -650,15 +351,20 @@ namespace oln
   stc_Header;
   stc_End;
 
+  /*!
+  ** \class multiple_image_morpher
+  ** \brief has several delegatees
+  **
+  */
   template <typename Exact>
-  class classname : public super
+  class multiple_image_morpher : public super
   {
   public:
     stc_using(delegatee);
 
     delegatee& image(unsigned i) { assert(/*this->has_data() &&*/ i < n);
     return this->exact().impl_image(i); }
-  delegatee image(unsigned i) const {assert(/*this->has_data() &&*/ i < n);
+    delegatee image(unsigned i) const {assert(/*this->has_data() &&*/ i < n);
     return this->exact().impl_image(i); }
   protected:
     unsigned n;
@@ -676,6 +382,11 @@ namespace oln
   typedef behavior::mult_identity behavior;
   stc_End;
 
+  /*!
+  ** \class image_extansions
+  ** \brief extension of simples images
+  **
+  */
   template <typename Exact>
   struct images_extansion : public super
   {
@@ -694,6 +405,11 @@ namespace oln
   typedef singleton<I> data;
   stc_End;
 
+  /*!
+  ** \class polite_image
+  **
+  ** void talk() : say Nice
+  */
   template <typename I>
   class polite_image : public super
   {
@@ -722,18 +438,28 @@ namespace oln
   typedef subset_image_1_iterator_<I, F> iter;
   stc_End;
 
+
+  /*!
+  ** \class subset_image_1
+  ** \brief use a function point to bool F to define a subset image of image I
+  **
+  */
   template <typename I, typename F>
   class subset_image_1 : public super
   {
   public:
+    //properties
     stc_using(delegatee);
     stc_using(data);
     stc_using(psite);
     stc_using(lvalue);
     stc_using(rvalue);
 
+    //ctors
     subset_image_1(I& ima, F fun) : fun_(fun) { this->data_ = new data (ima); }
 
+
+    // method implementation
     rvalue impl_rvalue_access(const psite& p) const { assert(fun_(p));
     return this->exact().image()(p); }
 
@@ -746,7 +472,7 @@ namespace oln
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
   protected:
-    F fun_;
+    F fun_;			/*!< function fp2b that define a subset of delegatee*/
   };
 
 # include "../local/undefs.hh"
@@ -763,21 +489,29 @@ namespace oln
   typedef subset_image_2_iterator_<Image < subset_image_2<I, box> > >  iter;
   stc_End;
 
-  // note: I_iter is the iter type of I
+
+  /*!
+  ** \class subset_image_2
+  ** \brief define a subset image with a new point_set
+  **
+  */
   template <typename I, typename Ps>
   class subset_image_2 : public super
   {
   public:
+    //properties
     stc_using(delegatee);
     stc_using(data);
     stc_using(psite);
     stc_using(lvalue);
     stc_using(rvalue);
-    //    stc_using(iter);
     stc_using(box);
 
+    //ctor
     subset_image_2(I& ima, Ps ps) : ps_(ps) { this->data_ = new data (ima); }
 
+
+    //method implemention
     rvalue impl_rvalue_access(const psite& p) const { assert(ps_.includes(p));
     return this->exact().image()(p); }
 
@@ -785,19 +519,26 @@ namespace oln
     return this->exact().image()(p) ;}
 
     bool impl_has(const psite& p) const { return ps_.includes(p) && this->exact().image().has(p) ;}
-    bool impl_owns(const psite& p) const { return ps_.includes(p) /*&& this->exact().image().owns_(p)*/ ;}
+    bool impl_owns(const psite& p) const { return ps_.includes(p) ;}
     Ps impl_bbox() const { return ps_;}
 
     delegatee& impl_image() { return this->data_->value_; }
     delegatee impl_image() const { return this->data_->value_; }
   protected:
-    Ps ps_;
+    Ps ps_;			/*!< new point set */
   };
 
 # include "../local/undefs.hh"
 
 
-  //redefinitions of operator |
+  /*!
+  ** redefinition of operator |
+  **
+  ** @param ima image
+  ** @param fun fp2b function
+  **
+  ** @return subset_image ima with fun
+  */
   template <typename I, typename F>
   subset_image_1<I, F> operator| (I& ima, F& fun)
   {
@@ -805,12 +546,7 @@ namespace oln
     return (masked);
   }
 
-//   template <typename I, typename Ps>
-//   subset_image_2<I, Ps> operator| (I& ima, Ps& ps)
-//   {
-//     subset_image_2<I, Ps> masked(ima, ps);
-//     return (masked);
-//   }
+
 
 # define classname  value_cast_image
 # define current    value_cast_image<T, I>
@@ -867,6 +603,14 @@ namespace oln
   typedef value_proxy_< image_stack<n, I> > lvalue;
   stc_End;
 
+  /*!
+  ** \class image_stack
+  ** \brief make a stack of different image
+  **
+  ** n is number of images into the stack
+  ** I is the type of image belong to the stack
+  ** Note: this class use a value proxy to differentiate read and write operation
+  */
   template <unsigned n, typename I>
   class image_stack : public super
   {
@@ -882,7 +626,7 @@ namespace oln
     image_stack() { this->data_ = 0;
     this->n = n; }
 
-    //Methodes
+    //Methods
     lvalue impl_lvalue_access(const psite& p)
     {
       value_proxy_< image_stack<n, I> > tmp (*this, p);
@@ -892,7 +636,7 @@ namespace oln
     delegatee& impl_image(unsigned i) { return this->delegatee_[i]; }
     delegatee impl_image(unsigned i) const { return this->delegatee_[i]; }
 
-    //Internal methodes
+    //Internal methods
     rvalue read_(const psite& p) const
     {
       value v;
@@ -911,7 +655,7 @@ namespace oln
       return v;
     }
   protected:
-    vec<n, I> delegatee_;
+    vec<n, I> delegatee_;	/*!< images vector which represent stack*/
   };
 
 # include "../local/undefs.hh"
@@ -922,7 +666,6 @@ namespace oln
 # define classname  image2d
 
   stc_Header;
-  // typedef stc::is<Image2d> category;
   typedef point2d point;
   typedef point::coord coord;
   typedef point psite;
@@ -936,6 +679,11 @@ namespace oln
   stc_End;
 
 
+  /*!
+  ** \class image2d
+  ** \brief Simple image 2d
+  **
+  */
   template <typename T>
   class image2d : public super
   {
@@ -961,7 +709,7 @@ namespace oln
     rvalue impl_rvalue_access(const psite& p) const  { return (this->data_.ptr_)->operator()(p.row_, p.col_); }
     box impl_bbox() const {return bb_;}
   protected:
-    box bb_;
+    box bb_;			/*!< box associated with the image2d*/
   };
 
 # include "../local/undefs.hh"
@@ -986,6 +734,12 @@ namespace oln
   typedef box1d box;
   stc_End;
 
+
+  /*!
+  ** \class signal
+  ** \brief simple image in one dimension
+  **
+  */
   template <typename T>
   class signal : public super
   {
@@ -1009,6 +763,11 @@ namespace oln
 # include "../local/undefs.hh"
 
 
+  /*!
+  ** print point and value of a image
+  **
+  ** @param ima image to print
+  */
   template <typename I>
   void print(I& ima)
   {
@@ -1024,9 +783,6 @@ namespace oln
     }
   }
 
-
-  // End Image  //////////////////////////////////////////////
 }
 
-
-#endif /* !POINT_SCOOP1_HH_ */
+#endif /* !IMAGE_HH_ */

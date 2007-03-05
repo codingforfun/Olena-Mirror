@@ -1,5 +1,5 @@
 #include <ostream>
-#include "point_scoop1.hh"
+#include "olena.hh"
 
 
 int main()

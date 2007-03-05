@@ -29,7 +29,10 @@
 # define POINT_SET_HH_
 
 
-#include "forward.hh"
+# include "forward.hh"
+# include <mlc/int.hh>
+# include <set>
+# include <algorithm>
 
 
 namespace oln
