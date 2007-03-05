@@ -45,6 +45,13 @@ namespace oln
   template < class Exact > struct Grid;
   struct grid1d;
   struct grid2d;
+
+  //iterator forward declaration
+  template < typename P >
+  class pset_std_iterator_;
+
+  template < typename P >
+  class box_iterator_;
 }
 
 #endif /* !FORWARD_HH_ */

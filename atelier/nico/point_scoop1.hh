@@ -28,6 +28,7 @@
 #ifndef POINT_SCOOP1_HH_
 # define POINT_SCOOP1_HH_
 
+
 # include <mlc/int.hh>
 # include <cassert>
 # include <set>
@@ -40,260 +41,52 @@
 
 # include "init_oln_point.hh"
 # include "forward.hh"
+# include "point.hh"
+# include "point_set.hh"
 # include "plug.hh"
 # include "tools.hh"
 # include "impl_deleg.hh"
 # include "array.hh"
 # include "proxy.hh"
 # include "tracked_ptr.hh"
+# include "fp2b.hh"
 
 
 namespace oln
 {
 
-  //macro for scoop1 paradigm
-#define stc_simple_typename(Type)     typedef typename vtypes<Exact>::Type Type
-#define stc_simple_using(Type, Where) typedef typename vtypes<Where>::Type Type
-#define stc_simple_find(Type, Where)  typename vtypes<Where>::Type
-
-
-
-
   /////////////////////////////////////////////////////////////
   //all Grid class
+
+  // usefull to determine grid type of a Image
   template < class Exact >
-  struct Grid
-  {
-  };
+  struct Grid  {};
 
-  struct grid1d : public Grid< grid1d >
-  {
-  };
+  struct grid1d : public Grid< grid1d > {};
 
-  struct grid2d : public Grid< grid2d >
-  {
-  };
+  struct grid2d : public Grid< grid2d >{};
 
 
   //End Grid
   ////////////////////////////////////////////////////////////
-  //all Poin class
 
 
 
 
-  template < typename Exact >
-  class Point : public any<Exact>
-  {
-  public:
-    stc_simple_typename(grid);
-    stc_simple_typename(coord);
-    stc_simple_typename(dim);
-
-    enum { n = mlc_value(dim) };
-
-    typedef Point<Exact> self;
 
 
-
-    bool operator==(self const& rhs) const  { return this->exact().impl_egal(rhs.exact()); }
-    bool operator<(self const& rhs) const   { return this->exact().impl_inf(rhs.exact()); }
-    bool operator!=(self const& rhs) const  { return this->exact().impl_diff(rhs.exact()); }
-    bool operator>(self const& rhs) const   { return this->exact().impl_sup(rhs.exact()); }
-    bool operator>=(self const& rhs) const  { return this->exact().impl_sup_egal(rhs.exact()); }
-    bool operator<=(self const& rhs) const  { return this->exact().impl_inf_egal(rhs.exact()); }
-    coord operator[](unsigned i) const      { return this->exact().impl_acces(i); }
-    coord& operator[](unsigned i)           { return this->exact().impl_acces(i); }
-  protected:
-    Point() {}
-  };
-
-# include "../local/undefs.hh"
-
-
-  template <typename C>
-  class point2d_;
-
-
-  template<typename C>
-  struct vtypes<point2d_< C > >
-  {
-    typedef stc::is<Point> category;
-    typedef mlc::none super_type;
-    typedef grid2d grid;
-    typedef C coord;
-    typedef mlc::uint_<2> dim;
-  };
-
-  template < typename C >
-  class point2d_ : public Point< point2d_<C> >
-  {
-  public:
-    stc_simple_using(coord, point2d_);
-
-    point2d_() {}
-    point2d_(C row, C col) : row_(row), col_(col) {}
-
-    C row_;
-    C col_;
-
-    typedef point2d_<C> self;
-
-
-    //    point2d_(const point2d_<C> &rhs) { row_ = rhs.row_; col_ =  rhs.col_; }
-
-    bool impl_egal(self const& rhs) const      { return row_ == rhs.row_ and col_ == rhs.col_; }
-    bool impl_inf(self const& rhs)  const      { return row_ < rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
-    bool impl_diff(self const& rhs) const      { return row_ != rhs.row_ or col_ != rhs.col_; }
-    bool impl_sup(self const& rhs)  const      { return row_ > rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
-    bool impl_sup_egal(self const& rhs) const  { return row_ >= rhs.row_ or (row_ == rhs.row_ and col_ < rhs.col_); }
-    bool impl_inf_egal(self const& rhs) const  { return row_ <= rhs.row_ or (row_ == rhs.row_ and col_ <= rhs.col_); }
-    coord operator[](unsigned i) const         {
-      if (i == 0) return  row_;
-      return col_;
-    }
-    coord& operator[](unsigned i)               {
-      if (i == 0) return  row_;
-      return col_;
-    }
-  };
-
-  template <typename C>
-  std::ostream& operator<<(std::ostream& ostr, const point2d_<C> p)
-  {
-    return ostr << "p[" << p.row_ << "][" << p.col_ << "]";
-  }
-
-  typedef point2d_<int> point2d;
-
-# include "../local/undefs.hh"
-
-  template <typename C>
-  class point1d_;
-
-
-  template<typename C>
-  struct vtypes<point1d_< C > >
-  {
-    typedef stc::is<Point> category;
-    typedef mlc::none super_type;
-    typedef grid1d grid;
-    typedef C coord;
-    typedef mlc::uint_<1> dim;
-  };
-
-  template < typename C >
-  class point1d_ : public Point< point1d_<C> >
-  {
-  public:
-    stc_simple_using(coord, point1d_);
-
-    C col;
-
-    typedef point1d_<C> self;
-    bool impl_egal(self const& rhs) const      { return col == rhs.col; }
-    bool impl_inf(self const& rhs)  const      { return col < rhs.col; }
-    bool impl_diff(self const& rhs) const      { return col != rhs.col; }
-    bool impl_sup(self const& rhs)  const      { return col < rhs.col; }
-    bool impl_sup_egal(self const& rhs) const  { return col < rhs.col; }
-    bool impl_inf_egal(self const& rhs) const  { return col <= rhs.col; }
-    coord operator[](unsigned i) const         { i = i; return col; }
-    coord& operator[](unsigned i)              { i = i; return col; }
-  };
-
-  template <typename C>
-  std::ostream& operator<<(std::ostream& ostr, const point1d_<C> p)
-  {
-    return ostr << "p[" << p.col << "]";
-  }
-
-
-  typedef point1d_<int> point1d;
-
-# include "../local/undefs.hh"
-
-
-  /////////////////////////////////////////////////////////////
-  //Point Test procedure
-  template <typename Exact>
-  bool bidon(const Point<Exact>& p1, const Point<Exact>& p2)
-  {
-    return p1 == p2;
-  }
-  //
-  ///////////////////////////////////////////////////////////
-
-  //End point class
-  /////////////////////////////////////////////////////////////
-
-
-  ///////////////////////////////////////////////////////////
-  // Point set class
-
-  //abstract world
-
-# define current   Point_Set<Exact>
-# define super      any<Exact>
-# define templ      template <typename Exact>
-# define classname  Point_Set
-
-  template <typename Exact>
-  struct Point_Set : public super
-  {
-    stc_typename(point);
-    stc_typename(grid);
-    stc_typename(box);
-    stc_typename(iter);
-
-
-    unsigned int npoint() const { return this->exact().impl_npoint();  };
-    bool includes(const point& p) const { return this->exact().impl_includes(p);  };
-    box bbox() const { return this->exact().impl_includes(); }
-  };
-
-# include "../local/undefs.hh"
-
-  // concrete world
-
-# define current   point_set_base<Exact>
-# define super      top <Exact>
-# define templ      template <typename Exact>
-# define classname  point_set_base
-
-  stc_Header;
-  typedef stc::is<Point_Set> category;
-  typedef stc::abstract point;
-  typedef stc::abstract grid;
-  typedef stc::abstract box;
-  typedef stc::abstract iter;
-  stc_End;
-
-
-  template <typename Exact>
-  class point_set_base : public super
-  {
-  public:
-    stc_using(point);
-    stc_using(box);
-
-
-    // unsigned int npoint() const { return this->exact().impl_npoint();  };
-//     bool includes() const { return this->exact().impl_includes();  };
-//     box bbox () const  { return this->exact().impl_includes(); }
-  protected:
-    point_set_base() {}
-  };
-
-
-# include "../local/undefs.hh"
-  // End Point class
-  //////////////////////////////////////////////////////////
 
 
   //////////////////////////////////////////////////////////
   //Iterator
 
   // abstract world
+
+  /*!
+  ** \class Iterator
+  ** top abstract class for Iterator
+  **
+  */
   template <typename Exact>
   struct Iterator : public any <Exact>
   {
@@ -319,7 +112,11 @@ namespace oln
 
 
 
-
+  /*!
+  ** \class Iterator_on_Points
+  ** abstract class of Iterator which is specialize for a Point_set
+  **
+  */
   template <typename Exact>
   struct Iterator_on_Points : public super
   {
@@ -351,7 +148,11 @@ namespace oln
   typedef oln::point2d_<C> point;
   stc_End;
 
-
+  /*!
+  ** \class simple_iter
+  ** testing class, nothing interessting.
+  **
+  */
   template < typename C >
   class simple_iter : public super
   {
@@ -407,7 +208,11 @@ namespace oln
   template <typename P>
   class box_;
 
-
+  /*!
+  ** \class box_iterator_
+  ** concrete Iterator fox box_ class
+  **
+  */
   template < typename P >
   class box_iterator_ : public super
   {
@@ -437,6 +242,10 @@ namespace oln
 
 
   //// methode implementation
+
+  /*!
+  ** set the iterator to the next point
+  */
   template < typename P >
   void box_iterator_< P >::impl_next()
   {
@@ -455,6 +264,7 @@ namespace oln
       p_ = nop_;
   }
 
+  //definitions
   typedef box_iterator_< point2d_<int> > iter2d;
   typedef box_iterator_< point1d_<int> > iter1d;
 
@@ -472,7 +282,11 @@ namespace oln
   stc_End;
 
 
-
+  /*!
+  ** \class subset_image_1_iterator_
+  ** concrete Iterator fox su class
+  **
+  */
   template < typename I, typename F >
   class subset_image_1_iterator_ : public super
   {
@@ -603,144 +417,7 @@ namespace oln
 
 
 
-//////////////////////////////////////////////////
-/// set
 
-# define current    pset_std<P>
-# define super      point_set_base< current >
-# define templ      template <typename P>
-# define classname  pset_std
-
-  stc_Header;
-  typedef P point;
-  typedef stc::final<stc_type(point, grid)> grid;
-  typedef current box;
-  typedef pset_std_iterator_<P> iter;
-  stc_End;
-
-  template <typename P>
-  class pset_std : public super
-  {
-  public:
-    stc_using(box);
-    stc_using(point);
-    point pmin;
-    point pmax;
-
-    enum { n = mlc_value(typename point::dim) };
-
-
-    pset_std(const P& p1, const P& p2) : pmin(p1), pmax(p2) { set_.insert(pmin); set_.insert(pmax); }
-    const pset_std& impl_bbox() const { return *this; }
-    bool impl_includes(const point& p) const
-    {
-      for (unsigned i = 0; i < n; ++i)
-	if (p[i] < pmin[i] or p[i] > pmax[i])
-	  return false;
-      return true;
-    }
-  protected:
-    std::set<point> set_;
-  };
-
-
-# include "../local/undefs.hh"
-
-
-//// start box
-
-
-# define current    box_<P>
-# define super      point_set_base< current >
-# define templ      template <typename P>
-# define classname  box_
-
-  stc_Header;
-  typedef P point;
-  typedef stc::final<stc_type(point, grid)> grid;
-  typedef current box;
-  typedef box_iterator_<P> iter;
-  stc_End;
-
-  template <typename P>
-  class box_: public super
-  {
-  public:
-    stc_using(box);
-    stc_using(point);
-
-    enum { n = mlc_value(typename point::dim) };
-    point pmin;
-    point pmax;
-
-    box_()  {}
-    box_(const P& p1, const P& p2) : pmin(p1), pmax(p2) {}
-    const box_& impl_bbox() const { return *this; }
-    bool impl_includes(const point& p) const
-    {
-      //  std::cout << "includes: min " << pmin << " out:" << pmax << std::endl;
-      for (unsigned i = 0; i < n; ++i)
-	if (p[i] < pmin[i] or p[i] > pmax[i])
-	  return false;
-      return true;
-    }
-  };
-
-# include "../local/undefs.hh"
-
-  typedef box_< point2d_<int> > box2d;
-  typedef box_< point1d_<int> > box1d;
-  /// end set
-  ////////////////////////////////////////////////
-
-  ////////////////////////////////////////////////
-  // function point to bool
-
-# define classname  fp2b
-# define current    fp2b<Exact>
-# define super      any<Exact>
-# define templ      template <typename Exact>
-
-  template <typename Exact> struct fp2b;
-
-  template <typename Exact>
-  struct vtypes<fp2b<Exact> >
-  {
-    typedef mlc::none super_type;
-  };
-
-
-  template <typename Exact>
-  struct fp2b : any<Exact>
-  {
-    stc_typename(point);
-
-    bool operator()(const point& p) const { return this->exact().impl_valid_access(p); }
-  };
-# include "../local/undefs.hh"
-
-# define classname  chessboard_t
-# define current    chessboard_t
-# define super      fp2b<chessboard_t>
-  struct chessboard_t;
-
-  template <>
-  struct vtypes<chessboard_t>
-  {
-    typedef mlc::none super_type;
-    typedef point2d point;
-  };
-
-  struct  chessboard_t : super
-  {
-    typedef point2d point;
-
-    bool operator()(const point& p) const { return (p.row_ + p.col_) % 2 == 0; }
-  };
-# include "../local/undefs.hh"
-
-  //
-  ////////////////////////////////////////////////
 
   ////////////////////////////////////////////////
   // Image
@@ -1145,6 +822,7 @@ namespace oln
   typedef T value;
   typedef stc::not_delegated lvalue;
   typedef I delegatee;
+  typedef singleton<I> data;
   stc_End;
 
   template <typename T, typename I>
@@ -1330,22 +1008,6 @@ namespace oln
 
 # include "../local/undefs.hh"
 
-# define classname  map_image
-# define current    map_image<P, T>
-# define super      primitive_image<current>
-# define templ      template <typename P, typename T>
-
-//   stc_Header;
-//   stc_End;
-
-//   template <typename P, typename T>
-//   class map_image : super
-//   {
-//     typedef std::map<P, T> map_;
-//   }
-
-
-# include "../local/undefs.hh"
 
   template <typename I>
   void print(I& ima)
@@ -1362,9 +1024,9 @@ namespace oln
     }
   }
 
-# include "../local/undefs.hh"
 
   // End Image  //////////////////////////////////////////////
 }
 
-#endif /* !POINT_OOP1_HH_ */
+
+#endif /* !POINT_SCOOP1_HH_ */
