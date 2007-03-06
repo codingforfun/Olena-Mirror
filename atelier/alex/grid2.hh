@@ -2,6 +2,7 @@
 # define GRID_HH_
 
 # include <cassert>
+# include <vector>
 # include <set>
 # include <mlc/int.hh>
 # include <mlc/uint.hh>
@@ -381,7 +382,7 @@ namespace glg
   };
 
 # include "../local/undefs.hh"
-  
+
 
   // ========
   // SELECTOR
@@ -777,6 +778,7 @@ namespace glg
 
     enum { n = mlc_value(dim) };
 
+    box_() {}
     box_(P p1, P p2) : pmin(p1), pmax(p2) {}
     bool impl_includes(const point& p) const {
       for (unsigned i = 0; i < n; ++i)
@@ -926,6 +928,8 @@ namespace glg
 		       bb.pmin.col, bb.pmax.col) ;}
     box impl_bbox() const { return box_; };
     box& impl_bbox() { return box_; };
+    image2d() {}
+
 
   private:
     box   box_;
@@ -1056,12 +1060,12 @@ namespace glg
     stc_using(delegatee);
 
     delegatee& image(unsigned i = 0) {
-      precondition(this->exact().has_data() && i < n);
-      return this->exact.impl_image(i);}
+      precondition(i < n);
+      return this->exact().impl_image(i);}
 
     const delegatee& image(unsigned i = 0) const {
       precondition(this->exact().has_data() && i < n);
-      return this->exact.impl_image(i);}
+      return this->exact().impl_image(i);}
 
   protected:
     unsigned n;
@@ -1163,6 +1167,120 @@ namespace glg
     value_cast_image<T, I> tmp(input.exact());
     return tmp;
   }
+
+  // Value proxy
+  // -----------
+
+
+  template <typename V>
+  class value_proxy_ {
+  };
+
+
+
+  // Image Stack
+  // -----------
+
+
+# define templ template <unsigned n, typename I>
+# define classname image_stack
+# define current image_stack < n, I >
+# define super multiple_image_morpher < current >
+
+  stc_Header;
+  typedef I delegatee;
+  typedef vec<n, typename I::value> value;
+  typedef const value rvalue;
+  typedef value_proxy_< image_stack<n,I> > lvalue;
+
+  typedef vec<n, I> data;
+  stc_End;
+
+  template <unsigned n, typename I>
+  class image_stack : public super
+  {
+  public:
+    stc_using(delegatee);
+    stc_using(lvalue);
+    stc_using(rvalue);
+    stc_using(value);
+    stc_using(psite);
+    
+    image_stack() { this->data_ = 0; this->n = n; }
+
+    lvalue impl_par(const psite& p) /* PAS const */
+    {
+      lvalue tmp(*this, p);
+      return tmp;
+    }
+    rvalue impl_par(const psite& p) const { return read_(p); }
+
+    delegatee& impl_image(unsigned i = 0) {return images_[i]; }
+    const delegatee& impl_image(unsigned i = 0) const { return images_[i]; }
+
+    rvalue read_(const psite& p) const
+    {
+      value res;
+      for (unsigned i = 0; i < n; ++i)
+	res[i] = images_[i](p);
+      return res;
+    }
+
+    lvalue read_(const psite& p)
+    {
+      value res;
+      for (unsigned i = 0; i < n; ++i)
+	res[i] = images_[i](p);
+      return res;
+    }
+
+
+  private:
+    vec<n, delegatee> images_;
+  };
+
+# include "../local/undefs.hh"
+
+  // fp2b
+  // ----
+
+# define templ template < typename Exact >
+# define classname fp2b
+# define current fp2b < Exact >
+# define super top < current >
+
+  stc_Header;
+  typedef stc::abstract point;
+  stc_End;
+
+  template <typename Exact>
+  class fp2b : public super
+  {
+  public:
+    stc_using(point);
+    bool operator() (const point& p) const;
+  };
+
+# include "../local/undefs.hh"
+
+  // chessboard
+  // ----------
+
+# define classname chessboard
+# define current chessboard
+# define super fp2b < current >
+
+  stc_Header;
+  typedef  point;
+  stc_End;
+
+  class chessboard : public super
+  {
+    stc_using(point);
+    bool operator() (const point& p) const
+    { return ((p.row + p.col) % 2 == 0) }
+  };    
+
 
   // ==========================
   // EXPERIMENTAL (NON WORKING)
