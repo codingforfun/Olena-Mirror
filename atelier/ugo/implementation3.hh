@@ -418,7 +418,7 @@ namespace ugo
   stc_End;
 
   template <typename Exact>
-  class image_base : public super
+  struct image_base : public super
   {
       stc_typename(data);
 
@@ -458,7 +458,6 @@ namespace ugo
   template <typename T>
   struct image2d_ : public super
   {
-    public:
       stc_using( point );
       stc_using( value );
       stc_using( box   );
@@ -469,7 +468,7 @@ namespace ugo
       stc_using( lvalue );
       stc_using( psite  );
 
-      image2d_() { bbox = box(); }
+      image2d_() : bbox( box() ) { }
 
       image2d_(box &box_init) : bbox(box_init) {
 	data_ = new data(bbox.pmin.row, bbox.pmin.col,
@@ -482,7 +481,7 @@ namespace ugo
       box     impl_bbox() const		       { return bbox;		         }
       operator box()			       { return bbox;                    }
 
-      box&	bbox;
+      box	bbox;
     protected:
       data*	data_;
   };
@@ -535,16 +534,16 @@ namespace ugo
   {
       stc_using(delegatee);
 
-      delegatee& image()
+      delegatee& image(unsigned i)
       {
 	precondition(this->exact().has_data());
-	return this->exact().impl_image();
+	return this->exact().impl_image(i);
       }
 
-      delegatee image() const
+      delegatee image(unsigned i) const
       {
 	precondition(this->exact().has_data());
-	return this->exact().impl_image();
+	return this->exact().impl_image(i);
       }
     protected:
       single_image_morpher() {}
@@ -692,13 +691,16 @@ namespace ugo
   struct image_stack : public super
   {
       stc_using( data   );
+      stc_using( box    );
       stc_using( psite  );
       stc_using( value  );
       stc_using( rvalue );
 
       stc_using(delegatee);
 
-      image_stack() { this->data_ = 0; }
+      image_stack() {
+	this->data_ = 0;
+      }
 
       delegatee& impl_image(unsigned i)               { return this->delegatee_[i]; }
       delegatee  impl_image(unsigned i) const         { return this->delegatee_[i]; }
