@@ -141,6 +141,7 @@ namespace ugo
       bool owns_(const psite& p) const { return this->exact().impl_owns(p);    }
       bool has_data() const            { return this->exact().impl_has_data(); }
       box  bbox() const                { return this->exact().impl_bbox();     }
+      operator box()		       { return this->exact().impl_castbox();         }
 
     protected:
       Image() {}

@@ -343,6 +343,12 @@ namespace ugo
 	p_    = bbox_.pmin;
       }
 
+      box_iterator_(box_<point>& box)
+      {
+	bbox_ = box;
+	p_    = bbox_.pmin;
+      }
+
       void impl_start() { p_ =  bbox_.pmin; }
 
       // arf nop
@@ -478,8 +484,8 @@ namespace ugo
       bool    impl_owns(const psite& p) const  { return bbox.includes(p);       }
       rvalue  impl_read(const psite& p) const  { return (*data_)(p.row, p.col); }
       lvalue  impl_rw(const psite& p)          { return (*data_)(p.row, p.col); }
-      box     impl_bbox() const		       { return bbox;		         }
-      operator box()			       { return bbox;                    }
+      box     impl_bbox() const		       { return bbox;		        }
+      box     impl_castbox()                   { return bbox;                   }
 
       box	bbox;
     protected:

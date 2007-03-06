@@ -41,12 +41,12 @@ int main ()
   s.image(0) = ima_0;
   s.image(1) = ima_1;
 
-//  println(s);
+  println(s);
 
-//  s(p) = make_vec(6, 9);
-//  std::cout << s(p)     << ' '
-//	    << ima_0(p) << ' '
-//	    << ima_1(p) << ' ' << std::endl;
+  //  s(p) = make_vec(6, 9);
+  //  std::cout << s(p)     << ' '
+  //	        << ima_0(p) << ' '
+  //	        << ima_1(p) << ' ' << std::endl;
 
   return (0);
 }
