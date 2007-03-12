@@ -14,10 +14,12 @@ namespace ugo
 
   namespace automatic
   {
+    /*
     template <typename Exact>
     struct set_impl<Image, behavior::stack, Exact> : public virtual any<Exact>
     {
     };
+    */
   }
 }
 #endif	    /* !SET_IMPPL_HH_ */

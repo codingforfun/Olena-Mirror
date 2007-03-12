@@ -8,11 +8,8 @@ void   println(I& img)
   for (it.start(); it.is_valid(); it.next())
   {
     std::cout << img(it) << ' ';
-    if (((ugo::point2d)it)[0] == img.bbox.pmax[0])
-      std::cout << std::endl;
   }
 }
-
 
 int main ()
 {

@@ -672,6 +672,11 @@ namespace ugo
       typename I::psite p_;
   };
 
+  template <typename I>
+  std::ostream& operator<<(std::ostream& ostr, const value_proxy_<I>& v)
+  {
+    return ostr << v.value();
+  }
 
   //--stack_image-----------------------------------
 
@@ -701,6 +706,7 @@ namespace ugo
       stc_using( psite  );
       stc_using( value  );
       stc_using( rvalue );
+      stc_using( lvalue );
 
       stc_using(delegatee);
 
@@ -708,8 +714,8 @@ namespace ugo
 	this->data_ = 0;
       }
 
-      delegatee& impl_image(unsigned i)               { return this->delegatee_[i]; }
-      delegatee  impl_image(unsigned i) const         { return this->delegatee_[i]; }
+      delegatee& impl_image(unsigned i = 0)           { return this->delegatee_[i]; }
+      delegatee  impl_image(unsigned i = 0) const     { return this->delegatee_[i]; }
 
       rvalue read_(const psite& p) const
       {
@@ -728,6 +734,11 @@ namespace ugo
 	  v[i] = this->delegatee_[i](p);
 	return v;
       }
+
+      lvalue  impl_rw(const psite& p)          { return this->delegatee_[0].impl_rw(p); }
+
+      box     impl_castbox()                   { return this->delegatee_[0].bbox;   }
+
     protected:
       vec<n, I> delegatee_;
   };
