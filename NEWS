@@ -1,6 +1,29 @@
-Olena 1.0
+Olena-NG
 
-	* SCOOP 2 paradigm.
+	* This version of Olena makes use of the SCOOP 2 paradigm.
+
+
+Olena 0.11	February 21, 2007
+
+	* The whole Olena distribution compiles with the GNU C++
+	  Compiler (G++) 4.0 and 4.1.  The compatibility with previous
+	  versions of the compiler has been broken.
+
+	* Revamp of Swilena.
+	  The Swilena wrappers have been repaired, as they had become
+	  incompatible with recent versions of SWIG, G++, Python and Ruby.
+	  Moreover, a lot of small bugs have been fixed in Swilena.
+	  The test suite of Rblena, the Ruby wrappers for Olena, has
+	  been completed and is comparable to Pylena's (the Python
+	  wrappers for Olena).
+
+	* Libtool.
+	  The whole package uses GNU Libtool to handle libraries.
+	  Swilena benefits this, and uses Libtool to create shared
+	  libraries upon which SWIG wrappers are built.
+
+	* Miscellaneous corrections in Olena and Integre, as well as in
+	  their test suites.
 
 
 Olena 0.10	April 15, 2004
