@@ -1,5 +1,11 @@
 2007-11-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for Vcs back.
+
+	* vcs/oln.rb: New.
+
+2007-11-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move Milena out of the Olena-NG tree.
 
 	* milena/: Remove directory.
