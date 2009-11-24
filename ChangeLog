@@ -1,3 +1,10 @@
+2009-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename Dyn as Extatica.
+
+	* dynamic-use-of-static-c++/: Rename as...
+	* extatica/: ...this.
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Honor `--without-qt' in configure.
