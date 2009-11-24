@@ -27,8 +27,7 @@ m4_pattern_forbid([^RBCONFIG$])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([LRDE C++ Static-Dynamic bridge], [0.1],
-        [nicolas.pouillard@lrde.epita.fr, damien.thivolle@lrde.epita.fr], [dyn])
+AC_INIT([Extatica], [0.1], [olena@lrde.epita.fr], [extatica])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([_config])
