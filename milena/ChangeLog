@@ -1,3 +1,17 @@
+2010-04-09  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Unified structure for simple/dual input min/max tree.
+
+	* mln/core/concept/tree.hh: New component concept.
+	* mln/core/image/attribute_image.hh: New attribute image.
+	* mln/core/site_set/p_nodes.hh: Nodes site set.
+	* mln/core/site_set/p_nodes_piter.hh: Nodes set iterators.
+	* mln/tag/tree.hh: Tags for min/max tree.
+	* mln/util/ctree/ctree.hh: New tree structure.
+	* mln/util/ctree/internal/tree_base.hh: Base type for tree structure.
+	* mln/util/ctree/node.hh,
+	* mln/util/ctree/tree_ids.hh: Node site type.
+
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/white_paper/white_paper.tex: Fix an invalid URL.
