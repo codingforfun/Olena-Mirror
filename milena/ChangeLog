@@ -6936,6 +6936,21 @@
 
 	* tests/core/other/box_runend_piter.cc: Fix assertion.
 
+2010-04-09  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Unified structure for simple/dual input min/max tree.
+
+	* mln/core/concept/tree.hh: New component concept.
+	* mln/core/image/attribute_image.hh: New attribute image.
+	* mln/core/site_set/p_nodes.hh: Nodes site set.
+	* mln/core/site_set/p_nodes_piter.hh: Nodes set iterators.
+	* mln/tag/tree.hh: Tags for min/max tree.
+	* mln/util/ctree/ctree.hh: New tree structure.
+	* mln/util/ctree/internal/tree_base.hh: Base type for tree structure.
+	* mln/util/ctree/node.hh,
+	* mln/util/ctree/tree_ids.hh: Node site type.
+
+
 2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Do not install low-quality HTML documentation.
@@ -8171,6 +8186,7 @@
 	Regen Milena's Makefile helpers.
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Here.
+
 
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
