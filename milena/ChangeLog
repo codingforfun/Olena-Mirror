@@ -1,3 +1,27 @@
+2010-05-04  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Tree build algorithms and tree management routines
+
+	* mln/core/image/all.hh: Update.
+	* mln/morpho/tree/all.hh: Update.
+	* mln/tag/skeleton.hh: Update.
+	* mln/morpho/tree/component_tree.hh: Routines to build component
+	trees.
+	* mln/morpho/tree/compute_attribute_image.hh: Routines to compute
+	attribute images.
+	* mln/morpho/tree/dual_input_tree.hh: Routines to build dual-input
+	trees.
+	* mln/morpho/tree/filter/direct.hh,
+	* mln/morpho/tree/filter/max.hh,
+	* mln/morpho/tree/filter/min.hh,
+	* mln/morpho/tree/filter/subtractive.hh: Filtering routines.
+	* mln/morpho/tree/impl/hqueue.hh,
+	* mln/morpho/tree/impl/hqueue_fast.hh,
+	* mln/morpho/tree/impl/union_find.hh,
+	* mln/morpho/tree/impl/union_find_fast.hh: Tree computation algorithms.
+	* mln/morpho/tree/leaf_last.hh,
+	* mln/morpho/tree/propagate_node.hh: Tree management routines.
+
 2010-04-09  edwin carlinet  <carlinet@lrde.epita.fr>
 
 	Unified structure for simple/dual input min/max tree.

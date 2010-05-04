@@ -44,7 +44,7 @@ namespace mln
   }
 }
 
-
+# include <mln/debug/ctree.hh>
 # include <mln/debug/draw_graph.hh>
 # include <mln/debug/format.hh>
 # include <mln/debug/histo.hh>
