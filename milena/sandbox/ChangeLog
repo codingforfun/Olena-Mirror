@@ -1,3 +1,23 @@
+2010-05-04  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Comparison of tree build algorithms.
+
+	* edwin/TreeAlgorithmsComp/dual/dual.hh,
+	* edwin/TreeAlgorithmsComp/dual/dual_main,
+	* edwin/TreeAlgorithmsComp/dual/dual_main.cc,
+	* edwin/TreeAlgorithmsComp/dual/wilkinson_ref.c,
+	* edwin/TreeAlgorithmsComp/makefile.rules,
+	* edwin/TreeAlgorithmsComp/max_tree.cc,
+	* edwin/TreeAlgorithmsComp/max_tree_with_rank.cc,
+	* edwin/TreeAlgorithmsComp/parallel_apply.hh,
+	* edwin/TreeAlgorithmsComp/parallel_union_find.hh,
+	* edwin/TreeAlgorithmsComp/tbb_union_find_8.cc,
+	* edwin/TreeAlgorithmsComp/test_salembier_fast_16.cc,
+	* edwin/TreeAlgorithmsComp/test_salembier_fast_8.cc,
+	* edwin/TreeAlgorithmsComp/test_union_find_fast_16.cc,
+	* edwin/TreeAlgorithmsComp/test_union_find_fast_8.cc:
+	Comparison algorithms.
+
 2009-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some bench + canvas + subsampling + browsing code.
