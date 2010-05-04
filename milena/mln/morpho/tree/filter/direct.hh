@@ -27,7 +27,9 @@
 # define MLN_MORPHO_TREE_FILTER_DIRECT_HH
 
 # include <mln/core/concept/function.hh>
-# include <mln/morpho/tree/data.hh>
+# include <mln/core/image/attribute_image.hh>
+# include <mln/morpho/tree/propagate_node.hh>
+
 
 /**
 ** \file   mln/morpho/tree/filter/direct.hh
@@ -51,36 +53,39 @@ namespace mln
 
 	/**
 	** Direct non-pruning strategy. A node is removed if it does
-	** not verify the predicate. The sub-components remain intact.
+	** not verify the predicate. Its pixels are lowered in gray
+	** level to the highest ancestor which meets the criterion,
+	** and while its descendants are unaffected.
 	**
-	** \param[in] tree Component tree.
-	** \param[out] f_ Image to filter.
+	** \param[in,out] attr The attribute image.
 	** \param[in] pred_ Filtering criterion.
 	*/
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename P>
 	inline
 	void
-	direct(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_);
+	direct(attribute_image<T,V>& attr, const Function_v2b<P>& pred_);
 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename F>
 	inline
 	void
-	direct(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_)
+	direct(attribute_image<T,V>& attr, const Function_v2b<F>& pred_)
 	{
-	  F& f = exact(f_);
-	  const P& pred = exact(pred_);
-
 	  trace::entering("mln::morpho::tree::filter::direct");
 
-	  mln_dn_node_piter(T) n(tree);
-	  for_all(n)
-	    if (!pred(n))
-	      f(n) = f(tree.parent(n));
+	  typedef attribute_image<T,V> A;
+
+	  const F& pred = exact(pred_);
+	  const T& tree = attr.tree();
+
+	  mln_fwd_piter(A) node(attr.domain());
+	  for_all(node)
+	    if (!pred(node))
+	      attr(node) = attr(tree.parent(node));
 
 	  trace::exiting("mln::morpho::tree::filter::direct");
 	}

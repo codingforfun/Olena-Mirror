@@ -40,6 +40,7 @@
 
 // Files.
 
+# include <mln/core/image/attribute_image.hh>
 # include <mln/core/image/ch_piter.hh>
 # include <mln/core/image/complex_image.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>

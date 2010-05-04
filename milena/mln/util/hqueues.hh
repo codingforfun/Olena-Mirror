@@ -55,6 +55,7 @@ namespace mln
 	nvalues = mln_card(T)
       };
 
+      hqueues();
       hqueues(const histo::array<T>& h);
 
       const p_queue_fast<P>& operator[](unsigned i) const;
@@ -66,38 +67,29 @@ namespace mln
       const mln::value::set<T>& vset() const;
 
     protected:
-      void pre_allocate_(unsigned i);
-
-      const histo::array<T>& h_;
       const mln::value::set<T>& s_;
-      std::vector<bool> allocated_;
       std::vector< p_queue_fast<P> >queues_;
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
+    template <typename P, typename T>
+    inline
+    hqueues<P,T>::hqueues()
+    : s_ (mln::value::set<T>::the())
+    {
+      queues_.resize(nvalues);
+    }
+
 
     template <typename P, typename T>
     inline
     hqueues<P,T>::hqueues(const histo::array<T>& h)
-    : h_ (h),
-      s_ (mln::value::set<T>::the()),
-      allocated_ (nvalues, false),
-      queues_ (nvalues)
+    : s_ (mln::value::set<T>::the())
     {
-    }
-
-    template <typename P, typename T>
-    inline
-    void
-    hqueues<P,T>::pre_allocate_(unsigned i)
-    {
-      mln_precondition(i < nvalues);
-      if (!allocated_[i])
-	{
-	  queues_[i].reserve(h_[i]);
-	  allocated_[i] = true;
-	}
+      queues_.resize(nvalues);
+      for (unsigned i = 0; i < nvalues; ++i)
+	queues_[i].reserve(h[i]);
     }
 
 
@@ -107,7 +99,6 @@ namespace mln
     hqueues<P,T>::operator[](unsigned i) const
     {
       mln_precondition(i < nvalues);
-      pre_allocate_(i);
       return queues_[i];
     }
 
@@ -117,7 +108,6 @@ namespace mln
     hqueues<P,T>::operator[](unsigned i)
     {
       mln_precondition(i < nvalues);
-      pre_allocate_(i);
       return queues_[i];
     }
 
@@ -127,7 +117,6 @@ namespace mln
     hqueues<P,T>::operator()(const T& v) const
     {
       unsigned i = s_.index_of(v);
-      pre_allocate_(i);
       return queues_[i];
     }
 
@@ -137,7 +126,6 @@ namespace mln
     hqueues<P,T>::operator()(const T& v)
     {
       unsigned i = s_.index_of(v);
-      pre_allocate_(i);
       return queues_[i];
     }
 

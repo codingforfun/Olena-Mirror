@@ -30,7 +30,6 @@
 ///
 /// File that includes all morphological tree-related routines.
 
-
 namespace mln
 {
 
@@ -46,11 +45,14 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/morpho/tree/compute_attribute_image.hh>
-# include <mln/morpho/tree/compute_parent.hh>
 # include <mln/morpho/tree/dual_input_tree.hh>
-# include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/max.hh>
-# include <mln/morpho/tree/utils.hh>
+# include <mln/morpho/tree/component_tree.hh>
+# include <mln/morpho/tree/compute_parent.hh
+# include <mln/morpho/tree/compute_attribute_image.hh>
+# include <mln/morpho/tree/leaf_last.hh>
+# include <mln/morpho/tree/propagate_node.hh>
 
-#endif // ! MLN_MORPHO_TREE_ALL_HH
+# include <mln/morpho/tree/filter/all.hh>
+
+
+#endif // !MLN_MORPHO_TREE_ALL_HH

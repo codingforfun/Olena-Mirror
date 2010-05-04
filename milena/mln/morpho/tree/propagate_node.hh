@@ -26,14 +26,27 @@
 #ifndef MLN_MORPHO_TREE_PROPAGATE_NODE_HH
 # define MLN_MORPHO_TREE_PROPAGATE_NODE_HH
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/macros.hh>
-# include <mln/morpho/tree/data.hh>
-
 /// \file
 ///
 /// Functions to propagate node in the tree.
+///
+/// \todo: The new implementation permits: + to propagate toward
+/// subcomponents very fast (data::fill)\ + to propagate toward
+/// supernodes as fast as the previous component\ + the attribute
+/// image is still valid without the use of propagate_representative
+/// that does not make sense any more.
+///
+/// We are able in both cases to do something like:
+/// + data::fill(attr_img | asc(n), v)
+/// + data::fill(attr_img | desc(n), v)
+///
+/// However the subimage morpher is not specialized for fast image and
+/// does not take benefits in the fact that:
+/// + desc(n) is a p_run (so can be memseté)
+/// + attr_img can accessed by indexed (element() method for fast-image)
 
+# include <mln/core/image/attribute_image.hh>
+# include <algorithm>
 
 namespace mln
 {
@@ -44,165 +57,51 @@ namespace mln
     namespace tree
     {
 
-      /*!
-      ** Propagate a value \p v from a node \p n to its descendants.
-      **
-      ** \param[in] n	       Node to propagate.
-      ** \param[in] t	       Component tree used for propagation.
-      ** \param[in] a_	       Attribute image where values are propagated.
-      ** \param[in] v	       Value to propagate.
-      ** \param[out] nb_leaves Optional. Store the number of leaves in
-      ** the component.
-      */
-      template <typename T, typename A>
-      void
-      propagate_node_to_descendants(mln_psite(A) n,
-				    const T& t,
-				    Image<A>& a_,
-				    const mln_value(A)& v,
-				    unsigned* nb_leaves = 0);
-
-      /*!
-      ** Propagate the node's value to its descendants.
-      **
-      ** \param[in] n	       Node to propagate.
-      ** \param[in] t	       Component tree used for propagation.
-      ** \param[in] a_	       Attribute image where values are propagated.
-      ** \param[out] nb_leaves Optional. Store the number of leaves in
-      ** the component.
-      */
-      template <typename T, typename A>
+      template <typename T, typename V>
       inline
-      void
-      propagate_node_to_descendants(mln_psite(A)& n,
-				    const T& t,
-				    Image<A>& a_,
-				    unsigned* nb_leaves = 0);
-
-
-      /*!
-      ** Propagate a value \p v from a node \p n to its ancestors.
-      **
-      ** \param[in] n Node to propagate.
-      ** \param[in] t Component tree used for propagation.
-      ** \param[in] a_ Attribute image where values are propagated.
-      ** \param[in] v Value to propagate.
-      */
-      template <typename T, typename A>
-      void
-      propagate_node_to_ancestors(mln_psite(A) n,
-				  const T& t,
-				  Image<A>& a_,
-				  const mln_value(A)& v);
-
-      /*!
-      ** Propagate the node's value to its ancestors.
-      **
-      ** \param[in] n Node to propagate.
-      ** \param[in] t Component tree used for propagation.
-      ** \param[in,out] a_ Attribute image where values are propagated.
-      */
-      template <typename T, typename A>
-      inline
-      void
-      propagate_node_to_ancestors(mln_psite(A) n,
-				  const T& t,
-				  Image<A>& a_);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      /* Descendants propagation */
-
-      template <typename T, typename A>
-      inline
-      void
-      propagate_node_to_descendants(mln_psite(A) n,
-				    const T& t,
-				    Image<A>& a_,
-				    const mln_value(A)& v,
-				    unsigned* nb_leaves = 0)
+      unsigned
+      propagate_node_to_descendants(attribute_image<T, V>& a,
+				    const typename T::node_t& n,
+				    const V& value)
       {
-	A& a = exact(a_);
+	typedef typename T::nodes_t desc_t;
 	mln_precondition(a.is_valid());
-	mln_precondition(a.domain() == t.f().domain());
-	mln_precondition(a.domain().has(n));
+	mln_precondition(a.has(n));
 
+	// (n € desc(n)) but we don't set its value.
+	unsigned i = a.tree().desc(n).nsites();
 
-	if (!t.is_a_node(n)) // Get the representant.
-	  n = t.parent(n);
-	mln_assertion(t.is_a_node(n));
-
-	typename T::depth1st_piter pp(t, n);
-
-	pp.start(); // We don't set n to v.
-
-	if (nb_leaves)
-	  *nb_leaves += t.is_a_leaf(pp);
-
-	for (pp.next(); pp.is_valid(); pp.next())
+	if (i > 1)
 	  {
-	    a(pp) = v;
-	    if (nb_leaves && t.is_a_leaf(pp))
-	      ++(*nb_leaves);
+	    mln_assertion(a.tree().has_index(n.index() + i));
+	    V* v = a.buffer() + n.index();
+	    std::fill(v + 1, v + i, value);
 	  }
+	return i - 1;
       }
 
-
-      template <typename T, typename A>
+      template <typename T, typename V>
       inline
-      void
-      propagate_node_to_descendants(mln_psite(A) n,
-				    const T& t,
-				    Image<A>& a_,
-				    unsigned* nb_leaves = 0)
-
+      unsigned
+      propagate_node_to_ancestors(attribute_image<T, V>& a,
+				  typename T::node_t n,
+				  const V& v)
       {
-	A& a = exact(a_);
-	propagate_node_to_descendants(n, t, a, a(n), nb_leaves);
-      }
-
-
-      /* Ancestors propagation */
-
-      template <typename T, typename A>
-      void
-      propagate_node_to_ancestors(mln_psite(A) n,
-				  const T& t,
-				  Image<A>& a_,
-				  const mln_value(A)& v)
-      {
-	A& a = exact(a_);
 	mln_precondition(a.is_valid());
-	mln_precondition(a.domain() == t.f().domain());
-	mln_precondition(a.domain().has(n));
+	mln_precondition(a.has(n));
 
-	if (!t.is_a_node(n)) // Get the representant.
-	  n = t.parent(n);
-	mln_assertion(t.is_a_node(n));
+	if (a.tree().is_a_root(n))
+	  return 0;
 
-	if (t.is_root(n))
-	  return;
-
+	unsigned i = 0;
 	do {
-	  n = t.parent(n);
+	  n = a.tree().parent(n);
 	  a(n) = v;
-	} while (!t.is_root(n));
+	  ++i;
+	} while (!a.tree().is_a_root(n));
 
+	return i;
       }
-
-      template <typename T, typename A>
-      inline
-      void
-      propagate_node_to_ancestors(mln_psite(A) n,
-				  const T& t,
-				  Image<A>& a_)
-      {
-	A& a = exact(a_);
-	propagate_node_to_ancestors(n, t, a, a(n));
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::tree
 

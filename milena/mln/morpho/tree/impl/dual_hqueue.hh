@@ -32,31 +32,19 @@
 /// This implementation is based on P. Salembier algorithm using
 /// hierachical queues. This implies a low-quantized input image so
 /// that the number of queues is limited.
-///
-/// TODO: Think about how to extend f domain in a more
-/// generic way. The actual implementation doubles the size of the
-/// first dimension. It implies a boxed domain.
-///
-/// TODO: Use the less functor. The actual implementation is for max-tree.
-///
-/// TODO: During the canonization pass, we build the tree site set
-/// from the sorted site set of f, so that we compute twice f
-/// histogram (can be avoided).
 
-# include <mln/data/sort_psites.hh>
+# include <mln/util/ctree/ctree.hh>
 # include <mln/data/fill.hh>
 
+# include <mln/extension/fill.hh>
+# include <mln/extension/adjust.hh>
 # include <mln/geom/nsites.hh>
-# include <mln/geom/translate.hh>
 
-# include <mln/morpho/tree/data.hh>
 
 # include <mln/util/hqueues.hh>
-# include <mln/util/ord.hh>
 
 # include <mln/value/value_array.hh>
 # include <mln/value/set.hh>
-
 # include <mln/util/timer.hh>
 
 namespace mln
@@ -79,320 +67,430 @@ namespace mln
 	///
 	/// \return The tree structure.
 	///
-	template <typename I, typename N>
-	inline
-	data<I, p_array<mln_psite(I)> >
-	dual_hqueue(const Image<I>& f,
+	template <typename T, typename I, typename N>
+	util::ctree::ctree<I>
+	dual_hqueue(const tag::tree::tree_t<T>&,
+		    const Image<I>& f,
 		    const Image<I>& m,
 		    const Neighborhood<N>& nbh);
+
 
       } // end of namespace mln::morpho::tree::impl
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace internal
-      {
-
-	template <typename I, typename N, class E>
-	struct shared_flood_args
-	{
-	  typedef mln_psite(I) P;
-	  typedef mln_value(I) V;
-	  typedef p_array<P> S;
-
-	  const I& f;
-	  const I& m;
-	  const N& nbh;
-	  mln_ch_value(I, P)& parent;
-
-	  // Aux data
-	  util::hqueues<P, V>&		hqueues;
-	  const E&			extend; // site -> site functor.
-	  value::value_array<V, bool>	is_node_at_level;
-	  value::value_array<V, P>	node_at_level;
-	  mln_ch_value(I, bool)		deja_vu;
-	  const value::set<V>&			vset;
-
-	  shared_flood_args(const I& f_,
-			    const I& m_,
-			    const N& neigb_,
-			    mln_ch_value(I, P)& parent_,
-			    util::hqueues<mln_psite(I), V>& hqueues_,
-			    const E& extend_)
-	    : f (f_),
-	      m (m_),
-	      nbh (neigb_),
-	      parent (parent_),
-	      hqueues (hqueues_),
-	      extend (extend_),
-	      is_node_at_level (false),
-	      vset (hqueues.vset())
-	  {
-	      initialize(deja_vu, f);
-	      mln::data::fill(deja_vu, false);
-	  }
-	};
-
-	template <typename I>
-	inline
-	histo::array<mln_value(I)>
-	compute_histo(const I& f, const I& m, mln_value(I)& hmin, mln_psite(I)& pmin)
-	{
-	  histo::array<mln_value(I)> hm = histo::compute(m);
-	  const histo::array<mln_value(I)> hf = histo::compute(f);
-
-	  { // Retrieve hmin.
-	    unsigned i = 0;
-	    while (hm[i] == 0)
-	      ++i;
-	    hmin = hm.vset()[i];
-	  }
-
-	  // Merge histograms.
-	  for (unsigned i = 0; i < hm.nvalues(); ++i)
-	    hm[i] += hf[i];
-
-	  // Retrieve pmin.
-	  mln_piter(I) p(m.domain());
-	  for (p.start(); m(p) != hmin; p.next())
-	    ;
-	  mln_assertion(p.is_valid());
-	  pmin = p;
-
-	  return hm;
-	}
-
-	// Site -> site functor: give for all p in Domain(f), its
-	// equivalence in the extended domain.
-	// TODO: make it generic. It works only on boxed domain.
-	template <typename I>
-	struct extend
-	{
-	  extend(const mln_psite(I)::delta& dp)
-	    : dp_ (dp)
-	  {
-	  }
-
-	  mln_psite(I) operator() (const mln_psite(I)& p) const
-	  {
-	    return p + dp_;
-	  }
-
-	private:
-	  const mln_psite(I)::delta dp_;
-	};
-
-      } // end of namespace mln::morpho::tree::internal
-
       namespace impl
       {
 
+
 	template <typename I, typename N, typename E>
-	unsigned
-	flood(internal::shared_flood_args<I, N, E>& args, const unsigned h_idx)
+	struct flooder_base_ : Object<E>
 	{
-	  mln_assertion(args.is_node_at_level[h_idx]);
+	  typedef unsigned P;
+	  typedef mln_value(I) V;
 
-	  while (!args.hqueues[h_idx].empty())
-	    {
-	      mln_psite(I) p = args.hqueues[h_idx].pop_front();
-	      unsigned p_idx = args.vset.index_of(args.f(p));
+	  // Constructor.
+	  flooder_base_(const I& f_, const I& m_, const N& nbh_);
 
-	      if (p_idx != h_idx)
-		{ // Intensity mismatch: irregular case.
-		  mln_psite(I) pext = args.extend(p);
-		  args.parent(pext) = args.node_at_level[h_idx];
-
-		  if (p_idx > h_idx) // Singleton with parent at h.
-		    args.parent(p) = args.node_at_level[h_idx];
-		  else
-		    {
-		      if (!args.is_node_at_level[p_idx])
-			{
-			  args.is_node_at_level[p_idx] = true;
-			  args.node_at_level[p_idx] = p;
-			}
-		    }
-		}
-
-	      if (p_idx <= h_idx)
-		{
-		  if (!args.f.domain().has(args.node_at_level[p_idx]) ||
-		      util::ord_strict(p, args.node_at_level[p_idx]))
-		    { // Regular case but a representative provided by the extension.
-		      args.parent(args.node_at_level[p_idx]) = p;
-		      args.node_at_level[p_idx] = p;
-		      //args.parent(p) = p;
-		    }
-		  args.parent(p) = args.node_at_level[p_idx];
-		}
+	  // Returned values.
+	  mln_ch_value(I, unsigned)	map;
+	  std::vector<P>		location;
+	  std::vector<V>		values;
+	  std::vector<P>		parent;
+	  std::vector<unsigned>		area;
+	  unsigned			nnode;
 
 
-	      // Process the neighbors
-	      mln_niter(N) n(args.nbh, p);
-	      for_all(n)
-		if (args.f.domain().has(n) && !args.deja_vu(n))
-		  {
-		    unsigned mn = args.vset.index_of(args.m(n));
-		    unsigned fn = args.vset.index_of(args.f(n));
-		    args.hqueues[mn].push(n);
-		    args.deja_vu(n) = true;
+	protected:
+	  enum {
+	    nvalues = mln_card(mln_value(I))
+	  };
 
-		    mln_psite(I) ext = args.extend(n);
-		    // Create a node at c.
-		    {
-		      mln_psite(I) node = (fn == mn) ? n : ext;
-		      if (!args.is_node_at_level[mn])
-			{
-			  args.is_node_at_level[mn] = true;
-			  args.node_at_level[mn] = node;
-			}
-		    }
 
-		    while (mn > h_idx)
-		      mn = flood(args, mn);
-		  }
-	    }
+	  // Recursive function that floods. Canevas function.
+	  int flood(int h_idx);
 
-	  // Retrieve dad.
-	  args.is_node_at_level[h_idx] = false;
-	  unsigned c = h_idx;
-	  while (c > 0 && !args.is_node_at_level[c])
-	    --c;
+	  // HLevel comparaison. To be specialized for min/max tree.
+	  bool hlevel_less(int h_idx1, int h_idx2);
 
-	  mln_psite(I) x = args.node_at_level[h_idx];
-	  if (c > 0)
-	    args.parent(x) = args.node_at_level[c];
-	  else
-	    args.parent(x) = x;
+	  // Parent attachment function. To be specialized for min/max tree.
+	  int attach_parent(int h_idx);
 
-	  return c;
+	  // Data.
+	  // \{
+	  const I& f;
+	  const I& m;
+	  const N& nbh;
+
+	  // Auxiliary data.
+	  util::hqueues<unsigned, V>		hqueues;
+	  value::set<V>				vset;
+	  util::array<int>			dp;
+	  unsigned				n_nbhs;
+
+	  mln_ch_value(I, bool)		deja_vu;
+	  value::value_array<V, bool>	is_node_at_level;
+	  value::value_array<V, P>	node_at_level;
+	  unsigned			loc;
+	  // \}
+	};
+
+	template <typename T, typename I, typename N>
+	struct flooder;
+
+	template <typename I, typename N>
+	struct flooder<tag::tree::max_t, I, N> :
+	  flooder_base_< I, N, flooder<tag::tree::max_t, I, N> >
+	{
+	  typedef mln_value(I) V;
+	  typedef flooder_base_< I, N, flooder<tag::tree::max_t, I, N> > super_;
+
+	  // Constructor.
+	  flooder(const I& f, const I& m, const N& nbh);
+
+	  // HLevel comparaison.
+	  bool hlevel_less_(int h_idx1, int h_idx2);
+
+	  // Parent attachment function.
+	  int attach_parent_(int h_idx);
+
+	public:
+	  using super_::parent;
+	  using super_::area;
+	  using super_::location;
+
+	protected:
+	  using super_::is_node_at_level;
+	  using super_::node_at_level;
+	  using super_::vset;
+	  using super_::loc;
+	  using super_::hqueues;
+	};
+
+	template <typename I, typename N>
+	struct flooder<tag::tree::min_t, I, N> :
+	  flooder_base_< I, N, flooder<tag::tree::min_t, I, N> >
+	{
+	  typedef mln_value(I) V;
+	  typedef flooder_base_< I, N, flooder<tag::tree::min_t, I, N> > super_;
+
+	  // Constructor.
+	  flooder(const I& f, const I& m, const N& nbh);
+
+	  // HLevel comparaison.
+	  bool hlevel_less_(int h_idx1, int h_idx2);
+
+	  // Parent attachment function.
+	  unsigned attach_parent_(int h_idx);
+
+	public:
+	  using super_::parent;
+	  using super_::area;
+	  using super_::location;
+
+	protected:
+	  using super_::is_node_at_level;
+	  using super_::node_at_level;
+	  using super_::vset;
+	  using super_::loc;
+	  using super_::hqueues;
+	};
+
+
+	template <typename I, typename N, typename E>
+	inline
+	bool
+	flooder_base_<I, N, E>::hlevel_less(int h_idx1, int h_idx2)
+	{
+	  E& obj = exact(*this);
+	  return obj.hlevel_less_(h_idx1, h_idx2);
+	}
+
+	template <typename I, typename N, typename E>
+	inline
+	int
+	flooder_base_<I, N, E>::attach_parent(int h_idx)
+	{
+	  E& obj = exact(*this);
+	  return obj.attach_parent_(h_idx);
 	}
 
 	template <typename I, typename N>
 	inline
-	data< I, p_array<mln_psite(I)> >
-	dual_hqueue(const Image<I>& f_,
-		    const Image<I>& m_,
-		    const Neighborhood<N>& neibh_)
+	flooder<tag::tree::max_t, I, N>::flooder(const I& f_, const I& m_, const N& nbh_)
+	  : flooder_base_<I, N, flooder<tag::tree::max_t, I, N> >(f_, m_, nbh_)
 	{
-	  trace::entering("mln::morpho::tree::impl::dual_hqueue");
+	}
 
-	  const I& f = exact(f_);
-	  const I& m = exact(m_);
-	  const N& nbh = exact(neibh_);
+	template <typename I, typename N>
+	inline
+	flooder<tag::tree::min_t, I, N>::flooder(const I& f_, const I& m_, const N& nbh_)
+	  : flooder_base_<I, N, flooder<tag::tree::min_t, I, N> >(f_, m_, nbh_)
+	{
+	}
 
-	  typedef mln_psite(I) P;
-	  typedef p_array<mln_psite(I)> S;
+	template <typename I, typename N>
+	inline
+	bool
+	flooder<tag::tree::max_t, I, N>::hlevel_less_(int h_idx1, int h_idx2)
+	{
+	  return h_idx1 < h_idx2;
+	}
 
-	  util::timer tm;
-	  tm.start();
+	template <typename I, typename N>
+	inline
+	bool
+	flooder<tag::tree::min_t, I, N>::hlevel_less_(int h_idx1, int h_idx2)
+	{
+	  return h_idx2 < h_idx1;
+	}
 
-	  // Histo.
-	  mln_psite(I) pmin;
-	  mln_value(I) hmin;
-	  const histo::array<mln_value(I)> histo = internal::compute_histo(f, m, hmin, pmin);
-	  util::hqueues<P, mln_value(I)> hqueues(histo);
+	template <typename I, typename N>
+	inline
+	int
+	flooder<tag::tree::max_t, I, N>::attach_parent_(int h_idx)
+	{
+	  mln_assertion(h_idx >= 0);
+	  mln_assertion(is_node_at_level[h_idx]);
 
-	  mln_psite(I)::delta dp(literal::zero);
-	  mln_domain(I) d_ext = f.domain();
-	  mln_domain(I) d = f.domain();
 
-	  // Extend the domain.
-	  dp[0] = d.pmax()[0] - d.pmin()[0] + 1;
-	  d.pmax() += dp;
-	  d_ext.pmin() += dp;
-	  d_ext.pmax() += dp;
+	  unsigned x = node_at_level[h_idx];
+	  int c = h_idx - 1;
 
-	  // Data.
-	  mln_concrete(I)	fext;
-	  mln_ch_value(I, P)	parent;
-	  p_array<mln_psite(I)> s;
+	  is_node_at_level[h_idx] = false;
+	  while (c >= 0 && !is_node_at_level[c])
+	    --c;
 
-	  // Initialization.
-	  fext = geom::translate(m, dp.to_vec(), f, d);
-	  initialize(parent, fext);
-	  s.reserve(geom::nsites(fext));
-
-	  // Process.
-	  internal::extend<I> extend(dp);
-	  internal::shared_flood_args< I, N, internal::extend<I> >
-	    args(f, m, nbh, parent, hqueues, extend);
-
-	  unsigned r = args.vset.index_of(hmin);
-	  args.deja_vu(pmin) = true;
-	  args.hqueues[r].push(pmin);
-	  args.node_at_level[r] = (f(pmin) == hmin) ? pmin : extend(pmin);
-	  args.is_node_at_level[r] = true;
-	  flood(args, r);
-
-	  // Attach the nodes under hmin.
-	  unsigned i = r;
-	  do
+	  if (c >= 0)
 	    {
-	      if (args.is_node_at_level[i])
-		{
-		  parent(args.node_at_level[r]) = args.node_at_level[i];
-		  r = i;
-		}
+	      unsigned p = node_at_level[c];
+	      parent[x] = p;
+	      area[p] += area[x] + 1;
 	    }
-	  while (i-- > 0);
-	  parent(args.node_at_level[r]) = args.node_at_level[r]; //root
+	  else // root case.
+	    parent[x] = x;
 
-	  // Canonization and make tree site set.
+	  location[x] = loc++;
+	  return c;
+	}
+
+	// template <typename I, typename N>
+	// inline
+	// unsigned
+	// flooder<tag::tree::min_t, I, N>::attach_parent_(unsigned h_idx)
+	// {
+	//   unsigned nv = vset.nvalues() - 1;
+	//   unsigned c = h_idx;
+
+	//   while (c < nv && !is_node_at_level[c])
+	//     ++c;
+
+	//   unsigned x = node_at_level[h_idx];
+	//   if (is_node_at_level[c])
+	//     {
+	//       unsigned p = node_at_level[c];
+	//       parent[x] = p;
+	//       area[p] += area[x] + 1;
+	//     }
+	//   else
+	//     parent[x] = x;
+
+	//   location[x] = loc++;
+	//   return c;
+	// }
+
+
+	template <typename I, typename N, typename E>
+	flooder_base_<I, N, E>::flooder_base_(const I& f_, const I& m_, const N& nbh_)
+	  : f (f_), m(m_), nbh (nbh_), is_node_at_level (false)
 	  {
-	    mln_ch_value(I, bool) deja_vu(d_ext);
-	    mln::data::fill(deja_vu, false);
+	    typedef mln_value(I) V;
 
-	    p_array<mln_psite(I)> s_f = mln::data::sort_psites_increasing(f);
-	    mln_fwd_piter(S) p(s_f); // Forward.
-	    for_all(p)
+	    unsigned pmin_offset;
+	    V vmin;
+
+	    // Allocate hierarchical queues and retrieve the starting point
 	    {
-	      P x = p;
-	      P q = parent(p);
+	     util::array< unsigned > h(nvalues, 0);
 
-	      // Case: l: m <---- m <---- f
-	      // Or
-	      // Case  l1: m <----- f      impossible.
-	      //           |
-	      //       l2: m
-	      mln_assertion(!(d_ext.has(q) && fext(p) == fext(q) && d_ext.has(parent(q)) && q != parent(q)));
+	     pmin_offset = m.index_of_point(m.domain().pmin());
+	     vmin = m.element(pmin_offset);
 
-	      while (d_ext.has(q) && !deja_vu(q) && (fext(q) != fext(parent(q)) || q == parent(q)))
-		{
-		  s.append(q);
-		  deja_vu(q) = true;
-		  x = q;
-		  q = parent(q);
-		}
+	     mln_fwd_pixter(const I) pxl(m);
+	     for_all(pxl)
+	     {
+	       ++h[pxl.val()];
+	       if (hlevel_less(pxl.val(), vmin))
+		 {
+		   vmin = pxl.val();
+		   pmin_offset = pxl.offset();
+		 }
+	     }
 
-	      if (d_ext.has(q) && fext(q) == fext(parent(q)) && q != parent(q))
-		{
-		  q = (parent(x) = parent(q));
-		  mln_assertion(f.domain().has(q));
-		}
-
-	      if (fext(q) == fext(parent(q)))
-		parent(x) = parent(q);
-
-	      s.append(p);
-
-	      mln_assertion((q = parent(p)) == parent(q) || fext(q) != fext(parent(q)));
+	     for (unsigned i = 0; i < nvalues; ++i)
+	       hqueues[i].reserve(h[i]);
 	    }
 
+	   // Initialize aux data
+	   {
+	     dp = offsets_wrt(f, nbh);
+	     n_nbhs = dp.nelements();
+	     vset = value::set<V>::the();
+
+	     extension::adjust(f, nbh);
+	     extension::adjust(m, nbh);
+
+	     initialize(deja_vu, f);
+	     initialize(map, f);
+	     data::fill(deja_vu, false);
+	     extension::fill(deja_vu, true);
+
+	     unsigned nsites = geom::nsites(f);
+	     parent.resize(2 * nsites);
+	     location.resize(2 * nsites);
+	     area.resize(2 * nsites, 0);
+	     values.resize(2 * nsites);
+
+	     nnode = 0;
+	     loc = 0;
+	   }
+
+	   // Start flooding
+	   unsigned hmin = vset.index_of(vmin);
+	   unsigned fmin = vset.index_of(f.element(pmin_offset));
+	   std::cout << vmin << std::endl;
+	   hqueues[hmin].push(pmin_offset);
+	   deja_vu.element(pmin_offset) = true;
+	   values[nnode] = vmin;
+	   node_at_level[fmin] = nnode++;
+	   is_node_at_level[fmin] = true;
+	   if (hmin != fmin)
+	     {
+	       values[nnode] = f.element(pmin_offset);
+	       node_at_level[hmin] = nnode++;
+	       is_node_at_level[hmin] = true;
+	     }
+	   int c = flood(hmin);
+	   while (c != -1) // There still are nodes under minimal mask level.
+	     c = attach_parent(c);
+	   mln_assertion(c == -1);
 	  }
 
-	  std::cout << "Construction de l'arbre en " << tm << " s." << std::endl;
+	template <typename I, typename N, typename E>
+	int
+	flooder_base_<I, N, E>::flood(int h_idx)
+	{
+	  mln_assertion(h_idx >= 0);
+	  mln_assertion(is_node_at_level[h_idx]);
 
-	  data<I, S> tree(fext, parent, s);
+	  while (!hqueues[h_idx].empty())
+	    {
+	      unsigned p = hqueues[h_idx].pop_front();
+	      int p_idx = vset.index_of(f.element(p));
+	      mln_assertion(vset.index_of(m.element(p)) == (unsigned)h_idx);
+	      //mln_assertion(is_node_at_level[p_idx]);
 
-	  trace::exiting("mln::morpho::tree::impl::dual_hqueue");
 
+	      if (h_idx < p_idx) // FIXME: max tree only
+		{
+		  // Singleton
+		  int par_i = node_at_level[h_idx];
+		  int self_i = nnode++; // Create the node.
+		  map.element(p) = self_i;
+		  values[self_i] = m.element(p);
+		  area[self_i] = 1;
+		  parent[self_i] = par_i;
+		  location[self_i] = loc++;
+		  area[par_i]++;
+		}
+	      else
+		map.element(p) = node_at_level[p_idx];
+
+	      // Process the neighbors
+	      for (unsigned j = 0; j < n_nbhs; ++j)
+		{
+		  unsigned n = p + dp[j];
+
+		  if (!deja_vu.element(n))
+		  {
+		    unsigned n_hidx = vset.index_of(m.element(n));
+		    unsigned n_fidx = vset.index_of(f.element(n));
+		    hqueues[n_hidx].push(n);
+		    deja_vu.element(n) = true;
+
+		    if (!is_node_at_level[n_hidx])
+		      {
+			values[nnode] = (m.element(n));
+			node_at_level[n_hidx] = nnode++;
+			is_node_at_level[n_hidx] = true;
+		      }
+		    if (!is_node_at_level[n_fidx] && n_fidx < n_hidx)
+		      {
+			values[nnode] = (f.element(n));
+			node_at_level[n_fidx] = nnode++;
+			is_node_at_level[n_fidx] = true;
+		      }
+
+		    while (hlevel_less(h_idx, n_hidx))
+		      n_hidx = flood(n_hidx);
+		  }
+		}
+	    }
+
+	  return attach_parent(h_idx);
+	}
+
+	template <typename T, typename I, typename N>
+	inline
+	util::ctree::ctree<I>
+	dual_hqueue(const tag::tree::tree_t<T>&,
+		    const Image<I>& f_,
+		    const Image<I>& m_,
+		    const Neighborhood<N>& nbh_)
+	{
+	  trace::entering("mln::morpho::tree::impl::hqueue");
+	  const I& f = exact(f_);
+	  const I& m = exact(m_);
+	  const N& nbh = exact(nbh_);
+
+	  mln_precondition(f.is_valid());
+	  mln_precondition(m.is_valid());
+	  mln_precondition(nbh.is_valid());
+
+	  // Process
+	  impl::flooder<T, I, N> args(f, m, nbh);
+
+	  // Reserve
+	  util::ctree::ctree<I> tree;
+	  tree.reserve(f, args.nnode);
+
+	  // Set values
+	  {
+	    mln_piter(I) p(f.domain());
+	    for_all(p)
+	    {
+	      unsigned idx = args.map(p);
+	      unsigned loc = args.nnode - args.location[idx] - 1;
+	      tree.node_at_(p) = loc;
+	    }
+
+	    for (int idx = 0; idx < args.nnode; ++idx)
+	    {
+	      unsigned loc = args.nnode - args.location[idx] - 1;
+
+	      tree.parent_at_(loc) = args.nnode - args.location[args.parent[idx]] - 1;
+	      tree.f_at_(loc) = args.values[idx];
+	      tree.length_at_(loc) = args.area[idx];
+	    }
+	  }
+
+	  trace::exiting("mln::morpho::tree::impl::hqueue");
 	  return tree;
 	}
 
-      }  // end of namespace mln::morpho::tree::impl
+      } // end of namespace mln::morpho::tree::impl
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
