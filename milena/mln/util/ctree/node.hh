@@ -130,6 +130,12 @@ namespace mln
       bool
       operator!= (const node<T>& n1, const node<T>& n2);
 
+      /// Test if the node \p n1 is a descendant of \p n2
+      ///
+      template <typename T>
+      bool
+      operator< (const node<T>& n1, const node<T>& n2);
+
     } // end of namespace mln::util::ctree
 
   } // end of namespace mln::util
@@ -271,6 +277,14 @@ namespace mln
       operator!= (const node<T>& n1, const node<T>& n2)
       {
 	return n1.index() != n2.index();
+      }
+
+      template <typename T>
+      inline
+      bool
+      operator< (const node<T>& n1, const node<T>& n2)
+      {
+	return n1.index() > n2.index();
       }
 
     } // end of namespace mln::util::ctree

@@ -50,6 +50,7 @@ namespace mln
   template <typename G, typename F> class p_vertices;
   template <typename P, typename V, typename G> class vertex_image;
   template <typename P, typename V, typename G> class edge_image;
+  template <typename T, typename V> class attribute_image;
   template <typename I> class labeled_image;
   namespace pw { template <typename F, typename S> class image; }
 
@@ -213,6 +214,13 @@ namespace mln
 			V >
       {
 	typedef mln_ch_value(I,V) ret;
+      };
+
+      // Attribute image.
+      template <typename T, typename V1, typename V2>
+      struct ch_value_< attribute_image< tag::tree_<T>, tag::value_<V1> >, V2 >
+      {
+	typedef attribute_image<T, V2> ret;
       };
 
 
