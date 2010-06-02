@@ -48,7 +48,14 @@
   std::cout << "End   task: " << task__.str() << " in " << (t1-t0).seconds() << std::endl; \
   }
 
-
+#ifdef TRACE
+# include <tbb/compat/thread>
+# define TRACE_START(TASK)	BENCH_START(TASK)
+# define TRACE_END()		BENCH_END()
+#else
+# define TRACE_START(TASK)	;
+# define TRACE_END()		;
+#endif
 
 
 namespace mln
@@ -248,7 +255,7 @@ ll_union_find<I, N>::operator() (const tbb::blocked_range<int>& r)
       subdomain.pmax()[0] = r.end() - 1;
 
       this->build(subdomain);
-      std::cout << "Warning: Not parallel merge. " << std::endl;
+      //std::cout << "Warning: Not parallel merge. " << std::endl;
       this->merge(subdomain);
       this->domain.pmax() = subdomain.pmax();
     }
@@ -259,7 +266,7 @@ template <typename I, typename N>
 void
 ll_union_find<I, N>::build(const box2d& subdomain)
 {
-  BENCH_START("Build: " << subdomain)
+  TRACE_START("Build: " << subdomain << " T: " << std::this_thread::get_id())
 
   mln_precondition(subdomain.is_valid());
   const unsigned n_values = unsigned(mln_max(T)) + 1;
@@ -307,7 +314,7 @@ ll_union_find<I, N>::build(const box2d& subdomain)
 	  zpar.element(p) = zpar.element(zpar.element(p));
 	}
     }
-  BENCH_END()
+  TRACE_END()
 }
 
 
@@ -318,7 +325,7 @@ ll_union_find<I, N>::merge(const box2d& d2)
   const int stride = f.delta_index(dpoint2d(1, 0));
   box2d& d1 = this->domain;
 
-  BENCH_START("Merge: " << d1 << "&" << d2)
+  TRACE_START("Merge: " << d1 << "&" << d2 << " T: " << std::this_thread::get_id())
 
   // Split along x axis
   assert(d1.pmin()[1] == d2.pmin()[1]);
@@ -335,7 +342,7 @@ ll_union_find<I, N>::merge(const box2d& d2)
       ++x2;
     }
 
-  BENCH_END()
+  TRACE_END()
 }
 
 /// Merge two trees.

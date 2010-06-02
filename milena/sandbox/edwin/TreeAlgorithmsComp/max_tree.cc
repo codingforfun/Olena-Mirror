@@ -1,29 +1,21 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_u12.hh>
+#include <mln/value/int_u16.hh>
+
+#include <mln/io/pgm/load.hh>
 
 #include <mln/data/sort_offsets.hh>
 #include <mln/extension/adjust.hh>
 #include <mln/extension/fill.hh>
-#include <mln/debug/println.hh>
-#include <mln/util/timer.hh>
 
-static mln::util::timer tm;
-static const int ITERATION = 4;
+#include "bench.hh"
 
-
-#define START_BENCH()				\
-  tm.restart();					\
-  for (int i = 0; i < ITERATION; ++i) {
-
-#define END_BENCH()						\
-  }								\
-    std::cout << ((float)(tm.stop() * 1000.0) / ITERATION) << std::endl;
-
+#ifndef Q
+# define Q int_u8
+#endif
 
 namespace mln
 {
@@ -73,7 +65,9 @@ namespace mln
   radix_decreasing_sort(const I& f, util::array< util::array<unsigned> >& s)
   {
     typedef mln_value(I) T;
-    const unsigned n = unsigned(mln_max(T)) + 1;
+    const unsigned n = mln_card(T);
+    // std::cout << "Sort 0" << std::endl;
+
     s.resize(n);
 
     // h
@@ -82,12 +76,19 @@ namespace mln
     for_all(pxl)
       ++h[pxl.val()];
 
+    // std::cout << "Sort 0" << std::endl;
+
     for (unsigned v = 0; v < n; ++v)
       s[v].reserve(h[v]);
+
+    // std::cout << "Sort 0" << std::endl;
+
 
     // computing output data
     for_all(pxl)
       s[pxl.val()].append(pxl.offset());
+
+    // std::cout << "Sort 0" << std::endl;
   }
 
 
@@ -99,7 +100,7 @@ namespace mln
 		     bool run_tree_canonization        = true)
   {
     typedef mln_value(I) T;
-    const unsigned n_values = unsigned(mln_max(T)) + 1;
+    const unsigned n_values = mln_card(T);
 
     extension::adjust(f, nbh);
     extension::fill(f, mln_max(T));
@@ -199,7 +200,7 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm nBench" << std::endl;
   std::cerr << "  max-tree with full optimizations" << std::endl;
   std::abort();
 }
@@ -208,25 +209,25 @@ void usage(char* argv[])
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2)
+  if (argc != 3)
     usage(argv);
 
   using namespace mln;
+  using value::int_u8;
+  using value::int_u12;
+  using value::int_u16;
+  typedef Q V;
 
   neighb2d nbh = c4();
-
-  image2d<value::int_u8> f;
+  image2d<V> f;
   io::pgm::load(f, argv[1]);
 
   // go go go
   image2d<unsigned> parent = compute_max_tree(f, nbh);
-
-  tm.start();
-
-  START_BENCH();
-  compute_max_tree(f, nbh);
-  END_BENCH();
-
-  //  debug::println(parent);
   std::cout << "nnodes = " << nnodes(f, parent) << std::endl;
+
+  int nb_bench = atoi(argv[2]);
+  START_BENCH(nb_bench);
+  parent = compute_max_tree(f, nbh);
+  END_BENCH("union find: ");
 }

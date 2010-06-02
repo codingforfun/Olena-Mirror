@@ -1,3 +1,20 @@
+2010-06-02  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	* edwin/TreeAlgorithmsComp/Makefile: New.
+	* edwin/TreeAlgorithmsComp/bench.hh,
+	* edwin/TreeAlgorithmsComp/nnodes.hh: Shared headers.
+
+	* edwin/TreeAlgorithmsComp/parallel_union_find.hh,
+	* edwin/TreeAlgorithmsComp/salembier.hh,
+	* edwin/TreeAlgorithmsComp/max_tree.cc,
+	* edwin/TreeAlgorithmsComp/max_tree_with_rank.cc,
+	* edwin/TreeAlgorithmsComp/salembier_.cc,
+	* edwin/TreeAlgorithmsComp/tbb_union_find_8.cc:
+	Routines to build components trees (Minor updates).
+
+	* edwin/TreeAlgorithmsComp/compute_histo_.cc:
+	Tool to output the histogram of an image whatever quantized.
+
 2010-05-04  edwin carlinet  <carlinet@lrde.epita.fr>
 
 	Comparison of tree build algorithms.
