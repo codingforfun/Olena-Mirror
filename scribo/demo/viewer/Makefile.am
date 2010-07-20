@@ -21,12 +21,9 @@ viewer_SOURCES = $(BUILT_SOURCES)		\
 		 image_widget.cc		\
 		 xml_widget.cc			\
 		 key_widget.cc			\
-		 property_widget.cc		\
 		 browser_widget.cc		\
 		 image_scene.cc			\
 		 image_view.cc			\
-		 dommodel.cc			\
-		 domitem.cc			\
 		 image_region.cc		\
 		 help_dialog.cc			\
 		 step_widget.cc
@@ -40,12 +37,9 @@ BUILT_SOURCES = viewer.moc.cc			\
 		image_widget.moc.cc		\
 		xml_widget.moc.cc		\
 		key_widget.moc.cc		\
-		property_widget.moc.cc		\
 		browser_widget.moc.cc		\
 		image_scene.moc.cc		\
 		image_view.moc.cc		\
-		dommodel.moc.cc			\
-		domitem.moc.cc			\
 		image_region.moc.cc		\
 		help_dialog.moc.cc		\
 		step_widget.moc.cc
@@ -55,12 +49,9 @@ include_HEADERS = viewer.hh			\
 		  image_widget.hh		\
 		  xml_widget.hh			\
 		  key_widget.hh			\
-		  property_widget.hh		\
 		  browser_widget.hh		\
 		  image_scene.hh		\
 		  image_view.hh			\
-		  dommodel.hh			\
-		  domitem.hh			\
 		  image_region.hh		\
 		  image_region.hxx		\
 		  common.hh			\
