@@ -1,4 +1,11 @@
-2010-08-05  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr@>
+2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
+
+	Delete two build files.
+
+	* arthur/xml_transform/_build/common.o,
+	* arthur/xml_transform/_build/image_crop.o: Delete.
+
+2010-08-05  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
 
 	Output change in xml_tranform.
 
