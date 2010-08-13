@@ -1,0 +1,222 @@
+* Fix dispatch in morpho::closing_algebraic with morpho/attribute/*.
+  -> tests/morpho/closing_volume do not compile
+
+* Cleanup icp.hh
+  -> remove debug?
+
+* Improve closest point functor in icp.hh
+  -> We want it to handle the case when a given point is not in the closest
+     point image domain.
+
+* Fix pw::value(slice(ima3d, 0)) op pw::cst.
+  -> do not compile.
+
+* Fix segfault in the closest point functor in icp.hh when compiled with -O1
+  -> If no optimization flag is set during compilation, whether NDEBUG is set
+  or not, the code just works.
+
+* Add missing tests for mln/fun/*
+
+* Wrap extract/red,green,blue into a more generic routine
+  -> ex: data::fill(thru(red, ima), 0);
+
+* Implement a subgraph and a regular graph
+
+* Add win::diamond
+
+* Write a lemmings canvas with a conditional stop.
+
+* Fix gray level value types.
+
+* Fix Float value types.
+
+* Cleanup debug::draw_graph. 
+
+* Rename Image::pset to Image::domain_t
+
+* Check guards in println.spe.hh and level/median.hh
+
+* Make the graph image types shorter
+  -> Do we want to add a specific image type for graph images or do we want to
+     add new typedefs?
+
+* Add debugging levels in trace.
+
+* Add operator '/'
+  -> ima / box
+
+* Avoid using pw::cst with < and > operators.
+
+* Make Olena compile with gcc 2.95
+  -> Ambiguities at compile time.
+
+* ima | pw::cst(0) instead of ima | (pw::value(ima) == 0)
+
+* Automatic conversions from array<T> to fun::array<U> with U!=T
+
+* Make labeling::compute robust if label 0 is missing.
+  -> Currently, it crashes. (cf. mail theo).
+
+* Make pw::value(ima) op literal::* work.
+
+* Check if l2l::relabel is useful.
+
+
+------------------------
+
+* Add for_all_components(i, array).
+  => Or special array type
+
+* data::fill(util::array<>, value);
+
+* Make graph image type shorter.
+
+* Function associating edges to a pair of sites from a graph image.
+  => Use it by default while constructing a p_edges.
+
+* Function associating a vertex to an edge from a label image.
+  => Use it by default while constructing a p_vertices.
+
+* Routine returning an array mapping vertices and their component representative.
+  (see demat.hh, make_relabel_fun_t)
+
+* Routine Returning the number of vertices per graph component.
+  (see demat.hh, comp_size_t)
+
+* lbl | (attribute::card > 10)
+  => would keep only the components having their attribute card greater than 10.
+  * Or just a routine: keep_inplace(lbl, nlabels, attribute::card > 10);
+
+    template <typename R>
+    struct remove_small_comps
+      : Function_l2b< remove_small_comps<R> >
+    {
+      remove_small_comps(const util::array<R>& nsitecomp)
+	: nsitecomp_(nsitecomp)
+      {
+      }
+
+      /// Return false if the components is smaller than a given size.
+      bool operator()(const label_16& l) const
+      {
+	return nsitecomp_[l] >= settings.min_comp_size;
+      }
+
+      const util::array<R>& nsitecomp_;
+    };
+
+    // Remove components which are too small
+    typedef util::array<accu_count_res_t> nsitecomp_t;
+    nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
+    remove_small_comps<accu_count_res_t> fl2b(nsitecomp);
+    labeling::relabel_inplace(lbl, nlabels, fl2b);
+
+
+* data::fill(ima | array<box>, false);
+  => instead of:
+
+      for_all_components(i, boxes)
+	data::fill(ima | boxes[i], false);
+
+* draw::boxes
+
+* debug::filename(input_file_name, name);
+  => format the debug output file name correctly.
+  => input_file_name _ id _ name
+
+* image2d tmp = extend(ima, 1); compiles. Do we want that?
+  => may be confusing since tmp do not have the extension!
+
+
+
+--------
+
+
+* Boule N-d.
+
+* Decouper mln/core/image en sous repertoire? / Distinguer morpher sur site,
+  morpher sur valeur...?
+
+
+
+* Add dispatch to make::graph and make::region_adjacency_graph
+
+* Add an adjacency_matrix class and use it in make::*graph.
+
+* Allow graph dump.
+
+* Add specialization for image<bool>
+
+
+
+//////// FROM SCRIBO
+
+* Add for_all_components(i, array).
+  => Or special array type
+
+* data::fill(util::array<>, value);
+
+* Make graph image type shorter.
+
+* Function associating edges to a pair of sites from a graph image.
+  => Use it by default while constructing a p_edges.
+
+* Function associating a vertex to an edge from a label image.
+  => Use it by default while constructing a p_vertices.
+
+* Routine returning an array mapping vertices and their component representative.
+  (see demat.hh, make_relabel_fun_t)
+
+* Routine Returning the number of vertices per graph component.
+  (see demat.hh, comp_size_t)
+
+* lbl | (attribute::card > 10)
+  => would keep only the components having their attribute card greater than 10.
+  * Or just a routine: keep_inplace(lbl, nlabels, attribute::card > 10);
+
+    template <typename R>
+    struct remove_small_comps
+      : Function_l2b< remove_small_comps<R> >
+    {
+      remove_small_comps(const util::array<R>& nsitecomp)
+	: nsitecomp_(nsitecomp)
+      {
+      }
+
+      /// Return false if the components is smaller than a given size.
+      bool operator()(const label_16& l) const
+      {
+	return nsitecomp_[l] >= settings.min_comp_size;
+      }
+
+      const util::array<R>& nsitecomp_;
+    };
+
+    // Remove components which are too small
+    typedef util::array<accu_count_res_t> nsitecomp_t;
+    nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
+    remove_small_comps<accu_count_res_t> fl2b(nsitecomp);
+    labeling::relabel_inplace(lbl, nlabels, fl2b);
+
+
+* data::fill(ima | array<box>, false);
+  => instead of:
+
+      for_all_components(i, boxes)
+	data::fill(ima | boxes[i], false);
+
+* draw::boxes
+
+* debug::filename(input_file_name, name);
+  => format the debug output file name correctly.
+  => input_file_name _ id _ name
+
+* image2d tmp = extend(ima, 1); compiles. Do we want that?
+  => may be confusing since tmp do not have the extension!
+
+
+
+
+
+
+
