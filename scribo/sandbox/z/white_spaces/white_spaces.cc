@@ -470,7 +470,8 @@ int main(int argc, char *argv[])
     // Right
     mln::single_right_dmax_ratio_aligned_functor<L>
       functor(input_clo, components, dmax, min_angle, max_angle, anchor::Top);
-    top_right = primitive::link::impl::compute_fastest(functor, anchor::Top);
+//    top_right = primitive::link::impl::compute_fastest(functor, anchor::Top);
+    top_right = primitive::link::compute(functor, anchor::Top);
 
     t.stop();
 
