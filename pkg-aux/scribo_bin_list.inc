@@ -1,0 +1,13 @@
+f 755 root sys /tmp/oln/bin/scribo-cli ./scribo_inst.tmp//tmp/oln/bin/scribo-cli
+f 755 root sys /tmp/oln/bin/scribo-review ./scribo_inst.tmp//tmp/oln/bin/scribo-review
+f 755 root sys /tmp/oln/bin/scribo-viewer ./scribo_inst.tmp//tmp/oln/bin/scribo-viewer
+d 755 root sys /tmp/oln/libexec/scribo -
+f 755 root sys /tmp/oln/libexec/scribo/sauvola_ms_split ./scribo_inst.tmp//tmp/oln/libexec/scribo/sauvola_ms_split
+f 755 root sys /tmp/oln/libexec/scribo/text_in_doc_preprocess ./scribo_inst.tmp//tmp/oln/libexec/scribo/text_in_doc_preprocess
+f 755 root sys /tmp/oln/libexec/scribo/sauvola ./scribo_inst.tmp//tmp/oln/libexec/scribo/sauvola
+f 755 root sys /tmp/oln/libexec/scribo/text_recognition_in_picture ./scribo_inst.tmp//tmp/oln/libexec/scribo/text_recognition_in_picture
+f 755 root sys /tmp/oln/libexec/scribo/pbm_text_in_doc ./scribo_inst.tmp//tmp/oln/libexec/scribo/pbm_text_in_doc
+f 755 root sys /tmp/oln/libexec/scribo/content_in_doc ./scribo_inst.tmp//tmp/oln/libexec/scribo/content_in_doc
+f 755 root sys /tmp/oln/libexec/scribo/sauvola_ms ./scribo_inst.tmp//tmp/oln/libexec/scribo/sauvola_ms
+f 755 root sys /tmp/oln/libexec/scribo/sauvola_ms_fg ./scribo_inst.tmp//tmp/oln/libexec/scribo/sauvola_ms_fg
+f 755 root sys /tmp/oln/libexec/scribo/text_in_picture ./scribo_inst.tmp//tmp/oln/libexec/scribo/text_in_picture

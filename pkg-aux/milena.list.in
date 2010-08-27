@@ -1,0 +1,42 @@
+%product Generic C++ Image Processing Library
+%copyright 2010 by LRDE, All Rights Reserved.
+%vendor LRDE/EPITA
+%license @abs_top_srcdir@/COPYING
+%readme @abs_top_srcdir@/README
+%version 1.0a 100
+%description Generic C++ Image processing library
+
+%requires milena-dev
+%requires milena-bin
+%requires milena-doc
+
+# Executables
+%system all
+
+
+
+# Development package
+# -------------------
+
+%subpackage dev
+%description Generic C++ Image Processing Library
+
+%include @abs_top_srcdir@/pkg-aux/milena_include_list.inc
+
+
+# Development package
+# -------------------
+
+%subpackage bin
+%description Image Processing Tools
+
+%include @abs_top_srcdir@/pkg-aux/milena_bin_list.inc
+
+
+# Documentation package
+# ---------------------
+
+%subpackage doc
+%description Documentation of Milena image processing library
+
+%include @abs_top_srcdir@/pkg-aux/milena_doc_list.inc

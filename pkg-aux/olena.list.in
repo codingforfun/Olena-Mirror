@@ -1,0 +1,14 @@
+%product Generic C++ image processing platform.
+%copyright 2010 by LRDE, All Rights Reserved.
+%vendor LRDE/EPITA
+%license ${srcdir}/COPYING
+%readme ${srcdir}/README
+%version 1.0a 100
+
+%requires milena
+%requires scribo
+
+
+# Executables
+%system all
+

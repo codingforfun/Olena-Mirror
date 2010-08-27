@@ -311,6 +311,10 @@ AC_ARG_ENABLE([scribo],
                               [enable Scribo])])
 AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 
+# Ask for the creation of pkg-aux/scribo.list, used to build rpm and
+# deb packages.
+AC_CONFIG_FILES([pkg-aux/scribo.list])
+
 AC_CONFIG_FILES([
   scribo/Makefile
     scribo/demo/Makefile
@@ -371,6 +375,10 @@ AC_CONFIG_HEADERS([config.h])
 # Ask for the creation of a milena/doc/tool/data.hh, used to access to
 # data (images) from the documentation.
 AC_CONFIG_FILES([milena/doc/tools/data.hh])
+
+# Ask for the creation of pkg-aux/milena.list, used to build rpm and
+# deb packages.
+AC_CONFIG_FILES([pkg-aux/milena.list])
 
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([

@@ -1,0 +1,35 @@
+%product C++ Document Analysis toolkit
+%copyright 2010 by LRDE, All Rights Reserved.
+%vendor LRDE/EPITA
+%license @abs_top_srcdir@/COPYING
+%readme @abs_top_srcdir@/scribo/README
+%version 1.0 100
+%description C++ Document Analysis toolkit
+
+%requires milena-dev
+%requires scribo-dev
+%requires scribo-bin
+
+# Executables
+%system all
+
+
+
+# Development package
+# -------------------
+
+%subpackage dev
+%description C++ Document Analysis Library
+
+%requires milena-dev
+
+%include @abs_top_srcdir@/pkg-aux/scribo_include_list.inc
+
+
+# Development package
+# -------------------
+
+%subpackage bin
+%description Document Analysis command line tools (CLI)
+
+%include @abs_top_srcdir@/pkg-aux/scribo_bin_list.inc
