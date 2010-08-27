@@ -110,3 +110,54 @@ EXTRA_DIST +=					\
   tests/img/test_rgb8.tif			\
   tests/img/test_bw.tif				\
   tests/img/test_gl.tif
+
+
+
+# Packaging
+#----------
+
+tmp_inst_dir = milena_inst.tmp
+tmp_inst_path = $(abs_builddir)/$(tmp_inst_dir)
+
+regen-inst:
+	rm -rf $(tmp_inst_path) 					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& mkepmlist --prefix $(bindir) -g sys -u root			\
+		$(builddir)/$(tmp_inst_dir)/$(bindir) 			\
+			> $(top_srcdir)/pkg-aux/milena_bin_list.inc 	\
+	&& mkepmlist --prefix $(datarootdir)/olena -g sys -u root	\
+	 	$(builddir)/$(tmp_inst_dir)/$(datarootdir)/olena 	\
+			>> $(top_srcdir)/pkg-aux/milena_bin_list.inc 	\
+	&& mkepmlist --prefix $(datarootdir)/doc -g sys -u root 	\
+		$(builddir)/$(tmp_inst_dir)/$(datarootdir)/doc 		\
+			> $(top_srcdir)/pkg-aux/milena_doc_list.inc	\
+	&& mkepmlist --prefix $(includedir) -g sys -u root 		\
+		$(builddir)/$(tmp_inst_dir)/$(includedir) 		\
+			> $(top_srcdir)/pkg-aux/milena_include_list.inc \
+	&& rm -rf $(tmp_inst_path)
+
+
+deb:
+	rm -rf $(tmp_inst_path) 					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f deb -n --output-dir $(top_builddir) milena 	\
+		$(top_builddir)/pkg-aux/milena.list 			\
+	&& rm -rf $(tmp_inst_path)
+
+
+rpm:
+	rm -rf $(tmp_inst_path) 					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f rpm -n --output-dir $(top_builddir) milena 	\
+		$(top_builddir)/pkg-aux/milena.list 			\
+	&& rm -rf $(tmp_inst_path)
+
+pkg:
+	rm -rf $(tmp_inst_path) 					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f rpm -n --output-dir $(top_builddir) milena 	\
+		$(top_builddir)/pkg-aux/milena.list 			\
+	&& epm -v -v -f deb -n --output-dir $(top_builddir) milena 	\
+		$(top_builddir)/pkg-aux/milena.list 			\
+	&& rm -rf $(tmp_inst_path)
+
