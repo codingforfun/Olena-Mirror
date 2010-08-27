@@ -1,3 +1,8 @@
+2010-08-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* Makefile.am: Add new rules to build rpm and deb packages for
+	Scribo.
+
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/primitive/extract/separators_nonvisible.hh: Fix warnings.

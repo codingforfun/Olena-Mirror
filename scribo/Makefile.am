@@ -41,3 +41,56 @@ $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	       scribo headers.mk nodist-headers
 
 include $(srcdir)/headers.mk
+
+
+
+
+# Packaging
+#----------
+
+tmp_inst_dir = scribo_inst.tmp
+tmp_inst_path = $(abs_builddir)/$(tmp_inst_dir)
+
+regen-inst:
+	rm -rf $(tmp_inst_path) 					\
+	&& mkdir $(tmp_inst_path)					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& mkepmlist --prefix $(bindir) -g sys -u root 			\
+		$(builddir)/$(tmp_inst_dir)/$(bindir) 			\
+			> $(top_srcdir)/pkg-aux/scribo_bin_list.inc 	\
+	&& mkepmlist --prefix $(libexecdir) -g sys -u root 		\
+		$(builddir)/$(tmp_inst_dir)/$(libexecdir) 		\
+			>> $(top_srcdir)/pkg-aux/scribo_bin_list.inc	\
+	&& mkepmlist --prefix $(includedir) -g sys -u root 		\
+		$(builddir)/$(tmp_inst_dir)/$(includedir) 		\
+			> $(top_srcdir)/pkg-aux/scribo_include_list.inc \
+	&& rm -rf $(tmp_inst_path)
+
+
+deb:
+	rm -rf $(tmp_inst_path) 					\
+	&& mkdir $(tmp_inst_path)					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f deb -n --output-dir $(top_builddir) scribo 	\
+		$(top_builddir)/pkg-aux/scribo.list 			\
+	&& rm -rf $(tmp_inst_path)
+
+
+rpm:
+	rm -rf $(tmp_inst_path) 					\
+	&& mkdir $(tmp_inst_path)					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f rpm -n --output-dir $(top_builddir) scribo 	\
+		$(top_builddir)/pkg-aux/scribo.list 			\
+	&& rm -rf $(tmp_inst_path)
+
+pkg:
+	rm -rf $(tmp_inst_path) 					\
+	&& mkdir $(tmp_inst_path)					\
+	&& $(MAKE) DESTDIR=$(tmp_inst_path) install			\
+	&& epm -v -v -f rpm -n --output-dir $(top_builddir) scribo 	\
+		$(top_builddir)/pkg-aux/scribo.list 			\
+	&& epm -v -v -f deb -n --output-dir $(top_builddir) scribo 	\
+		$(top_builddir)/pkg-aux/scribo.list 			\
+	&& rm -rf $(tmp_inst_path)
+
