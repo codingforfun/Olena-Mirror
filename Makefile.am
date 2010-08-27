@@ -136,3 +136,23 @@ snapshot:
 	&& $(MAKE) $(AM_MAKEFLAGS) dist 				\
 	&& mv -f $(srcdir)/configure.ac.old $(srcdir)/configure.ac
 #>>
+
+
+regen-inst:
+	cd milena && $(MAKE) regen-inst		\
+	&& cd scribo && $(MAKE) regen-inst
+
+deb:
+	cd milena && $(MAKE) deb		\
+	&& cd scribo && $(MAKE) deb
+
+rpm:
+	cd milena && $(MAKE) rpm		\
+	&& cd scribo && $(MAKE) rpm
+
+pkg:
+	cd $(abs_top_builddir)/milena		\
+	&& $(MAKE) pkg				\
+	&& cd $(abs_top_builddir)/scribo	\
+	&& $(MAKE) pkg				\
+	&& cd $(abs_top_builddir)

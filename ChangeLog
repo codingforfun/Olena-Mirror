@@ -1,5 +1,9 @@
 2010-08-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* Makefile.am: Add new rules to build rpm and deb packages.
+
+2010-08-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add package configuration files.
 
 	* configure.ac: Ask for the generation of some package
