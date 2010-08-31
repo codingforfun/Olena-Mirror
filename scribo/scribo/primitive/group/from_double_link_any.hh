@@ -98,16 +98,18 @@ namespace scribo
 	    else
 	      parent(pi) = pli;
 	  }
-
-	  pi = internal::find_root(parent, i);
-	  unsigned pri = internal::find_root(parent, right_link(i));
-
-	  if (pi != pri)
+	  else
 	  {
-	    if (pri < pi)
-	      parent(pri) = pi;
-	    else
-	      parent(pi) = pri;
+	    pi = internal::find_root(parent, i);
+	    unsigned pri = internal::find_root(parent, right_link(i));
+
+	    if (pi != pri)
+	    {
+	      if (pri < pi)
+		parent(pri) = pi;
+	      else
+		parent(pi) = pri;
+	    }
 	  }
 	}
 

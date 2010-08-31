@@ -59,8 +59,6 @@
 
 #include <scribo/primitive/group/from_double_link_any.hh>
 
-#include <scribo/primitive/group/from_single_link.hh>
-
 #include <scribo/filter/object_links_top_aligned.hh>
 #include <scribo/filter/object_groups_small.hh>
 #include <scribo/filter/object_links_bottom_aligned.hh>
@@ -410,6 +408,17 @@ int main(int argc, char *argv[])
   std::cout << "Image loaded - " << t_ << std::endl;
 
   gt.start();
+
+
+  // Remove horizontal lines.
+  t.restart();
+
+  image2d<bool> hlines = primitive::extract::lines_h_pattern(input, 50, 3);
+  input = primitive::remove::separators(input, hlines);
+
+  t_ = t;
+  std::cout << "Horizontal lines removed - " << t_ << std::endl;
+
 
   // Closing structural - Connect characters.
   t.restart();
@@ -832,12 +841,32 @@ int main(int argc, char *argv[])
       io::pbm::save(output, "separators_hom.pbm");
       io::pbm::save(separators, "separators_filtered.pbm");
     }
+
+    t.restart();
+    value::int_u16 ncomps;
+    component_set<L> comps = primitive::extract::components(output, c8(), ncomps);
+    image2d<value::rgb8> both;
+
+    both = data::convert(value::rgb8(), input);
+
+    // Needed since the rotated image origin is (0,0). Rotation does
+    // not preserve rotated coordinates.
+    dpoint2d dp(input.domain().pcenter() - input_clo.domain().pcenter());
+
+    for_all_comps(c, comps)
+    {
+      box2d b = geom::rotate(comps(c).bbox(), -90, input_clo.domain().pcenter());
+      mln::draw::line(both,
+		      b.pmin() + dp,
+		      b.pmax() + dp,
+		      literal::green);
+    }
+    t_ = t;
+    std::cout << "Output image - " << t_ << std::endl;
+    gt.stop();
+    t_ = gt;
+    std::cout << "Total time: " << t_ << std::endl;
+
+    io::ppm::save(both, argv[5]);
   }
-
-  t_ = t;
-  std::cout << "Separator image - " << t_ << std::endl;
-
-  gt.stop();
-  t_ = gt;
-  std::cout << "Total time: " << t_ << std::endl;
 }
