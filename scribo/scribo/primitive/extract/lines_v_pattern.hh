@@ -88,7 +88,7 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 0, win);
 
-	unsigned new_length = length / 2 + delta;
+	unsigned new_length = length + delta;
 	new_length += 1 - (new_length % 2); // Guaranty that new_length is odd.
 
 	mln_concrete(I)
