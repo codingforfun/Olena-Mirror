@@ -1,0 +1,149 @@
+
+
+les trucs chiants à gérer
+-------------------------
+
+Jordan en c4 :
+
+ x x x
+ x 1 x x
+ x x 2 x
+   x x x
+
+Jordan en c8 :
+   x
+ x 0 x
+   x
+
+En niveaux :
+
+ 0 0 0      0 0 0
+ 0 2 0  ou  0 1 0
+ 0 0 0      0 0 0
+
+ 1 0      2 0      3 0
+ 0 1  ou  0 2  ou  0 3  -> les lignes se croisent
+
+d'après Monasse en c4 :
+
+ 0 0 0 0 1
+ 0 2 2 2 0
+ 0 2 1 2 0
+   0 0 0 0   (et ? pb d'inclusion avec f <= 1 et f >= 1)
+
+
+
+des pistes
+----------
+
+première piste :
+
++--------+  +-----+   +-----+   +-------+ 
+|        |  |     |   |     |   |       | 
+|   0    |  | 0-2 |   | 1-3 |   |   3   | 
+|        |  |     |   |     |   |       | 
++--------+  +-----+   +-----+   +-------+ 
+
+avec la première idée de "seuillage" :
+
+         0   |  0-2  |  1-3  |   3
+
+<  2     x       x       x
+<= 2     x       x       x
+ = 2             x       x
+>= 2             x       x       x
+>  2             x       x       x
+
+ basée sur "il existe un entier dans l'intervalle tel quel"
+
+
+mais ça serait peut-être (?) mieux d'avoir :
+
+         0   |  0-2  |  1-3  |   3
+
+<  2     x
+<= 2     x       x       x
+ = 2             x       x
+>= 2             x       x       x
+>  2                             x
+
+au sens de "tous les entiers de l'intervalle vérifient"...
+
+pas forcément car on aboutira toujours à des résultats non-classiques
+!  en effet, on veut pouvoir faire passer plusieurs niveaux différents
+au même endroit ; on ne veut PAS multiplier les sites, c-a-d créer 
+autant de sites intermédiaires que de niveaux différents.
+
+exemple : entre 2 pixels adjacents tels que | 0 | 9 |, on ne veut pas
+insérer 8 sites et avoir | 0 | 1 | .. | 8 | 9 |  =>  les lignes 2 et
+7 devront passer sur le même site.  aussi, on aura  = 2  et  = 7 !
+
+
+
+cas ensembliste
+---------------
+
+on doit pouvoir définir des opérateurs ensemblistes cohérents
+
+en fait, la valuation des 0- et 1-faces doit fonctionner dans le cas
+binaire.  mieux, on doit pouvoir retrouver l'extension aux fonctions
+par décomposition / reconstruction.
+
+
+
+idées / remarques / to-do
+-------------------------
+
+l'interprétation des schémas à 2 inter-pixels devrait pouvoir se faire
+à l'aide de schémas à 3 inter-pixels, non ?
+
+on peut aussi raisonner en terme de 1, 1+, 1- ? 
+
+on peut avoir des sens différents pour les comparaisons strictes et
+larges, et/ou aussi pour l'égalité ; de plus, le cas d'un intervalle
+réduit à une valeur peut également être traité comme un cas à part...
+
+important : il faut trouver une interprétation topologique (en termes
+d'ouverts et de fermés) de ces solutions ?
+
+le cadre est un arbre auto-dual => on doit considérer les arbres (donc
+composantes donc trous) issus respectivement des coupes inférieures et
+supérieures + on doit pouvoir vérifier les inclusions !!!
+
+en particulier, Jordan doit s'expliquer grâce à du suivi de contours
+=> il faut pouvoir étiqueter les contours sans ambiguité et (!)
+réaliser un suivi topologique (de proche en proche)...
+
+
+
+à vérifier
+----------
+
++--------+  +-----+   +-----+   +-------+ 
+|        |  |     |   |     |   |       | 
+|   0    |  |  0  |   |  1  |   |   1   | 
+|        |  |     |   |     |   |       | 
++--------+  +-----+   +-----+   +-------+ 
+
++--------+  +-----+   +-----+   +-------+ 
+|        |  |     |   |     |   |       | 
+|   0    |  |  ?  |   |  ?  |   |   2   | 
+|        |  |     |   |     |   |       | 
++--------+  +-----+   +-----+   +-------+ 
+
++--------+  +-----+   +-----+   +-------+ 
+|        |  |     |   |     |   |       | 
+|   0    |  |  1  |   |  2  |   |   3   | 
+|        |  |     |   |     |   |       | 
++--------+  +-----+   +-----+   +-------+ 
+
+
+
+
+autre piste :
+
++--------+  +-----+   +-----+   +-----+   +-------+ 
+|        |  |     |   |     |   |     |   |       |
+|   0    |  |  0  |   | 1-4 |   |  5  |   |   5   |
+|        |  |     |   |     |   |     |   |       |
++--------+  +-----+   +-----+   +-----+   +-------+

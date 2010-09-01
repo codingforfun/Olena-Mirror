@@ -1,0 +1,15 @@
+	-*- outline -*-
+
+
+* to-do
+
+merge svg.2.k4_012.cc and k4_012.cc so that the code is
+correct and we have a nice log...
+
+
+* tracing and displaying
+
+** file  svg.2
+
+both 'deja_vu' and 'in_queue' are depicted in the 1st pass
+'ordering' (1st and 2nd pass) as an image
