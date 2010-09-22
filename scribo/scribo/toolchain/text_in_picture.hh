@@ -135,7 +135,7 @@ namespace scribo
 	  sauvola_min_w = 51u;
 
 	  // Group Filtering
-	  bbox_h_ratio = 1.60f;
+	  bbox_h_ratio = 1.75f;
 	  bbox_overlap = 0.80f;
 	  small_groups = 3;
 	  v_thickness = 8;
