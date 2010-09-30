@@ -48,20 +48,22 @@
 # else // !WALL_CLOCK
 
 #  include <tbb/tick_count.h>
+#  include <cmath>
 
-#  define START_BENCH(N_ITERATION)		\
-  {						\
+#  define START_BENCH(N_ITERATION)			\
+  {							\
+  const int n_iteration__ = N_ITERATION;		\
   tbb::tick_count t0__ = tbb::tick_count::now();	\
-  const int n_iteration__ = N_ITERATION;	\
-  for (int i__ = 0; i__ < n_iteration__; ++i__) {
+  for (int i__ = 0; i__ < n_iteration__; ++i__) {	\
 
-#  define END_BENCH(MSG)				\
-  }							\
-    tbb::tick_count t1__ = tbb::tick_count::now();	\
-    std::cout << MSG					\
-    << (t1__ - t0__).seconds() * 1000 / n_iteration__	\
-    << " ms." << std::endl;				\
-    }
+
+#  define END_BENCH(MSG)						\
+  };									\
+  tbb::tick_count t1__ = tbb::tick_count::now();			\
+  std::cout << MSG							\
+  << (t1__ - t0__).seconds() * 1000 / n_iteration__			\
+  << " ms ." << std::endl;						\
+  }
 
 # endif
 

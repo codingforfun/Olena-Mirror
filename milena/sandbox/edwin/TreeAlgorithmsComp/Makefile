@@ -15,6 +15,7 @@ LDFLAGS = $(if $(WALL_CLOCK), -ltbb)
 CC = g++
 
 tbb_CXXFLAGS = $(CXXFLAGS) -I $(TBB_INCLUDE_DIR) -DWALL_CLOCK
+#tbb_CXXFLAGS += -DTRACE # pour debuguer les threads
 tbb_LDFLAGS = -L $(TBB_LIB_DIR) -ltbb
 
 TARGETS =			\

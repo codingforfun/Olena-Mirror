@@ -1,4 +1,13 @@
+2010-09-30  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Minor fixes.
+
+	* edwin/TreeAlgorithmsComp/Makefile: Minor fixes.
+	* edwin/TreeAlgorithmsComp/bench.hh: Minor fixes.
+
 2010-06-02  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Minor fixes in component tree algorithms.
 
 	* edwin/TreeAlgorithmsComp/Makefile: New.
 	* edwin/TreeAlgorithmsComp/bench.hh,
