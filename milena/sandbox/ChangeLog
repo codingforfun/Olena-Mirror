@@ -1,5 +1,12 @@
 2010-09-30  edwin carlinet  <carlinet@lrde.epita.fr>
 
+	2-steps maxtree algorithm with Salembier topological sort and
+	union-find building.
+
+	* edwin/MaxTree/salembier_two_steps.cc: 2-steps MaxTree algorithm.
+
+2010-09-30  edwin carlinet  <carlinet@lrde.epita.fr>
+
 	Salembier algorithm working on edges.
 
 	* edwin/MaxTree/Makefile: New.
