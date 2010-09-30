@@ -1,5 +1,15 @@
 2010-09-30  edwin carlinet  <carlinet@lrde.epita.fr>
 
+	Salembier algorithm working on edges.
+
+	* edwin/MaxTree/Makefile: New.
+	* edwin/MaxTree/cplx2d.hh: Special edge connectivity.
+	* edwin/MaxTree/salembier_edge.cc,
+	* edwin/MaxTree/salembier_edge.hh: Boundary consideration of
+	salembier algorithm.
+
+2010-09-30  edwin carlinet  <carlinet@lrde.epita.fr>
+
 	Minor fixes.
 
 	* edwin/TreeAlgorithmsComp/Makefile: Minor fixes.
