@@ -249,21 +249,32 @@ namespace scribo
       timer_.restart();
       mln_ch_value(I,bool) input;
 
-      unsigned w = win;
-      if (!w)
-	w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
-      if (! w % 2)
-	++w;
-      w = std::min(w, conf.sauvola_min_w);
-      if (multi_scale_bin)
-      {
-	std::cout << "** Using sauvola_ms with w_1 = " << w << std::endl;
-	input = scribo::binarization::sauvola_ms(intensity_ima, w, conf.sauvola_s);
-      }
+
+
+      unsigned w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
+      if (win)
+	input = scribo::binarization::sauvola_ms_split(input_rgb, w,
+						       conf.sauvola_s, 1);
       else
       {
-	std::cout << "** Using sauvola with w_1 = " << w << std::endl;
-	input = scribo::binarization::sauvola(intensity_ima, w);
+
+	unsigned w = win;
+	if (!w)
+	  w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
+	if (! w % 2)
+	  ++w;
+	w = std::min(w, conf.sauvola_min_w);
+
+	if (multi_scale_bin)
+	{
+	  std::cout << "** Using sauvola_ms with w_1 = " << w << std::endl;
+	  input = scribo::binarization::sauvola_ms(intensity_ima, w, conf.sauvola_s);
+	}
+	else
+	{
+	  std::cout << "** Using sauvola with w_1 = " << w << std::endl;
+	  input = scribo::binarization::sauvola(intensity_ima, w);
+	}
       }
 
       if (debug)
