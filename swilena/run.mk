@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,7 +17,7 @@
 
 # A test/script wrapper.
 
-RUN = $(top_builddir)/swilena/run
-RUN_IN = $(top_srcdir)/swilena/run.in
+RUN = $(top_builddir)/run
+RUN_IN = $(top_srcdir)/run.in
 $(RUN): $(RUN_IN)
-	cd $(top_builddir)/swilena && $(MAKE) $(AM_MAKEFLAGS) run
+	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) run

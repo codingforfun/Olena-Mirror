@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,7 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = python
+
+# `configure' wrapper used in recursive configuration.
+EXTRA_DIST = configure.gnu
 
 # Meta-wrappers (templates), not generating a module, but factoring
 # common parts.
@@ -50,6 +56,9 @@ wrappers =					\
 						\
   dynamic_image2d.i
 
-EXTRA_DIST = $(meta_wrappers) $(wrappers)
+EXTRA_DIST += $(meta_wrappers) $(wrappers)
+
+# Images used in tests.
+EXTRA_DIST += img/lena.pgm
 
 check_SCRIPTS = run

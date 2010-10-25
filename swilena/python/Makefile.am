@@ -22,16 +22,17 @@
 ## FIXME: Factor as much as possible.  See how we handled this in TC.
 
 CLEANFILES =
-AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
-TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
-AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
-AM_SWIGFLAGS = -Wall -c++ -python -I$(top_srcdir)/milena
+MILENA_CPPFLAGS = @MILENA_CPPFLAGS@
+AM_CPPFLAGS = -I$(PYTHONINC) $(MILENA_CPPFLAGS)
+SWILENA_CXXFLAGS = @SWILENA_CXXFLAGS@
+AM_CXXFLAGS = $(SWILENA_CXXFLAGS)
+AM_SWIGFLAGS = -Wall -c++ -python $(MILENA_CPPFLAGS)
 ## We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
 
 ## Run Swig to create the C++ wrapper files, the Python interface
 ## files, and the dependency Makefile snippets.
-%-wrap.cc %.py: $(top_srcdir)/swilena/%.i
+%-wrap.cc %.py: $(top_srcdir)/%.i
 @AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
 @AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
 @AMDEP_TRUE@	else \
@@ -207,7 +208,7 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 ## Tests.  ##
 ## ------- ##
 
-include $(top_srcdir)/swilena/run.mk
+include $(top_srcdir)/run.mk
 
 ## FIXME: Do we really need to pass top_srcdir and top_builddir to run?
 TESTS_ENVIRONMENT = \

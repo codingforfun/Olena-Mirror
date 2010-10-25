@@ -1,0 +1,277 @@
+Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+Laboratory (LRDE)
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
+
+
+=======================
+Introduction to Swilena
+=======================
+
+Swilena is a part of Olena_, a generic and efficient platform
+dedicated to image processing.
+
+.. _Olena: http://olena.lrde.epita.fr
+
+Swilena provides bindings of the Milena C++ library (also a part of
+Olena) to other languages (currently Python).
+
+Swilena is distributed in two ways:
+
+   * as a component of the Olena package
+
+   * and a standalone package.
+
+If you obtained Swilena as an project embedded an Olena package, we
+advise you to read Olena's README, at the top-level directory of the
+package, and not to configure nor compile Swilena separately (i.e., do
+not use `swilena/configure', use the top-level `configure' instead
+and run `make' from the top-level directory).
+
+Otherwise, you are in the case of a standalone package, and you might
+want to read the rest of this file.
+
+
+==========================================
+Detailed Instructions (Standalone Package)
+==========================================
+
+-----------------
+Required Software
+-----------------
+
+Here is a non-exhaustive list of required software required to build
+Swilena successfully.
+
+   * to compile the user examples:
+
+        - a POSIX shell, like Bash
+
+        - a decent C++ compiler, like GNU C++
+
+        - a `make' utility, like GNU `make'
+
+        - the Simplified Wrapper and Interface Generator (SWIG_).
+
+        - Python_
+
+.. _SWIG: http://www.swig.org
+
+.. _Python: http://www.python.org
+
+
+If you are using a standalone version of Swilena, you also need a
+working Milena_ install (Milena is shipped with Olena).
+
+.. _Milena: http://olena.lrde.epita.fr
+
+
+-------------
+Configuration
+-------------
+
+In order to prepare the build process, you need to configure the source
+tree.
+
+   Assuming your Swilena distribution is uncompressed in directory
+`swilena-1.1', follow these steps:
+
+     % cd swilena-1.1
+     % mkdir _build
+     % cd _build
+     % ../configure
+
+   The build process can be altered by a number of options you can pass
+to the `configure' script.  The following sections describe them.
+
+
+Milena path
+===========
+
+Swilena requires the Milena library.  If Swilena's `configure' is
+unable to find your installation of Milena, or if you want to use a
+specific installation, you must help `configure' find it using the
+`--with-milena' flag.  For instance, if you have installed Milena in
+`$HOME/local', replace the call to `configure' from the previous
+section by this command:
+
+     % ../configure --with-milena=$HOME/local
+
+
+Installation Path
+=================
+
+By default, Swilena is installed in the standard "local" directory of
+your system.  This is usually `/usr/local' under Unix.
+
+   You can change this path with the following flag:
+
+      --prefix=<installation prefix>
+
+
+Compiler Selection and Compilation Flags
+========================================
+
+By default, `configure' will try to use the first C++ compiler it
+encounters on your system.  If `CXX' is not set, it will look, in order,
+for:
+
+   - the value of the `CXX' environment variable,
+
+   - the GNU C++ compiler (`g++'),
+
+   - the `c++' or `gpp' commands on your system,
+
+   - `aCC', the HP-UX standard C++ compiler,
+
+   - the `CC', `cxx', `cc++' or `cl' commands on your system,
+
+   - KAI's C++ compiler (`KCC'),
+
+   - `RCC', `xlC_r' or `xlC'.
+
+   You can override the detection system by passing your favorite
+compiler name to `configure', as follows:
+
+     % ../configure CXX=<your-favorite-C++-compiler>
+
+   As an alternative, you can also set the environment variable `CXX'.
+
+
+   For some compilers (GNU g++ and Intel's icpc to some extent) ,
+`configure' will use default CXXFLAGS.  You can override the default
+C++ flags by giving `configure' your selection of flags:
+
+     % ../configure CXXFLAGS="<your-favorite-flags>"
+
+
+--------
+Building
+--------
+
+Once your build directory is `configure'd, you can run
+
+     % make
+
+to build Swilena.
+
+
+   Additionally, you can build and run the test suite with:
+
+     % make check
+
+However, this process is time- and memory- consuming, and you probably
+do not need it except if you are developing/debugging Swilena.
+
+
+----------
+Installing
+----------
+
+To install Swilena on your system, run:
+
+      % make install
+
+from the build directory.
+
+   If not overridden with `--prefix', this will install:
+
+   * the Swilena Python Shell (`sps' script) in `/usr/local/bin',
+
+   * Python bindings in `/usr/local/lib/python2.x/site-packages/'.
+
+
+   You can later remove Swilena from your system by running
+
+      % make uninstall
+
+from the build directory (if you have kept it).  We recommend the use
+of GNU Stow (or any similar program) during the installation of Swilena,
+to make the uninstallation of Swilena easier.
+
+
+=====================
+Layout of the Tarball
+=====================
+
+The Swilena project directory layout is as follows:
+
+build-aux
+   Auxiliary tools used by the GNU Build System during ``configure``
+   and ``make`` stages.
+
+img
+   Some (2D) images, mostly used for test purpose.
+
+m4
+   Extra Autoconf macros.
+
+python
+   Some Python bindings for Milena.
+
+
+===================
+Supported Platforms
+===================
+
+Swilena has been tested on the following configurations:
+
+===========================  =============================================
+System                       Compiler
+===========================  =============================================
+GNU/Linux on IA-32           g++ (GNU GCC) 3.3, 4.1, 4.2 and 4.4
+GNU/Linux on IA-32           icpc (Intel C/C++ Compiler) 10.1 and 11.0
+GNU/Linux on AMD64/Intel 64  g++ (GNU GCC) 4.1
+Mac OS X (10.6) on IA-32     g++ (GNU GCC) 4.2.1
+===========================  =============================================
+
+
+See Also
+========
+
+There are other sources of interest in the distribution.
+
+- Headline news about the project can be found in the file ``NEWS`` at
+  the root of the source tree.
+
+
+License
+=======
+
+Swilena is released under the GNU General Public Licence.  See the file
+``COPYING`` (at the root of the source tree) for details.
+
+
+Contacts
+========
+
+The team can be reached by mail at olena@lrde.epita.fr.  The snail
+mail address follows.
+
+* Olena - LRDE
+
+  | Laboratoire de Recherche et Développement de l'EPITA (LRDE)
+  | 14-16 rue Voltaire
+  | FR-94276 Le Kremlin-Bicêtre CEDEX
+  | France
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:
