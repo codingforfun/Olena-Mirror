@@ -264,45 +264,9 @@ AC_CONFIG_SUBDIRS([external/trimesh])
 AC_ARG_ENABLE([swilena],
               [AS_HELP_STRING([--enable-swilena],
                               [build Swilena Python bindings])])
-AS_IF([test "x$enable_swilena" = xyes],
-      [# Ensure dynamic libraries are enabled.
-       if test "x$enable_shared" = xno; then
-         AC_MSG_ERROR([`--enable-swilena' was given, but dynamic libraries are
-disabled.  Try to invoke configure with `--enable-shared'.])
-       fi
-       # Check for SWIG.
-       AC_PROG_SWIG([1.3.35])
-       if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
-         AC_MSG_ERROR([SWIG 1.3.35 is required for Swilena])
-       fi
-       # Check for Python.
-       AM_PATH_PYTHON([2.4], [],
-                      [AC_MSG_ERROR([Python 2.4 is required for Swilena.])])
-       AS_VERSION_COMPARE([2.5], [$am_cv_python_version],
-         [AC_MSG_WARN([Python 2.6 and greater may not work with Swilena.])])
-       adl_CHECK_PYTHON
-       # Check for Python headers.
-       save_CPPFLAGS=$CPPFLAGS
-       CPPFLAGS="$CPPFLAGS -I$PYTHONINC"
-       AC_CHECK_HEADERS([Python.h], [],
-                        [AC_MSG_ERROR([`Python.h' is required for Swilena.
-Try adding `-I <Python include path>' to `CPPFLAGS'.])])
-       CPPFLAGS=$save_CPPFLAGS])
 AM_CONDITIONAL([ENABLE_SWILENA], [test "x$enable_swilena" = xyes])
+AC_CONFIG_SUBDIRS([swilena])
 
-AC_CONFIG_FILES([swilena/Makefile
-                 swilena/python/Makefile])
-
-AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
-
-AC_CONFIG_FILES(m4_do([swilena/python/sps],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps.in]),
-                [chmod +x swilena/python/sps])
-AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps-local.in]),
-                [chmod +x swilena/python/sps-local])
 
 dnl<<lrde
 ## -------- ##

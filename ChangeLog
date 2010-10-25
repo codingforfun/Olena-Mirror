@@ -1,3 +1,10 @@
+2010-10-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Swilena be in charge of its own configuration.
+
+	* configure.ac: Here.
+	* m4/pypath.m4, m4/swig.m4: Remove.
+
 2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove a superfluous invocation of AM_CONDITIONAL regarding Magick++.
