@@ -82,6 +82,7 @@
 #include <scribo/filter/object_groups_with_holes.hh>
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
+#include <scribo/filter/object_links_bbox_w_ratio.hh>
 #include <scribo/filter/object_links_bbox_overlap.hh>
 
 #include <scribo/filter/common/objects_photo.hh>
@@ -166,6 +167,7 @@ int main(int argc, char* argv[])
   typedef image2d<value::label_16> L;
   component_set<L>
     comps = toolchain::text_in_picture(input_rgb, bg_removal, multi_scale_bin,
+				       0,
 				       max_dim_size, lambda, out_base_dir);
 
 
@@ -174,6 +176,7 @@ int main(int argc, char* argv[])
     comps_neg = toolchain::text_in_picture(world::rgb::invert(input_rgb),
 					   bg_removal,
 					   multi_scale_bin,
+					   15,
 					   max_dim_size, lambda, out_base_dir);
 
 

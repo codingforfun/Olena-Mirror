@@ -103,6 +103,7 @@ namespace scribo
     component_set<mln_ch_value(I, value::label_16)>
     text_in_picture(const Image<I>& input_rgb_orig,
 		    bool bg_removal, bool multi_scale_bin,
+		    unsigned win = 0,
 		    unsigned max_dim_size = 0, unsigned lambda = 0,
 		    const char *debug_outdir = 0);
 
@@ -136,7 +137,7 @@ namespace scribo
 
 	  // Group Filtering
 	  bbox_h_ratio = 1.75f;
-	  bbox_overlap = 0.80f;
+	  bbox_overlap = 0.60f;
 	  small_groups = 3;
 	  v_thickness = 8;
 	  regroup_dmax = 30;
@@ -167,6 +168,7 @@ namespace scribo
     component_set<mln_ch_value(I, value::label_16)>
     text_in_picture(const Image<I>& input_rgb_orig_,
 		    bool bg_removal, bool multi_scale_bin,
+		    unsigned win = 0,
 		    unsigned max_dim_size = 0, unsigned lambda = 0,
 		    const char *debug_outdir = 0)
     {
@@ -246,7 +248,10 @@ namespace scribo
       // Binarize foreground to use it in the processing chain.
       timer_.restart();
       mln_ch_value(I,bool) input;
-      unsigned w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
+
+      unsigned w = win;
+      if (!w)
+	w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
       if (! w % 2)
 	++w;
       w = std::min(w, conf.sauvola_min_w);
@@ -347,6 +352,8 @@ namespace scribo
 	hratio_filtered_links = filter::object_links_bbox_h_ratio(merged_links,
 								  conf.bbox_h_ratio);
 
+      hratio_filtered_links =
+	filter::object_links_bbox_w_ratio(hratio_filtered_links, 3);
 
 
 
