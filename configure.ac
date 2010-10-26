@@ -247,7 +247,7 @@ AC_ARG_ENABLE([trimesh],
               [AS_HELP_STRING([--enable-trimesh],
                               [build the (bundled) trimesh2 library])])
 AM_CONDITIONAL([ENABLE_TRIMESH], [test "x$enable_trimesh" = xyes])
-AC_CONFIG_SUBDIRS([external/trimesh])
+AC_CONFIG_SUBDIRS([milena/external/trimesh])
 
 
 ## --------- ##
@@ -288,9 +288,9 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
-    external/Makefile
     milena/Makefile
       milena/doc/Makefile
+      milena/external/Makefile
       milena/mesh/Makefile
 ])
 

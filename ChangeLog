@@ -1,5 +1,16 @@
 2010-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move trimesh2 into Milena.
+
+	* external/trimesh/: Move...
+	* milena/external/trimesh/: ...here.
+	* configure.ac,
+	* milena/apps/mesh-segm-skel/Makefile.am:
+	Adjust paths.
+	* milena/Makefile.am (SUBDIRS): Add external.
+
+2010-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Scribo be in charge of its own configuration.
 
 	* configure.ac: Here.
