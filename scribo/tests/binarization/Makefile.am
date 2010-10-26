@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +17,7 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-include $(top_srcdir)/scribo/tests/tests.mk
+include $(top_srcdir)/tests/tests.mk
 
 check_PROGRAMS =				\
   global_threshold 				\

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/scribo/scribo.mk
+include $(top_srcdir)/scribo.mk
 
 bin_PROGRAMS = 				\
   denoise_bg 				\

@@ -15,11 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-AM_CPPFLAGS = 			\
-	-I$(top_srcdir)/scribo 	\
-	-I$(top_builddir)/scribo\
-	-I$(top_srcdir)/milena 	\
-	-I$(top_builddir)/milena
+MILENA_CPPFLAGS = @MILENA_CPPFLAGS@
+
+AM_CPPFLAGS =					\
+  -I$(top_srcdir)				\
+  -I$(top_builddir)				\
+  $(MILENA_CPPFLAGS)
 
 SCRIBO_TESTS_CXXFLAGS = @SCRIBO_TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(SCRIBO_TESTS_CXXFLAGS)

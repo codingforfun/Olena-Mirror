@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,6 @@
    (as well as additional burden in Makefiles, too.).  */
 
 /// \brief The absolute path to the img directory of Scribo.
-# define SCRIBO_IMG_DIR "@abs_top_srcdir@/scribo/tests/img"
+# define SCRIBO_IMG_DIR "@abs_top_srcdir@/tests/img"
 
 #endif // ! SCRIBO_TESTS_DATA_HH

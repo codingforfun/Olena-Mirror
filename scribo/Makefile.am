@@ -15,7 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = demo tests src
+ACLOCAL_AMFLAGS = -I m4
+
+SUBDIRS = build-aux demo tests src
+
+# `configure' wrapper used in recursive configuration.
+EXTRA_DIST = configure.gnu
 
 .PHONY: bin
 

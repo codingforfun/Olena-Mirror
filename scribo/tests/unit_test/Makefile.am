@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/scribo/tests/tests.mk
+include $(top_srcdir)/tests/tests.mk
 
 COND_TESTS = cond_tests_qt 			\
 	     cond_tests_qt_tesseract_tiff	\
