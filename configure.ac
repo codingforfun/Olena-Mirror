@@ -223,13 +223,6 @@ if test x$oln_have_qt = xyes; then
 fi
 AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_expected_qt_version" = xyes])
 
-# ----------- #
-# Tesseract.  #
-# ----------- #
-
-OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
-             [tesseract], [TESSERACT])
-
 # -------------- #
 # TIFF library.  #
 # -------------- #
@@ -277,53 +270,9 @@ AC_ARG_ENABLE([scribo],
               [AS_HELP_STRING([--enable-scribo],
                               [enable Scribo])])
 AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
-
-AC_CONFIG_FILES([
-  scribo/Makefile
-    scribo/demo/Makefile
-      scribo/demo/review/Makefile
-      scribo/demo/viewer/Makefile
-    scribo/src/Makefile
-      scribo/src/binarization/Makefile
-      scribo/src/contest/Makefile
-      scribo/src/contest/hdibco-2010/Makefile
-      scribo/src/debug/Makefile
-      scribo/src/filter/Makefile
-      scribo/src/misc/Makefile
-      scribo/src/postprocessing/Makefile
-      scribo/src/preprocessing/Makefile
-      scribo/src/primitive/Makefile
-        scribo/src/primitive/extract/Makefile
-        scribo/src/primitive/find/Makefile
-        scribo/src/primitive/group/Makefile
-      scribo/src/table/Makefile
-      scribo/src/text/Makefile
-])
-
-AC_CONFIG_FILES([scribo/tests/data.hh])
-
-AC_CONFIG_FILES([
-  scribo/tests/Makefile
-    scribo/tests/binarization/Makefile
-    scribo/tests/core/Makefile
-    scribo/tests/filter/Makefile
-    scribo/tests/preprocessing/Makefile
-    scribo/tests/table/Makefile
-    scribo/tests/text/Makefile
-    scribo/tests/toolchain/Makefile
-    scribo/tests/toolchain/nepomuk/Makefile
-    scribo/tests/unit_test/Makefile
-])
-
-# Flags for Scribo
-AC_ARG_VAR([SCRIBO_CXXFLAGS], [C++ compiler flags for Scribo binaries])
-AC_ARG_VAR([SCRIBO_TESTS_CXXFLAGS], [C++ compiler flags for Scribo tests])
-if test "$GXX" = yes || test "$ICPC" = yes; then
-  test -z "$SCRIBO_CXXFLAGS" && SCRIBO_CXXFLAGS="-DNDEBUG -O2"
-  # FIXME: We might want to use -ggdb when g++ is used.
-  test -z "$SCRIBO_TESTS_CXXFLAGS" && SCRIBO_TESTS_CXXFLAGS="-g -O0"
-fi
+AC_CONFIG_SUBDIRS([scribo])
 dnl>>
+
 
 ## --------------- ##
 ## Configuration.  ##
@@ -643,7 +592,6 @@ Options used to compile and link:
   BOOST_ROOT      = $BOOST_ROOT
   MAGICKXX_CFLAGS = $MAGICKXX_CPPFLAGS
   MAGICKXX_LIBS   = $MAGICKXX_LDFLAGS
-  SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
   APPS_CXXFLAGS   = $APPS_CXXFLAGS
   TOOLS_CXXFLAGS  = $TOOLS_CXXFLAGS
 
