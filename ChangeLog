@@ -1,5 +1,15 @@
 2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add advice about the release process.
+
+	* HACKING (Required Software): Add LaTeX2HTML.
+	Aesthetic changes.
+	(Useful Tools): Rename as...
+	(Useful Developer Tools): ...this.
+	(Releasing): New section.
+
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Milena be in charge of its own configuration and distribution.
 
 	* configure.ac: Remove parts now handled by Milena's configure.ac.
