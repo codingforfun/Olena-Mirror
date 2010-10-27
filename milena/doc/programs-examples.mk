@@ -86,9 +86,9 @@ PROGRAMS_examples +=				\
   tuto4_site_set_create
 
 # FIXME: Careful, this will only work if this file is included by
-# `milena/doc/Makefile.am', since `examples/' is a subdirectory of
-# `milena/doc/'.  Anyway, this file is to be eventually inlined in
-# `milena/doc/Makefile.am', so this is not a big deal.
+# `doc/Makefile.am', since `examples/' is a subdirectory of
+# `doc/'.  Anyway, this file is to be eventually inlined in
+# `doc/Makefile.am', so this is not a big deal.
 accu_right_instantiation_SOURCES = examples/accu-right-instantiation.cc
 borderthickness_SOURCES = examples/borderthickness.cc
 box2d_bbox_SOURCES = examples/box2d-bbox.cc

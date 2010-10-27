@@ -18,7 +18,7 @@
 ## FIXME: Revamp (see Olena 0.11's test suite).
 
 # Look for Milena header in srcdir.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
+AM_CPPFLAGS = -I$(top_srcdir)
 
 # FIXME: Add
 #

@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/milena/tests/tests.mk
+include $(top_srcdir)/tests/tests.mk
 
 AM_CPPFLAGS += $(MAGICKXX_CPPFLAGS)
 AM_LDFLAGS = $(MAGICKXX_LDFLAGS)

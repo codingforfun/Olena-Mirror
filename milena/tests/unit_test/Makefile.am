@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/milena/tests/tests.mk
+include $(top_srcdir)/tests/tests.mk
 
 COND_TESTS = cond_tests_boost-tuple		\
 	     cond_tests_cfitsio			\
@@ -42,7 +42,7 @@ regen-am:
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
-# at the beginning og the action.
+# at the beginning of the action.
 $(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests $(COND_TESTS)
 	cd $(top_srcdir)					\
 	&& ./build-aux/build_unit_test.sh 			\

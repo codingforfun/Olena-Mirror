@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +18,7 @@
 # Illustrations from the ISMM 2009 paper.
 
 # Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
@@ -37,7 +38,7 @@ dist_noinst_DATA = seeds.pgm m283-c.off
 noinst_DATA = lena-s.ppm graph-s.png m283-s.off
 MOSTLYCLEANFILES = $(noinst_DATA) graph-s.neato
 
-lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
+lena-s.ppm: $(top_srcdir)/img/lena.pgm image2d$(EXEEXT)
 	./image2d$(EXEEXT) $< 1000 $@
 
 graph-s.png: graph-s.neato

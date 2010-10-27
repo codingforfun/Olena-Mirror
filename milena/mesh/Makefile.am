@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -49,9 +50,9 @@ dist_mesh_DATA += $(more_meshes)
 ## Pseudo-inverse curvature of meshes.  ##
 ## ------------------------------------ ##
 
-mesh_pinv_curv = $(top_builddir)/milena/apps/mesh-segm-skel/mesh-pinv-curv
-mesh_pinv_curv: $(top_srcdir)/milena/apps/mesh-segm-skel/mesh-pinv-curv.cc
-	cd $(top_builddir)/milena/apps/mesh-segm-skel/mesh-pinv-curv && \
+mesh_pinv_curv = $(top_builddir)/apps/mesh-segm-skel/mesh-pinv-curv
+mesh_pinv_curv: $(top_srcdir)/apps/mesh-segm-skel/mesh-pinv-curv.cc
+	cd $(top_builddir)/apps/mesh-segm-skel/mesh-pinv-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_pinv_curv
 
 # FIXME: *-pinv-curv.off files should not be regenerated
@@ -67,9 +68,9 @@ dist_mesh_DATA += $(pinv_curv)
 ## Maximum curvature of meshes.  ##
 ## ----------------------------- ##
 
-mesh_max_curv = $(top_builddir)/milena/apps/mesh-segm-skel/mesh-max-curv
-mesh_max_curv: $(top_srcdir)/milena/apps/mesh-segm-skel/mesh-max-curv.cc
-	cd $(top_builddir)/milena/apps/mesh-segm-skel/mesh-max-curv && \
+mesh_max_curv = $(top_builddir)/apps/mesh-segm-skel/mesh-max-curv
+mesh_max_curv: $(top_srcdir)/apps/mesh-segm-skel/mesh-max-curv.cc
+	cd $(top_builddir)/apps/mesh-segm-skel/mesh-max-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_max_curv
 
 # FIXME: *-max-curv.off files should not be regenerated

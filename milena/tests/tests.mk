@@ -2,7 +2,7 @@
 
 ## Shared configuration for tests.
 
-## Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+## Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 ## Laboratory (LRDE)
 ##
 ## This file is part of Olena.
@@ -20,11 +20,11 @@
 ## along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# FIXME: Revamp (see Olena 0.11's test suite).
+# FIXME: Revamp? (See Olena 0.11's test suite).
 
 # Look for Milena header in srcdir and for (generated) test headers
 # (like data.hh) in builddir.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
 # FIXME: Add
 #
@@ -55,4 +55,4 @@ TIFF_LDFLAGS = @TIFF_LDFLAGS@
 
 
 # Inject rules to compile tests (recursively), without running them.
-include $(top_srcdir)/milena/tests/tests-recursive.mk
+include $(top_srcdir)/tests/tests-recursive.mk

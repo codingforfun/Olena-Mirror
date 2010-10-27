@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -33,12 +33,12 @@
    (as well as additional burden in Makefiles, too.).  */
 
 /// The absolute path to the img directory of Milena.
-# define MLN_IMG_DIR "@abs_top_srcdir@/milena/img"
+# define MLN_IMG_DIR "@abs_top_srcdir@/img"
 
 /// The absolute path to the img directory of Milena.
-# define MLN_TESTS_IMG_DIR "@abs_top_srcdir@/milena/tests/img"
+# define MLN_TESTS_IMG_DIR "@abs_top_srcdir@/tests/img"
 
 /// The absolute path to the mesh directory of Milena.
-# define MLN_MESH_DIR "@abs_top_srcdir@/milena/mesh"
+# define MLN_MESH_DIR "@abs_top_srcdir@/mesh"
 
 #endif // ! TESTS_DATA_HH

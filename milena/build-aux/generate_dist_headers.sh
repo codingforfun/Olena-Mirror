@@ -1,0 +1,1 @@
+../../build-aux/generate_dist_headers.sh

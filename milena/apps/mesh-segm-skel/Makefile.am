@@ -16,12 +16,12 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 # Linking with gluit and GLUT/OpenGL.
-gluit_builddir = $(top_builddir)/milena/external/trimesh/gluit
-include $(top_srcdir)/milena/external/trimesh/gluit/gluit.mk
+gluit_builddir = $(top_builddir)/external/trimesh/gluit
+include $(top_srcdir)/external/trimesh/gluit/gluit.mk
 
 # Find Milena and trimesh headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
-CPPFLAGS_trimesh = -I$(top_srcdir)/milena/external/trimesh/include
+AM_CPPFLAGS = -I$(top_srcdir)
+CPPFLAGS_trimesh = -I$(top_srcdir)/external/trimesh/include
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
@@ -32,7 +32,7 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 # LDFLAGS_trimesh instead.  Likewise for CPPFLAGS_trimesh and
 # LDADD_trimesh, for symmetry reasons.
 LDFLAGS_trimesh = $(GLFLAGS)
-LDADD_trimesh = -L$(top_builddir)/milena/external/trimesh/libsrc -ltrimesh $(GLLIBS)
+LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 
 
 bin_PROGRAMS =

@@ -1,6 +1,7 @@
 #! /bin/sh
 
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,7 +19,7 @@
 
 set -ex
 
-mesh_dir=@top_srcdir@/milena/mesh
+mesh_dir=@top_srcdir@/mesh
 
 time ./mesh-complex-segm $mesh_dir/socket-max-curv.off 25 socket-max-curv-segm.off
 time ./mesh-complex-segm $mesh_dir/teapot-max-curv.off 50 teapot-max-curv-segm.off

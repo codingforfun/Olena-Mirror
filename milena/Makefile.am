@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = 	\
+  build-aux	\
   external	\
   doc 		\
   mesh 	 	\
@@ -112,3 +115,96 @@ EXTRA_DIST +=					\
   tests/img/test_rgb8.tif			\
   tests/img/test_bw.tif				\
   tests/img/test_gl.tif
+
+
+#<<lrde
+## FIXME: All of this it too much ad hoc.  Use Git branches to
+## distinguish distributed files from non distributed ones after the
+## conversion of the repository.
+
+## FIXME: Moreover, this list is partially duplicated in Olena's
+## `Makefile.am', so that pruning also occurs both when rolling an
+## Olena tarball or a (standalone) Milena tarball.
+
+LRDE_STRIPPED_DIST_FILES =			\
+  $(distdir)/Makefile.am			\
+  $(distdir)/configure.ac			\
+  $(distdir)/mln/accu/math/all.hh		\
+  $(distdir)/mln/all.hh				\
+  $(distdir)/mln/core/image/vmorph/all.hh	\
+  $(distdir)/mln/core/image/vmorph/fun_image.hh	\
+  $(distdir)/mln/data/all.hh			\
+  $(distdir)/mln/essential/routine.hh		\
+  $(distdir)/mln/fun/all.hh			\
+  $(distdir)/mln/fun/essential.hh		\
+  $(distdir)/mln/fun/v2v/all.hh			\
+  $(distdir)/mln/fun/v2v/essential.hh		\
+  $(distdir)/mln/linear/all.hh			\
+  $(distdir)/mln/trait/all.hh			\
+  $(distdir)/mln/trait/ch_value.hh		\
+  $(distdir)/mln/value/all.hh			\
+  $(distdir)/mln/value/essential.hh		\
+  $(distdir)/tests/Makefile.am			\
+  $(distdir)/tests/convert/Makefile.am		\
+  $(distdir)/tests/extract/Makefile.am		\
+  $(distdir)/tests/fun/v2v/Makefile.am		\
+  $(distdir)/tests/linear/Makefile.am		\
+  $(distdir)/tests/linear/gaussian/Makefile.am	\
+  $(distdir)/tests/registration/Makefile.am	\
+  $(distdir)/tests/trait/ch_value.cc		\
+  $(distdir)/tests/value/Makefile.am
+
+LRDE_NODIST_FILES =					\
+  $(distdir)/tests/convert/to_hsl.cc		\
+  $(distdir)/tests/extract/blue.cc		\
+  $(distdir)/tests/extract/green.cc		\
+  $(distdir)/tests/extract/hue.cc		\
+  $(distdir)/tests/extract/lum.cc		\
+  $(distdir)/tests/extract/red.cc		\
+  $(distdir)/tests/extract/sat.cc		\
+  $(distdir)/tests/fun/v2v/component.cc		\
+  $(distdir)/tests/fun/v2v/hsl_to_rgb.cc		\
+  $(distdir)/tests/fun/v2v/rgb_to_hsl.cc		\
+  $(distdir)/tests/linear/gaussian.cc		\
+  $(distdir)/tests/linear/gaussian/filter.cc	\
+  $(distdir)/tests/registration/registration.cc	\
+  $(distdir)/tests/value/stack.cc
+
+## FIXME: Running `build-aux/build_unit_test.sh' just to update
+## `milena/tests/unit_test/unit-tests.mk' is overkill:
+##
+## 1. It recreates *all* the sources (more than 1200 `.cc' files!).
+##    => We should just regen `unit-tests.mk', not the `.cc' files.
+##
+## 2. It visits (almost) all the directories and files under
+##    milena/mln/ (which admittedly a smaller issue compared to the
+##    previous one)
+##    => Prune `unit-tests.mk' instead of regenerating it.  The
+##       simplest solution is probably to equip `unit-tests.mk' in the
+##       first place with `<<lrde'/`>>' tags, then prune it with
+##       dist-strip.
+##
+
+# Do not distribute parts tagged `lrde' (see build-aux/strip-lrde).
+# Then, regen files; and if the `distdir' (or `dist' or `distcheck')
+# target was run from Milena's (and not Olena's) source directory,
+# call `autoreconf'.
+dist-hook:
+	for f in $(LRDE_STRIPPED_DIST_FILES); do		\
+	  $(srcdir)/build-aux/strip-lrde $$f;			\
+	done;							\
+	rm -rf $(LRDE_NODIST_FILES)				\
+	  && $(srcdir)/build-aux/build_unit_test.sh		\
+	      $(distdir)/mln					\
+	      $(distdir)/tests/unit_test			\
+	      $(srcdir)/tests/unit_test/disabled_tests		\
+	      mln						\
+	  && if test x$(distdir) = x$(top_distdir); then	\
+	       (						\
+	         cd $(distdir);					\
+	         set -evx;					\
+	         autoreconf -f -v -i;				\
+	         find . -name autom4te.cache | xargs rm -rf	\
+	       )						\
+	     fi
+#>>

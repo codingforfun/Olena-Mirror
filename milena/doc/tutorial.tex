@@ -138,12 +138,12 @@ It is a more detailed explanations of the library's features.
 
 \textit{Assemblers} and \textit{designers} may be also interested by all the
 examples provided with the documentation and the tutorial. The source code is
-available in \hpath{milena/doc/examples} \tofix{ref} and is usually pointed
+available in \hpath{doc/examples} \tofix{ref} and is usually pointed
 out and commented by the documentation.
 
 Taking a look at the test suite is also a good idea. The tests usually focus on
 a single functionality and handle several use cases which may overlap your needs.
-The test suite is located in \hpath{milena/tests} \tofix{ref?}.
+The test suite is located in \hpath{tests} \tofix{ref?}.
 
 Still not enough information? More information about all the routines is
 available in the User HTML documentation \tofix{ref}.
@@ -338,12 +338,12 @@ List of \hpath{milena}'s subdirectories:
   test suite. Feel free to use it in your programs.
 
 \item \dir{mesh} --- A set of 3D meshes. They can be used with the full
-  example located in \hpath{milena/apps}.
+  example located in \hpath{apps}.
 
 \item \dir{mln} --- The core of the library. Contains all the library headers.
 
 \item \dir{tests} --- The test suite. Is it subdivided in sub directories.
-  The directory hierarchy respects \hpath{milena/mln}'s.
+  The directory hierarchy respects \hpath{mln}'s.
 
 \item \dir{tools} --- Small tools written with milena. They can be used as examples.
 
@@ -405,8 +405,7 @@ List of \hpath{mln}'s subdirectories:
 \end{itemize}
 
 
-The source code and the material of the documentation is available in \hpath{
-milena/doc}.
+The source code and the material of the documentation is available in \hpath{doc}.
 List of \hpath{doc}'s subdirectories:
 \begin{itemize}
 \item \dir{examples} --- All the source code of the documentation examples.
@@ -723,7 +722,7 @@ compiled if you want to use them.
 \doxysubsection{tuto2examples}{Examples}
 
 Examples are part of the documentation. The sources are located in
-\hpath{milena/doc/examples}.
+\hpath{doc/examples}.
 
 To compile the examples simply run:
 \begin{verbatim}
@@ -822,7 +821,7 @@ implementation would look like this one:
 
 \doxyrawcode{tuto3/fill_non_generic}
 
-See milena/doc/examples/tuto3/fill\_non\_generic.cc.
+See doc/examples/tuto3/fill\_non\_generic.cc.
 
 
 In this example, there are a lot of \B{implicit} assumptions about the input:
@@ -1238,7 +1237,7 @@ This site only contains :
 %**************************
 \doxysection{tuto4images}{Images}
 
-In milena, an image is seen as a composition of both a site set and a function
+In Milena, an image is seen as a composition of both a site set and a function
 mapping a site to a value.
 
 %--------------------------

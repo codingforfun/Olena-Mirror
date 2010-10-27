@@ -18,7 +18,7 @@
 
 # Look for Milena headers in srcdir and for (generated) test headers
 # (like data.hh) in builddir.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
 DOXYGEN = doxygen
 
@@ -215,7 +215,7 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@builddir\@,$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	Id=`grep '^\$$Id' $(top_srcdir)/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	  $(edit) $< >$@
 MAINTAINERCLEANFILES += $(DOXYFILE_USER)
@@ -292,7 +292,7 @@ edit_devel = sed							      \
 
 $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	Id=`grep '^\$$Id' $(top_srcdir)/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	  $(edit) $< >$@.tmp
 	$(edit_devel) $@.tmp >$@

@@ -32,6 +32,6 @@
    (as well as additional burden in Makefiles, too.).  */
 
 /// The absolute path to the doc directory of Milena.
-# define MLN_DOC_DIR "@abs_top_srcdir@/milena/doc"
+# define MLN_DOC_DIR "@abs_top_srcdir@/doc"
 
 #endif // ! DOC_TOOLS_HH

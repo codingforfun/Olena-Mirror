@@ -1,0 +1,393 @@
+Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+Laboratory (LRDE)
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
+
+
+======================
+Introduction to Milena
+======================
+
+Milena is a part of Olena_, a generic and efficient platform
+dedicated to image processing.
+
+.. _Olena: http://olena.lrde.epita.fr
+
+Milena is a generic C++ library and the core component of the Olena
+project.
+
+Milena is distributed in two ways:
+
+   * as a component of the Olena package
+
+   * and a standalone package.
+
+If you obtained Milena as an project embedded an Olena package, we
+advise you to read Olena's README, at the top-level directory of the
+package, and not to configure nor compile Milena separately (i.e., do
+not use `milena/configure', use the top-level `configure' instead
+and run `make' from the top-level directory).
+
+Otherwise, you are in the case of a standalone package, and you might
+want to read the rest of this file.
+
+
+==========================================
+Detailed Instructions (Standalone Package)
+==========================================
+
+-----------------
+Required Software
+-----------------
+
+Here is a non-exhaustive list of required software required to build
+Milena successfully.
+
+   * to compile the user examples:
+
+        - a POSIX shell, like Bash
+
+        - a decent C++ compiler, like GNU C++
+
+        - a `make' utility, like GNU `make'
+
+
+-------------
+Configuration
+-------------
+
+In order to prepare the build process, you need to configure the source
+tree.
+
+   Assuming your Milena distribution is uncompressed in directory
+`milena-1.1', follow these steps:
+
+     % cd milena-1.1
+     % mkdir _build
+     % cd _build
+     % ../configure
+
+   The build process can be altered by a number of options you can pass
+to the `configure' script.  The following sections describe them.
+
+
+Installation Path
+=================
+
+By default, Milena is installed in the standard "local" directory of
+your system.  This is usually `/usr/local' under Unix.
+
+   You can change this path with the following flag:
+
+      --prefix=<installation prefix>
+
+
+Compiler Selection and Compilation Flags
+========================================
+
+By default, `configure' will try to use the first C++ compiler it
+encounters on your system.  If `CXX' is not set, it will look, in order,
+for:
+
+   - the value of the `CXX' environment variable,
+
+   - the GNU C++ compiler (`g++'),
+
+   - the `c++' or `gpp' commands on your system,
+
+   - `aCC', the HP-UX standard C++ compiler,
+
+   - the `CC', `cxx', `cc++' or `cl' commands on your system,
+
+   - KAI's C++ compiler (`KCC'),
+
+   - `RCC', `xlC_r' or `xlC'.
+
+   You can override the detection system by passing your favorite
+compiler name to `configure', as follows:
+
+     % ../configure CXX=<your-favorite-C++-compiler>
+
+   As an alternative, you can also set the environment variable `CXX'.
+
+
+   For some compilers (GNU g++ and Intel's icpc to some extent) ,
+`configure' will use default CXXFLAGS.  You can override the default
+C++ flags by giving `configure' your selection of flags:
+
+     % ../configure CXXFLAGS="<your-favorite-flags>"
+
+
+--------
+Building
+--------
+
+Once your build directory is `configure'd, you can run
+
+     % make
+
+to build Milena.
+
+
+   Additionally, you can build and run the test suite with:
+
+     % make check
+
+However, this process is time- and memory- consuming, and you probably
+do not need it except if you are developing/debugging Milena.
+
+
+----------
+Installing
+----------
+
+To install Milena on your system, run:
+
+      % make install
+
+from the build directory.
+
+   If not overridden with `--prefix', this will install:
+
+   * the headers in `/usr/local/include/mln/',
+
+   * some applications and tools in `/usr/local/bin/',
+
+   * sample images and meshes in `/usr/local/share/olena/images/',
+
+   * the documentation in `/usr/local/share/doc/olena/`.
+
+
+   You can later remove Milena from your system by running
+
+      % make uninstall
+
+from the build directory (if you have kept it).  We recommend the use
+of GNU Stow (or any similar program) during the installation of Milena,
+to make the uninstallation of Milena easier.
+
+
+=====================
+Layout of the Tarball
+=====================
+
+The Milena project directory layout is as follows:
+
+apps
+   Application examples.
+
+build-aux
+   Auxiliary tools used by the GNU Build System during ``configure``
+   and ``make`` stages.
+
+demos
+   Demos of Milena.
+
+doc
+   Documentation.
+
+external
+   Sources of bundled dependencies.
+
+  trimesh
+    Trimesh2 library.
+
+img
+   Some (2D) images, mostly used for test purpose.
+
+mesh
+   Some 3D meshes, mostly used for test purpose.
+
+mln
+   Headers of the Milena library.
+
+tests
+   The test suite.
+
+tools
+   Example tools.
+
+
+===================
+Supported Platforms
+===================
+
+Milena has been tested on the following configurations:
+
+===========================  =============================================
+System                       Compiler
+===========================  =============================================
+GNU/Linux on IA-32           g++ (GNU GCC) 3.3, 4.1, 4.2 and 4.4
+GNU/Linux on IA-32           icpc (Intel C/C++ Compiler) 10.1 and 11.0
+GNU/Linux on AMD64/Intel 64  g++ (GNU GCC) 4.1
+Mac OS X (10.6) on IA-32     g++ (GNU GCC) 4.2.1
+===========================  =============================================
+
+
+According to the wanted features, some dependencies may be required:
+
+
+To enable I/O with TIFF images, `libtiff`_ must be installed.
+
+.. _libtiff: http://www.libtiff.org/
+
+To enable I/O with GDCM images, `GDCM`_ must be installed.
+
+.. _GDCM: http://sourceforge.net/apps/mediawiki/gdcm/
+
+To support many image formats in Milena's I/O system, `Magick++`_ must
+be installed.
+
+.. _Magick++: http://www.imagemagick.org/Magick++/
+
+The Boost Tuple Library from the `Boost`_ Project is needed if you
+want to support tuple accumulators.
+
+.. _Boost: http://www.boost.org/
+
+Apart from GDCM, these dependencies are commonly provided by the
+package management systems (e.g., Debian's APT, Mac OS X's Mac Ports,
+etc.).  We recommend using package managers instead of installing
+dependencies by hand.
+
+
+See Also
+========
+
+There are other sources of interest in the distribution.
+
+- Headline news about the project can be found in the file ``NEWS`` at
+  the root of the source tree.
+
+- The library reference HTML documentation, generated by Doxygen_, is
+  located in ``doc/user/html/``.
+
+.. _Doxygen: http://www.doxygen.org
+
+
+License
+=======
+
+Milena is released under the GNU General Public Licence.  See the file
+``COPYING`` (at the root of the source tree) for details.
+
+
+Contacts
+========
+
+The team can be reached by mail at olena@lrde.epita.fr.  The snail
+mail address follows.
+
+* Olena - LRDE
+
+  | Laboratoire de Recherche et Développement de l'EPITA (LRDE)
+  | 14-16 rue Voltaire
+  | FR-94276 Le Kremlin-Bicêtre CEDEX
+  | France
+
+
+Bibliography
+============
+
+Further information about Milena can be found into the following related
+papers.
+
+About Image Processing Programming:
+
+   * `Why and How to Design a Generic and Efficient Image Processing
+     Framework: The Case of the Milena Library`.  Roland Levillain,
+     Thierry Géraud, Laurent Najman.  In the proceedings of the 2010
+     International Conference on Image Processing (ICIP)
+     http://www.icip2010.org/
+     Hong Kong, September 26 - 29, 2010.
+
+   * `Writing Reusable Digital Geometry Algorithms in a Generic Image
+     Processing Framework`.  Roland Levillain, Thierry Géraud, Laurent
+     Najman.  In the proceedings of the Workshop on Applications of
+     Digital Geometry and Mathematical Morphology (WADGMM)
+     http://mdigest.jrc.ec.europa.eu/wadgmm2010/
+     Istanbul, Turkey, August 22, 2010.
+
+   * `Milena: Write Generic Morphological Algorithms Once, Run on Many
+     Kinds of Images`.  Roland Levillain, Thierry Géraud, Laurent
+     Najman.  In the proceedings of the 9th International Symposium on
+     Mathematical Morphology (ISMM)
+     http://www.cs.rug.nl/~ISMM09/
+     Groningen, The Netherlands, August 24 - 27, 2009.
+
+   * `Generic Algorithmic Blocks Dedicated to Image Processing`,
+     Jérôme Darbon, Thierry Géraud, Patrick Bellot.  In the proceedings
+     of ECOOP PHD Oslo, Norway, June 2004.
+
+   * `Generic Implementation of Morphological Image Operators`, Jérôme
+     Darbon, Thierry Géraud, and Alexandre Duret-Lutz, submitted to
+     International Symposium On Mathematical Morphology VI (ISMM
+     2002), April 3-5, 2002, Sydney, Australia.
+
+   * `Applying Generic Programming to Image Processing`, Thierry
+     Géraud, Yoann Fabre, and Alexandre Duret-Lutz.  In the
+     Proceedings of the IASTED International Conference on Applied
+     Informatics (AI'2001) - Symposium Advances in Computer
+     Applications, ACTA Press, pages 577-581, Innsbruck, Austria,
+     February 2001.
+
+   * `Obtaining Genericity for Image Processing and Pattern
+     Recognition Algorithms`.  Thierry Géraud, Yoann Fabre, Alexandre
+     Duret-Lutz, Dimitri Papadopoulos-Orfanos, and Jean-François
+     Mangin.  In the Proceedings of the 15th International Conference
+     on Pattern Recognition (ICPR'2000), IEEE Computer Society,
+     vol. 4, pages 816-819, Barcelona, Spain, September 2000.
+
+About Generic Programming Paradigm:
+
+   * `Semantics-Driven Genericity: A Sequel to the Static C++
+     Object-Oriented Programming Paradigm (SCOOP 2)`.  Thierry Géraud,
+     Roland Levillain.  In the proceedings of the 6th International
+     Workshop on Multiparadigm Programming with Object-Oriented
+     Languages
+     http://homepages.fh-regensburg.de/~mpool/mpool08/welcome.html
+     Paphos, Cyprus July 7, 2008.
+
+   * `Static C++ Object-Oriented Programming (SCOOP)`, Nicolas Burrus,
+     Alexandre Duret-Lutz, Thierry Géraud, David Lesage, and Raphaël
+     Poss.  In the Proceedings of the Workshop on Multiple Paradigm
+     with OO Languages (MPOOL'03) Anaheim, CA, October 2003.
+
+   * `Generic Design Patterns in C++`.  Alexandre Duret-Lutz, Thierry
+     Géraud, and Akim Demaille.  In the Proceedings of the 6th USENIX
+     Conference on Object-Oriented Technologies and Systems
+     (COOTS'2001), pages 189-202, San Antonio, Texas, USA,
+     January-February 2001.
+
+   * `Olena: a Component-Based Platform for Image Processing, mixing
+     Generic, Generative and OO Programming`.  Alexandre Duret-Lutz.
+     In the Proceedings of the 2nd International Symposium on
+     Generative and Component-Based Software Engineering (GCSE 2000),
+     Young Researchers Workshop (published in "Net.ObjectDays2000";
+     ISBN 3-89683-932-2), pages 653-659, Erfurt, Germany, October
+     2000.
+
+
+   You can download these papers and related materials from
+<http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications>
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:
