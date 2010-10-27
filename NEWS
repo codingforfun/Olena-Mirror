@@ -1,5 +1,9 @@
 * Olena 1.0a
 
+	* Starting with Olena 1.1, Milena, Swilena and Scribo are
+	  independent components of the project, distributed together
+	  with the Olena package and as standalone packages.
+
 
 * Olena 1.0	July 14, 2009
 
@@ -352,7 +356,7 @@ End:
 
 ----
 
-Copyright (C) 2001, 2002, 2003, 2004, 2007, 2009 EPITA Research and
+Copyright (C) 2001, 2002, 2003, 2004, 2007, 2009, 2010 EPITA Research and
 Development Laboratory (LRDE)
 
 This file is part of Olena.

@@ -1,3 +1,19 @@
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Milena be in charge of its own configuration and distribution.
+
+	* configure.ac: Remove parts now handled by Milena's configure.ac.
+	* Makefile.am (ACLOCAL_AMFLAGS): Remove.
+	(LRDE_STRIPPED_DIST_FILES, LRDE_NODIST_FILES):
+	Remove all Milena files.
+	(dist-hook): Do not regen Milena's unit tests, as Milena itself is
+	now in charge of this.
+	* NEWS, README: Update.
+	* build-aux/tex.mk,
+	* build-aux/texi2dvi,
+	Remove.
+	* build-aux/Makefile.am (EXTRA_DIST): Remove texi2dvi.
+
 2010-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move trimesh2 into Milena.

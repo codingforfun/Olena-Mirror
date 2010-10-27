@@ -15,9 +15,5 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# texi2dvi: produce DVI (or PDF) files from Texinfo (or (La)TeX) sources.
-# Part of the Texinfo project (http://www.gnu.org/software/texinfo/).
-EXTRA_DIST = texi2dvi
-
 # File generators.
-EXTRA_DIST += generate_dist_headers.sh build_unit_test.sh
+EXTRA_DIST = generate_dist_headers.sh build_unit_test.sh
