@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -70,13 +71,25 @@ if DARWIN
   libdyn_la_SOURCES += libiberty-fix.c
 endif DARWIN
 
-libdyn_la_LIBADD = @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
-  $(top_builddir)/libmd5/libmd5.la $(BOOST_FILESYSTEM_LIBS)
+RUBY_LIBRUBYARG_SHARED = @RUBY_LIBRUBYARG_SHARED@
+
+libdyn_la_LIBADD =				\
+  $(RUBY_LIBRUBYARG_SHARED)			\
+  $(LIBLTDL)					\
+  $(top_builddir)/libmd5/libmd5.la		\
+  $(BOOST_FILESYSTEM_LIBS)
 libdyn_la_DEPENDENCIES = $(LTDLDEPS)
 
-libdyn_la_CPPFLAGS =							   \
-  $(LTDLINCL) $(BOOST_CPPFLAGS)						   \
-  -I$(top_builddir) -I$(srcdir) -I. -I$(top_srcdir)/libmd5 -I@RUBY_topdir@
+RUBY_topdir = @RUBY_topdir@
+
+libdyn_la_CPPFLAGS =				\
+  $(LTDLINCL)					\
+  $(BOOST_CPPFLAGS)				\
+  -I$(top_builddir)				\
+  -I$(srcdir)					\
+  -I.						\
+  -I$(top_srcdir)/libmd5			\
+  -I$(RUBY_topdir)
 libdyn_la_CXXFLAGS = $(WARNING_CXXFLAGS)
 libdyn_la_LDFLAGS = -version-info 0:1:0 $(BOOST_FILESYSTEM_LDFLAGS)
 
