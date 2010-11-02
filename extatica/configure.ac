@@ -60,8 +60,7 @@ DYN_CXX_WARNINGS([[-Wall],
                   [-Wwrite-strings],
                   [-Wbad-function-cast],
                   [-Wmissing-declarations],
-                  [-Wnested-externs],
-                  [-Werror]])
+                  [-Wnested-externs]])
 
 ## -------- ##
 ## Libtool. ##
