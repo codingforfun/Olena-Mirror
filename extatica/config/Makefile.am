@@ -15,3 +15,6 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 dist_noinst_SCRIPTS = erbx rbconfig_gen.rb mk_local_config_rb_in.rb
+
+# Used by libiberty/configure.ac.
+EXTRA_DIST = xtc.m4

@@ -112,7 +112,7 @@ installcheck: installcheck-subdir
 
 INCDIR=$(srcdir)/$(MULTISRCTOP)../include
 
-COMPILE.c = $(CC) -c @DEFS@ $(CFLAGS) $(CPPFLAGS) -I. -I$(INCDIR) $(HDEFINES) @ac_libiberty_warn_cflags@
+COMPILE.c = $(CC) -c @DEFS@ $(CFLAGS) $(CPPFLAGS) -I. -I$(INCDIR) $(HDEFINES)
 
 # Just to make sure we don't use a built-in rule with VPATH
 .c.$(objext):
@@ -452,8 +452,6 @@ config.status: $(srcdir)/configure
 AUTOCONF = autoconf
 configure_deps = $(srcdir)/aclocal.m4 \
 	$(srcdir)/../config/acx.m4 \
-	$(srcdir)/../config/no-executables.m4 \
-	$(srcdir)/../config/override.m4 \
 	$(srcdir)/../config/warnings.m4 \
 
 $(srcdir)/configure: @MAINT@ $(srcdir)/configure.ac $(configure_deps)

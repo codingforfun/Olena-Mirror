@@ -128,7 +128,6 @@ if test $cross_compiling = no && test $multilib = yes \
    cross_compiling=maybe
 fi
 
-GCC_NO_EXECUTABLES
 AC_PROG_CC
 AC_SYS_LARGEFILE
 AC_PROG_CPP_WERROR
@@ -634,7 +633,13 @@ if test -z "${setobjs}"; then
   # We haven't set the list of objects yet.  Use the standard autoconf
   # tests.  This will only work if the compiler works.
   AC_ISC_POSIX
-  AC_REPLACE_FUNCS($funcs)
+  # Autoconf's AC_REPLACE_FUNCS emits an extra line adding
+  # a wrong line to confdefs.h (at least in Autoconf 2.68):
+  #
+  #   $as_echo "#define \`\$as_echo \"HAVE_\$ac_func\" | \$as_tr_cpp\` 1" >>confdefs.h
+  #
+  # Use a replacement macro (XTC_REPLACE_FUNCS) as a workaround.
+  XTC_REPLACE_FUNCS($funcs)
   libiberty_AC_FUNC_C_ALLOCA
   AC_FUNC_FORK
   if test $ac_cv_func_vfork_works = no; then

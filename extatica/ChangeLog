@@ -1,5 +1,27 @@
 2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Tailor GNU Libiberty for Extatica.
+
+	* config.guess: New symlink to _config/config.guess.
+	* config.sub: New symlink to _config/config.sub.
+	* install-sh: New symlink to _config/install-sh.
+	* config/no-executables.m4,
+	* config/override.m4:
+	Remove.
+	* config/xtc.m4: New.
+	* config/Makefile.am (EXTRA_DIST): Add xtc.m4.
+	* libiberty/Makefile.in (COMPILE.c): Remove
+	@ac_libiberty_warn_cflags@.
+	(configure_deps): Remove $(srcdir)/../config/no-executables.m4 and
+	$(srcdir)/../config/override.m4.
+	* libiberty/aclocal.m4: Do not include ../config/no-executables.m4
+	nor ../config/override.m4.
+	Include ../config/xtc.m4.
+	* libiberty/configure.ac: Use XTC_REPLACE_FUNCS instead of
+	AC_REPLACE_FUNCS.
+
+2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add GNU Libiberty files from CVS GNU Binutils.
 
 	* config/acx.m4,
