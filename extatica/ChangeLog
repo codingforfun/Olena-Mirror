@@ -1,5 +1,22 @@
 2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Extatica use the embedded GNU Libiberty.
+
+	* config/libiberty.m4: Remove.
+	* configure.ac: No longer invoke DYN_LIBIBERTY.
+	Configure subdirectory libiberty instead.
+	* src/ansidecl.h,
+	* src/demangle.h:
+	Remove these previously imported Libiberty headers.
+	* src/Makefile.am (libdyn_la_SOURCES): Remove ansidecl.h and
+	demangle.h.
+	(libdyn_la_LIBADD): Add $(top_builddir)/libiberty/libiberty.a.
+	(libiberty_inc): New variable.
+	(libdyn_la_CPPFLAGS): Add -I$(libiberty_inc).
+	* Makefile.am (SUBDIRS): Add libiberty.
+
+2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Tailor GNU Libiberty for Extatica.
 
 	* config.guess: New symlink to _config/config.guess.

@@ -59,8 +59,7 @@ libextatica_la_SOURCES =			\
   function_loader.hh function_loader.cc		\
   name_of.hh name_of.cc				\
   policy.hh policy.cc				\
-  ruby_stream.hh ruby_stream.cc			\
-  ansidecl.h demangle.h
+  ruby_stream.hh ruby_stream.cc
 
 nodist_libextatica_la_SOURCES =			\
   all_methods.hh all_methods.cc			\
@@ -83,10 +82,13 @@ libextatica_la_LIBADD =				\
   $(RUBY_LIBRUBYARG_SHARED)			\
   $(LIBLTDL)					\
   $(top_builddir)/libmd5/libmd5.la		\
+  $(top_builddir)/libiberty/libiberty.a		\
   $(BOOST_FILESYSTEM_LIBS)
 libextatica_la_DEPENDENCIES = $(LTDLDEPS)
 
 RUBY_topdir = @RUBY_topdir@
+
+libiberty_inc = $(top_srcdir)/include
 
 libextatica_la_CPPFLAGS =			\
   $(LTDLINCL)					\
@@ -95,7 +97,8 @@ libextatica_la_CPPFLAGS =			\
   -I$(srcdir)					\
   -I.						\
   -I$(top_srcdir)/libmd5			\
-  -I$(RUBY_topdir)
+  -I$(RUBY_topdir)				\
+  -I$(libiberty_inc)
 libextatica_la_CXXFLAGS = $(WARNING_CXXFLAGS)
 libextatica_la_LDFLAGS = -version-info 0:1:0 $(BOOST_FILESYSTEM_LDFLAGS)
 

@@ -92,11 +92,11 @@ AC_SUBST(LIBLTDL)
 ## Libiberty.  ##
 ## ----------- ##
 
-DYN_LIBIBERTY
-
 # Are we running on Darwin (Mac OS X)?  If so, we'll have to deal with
 # MacPorts' libiberty's issues w.r.t `environ'.
 AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
+
+AC_CONFIG_SUBDIRS([libiberty])
 
 ## ------ ##
 ## Boost. ##
