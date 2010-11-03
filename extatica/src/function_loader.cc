@@ -84,7 +84,7 @@ namespace dyn {
   foreach_path_in_paths(const std::string& header_paths, Fun& fun)
   {
     std::list<std::string>::const_iterator it;
-    unsigned last = 0, pos;
+    std::string::size_type last = 0, pos;
     while (true)
     {
       pos = header_paths.find(":", last);
@@ -98,6 +98,8 @@ namespace dyn {
 	fun(sub);
       if (pos >= std::string::npos) break;
       last = pos + 1;
+      // Invariant.
+      assert(pos < header_paths.size());
     }
   }
 
@@ -203,10 +205,10 @@ namespace dyn {
 	  // Check if the first type is a pointer to choose the good
 	  // operator (`.' or `->').
 	  str stripped_type(type);
-	  unsigned pos;
+	  str::size_type pos;
 	  while ((pos = stripped_type.find(" ")) != str::npos)
 	    stripped_type.erase(pos, 1);
-	  unsigned len = stripped_type.length();
+	  std::string::size_type len = stripped_type.length();
 	  first_type_is_ptr =
 	    ((stripped_type.compare(len - 7, 7, "*const>") == 0)
 	     || (stripped_type.compare(len - 2, 2, "*>") == 0));

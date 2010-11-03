@@ -1,5 +1,14 @@
 2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Handle 64-bit hosts properly.
+
+	* src/function_loader.cc (dyn::foreach_path_in_paths)
+	(dyn::function_loader_t::gen_cxx):
+	Use std::string::size_type to store lengths and positions in
+	std::string's.
+
+2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the stream junction operation.
 
 	* src/function_loader.cc (join): Take care not to increment a
