@@ -1,5 +1,9 @@
 2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* config/swig.m4: Catch up with Swilena's version.
+
+2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp the configuration of Extatica's SWIG Python bindings.
 
 	* configure.ac: Here.
