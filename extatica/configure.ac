@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -104,57 +105,81 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 BOOST_FILESYSTEM
 BOOST_STRING_ALGO
 
-## ------ ##
-## Swig.  ##
-## ------ ##
+## ---------------------- ##
+## SWIG Python bindings.  ##
+## ---------------------- ##
 
-# FIXME: Unify the Autoconf machinery w.r.t. SWIG and Python with Olena's.
+AC_ARG_ENABLE([swig-python-bindings],
+  [AS_HELP_STRING([--enable-swig-python-bindings],
+                  [build SWIG Python bindings @<:@default=auto@:>@])],
+  [],
+  [enable_swig_python_bindings=auto])
 
-AC_ARG_WITH([swig],
-            [AC_HELP_STRING([--with-swig],
-                            [require Swig modules (defaults to auto)])],
-            [],
-            [with_swig=auto])
+# Trick borrowed from autotroll.m4 to get a decent flow control with 'break'.
+for xtc_ignored in once; do
 
-if test x$with_swig != xno; then
-  has_swig=yes
+  # Ensure dynamic libraries are enabled.
+  if test "x$enable_shared" = xno; then
+    if test "x$enable_swig_python_bindings" != xauto; then
+      AC_MSG_ERROR([`--enable-swig-python-bindings' was passed, but dynamic
+libraries are disabled.  Try to invoke configure with `--enable-shared'.])
+    fi
+    break
+  fi
+
+  # Check for SWIG.
+  AC_PROG_SWIG([1.3.35])
+  if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
+    if test "x$enable_swig_python_bindings" != xauto; then
+      AC_MSG_ERROR([`--enable-swig-python-bindings' was passed, but SWIG 1.3.35
+(or greater) cannot be found.])
+    fi
+    break
+  fi
 
   # Check for Python.
-  AM_PATH_PYTHON([2.5])
-  adl_CHECK_PYTHON
+  AM_PATH_PYTHON([2.4], [], [xtc_have_python=no])
+  if test "x$xtc_have_python" = xno; then
+    if test "x$enable_swig_python_bindings" != xauto; then
+      AC_MSG_ERROR([`--enable-swig-python-bindings' was passed, but Python 2.4
+(or greater) cannot be found.])
+    fi
+    break
+  fi
 
-  # Check for Python and SWIG.
+  # Warn about Python 2.6 which probably won't work with our bindings
+  # (for the moment).
+  AS_VERSION_COMPARE([2.5], [$am_cv_python_version],
+    [AC_MSG_WARN([Python 2.6 and greater may not work with SWIG Python bindings.])])
+
+  # Set PYTHONINC path.
+  adl_CHECK_PYTHON
+  # Check for Python headers.
   save_CPPFLAGS=$CPPFLAGS
   CPPFLAGS="$CPPFLAGS -I$PYTHONINC"
-  AC_CHECK_HEADERS([Python.h],
-		   [python_headers=yes],
-	           [python_headers=no])
-
-  if test x$python_headers = xno; then
-    oln_has_swig=no
-    if test x$with_swig = xyes; then
-      AC_MSG_ERROR(
-	  [Python.h is required to build SWIG modules.
-	  Add `-I python_include_path' to `CPPFLAGS'
-	  or `--without-swig' to disable SWIG modules.])
-    fi
-  fi
-
+  AC_CHECK_HEADERS([Python.h], [], [xtc_have_python_h=no])
   CPPFLAGS=$save_CPPFLAGS
-
-  AC_PROG_SWIG([1.3.36])
-  if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
-    has_swig=no
+  if test "x$xtc_have_python_h" = xno; then
+    if test "x$enable_swig_python_bindings" != xauto; then
+      AC_MSG_ERROR([`--enable-swig-python-bindings' was passed, but `Python.h'
+cannot be found.  Try adding `-I <Python include path>' to `CPPFLAGS'.])
+    fi
+    break
   fi
 
-  case $with_swig:$has_swig in
-    yes:no)
-      AC_MSG_ERROR([SWIG 1.3.36 is required.
-                    Use `--without-swig' to disable SWIG modules.]);;
-  esac
+  # All tests passed: enable SWIG Python bindings.
+  xtc_swig_python_bindings=yes
+done
+
+AC_MSG_CHECKING([whether to build SWIG Python bindings])
+if test "x$xtc_swig_python_bindings" = "xyes"; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
 fi
 
-AC_MSG_RESULT([$has_swig])
+AM_CONDITIONAL([SWIG_PYTHON_BINDINGS],
+               [test "x$xtc_swig_python_bindings" = "xyes"])
 
 AC_CONFIG_FILES([swig/Makefile
 		 swig/python/Makefile])

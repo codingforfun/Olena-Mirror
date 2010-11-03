@@ -1,5 +1,15 @@
 2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Revamp the configuration of Extatica's SWIG Python bindings.
+
+	* configure.ac: Here.
+	Lower requirements to SWIG 1.3.35 and Python 2.4.
+	Warn about Python 2.6 and greater.
+	* Makefile.am (SUBDIRS): Remove swig.
+	(SUBDIRS) [SWIG_PYTHON_BINDINGS]: Add swig.
+
+2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use std::string uniformly.
 
 	* src/data.hh (dyn::data::is_const)

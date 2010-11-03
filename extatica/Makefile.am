@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,7 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = libltdl libmd5 bin src config data test swig
+SUBDIRS = libltdl libmd5 bin src config data test
+
+if SWIG_PYTHON_BINDINGS
+  SUBDIRS += swig
+endif SWIG_PYTHON_BINDINGS
 
 ACLOCAL_AMFLAGS = -I config -I libltdl
 
