@@ -63,10 +63,11 @@ OStream& join(const InputIterator& begin, const InputIterator& end,
   InputIterator it = begin;
 
   if (it != end)
-    ostr << *it;
-
-  for (++it; it != end; ++it)
-    ostr << elt << *it;
+    {
+      ostr << *it;
+      for (++it; it != end; ++it)
+	ostr << elt << *it;
+    }
 
   return ostr;
 }
