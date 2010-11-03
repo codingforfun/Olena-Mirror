@@ -112,7 +112,7 @@ namespace dyn {
       ostr << "#include ";
       if (path.find("<") == std::string::npos
 	  || path.find("\"") == std::string::npos)
-	if (path.find(".hh") == path.length() - 3)
+	if (path.find(".hh") == path.size() - 3)
 	  ostr << "\"" << path << "\"";
 	else
 	  ostr << "<" << path << ">";
@@ -208,7 +208,7 @@ namespace dyn {
 	  str::size_type pos;
 	  while ((pos = stripped_type.find(" ")) != str::npos)
 	    stripped_type.erase(pos, 1);
-	  std::string::size_type len = stripped_type.length();
+	  std::string::size_type len = stripped_type.size();
 	  first_type_is_ptr =
 	    ((stripped_type.compare(len - 7, 7, "*const>") == 0)
 	     || (stripped_type.compare(len - 2, 2, "*>") == 0));

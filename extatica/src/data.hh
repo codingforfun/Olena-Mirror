@@ -356,7 +356,7 @@ namespace dyn {
     {
       std::string type_(type());
       return type_.find("dyn::data_proxy_by_ref<") == 0
-          && type_.rfind("const>") == type_.length() - 6;
+          && type_.rfind("const>") == type_.size() - 6;
     }
 
     meth method(const std::string& method_name);

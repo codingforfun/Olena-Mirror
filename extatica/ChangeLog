@@ -1,5 +1,14 @@
 2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use std::string uniformly.
+
+	* src/data.hh (dyn::data::is_const)
+	* src/function_loader.cc (dyn::gen_cxx_path::gen_cxx_path)
+	(dyn::function_loader_t::gen_cxx):
+	Use std::string::size() instead of std::string::length().
+
+2010-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Handle 64-bit hosts properly.
 
 	* src/function_loader.cc (dyn::foreach_path_in_paths)
