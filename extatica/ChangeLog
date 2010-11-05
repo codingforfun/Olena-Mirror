@@ -1,3 +1,9 @@
+2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the text of the GNU GPL v2 to Extatica.
+
+	* COPYING: New.
+
 2010-11-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Credit authors of Extatica.
