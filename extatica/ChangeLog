@@ -1,5 +1,9 @@
 2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Do not pass option `foreign' to Automake.
+
+2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a NEWS file to Extatica.
 
 	* NEWS: New.

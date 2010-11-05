@@ -34,7 +34,7 @@ AC_INIT([Extatica], [0.1], [olena@lrde.epita.fr], [extatica])
 AC_CONFIG_AUX_DIR([_config])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 -Wall nostdinc])
+AM_INIT_AUTOMAKE([1.10 check-news dist-bzip2 -Wall nostdinc])
 
 
 ## --------------------- ##
