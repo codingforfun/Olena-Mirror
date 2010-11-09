@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -19,10 +19,4 @@
 # \file 
 # \brief Configuration values of the package.
 
-# FIXME: We might want to turn this into a config.py.in file and
-# generate it instead of getting variables from the environment.
-
-import os
-
-abs_top_srcdir = os.environ["abs_top_srcdir"]
-abs_milena_dir = os.path.join(abs_top_srcdir, "..", "milena")
+abs_milena_dir = "@MILENA_DIR@"

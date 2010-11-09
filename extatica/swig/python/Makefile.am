@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,7 +23,6 @@
 
 ## FIXME: Adjust.
 
-CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_builddir)/src -I$(top_srcdir)/src
 ## FIXME: Define an equivalent to Olena's TOOLS_CXXFLAGS?
 ##TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
@@ -50,8 +49,34 @@ libdynmilena_la = $(top_builddir)/src/wrappers/libdynmilena.la $(libdyn_la)
 # ltihooks.py: Python import hooks that understand Libtool libraries.
 python_PYTHON = ltihooks.py
 
-# config.py: Configuration values of the package.
-EXTRA_DIST = config.py
+# Use Make to generate `config.py' instead of `configure', as advised
+# by Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
+         -e 's|@MILENA_DIR[@]|$(MILENA_DIR)|g'
+
+# config.py: Access to the data of the distribution (images, meshes,
+# etc.).
+#
+# Use the all-local hook instead of the nodist_noinst_PYTHON variable,
+# since ``[...] byte-compilation occurs at install time, any files
+# listed in `noinst_PYTHON' will not be compiled'' (and therefore
+# generated, in our case), according to Automake's manual,
+all-local: config.py
+EXTRA_DIST = config.py.in
+config.py: config.py.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+CLEANFILES = config.py config.py[co]
 
 
 ## ----------------- ##

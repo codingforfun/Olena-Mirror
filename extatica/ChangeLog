@@ -1,3 +1,16 @@
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Generate Extatica's swig/python/config.py.
+
+	* swig/python/config.py: Remove.
+	Superseded by...
+	* swig/python/config.py.in: ...this (new) file.
+	* swig/python/Makefile.am (edit): New variable.
+	(all-local): Depend on...
+	(config.py): ...this (new) target.
+	(EXTRA_DIST): s/config.py/config.py.in/.
+	(CLEANFILES) Add config.py and config.py[co].
+
 2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use intermediate variables in src/Makefile.am.
