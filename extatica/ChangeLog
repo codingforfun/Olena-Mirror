@@ -1,3 +1,13 @@
+2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Mention Libiberty in Extatica's AUTHORS, NEWS and README.
+
+	* AUTHORS, NEWS: Here.
+	* README (GNU Libiberty): Remove the paragraph on Libiberty as a
+	dependency.
+	(Layout of the Tarball): Mention directories `include' and
+	`libiberty'.
+
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Work around a defect in Libiberty's `configure.ac' (in Extatica).

@@ -15,6 +15,7 @@ Active LRDE Staff.
   - Addition of a few wrappers around Milena.
   - First experiments with SWIG and Python.
   - Modernization of the package and renaming as ``Extatica''.
+  - Integration of a Libiberty (for the C++ mangler/demangler).
 
 ================================
 Past contributors of LRDE Staff.

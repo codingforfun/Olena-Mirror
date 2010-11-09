@@ -116,14 +116,6 @@ section by this command:
 
      % ../configure --with-milena=$HOME/local
 
-GNU Libiberty
-=============
-
-Extatica depends on GNU Libiberty, which is part of GNU Binutils (and
-GCC).  If `configure' cannot find Libiberty, you can pass the path to
-the library (usually named `libiberty.a') through `LDFLAGS', e.g.
-
-     % ../configure LDFLAGS="-L/opt/local/lib"
 
 Installation Path
 =================
@@ -255,6 +247,12 @@ config
 
 data
    Extatica template used to generate wrappers.
+
+include
+   Headers of Libiberty.
+
+libiberty
+   Third-party library containing a C++ mangler/demangler.
 
 libltdl
    Third-party library used to load dynamic modules.

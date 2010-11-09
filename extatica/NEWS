@@ -7,8 +7,9 @@
 	  ``Extatica''.
 
 	* Better handling of extra dependencies of the package: many
-	  Ruby parts have been turned into C++ code; dependencies (MD5)
-	  have been integrated into the project.
+	  Ruby parts have been turned into C++ code; dependencies (MD5,
+	  Libiberty's C++ mangler/demangler) have been integrated into
+	  the project.
 
 	* First experiments with Milena: addition of a few wrappers
 	  around Milena routines; first ``dynamic'' Python wrappers
