@@ -1,5 +1,27 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the distribution of Extatica.
+
+	* config/Makefile.am (ruby.m4): Remove wrong and useless
+	target.
+	(dist_noinst_SCRIPTS): Add erbx rbconfig_gen.rb
+	mk_local_config_rb_in.rb.
+	* bin/Makefile.am (noinst_SCRIPTS): Rename as...
+	(dist_noinst_SCRIPTS): ...this, so that scripts are distributed.
+	* src/Makefile.am (libdyn_la_SOURCES): Remove config.h, as it is
+	already distributed as a product of `configure'.
+	Move all_methods.hh, all_methods.cc, function.hh and
+	function.cc...
+	(nodist_libdyn_la_SOURCES): ...here (new variables).
+	(EXTRA_DIST): New variable.
+	(dyn-all.hh, dyn-light.hh): Do not use a pipe to filter
+	concatenated files, to be able to catch errors in the call to
+	`cat' (e.g., missing files).
+	* test/Makefile.am (EXTRA_DIST): Add fixtures/my_lib/lib.hh,
+	fixtures/my_lib/damien.hh and fixtures/my_lib/damien.hxx.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix cleaning rules in Extatica.
 
 	* data/Makefile.am (CLEANFILES): Add Makefile.template and

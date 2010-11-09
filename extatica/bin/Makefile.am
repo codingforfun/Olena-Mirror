@@ -1,4 +1,4 @@
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,5 +16,5 @@
 
 bin_SCRIPTS = dyn-config
 # FIXME put dyn- before these binaries
-noinst_SCRIPTS = mk_swig_input swig_tree_to_yaml yaml_to_dyn_decls
+dist_noinst_SCRIPTS = mk_swig_input swig_tree_to_yaml yaml_to_dyn_decls
 BUILT_SOURCES = dyn-config

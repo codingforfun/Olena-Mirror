@@ -1,4 +1,4 @@
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,4 +14,4 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-ruby.m4: rbconfig_gen.rb config/mk_local_config_rb_in.rb
+dist_noinst_SCRIPTS = erbx rbconfig_gen.rb mk_local_config_rb_in.rb

@@ -75,6 +75,11 @@ milena_test_DEPENDENCIES = $(top_builddir)/src/libdyn.la
 
 #erb# =end_generated
 
+# Fixtures.
+EXTRA_DIST =						\
+  fixtures/my_lib/lib.hh				\
+  fixtures/my_lib/damien.hh fixtures/my_lib/damien.hxx
+
 TESTS = $(check_PROGRAMS)
 
 tests: $(check_PROGRAMS)
