@@ -1,6 +1,6 @@
 #
 # Makefile
-#   Copyright (C) 1999, 2002, 2006
+#   Copyright (C) 1999, 2002, 2006, 2010
 #   Free Software Foundation
 #
 # This file is part of the libiberty library.
@@ -77,10 +77,15 @@ html install-html info install-info clean-info dvi pdf install-pdf \
 install etags tags installcheck:
 
 # The standard clean rules.
+# Names ending in `.dSYM' are directories created by the compiler on
+# Darwin (Mac OS X).
 mostlyclean:
 	rm -f test-demangle
+	rm -rf test-demangle.dSYM
 	rm -f test-pexecute
+	rm -rf test-pexecute.dSYM
 	rm -f test-expandargv
+	rm -rf test-expandargv.dSYM
 	rm -f core
 clean: mostlyclean
 distclean: clean

@@ -1,5 +1,14 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix cleaning rules in Libiberty.
+
+	* libiberty/Makefile.in (distclean): Remove configure.lineno and
+	config.status.lineno.
+	* libiberty/testsuite/Makefile.in (mostlyclean): Remove
+	directories ending in `.dSYM'.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Libiberty compatible with Automake.
 
 	* libiberty/local.mk: New helper, containing missing recursive

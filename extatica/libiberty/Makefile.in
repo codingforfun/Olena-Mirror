@@ -430,7 +430,7 @@ distclean: distclean-subdir
 	$(MAKE) SUBDIRS="" clean
 	@$(MULTICLEAN) multi-clean DO=distclean
 	-rm -f *~ Makefile config.cache config.status xhost-mkfrag TAGS multilib.out
-	-rm -f config.log
+	-rm -f config.log configure.lineno config.status.lineno
 	-rmdir testsuite 2>/dev/null
 maintainer-clean realclean: maintainer-clean-subdir
 	$(MAKE) SUBDIRS="" distclean
