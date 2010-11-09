@@ -1,5 +1,19 @@
 2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Cleanup and aesthetic changes.
+
+	* .vcs: Remove.
+	* src/function_loader.cc,
+	* swig/mln.i,
+	* swig/python/config.py.in,
+	* test/fixtures/my_lib/damien.hh,
+	* test/fixtures/my_lib/damien.hxx,
+	* test/fixtures/my_lib/lib.hh,
+	* test/vaucanson/test-loader.cc:
+	Fix punctuation.
+
+2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename Dyn as Extatica within the project.
 
 	* config.site: s/dyn/extatica/.

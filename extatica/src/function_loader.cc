@@ -1,5 +1,5 @@
 /* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
-   Laboratory (LRDE)
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
