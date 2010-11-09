@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -48,3 +49,5 @@ Makefile.repository: Makefile
 	    -e 's/^SUBDIRS = .*/SUBDIRS = $$(shell ls | grep -v Makefile)/' \
 	    -e 's|^Makefile: |Makefile.old: |' \
 	    -e 's|^VPATH = .*|VPATH = .|' | grep -v '^include ' > $@
+
+CLEANFILES = Makefile.template Makefile.repository

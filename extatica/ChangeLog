@@ -1,5 +1,18 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix cleaning rules in Extatica.
+
+	* data/Makefile.am (CLEANFILES): Add Makefile.template and
+	Makefile.repository.
+	* swig/python/Makefile.am (CLEANFILES)
+	* test/Makefile.am (CLEANFILES):
+	Add dyn.log.
+	* test/wrappers/Makefile.am (CLEANFILES): Likewise.
+	(clean-local): Depend on...
+	(clean-repository): ...this new (phony) target.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate Extatica's swig/python/config.py.
 
 	* swig/python/config.py: Remove.

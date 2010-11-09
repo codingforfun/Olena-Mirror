@@ -149,6 +149,9 @@ TESTS = milena-libdyn.py milena-libdynmilena.py
 # FIXME: Is this really needed?
 EXTRA_DIST += $(TESTS)
 
+# Log produced by libdyn.
+CLEANFILES += dyn.log
+
 clean-local: clean-repository
 .PHONY: clean-repository
 clean-repository:

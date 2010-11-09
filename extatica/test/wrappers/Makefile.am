@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,3 +23,11 @@ check_PROGRAMS = test-milena
 test_milena_SOURCES = test-milena.cc
 
 TESTS = $(check_PROGRAMS)
+
+# Log produced by libdyn.
+CLEANFILES = dyn.log
+
+clean-local: clean-repository
+.PHONY: clean-repository
+clean-repository:
+	-rm -rf repository
