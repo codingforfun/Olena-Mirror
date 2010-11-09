@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,7 +23,7 @@ def expand ( var, binding )
   var.gsub(/\$\{(.*)\}/) { eval($1, binding) }
 end
 
-name = 'libdyn'
+name = 'libextatica'
 version = '0.1'
 prefix = Pathname.new('@prefix@')
 includedir = expand('@includedir@', binding)
@@ -33,14 +33,14 @@ exec_prefix = expand('@exec_prefix@', binding)
 libdir = expand('@libdir@', binding)
 
 libtool_flags = '-export-dynamic'
-libdir_libdyn_la = Pathname.new("#{libdir}/libdyn.la")
-if libdir_libdyn_la.exist? # FIXME Perhaps is assertion is bad.
+libdir_libextatica_la = Pathname.new("#{libdir}/libextatica.la")
+if libdir_libextatica_la.exist? # FIXME Perhaps is assertion is bad.
   cflags = "-I#{includedir}"
   libtool = 'libtool' # Hope that libtool is installed
-  libtool_libs = "#{libdir_libdyn_la} #{libtool_flags}"
+  libtool_libs = "#{libdir_libextatica_la} #{libtool_flags}"
 else
   cflags = "-I#{top_builddir}/src -I#{top_srcdir}/src"
-  libtool_libs = "#{top_builddir}/src/libdyn.la #{libtool_flags}"
+  libtool_libs = "#{top_builddir}/src/libextatica.la #{libtool_flags}"
   libtool = "#{top_builddir}/libtool"
 end
 

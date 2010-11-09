@@ -19,8 +19,8 @@ AC_PREREQ([2.61])
 
 # Catch some macros that are not expanded.
 m4_pattern_forbid([^AC_LIBLTDL_])
-m4_pattern_forbid([^DYN_])
-m4_pattern_allow([^DYN_FIXTURES$])
+m4_pattern_forbid([^XTC_])
+m4_pattern_allow([^XTC_FIXTURES$])
 m4_pattern_forbid([^ERB$])
 m4_pattern_forbid([^RBCONFIG$])
 
@@ -51,7 +51,7 @@ if test "$GXX" = yes; then
 fi
 
 # Use good warnings.
-DYN_CXX_WARNINGS([[-Wall],
+XTC_CXX_WARNINGS([[-Wall],
                   [-W],
                   [-Wcast-align],
                   [-Wcast-qual],
@@ -194,11 +194,11 @@ my_abs_srcdir=`cd $srcdir && pwd`
 my_abs_builddir=`pwd`
 
 # FIXME: Remove me when function_loader will be pure C++
-AC_SUBST([DYNDIR], [$my_abs_srcdir/src])
+AC_SUBST([XTCDIR], [$my_abs_srcdir/src])
 
-AC_SUBST([DYN_DATADIR], [$my_abs_builddir/data])
+AC_SUBST([XTC_DATADIR], [$my_abs_builddir/data])
 
-AC_SUBST([DYN_FIXTURES], [$my_abs_srcdir/test/fixtures])
+AC_SUBST([XTC_FIXTURES], [$my_abs_srcdir/test/fixtures])
 
 ## -------- ##
 ## Milena.  ##
@@ -254,7 +254,7 @@ AM_CONFIG_HEADER([_config/config.h])
 AC_CONFIG_FILES([
   Makefile
   bin/Makefile
-  bin/dyn-config
+  bin/xtc-config
   libmd5/Makefile
   src/Makefile
   src/config.hh
@@ -265,7 +265,7 @@ AC_CONFIG_FILES([
   test/Makefile
     test/vaucanson/Makefile
     test/wrappers/Makefile
-], [chmod +x bin/dyn-config])
+], [chmod +x bin/xtc-config])
 
 # Instantiate the output files.
 AC_OUTPUT

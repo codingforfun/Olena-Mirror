@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,5 +21,5 @@
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_builddir)/src
 
 # Wrapping a few Milena routines.
-lib_LTLIBRARIES = libdynmilena.la
-libdynmilena_la_SOURCES = milena.hh milena.cc
+lib_LTLIBRARIES = libextatica-milena.la
+libextatica_milena_la_SOURCES = milena.hh milena.cc

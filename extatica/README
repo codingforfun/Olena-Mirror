@@ -26,6 +26,6 @@ From the repository:
   CONFIG_SITE=`pwd`/../config.site ../configure --prefix=`pwd`/../_install
 
   # You may want to add the `bin/' directory to your path, but it is
-  # no longer mandatory (`dyn-config' from `bin/' used to be required
+  # no longer mandatory (`xtc-config' from `bin/' used to be required
   # by programs compiled with our system).
   export PATH=$PATH:`pwd`/bin

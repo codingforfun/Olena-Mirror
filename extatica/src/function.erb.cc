@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_FUNCTION_CC
-# define DYN_FUNCTION_CC
+#ifndef XTC_FUNCTION_CC
+# define XTC_FUNCTION_CC
 
 # include <cassert>
 # include <string>
@@ -32,10 +32,10 @@
 # include <list>
 # include "function_loader.hh"
 
-namespace dyn
+namespace xtc
 {
 
-    <%- DYN_MAX_ARGUMENTS.times do |i| -%>
+    <%- XTC_MAX_ARGUMENTS.times do |i| -%>
 
       <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" }.join(', ') -%>
       <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
@@ -43,7 +43,7 @@ namespace dyn
       data
       generic_fun::operator() (<%= arguments %>) const
       {
-        typedef data (*func_t)(<%= (['const dyn::data&'] * i).join(', ') %>);
+        typedef data (*func_t)(<%= (['const xtc::data&'] * i).join(', ') %>);
         arguments_types_t arguments_types;
 
         if (obj_ptr_)
@@ -58,7 +58,7 @@ namespace dyn
 
         if (obj_ptr_)
         {
-          typedef data (*func_t2)(<%= (['const dyn::data&'] * (i + 1)).join(', ') %>);
+          typedef data (*func_t2)(<%= (['const xtc::data&'] * (i + 1)).join(', ') %>);
           return ((func_t2)ptr)(<%= (['*obj_ptr_'] + objects).join(', ') %>);
         }
 
@@ -67,6 +67,6 @@ namespace dyn
 
     <%- end -%>
 
-} // end of namespace dyn
+} // end of namespace xtc
 
-#endif // ! DYN_FUNCTION_CC
+#endif // ! XTC_FUNCTION_CC

@@ -1,3 +1,75 @@
+2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename Dyn as Extatica within the project.
+
+	* config.site: s/dyn/extatica/.
+	* README,
+	* bin/Makefile.am,
+	* bin/mk_swig_input,
+	* config/erbx,
+	* config/warning.m4,
+	* configure.ac,
+	* data/Makefile.am,
+	* data/function.cc,
+	* src/Makefile.am,
+	* src/all_methods.erb.cc,
+	* src/all_methods.erb.hh,
+	* src/config.hh.in,
+	* src/data.cc,
+	* src/data.hh,
+	* src/data.hxx,
+	* src/function.erb.cc,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/libiberty-fix.c,
+	* src/name_of.cc,
+	* src/name_of.hh,
+	* src/policy.cc,
+	* src/policy.hh,
+	* src/ruby_stream.cc,
+	* src/ruby_stream.hh,
+	* src/wrappers/Makefile.am,
+	* src/wrappers/milena.cc,
+	* src/wrappers/milena.hh,
+	* swig/Makefile.am,
+	* swig/mln.i,
+	* swig/python/Makefile.am,
+	* test/Makefile.am,
+	* test/test_containers.cc,
+	* test/test_damien.cc,
+	* test/test_function_loader.cc,
+	* test/test_methods.cc,
+	* test/test_milena.cc,
+	* test/test_var_and_val.cc,
+	* test/vaucanson/Makefile.am,
+	* test/wrappers/Makefile.am,
+	* test/wrappers/test-milena.cc:
+	s/libdyn/libextatica/.
+	s/libdynmilena/libextatica-milena/.
+	s/dyn-config/xtc-config/.
+	s/DYNDIR/XTCDIR/.
+	s/DYN_DATADIR/XTC_DATADIR/.
+	s/DYN_FIXTURES/XTC_FIXTURES/.
+	s/dyn/xtc/.
+	Adjust.
+	* bin/dyn-config.in,
+	* bin/yaml_to_dyn_decls,
+	* src/dyn.hh,
+	* swig/python/milena-libdynmilena.py,
+	* swig/python/milena-libdyn.py,
+	* swig/dyn.i:
+	Likewise.
+	Rename as...
+	* bin/xtc-config.in,
+	* bin/yaml_to_xtc_decls,
+	* src/extatica.hh,
+	* swig/python/milena-libextatica-milena.py,
+	* swig/python/milena-libextatica.py,
+	* swig/xtc.i:
+	...this.
+
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add support for configuration option `--with-milena' in Extatica.

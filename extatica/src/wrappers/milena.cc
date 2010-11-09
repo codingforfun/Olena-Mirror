@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -31,7 +31,7 @@
 /// \todo The next step is to generate (semi-)automatically this file
 /// from Milena's (possibly annotated) source files.
 
-namespace dyn
+namespace xtc
 {
 
   namespace mln
@@ -43,11 +43,11 @@ namespace dyn
 
     void initialize()
     {
-      dyn::include_dir(MILENA_DIR);
-      dyn::include("mln/core/image/image2d.hh");
-      dyn::include("mln/data/fill.hh");
-      dyn::include("mln/debug/iota.hh");
-      dyn::include("mln/debug/println.hh");
+      xtc::include_dir(MILENA_DIR);
+      xtc::include("mln/core/image/image2d.hh");
+      xtc::include("mln/data/fill.hh");
+      xtc::include("mln/debug/iota.hh");
+      xtc::include("mln/debug/println.hh");
     }
 
 
@@ -65,6 +65,6 @@ namespace dyn
 
     // ...
 
-  } // end of namespace dyn::mln
+  } // end of namespace xtc::mln
 
-} // end of namespace dyn
+} // end of namespace xtc

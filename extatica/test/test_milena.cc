@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,17 +24,17 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 
-using namespace dyn::language;
+using namespace xtc::language;
 
 int main()
 {
-  dyn::include_dir(MILENA_DIR);
-  dyn::include("mln/core/image/image2d.hh");
-  dyn::include("mln/data/fill.hh");
-  dyn::include("mln/debug/iota.hh");
-  dyn::include("mln/debug/println.hh");
+  xtc::include_dir(MILENA_DIR);
+  xtc::include("mln/core/image/image2d.hh");
+  xtc::include("mln/data/fill.hh");
+  xtc::include("mln/debug/iota.hh");
+  xtc::include("mln/debug/println.hh");
 
   ctor mk_image2d_int("mln::image2d<int>");
   fun fill("mln::data::fill");

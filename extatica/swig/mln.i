@@ -1,6 +1,6 @@
 							// -*- C++ -*-
 
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 
    This file is part of Olena.
 
@@ -26,14 +26,14 @@
    executable file might be covered by the GNU General Public License.  */
 
 /// \file
-/// \brief A wrapper of libdynmilena.
+/// \brief A wrapper of libextatica-milena.
 
 %module mln
 
-%import dyn.i
+%import xtc.i
 
 %{
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 #include "wrappers/milena.hh"
 %}
 
@@ -42,5 +42,5 @@
 %init
 %{
   // Set up header paths.
-  dyn::mln::initialize();
+  xtc::mln::initialize();
 %}

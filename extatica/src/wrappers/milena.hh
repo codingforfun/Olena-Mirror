@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_WRAPPERS_MILENA_HH
-# define DYN_WRAPPERS_MILENA_HH
+#ifndef XTC_WRAPPERS_MILENA_HH
+# define XTC_WRAPPERS_MILENA_HH
 
 /// \file
 /// \brief Declaration of Milena wrappers.
@@ -32,9 +32,9 @@
 /// \todo The next step is to generate (semi-)automatically this file
 /// from Milena's (possibly annotated) source files.
 
-# include <dyn-all.hh>
+# include <xtc-all.hh>
 
-namespace dyn
+namespace xtc
 {
 
   namespace mln
@@ -47,7 +47,7 @@ namespace dyn
     /* FIXME: This is not really elegant, but this is a lot safer than
        the previous approach relying on the (implementation-defined)
        order of initialization of global objects' ctors.  We can
-       probably improve this by reworking dyn::function_loader.  See
+       probably improve this by reworking xtc::function_loader.  See
        also hints and advice from
        http://en.allexperts.com/q/C-1040/Constructors-Global-Object.htm.  */
 
@@ -61,18 +61,18 @@ namespace dyn
     | A few wrapped routines.  |
     `-------------------------*/
 
-    extern dyn::language::ctor mk_image2d_int;
+    extern xtc::language::ctor mk_image2d_int;
 
-    extern dyn::language::fun fill;
-    extern dyn::language::fun iota;
-    extern dyn::language::fun println;
+    extern xtc::language::fun fill;
+    extern xtc::language::fun iota;
+    extern xtc::language::fun println;
 
     // FIXME: Wrap more routines.
 
     // ...
 
-  } // end of namespace dyn::mln
+  } // end of namespace xtc::mln
 
-} // end of namespace dyn
+} // end of namespace xtc
 
-#endif // ! DYN_WRAPPERS_MILENA_HH
+#endif // ! XTC_WRAPPERS_MILENA_HH

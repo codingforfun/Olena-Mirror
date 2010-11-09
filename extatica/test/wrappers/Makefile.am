@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-LDADD =						\
-  $(top_builddir)/src/wrappers/libdynmilena.la	\
-  $(top_builddir)/src/libdyn.la 
+LDADD =							\
+  $(top_builddir)/src/wrappers/libextatica-milena.la	\
+  $(top_builddir)/src/libextatica.la 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_builddir)/src
 
 check_PROGRAMS = test-milena
@@ -24,8 +24,8 @@ test_milena_SOURCES = test-milena.cc
 
 TESTS = $(check_PROGRAMS)
 
-# Log produced by libdyn.
-CLEANFILES = dyn.log
+# Log produced by libextatica.
+CLEANFILES = xtc.log
 
 clean-local: clean-repository
 .PHONY: clean-repository

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,12 +23,12 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_POLICY_CC
-# define DYN_POLICY_CC
+#ifndef XTC_POLICY_CC
+# define XTC_POLICY_CC
 
 # include "policy.hh"
 
-namespace dyn
+namespace xtc
 {
   namespace policy
   {
@@ -40,4 +40,4 @@ namespace dyn
   }
 }
 
-#endif // ! DYN_POLICY_CC
+#endif // ! XTC_POLICY_CC

@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,13 +24,13 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_FUNCTION_HH
-# define DYN_FUNCTION_HH
+#ifndef XTC_FUNCTION_HH
+# define XTC_FUNCTION_HH
 
 # include <cassert>
 # include <string>
 
-namespace dyn
+namespace xtc
 {
 
   enum fun_kind
@@ -53,7 +54,7 @@ namespace dyn
       header_paths_(header_paths), obj_ptr_(obj_ptr) {}
 
 
-    <%- DYN_MAX_ARGUMENTS.times do |i| -%>
+    <%- XTC_MAX_ARGUMENTS.times do |i| -%>
       data
       operator() (<%= (["const data&"] * i).join(', ') %>) const;
     <%- end -%>
@@ -83,6 +84,6 @@ namespace dyn
                   header_paths, obj_ptr) {}
   };
 
-} // end of namespace dyn
+} // end of namespace xtc
 
-#endif // ! DYN_FUNCTION_HH
+#endif // ! XTC_FUNCTION_HH

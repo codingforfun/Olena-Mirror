@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,6 +16,6 @@
 
 SUBDIRS = python
 
-EXTRA_DIST = dyn.i mln.i
+EXTRA_DIST = xtc.i mln.i
 
 check_SCRIPTS = run

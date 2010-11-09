@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -25,13 +26,13 @@
 
 #include <iostream>
 
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 
-using namespace dyn::language;
+using namespace xtc::language;
 
 int main()
 {
-  dyn::include_dir(DYN_FIXTURES);
+  xtc::include_dir(XTC_FIXTURES);
 
   std::cout << "Test methods" << std::endl;
   ctor mk_down_int("down<int>", "my_lib/damien.hh");

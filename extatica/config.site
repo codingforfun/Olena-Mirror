@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 
-if test $PACKAGE_TARNAME == dyn; then
+if test $PACKAGE_TARNAME == extatica; then
 
 # Use the cache.
 cache_file=config.cache

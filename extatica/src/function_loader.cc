@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE)
 
    This file is part of Olena.
 
@@ -23,8 +24,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_FUNCTION_LOADER_CC
-# define DYN_FUNCTION_LOADER_CC
+#ifndef XTC_FUNCTION_LOADER_CC
+# define XTC_FUNCTION_LOADER_CC
 
 # include <cstdlib>
 
@@ -46,10 +47,10 @@
 
 // For more details about this, see
 // http://www.gnu.org/prep/standards/html_node/Conditional-Compilation.html
-# ifdef DYN_RUBY_GENERATOR
-#  define HAVE_DYN_RUBY_GENERATOR true
+# ifdef XTC_RUBY_GENERATOR
+#  define HAVE_XTC_RUBY_GENERATOR true
 # else
-#  define HAVE_DYN_RUBY_GENERATOR false
+#  define HAVE_XTC_RUBY_GENERATOR false
 # endif
 
 namespace bfs = boost::filesystem;
@@ -73,7 +74,7 @@ OStream& join(const InputIterator& begin, const InputIterator& end,
 }
 
 
-namespace dyn {
+namespace xtc {
 
   ruby::environment ruby_environment;
 
@@ -147,9 +148,9 @@ namespace dyn {
     function_loader_t()
     {
       lt_dlinit();
-      if (HAVE_DYN_RUBY_GENERATOR)
+      if (HAVE_XTC_RUBY_GENERATOR)
 	{
-	  ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
+	  ruby << "$: << \"" << XTCDIR << "\"" << ruby::eval;
 	  ruby << "require 'function_loader'" << ruby::eval;
 	  ruby << "require 'md5'" << ruby::eval;
 	  ruby << "Signal.trap(:SEGV, 'IGNORE')" << ruby::eval;
@@ -178,16 +179,16 @@ namespace dyn {
       bool first_type_is_ptr = false;
       str_list::const_iterator it;
 
-      ostr << "#include \"dyn-light.hh\"\n";
+      ostr << "#include \"xtc-light.hh\"\n";
 
       gen_cxx_path<OStream> fun(ostr);
       foreach_path_in_paths(paths, fun);
 
       ostr << "extern \"C\" {\n"
-	   << "  namespace dyn {\n"
+	   << "  namespace xtc {\n"
 	   << "    namespace generated {\n"
 	   << "      data\n"
-	   << "      dyn_" << identifier << "(";
+	   << "      xtc_" << identifier << "(";
 
       int i = 0;
       for (it = args.begin(); it != args.end(); ++it, ++i)
@@ -256,7 +257,7 @@ namespace dyn {
 	  // no break here
 	case METH:
 	case FUN:
-	  body << "policy::receiver<select_dyn_policy(("
+	  body << "policy::receiver<select_xtc_policy(("
 	       << call.str() << "))> receiver;" << nl
 	       << "(receiver(), " << call.str() << ");" << nl
 	       << "data ret(receiver.proxy(), (proxy_tag*)0);" << nl
@@ -308,13 +309,13 @@ namespace dyn {
     cxx_compile(const std::string& cxx, const std::string& identifier,
 		const std::string& cflags, const std::string& ldflags)
     {
-      bfs::path dyn_datadir(DYN_DATADIR);
+      bfs::path xtc_datadir(XTC_DATADIR);
 
       bfs::path repository("repository");
       if (!bfs::exists(repository))
 	{
 	  bfs::create_directory(repository);
-	  bfs::create_symlink(dyn_datadir / "Makefile.repository",
+	  bfs::create_symlink(xtc_datadir / "Makefile.repository",
 			      repository / "Makefile");
 	}
 
@@ -323,32 +324,32 @@ namespace dyn {
 	{
 	  bfs::create_directory(dir);
 
-	  bfs::ifstream makefile_orig_str(dyn_datadir / "Makefile.template");
+	  bfs::ifstream makefile_orig_str(xtc_datadir / "Makefile.template");
 	  std::stringstream makefile_orig;
 	  makefile_orig << makefile_orig_str.rdbuf();
 	  bfs::ofstream makefile(dir / "Makefile");
 	  /* FIXME: We might want to use boost::format in several
 	     places here, since
 
-	       (boost::format("libdyn_%1%.la") % identifier).str()
+	       (boost::format("libextatica_%1%.la") % identifier).str()
 
 	     may be more elegant than
 
-	       std::string("libdyn_") + identifier + ".la")
+	       std::string("libextatica_") + identifier + ".la")
 	  */
 	  /* FIXME: It would be more elegant if we could replace
-	     `libdyn_function.la' on the fly while copying the
+	     `libextatica_function.la' on the fly while copying the
 	     Makefile (as we would do with Perl).  See what Boost
 	     proposes.  */
 	  makefile <<
 	    ba::replace_all_copy(makefile_orig.str(),
-				 "libdyn_function.la",
-				 std::string("libdyn_") + identifier + ".la");
+				 "libextatica_function.la",
+				 std::string("libextatica_") + identifier + ".la");
 	  makefile << "CXXFLAGS += " << cflags << std::endl;
 	  makefile << "LDFLAGS += " << ldflags << std::endl;
 
 	  bfs::create_directory(dir / ".deps");
-	  bfs::ofstream(dir / ".deps" / "libdyn_function_la-function.Plo");
+	  bfs::ofstream(dir / ".deps" / "libextatica_function_la-function.Plo");
 
 	  bfs::path file = dir / "function.cc";
 	  bfs::ofstream function(file);
@@ -434,8 +435,8 @@ namespace dyn {
 
       const char* error;
       std::string lib_path = std::string("repository/") + identifier
-			     + "/libdyn_" + identifier + ".la";
-      std::string symb = std::string("dyn_") + identifier;
+			     + "/libextatica_" + identifier + ".la";
+      std::string symb = std::string("xtc_") + identifier;
 
       lt_dlhandle lib = lt_dlopen(lib_path.c_str());
       if ((error = lt_dlerror())) std::cerr << error << std::endl;
@@ -525,8 +526,8 @@ namespace dyn {
 
       const char* error;
       std::string lib_path = std::string("repository/") + identifier
-			     + "/libdyn_" + identifier + ".la";
-      std::string symb = std::string("dyn_") + identifier;
+			     + "/libextatica_" + identifier + ".la";
+      std::string symb = std::string("xtc_") + identifier;
 
       lt_dlhandle lib = lt_dlopen(lib_path.c_str());
       if ((error = lt_dlerror())) std::cerr << error << std::endl;
@@ -580,7 +581,7 @@ namespace dyn {
 		const arguments_types_t& arguments_types,
 		const std::string& header_path)
   {
-    if (HAVE_DYN_RUBY_GENERATOR)
+    if (HAVE_XTC_RUBY_GENERATOR)
       return function_loader.ruby_load(kind, name, arguments_types,
 				       header_path);
     else
@@ -588,6 +589,6 @@ namespace dyn {
 				      header_path);
   }
 
-} // end of namespace dyn
+} // end of namespace xtc
 
-#endif // ! DYN_FUNCTION_LOADER_CC
+#endif // ! XTC_FUNCTION_LOADER_CC

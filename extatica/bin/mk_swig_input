@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -38,7 +38,7 @@ File.open('all.hh', 'w') do |all|
   end
 end
 dirs = ARGV.map {|x| '-I' + x}
-`g++ #{dirs.join ' '} -I. #{CFLAGS} -I#{DYNDIR} #{flags} -E all.hh | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
+`g++ #{dirs.join ' '} -I. #{CFLAGS} -I#{XTCDIR} #{flags} -E all.hh | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
   line.chomp!
   line.gsub!(/^.*include\/(vaucanson\/.*)".*$/, '\1')
   next unless line =~ patt

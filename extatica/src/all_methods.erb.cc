@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,18 +23,18 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_ALL_METHODS_CC
-# define DYN_ALL_METHODS_CC
+#ifndef XTC_ALL_METHODS_CC
+# define XTC_ALL_METHODS_CC
 
-# define DYN_FULL_IMPLEMENTATION
+# define XTC_FULL_IMPLEMENTATION
 # include "all_methods.hh"
 # include "data.hh"
 # include "function.hh"
 
-namespace dyn
+namespace xtc
 {
 
-<%- (DYN_MAX_ARGUMENTS - 1).times do |i| -%>
+<%- (XTC_MAX_ARGUMENTS - 1).times do |i| -%>
   <%- arguments = (0 .. i - 1).map { |j| "const data& arg#{j}" } -%>
   <%- objects   = (0 .. i - 1).map { |j| "arg#{j}" } -%>
 
@@ -59,4 +59,4 @@ namespace dyn
 
 }
 
-#endif // ! DYN_ALL_METHODS_CC
+#endif // ! XTC_ALL_METHODS_CC

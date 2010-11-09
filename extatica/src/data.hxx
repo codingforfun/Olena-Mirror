@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_DATA_HXX
-# define DYN_DATA_HXX
+#ifndef XTC_DATA_HXX
+# define XTC_DATA_HXX
 
 # include <string>
 # include <cassert>
@@ -33,14 +33,14 @@
 # include "function.hh"
 # include "name_of.hh"
 
-namespace dyn {
+namespace xtc {
 
   template <typename T>
   T data::convert_to() const
   {
-    static fun dyn_data_cast(std::string("data_cast< ") +
+    static fun xtc_data_cast(std::string("data_cast< ") +
                              type() + ", " + mlc_name<T>::of() + " >");
-    return dyn_data_cast(*this);
+    return xtc_data_cast(*this);
   }
 
 
@@ -68,19 +68,19 @@ namespace dyn {
   data& data::operator=(const T& rhs)
   {
     assert(proxy_);
-    static fun dyn_data_assign(std::string("data_assign<") + proxy()->type() + ", " + mlc_name<T>::of() + ">");
-    dyn_data_assign(*this, rhs);
+    static fun xtc_data_assign(std::string("data_assign<") + proxy()->type() + ", " + mlc_name<T>::of() + ">");
+    xtc_data_assign(*this, rhs);
     return *this;
   }
 
 }
 
-std::ostream& operator<<(std::ostream& ostr, const dyn::data& d);
-std::istream& operator>>(std::istream& istr, dyn::data& d);
-dyn::data& operator++(dyn::data& d);
-dyn::data& operator--(dyn::data& d);
-bool operator!=(const dyn::data& lhs, const dyn::data& rhs);
-bool operator==(const dyn::data& lhs, const dyn::data& rhs);
-dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs);
+std::ostream& operator<<(std::ostream& ostr, const xtc::data& d);
+std::istream& operator>>(std::istream& istr, xtc::data& d);
+xtc::data& operator++(xtc::data& d);
+xtc::data& operator--(xtc::data& d);
+bool operator!=(const xtc::data& lhs, const xtc::data& rhs);
+bool operator==(const xtc::data& lhs, const xtc::data& rhs);
+xtc::data operator+(const xtc::data& lhs, const xtc::data& rhs);
 
-#endif // ! DYN_DATA_HXX
+#endif // ! XTC_DATA_HXX

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,29 +23,29 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_DATA_CC
-# define DYN_DATA_CC
+#ifndef XTC_DATA_CC
+# define XTC_DATA_CC
 
-# include "dyn.hh"
+# include "extatica.hh"
 # include "data.hh"
 
-# ifdef DYNDEBUG
+# ifdef XTCDEBUG
 #  include <iostream>
 # else
 #  include <fstream>
 # endif
 
-namespace dyn {
+namespace xtc {
 
-# ifdef DYNDEBUG
+# ifdef XTCDEBUG
   std::ostream& logger(std::cerr);
 # else
 #  ifdef NDEBUG
   std::ofstream dev_null("/dev/null");
   std::ostream& logger(dev_null);
 #  else
-  std::ofstream dyn_log("dyn.log");
-  std::ostream& logger(dyn_log);
+  std::ofstream xtc_log("xtc.log");
+  std::ostream& logger(xtc_log);
 #  endif
 # endif
 
@@ -112,42 +112,42 @@ namespace dyn {
   }
 }
 
-std::ostream& operator<<(std::ostream& ostr, const dyn::data& d)
+std::ostream& operator<<(std::ostream& ostr, const xtc::data& d)
 {
-  return dyn::internal::operator_push(ostr, d).get_ref_on<std::ostream>();
+  return xtc::internal::operator_push(ostr, d).get_ref_on<std::ostream>();
 }
 
-std::istream& operator>>(std::istream& istr, dyn::data& d)
+std::istream& operator>>(std::istream& istr, xtc::data& d)
 {
-  return dyn::internal::operator_pop(istr, d).get_ref_on<std::istream>();
+  return xtc::internal::operator_pop(istr, d).get_ref_on<std::istream>();
 }
 
-dyn::data& operator++(dyn::data& d)
+xtc::data& operator++(xtc::data& d)
 {
-  dyn::internal::operator_incr(d);
+  xtc::internal::operator_incr(d);
   return d;
 }
 
-dyn::data& operator--(dyn::data& d)
+xtc::data& operator--(xtc::data& d)
 {
-  dyn::internal::operator_decr(d);
+  xtc::internal::operator_decr(d);
   return d;
 }
 
-bool operator!=(const dyn::data& lhs, const dyn::data& rhs)
+bool operator!=(const xtc::data& lhs, const xtc::data& rhs)
 {
-  return dyn::internal::operator_not_equal(lhs, rhs);
+  return xtc::internal::operator_not_equal(lhs, rhs);
 }
 
-bool operator==(const dyn::data& lhs, const dyn::data& rhs)
+bool operator==(const xtc::data& lhs, const xtc::data& rhs)
 {
-  return dyn::internal::operator_equal(lhs, rhs);
+  return xtc::internal::operator_equal(lhs, rhs);
 }
 
 
-dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs)
+xtc::data operator+(const xtc::data& lhs, const xtc::data& rhs)
 {
-  return dyn::internal::operator_plus(lhs, rhs);
+  return xtc::internal::operator_plus(lhs, rhs);
 }
 
-#endif // ! DYN_DATA_CC
+#endif // ! XTC_DATA_CC

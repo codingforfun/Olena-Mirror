@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,13 +23,13 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_FUNCTION_LOADER_HH
-# define DYN_FUNCTION_LOADER_HH
+#ifndef XTC_FUNCTION_LOADER_HH
+# define XTC_FUNCTION_LOADER_HH
 
 # include <string>
 # include <list>
 
-namespace dyn {
+namespace xtc {
 
   void
   include(const std::string& file);
@@ -49,6 +49,6 @@ namespace dyn {
                 const arguments_types_t& arguments_types,
                 const std::string& header_path);
 
-} // end of namespace dyn
+} // end of namespace xtc
 
-#endif // ! DYN_FUNCTION_LOADER_HH
+#endif // ! XTC_FUNCTION_LOADER_HH

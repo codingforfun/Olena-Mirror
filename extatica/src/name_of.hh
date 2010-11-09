@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +24,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_NAME_OF_HH
-# define DYN_NAME_OF_HH
+#ifndef XTC_NAME_OF_HH
+# define XTC_NAME_OF_HH
 
 # include <typeinfo>
 
@@ -207,4 +208,4 @@ mlc_set_name(std::ostringstream);
 
 # endif
 
-#endif // ! DYN_NAME_OF_HH
+#endif // ! XTC_NAME_OF_HH

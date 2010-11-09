@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,18 +23,18 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_DYN_HH
-# define DYN_DYN_HH
+#ifndef XTC_EXTATICA_HH
+# define XTC_EXTATICA_HH
 
 # include "config.hh"
 
-# define DYN_FULL_IMPLEMENTATION
+# define XTC_FULL_IMPLEMENTATION
 
 # include "data.hh"
 
 # include "function.hh"
 
-namespace dyn
+namespace xtc
 {
   namespace language
   {
@@ -74,13 +74,13 @@ namespace dyn
       val(const val& rhs)  : data(rhs) { logger << "val(const val& rhs)" << std::endl; }
     };
 
-    typedef ::dyn::fun  fun;
-    typedef ::dyn::ctor ctor;
-    typedef ::dyn::meth meth;
-    typedef ::dyn::meth method;
+    typedef ::xtc::fun  fun;
+    typedef ::xtc::ctor ctor;
+    typedef ::xtc::meth meth;
+    typedef ::xtc::meth method;
   }
 }
 
 # include "function_loader.hh"
 
-#endif // ! DYN_DYN_HH
+#endif // ! XTC_EXTATICA_HH

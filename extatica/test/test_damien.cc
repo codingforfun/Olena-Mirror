@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -25,11 +26,11 @@
 
 #include "my_lib/damien.hh"
 
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 
-using namespace dyn::language;
+using namespace xtc::language;
 
-namespace dyn
+namespace xtc
 {
   fun down("mk_down");
 
@@ -43,8 +44,8 @@ namespace dyn
 
 int main()
 {
-  dyn::include_dir(DYN_FIXTURES);
-  dyn::include("my_lib/damien.hxx");
+  xtc::include_dir(XTC_FIXTURES);
+  xtc::include("my_lib/damien.hxx");
 
   down<char>               a('x');
   down<int>                b(10);
@@ -57,56 +58,56 @@ int main()
 
   std::cout << d2 << std::endl;
 
-  fun  dyn_foo("foo");
-  fun  dyn_change("change");
+  fun  xtc_foo("foo");
+  fun  xtc_change("change");
   ctor mk_down_char("down<char>");
   ctor mk_down_int("down<int>");
-  meth dyn_print_noarg("print_noarg");
-  meth dyn_get_i("get_i");
-  meth dyn_get_t("get_t");
-  method dyn_clone("clone"); // Same as meth
+  meth xtc_print_noarg("print_noarg");
+  meth xtc_get_i("get_i");
+  meth xtc_get_t("get_t");
+  method xtc_clone("clone"); // Same as meth
 
   var f = mk_down_char('x');
 
   std::cout << mlc_name_of(f) << std::endl;
 
   var g = mk_down_int(44);
-  var h = dyn::mk_down(e);
+  var h = xtc::mk_down(e);
 
-  var j = dyn::down(46);
+  var j = xtc::down(46);
 
   meth j_print_noarg = j.method("print_noarg");
 
   // std::cout is not printable
   // but a data containing std::cout yes
-  var dyn_std_cout = std::cout;
-  std::cout << dyn_std_cout << std::endl;
+  var xtc_std_cout = std::cout;
+  std::cout << xtc_std_cout << std::endl;
 
   for ( int i = 0; i < 5; ++i )
   {
     std::cout << "*** Turn " << i << " ***" << std::endl;
-    dyn_print_noarg(a);
+    xtc_print_noarg(a);
 
-    dyn_foo(a);
+    xtc_foo(a);
 
-    dyn_foo(b);
-    dyn_foo(c);
-    dyn_foo(d);
-    dyn_foo(e);
-    dyn_foo(42);
+    xtc_foo(b);
+    xtc_foo(c);
+    xtc_foo(d);
+    xtc_foo(e);
+    xtc_foo(42);
 
-    dyn_print_noarg(f);
+    xtc_print_noarg(f);
 
-    dyn_foo(g);
+    xtc_foo(g);
 
-    dyn_change(c);
+    xtc_change(c);
 
-    var x1 = dyn_get_i(b);
-    std::cout << "dyn_get_i(b) => " << x1 << std::endl;
-    var x2 = *dyn_get_t(d);
-    std::cout << "dyn_get_t(d) => " << x2 << std::endl;
+    var x1 = xtc_get_i(b);
+    std::cout << "xtc_get_i(b) => " << x1 << std::endl;
+    var x2 = *xtc_get_t(d);
+    std::cout << "xtc_get_t(d) => " << x2 << std::endl;
 
-    var x3 = *dyn_clone(a);
+    var x3 = *xtc_clone(a);
     std::cout << "*clone(a) => " << x3 << std::endl;
 
     j.send("print_noarg");

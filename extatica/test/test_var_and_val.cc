@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -25,14 +26,14 @@
 
 #include "my_lib/lib.hh"
 
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 
-using namespace dyn::language;
+using namespace xtc::language;
 
 int main()
 {
-  dyn::include_dir(DYN_FIXTURES);
-  dyn::include("my_lib/lib.hh");
+  xtc::include_dir(XTC_FIXTURES);
+  xtc::include("my_lib/lib.hh");
 
   echo("Test vars and vals");
   val i = 4;

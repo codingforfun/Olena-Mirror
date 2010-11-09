@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -25,7 +25,7 @@
 
 
 /** \file
-    \brief An ugly workaround to have libiberty (glued into libdyn)
+    \brief An ugly workaround to have libiberty (glued into libextatica)
     find the \c environ symbol.
 
     Everything should run well as long as we do not use it, nor any

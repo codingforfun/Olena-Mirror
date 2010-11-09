@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,23 +17,23 @@
 
 require 'pathname'
 
-DYN_DATADIR = Pathname.new(__FILE__).dirname.parent + '_build/data' # FIXME
+XTC_DATADIR = Pathname.new(__FILE__).dirname.parent + '_build/data' # FIXME
 
 def compile ( cxx, identifier, name, cflags, ldflags )
   repository = Pathname.new('repository')
   unless repository.exist?
     repository.mkpath
-    (repository + 'Makefile').make_symlink(DYN_DATADIR + 'Makefile.repository')
+    (repository + 'Makefile').make_symlink(XTC_DATADIR + 'Makefile.repository')
   end
   dir = repository + identifier
   unless dir.exist?
     dir.mkpath
-    makefile = (DYN_DATADIR + 'Makefile.template').read
-    makefile.gsub!(/libdyn_function\.la/, "libdyn_#{identifier}.la")
+    makefile = (XTC_DATADIR + 'Makefile.template').read
+    makefile.gsub!(/libextatica_function\.la/, "libextatica_#{identifier}.la")
     (dir + 'Makefile').open('w') { |f| f.puts makefile }
     file = dir + "function.cc"
     (dir + '.deps').mkpath
-    (dir + '.deps' + 'libdyn_function_la-function.Plo').open('w')
+    (dir + '.deps' + 'libextatica_function_la-function.Plo').open('w')
     file.open('w') do |f|
       f.puts cxx
     end

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +17,7 @@
 # FIXME: Clean me!
 
 check-local_DISABLE: tree.yml
-	@@BIN@@/yaml_to_dyn_decls < $<
+	@@BIN@@/yaml_to_xtc_decls < $<
 	cp dyn_vaucanson_dyn_mirror.hh @@VCSN@@/src/demos/function_library
 	wc tree.swig tree.yml dyn_vaucanson_dyn_mirror.hh dyn_vaucanson_methods.yml
 

@@ -1,6 +1,6 @@
 # Finding valid warning flags for the C and C++ Compilers.  -*-Autoconf-*-
 #
-# Copyright (C) 2003, 2006, 2009 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2006, 2009, 2010 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,16 +36,16 @@ rm -f conftest.$ac_objext m4_ifval([$1], [conftest.$ac_ext])[]dnl
 ])# AC_COMPILE_STDERR_IFELSE
 
 
-# DYN_COMPILER_FLAGS_NAME
+# XTC_COMPILER_FLAGS_NAME
 # ----------------------
 # Return the name of the FLAGS variable for the current language.
-m4_define([DYN_COMPILER_FLAGS_NAME],
+m4_define([XTC_COMPILER_FLAGS_NAME],
 [AC_LANG_CASE([C],   [CFLAGS],
               [C++], [CXXFLAGS])[]dnl
-])# DYN_COMPILER_FLAGS_NAME
+])# XTC_COMPILER_FLAGS_NAME
 
 
-# DYN_COMPILER_OPTION_IF(OPTION, [IF-SUPPORTED], [IF-NOT-SUPPORTED])
+# XTC_COMPILER_OPTION_IF(OPTION, [IF-SUPPORTED], [IF-NOT-SUPPORTED])
 # -----------------------------------------------------------------
 # icc doesn't choke on unknown options, it will just issue warnings
 # (even with -Werror).  So we grep stderr for any message that says an
@@ -59,13 +59,13 @@ m4_define([DYN_COMPILER_FLAGS_NAME],
 # cc1plus: warning: ignoring command line option '-Wbad-function-cast'
 #
 # Pay attention not to give grep a regexp starting with "-".
-AC_DEFUN([DYN_COMPILER_OPTION_IF],
+AC_DEFUN([XTC_COMPILER_OPTION_IF],
 [AS_VAR_PUSHDEF([ac_Option],
                 [ac_cv_[]_AC_LANG_ABBREV[]_supports_$1])dnl
 AC_CACHE_CHECK([whether _AC_LANG compiler accepts $1],
                [ac_Option],
-[ac_save_[]DYN_COMPILER_FLAGS_NAME=$DYN_COMPILER_FLAGS_NAME
-DYN_COMPILER_FLAGS_NAME="$DYN_COMPILER_FLAGS_NAME $1"
+[ac_save_[]XTC_COMPILER_FLAGS_NAME=$XTC_COMPILER_FLAGS_NAME
+XTC_COMPILER_FLAGS_NAME="$XTC_COMPILER_FLAGS_NAME $1"
 ac_Option=no
 AC_COMPILE_STDERR_IFELSE([AC_LANG_PROGRAM],
   [if (grep -E 'm4_do([ignoring option],
@@ -76,14 +76,14 @@ AC_COMPILE_STDERR_IFELSE([AC_LANG_PROGRAM],
       ) >/dev/null 2>&1; then :; else
       ac_Option=yes
    fi])
-DYN_COMPILER_FLAGS_NAME=$ac_save_[]DYN_COMPILER_FLAGS_NAME
+XTC_COMPILER_FLAGS_NAME=$ac_save_[]XTC_COMPILER_FLAGS_NAME
 ])
 AS_VAR_IF([ac_Option], [yes], [$2], [$3])dnl
 AS_VAR_POPDEF([ac_Option])dnl
-])# DYN_COMPILER_OPTION_IF
+])# XTC_COMPILER_OPTION_IF
 
 
-# DYN_CXX_WARNINGS(OPTIONS)
+# XTC_CXX_WARNINGS(OPTIONS)
 # ------------------------
 # Check whether the C++ compiler support the OPTION, and if it
 # does, append it to WARNING_CXXFLAGS.
@@ -94,15 +94,15 @@ AS_VAR_POPDEF([ac_Option])dnl
 #
 # but not when used alone.  This also demonstrates the importance of the
 # order.
-AC_DEFUN([DYN_CXX_WARNINGS],
-[ac_save_compiler_flags=$DYN_COMPILER_FLAGS_NAME
+AC_DEFUN([XTC_CXX_WARNINGS],
+[ac_save_compiler_flags=$XTC_COMPILER_FLAGS_NAME
 m4_foreach([AC_Option], [$1],
-    [DYN_COMPILER_OPTION_IF(AC_Option,
+    [XTC_COMPILER_OPTION_IF(AC_Option,
            [WARNING_CXXFLAGS="$WARNING_CXXFLAGS AC_Option"
-            DYN_COMPILER_FLAGS_NAME="$ac_save_compiler_flags $WARNING_FLAGS"])
+            XTC_COMPILER_FLAGS_NAME="$ac_save_compiler_flags $WARNING_FLAGS"])
 dnl Newlines inserted on purpose, to avoid erroneous concatenations.
 
 ])
-DYN_COMPILER_FLAGS_NAME=$ac_save_compiler_flags
+XTC_COMPILER_FLAGS_NAME=$ac_save_compiler_flags
 AC_SUBST([WARNING_CXXFLAGS])
-])# DYN_CXX_WARNINGS(OPTIONS)
+])# XTC_CXX_WARNINGS(OPTIONS)

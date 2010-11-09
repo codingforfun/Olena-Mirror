@@ -17,13 +17,13 @@
 
 
 # Do not install me.
-lib_LTLIBRARIES = libdyn_function.la
+lib_LTLIBRARIES = libextatica_function.la
 # FIXME: This is probably not portable!  
-# libdyn_function_la_LDFLAGS = `dyn-config --libtool-libs`
-# libdyn_function_la_CXXFLAGS = `dyn-config --cflags`
-libdyn_function_la_LDFLAGS = $(top_builddir)/src/libdyn.la -export-dynamic
-libdyn_function_la_CPPFLAGS = -I$(top_builddir)/src -I$(top_srcdir)/src
-libdyn_function_la_SOURCES = function.cc
+# libextatica_function_la_LDFLAGS = `xtc-config --libtool-libs`
+# libextatica_function_la_CXXFLAGS = `xtc-config --cflags`
+libextatica_function_la_LDFLAGS = $(top_builddir)/src/libextatica.la -export-dynamic
+libextatica_function_la_CPPFLAGS = -I$(top_builddir)/src -I$(top_srcdir)/src
+libextatica_function_la_SOURCES = function.cc
 
 pkgdata_DATA = Makefile.template Makefile.repository
 

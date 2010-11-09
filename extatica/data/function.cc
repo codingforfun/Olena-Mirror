@@ -1,4 +1,4 @@
-#include "dyn-light.hh"
+#include "xtc-light.hh"
 
 int foo()
 {

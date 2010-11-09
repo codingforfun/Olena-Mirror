@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,21 +23,21 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_POLICY_HH
-# define DYN_POLICY_HH
+#ifndef XTC_POLICY_HH
+# define XTC_POLICY_HH
 
 # include "data.hh"
 
-namespace dyn
+namespace xtc
 {
   namespace policy
   {
     
-#   define select_dyn_policy(e)                                               \
-      (dyn::policy::type)dyn::policy::simplify<                               \
-        sizeof((dyn::policy::id_for_pod_2(), e, dyn::policy::id_for_pod_2())) \
-      + sizeof((dyn::policy::id_for_ptr_and_ref_2(), e,                       \
-                dyn::policy::id_for_ptr_and_ref_2()))>::val
+#   define select_xtc_policy(e)                                               \
+      (xtc::policy::type)xtc::policy::simplify<                               \
+        sizeof((xtc::policy::id_for_pod_2(), e, xtc::policy::id_for_pod_2())) \
+      + sizeof((xtc::policy::id_for_ptr_and_ref_2(), e,                       \
+                xtc::policy::id_for_ptr_and_ref_2()))>::val
 
     template <unsigned n>
     struct id
@@ -102,7 +102,7 @@ namespace dyn
       receiver& operator,(T& obj)
       {
         logger << "receiver::operator,(T&) [ T = " << mlc_name<T>::of() << " ]" << std::endl;
-        proxy_ = new typename dyn_choose_data_proxy<T, policy>::ret(obj);
+        proxy_ = new typename xtc_choose_data_proxy<T, policy>::ret(obj);
         return *this;
       }
 
@@ -110,7 +110,7 @@ namespace dyn
       receiver& operator,(const T& obj)
       {
         logger << "receiver::operator,(const T&) [ T = " << mlc_name<const T>::of() << " ]" << std::endl;
-        proxy_ = new typename dyn_choose_data_proxy<T, policy>::ret(obj);
+        proxy_ = new typename xtc_choose_data_proxy<T, policy>::ret(obj);
         return *this;
       }
 
@@ -129,4 +129,4 @@ namespace dyn
   }
 }
 
-#endif // ! DYN_POLICY_HH
+#endif // ! XTC_POLICY_HH

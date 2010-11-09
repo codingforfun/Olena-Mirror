@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_NAME_OF_CC
-# define DYN_NAME_OF_CC
+#ifndef XTC_NAME_OF_CC
+# define XTC_NAME_OF_CC
 
 # include "name_of.hh"
 
@@ -47,4 +47,4 @@ std::string demangle(const char* name)
 
 # endif
 
-#endif // ! DYN_NAME_OF_CC
+#endif // ! XTC_NAME_OF_CC

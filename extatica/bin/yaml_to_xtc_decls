@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-# Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -85,17 +85,17 @@ class Dumper
     @states.pop
     puts '// };'
   end
-  def print_dyn ( key, tree )
+  def print_xtc ( key, tree )
     return if tree.nil?
     case tree
     when Array
       tree.each do |node|
-        print_dyn(nil, node)
+        print_xtc(nil, node)
       end
       return
     when Hash
       if tree.size == 1
-        print_dyn(*tree.to_a.first)
+        print_xtc(*tree.to_a.first)
         return
       end
     when String
@@ -116,7 +116,7 @@ class Dumper
     case key
     when 'namespace'
       namespace tree.name do
-        print_dyn nil, tree.contents
+        print_xtc nil, tree.contents
       end
     when 'struct', 'class'
       name = (@namespace[1..-1] + [tree.name]).join('::')
@@ -147,7 +147,7 @@ class Dumper
 =end
       end
       struct tree.name, name do
-        print_dyn nil, tree.contents
+        print_xtc nil, tree.contents
       end
     when 'cdecl'
       node_name = tree.name
@@ -165,10 +165,10 @@ class Dumper
       end
     when 'include'
       @includes << tree.name
-      print_dyn nil, tree.contents
+      print_xtc nil, tree.contents
       @includes.pop
     # when 'constructor'
-      # dump "dyn::ctor(#{convert_params(tree.parms)})"
+      # dump "xtc::ctor(#{convert_params(tree.parms)})"
     end
   end
   def print_all_methods
@@ -188,26 +188,26 @@ dumper = Dumper.new
 root = tree.rpath_find(:first, ARGV[0] || 'top/contents/include/*name/vcsn\.i')
 # puts root.to_yaml
 puts '// ------------------------------------------------ '
-puts '// dyn_vaucanson_dyn_mirror.hh'
-File.open('dyn_vaucanson_dyn_mirror.hh', 'w') do |dyn_vaucanson_dyn_mirror_hh|
-  dumper.with(dyn_vaucanson_dyn_mirror_hh) do
-    dumper.namespace 'dyn' do
-      dumper.print_dyn nil, root['contents']
+puts '// xtc_vaucanson_xtc_mirror.hh'
+File.open('xtc_vaucanson_xtc_mirror.hh', 'w') do |xtc_vaucanson_xtc_mirror_hh|
+  dumper.with(xtc_vaucanson_xtc_mirror_hh) do
+    dumper.namespace 'xtc' do
+      dumper.print_xtc nil, root['contents']
     end
   end
 end
 puts '// ------------------------------------------------ '
 puts '// all_methods.yml'
-File.open('dyn_vaucanson_methods.yml', 'w') do |all_methods_yml|
+File.open('xtc_vaucanson_methods.yml', 'w') do |all_methods_yml|
   dumper.with(all_methods_yml) do
     dumper.print_all_methods
   end
 end
 =begin
 puts '// ------------------------------------------------ '
-puts '// dyn_vaucanson_mlc_name.hh'
-File.open('dyn_vaucanson_mlc_name.hh', 'w') do |dyn_vaucanson_mlc_name_hh|
-  dumper.with(dyn_vaucanson_mlc_name_hh) do
+puts '// xtc_vaucanson_mlc_name.hh'
+File.open('xtc_vaucanson_mlc_name.hh', 'w') do |xtc_vaucanson_mlc_name_hh|
+  dumper.with(xtc_vaucanson_mlc_name_hh) do
     dumper.print_mlc_set_names
   end
 end

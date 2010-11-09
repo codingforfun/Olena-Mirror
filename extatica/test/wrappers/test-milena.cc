@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -30,11 +30,11 @@
 
 int main()
 {
-  dyn::mln::initialize();
+  xtc::mln::initialize();
 
-  dyn::language::var ima = dyn::mln::mk_image2d_int(3, 3);
-  dyn::mln::fill(ima, 0);
-  dyn::mln::println("ima (before) =", ima);
-  dyn::mln::iota(ima);
-  dyn::mln::println("ima (after) =", ima);
+  xtc::language::var ima = xtc::mln::mk_image2d_int(3, 3);
+  xtc::mln::fill(ima, 0);
+  xtc::mln::println("ima (before) =", ima);
+  xtc::mln::iota(ima);
+  xtc::mln::println("ima (after) =", ima);
 }

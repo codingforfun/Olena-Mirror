@@ -32,8 +32,8 @@ AM_SWIGFLAGS = -Wall -c++ -python -I$(top_builddir)/src -I$(top_srcdir)/src
 # We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
 # Libraries with their dependencies.
-libdyn_la = $(top_builddir)/src/libdyn.la
-libdynmilena_la = $(top_builddir)/src/wrappers/libdynmilena.la $(libdyn_la)
+libextatica_la = $(top_builddir)/src/libextatica.la
+libextatica_milena_la = $(top_builddir)/src/wrappers/libextatica-milena.la $(libextatica_la)
 
 # Run Swig to create the C++ wrapper files, the Python interface
 # files, and the dependency Makefile snippets.
@@ -94,21 +94,21 @@ CLEANFILES = config.py config.py[co]
 nodist_python_PYTHON =
 pyexec_LTLIBRARIES =
 
-## dyn.
-pyexec_LTLIBRARIES += _dyn.la
-nodist__dyn_la_SOURCES = dyn-wrap.cc
-_dyn_la_LIBADD = $(libdyn_la)
-CLEANFILES += $(nodist__dyn_la_SOURCES) dyn.py dyn.py[co]
+## xtc.
+pyexec_LTLIBRARIES += _xtc.la
+nodist__xtc_la_SOURCES = xtc-wrap.cc
+_xtc_la_LIBADD = $(libextatica_la)
+CLEANFILES += $(nodist__xtc_la_SOURCES) xtc.py xtc.py[co]
 ## Include the dependency files.  Copied from Automake's generated
 ## case for C++.
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_dyn-wrap.Pcc@am__quote@
-nodist_python_PYTHON += dyn.py
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_xtc-wrap.Pcc@am__quote@
+nodist_python_PYTHON += xtc.py
 
 # FIXME: Should be optional.
 ## mln.
 pyexec_LTLIBRARIES += _mln.la
 nodist__mln_la_SOURCES = mln-wrap.cc
-_mln_la_LIBADD = $(libdynmilena_la)
+_mln_la_LIBADD = $(libextatica_milena_la)
 CLEANFILES += $(nodist__mln_la_SOURCES) mln.py mln.py[co]
 ## Include the dependency files.  Copied from Automake's generated
 ## case for C++.
@@ -144,13 +144,13 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # and a test.  Alas, the script `run' expects a file name with an
 # extension as argument.  We could improve this by adding options such
 # as `--python' to `run'.
-TESTS = milena-libdyn.py milena-libdynmilena.py
+TESTS = milena-libextatica.py milena-libextatica-milena.py
 
 # FIXME: Is this really needed?
 EXTRA_DIST += $(TESTS)
 
-# Log produced by libdyn.
-CLEANFILES += dyn.log
+# Log produced by libextatica.
+CLEANFILES += xtc.log
 
 clean-local: clean-repository
 .PHONY: clean-repository

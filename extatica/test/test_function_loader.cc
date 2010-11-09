@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -27,24 +28,24 @@
 
 #include "my_lib/lib.hh"
 
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 
-using namespace dyn::language;
+using namespace xtc::language;
 
 int main()
 {
-  dyn::include_dir(DYN_FIXTURES);
+  xtc::include_dir(XTC_FIXTURES);
 
-  dyn::fun dfoo1("foo1", "my_lib/lib.hh"); // With the include
+  xtc::fun dfoo1("foo1", "my_lib/lib.hh"); // With the include
 
-  dyn::include("my_lib/lib.hh"); // setup a default include
+  xtc::include("my_lib/lib.hh"); // setup a default include
 
-  dyn::fun dfoo2("foo2"); // use the default includes
-  dyn::fun dfoo2b("foo2b");
-  dyn::fun dfoo3("foo3");
-  dyn::fun dfoo4("foo4");
-  dyn::fun dsqr("my_lib::sqr");
-  dyn::fun dpower("my_lib::power");
+  xtc::fun dfoo2("foo2"); // use the default includes
+  xtc::fun dfoo2b("foo2b");
+  xtc::fun dfoo3("foo3");
+  xtc::fun dfoo4("foo4");
+  xtc::fun dsqr("my_lib::sqr");
+  xtc::fun dpower("my_lib::power");
 
   dfoo1();
   dfoo1();

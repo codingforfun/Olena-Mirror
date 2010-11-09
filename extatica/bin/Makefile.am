@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_SCRIPTS = dyn-config
-# FIXME put dyn- before these binaries
-dist_noinst_SCRIPTS = mk_swig_input swig_tree_to_yaml yaml_to_dyn_decls
-BUILT_SOURCES = dyn-config
+bin_SCRIPTS = xtc-config
+# FIXME put xtc- before these binaries
+dist_noinst_SCRIPTS = mk_swig_input swig_tree_to_yaml yaml_to_xtc_decls
+BUILT_SOURCES = xtc-config

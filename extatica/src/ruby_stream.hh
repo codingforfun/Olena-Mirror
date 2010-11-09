@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_RUBY_STREAM_HH
-# define DYN_RUBY_STREAM_HH
+#ifndef XTC_RUBY_STREAM_HH
+# define XTC_RUBY_STREAM_HH
 
 // #define DEBUG_RUBY_STREAM
 
@@ -122,4 +122,4 @@ ruby::stream& operator<< (ruby::stream& stream, const T& obj)
   return stream;
 }
 
-#endif // ! DYN_RUBY_STREAM_HH
+#endif // ! XTC_RUBY_STREAM_HH

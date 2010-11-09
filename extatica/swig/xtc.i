@@ -1,6 +1,6 @@
 							// -*- C++ -*-
 
-/* Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -26,42 +26,42 @@
    executable file might be covered by the GNU General Public License.  */
 
 /// \file
-/// \brief A wrapper of libdyn.
+/// \brief A wrapper of libextatica.
 
-%module dyn
+%module xtc
 
 %include std_string.i
 
 %{
-#include "dyn-all.hh"
+#include "xtc-all.hh"
 %}
 
 // Ignore global objects causing trouble to swig.
-%ignore dyn::logger;
+%ignore xtc::logger;
 
-%include "dyn-all.hh";
+%include "xtc-all.hh";
 
 /*---------------.
 | Construction.  |
 `---------------*/
 
-/* The natural, single-argument ctors of dyn::data manipulate the
+/* The natural, single-argument ctors of xtc::data manipulate the
    encapsulated member by reference, which is wrong when these data
    are of builtin types of the target language (e.g., Pythons'
    `int's), because we have no control on them and they can vanish at
    any moment.
     
-   To prevent this, provide constructors helpers creating dyn::data
+   To prevent this, provide constructors helpers creating xtc::data
    objects manipulating data by value (copy).  */
 %define generate_data_ctor(Arg, Type)
-%extend dyn::data
+%extend xtc::data
 {
   data(Arg v)
   {
-    dyn::proxy_tag* dummy = 0;
+    xtc::proxy_tag* dummy = 0;
     // This dummy pointer passed as second argument is required to
     // call the right ctor.
-    return new dyn::data(new dyn::data_proxy_by_cpy< Type >(v), dummy);
+    return new xtc::data(new xtc::data_proxy_by_cpy< Type >(v), dummy);
   }
 }
 %enddef // !generate_data_ctor
@@ -76,7 +76,7 @@ generate_data_ctor(Type, Type)
 generate_data_ctor(const Type &, Type)
 %enddef
 
-// Generate dyn::data ctors using a proxy-by-value for classic types.
+// Generate xtc::data ctors using a proxy-by-value for classic types.
 generate_data_ctor_val(int)
 generate_data_ctor_ref(std::string)
 
@@ -84,8 +84,8 @@ generate_data_ctor_ref(std::string)
 | Conversions.  |
 `--------------*/
 
-// Instantiate dyn::data explicit conversion routines for some types.
-%extend dyn::data
+// Instantiate xtc::data explicit conversion routines for some types.
+%extend xtc::data
 {
   %template(convert_to_int) convert_to<int>;
   %template(convert_to_string) convert_to<std::string>;

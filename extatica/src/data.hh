@@ -1,4 +1,5 @@
-/* Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE)
+/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+   Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -23,8 +24,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DYN_DATA_HH
-# define DYN_DATA_HH
+#ifndef XTC_DATA_HH
+# define XTC_DATA_HH
 
 # include <string>
 # include <cassert>
@@ -32,7 +33,7 @@
 # include "name_of.hh"
 # include "all_methods.hh"
 
-namespace dyn {
+namespace xtc {
 
   extern std::ostream& logger;
 
@@ -355,7 +356,7 @@ namespace dyn {
     bool is_const()
     {
       std::string type_(type());
-      return type_.find("dyn::data_proxy_by_ref<") == 0
+      return type_.find("xtc::data_proxy_by_ref<") == 0
           && type_.rfind("const>") == type_.size() - 6;
     }
 
@@ -419,26 +420,26 @@ namespace dyn {
 
 }
 
-template <typename T, dyn::policy::type policy>
-struct dyn_choose_data_proxy
+template <typename T, xtc::policy::type policy>
+struct xtc_choose_data_proxy
 {
-  typedef dyn::data_proxy_by_cpy<T> ret;
+  typedef xtc::data_proxy_by_cpy<T> ret;
 };
 
 template <typename T>
-struct dyn_choose_data_proxy<T, dyn::policy::is_ref>
+struct xtc_choose_data_proxy<T, xtc::policy::is_ref>
 {
-  typedef dyn::data_proxy_by_ref<T> ret;
+  typedef xtc::data_proxy_by_ref<T> ret;
 };
 
 template <typename T>
-struct dyn_choose_data_proxy<T, (dyn::policy::type)(dyn::policy::is_ref + dyn::policy::is_const)>
+struct xtc_choose_data_proxy<T, (xtc::policy::type)(xtc::policy::is_ref + xtc::policy::is_const)>
 {
-  typedef dyn::data_proxy_by_ref<const T> ret;
+  typedef xtc::data_proxy_by_ref<const T> ret;
 };
 
-# ifdef DYN_FULL_IMPLEMENTATION
+# ifdef XTC_FULL_IMPLEMENTATION
 # include "data.hxx"
 # endif
 
-#endif // ! DYN_DATA_HH
+#endif // ! XTC_DATA_HH
