@@ -1,3 +1,14 @@
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make Libiberty compatible with Automake.
+
+	* libiberty/local.mk: New helper, containing missing recursive
+	targets.
+	* libiberty/configure.ac: Configure Libiberty's `Makefile' using
+	both `Makefile.in' and `local.mk'.
+	* libiberty/Makefile.in (Makefile): Update the invocation of
+	config.status.
+
 2010-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have Extatica use the embedded GNU Libiberty.

@@ -2,7 +2,7 @@
 # Originally written by K. Richard Pixley <rich@cygnus.com>.
 #
 # Copyright (C) 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-# 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+# 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2010 Free Software
 # Foundation
 #
 # This file is part of the libiberty library.
@@ -438,7 +438,7 @@ maintainer-clean realclean: maintainer-clean-subdir
 force:
 
 Makefile: $(srcdir)/Makefile.in config.status
-	CONFIG_FILES=Makefile CONFIG_HEADERS= $(SHELL) ./config.status
+	$(SHELL) ./config.status Makefile
 
 # Depending on Makefile makes sure that config.status has been re-run
 # if needed.  This prevents problems with parallel builds.
