@@ -30,3 +30,6 @@ EXTRA_DIST += configure.gnu
 
 # Images used in tests.
 EXTRA_DIST += img/lena.pgm
+
+# Libiberty support.
+include $(srcdir)/libiberty.mk

@@ -1,5 +1,15 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the distribution of Libiberty.
+
+	* libiberty.mk: New.
+	Include it...
+	* Makefile.am: ...here.
+	* mkinstalldirs, move-if-change: New scripts.
+	Imported from CVS GNU Binutils.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix cleaning rules in Libiberty.
 
 	* libiberty/Makefile.in (distclean): Remove configure.lineno and
