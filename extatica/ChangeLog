@@ -1,5 +1,12 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Work around a defect in Libiberty's `configure.ac' (in Extatica).
+
+	* bootstrap: Remove a directory wrongfully created by autreconf,
+	because of Libiberty's buggy `configure.ac'.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the distribution of Libiberty.
 
 	* libiberty.mk: New.

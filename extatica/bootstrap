@@ -66,3 +66,12 @@ if $run_autoreconf_p; then
   # Finally, install the GNU Build System.
   autoreconf -f -v -i
 fi
+
+# `autoreconf' wrongfully creates a directory named
+# `libiberty/$libiberty_topdir' (containing an actual `$' sign)
+# because Libiberty's `configure.ac' invokes `AC_CONFIG_AUX_DIR' with
+# a shell variable as argument (`$libiberty_topdir'); remove this
+# (presumably empty) directory.
+if test -d 'libiberty/$libiberty_topdir'; then
+  rmdir 'libiberty/$libiberty_topdir'
+fi
