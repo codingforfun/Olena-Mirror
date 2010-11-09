@@ -200,8 +200,35 @@ AC_SUBST([DYN_DATADIR], [$my_abs_builddir/data])
 
 AC_SUBST([DYN_FIXTURES], [$my_abs_srcdir/test/fixtures])
 
+## -------- ##
+## Milena.  ##
+## -------- ##
+
+# The current approach to providing Extatica a path to Milena's headers
+# is naive: for instance, we cannot provide two paths (source and
+# build dirs) in the case of an Olena build using a parallel build
+# (where srcdir != builddir).  Improve if needed.
+
+# FIXME: Make Milena an optional dependency of Extatica.
+
+AC_ARG_WITH([milena],
+  [AC_HELP_STRING([--with-milena=DIR], [path to Milena headers])],
+  [if test x"$with_milena" = xno; then
+     AC_MSG_ERROR([Milena is required for Swilena.  Try to invoke configure
+without `--with-milena=no' nor `--without-milena.'])
+   fi])
+if test -n "$with_milena" && test x"$with_milena" != xyes; then
+  MILENA_CPPFLAGS="-I$with_milena"
+fi
+swl_save_CPPFLAGS=$CPPFLAGS
+CPPFLAGS="$MILENA_CPPFLAGS $CPPFLAGS"
+AC_CHECK_HEADER([mln/core/essential.hh], [],
+  AC_MSG_ERROR([Cannot find Milena's headers.  Try to invoke configure with
+`--with-milena=DIR'.]))
+CPPFLAGS=$swl_save_CPPFLAGS
 # Absolute path to Milena.
-AC_SUBST([MILENA_DIR], [$my_abs_srcdir/../milena])
+MILENA_DIR=`cd "$with_milena" && pwd`
+AC_SUBST([MILENA_DIR])
 
 ## ------------------- ##
 ## Ruby Configuration. ##

@@ -1,5 +1,12 @@
 2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for configuration option `--with-milena' in Extatica.
+
+	* configure.ac: ...here.
+	Adjust paths accordingly.
+
+2010-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the distribution of Extatica.
 
 	* config/Makefile.am (ruby.m4): Remove wrong and useless
