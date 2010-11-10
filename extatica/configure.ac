@@ -254,7 +254,6 @@ AM_CONFIG_HEADER([_config/config.h])
 AC_CONFIG_FILES([
   Makefile
   bin/Makefile
-  bin/xtc-config
   libmd5/Makefile
   src/Makefile
   src/config.hh
@@ -265,7 +264,10 @@ AC_CONFIG_FILES([
   test/Makefile
     test/vaucanson/Makefile
     test/wrappers/Makefile
-], [chmod +x bin/xtc-config])
+])
+
+# Configure bin/xtc-config.
+AC_CONFIG_FILES([bin/xtc-config], [chmod +x bin/xtc-config])
 
 # Instantiate the output files.
 AC_OUTPUT

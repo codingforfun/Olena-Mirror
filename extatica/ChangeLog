@@ -1,3 +1,9 @@
+2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Properly configure xtc-config.
+
+	* configure.ac: Execute `chmod +x bin/xtc-config' only once.
+
 2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Cleanup and aesthetic changes.
