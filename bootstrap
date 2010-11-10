@@ -255,3 +255,12 @@ if test -d libltdl; then rm -rf libltdl; fi
 for f in m4/argz.m4 m4/ltdl.m4; do
   if test -f "$f"; then rm -f "$f"; fi
 done
+
+# `autoreconf' wrongfully creates a directory named
+# `extatica/libiberty/$libiberty_topdir' (containing an actual `$' sign)
+# because Libiberty's `configure.ac' invokes `AC_CONFIG_AUX_DIR' with
+# a shell variable as argument (`$libiberty_topdir'); remove this
+# (presumably empty) directory.
+if test -d 'extatica/libiberty/$libiberty_topdir'; then
+  rmdir 'extatica/libiberty/$libiberty_topdir'
+fi

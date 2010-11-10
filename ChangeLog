@@ -1,5 +1,12 @@
 2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Work around a defect in Libiberty's `configure.ac' (in Olena).
+
+	* bootstrap: Remove a directory wrongfully created by autreconf in
+	Extatica, because of Libiberty's buggy `configure.ac'.
+
+2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Bundle Extatica with Olena.
 
 	* bootstrap: Invoke extatica/boostrap.
