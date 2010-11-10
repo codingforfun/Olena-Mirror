@@ -1,5 +1,17 @@
 2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prepare Extatica to be bundled with Olena.
+
+	* bootstrap (usage): New function.  Call it when invoked with
+	option `-h, --help'.
+	Do not install the GNU Build System (with autoreconf) if invoked
+	with option `--no-autoreconf'.
+	Remove the workaround for autoheader no honoring `--force'.
+	* configure.gnu: New.
+	* Makefile.am (EXTRA_DIST): Add configure.gnu.
+
+2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Properly configure xtc-config.
 
 	* configure.ac: Execute `chmod +x bin/xtc-config' only once.

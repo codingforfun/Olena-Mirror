@@ -1,6 +1,7 @@
 #! /bin/sh
 
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,6 +22,31 @@ set -e
 # Tell what's going on.
 set -x
 
+# Run autoreconf?
+run_autoreconf_p=true
+
+usage ()
+{
+  cat <<EOF
+Usage: $0 [OPTION]
+
+Options:
+  -h, --help              display this message
+      --no-autoreconf     do not run autoreconf
+
+Report bugs to <olena-bugs@lrde.epita.fr>
+EOF
+}
+
+# Process arguments.
+for arg in "$@"; do
+  case "$arg" in
+    -h|--help) usage; exit 0 ;;
+    --no-autoreconf) run_autoreconf_p=false ;;
+    *) fatal "error: unrecognized option: $1" ;;
+  esac
+done
+
 mkdir -p _config
 touch _config/local-config.rb.in
 
@@ -36,8 +62,7 @@ export LIBTOOLIZE=$libtoolize
 # Make the libtool with ltdl
 "$libtoolize" --force --copy --automake --ltdl
 
-# Finally, install the GNU Build System.
-autoreconf -f -v -i
-
-# FIXME: autoheader does not obey --force.
-find . -name 'config.h*.in' -o -name 'local-config.*.in' | xargs touch
+if $run_autoreconf_p; then
+  # Finally, install the GNU Build System.
+  autoreconf -f -v -i
+fi

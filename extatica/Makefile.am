@@ -24,3 +24,6 @@ endif SWIG_PYTHON_BINDINGS
 ACLOCAL_AMFLAGS = -I config -I libltdl
 
 EXTRA_DIST = bootstrap
+
+# `configure' wrapper used in recursive configuration.
+EXTRA_DIST += configure.gnu
