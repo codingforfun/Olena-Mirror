@@ -165,6 +165,7 @@ AC_ARG_ENABLE([all],
   [if test "x$enable_all" != xno; then
      enable_trimesh=yes
      enable_swilena=yes
+     enable_extatica=yes
 dnl<<lrde
      enable_scribo=yes
 dnl>>
@@ -303,6 +304,17 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
                       [:swilena/python/sps-common.in],
                       [:swilena/python/sps-local.in]),
                 [chmod +x swilena/python/sps-local])
+
+
+## ---------- ##
+## Extatica.  ##
+## ---------- ##
+
+AC_ARG_ENABLE([extatica],
+              [AS_HELP_STRING([--enable-extatica], [enable Extatica])])
+AM_CONDITIONAL([ENABLE_EXTATICA], [test "x$enable_extatica" = xyes])
+AC_CONFIG_SUBDIRS([extatica])
+
 
 dnl<<lrde
 ## -------- ##
@@ -640,6 +652,7 @@ Trimesh                 --enable-trimesh        $enable_trimesh
 -------------------------------------------------------------------------------
 Scribo                  --enable-scribo         $enable_scribo
 Swilena                 --enable-swilena        $enable_swilena
+Extatica                --enable-extatica       $enable_extatica
 -------------------------------------------------------------------------------
 
 

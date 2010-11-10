@@ -157,6 +157,9 @@ require doxygen 1.5.6
 require convert 6.3.7
 require hevea 1.10 -version
 
+## -------- ##
+## Milena.  ##
+## -------- ##
 
 # Regen files stored in the repository if asked so.
 if $regen_p; then
@@ -219,6 +222,10 @@ fi
 # Generate unit test files.
 run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests mln
 
+## -------- ##
+## Scribo.  ##
+## -------- ##
+
 # Generate unit test files for Scribo.
 run . ./build-aux/build_unit_test.sh    \
   scribo/scribo				\
@@ -226,5 +233,25 @@ run . ./build-aux/build_unit_test.sh    \
   scribo/tests/unit_test/disabled_tests \
   scribo
 
+## ---------- ##
+## Extatica.  ##
+## ---------- ##
+
+# Delegate to extatica/boostrap.
+run extatica ./bootstrap --no-autoreconf
+
+## ------------ ##
+## Autoreconf.  ##
+## ------------ ##
+
 # Install the GNU Build System.
 autoreconf -f -v -i
+
+# Remove directory `libltdl' installed in Olena's top-level directory by
+# autoreconf by mistake (probably because `libtoolize' also installed
+# libltdl in `extatica/libltdl').
+if test -d libltdl; then rm -rf libltdl; fi
+# Remove useless corresponding installed Autoconf macros as well.
+for f in m4/argz.m4 m4/ltdl.m4; do
+  if test -f "$f"; then rm -f "$f"; fi
+done

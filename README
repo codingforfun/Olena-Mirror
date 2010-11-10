@@ -244,6 +244,31 @@ To enable the installation of this module use::
 
        ./configure --enable-swilena
 
+Swilena is working, but it is still relatively small and not as mature
+as Milena.  Therefore it is probably only useful to Olena developers
+for the moment.
+
+Extatica
+--------
+
+Extatica is another optional component of Olena, enabling the
+generation, compilation and dynamic loading of C++ functions and
+methods at run time, using JIT compiling techniques.  Extatica has
+been primarily designed to provide a C++ dynamic-static bridge
+allowing Milena users to use its generic routines (templates) without
+the need to (re)instantiate and (re)compile them.
+
+To enable the installation of this module use::
+
+       ./configure --enable-extatica
+
+Extatica also provides (optional) SWIG Python bindings, needing both
+SWIG_ and Python_ to be built.
+
+Like Swilena, extatica is working, but is still in early stages of
+development.  Compiling and installing it is probably not really
+useful for the moment.
+
 Tools
 -----
 
@@ -367,6 +392,9 @@ The Olena project directory layout is as follows:
 build-aux
    Auxiliary tools used by the GNU Build System during ``configure``
    and ``make`` stages.
+
+extatica
+   The Extatica C++ dynamic-static bridge using JIT compiling.
 
 external
    Sources of Shipped dependencies.

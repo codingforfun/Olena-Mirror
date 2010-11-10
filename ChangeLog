@@ -1,3 +1,14 @@
+2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Bundle Extatica with Olena.
+
+	* bootstrap: Invoke extatica/boostrap.
+	* configure.ac: Add option ``--enable-extatica''.
+	Have option ``--enable-all'' trigger ``--enable-extatica''.
+	Update verbose output.
+	* Makefile.am (SUBDIRS) [ENABLE_EXTATICA]: Add extatica.
+	* README: Mention Extatica.
+
 2009-11-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename Dyn as Extatica.

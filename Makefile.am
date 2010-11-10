@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,6 +22,10 @@ SUBDIRS = build-aux external milena
 if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
+
+if ENABLE_EXTATICA
+  SUBDIRS += extatica
+endif ENABLE_EXTATICA
 
 #<<lrde
 if ENABLE_SCRIBO
