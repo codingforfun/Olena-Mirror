@@ -82,7 +82,7 @@ libextatica_la_LIBADD =				\
   $(RUBY_LIBRUBYARG_SHARED)			\
   $(LIBLTDL)					\
   $(top_builddir)/libmd5/libmd5.la		\
-  $(top_builddir)/libiberty/libiberty.a		\
+  $(top_builddir)/libiberty/pic/libiberty.a	\
   $(BOOST_FILESYSTEM_LIBS)
 libextatica_la_DEPENDENCIES = $(LTDLDEPS)
 

@@ -126,3 +126,6 @@ EXTRA_DIST +=								\
 
 # These scripts are required by Libiberty's build system.
 EXTRA_DIST += mkinstalldirs move-if-change
+
+# `configure' wrapper used in recursive configuration.
+EXTRA_DIST += libiberty/configure.gnu

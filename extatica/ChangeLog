@@ -1,3 +1,14 @@
+2010-11-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Build Libiberty as a shared library.
+
+	* libiberty/configure.gnu: New.
+	Pass `--enable-shared' to configure, unless told otherwise.
+	* libiberty.mk (EXTRA_DIST): Add libiberty/configure.gnu.
+	* src/Makefile.am (libextatica_la_LIBADD): Replace
+	$(top_builddir)/libiberty/libiberty.a with
+	$(top_builddir)/libiberty/pic/libiberty.a.
+
 2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Mention Libiberty in Extatica's AUTHORS, NEWS and README.
