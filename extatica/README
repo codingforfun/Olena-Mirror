@@ -1,31 +1,328 @@
-HOW TO USE THIS PROJECT
+Copyright (C) 2005, 2009, 2010 EPITA Research and Development
+Laboratory (LRDE).
 
-  Note: These instructions have been updated since this project has
-  been re-integrated into the Olena repository (October 2009).
-  However, they will probably evolve again, since the project should
-  eventually become a part of the Olena distribution.  The biggest
-  change will probably be to run things from the parent directory
-  (Olena's) and enable a configure flag to activate this module.
+This file is part of Olena.
 
-From the repository:
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
 
-  # Initialize the build system.
-  ./bootstrap
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-  # Make a build dir.
-  mkdir _build && cd _build
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-  # Configure the build for your system.
-  ../configure
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
 
-  # You can also use the file `config.site' shipped with the
-  # distribution, though it is a bit old.  `config.site' tries to use
-  # more efficient tools (g++-4.0 and ccache).  It also enables
-  # configure's caching mechanism.  With `--prefix' you can set the
-  # destination (here, `../_install').
-  CONFIG_SITE=`pwd`/../config.site ../configure --prefix=`pwd`/../_install
 
-  # You may want to add the `bin/' directory to your path, but it is
-  # no longer mandatory (`xtc-config' from `bin/' used to be required
-  # by programs compiled with our system).
-  export PATH=$PATH:`pwd`/bin
+========================
+Introduction to Extatica
+========================
+
+Extatica is a part of Olena_, a generic and efficient platform
+dedicated to image processing.
+
+.. _Olena: http://olena.lrde.epita.fr
+
+Extatica is a dynamic-static C++ bridge, enabling users to generate,
+compile and link C++ functions and methods at run time.  Extatica
+features a simple yet powerful C++ Just-In-Time (JIT) compiling
+engine. A common use case is the execution of C++ template routines
+that are not already compiled.
+
+The name of project comes from the phrase ``ex static'' (from the
+static [world]); add the canonical `-a' suffix to make it Olena-ish,
+and you get Extatica.
+
+Extatica can be used to provide dynamic services over the C++
+front-end directly, or indirectly (e.g., through a SWIG-based
+wrapper).  This way, other languages or environment can benefit from
+the power of C++ JIT compiling.
+
+Extatica is currently distributed as a standalone package, but like
+other Olena sub-projects, it will eventually come in two flavors: as a
+standalone package and as a component of the Olena meta-package.
+
+
+=====================
+Detailed Instructions
+=====================
+
+-----------------
+Required Software
+-----------------
+
+Here is a non-exhaustive list of required software required to build
+Extatica successfully.
+
+   * to compile the user examples:
+
+        - a POSIX shell, like Bash
+
+        - a decent C++ compiler, like GNU C++
+
+        - a `make' utility, like GNU `make'
+
+        - Ruby 1.8.6 or greater.
+
+   * if you want to build the SWIG Python bindings, you will also need:
+
+        - the Simplified Wrapper and Interface Generator (SWIG_).
+
+        - Python_
+
+.. _SWIG: http://www.swig.org
+
+.. _Python: http://www.python.org
+
+You also need a working Milena_ install (Milena is shipped with
+Olena).
+
+.. _Milena: http://olena.lrde.epita.fr
+
+
+-------------
+Configuration
+-------------
+
+In order to prepare the build process, you need to configure the source
+tree.
+
+   Assuming your Extatica distribution is uncompressed in directory
+`extatica-1.1', follow these steps:
+
+     % cd extatica-1.1
+     % mkdir _build
+     % cd _build
+     % ../configure
+
+   The build process can be altered by a number of options you can pass
+to the `configure' script.  The following sections describe them.
+
+
+Milena path
+===========
+
+Extatica requires the Milena library.  If Extatica's `configure' is
+unable to find your installation of Milena, or if you want to use a
+specific installation, you must help `configure' find it using the
+`--with-milena' flag.  For instance, if you have installed Milena in
+`$HOME/local', replace the call to `configure' from the previous
+section by this command:
+
+     % ../configure --with-milena=$HOME/local
+
+GNU Libiberty
+=============
+
+Extatica depends on GNU Libiberty, which is part of GNU Binutils (and
+GCC).  If `configure' cannot find Libiberty, you can pass the path to
+the library (usually named `libiberty.a') through `LDFLAGS', e.g.
+
+     % ../configure LDFLAGS="-L/opt/local/lib"
+
+Installation Path
+=================
+
+By default, Extatica is installed in the standard "local" directory of
+your system.  This is usually `/usr/local' under Unix.
+
+   You can change this path with the following flag:
+
+      --prefix=<installation prefix>
+
+
+Compiler Selection and Compilation Flags
+========================================
+
+By default, `configure' will try to use the first C++ compiler it
+encounters on your system.  If `CXX' is not set, it will look, in order,
+for:
+
+   - the value of the `CXX' environment variable,
+
+   - the GNU C++ compiler (`g++'),
+
+   - the `c++' or `gpp' commands on your system,
+
+   - `aCC', the HP-UX standard C++ compiler,
+
+   - the `CC', `cxx', `cc++' or `cl' commands on your system,
+
+   - KAI's C++ compiler (`KCC'),
+
+   - `RCC', `xlC_r' or `xlC'.
+
+   You can override the detection system by passing your favorite
+compiler name to `configure', as follows:
+
+     % ../configure CXX=<your-favorite-C++-compiler>
+
+   As an alternative, you can also set the environment variable `CXX'.
+
+
+   For some compilers (GNU g++ and Intel's icpc to some extent) ,
+`configure' will use default CXXFLAGS.  You can override the default
+C++ flags by giving `configure' your selection of flags:
+
+     % ../configure CXXFLAGS="<your-favorite-C++-flags>"
+
+
+   Extatica uses some C components: likewise, you can set set the C
+compiler and the C compilation flags by setting `CC' and `CFLAGS'
+respectively:
+
+     % ../configure CC=<your-favorite-C-compiler>
+
+     % ../configure CFLAGS="<your-favorite-C-flags>"
+
+You can of course use all of these all together:
+
+     % ../configure CC="<C-compiler>" CFLAGS="<C-flags>" \
+         CXX="<C++-compiler>" CXXFLAGS="<C++-flags>"
+
+
+--------
+Building
+--------
+
+Once your build directory is `configure'd, you can run
+
+     % make
+
+to build Extatica.
+
+
+   Additionally, you can build and run the test suite with:
+
+     % make check
+
+However, this process is time- and memory- consuming, and you probably
+do not need it except if you are developing/debugging Extatica.
+
+
+----------
+Installing
+----------
+
+To install Extatica on your system, run:
+
+      % make install
+
+from the build directory.
+
+   If not overridden with `--prefix', this will install:
+
+   * the `xtc-config' script in `/usr/local/bin',
+
+   * Extatica headers in `/usr/local/include',
+
+   * Extatica libraries in `/usr/local/lib',
+
+   * Python bindings in `/usr/local/lib/python2.x/site-packages'.
+
+   * Extatica boilerplate code in `/usr/local/share/extatica'.
+
+
+   You can later remove Extatica from your system by running
+
+      % make uninstall
+
+from the build directory (if you have kept it).  We recommend the use
+of GNU Stow (or any similar program) during the installation of Extatica,
+to make the uninstallation of Extatica easier.
+
+
+=====================
+Layout of the Tarball
+=====================
+
+The Extatica project directory layout is as follows:
+
+_config
+   Auxiliary tools used by the GNU Build System during ``configure``
+   and ``make`` stages.
+  
+bin
+   Scripts used by the build system or Extatica.
+
+config
+   Extra Autoconf macros and generators.
+
+data
+   Extatica template used to generate wrappers.
+
+libltdl
+   Third-party library used to load dynamic modules.
+
+libmd5
+   Third-party library providing a C++ implementation of the MD5 algorithm.
+
+src
+   Code of libextatica.
+
+  wrappers
+     Code to generate wrappers around libraries (currently, Milena).
+
+swig
+
+  python
+     SWIG Python bindings.
+
+test
+  Extatica's test suite.
+
+
+===================
+Supported Platforms
+===================
+
+Extatica has been tested on the following configurations:
+
+===========================  =============================================
+System                       Compiler
+===========================  =============================================
+GNU/Linux on IA-32           g++ (GNU GCC) 4.4
+Mac OS X (10.6) on IA-32     g++ (GNU GCC) 4.2.1
+===========================  =============================================
+
+
+See Also
+========
+
+There are other sources of interest in the distribution.
+
+- Headline news about the project can be found in the file ``NEWS`` at
+  the root of the source tree.
+
+
+License
+=======
+
+Extatica is released under the GNU General Public License.  See the file
+``COPYING`` (at the root of the source tree) for details.
+
+
+Contacts
+========
+
+The team can be reached by mail at olena@lrde.epita.fr.  The snail
+mail address follows.
+
+* Olena - LRDE
+
+  | Laboratoire de Recherche et Développement de l'EPITA (LRDE)
+  | 14-16 rue Voltaire
+  | FR-94276 Le Kremlin-Bicêtre CEDEX
+  | France
+
+
+
+.. Local Variables:
+.. mode: rst
+.. ispell-local-dictionary: "american"
+.. End:

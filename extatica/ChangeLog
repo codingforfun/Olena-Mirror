@@ -1,3 +1,11 @@
+2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update and augment Extatica's AUTHORS, NEWS and README.
+
+	* AUTHORS: Add details.
+	* NEWS: Update.
+	* README: Update and add instructions and information.
+
 2010-11-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Prepare Extatica to be bundled with Olena.

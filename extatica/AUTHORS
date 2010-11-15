@@ -4,21 +4,36 @@ This package was written by and with the assistance of
 Active LRDE Staff.
 ==================
 
+* Thierry Géraud	theo@lrde.epita.fr
+  - Original idea and implementation.
+
 * Roland Levillain	roland@lrde.epita.fr
+  - Project maintainer.
+  - Revival of the `dynamic-use-of-static-c++' prototype.
+  - Integration of a third-party C++ implementation of the MD5 algorithm.
+  - Progressive conversion of Ruby parts into C++ code.
+  - Addition of a few wrappers around Milena.
+  - First experiments with SWIG and Python.
+  - Modernization of the package and renaming as ``Extatica''.
 
 ================================
 Past contributors of LRDE Staff.
 ================================
 
 * Alexandre Duret-Lutz	adl@lrde.epita.fr
-* Thierry Géraud	theo@lrde.epita.fr
+  - Original idea and implementation.
 
 =========
 Students.
 =========
 
 * Nicolas Pouillard
+  - Initial work on the `dynamic-use-of-static-c++' prototype
+    (dynamic-static bridge).
+
 * Damien Thivolle
+  - Initial work on the `dynamic-use-of-static-c++' prototype
+    (dynamic-static bridge).
 
 
 .. Local Variables:
