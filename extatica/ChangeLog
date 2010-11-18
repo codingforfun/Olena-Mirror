@@ -1,5 +1,18 @@
 2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add data for tests on Extatica SWIG Python wrappers.
+
+	* img/lena.pgm: New (imported from Milena).
+	* Makefile.am (EXTRA_DIST): Add img/lena.pgm
+	* swig/python/data.py.in: New.
+	* swig/python/Makefile.am: Adjust.
+	(BUILT_SCRIPTS_xtc): Add data.py.
+	(EXTRA_DIST): Add data.py.in
+	(CLEANFILES): Add data.py and data.py[co].
+	(all-local): Depend on data.py.
+
+2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start to add Extatica SWIG Python wrappers over Milena.
 
 	* swig/python/mln/__init__.py,

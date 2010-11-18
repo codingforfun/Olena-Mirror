@@ -1,5 +1,4 @@
-# Copyright (C) 2005, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -15,18 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = libltdl libmd5 bin src config data test
+# \file
+# \brief Access to the data of the distribution (images, meshes, etc.).
 
-if SWIG_PYTHON_BINDINGS
-  SUBDIRS += swig
-endif SWIG_PYTHON_BINDINGS
+import os
 
-ACLOCAL_AMFLAGS = -I config -I libltdl
-
-EXTRA_DIST = bootstrap
-
-# `configure' wrapper used in recursive configuration.
-EXTRA_DIST += configure.gnu
-
-# Images used in tests.
-EXTRA_DIST += img/lena.pgm
+top_srcdir = "@top_srcdir@"
+img_dir = os.path.join(top_srcdir, "img")
+lena = os.path.join (img_dir, "lena.pgm")

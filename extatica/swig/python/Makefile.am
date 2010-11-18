@@ -116,6 +116,14 @@ nobase_python_PYTHON =				\
   mln/morpho/watershed.py			\
   mln/value.py
 
+# data.py: Access to the data of the distribution (images, meshes,
+# etc.).
+BUILT_SCRIPTS_xtc += data.py
+EXTRA_DIST += data.py.in
+CLEANFILES += data.py data.py[co]
+# Same remark as above.
+all-local: data.py
+
 
 ## ----------------- ##
 ## Wrapped modules.  ##
