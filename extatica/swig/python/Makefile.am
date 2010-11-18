@@ -39,11 +39,12 @@ libextatica_milena_la = $(top_builddir)/src/wrappers/libextatica-milena.la $(lib
 # files, and the dependency Makefile snippets.
 # FIXME: `%'-style patterns rules are not portable.
 %-wrap.cc %.py: $(top_srcdir)/swig/%.i
-	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
-	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
-	else \
-	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
-	fi
+@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
+@AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
+@AMDEP_TRUE@	else \
+@AMDEP_TRUE@	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
+@AMDEP_TRUE@	fi
+@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
 
 
 # ltihooks.py: Python import hooks that understand Libtool libraries.

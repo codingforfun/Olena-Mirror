@@ -1,3 +1,10 @@
+2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Extatica SWIG Python wrappers' dependency tracking.
+
+	* swig/python/Makefile.am (%-wrap.cc %.py): Honor Automake's
+	`AMDEP' internal conditional.
+
 2010-11-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update and augment Extatica's AUTHORS, NEWS and README.
