@@ -1,5 +1,18 @@
 2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise some SWIG Python wrappers over Milena.
+
+	* swig/python/morpho-segm.py: New.
+	* swig/python/Makefile.am (TESTS_ENVIRONMENT): Pass MILENA_DIR as
+	an environment variable.
+	No longer set environment variables pass abs_top_srcdir and
+	abs_top_builddir (not needed anymore).
+	(TESTS): Add morpho-segm.py.
+	(MOSTLYCLEANFILES): Add	morpho-segm-gradient.pgm and
+	morpho-segm-ws.pgm.
+
+2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add data for tests on Extatica SWIG Python wrappers.
 
 	* img/lena.pgm: New (imported from Milena).
