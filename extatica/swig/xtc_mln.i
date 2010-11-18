@@ -28,7 +28,7 @@
 /// \file
 /// \brief A wrapper of libextatica-milena.
 
-%module mln
+%module xtc_mln
 
 %import xtc.i
 

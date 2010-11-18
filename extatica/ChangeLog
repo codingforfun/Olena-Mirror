@@ -1,5 +1,24 @@
 2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename and factor things a bit in swig/python.
+
+	* swig/mln.i: Rename as...
+	* swig/xtc_mln.i: ...this.
+	* swig/Makefile.am (EXTRA_DIST): s/mln.i/xtc_mln.i/.
+	* swig/python/milena-libextatica-milena.py: Adjust.
+	* swig/python/config.py.in: Remove.
+	Superseded by...
+	* swig/python/mln_config_local.py.in: ...this (new) file.
+	* swig/python/Makefile.am
+	(all-local, EXTRA_DIST, CLEANFILES): s/config/mln_config_local/.
+	(BUILT_SCRIPTS_xtc): New.  Add mln_config_local.py.
+	(config.py): Remove target.
+	Superseded by mln_config_local.py through...
+	($(BUILT_SCRIPTS_xtc)): ...this (new) target.
+	* swig/python/milena-libextatica.py: Adjust.
+
+2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Extatica SWIG Python wrappers' dependency tracking.
 
 	* swig/python/Makefile.am (%-wrap.cc %.py): Honor Automake's

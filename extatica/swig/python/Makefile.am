@@ -50,9 +50,9 @@ libextatica_milena_la = $(top_builddir)/src/wrappers/libextatica-milena.la $(lib
 # ltihooks.py: Python import hooks that understand Libtool libraries.
 python_PYTHON = ltihooks.py
 
-# Use Make to generate `config.py' instead of `configure', as advised
-# by Autoconf's manual (see section ``Installation Directory
-# Variables'').
+# Use Make to generate `mln_config_local.py' instead of `configure',
+# as advised by Autoconf's manual (see section ``Installation
+# Directory Variables'').
 edit = sed							\
          -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
          -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
@@ -60,24 +60,30 @@ edit = sed							\
          -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
          -e 's|@MILENA_DIR[@]|$(MILENA_DIR)|g'
 
-# config.py: Access to the data of the distribution (images, meshes,
-# etc.).
-#
-# Use the all-local hook instead of the nodist_noinst_PYTHON variable,
-# since ``[...] byte-compilation occurs at install time, any files
-# listed in `noinst_PYTHON' will not be compiled'' (and therefore
-# generated, in our case), according to Automake's manual,
-all-local: config.py
-EXTRA_DIST = config.py.in
-config.py: config.py.in Makefile
+BUILT_SCRIPTS_xtc =
+$(BUILT_SCRIPTS_xtc): Makefile
 	rm -f $@ $@.tmp
 	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
+	  test -f ./$@.in || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$@.in >>$@.tmp
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
-CLEANFILES = config.py config.py[co]
+EXTRA_DIST =
+CLEANFILES =
+
+
+## ----------------- ##
+## Milena wrappers.  ##
+## ----------------- ##
+
+# FIXME: This section should be optional.
+
+# mln_config_local.py: Milena configuration (local version used in tests).
+BUILT_SCRIPTS_xtc += mln_config_local.py
+EXTRA_DIST += mln_config_local.py.in
+CLEANFILES += mln_config_local.py mln_config_local.py[co]
+all-local: mln_config_local.py
 
 
 ## ----------------- ##
@@ -106,15 +112,15 @@ CLEANFILES += $(nodist__xtc_la_SOURCES) xtc.py xtc.py[co]
 nodist_python_PYTHON += xtc.py
 
 # FIXME: Should be optional.
-## mln.
-pyexec_LTLIBRARIES += _mln.la
-nodist__mln_la_SOURCES = mln-wrap.cc
-_mln_la_LIBADD = $(libextatica_milena_la)
-CLEANFILES += $(nodist__mln_la_SOURCES) mln.py mln.py[co]
+## xtc_mln.
+pyexec_LTLIBRARIES += _xtc_mln.la
+nodist__xtc_mln_la_SOURCES = xtc_mln-wrap.cc
+_xtc_mln_la_LIBADD = $(libextatica_milena_la)
+CLEANFILES += $(nodist__xtc_mln_la_SOURCES) xtc_mln.py xtc_mln.py[co]
 ## Include the dependency files.  Copied from Automake's generated
 ## case for C++.
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_mln-wrap.Pcc@am__quote@
-nodist_python_PYTHON += mln.py
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_xtc_mln-wrap.Pcc@am__quote@
+nodist_python_PYTHON += xtc_mln.py
 
 
 ## ------- ##

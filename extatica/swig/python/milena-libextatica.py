@@ -22,10 +22,10 @@
 import ltihooks
 
 import xtc
-import config
+import mln_config_local
 
 # Set up paths.
-xtc.include_dir(config.abs_milena_dir)
+xtc.include_dir(mln_config_local.dir)
 xtc.include("mln/core/image/image2d.hh")
 xtc.include("mln/data/fill.hh")
 xtc.include("mln/debug/iota.hh")

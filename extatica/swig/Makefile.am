@@ -16,6 +16,6 @@
 
 SUBDIRS = python
 
-EXTRA_DIST = xtc.i mln.i
+EXTRA_DIST = xtc.i xtc_mln.i
 
 check_SCRIPTS = run

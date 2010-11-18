@@ -22,7 +22,9 @@
 import ltihooks
 
 import xtc
-import mln
+import xtc_mln
+# Shortcut.
+mln = xtc_mln
 
 # We'd like to be able to write this:
 #
