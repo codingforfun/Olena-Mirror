@@ -1,5 +1,31 @@
 2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start to add Extatica SWIG Python wrappers over Milena.
+
+	* swig/python/mln/__init__.py,
+	* swig/python/mln/common.py,
+	* swig/python/mln/data.py,
+	* swig/python/mln/debug.py,
+	* swig/python/mln/io/__init__.py,
+	* swig/python/mln/io/pgm.py,
+	* swig/python/mln/morpho/__init__.py,
+	* swig/python/mln/morpho/closing.py,
+	* swig/python/mln/morpho/watershed.py,
+	* swig/python/mln/value.py:
+	New.
+	* swig/python/mln/config.py.in: New.
+	* swig/python/Makefile.am (nobase_python_PYTHON): Add
+	mln/__init__.py, mln/common.py, mln/data.py, mln/debug.py,
+	mln/io/__init__.py, mln/io/pgm.py, mln/morpho/__init__.py,
+	mln/morpho/closing.py, mln/morpho/watershed.py and mln/value.py.
+	(mln/config.py): New target.
+	(nobase_nodist_python_PYTHON): Add mln/config.py.
+	(EXTRA_DIST): Add mln/config.py.in.
+	(CLEANFILES): Add mln/config.py and mln/config.py[co].
+	(all-local): Depend on mln/config.py.
+
+2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename and factor things a bit in swig/python.
 
 	* swig/mln.i: Rename as...

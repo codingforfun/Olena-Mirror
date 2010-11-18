@@ -69,9 +69,6 @@ $(BUILT_SCRIPTS_xtc): Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
-EXTRA_DIST =
-CLEANFILES =
-
 
 ## ----------------- ##
 ## Milena wrappers.  ##
@@ -79,11 +76,45 @@ CLEANFILES =
 
 # FIXME: This section should be optional.
 
+# mln/config.py: Milena configuration.
+nobase_nodist_python_PYTHON = mln/config.py
+# This target is not listed in BUILT_SCRIPTS_xtc, since its action
+# potentially needs to create a directory.
+mln/config.py: mln/config.py.in Makefile
+	rm -f $@ $@.tmp
+	test -d mln || mkdir mln &&		\
+	  srcdir='';				\
+	  test -f ./$@.in || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$@.in >>$@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+EXTRA_DIST = mln/config.py.in
+CLEANFILES = mln/config.py mln/config.py[co]
+# Use the all-local since ``[...] byte-compilation occurs at install
+# time, any files listed in `noinst_PYTHON' will not be compiled''
+# (and therefore generated, in our case) at build time, according to
+# Automake's manual.
+all-local: mln/config.py
+
 # mln_config_local.py: Milena configuration (local version used in tests).
 BUILT_SCRIPTS_xtc += mln_config_local.py
 EXTRA_DIST += mln_config_local.py.in
 CLEANFILES += mln_config_local.py mln_config_local.py[co]
+# Same remark as above.
 all-local: mln_config_local.py
+
+# Milena wrappers.
+nobase_python_PYTHON =				\
+  mln/__init__.py				\
+  mln/common.py					\
+  mln/data.py					\
+  mln/debug.py					\
+  mln/io/__init__.py				\
+  mln/io/pgm.py					\
+  mln/morpho/__init__.py			\
+  mln/morpho/closing.py				\
+  mln/morpho/watershed.py			\
+  mln/value.py
 
 
 ## ----------------- ##
