@@ -33,6 +33,10 @@
 %include std_string.i
 
 %{
+#include <cstring>
+#include <string>
+#include <sstream>
+
 #include "xtc-all.hh"
 %}
 
@@ -80,6 +84,12 @@ generate_data_ctor(const Type &, Type)
 generate_data_ctor_val(int)
 generate_data_ctor_ref(std::string)
 
+/*-------------.
+| Assignment.  |
+`-------------*/
+
+%rename(assign) xtc::data::operator=;
+
 /*--------------.
 | Conversions.  |
 `--------------*/
@@ -87,6 +97,27 @@ generate_data_ctor_ref(std::string)
 // Instantiate xtc::data explicit conversion routines for some types.
 %extend xtc::data
 {
-  %template(convert_to_int) convert_to<int>;
-  %template(convert_to_string) convert_to<std::string>;
+  %template(to_bool) convert_to<bool>;
+  %template(to_int) convert_to<int>;
+  %template(to_string) convert_to<std::string>;
+}
+
+/*------------------.
+| Pretty-printing.  |
+`------------------*/
+
+// Many Milena objects know how to print themselves with operator<<.
+// This is however not very convient in Python, where `str' is usally
+// used to produce a string representation of an object.  Fill this
+// gap.
+%extend xtc::data
+{
+  char* __str__() const
+  {
+    std::ostringstream s;
+    s << *$self;
+    // FIXME: This is admittedly ugly; can't we use std::string as
+    // return type?  See Swig's manual.
+    return strdup(s.str().c_str());
+  }
 }

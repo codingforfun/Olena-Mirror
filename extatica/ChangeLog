@@ -1,3 +1,46 @@
+2010-11-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add more SWIG Python wrappers over Milena.
+
+	* swig/xtc.i: Wrap `xtc::data::operator=' as `assign'.
+	Wrap `xtc::data::convert_to<bool>' as `to_bool'.
+	s/convert_to_int/to_int/.
+	s/convert_to_string/to_string/.
+	Add a method `__str__' to the wrapper of `xtc::data', delegating
+	to operator<<.
+	* swig/python/xtc_mln/value_set.hh: New.
+	* swig/python/mln/__init__.py,
+	* swig/python/mln/morpho/__init__.py:
+	Wrap more routines.
+	* swig/python/mln/morpho/elementary.py,
+	* swig/python/mln/morpho/opening.py:
+	New.
+	* swig/python/mln/config.py.in: s/milena_dir/milena_include_dir/.
+	Define extatica_include_dir.
+	* swig/python/mln_config_local.py.in: s/dir/milena_include_dir/.
+	Define extatica_include_dir.
+	* swig/python/milena-libextatica.py: Adjust.
+	* swig/python/mln/common.py: s/milena_dir/milena_include_dir/.
+	Set extatica_include_dir from the environment or from
+	`mln.config', and add it to the Exatica search path.
+	* swig/python/image2d-misc.py,
+	* swig/python/morpho-fun.py:
+	New tests.
+	* swig/python/Makefile.am (edit): Also substitute `includedir'.
+	(nobase_include_HEADERS): New
+	Add xtc_mln/value_set.hh.
+	(nobase_python_PYTHON): Add mln/morpho/elementary.py and
+	mln/morpho/opening.py.
+	(TESTS_ENVIRONMENT): Set environment variable EXTATICA_INCLUDE_DIR
+	to $(abs_srcdir).
+	(TESTS): Add image2d-misc.py and morpho-fun.py.
+	(MOSTLYCLEANFILES): Add	morpho-fun-closing.pgm,
+	morpho-fun-closing_area.pgm, morpho-fun-dilation.pgm,
+	morpho-fun-erosion.pgm, morpho-fun-gradient.pgm,
+	morpho-fun-gradient_external.pgm,
+	morpho-fun-gradient_internal.pgm, morpho-fun-opening.pgm and
+	morpho-fun-opening_area.pgm.
+
 2010-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise some SWIG Python wrappers over Milena.

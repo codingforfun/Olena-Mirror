@@ -15,13 +15,9 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 # \file
-# \brief Milena configuration.
+# \brief Python wrappers of Milena's mln::morpho::opening.
 
-# FIXME: We should use MILENA_INCLUDE_DIR instead of MILENA_DIR.
-#
-# By the way MILENA_DIR should point to the prefix of Milena, and
-# MILENA_INCLUDE_DIR to the directory containing the (installed)
-# `mln/' directory.
+from mln.common import *
 
-milena_include_dir = "@MILENA_DIR@"
-extatica_include_dir = "@includedir@"
+xtc.include("mln/morpho/opening/area.hh")
+area = xtc.fun("mln::morpho::opening::area")

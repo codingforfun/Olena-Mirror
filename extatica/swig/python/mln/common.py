@@ -22,12 +22,20 @@ import os
 import ltihooks
 import xtc
 
+# FIXME: We should use MILENA_INCLUDE_DIR instead of MILENA_DIR.
+#
+# By the way MILENA_DIR should point to the prefix of Milena, and
+# MILENA_INCLUDE_DIR to the directory containing the (installed)
+# `mln/' directory.
+
 # Query the environment first for Milena's directory, then try to
 # import `milena_dir' from `mln.config'.
 if os.environ.has_key('MILENA_DIR'):
-  milena_dir = os.environ['MILENA_DIR']
+  milena_include_dir = os.environ['MILENA_DIR']
+  extatica_include_dir = os.environ['EXTATICA_INCLUDE_DIR']
 else:
-  from mln.config import milena_dir
+  from mln.config import milena_include_dir, extatica_include_dir
 
 # Set up paths.
-xtc.include_dir(milena_dir)
+xtc.include_dir(milena_include_dir)
+xtc.include_dir(extatica_include_dir)

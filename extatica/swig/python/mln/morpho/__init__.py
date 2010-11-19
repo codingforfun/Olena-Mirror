@@ -19,5 +19,15 @@
 
 from mln.common import *
 
+__all__ = ["closing", "elementary", "opening", "watershed"]
+
+xtc.include("mln/morpho/dilation.hh")
+dilation = xtc.fun("mln::morpho::dilation")
+
+xtc.include("mln/morpho/erosion.hh")
+erosion = xtc.fun("mln::morpho::erosion")
+
 xtc.include("mln/morpho/gradient.hh")
 gradient = xtc.fun("mln::morpho::gradient")
+gradient_internal = xtc.fun("mln::morpho::gradient_internal")
+gradient_external = xtc.fun("mln::morpho::gradient_external")
