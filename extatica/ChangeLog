@@ -1,3 +1,13 @@
+2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Support header path appending.
+
+	* src/function_loader.hh, src/function_loader.cc
+	(xtc::function_loader_t::include_dir):
+	Do not append empty directories.
+	(xtc::function_loader_t::include_path): New method.
+	(xtc::include_path): New function.
+
 2010-11-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add more SWIG Python wrappers over Milena.

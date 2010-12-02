@@ -30,6 +30,8 @@
 # include <cstdlib>
 
 # include <map>
+# include <string>
+# include <sstream>
 // FIXME: Use and improve the logger to avoid use of std::cerr.
 # include <iostream>
 
@@ -289,7 +291,21 @@ namespace xtc {
     void
     include_dir(const std::string& dir)
     {
-      cflags_.push_back(std::string("-I") + dir);
+      if (!dir.empty())
+	cflags_.push_back(std::string("-I") + dir);
+    }
+
+    void
+    include_path(const std::string& path)
+    {
+      // Path delimiters may be system-dependent, but this routine is
+      // just a helper for include_dir, so this does not really matter
+      // in practice.
+      const char delim = ':';
+      std::stringstream sstr(path);
+      std::string dir;
+      while(std::getline(sstr, dir, delim))
+	include_dir(dir);
     }
 
     void
@@ -563,6 +579,12 @@ namespace xtc {
   include_dir(const std::string& dir)
   {
     function_loader.include_dir(dir);
+  }
+
+  void
+  include_path(const std::string& path)
+  {
+    function_loader.include_path(path);
   }
 
   void cflags(const std::string& elt)

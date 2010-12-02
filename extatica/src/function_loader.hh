@@ -37,6 +37,9 @@ namespace xtc {
   void
   include_dir(const std::string& dir);
 
+  void
+  include_path(const std::string& path);
+
   void cflags(const std::string& elt);
 
   void ldflags(const std::string& elt);
