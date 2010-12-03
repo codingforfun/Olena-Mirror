@@ -50,17 +50,16 @@ libextatica_milena_la = $(top_builddir)/src/wrappers/libextatica-milena.la $(lib
 # ltihooks.py: Python import hooks that understand Libtool libraries.
 python_PYTHON = ltihooks.py
 
-# Use Make to generate `mln_config_local.py' instead of `configure',
-# as advised by Autoconf's manual (see section ``Installation
-# Directory Variables'').
-edit = sed								     \
-         -e 's|@top_srcdir[@]|$(top_srcdir)|g'				     \
-         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'				     \
-         -e 's|@abs_builddir[@]|$(abs_builddir)|g'			     \
-         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'		     \
-         -e 's|@includedir[@]|$(includedir)|g'				     \
-         -e 's|@MILENA_INCLUDE_PATH[@]|$(MILENA_INCLUDE_PATH)|g'	     \
-         -e 's|@MILENA_LOCAL_INCLUDE_PATH[@]|$(MILENA_LOCAL_INCLUDE_PATH)|g'
+# Use Make to generate `mln_config.py' and BUILT_SCRIPTS_xtc scripts
+# instead of `configure', as advised by Autoconf's manual (see section
+# ``Installation Directory Variables'').
+edit = sed								\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'				\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'				\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'			\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'		\
+         -e 's|@includedir[@]|$(includedir)|g'				\
+         -e 's|@MILENA_INCLUDE_PATH[@]|$(MILENA_INCLUDE_PATH)|g'
 
 BUILT_SCRIPTS_xtc =
 $(BUILT_SCRIPTS_xtc): Makefile
@@ -98,12 +97,12 @@ CLEANFILES = mln/config.py mln/config.py[co]
 # Automake's manual.
 all-local: mln/config.py
 
-# mln_config_local.py: Milena configuration (local version used in tests).
-BUILT_SCRIPTS_xtc += mln_config_local.py
-EXTRA_DIST += mln_config_local.py.in
-CLEANFILES += mln_config_local.py mln_config_local.py[co]
+# mln_config.py: Milena configuration (local version used in some tests).
+BUILT_SCRIPTS_xtc += mln_config.py
+EXTRA_DIST += mln_config.py.in
+CLEANFILES += mln_config.py mln_config.py[co]
 # Same remark as above.
-all-local: mln_config_local.py
+all-local: mln_config.py
 
 # Milena wrappers.
 nobase_python_PYTHON =				\

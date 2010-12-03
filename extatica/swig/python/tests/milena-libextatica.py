@@ -19,13 +19,21 @@
 # \file
 # \brief A Python version of test/test_milena.cc using libextatica (directly).
 
+import os
+
 import ltihooks
 
 import xtc
-import mln_config_local
+import mln_config
 
 # Set up paths.
-xtc.include_path(mln_config_local.milena_include_path)
+# Query the environment first for Milena's include path, then try to
+# import `milena_include_path' from `mln_config'.
+if os.environ.has_key('MILENA_INCLUDE_PATH'):
+  milena_include_path = os.environ['MILENA_INCLUDE_PATH']
+else:
+  from mln_config import milena_include_path
+xtc.include_path(milena_include_path)
 xtc.include("mln/core/image/image2d.hh")
 xtc.include("mln/data/fill.hh")
 xtc.include("mln/debug/iota.hh")

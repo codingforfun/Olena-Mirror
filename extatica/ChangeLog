@@ -1,3 +1,20 @@
+2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make Milena include path lookup uniform across tests.
+
+	* swig/python/mln_config_local.py.in: Rename as...
+	* swig/python/mln_config.py.in: ...this.
+	Set milena_include_path to MILENA_INCLUDE_PATH instead of
+	MILENA_LOCAL_INCLUDE_PATH.
+	Do not set extatica_include_dir (was useless).
+	* swig/python/tests/milena-libextatica.py: Adjust.
+	Try to find Milena's include path from the environment, then use
+	the value of `mln_config.milena_include_path'.
+	* swig/python/Makefile.am (all-local)
+	(BUILT_SCRIPTS_xtc, EXTRA_DIST, CLEANFILES):
+	s/mln_config_local.py/mln_config.py/g.
+	(edit): No longer substitute MILENA_LOCAL_INCLUDE_PATH.
+
 2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move Extatica SWIG Python wrappers to their own directory.

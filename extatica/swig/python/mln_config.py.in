@@ -15,7 +15,6 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 # \file
-# \brief Milena configuration (local version used in tests).
+# \brief Milena configuration (local version used in some tests).
 
-milena_include_path = "@MILENA_LOCAL_INCLUDE_PATH@"
-extatica_include_dir = "@abs_srcdir@"
+milena_include_path = "@MILENA_INCLUDE_PATH@"
