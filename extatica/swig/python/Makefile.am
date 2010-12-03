@@ -223,6 +223,21 @@ MOSTLYCLEANFILES =				\
 
 EXTRA_DIST += $(TESTS)
 
+
+## --------------- ##
+## Install tests.  ##
+## --------------- ##
+
+include $(srcdir)/installcheck.mk
+# Like `run', but with PYTHONPATH pointing to an installed directory.
+INSTALL_TESTS_ENVIRONMENT = PYTHONPATH="$(pythondir):$$PYTHONPATH" $(PYTHON)
+INSTALL_TESTS = $(TESTS)
+
+
+## ---------- ##
+## Cleaning.  ##
+## ---------- ##
+
 # Log produced by libextatica.
 CLEANFILES += xtc.log
 

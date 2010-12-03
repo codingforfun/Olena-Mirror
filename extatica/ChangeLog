@@ -1,5 +1,14 @@
 2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Perform install tests in swig/python.
+
+	* swig/python/installcheck.mk: New.
+	Include it...
+	* swig/python/Makefile.am: ...here.
+	(INSTALL_TESTS_ENVIRONMENT, INSTALL_TESTS): New variables.
+
+2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Milena include path lookup uniform across tests.
 
 	* swig/python/mln_config_local.py.in: Rename as...
