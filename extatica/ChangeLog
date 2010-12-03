@@ -1,5 +1,16 @@
 2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make installcheck be quiet.
+
+	* swig/python/Makefile.am (run_install_test_verbose)
+	(run_install_test_verbose_, run_install_test_verbose_0):
+	New variables.
+	(INSTALL_TESTS_ENVIRONMENT): Use $(run_install_test_verbose) to
+	turn install tests' outputs off by default, and on when `VERBOSE'
+	is set to 1.
+
+2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Perform install tests in swig/python.
 
 	* swig/python/installcheck.mk: New.
