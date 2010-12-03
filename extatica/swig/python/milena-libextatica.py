@@ -25,7 +25,7 @@ import xtc
 import mln_config_local
 
 # Set up paths.
-xtc.include_dir(mln_config_local.milena_include_dir)
+xtc.include_path(mln_config_local.milena_include_path)
 xtc.include("mln/core/image/image2d.hh")
 xtc.include("mln/data/fill.hh")
 xtc.include("mln/debug/iota.hh")

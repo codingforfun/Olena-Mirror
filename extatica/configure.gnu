@@ -28,12 +28,11 @@ test x"${srcdir+set}" != xset && srcdir=`dirname $0`
 
 # Disabled option checking is a hint that this `configure.gnu' was
 # called from a parent `configure'.  If so, and if no `--with-milena'
-# option was provided, pass our own `--with-milena' option to the
-# recursive call to the actual `configure', carrying the path to
-# Milena's source directory.
+# option was provided, pass our own `--with-milena' option with the
+# special argument `embedded' to the recursive call to the actual
+# `configure'.
 if $no_option_checking_p && $no_milena_p; then
-  milena_dir=`cd "$srcdir/../milena" && pwd`
-  exec "$srcdir/configure" ${1+"$@"} "--with-milena=$milena_dir"
+  exec "$srcdir/configure" ${1+"$@"} "--with-milena=embedded"
 else
   exec "$srcdir/configure" ${1+"$@"}
 fi

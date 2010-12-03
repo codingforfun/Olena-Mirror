@@ -22,6 +22,8 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_builddir)/src
 check_PROGRAMS = test-milena
 test_milena_SOURCES = test-milena.cc
 
+TESTS_ENVIRONMENT = MILENA_INCLUDE_PATH="$(MILENA_LOCAL_INCLUDE_PATH)"
+
 TESTS = $(check_PROGRAMS)
 
 # Log produced by libextatica.

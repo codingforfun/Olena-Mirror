@@ -53,13 +53,14 @@ python_PYTHON = ltihooks.py
 # Use Make to generate `mln_config_local.py' instead of `configure',
 # as advised by Autoconf's manual (see section ``Installation
 # Directory Variables'').
-edit = sed							\
-         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
-         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
-         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
-         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
-         -e 's|@includedir[@]|$(includedir)|g'			\
-         -e 's|@MILENA_DIR[@]|$(MILENA_DIR)|g'
+edit = sed								     \
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'				     \
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'				     \
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'			     \
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'		     \
+         -e 's|@includedir[@]|$(includedir)|g'				     \
+         -e 's|@MILENA_INCLUDE_PATH[@]|$(MILENA_INCLUDE_PATH)|g'	     \
+         -e 's|@MILENA_LOCAL_INCLUDE_PATH[@]|$(MILENA_LOCAL_INCLUDE_PATH)|g'
 
 BUILT_SCRIPTS_xtc =
 $(BUILT_SCRIPTS_xtc): Makefile
@@ -174,8 +175,10 @@ nodist_python_PYTHON += xtc_mln.py
 
 include $(top_srcdir)/swig/run.mk
 
-TESTS_ENVIRONMENT = \
-  MILENA_DIR="$(MILENA_DIR)" EXTATICA_INCLUDE_DIR="$(abs_srcdir)" $(RUN)
+TESTS_ENVIRONMENT =					\
+  MILENA_INCLUDE_PATH="$(MILENA_LOCAL_INCLUDE_PATH)"	\
+  EXTATICA_INCLUDE_DIR="$(abs_srcdir)"			\
+  $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
 $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is

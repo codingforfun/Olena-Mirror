@@ -1,7 +1,6 @@
 							// -*- C++ -*-
 
-/* Copyright (C) 2005, 2009, 2010 EPITA Research and Development
-   Laboratory (LRDE).
+/* Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
 
    This file is part of Olena.
 
@@ -26,11 +25,9 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef XTC_CONFIG_HH
-# define XTC_CONFIG_HH
+#ifndef XTC_MLN_CONFIG_HH
+# define XTC_MLN_CONFIG_HH
 
-# define XTCDIR "@XTCDIR@"
-# define XTC_DATADIR "@XTC_DATADIR@"
-# define XTC_FIXTURES "@XTC_FIXTURES@"
+# define MILENA_INCLUDE_PATH "@MILENA_INCLUDE_PATH@"
 
-#endif // ! XTC_CONFIG_HH
+#endif // ! XTC_MLN_CONFIG_HH

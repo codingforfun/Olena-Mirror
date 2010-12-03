@@ -17,11 +17,5 @@
 # \file
 # \brief Milena configuration (local version used in tests).
 
-# FIXME: We should use MILENA_INCLUDE_DIR instead of MILENA_DIR.
-#
-# By the way MILENA_DIR should point to the prefix of Milena, and
-# MILENA_INCLUDE_DIR to the directory containing the (installed)
-# `mln/' directory.
-
-milena_include_dir = "@MILENA_DIR@"
+milena_include_path = "@MILENA_LOCAL_INCLUDE_PATH@"
 extatica_include_dir = "@abs_srcdir@"

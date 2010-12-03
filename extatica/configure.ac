@@ -204,31 +204,44 @@ AC_SUBST([XTC_FIXTURES], [$my_abs_srcdir/test/fixtures])
 ## Milena.  ##
 ## -------- ##
 
-# The current approach to providing Extatica a path to Milena's headers
-# is naive: for instance, we cannot provide two paths (source and
-# build dirs) in the case of an Olena build using a parallel build
-# (where srcdir != builddir).  Improve if needed.
-
 # FIXME: Make Milena an optional dependency of Extatica.
 
 AC_ARG_WITH([milena],
-  [AC_HELP_STRING([--with-milena=DIR], [path to Milena headers])],
+  [AC_HELP_STRING([--with-milena<:@=DIR@:>@],
+                  [path to Milena (DIR = prefix of Milena)])],
   [if test x"$with_milena" = xno; then
      AC_MSG_ERROR([Milena is required for Swilena.  Try to invoke configure
 without `--with-milena=no' nor `--without-milena.'])
    fi])
-if test -n "$with_milena" && test x"$with_milena" != xyes; then
-  MILENA_CPPFLAGS="-I$with_milena"
+# Process the special value `embedded' of `--with-milena', meaning
+# Milena is embedded with Extatica in an Olena package.
+if test x"$with_milena" = xembedded; then
+  # Path used with local components (e.g., during `check').
+  MILENA_LOCAL_INCLUDE_PATH="$my_abs_srcdir/../milena"
+  if test x"$my_abs_builddir" != x"$my_abs_srcdir"; then
+    MILENA_LOCAL_INCLUDE_PATH="$MILENA_LOCAL_INCLUDE_PATH:$my_abs_builddir/../milena"
+  fi
+  # Path used with install components (e.g., during `installcheck').
+  MILENA_INCLUDE_PATH="$includedir"
+  # For configuration tests.
+  MILENA_CPPFLAGS="-I$my_abs_srcdir/../milena"
+# Otherwise, this is a standalone package, using an already installed
+# version of Milena.
+elif test -n "$with_milena" && test x"$with_milena" != xyes; then
+  # Absolute path to installed Milena headers.
+  MILENA_LOCAL_INCLUDE_PATH=`cd "$with_milena/include" && pwd`
+  MILENA_INCLUDE_PATH=`cd "$with_milena/include" && pwd`
+  # For configuration tests.
+  MILENA_CPPFLAGS="-I$with_milena/include"
 fi
-swl_save_CPPFLAGS=$CPPFLAGS
+xtc_save_CPPFLAGS=$CPPFLAGS
 CPPFLAGS="$MILENA_CPPFLAGS $CPPFLAGS"
 AC_CHECK_HEADER([mln/core/essential.hh], [],
   AC_MSG_ERROR([Cannot find Milena's headers.  Try to invoke configure with
 `--with-milena=DIR'.]))
-CPPFLAGS=$swl_save_CPPFLAGS
-# Absolute path to Milena.
-MILENA_DIR=`cd "$with_milena" && pwd`
-AC_SUBST([MILENA_DIR])
+CPPFLAGS=$xtc_save_CPPFLAGS
+AC_SUBST([MILENA_LOCAL_INCLUDE_PATH])
+AC_SUBST([MILENA_INCLUDE_PATH])
 
 ## ------------------- ##
 ## Ruby Configuration. ##
@@ -258,6 +271,7 @@ AC_CONFIG_FILES([
   src/Makefile
   src/config.hh
     src/wrappers/Makefile
+    src/wrappers/mln-config.hh
   data/Makefile
   config/Makefile
   _config/local-config.rb

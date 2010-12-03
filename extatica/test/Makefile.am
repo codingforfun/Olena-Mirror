@@ -80,6 +80,8 @@ EXTRA_DIST =						\
   fixtures/my_lib/lib.hh				\
   fixtures/my_lib/damien.hh fixtures/my_lib/damien.hxx
 
+TESTS_ENVIRONMENT = MILENA_INCLUDE_PATH="$(MILENA_LOCAL_INCLUDE_PATH)"
+
 TESTS = $(check_PROGRAMS)
 
 tests: $(check_PROGRAMS)

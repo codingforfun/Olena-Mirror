@@ -24,13 +24,21 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
+#include <cstdlib>
+
 #include "xtc-all.hh"
+// FIXME: This is not elegant: this test is not in test/wrappers/, yet
+// it includes a header from src/wrappers/.
+#include "wrappers/mln-config.hh"
 
 using namespace xtc::language;
 
 int main()
 {
-  xtc::include_dir(MILENA_DIR);
+  char* env_milena_include_path = std::getenv("MILENA_INCLUDE_PATH");
+  const char* milena_include_path =
+    env_milena_include_path ? env_milena_include_path : MILENA_INCLUDE_PATH;
+  xtc::include_path(milena_include_path);
   xtc::include("mln/core/image/image2d.hh");
   xtc::include("mln/data/fill.hh");
   xtc::include("mln/debug/iota.hh");

@@ -1,5 +1,38 @@
 2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Better handling of Extatica's `--with-milena' option.
+
+	* configure.gnu: Pass option `--with-milena=embedded' to configure
+	an Extatica tree embedded in an Olena tree.
+	* configure.ac: Handle a special argument `embedded' for option
+	`--with-milena' looking for Milena in the same Olena tree.
+	Set MILENA_LOCAL_INCLUDE_PATH and MILENA_INCLUDE_PATH instead of
+	MILENA_DIR.
+	Configure src/wrappers/mln-config.hh.
+	* src/wrappers/mln-config.hh.in: New.
+	* src/config.hh.in: No longer define MILENA_DIR.
+	* src/wrappers/milena.cc: Try to find Milena's include path from
+	the environment, then use the value of the macro
+	MILENA_INCLUDE_PATH.
+	* test/test_milena.cc: Likewise.
+	* test/Makefile.am,
+	* test/wrappers/Makefile.am
+	(TESTS_ENVIRONMENT): Set MILENA_INCLUDE_PATH instead of
+	MILENA_DIR.
+	* swig/python/Makefile.am: Likewise.
+	(edit): Substitute MILENA_INCLUDE_PATH and
+	MILENA_LOCAL_INCLUDE_PATH instead of MILENA_DIR.
+	* swig/python/mln/config.py.in,
+	* swig/python/mln_config_local.py.in
+	(milena_include_dir): Replace by...
+	(milena_include_path): ...this.
+	s/MILENA_DIR/MILENA_INCLUDE_PATH/.
+	* swig/python/mln/common.py,
+	* swig/python/milena-libextatica.py:
+	Adjust.
+
+2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Support header path appending.
 
 	* src/function_loader.hh, src/function_loader.cc
