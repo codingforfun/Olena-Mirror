@@ -34,7 +34,12 @@ modpath='.libs:@abs_top_builddir@/src/.libs:@abs_top_builddir@/src/wrappers/.lib
 
 case $1 in
   '' | *.py)
-    PYTHONPATH='@abs_builddir@/python:@abs_srcdir@/python':"$PYTHONPATH" \
+    # Place `@abs_srcdir@/python' before `@abs_builddir@/python' in
+    # PYTHONPATH to help Python choose the `@abs_srcdir@/python/mln'
+    # as the root of the mln package in lieu of
+    # `@abs_builddir@/python/mln' (which only contains generated
+    # modules like `mln/config.py').
+    PYTHONPATH='@abs_srcdir@/python:@abs_builddir@/python':"$PYTHONPATH" \
     DYLD_LIBRARY_PATH=$modpath \
     exec @PYTHON@ "$@"
     ;;

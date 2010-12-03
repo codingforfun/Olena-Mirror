@@ -1,5 +1,24 @@
 2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move Extatica SWIG Python wrappers to their own directory.
+
+	* swig/python/image2d-misc.py,
+	* swig/python/milena-libextatica-milena.py,
+	* swig/python/milena-libextatica.py,
+	* swig/python/morpho-fun.py,
+	* swig/python/morpho-segm.py:
+	Move...
+	* swig/python/tests/image2d-misc.py,
+	* swig/python/tests/milena-libextatica-milena.py,
+	* swig/python/tests/milena-libextatica.py,
+	* swig/python/tests/morpho-fun.py,
+	* swig/python/tests/morpho-segm.py:
+	...here.
+	* swig/python/Makefile.am (TESTS): Adjust.
+	* swig/run.in: Help Python find the `mln' package.
+
+2010-12-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Better handling of Extatica's `--with-milena' option.
 
 	* configure.gnu: Pass option `--with-milena=embedded' to configure
