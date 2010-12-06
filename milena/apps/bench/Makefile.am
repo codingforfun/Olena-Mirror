@@ -21,9 +21,20 @@ APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =				\
-  gradient-lena
+  gradient-lena					\
+  gradient-spe-lena
+
+EXTRA_DIST =					\
+  and_not.hh					\
+  minus.hh
 
 gradient_lena_SOURCES = gradient-lena.cc
+gradient_spe_lena_SOURCES = gradient-spe-lena.cc
 
 MOSTLYCLEANFILES =				\
-  gradient-lena-out.pgm
+  gradient-lena-out.pgm				\
+  gradient-spe-lena-out-0.pgm			\
+  gradient-spe-lena-out-1.pgm			\
+  gradient-spe-lena-out-2.pgm			\
+  gradient-spe-lena-out-3.pgm			\
+  gradient-spe-lena-out-4.pgm
