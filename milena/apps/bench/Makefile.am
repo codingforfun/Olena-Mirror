@@ -20,18 +20,26 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
+EXTRA_DIST = lena1024.pgm
+
 noinst_PROGRAMS =				\
+  dilation-lena					\
   gradient-lena					\
   gradient-spe-lena
 
-EXTRA_DIST =					\
+EXTRA_DIST +=					\
   and_not.hh					\
   minus.hh
 
+dilation_lena_SOURCES = dilation-lena.cc
 gradient_lena_SOURCES = gradient-lena.cc
 gradient_spe_lena_SOURCES = gradient-spe-lena.cc
 
 MOSTLYCLEANFILES =				\
+  dilation-lena-out-spe.pgm			\
+  dilation-lena-out-gen.pgm			\
+  dilation-lena-out-fast.pgm			\
+  dilation-lena-out-faster.pgm			\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\
   gradient-spe-lena-out-1.pgm			\
