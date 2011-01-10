@@ -24,6 +24,7 @@ EXTRA_DIST = lena1024.pgm lena2048.pgm
 
 noinst_PROGRAMS =				\
   dilation-lena					\
+  dilation-lena-table				\
   gradient-lena					\
   gradient-spe-lena
 
@@ -37,6 +38,7 @@ EXTRA_DIST +=					\
   trait.hh
 
 dilation_lena_SOURCES = dilation-lena.cc dilation-lena.hh
+dilation_lena_table_SOURCES = dilation-lena-table.cc dilation-lena.hh
 gradient_lena_SOURCES = gradient-lena.cc
 gradient_spe_lena_SOURCES = gradient-spe-lena.cc
 
