@@ -17,8 +17,7 @@
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
-APPS_CXXFLAGS = @APPS_CXXFLAGS@
-AM_CXXFLAGS = $(APPS_CXXFLAGS)
+AM_CXXFLAGS = $(APPS_CXXFLAGS_NODEBUG)
 
 EXTRA_DIST = lena1024.pgm lena2048.pgm
 
