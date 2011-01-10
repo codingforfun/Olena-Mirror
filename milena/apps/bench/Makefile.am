@@ -36,7 +36,7 @@ EXTRA_DIST +=					\
   static_window.hh				\
   trait.hh
 
-dilation_lena_SOURCES = dilation-lena.cc
+dilation_lena_SOURCES = dilation-lena.cc dilation-lena.hh
 gradient_lena_SOURCES = gradient-lena.cc
 gradient_spe_lena_SOURCES = gradient-spe-lena.cc
 
