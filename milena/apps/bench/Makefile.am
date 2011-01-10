@@ -52,7 +52,6 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-512-faster_noaccu.pgm	\
   dilation-lena-out-512-fast_static.pgm		\
   dilation-lena-out-512-faster_static.pgm	\
-						\
   dilation-lena-out-1024-nongen.pgm		\
   dilation-lena-out-1024-nongen_2ptr.pgm	\
   dilation-lena-out-1024-nongen_1ptr.pgm	\
@@ -63,7 +62,6 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-1024-faster_noaccu.pgm	\
   dilation-lena-out-1024-fast_static.pgm	\
   dilation-lena-out-1024-faster_static.pgm	\
-						\
   dilation-lena-out-2048-nongen.pgm		\
   dilation-lena-out-2048-nongen_2ptr.pgm	\
   dilation-lena-out-2048-nongen_1ptr.pgm	\
@@ -74,6 +72,22 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-2048-faster_noaccu.pgm	\
   dilation-lena-out-2048-fast_static.pgm	\
   dilation-lena-out-2048-faster_static.pgm	\
+						\
+  dilation-lena-table-out-512-nongen.pgm	\
+  dilation-lena-table-out-512-nongen_2ptr.pgm	\
+  dilation-lena-table-out-512-gen.pgm		\
+  dilation-lena-table-out-512-fast.pgm		\
+  dilation-lena-table-out-512-fast_static.pgm	\
+  dilation-lena-table-out-1024-nongen.pgm	\
+  dilation-lena-table-out-1024-nongen_2ptr.pgm	\
+  dilation-lena-table-out-1024-gen.pgm		\
+  dilation-lena-table-out-1024-fast.pgm		\
+  dilation-lena-table-out-1024-fast_static.pgm	\
+  dilation-lena-table-out-2048-nongen.pgm	\
+  dilation-lena-table-out-2048-nongen_2ptr.pgm	\
+  dilation-lena-table-out-2048-gen.pgm		\
+  dilation-lena-table-out-2048-fast.pgm		\
+  dilation-lena-table-out-2048-fast_static.pgm	\
 						\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\
