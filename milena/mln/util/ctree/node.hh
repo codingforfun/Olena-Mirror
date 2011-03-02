@@ -47,8 +47,8 @@ namespace mln
   {
     namespace ctree
     {
-       template <typename T>
-       class node;
+      template <typename T>
+      class node;
     }
 
   }
@@ -119,26 +119,26 @@ namespace mln
 	int		idx_;
       };
 
-      /*
-      ** Operators.
-      */
-      template <typename T>
-      bool
-      operator== (const node<T>& n1, const node<T>& n2);
-
-      template <typename T>
-      bool
-      operator!= (const node<T>& n1, const node<T>& n2);
-
-      /// Test if the node \p n1 is a descendant of \p n2
-      ///
-      template <typename T>
-      bool
-      operator< (const node<T>& n1, const node<T>& n2);
-
     } // end of namespace mln::util::ctree
 
   } // end of namespace mln::util
+
+  /*
+  ** Operators.
+  */
+  template <typename T>
+  bool
+  operator== (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2);
+
+  template <typename T>
+  bool
+  operator!= (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2);
+
+  /// Test if the node \p n1 is a descendant of \p n2
+  ///
+  template <typename T>
+  bool
+  operator< (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2);
 
  
   namespace internal
@@ -260,36 +260,36 @@ namespace mln
 	return tree_ != 0 && tree_->is_valid();
       }
 
-      /*
-      ** Operators
-      */
-      template <typename T>
-      inline
-      bool
-      operator== (const node<T>& n1, const node<T>& n2)
-      {
-	return n1.index() == n2.index();
-      }
-
-      template <typename T>
-      inline
-      bool
-      operator!= (const node<T>& n1, const node<T>& n2)
-      {
-	return n1.index() != n2.index();
-      }
-
-      template <typename T>
-      inline
-      bool
-      operator< (const node<T>& n1, const node<T>& n2)
-      {
-	return n1.index() > n2.index();
-      }
-
     } // end of namespace mln::util::ctree
 
   } // end of namespace mln::util
+
+  /*
+  ** Operators
+  */
+  template <typename T>
+  inline
+  bool
+  operator== (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2)
+  {
+    return n1.index() == n2.index();
+  }
+
+  template <typename T>
+  inline
+  bool
+  operator!= (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2)
+  {
+    return n1.index() != n2.index();
+  }
+
+  template <typename T>
+  inline
+  bool
+  operator< (const util::ctree::node<T>& n1, const util::ctree::node<T>& n2)
+  {
+    return n1.index() > n2.index();
+  }
 
   namespace internal
   {
@@ -322,7 +322,7 @@ namespace mln
       return exact_().get_subject().tree();
     }
 
-   /*------------------------------------------`
+    /*------------------------------------------`
     | subject_impl<       util::ctree::node<T> |
     \-----------------------------------------*/
 

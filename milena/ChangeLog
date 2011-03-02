@@ -1,3 +1,14 @@
+2011-03-02  edwin carlinet  <carlinet@lrde.epita.fr>
+Minor updates to make things compile.
+
+	* milena/mln/core/alias/dpoint2d.hh: add typedef dpoint2df.
+	* milena/mln/core/image/attribute_image.hh: add explicit
+	constructor.
+	* milena/mln/morpho/tree/leaf_last.hh: energy minimization instead
+	of maximization.
+	* milena/mln/util/ctree/ctree.hh: bug fix.
+	* milena/mln/util/ctree/node.hh: put operators outside namespace.
+
 2010-05-21  edwin carlinet  <carlinet@lrde.epita.fr>
 
 	Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be

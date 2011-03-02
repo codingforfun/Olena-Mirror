@@ -43,6 +43,7 @@ namespace mln
   /// grid with integer coordinates.
   typedef dpoint<mln::grid::square, mln::def::coord> dpoint2d;
 
+  typedef dpoint<mln::grid::square, mln::def::coordf> dpoint2df;
 
 } // end of namespace mln
 
