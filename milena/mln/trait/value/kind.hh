@@ -58,7 +58,7 @@ namespace mln
 	// FIXME: Why not?
 	// label       logic
 	//   \         /     \  
-	//    \   nary_logic   \  
+	//    \   nary_logic g  \  
 	//     \     /   \       \  
 	//     binary   ternary  fuzzy
 	*/

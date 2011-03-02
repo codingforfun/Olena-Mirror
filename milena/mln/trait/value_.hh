@@ -137,6 +137,14 @@ namespace mln
        * typedef ? comp_1;
        * ...
        */
+
+      // FIXME: hack to allow dumping/loading non-native type.
+      static const char* name()
+      {
+	static std::string s = std::string("unknown");
+	return s.c_str();
+      }
+
     };
 
 

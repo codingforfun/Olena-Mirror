@@ -1,4 +1,11 @@
 2011-03-02  edwin carlinet  <carlinet@lrde.epita.fr>
+
+Add traits so that dump images of unspecified types can be load and save.
+
+	* milena/mln/trait/value/kind.hh,
+	* milena/mln/trait/value_.hh: Add "unknown" name for default types.
+
+2011-03-02  edwin carlinet  <carlinet@lrde.epita.fr>
 Minor updates to make things compile.
 
 	* milena/mln/core/alias/dpoint2d.hh: add typedef dpoint2df.
