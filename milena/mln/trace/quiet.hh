@@ -32,7 +32,13 @@
  */
 
 # include <ctime>
-# include <sys/time.h>
+
+# ifndef _WIN32
+#  include <sys/time.h>
+# else
+#  define NOMINMAX
+#  include <windows.h>
+# endif
 
 namespace mln
 {

@@ -81,6 +81,7 @@ namespace mln
 	template<class V>
 	static yes_ selector(M<V>*);
 	static no_  selector(...);
+  enum { ret = sizeof(selector(internal::make_< T >::ptr())) };
       };
 
     } // end of namespace mln::metal::internal
@@ -92,7 +93,7 @@ namespace mln
     /// Check whether T inherits from _CONCEPT_ M.
     //
     template <typename T, template <class> class M>
-    struct is_a : bool_<( sizeof( internal::helper_is_a_< T, M >::selector(internal::make_< T >::ptr()) )
+    struct is_a : bool_<( internal::helper_is_a_< T, M >::ret
 			  ==
 			  sizeof( internal::yes_ )  )>
     {};

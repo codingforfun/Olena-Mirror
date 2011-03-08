@@ -75,7 +75,7 @@ namespace mln
     template <typename E>
     yes_ exact_selector_(Object<E>*);
 
-    no_  exact_selector_(void*);
+    no_  exact_selector_(...);
 
     template <typename E, typename T>
     E* exact_run_(Object<E>* t, T*);
@@ -123,7 +123,7 @@ namespace mln
     inline
     E* exact_run_(Object<E>* t, T*)
     {
-      return (E*)(void*)t;
+      return static_cast<E*>(t);
     }
 
     template <typename T>

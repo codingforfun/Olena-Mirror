@@ -215,7 +215,7 @@ namespace mln
       mln_ch_value(typename T::function, mln_result(A))
       compute_attribute_image(const Accumulator<A>& a_,
 			      const T& t,
-			      mln_ch_value(typename T::function, A)* accu_image = 0)
+			      mln_ch_value(typename T::function, A)* accu_image)
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 
@@ -233,7 +233,7 @@ namespace mln
       compute_attribute_image_from(const Accumulator<A>& a_,
 				   const T& t,
 				   const Image<V>& values,
-				   mln_ch_value(typename T::function, A)* accu_image = 0)
+				   mln_ch_value(typename T::function, A)* accu_image)
       {
 	trace::entering("morpho::tree::compute_attribute_image_from");
 

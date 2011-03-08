@@ -46,6 +46,35 @@ namespace mln
 	doing.
 
 	\see mln::exact.  */
+
+
+    template <typename S, typename D>
+    struct safe_c_cast
+    {
+      static D* run(S* s, D* a = static_cast<D*>((S*)0))
+      {
+        return static_cast<D*>(s);
+      }
+      static D* run(S* s, ...)
+      {
+/*        static const E* exact_obj;
+        static const T& exact_obj_ref = *exact_obj;
+        static const ptrdiff_t exact_offset =
+          (const char*)(void*)(&exact_obj_ref)
+          - (const char*)(void*)(exact_obj);
+        return *(E*)((char*)(s) - exact_offset);*/
+        return *reinterpret_cast<E*>(s);
+      }
+
+    };
+
+    template <typename E, typename T>
+    E& force_exact(const T& ref)
+    {
+      return *safe_c_cast<T, E>::run(const_cast<T*>(&ref), (E*)0);
+    }
+
+    /*
     template <typename E, typename T>
     E& force_exact(const T& ref)
     {
@@ -56,6 +85,7 @@ namespace mln
 	- (const char*)(void*)(exact_obj);
       return *(E*)((char*)(&ref) - exact_offset);
     }
+    */
 
   } // end of namespace mln::internal
 

@@ -117,6 +117,7 @@ namespace mln
     {
       typedef mln_exact(mlc_unqualif(O))& ret;
       static ret on(O& obj);
+
     };
 
 
@@ -310,17 +311,22 @@ namespace mln
 
     template <typename P>
     inline
-    mln_exact(P)::HOT_actual_subject
+    // Fixme: This is a fix for compilation on MSVC.
+    typename helper_unproxy_rec< P, true >::ret
+    //Was: mln_exact(P)::HOT_actual_subject
     helper_unproxy_rec< P, true >::on(P& p)
     {
       return unproxy_rec(exact(p).unproxy_());
     }
 
+
     // helper_unprox_rec
 
     template <typename P>
     inline
-    mlc_const(mln_exact(P)::HOT_actual_subject)
+    // Fixme: This is a fix for compilation on MSVC.
+    typename helper_unproxy_rec< const P, true >::ret
+    //Was: mlc_const(mln_exact(P)::HOT_actual_subject)
     helper_unproxy_rec< const P, true >::on(const P& p)
     {
       return unproxy_rec(exact(p).unproxy_());

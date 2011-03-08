@@ -67,6 +67,8 @@ namespace mln
       {
 	static yes_ selector(U, int);
  	static no_  selector(eat, ...);
+	enum { ret = sizeof(selector(*internal::make_<mlc_const(T)>::ptr(), 0)) };
+
       };
 
     } // end of namespace mln::metal::internal
@@ -75,9 +77,7 @@ namespace mln
 
     /// \brief "converts-to" check.
     template <typename T, typename U>
-    struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>
-					::selector(*internal::make_<mlc_const(T)>::ptr(),
-						   0) )
+    struct converts_to : bool_<( internal::helper_converts_to_<T, U>::ret
 				 ==
 				 sizeof(internal::yes_) )>
     {};

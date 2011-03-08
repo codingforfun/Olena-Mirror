@@ -284,7 +284,7 @@ namespace mln
   }
 
   template <typename I, typename F>
-  thru_image<const I, F> thru(const mln::Function<F>& f,
+  const thru_image<const I, F> thru(const mln::Function<F>& f,
 			      const Image<I>& ima)
   {
     thru_image<const I, F> tmp(exact(ima), exact(f));
@@ -302,7 +302,7 @@ namespace mln
   }
 
   template <typename I, typename M>
-  thru_image<const I, mln_fun_with(M, mln_value(I))>
+  const thru_image<const I, mln_fun_with(M, mln_value(I))>
   thru(const mln::Meta_Function<M>& f, const Image<I>& ima)
   {
     typedef mln_fun_with(M, mln_value(I)) F;

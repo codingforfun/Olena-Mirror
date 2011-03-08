@@ -470,7 +470,9 @@ namespace mln
 
       template <typename I, typename S>
       inline
-      mln_rvalue_(mln_ch_value(I, mln_psite(I)))
+      // Fixme
+      // Was: mln_rvalue_(mln_ch_value(I, mln_psite(I)))
+      typename data<I,S>::parent_t::rvalue
       data<I,S>::parent(const mln_psite(I)& p) const
       {
 	mln_precondition(parent_.domain().has(p));
@@ -479,7 +481,10 @@ namespace mln
 
       template <typename I, typename S>
       inline
+            // Fixme
+      // Was: const mln_ch_value(I, mln_psite(I))&
       const mln_ch_value(I, mln_psite(I))&
+      //mln_rvalue(typename data<I,S>::parent_t)
       data<I,S>::parent_image() const
       {
 	mln_precondition(is_valid());
@@ -588,7 +593,9 @@ namespace mln
 
       template <typename I, typename S>
       inline
-      mln_rvalue_(mln_ch_value(I, p_array<mln_psite(I)>))
+      // Fixme
+      // Was: mln_rvalue_(mln_ch_value(I, p_array<mln_psite(I)>))
+      typename data<I,S>::children_t::rvalue
       data<I,S>::children(const mln_psite(I)& p) const
       {
 	mln_precondition(is_a_node(p));
