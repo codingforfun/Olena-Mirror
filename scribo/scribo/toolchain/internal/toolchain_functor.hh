@@ -42,6 +42,7 @@ namespace scribo
       public:
 
 	Toolchain_Functor();
+        virtual ~Toolchain_Functor();
 
 	virtual int nsteps() const = 0;
 
@@ -66,6 +67,9 @@ namespace scribo
       {
       }
 
+      Toolchain_Functor::~Toolchain_Functor()
+      {
+      }
 
       //==========
       // Triggers

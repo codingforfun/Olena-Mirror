@@ -1099,6 +1099,11 @@
 
 2011-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/toolchain/internal/toolchain_functor.hh: Fix a warning
+	with GCC 4.5.
+
+2011-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/toolchain/nepomuk/text_extraction.hh: Remove useless
 	punctuation in text output.
 
