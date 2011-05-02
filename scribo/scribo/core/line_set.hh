@@ -166,6 +166,7 @@ namespace scribo
 
     void update_line_data_(const mln::util::array<line_info<L> >& line_data);
 
+    void merge(const line_set<L>& lines);
 
   private:
     /// Duplicate the underlying image and create a new line_set.

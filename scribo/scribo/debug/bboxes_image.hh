@@ -82,6 +82,15 @@ namespace scribo
 		      const component_set<L>& comps,
       		      const value::rgb8& value);
 
+    // Draw text lines and their components
+    template <typename I, typename L>
+    inline
+    mln_ch_value(I, value::rgb8)
+    bboxes_image_textline(const Image<I>& input,
+			  const line_set<L>& lines,
+			  const value::rgb8& value,
+			  const value::rgb8& comp_value);
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
@@ -155,6 +164,38 @@ namespace scribo
       return output;
     }
 
+    template <typename I, typename L>
+    inline
+    mln_ch_value(I, value::rgb8)
+    bboxes_image_textline(const Image<I>& input,
+			  const line_set<L>& lines,
+			  const value::rgb8& value,
+			  const value::rgb8& comp_value)
+    {
+      trace::entering("scribo::debug::bboxes_image_textline");
+      mln_precondition(exact(input).is_valid());
+
+      mln_ch_value(I, value::rgb8)
+	output = data::convert(value::rgb8(), input);
+
+      for_all_lines(l, lines)
+	{
+	  if (! lines(l).is_hidden()
+	      && text::internal::looks_like_a_text_line(lines(l)))
+	    {
+	      mln::draw::box(output, lines(l).bbox(), value);
+	      const mln::util::array<component_id_t>& comps_id =
+		lines(l).component_ids();
+	      const component_set<L>& comps = lines.components();
+	      for (unsigned i = 0; i < comps_id.nelements(); i++)
+		mln::draw::box(output, comps(comps_id[i]).bbox(),
+			       comp_value);
+	    }
+	}
+
+      trace::exiting("scribo::debug::bboxes_image_textline");
+      return output;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

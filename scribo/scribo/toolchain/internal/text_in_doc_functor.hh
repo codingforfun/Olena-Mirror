@@ -47,7 +47,7 @@
 
 # include <scribo/preprocessing/denoise_fg.hh>
 
-# include <scribo/text/recognition.hh>
+//# include <scribo/text/recognition.hh>
 # include <scribo/text/merging.hh>
 
 # include <scribo/make/debug_filename.hh>
@@ -383,7 +383,7 @@ namespace scribo
 
 	on_new_progress_label("Recognizing text");
 
-	scribo::text::recognition(lines, ocr_language.c_str());
+	//	scribo::text::recognition(lines, ocr_language.c_str());
 
 	on_progress();
 
