@@ -250,7 +250,7 @@ private:
     std::vector< unsigned > clusters;
     unsigned cluster_index = 1;
 
-    clusters.reserve(data_.nelements());
+    clusters.resize(data_.nelements());
 
     if (not data_sorted_)
     {
@@ -261,7 +261,7 @@ private:
     unsigned i = 0;
     const unsigned nelements = data_.nelements();
 
-    clusters.push_back(cluster_index);
+    clusters[0] = cluster_index;
     const T std = data_.standard_deviation();
 
     for (i = 1; i < nelements - 1; ++i)
@@ -273,16 +273,14 @@ private:
 	       && left_distance <= std))
 	++cluster_index;
 
-      clusters.push_back(cluster_index);
+      clusters[i] = cluster_index;
     }
 
-    if (nelements > 1)
-    {
-      if (data_[i] - data_[i - 1] > std)
-	++cluster_index;
+    if (nelements > 1
+	&& data_[i] - data_[i - 1] > std)
+      ++cluster_index;
 
-      clusters.push_back(cluster_index);
-    }
+    clusters[i] = cluster_index;
 
     clusters_.clear();
     clusters_.reserve(cluster_index);
