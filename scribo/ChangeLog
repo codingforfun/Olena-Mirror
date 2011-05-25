@@ -1,3 +1,9 @@
+2011-05-25  Coddy Levi  <levi@lrde.epita.fr>
+
+	New algorithm to detect superpositions between two line sets.
+
+	* scribo/inverse_video/handle_collisions.hh: New.
+
 2011-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/viewer/xml_widget.cc: Fix a warning.
