@@ -81,18 +81,17 @@ namespace scribo
 	unsigned ls1_size_;
 	const scribo::line_set<L>& ls1_;
 	const scribo::line_set<L>& ls2_;
-      };      
+      };
     } // end of namespace scribo::text::internal
 
     // Facade
-    template <typename I,
-	      typename L,
-	      typename F>
+    template <typename I, typename L>
     void
     handle_collisions(image2d<I>& input,
 		      scribo::line_set<L>& ls1,
 		      scribo::line_set<L>& ls2,
-		      F choose)
+		      void (*choose)(scribo::line_info<L>&,
+				     scribo::line_info<L>&))
     {
       mln::trace::entering("scribo::inverse_video::handle_collisions");
 
@@ -122,7 +121,7 @@ namespace scribo
 	    : v[i];
 
 	  if (!scribo::text::internal::looks_like_a_text_line(ls(l))
-	      || !ls(l).is_valid())
+	      || !ls(l).is_valid() || ls(l).is_hidden())
 	    continue;
 
 	  unsigned tl, tr, bl, br;
@@ -136,11 +135,10 @@ namespace scribo
 
 	  std::set<unsigned> labels;
 	  labels.insert(tl);
-	  labels.insert(tl);
+	  labels.insert(tr);
 	  labels.insert(bl);
 	  labels.insert(br);
 
-	  bool chosen = true;
 	  for (std::set<unsigned>::const_iterator it = labels.begin();
 	       it != labels.end();
 	       ++it)
@@ -150,38 +148,24 @@ namespace scribo
 
 	    bool inverse_video_tested = (*it > ls1_size);
 
-	    const scribo::line_info<L>& l_tested =
+	    if (inverse_video_tested == inverse_video)
+	      break;
+
+	    scribo::line_info<L>& l_tested =
 	      (inverse_video_tested ? ls2(*it - ls1_size + 1) : ls1(*it));
 
 	    if (!scribo::text::internal::looks_like_a_text_line(l_tested)
-		|| !l_tested.is_valid())
+		|| !l_tested.is_valid() || l_tested.is_hidden())
 	      continue;
 
-	    chosen = choose(ls(l), l_tested);
-	    /*
-	    if (inverse_video != inverse_video_tested)
-	      {
-		if (inverse_video_tested)
-		  mln::draw::box(input,
-				 l_tested.bbox(),
-				 mln::literal::blue);
-		else
-		  mln::draw::box(input,
-				 l_tested.bbox(),
-				 mln::literal::green);
+	    choose(ls(l), l_tested);
 
-		if (inverse_video)
-		  mln::draw::box(input,
-				 ls(l).bbox(),
-				 mln::literal::blue);
-		else
-		  mln::draw::box(input,
-				 ls(l).bbox(),
-				 mln::literal::green);
-	      }*/
+	    if (ls(l).is_hidden())
+	      break;
 	  }
 	  
-	  scribo::text::internal::draw_box(billboard, b, v[i]);
+	  if (!ls(l).is_hidden())
+	    scribo::text::internal::draw_box(billboard, b, v[i]);
 	}
 
       mln::trace::exiting("scribo::inverse_video::handle_collisions");
