@@ -1,3 +1,12 @@
+2011-05-27  Sylvain Lobry  <lobry@lrde.epita.fr>
+
+	Added a choose function, to be used with handle_collisions.
+
+	* scribo/inverse_video/handle_collisions.hh: Prototype fixed.
+	* scribo/inverse_video/choose.hh,
+	* scribo/inverse_video/nb_comps.hh,
+	* scribo/inverse_video/ratio_area.hh: New.
+
 2011-05-26  Coddy Levi  <levi@lrde.epita.fr>
 
 	Bug corrected, several improvements, interface modified.

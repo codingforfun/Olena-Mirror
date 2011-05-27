@@ -44,14 +44,14 @@ namespace scribo
   {
 
     template <typename I,
-	      typename L,
-	      typename F>
+	      typename L>
     void
-    handle_collisions(const image2d<I>& input,
+    handle_collisions(image2d<I>& input,
 		      scribo::line_set<L>& ls1,
 		      scribo::line_set<L>& ls2,
-		      F choose);
-
+		      void (*choose)(image2d<I>&,
+				     scribo::line_info<L>&,
+				     scribo::line_info<L>&));
 # ifndef MLN_INCLUDE_ONLY
 
     namespace internal
@@ -90,7 +90,8 @@ namespace scribo
     handle_collisions(image2d<I>& input,
 		      scribo::line_set<L>& ls1,
 		      scribo::line_set<L>& ls2,
-		      void (*choose)(scribo::line_info<L>&,
+		      void (*choose)(image2d<I>&,
+				     scribo::line_info<L>&,
 				     scribo::line_info<L>&))
     {
       mln::trace::entering("scribo::inverse_video::handle_collisions");
@@ -158,7 +159,7 @@ namespace scribo
 		|| !l_tested.is_valid() || l_tested.is_hidden())
 	      continue;
 
-	    choose(ls(l), l_tested);
+	    choose(input, ls(l), l_tested);
 
 	    if (ls(l).is_hidden())
 	      break;
