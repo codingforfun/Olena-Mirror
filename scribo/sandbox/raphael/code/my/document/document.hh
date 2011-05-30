@@ -44,9 +44,12 @@ namespace mymln
 	  Hseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  Vseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  noise_mask = fun::i2v::array<bool>(Areas + 1);
+	  alone_letters_mask = fun::i2v::array<bool>(Areas + 1);
 
 	  lines_mark = mln::util::array<unsigned int>(Areas + 1);
+	  lines_mark_link = mln::util::array<unsigned int>(Areas + 1);
 	lines_mark.fill(0);
+	lines_mark_link.fill(0);
 	  img_influ = ima_influ;
 	  CSep = 0;
 	  CSepH = 0;
@@ -57,9 +60,20 @@ namespace mymln
 	  
 	}
 	/* OPERATION ON LINES */
+	inline void add_to_line_self_link(const point2d& point)
+	{
+	  add_to_line_self_link(img_influ(point));
+	}
 	inline void add_to_line(const point2d& point)
 	{ add_to_line(img_influ(point)); }
 	
+
+	inline void add_to_line_link(const point2d& A, const point2d& B)
+	{ add_to_line_link(img_influ(A), img_influ(B)); }
+	inline bool same_line(const point2d& A, const point2d& B)
+	{ return  same_line(img_influ(A), img_influ(B)); }
+	inline bool same_line(const Label A, const Label B)
+	{ return  lines_mark[A] == lines_mark[B]; }
 	inline void add_new_line(const point2d& point)
 	{ add_new_line(img_influ(point)); }
 	
@@ -70,11 +84,59 @@ namespace mymln
 	{ return contain_line(img_influ(point)); }
 	
 	inline void add_to_line(const Label lbl)
-	{ lines_mark[lbl] = CLine; std::cout << "add : " <<  CLine; }
+	{ lines_mark[lbl] = CLine; }
 	
 	inline void add_new_line(const Label lbl)
 	{ CLine = NLine; NLine++; }
 	
+	inline void add_to_line_self_link(const Label A)
+	{
+	  lines_mark_link[A] = A;
+	}
+	inline void add_to_line_link(const Label A, const Label B)
+	{
+
+	   unsigned int Pos = find_line_parent(A);
+	   if(lines_mark_link[B] == 0)
+	   {
+	    if(Pos != B)
+	    {
+	      if(Pos != 0)
+	      {
+		lines_mark_link[B] = Pos;
+		lines_mark_link[A] = Pos;
+	      }
+	      else
+	      {
+		lines_mark_link[A] = B;
+	      }
+	    }
+	   }
+	   else
+	   {
+	     unsigned int PosB = find_line_parent(B);
+	     if(PosB == Pos)
+	     {
+	       	lines_mark_link[B] = Pos;
+		lines_mark_link[A] = Pos;
+	     }
+	     else
+	     {
+	        lines_mark_link[B] = Pos;
+		lines_mark_link[PosB] = Pos;
+	     }
+	   }
+	   
+	   
+	    
+	}
+	inline unsigned int find_line_parent(const Label A)
+	{
+	  unsigned int Pos = A;
+	  while(Pos != lines_mark_link[Pos] && Pos != 0){Pos = lines_mark_link[Pos];}
+	  return Pos;
+	}
+
 	inline void jump_to_line(const Label lbl)
 	{ 
 	  if(lines_mark[lbl] != 0)
@@ -99,19 +161,20 @@ namespace mymln
 	  containers_mask(lbl) = false;
 	  Hseparator_mask(lbl) = false;
 	  Vseparator_mask(lbl) = false;
+	  alone_letters_mask(lbl) = false;
 	  
 	  noise_mask(lbl) = true;
 	}
 	void inline add(Label lbl, int link)
 	{
 	  if (link == 0){add_noise(lbl);}
-	  else if (link > 40){ add_separator(lbl);}
+	  else if (link > 30){ add_separator(lbl);}
 	  else { add_letter(lbl);}
 	}
 	void inline invalid_letter(const point2d& point)
 	{invalid_letter(img_influ(point));}
 	void invalid_letter(Label lbl)
-	{letters_mask(lbl) = true;}
+	{letters_mask(lbl) = false;}
 	void inline invalid_separator(const point2d& point)
 	{invalid_separator(img_influ(point));}
 	void invalid_separator(Label lbl)
@@ -126,6 +189,19 @@ namespace mymln
 	{containers_mask(lbl) = false;}
 	void inline add_letter(const point2d& point)
 	{add_letter(img_influ(point)); }
+	void add_alone_letter(const point2d& point)
+	{add_alone_letter(img_influ(point));}
+	void add_alone_letter(const Label lbl)
+	{
+	  letters_mask(lbl) = false;
+	  separators_mask(lbl) = false;
+	  containers_mask(lbl) = false;
+	  Vseparator_mask(lbl) = false;
+	  Hseparator_mask(lbl) = false;
+	  alone_letters_mask(lbl) = true;
+	  noise_mask(lbl) = false;
+	}
+	
 	void add_letter(const Label lbl)
 	{ 
 	      CLet++;
@@ -136,6 +212,7 @@ namespace mymln
 	      containers_mask(lbl) = false;
 	      Vseparator_mask(lbl) = false;
 	      Hseparator_mask(lbl) = false;
+	      alone_letters_mask(lbl) = false;
 	      
 	       noise_mask(lbl) = false;
 	      }
@@ -155,6 +232,7 @@ namespace mymln
 	   letters_mask(lbl) = false;
 	   separators_mask(lbl) = false;	   
 	    noise_mask(lbl) = false;
+	    alone_letters_mask(lbl) = false;
 	  }
 	  else
 		add_noise(lbl);
@@ -167,7 +245,7 @@ namespace mymln
 	   Hseparator_mask(lbl) = true;
 	   letters_mask(lbl) = false;
 	   separators_mask(lbl) = true;
-	   
+	   alone_letters_mask(lbl) = false;
 	    noise_mask(lbl) = false;
 	}
 	void add_Vseparator(const Label lbl)
@@ -178,7 +256,7 @@ namespace mymln
 	   Hseparator_mask(lbl) = false;
 	   letters_mask(lbl) = false;
 	   separators_mask(lbl) = true;
-	   
+	   alone_letters_mask(lbl) = false;
 	    noise_mask(lbl) = false;
 	}
 	void inline add_separator(const point2d& point)
@@ -192,6 +270,12 @@ namespace mymln
 	    else 
 	      add_container(lbl);
 	  }
+	  
+	  bool inline contain_alone_letter(const Label lbl)
+	  {return contain_(lbl, alone_letters_mask);}
+	  
+	  bool inline contain_alone_letter(const point2d& point)
+	  {return contain_alone_letter(img_influ(point));}
 	  
 	  bool inline contain_separator(const Label lbl)
 	  {return contain_(lbl, separators_mask);}
@@ -231,20 +315,38 @@ namespace mymln
 	  
 	  /* ALLIGN FUNCTION */
 	  
+	  inline bool allign_top( const point2d& Left, const point2d& Right)
+	  {return allign_top(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_top( const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right) * 1.5f;
+	    return  _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
+	  }
+	  
+	  
 	  inline bool allign_H( const point2d& Left, const point2d& Right)
 	  {return allign_H(img_influ(Left), img_influ(Right));}
 	  
 	  inline bool allign_H( const Label Left, const Label Right)
 	  {
-	    return label_allign_(1, Left, Right) < label_size_(1 ,Left);
+	      short int allignV = label_allign_(1, Left, Right) * 2;
+	    return  allignV < label_size_(1, Left) && allignV < label_size_(1, Right);
 	  }
 	  inline bool allign_V( const point2d& Left, const point2d& Right)
 	  {return allign_V(img_influ(Left), img_influ(Right));}
 	  
 	  inline bool allign_V( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 4;
+	    short int allignV = label_allign_(0, Left, Right) * 2;
 	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	  }
+	  inline bool allign_base_line(const point2d& Left, const point2d& Right)
+	  {return allign_base_line(img_influ(Left), img_influ(Right));}
+	  inline bool allign_base_line(const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right) * 1.5f;
+	    return  allignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
 	  }
 	  inline bool allign_Space_Factor(const point2d& Left, const point2d& Right)
 	  {return allign_Space_Factor(img_influ(Left), img_influ(Right));}
@@ -272,6 +374,8 @@ namespace mymln
 	  { return fun_mask_(separators_mask); }
 	  vertex_image<point2d,bool> fun_mask_containers()
 	  { return fun_mask_(containers_mask); }
+	  vertex_image<point2d,bool> fun_mask_alone_letters()
+	  { return fun_mask_(alone_letters_mask); }
 	  vertex_image<point2d,bool> fun_mask_all()
 	  {  
 	    typedef vertex_image<point2d,bool> v_ima_g;
@@ -288,6 +392,8 @@ namespace mymln
 	  { return image_mask_(letters_mask); }
 	  image2d<bool> image_mask_noise()
 	  { return image_mask_(noise_mask); }
+	  image2d<bool> image_mask_alone_letters()
+	  { return image_mask_(alone_letters_mask); }
 	  
 	  mln::util::array<box2d> bbox_mask_containers()
 	  { return bbox_mask_(containers_mask); }
@@ -298,7 +404,7 @@ namespace mymln
 	  mln::util::array<box2d> bbox_mask_noise()
 	  { return bbox_mask_(noise_mask); }
 	  
-	  	  mln::util::array<box2d> bbox_enlarge_mask_containers(short int x, short int y)
+	  mln::util::array<box2d> bbox_enlarge_mask_containers(short int x, short int y)
 	  { return bbox_mask_enlarge_(containers_mask, x, y); }
 	  mln::util::array<box2d> bbox_enlarge_mask_separators(short int x, short int y)
 	  { return bbox_mask_enlarge_(separators_mask, x, y); }
@@ -307,7 +413,16 @@ namespace mymln
 	  mln::util::array<box2d> bbox_enlarge_mask_noise(short int x, short int y)
 	  { return bbox_mask_enlarge_(noise_mask, x, y); }
 	  
+	  unsigned int get_parent_line(point2d point)
+	  { return lines_mark[img_influ(point)]; }
+	  unsigned int get_parent_line(Label L)
+	  { return lines_mark[L]; }
 	  
+	  
+	  void cook_lines()
+	  {
+	    propage_line_link();
+	  }
 	  
 	  /*image_if<image2d<Label> masked_image_letters()
 	  {return masked_image_(letters_mask); }
@@ -315,6 +430,17 @@ namespace mymln
 	  {return masked_image_(letters_mask); }*/	  
 
       private:
+	// PRIVATE FUNCTIONS ON LINES
+	inline void propage_line_link()
+	{
+	  for(unsigned int N = 1; N < lines_mark_link.size(); N++)
+	  {
+	    unsigned int Pos = N;
+	    while(Pos != lines_mark_link[Pos] && Pos != 0){Pos = lines_mark_link[Pos]; }
+	    lines_mark[N] = lines_mark[Pos];
+	  }
+	}
+	
 	// GENERIC CONTAIN TEST
 	inline bool contain_(const Label& lbl, const fun::i2v::array<bool>& array)
 	{
@@ -411,11 +537,15 @@ namespace mymln
 	fun::i2v::array<bool> Vseparator_mask;
 	fun::i2v::array<bool> separators_mask;
 	fun::i2v::array<bool> letters_mask;
+	fun::i2v::array<bool> alone_letters_mask;
 	fun::i2v::array<bool> containers_mask;
 	fun::i2v::array<bool> noise_mask;
 	unsigned int CLine;
 	unsigned int NLine;
-	mln::util::array<unsigned int> lines_mark;
+	
+	mln::util::array<Label> lines_start;
+	mln::util::array<unsigned int> lines_mark;	
+	mln::util::array<unsigned int> lines_mark_link;
 	unsigned int CLet ;
 	unsigned int CSep ;
 	unsigned int CSepH ;

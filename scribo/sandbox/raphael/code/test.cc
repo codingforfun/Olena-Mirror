@@ -62,7 +62,7 @@ void Process(std::string File, std::string Dir)
 
     uint16 areas_detected;
       timer.start();
-    image2d<uint16> ima_blob = labeling::blobs(ima, c4(), areas_detected);
+    image2d<uint16> ima_blob = labeling::blobs(ima, c8(), areas_detected);
      std::cout << "CREATE BLOBS : " << timer.stop() << endl;
      timer.restart();
        timer.start();
@@ -70,8 +70,8 @@ void Process(std::string File, std::string Dir)
      std::cout << "CREATE INFLUENCE ZONE GEODESIC : " << timer.stop() << endl;
      timer.restart();
        timer.start();
-    util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c4(), areas_detected);
-    
+    util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c8(), areas_detected);
+  //  mymln::debug::save_label_image(ima_influ, Dir + "/influ_" + File); 
     
     std::cout << "CREATE GRAPH : " << timer.stop() << endl;
     
@@ -116,12 +116,14 @@ void Process(std::string File, std::string Dir)
     //mymln::debug::save_label_image(ima_influ, "influ_" + File);
     mymln::document::clean_containers_items(doc);
     mymln::document::clean_letters_items(doc);
-    mymln::document::clean_get_lines(doc);
+    mymln::document::clean_get_lines(doc,  Dir + "/" + "line_graph_" + File, doc.image_mask_letters());
+    mymln::document::clean_dot_items(doc, Dir + "/" + "dot_graph_" + File, doc.image_mask_letters());
     doc.stat();
     std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
     //io::ppm::save(ima_influ, "separator.ppm");
    //io::pbm::save(doc.image_mask_separators(),"separators");
     io::pbm::save(doc.image_mask_letters(),Dir + "/" + "letters_" + File);
+    io::pbm::save(doc.image_mask_alone_letters(),Dir + "/" + "letters_alone_" + File);
     io::pbm::save(doc.image_mask_separators(),Dir + "/" + "separators_" + File);
     io::pbm::save(doc.image_mask_containers(),Dir + "/" + "containers_" + File);
     io::pbm::save(doc.image_mask_noise(),Dir + "/" + "noise_" + File);
