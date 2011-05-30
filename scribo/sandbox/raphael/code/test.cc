@@ -44,7 +44,7 @@
 #include <my/document/clean.hh>
 using namespace mln;
 using namespace std;
-void Process(std::string File)
+void Process(std::string File, std::string Dir)
 {
   
    std::cout << "Processing : " << File << endl;
@@ -54,7 +54,7 @@ void Process(std::string File)
     
    mln::util::timer timer;
    timer.start();
-   io::pbm::load(ima, File);
+   io::pbm::load(ima, Dir + "/" + File);
    std::cout << "LOADING FILE : " << timer.stop() << endl;
    timer.restart();
 
@@ -121,10 +121,11 @@ void Process(std::string File)
     std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
     //io::ppm::save(ima_influ, "separator.ppm");
    //io::pbm::save(doc.image_mask_separators(),"separators");
-    io::pbm::save(doc.image_mask_letters(),"letters_" + File);
-    io::pbm::save(doc.image_mask_separators(),"separators_" + File);
-    io::pbm::save(doc.image_mask_containers(),"containers_" + File);
-    io::pbm::save(doc.image_mask_noise(),"noise_" + File);
+    io::pbm::save(doc.image_mask_letters(),Dir + "/" + "letters_" + File);
+    io::pbm::save(doc.image_mask_separators(),Dir + "/" + "separators_" + File);
+    io::pbm::save(doc.image_mask_containers(),Dir + "/" + "containers_" + File);
+    io::pbm::save(doc.image_mask_noise(),Dir + "/" + "noise_" + File);
+    doc.debug_save_lines(Dir + "/" + "lines_" + File);
  /*  typedef vertex_image<point2d,bool> v_ima_g;
    v_ima_g mask = doc.fun_mask_letters();
 */
@@ -161,8 +162,8 @@ void Process(std::string File)
    //std::cout << "NODES:" << fnds << endl;
    //  mymln::debug::save_graph_image(area_grph, ima, "graph_" + File);
     // mymln::debug::save_graph_image(doc.fun_mask_separators(), ima, "separator_graph_" + File);
-    mymln::debug::save_graph_image(area_grph, doc.image_mask_letters(), "graph_" + File);
-    mymln::debug::save_graph_image(doc.fun_mask_letters(), doc.image_mask_letters(), "container_graph_" + File);
+    mymln::debug::save_graph_image(area_grph, doc.image_mask_letters(), Dir + "/" + "graph_" + File);
+    mymln::debug::save_graph_image(doc.fun_mask_letters(), doc.image_mask_letters(), Dir + "/" + "container_graph_" + File);
    //mymln::debug::save_boxes_image(doc.bbox_mask_letters(), ima, "lbox_" + File);
       //mymln::debug::save_boxes_image(doc.bbox_enlarge_mask_letters(10, 0), ima, "linebox_" + File);
 }
@@ -170,11 +171,27 @@ void Process(std::string File)
 
 int main( int argc, char** argv)
 {
-   if(argc <= 1){Process("ima.pbm");}
+   if(argc <= 1){Process("ima.pbm", "");}
    else
    {
+     bool dir = false;
+     std::string Dir = "";
      for(int N = 1 ; N < argc; N++)
-     {Process(argv[N]);}
+     {
+       if(dir)
+       {
+	 Dir = argv[N];
+	 dir = false;
+       }
+       else
+       {
+	if(!strcmp(argv[N], "-D"))
+	{ dir = true;}
+	else
+	{ Process(argv[N], Dir); }
+       }
+     }
    }
+   
     
 }
