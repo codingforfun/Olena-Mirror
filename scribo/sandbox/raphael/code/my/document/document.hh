@@ -264,9 +264,10 @@ namespace mymln
 	    std::cout << "      vertical separator(s) : " << CSepV << std::endl;
 	    std::cout << "      horizontal separator(s) : " << CSepH << std::endl;
 	    std::cout << "      lines(s) : " << CLine << std::endl;
-	    mymln::debug::save_label_image(img, lines_mark , "outfileline.pbm");
+	  
 	  }
-
+	  void debug_save_lines(std::string file)
+	  {  mymln::debug::save_label_image(img, lines_mark , file);}
 	  vertex_image<point2d,bool> fun_mask_separators()
 	  { return fun_mask_(separators_mask); }
 	  vertex_image<point2d,bool> fun_mask_containers()

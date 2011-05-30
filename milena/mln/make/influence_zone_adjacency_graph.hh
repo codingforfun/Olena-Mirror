@@ -115,7 +115,10 @@ namespace mln
 
 	  util::adjacency_matrix<> adj(nlabels.next());
 	  extension::adjust_fill(iz, nbh, 0u);
-
+	  
+	  util::graph g;
+	  g.add_vertices(nlabels.next());
+	  
 	  typedef mln_value(I) L;
 	  mln_piter(I) p(iz.domain());
 	  mln_niter(N) n(nbh, p);
@@ -127,25 +130,90 @@ namespace mln
 	      if (iz.domain().has(n))
 	      {
 		L l2 = iz(n);
-		if (iz(n) != iz((p)))
+		if (l1 != l2 && !adj.are_adjacent(l1, l2))
+		{
 		  adj.add(l1, l2);
+		  adj.add(l2, l1);
+		  g.add_edge(l1, l2);
+		}
 	      }
 	    }
 	  }
 
 	  // Construct graph.
+	  // SLOW
+	 /* for (unsigned i = 0; i < nlabels.next(); ++i)
+	    for (unsigned j = 0; j < i; ++j)
+	      if (adj.are_adjacent(i, j))
+		g.add_edge(i, j); */
+	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph");
+	  return g;
+	}
+	
+	/// Fastest implementation of make::influence_zone_adjacency_graph.
+	///
+        /// \param[in] iz_ influence zone image.
+        /// \param[in] nbh_ A neighborhood.
+        /// \param[in] nlabels number of influence zone in \p iz.
+        ///
+        /// \return util::graph Graph based on the adjacency of the influence zones.
+	//
+	template <typename I, typename N>
+	util::graph
+	influence_zone_adjacency_graph_fastest(const Image<I>& iz_,
+				       const Neighborhood<N>& nbh_,
+				       const mln_value(I)& nlabels)
+	{
+	  trace::entering("make::impl::generic::influence_zone_adjacency_graph_fastest");
+
+	  internal::influence_zone_adjacency_graph_tests(iz_, nbh_, nlabels);
+	  const I& iz = exact(iz_);
+	  const N& nbh = exact(nbh_);
 	  util::graph g;
 	  g.add_vertices(nlabels.next());
+	  util::adjacency_matrix<> adj(nlabels.next());
+	  extension::adjust_fill(iz, nbh, 0u);
+	  typedef mln_value(I) L;
+	  mln_pixter(const I)    p(iz);
+	  //mln_piter(I) p(iz.domain());
+	  mln_nixter(const I, N) n(p, nbh);
+	  //mln_niter(N) n(nbh, p); 
+	  for_all(p)
+	  {
+	    L l1 = p.val();
+	    for_all(n)
+	    {
+		
+		L l2 = n.val();
+		if (n.offset() != p.offset())
+		{
+		  if(l1 != l2 && !adj.are_adjacent(l1, l2))
+		  {		    
+		    if(l2 > 0 )
+		    {
+		      adj.add(l1, l2);
+		      adj.add(l2, l1);
+		      g.add_edge(l1, l2);
+		    }
+		  }
+		  
+		}
+	      
+	    }
+	  }
+	  // Construct graph.
+/*
 	  for (unsigned i = 0; i < nlabels.next(); ++i)
 	    for (unsigned j = 0; j < i; ++j)
 	      if (adj.are_adjacent(i, j))
 		g.add_edge(i, j);
-
-	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph");
+*/
+	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph_fastest");
 	  return g;
 	}
-
+	
       } // end of namespace mln::make::impl::generic
+
 
     } // end of namespace mln::make::impl
 
@@ -154,13 +222,41 @@ namespace mln
     namespace internal
     {
 
+	template <typename I, typename N>
+	inline
+	util::graph
+	influence_zone_adjacency_graph_dispatch(metal::false_,
+				const Image<I>& iz,
+				const Neighborhood<N>& nbh,
+				const mln_value(I)& nlabels)
+      {
+	return make::impl::generic::influence_zone_adjacency_graph(iz, nbh, nlabels);
+      }
+
+	template <typename I, typename N>
+	inline
+	util::graph
+	influence_zone_adjacency_graph_dispatch(metal::true_,
+				const Image<I>& iz,
+				const Neighborhood<N>& nbh,
+				const mln_value(I)& nlabels)
+      {
+  	return make::impl::generic::influence_zone_adjacency_graph_fastest(iz, nbh, nlabels);
+      }
+      
       template <typename I, typename N>
+      inline
       util::graph
       influence_zone_adjacency_graph_dispatch(const Image<I>& iz,
 					      const Neighborhood<N>& nbh,
 					      const mln_value(I)& nlabels)
       {
-	return make::impl::generic::influence_zone_adjacency_graph(iz, nbh, nlabels);
+	enum {
+	  test = mlc_equal(mln_trait_image_speed(I),
+			   trait::image::speed::fastest)::value 
+	};
+	return make::internal::influence_zone_adjacency_graph_dispatch(metal::bool_<test>(),
+								   iz, nbh, nlabels);
       }
 
     } // end of namespace mln::make::internal
