@@ -189,6 +189,8 @@ namespace mymln
 	{containers_mask(lbl) = false;}
 	void inline add_letter(const point2d& point)
 	{add_letter(img_influ(point)); }
+	void inline add_letter_coerce(const point2d& point)
+	{add_letter_coerce(img_influ(point)); }
 	void add_alone_letter(const point2d& point)
 	{add_alone_letter(img_influ(point));}
 	void add_alone_letter(const Label lbl)
@@ -201,7 +203,17 @@ namespace mymln
 	  alone_letters_mask(lbl) = true;
 	  noise_mask(lbl) = false;
 	}
-	
+	void add_letter_coerce(const Label lbl)
+	{
+	  
+	      letters_mask(lbl) = true;
+	      separators_mask(lbl) = false;
+	      containers_mask(lbl) = false;
+	      Vseparator_mask(lbl) = false;
+	      Hseparator_mask(lbl) = false;
+	      alone_letters_mask(lbl) = false;	      
+	      noise_mask(lbl) = false;
+	}
 	void add_letter(const Label lbl)
 	{ 
 	      CLet++;
@@ -320,10 +332,18 @@ namespace mymln
 	  
 	  inline bool allign_top( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 1.5f;
-	    return  _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
+	    short int allignV = label_allign_(0, Left, Right);
+	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
+	  inline bool allign_H_Large( const point2d& Left, const point2d& Right)
+	  {return allign_H_Large(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_Large( const Label Left, const Label Right)
+	  {
+	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
+	    return  allignV < label_size_(1, Left);
+	  }
 	  
 	  inline bool allign_H( const point2d& Left, const point2d& Right)
 	  {return allign_H(img_influ(Left), img_influ(Right));}

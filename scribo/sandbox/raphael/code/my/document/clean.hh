@@ -139,10 +139,13 @@ namespace mymln
 	      {
 		draw::line(out, q,v, mln::literal::green);
 		doc.add_to_line_link(v, q);
+		doc.add_letter_coerce(q);
 	      }
-	      else if (doc.allign_H(q, v) && doc.allign_top(q, v)) //ORDRE DESPARAMETRE ETRANGE A CHECK
+	      else if (doc.allign_H_Large(v, q) && doc.allign_top(v, q))
 	      {
 		draw::line(out, q,v, mln::literal::magenta);
+		doc.add_to_line_link(v, q);
+		doc.add_letter_coerce(q);
 	      }
 	    }
 	  }
