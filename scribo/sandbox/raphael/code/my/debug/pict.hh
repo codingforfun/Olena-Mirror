@@ -3,6 +3,7 @@
 #include <mln/util/graph.hh>
 
 #include <mln/debug/superpose.hh>
+#include <my/util/union.hh>
 using namespace mln;
 using namespace std;
 namespace mymln
@@ -26,6 +27,20 @@ namespace mymln
 	image2d<value::rgb8> ima_color = labeling::colorize(value::rgb8(), ima);
 	io::ppm::save(ima_color, file);
       }
+      
+      template<typename I1, typename I2> inline void save_label_image(image2d<I1> ima, mymln::util::union_find<I2> trans, std::string file)
+      {	
+	mln_piter(image2d<I1>) p(ima.domain());
+	p.start();
+	while(p.is_valid())
+	{
+	     ima(p) = trans[ima(p)];
+	     p.next();
+	}
+	image2d<value::rgb8> ima_color = labeling::colorize(value::rgb8(), ima);
+	io::ppm::save(ima_color, file);
+      }
+      
       template<typename p_v> inline void save_graph_image(p_v& pv, unsigned int SizeX, unsigned int SizeY, std::string file)
       {
 	image2d<value::rgb8> ima_graph(SizeY, SizeX);
