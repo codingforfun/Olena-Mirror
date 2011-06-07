@@ -1,7 +1,9 @@
 #ifndef INC_DOCUMENT_DOC
 #define INC_DOCUMENT_DOC
+#include <mln/accu/shape/bbox.hh>
 #include<my/util/vector_bbox_group.hh>
 #include<my/util/union.hh>
+#include<my/debug/pict.hh>
 #include <mln/util/graph.hh>
 
 
@@ -47,14 +49,24 @@ namespace mymln
 	  separators_mask = fun::i2v::array<bool>(Areas + 1);
 	  containers_mask = fun::i2v::array<bool>(Areas + 1);
 	  letters_mask = fun::i2v::array<bool>(Areas + 1);
+	  all_letters_mask = fun::i2v::array<bool>(Areas + 1);
 	  Hseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  Vseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  noise_mask = fun::i2v::array<bool>(Areas + 1);
 	  alone_letters_mask = fun::i2v::array<bool>(Areas + 1);
+	  implicit_separators_left_mask = fun::i2v::array<bool>(Areas + 1);
+	  implicit_separators_right_mask = fun::i2v::array<bool>(Areas + 1);
 	  CImpSep = 1;
 	  NImpSep = 2;
 	  lines_union = mymln::util::union_find<Label>(Areas + 1);
 	  implicit_separators_union = mymln::util::union_find<Label>(Areas + 1);
+	  
+	  paragraphs_union = mymln::util::union_find<Label>(Areas + 1);
+	  
+	  tag_lbl = mln::util::array<std::string>(Areas + 1);
+	  lines_split = mln::util::array<Label>(Areas + 1);
+	  lines_split.fill(0);
+	  
 	  img_influ = ima_influ;
 	  CSep = 0;
 	  CSepH = 0;
@@ -62,10 +74,190 @@ namespace mymln
 	  CLet = 0;
 	  CLine = 1;
 	  NLine = 2;
+	  CPar = 1;
+	  NPar = 2;
 	  Areas_Number_ = Areas + 1;
 	  
 	}
+	/* OPERATION ON PARAGRAPH */
+	inline bool link_paragraphs()
+	{
+	   for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    paragraphs_union.invalidate_link(N);
+	    if(start_lines_mask(N))
+	    {
+	      paragraphs_union.add_self_link(N);
+	    }
+	    else if(contain_line(N))
+	    {
+	      if(get_beginning_of_line(N) == 0){std::cout <<"ERROR#\n";}
+	      paragraphs_union.add_link(get_beginning_of_line(N), N);
+	    }
+	  }
+	}
+	inline bool contain_paragraph(const point2d& point)
+	{return contain_paragraph(img_influ(point));}
+	inline bool contain_paragraph(const Label lbl)
+	{return paragraphs_union[lbl] != 0;}
+	inline void add_to_paragraph(const point2d& point)
+	{add_to_paragraph(img_influ(point));}
+	inline void add_to_paragraph(const Label lbl)
+	{paragraphs_union[lbl] = CPar;}
+	
+	inline void add_new_paragraph(const point2d& point)
+	{add_new_paragraph(img_influ(point));}
+	inline void add_new_paragraph(const Label lbl)
+	{CPar = NPar; NPar++;}
+	
+	inline void add_to_paragraph_link(const point2d& A, const point2d& B)
+	{add_to_paragraph_link(img_influ(A),img_influ(B));}
+	inline void add_to_paragraph_link(const Label A, const Label B)
+	{paragraphs_union.add_link(A, B);}
+	
+	inline void add_to_paragraph_self_link(const point2d& A)
+	{add_to_paragraph_self_link(img_influ(A));}
+	inline void add_to_paragraph_self_link(const Label A)
+	{paragraphs_union.add_self_link(A);}
+	
+	inline void propage_paragraph_link()
+	{paragraphs_union.propage_links();}
+	
+	inline void jump_to_paragraph(const point2d& point)
+	{
+	  jump_to_paragraph(img_influ(point));
+	}
+	inline void jump_to_paragraph(const Label lbl)
+	{ 
+	  if(paragraphs_union[lbl] != 0)
+	    CPar = paragraphs_union[lbl];
+	  else
+	    add_new_paragraph(lbl);
+	}
 	/* OPERATION ON LINES */
+	inline void split_line_exclusive(const point2d& point)
+	{split_line_exclusive(img_influ(point));}
+	inline void split_line_exclusive(const Label lbl)
+	{
+	  if(lbl == 0){return;}
+	  lines_union.add_self_link(lbl);
+	  Label pos = get_end_of_line(lbl);
+	  if(pos == lbl){return;}
+	 
+	  while(lines_split[pos] && lines_split[pos] != lbl && pos != lbl)
+	  {
+	    if(_bboxgp[lines_split[pos]].pmin()[1] < _bboxgp[lbl].pmin()[1])
+	    { 
+	      lines_split[lbl] = lines_split[pos];
+	      lines_split[pos] = lbl;
+	      return;
+	    }
+	    pos = lines_split[pos];
+	  }
+	  if(pos == lbl || lines_split[pos] == lbl){return;}
+	  lines_split[pos] = lbl;
+	  
+	}
+	
+	
+	inline void split_line(const point2d& point)
+	{split_line(img_influ(point));}
+	inline void split_line(const Label lbl)
+	{
+	  if(lbl == 0){return;}
+	  lines_union.add_self_link(lbl);
+	  Label pos = get_beginning_of_line(lbl);
+	  if(pos == lbl){return;}
+	 
+	  while(lines_split[pos] && lines_split[pos] != lbl && pos != lbl)
+	  {
+	    if(_bboxgp[lines_split[pos]].pmin()[1] > _bboxgp[lbl].pmin()[1])
+	    { 
+	      lines_split[lbl] = lines_split[pos];
+	      lines_split[pos] = lbl;
+	      return;
+	    }
+	    pos = lines_split[pos];
+	  }
+	  if(pos == lbl || lines_split[pos] == lbl){return;}
+	  lines_split[pos] = lbl;
+	  
+	}
+	
+	
+	inline void cook_line_splitting_exclusive()
+	{
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    lines_union.invalidate_link(N);
+	    if(end_lines_mask(N) || implicit_separators_right_mask(N))
+	      split_line_exclusive(N);
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(lines_union.is_self_link(N))
+	    {
+	      add_new_line(N);
+	      add_to_line(N);
+	    }
+	    else if(end_lines_mask(N))
+		lines_union.add_self_link(N);
+	    else
+	    {lines_union.invalidate_link(N);}
+	  }
+	  lines_union[0] = 0;
+	  lines_union.invalidate_link(0);
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(!contain_line(N) || lines_union.is_self_link(N))
+	      continue;    
+	    Label pos = get_end_of_line(N);
+	    while(lines_split[pos] && _bboxgp[lines_split[pos]].pmin()[1] > _bboxgp[N].pmin()[1])
+	      pos = lines_split[pos];
+	    if(pos != 0)
+	    {lines_union[N] = lines_union[pos]; lines_union.add_link(pos,N);}
+	  }
+	 
+	  //lines_union.propage_links();lines_union
+	  cook_lines();
+	}
+	
+	inline void cook_line_splitting()
+	{
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    lines_union.invalidate_link(N);
+	    if(start_lines_mask(N) || implicit_separators_left_mask(N))
+	      split_line(N);
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(lines_union.is_self_link(N))
+	    {
+	      add_new_line(N);
+	      add_to_line(N);
+	    }
+	    else if(start_lines_mask(N))
+		lines_union.add_self_link(N);
+	    else
+	    {lines_union.invalidate_link(N);}
+	  }
+	  lines_union[0] = 0;
+	  lines_union.invalidate_link(0);
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(!contain_line(N) || lines_union.is_self_link(N))
+	      continue;    
+	    Label pos = get_beginning_of_line(N);
+	    while(lines_split[pos] && _bboxgp[lines_split[pos]].pmin()[1] < _bboxgp[N].pmin()[1])
+	      pos = lines_split[pos];
+	    if(pos != 0)
+	    {lines_union[N] = lines_union[pos]; lines_union.add_link(pos,N);}
+	  }
+	 
+	  //lines_union.propage_links();lines_union
+	  cook_lines();
+	}
 	inline void add_to_line_self_link(const point2d& point)
 	{ add_to_line_self_link(img_influ(point));}
 	inline void add_to_line(const point2d& point)
@@ -86,6 +278,11 @@ namespace mymln
 	
 	inline bool contain_line(const point2d& point)
 	{ return contain_line(img_influ(point)); }
+	
+	inline bool contain_line_start(const point2d& point)
+	{ return contain_line_start(img_influ(point)); }
+	inline bool contain_line_start(const Label lbl)
+	{ return lines_first_label(lbl); }
 	
 	inline void add_to_line(const Label lbl)
 	{ lines_union[lbl] = CLine; }
@@ -134,6 +331,10 @@ namespace mymln
 	  if (link == 0){add_noise(lbl);}
 	  else if (link > 30){ add_separator(lbl);}
 	  else { add_letter(lbl);}
+	  
+	  /* SET UP SPECIAL MASK TO FALSE */
+	  implicit_separators_left_mask(lbl) = false;
+	  implicit_separators_right_mask(lbl) = false;
 	}
 	void inline invalid_letter(const point2d& point)
 	{invalid_letter(img_influ(point));}
@@ -166,11 +367,13 @@ namespace mymln
 	  Hseparator_mask(lbl) = false;
 	  alone_letters_mask(lbl) = true;
 	  noise_mask(lbl) = false;
+	  all_letters_mask(lbl) = true;
 	}
 	void add_letter_coerce(const Label lbl)
 	{
 	  
 	      letters_mask(lbl) = true;
+	      all_letters_mask(lbl) = true;
 	      separators_mask(lbl) = false;
 	      containers_mask(lbl) = false;
 	      Vseparator_mask(lbl) = false;
@@ -184,6 +387,7 @@ namespace mymln
 	      if(label_valid_size_Min_(lbl, 2))
 	      {
 	      letters_mask(lbl) = true;
+	      all_letters_mask(lbl) = true;
 	      separators_mask(lbl) = false;
 	      containers_mask(lbl) = false;
 	      Vseparator_mask(lbl) = false;
@@ -209,6 +413,7 @@ namespace mymln
 	   separators_mask(lbl) = false;	   
 	    noise_mask(lbl) = false;
 	    alone_letters_mask(lbl) = false;
+	    all_letters_mask(lbl) = false;
 	  }
 	  else
 		add_noise(lbl);
@@ -223,6 +428,7 @@ namespace mymln
 	   separators_mask(lbl) = true;
 	   alone_letters_mask(lbl) = false;
 	    noise_mask(lbl) = false;
+	    all_letters_mask(lbl) = false;
 	}
 	void add_Vseparator(const Label lbl)
 	{
@@ -234,6 +440,7 @@ namespace mymln
 	   separators_mask(lbl) = true;
 	   alone_letters_mask(lbl) = false;
 	    noise_mask(lbl) = false;
+	    all_letters_mask(lbl) = false;
 	}
 	void inline add_separator(const point2d& point)
 	{add_letter(img_influ(point)); }
@@ -258,6 +465,8 @@ namespace mymln
 	  
 	  bool inline contain_letter(const Label lbl)
 	  {return contain_(lbl, letters_mask);}
+	  
+	  
 	  
 	  bool inline contain_container(const Label lbl)
 	  {return contain_(lbl, containers_mask);}
@@ -310,6 +519,19 @@ namespace mymln
 	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
+	  inline bool allign_up_line_line( const point2d& Left, const point2d& Right)
+	  {return allign_up_line_line(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_up_line_line( const Label Left, const Label Right)
+	  {
+	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(allignV < 0){allignV = -allignV; }
+	    allignV *= 1.4f;
+	    return  
+	      allignV < lines_bbox[lines_union[Left]].len(0) &&
+	      (lines_bbox[lines_union[Left]].pcenter()[0]) > (lines_bbox[lines_union[Left]].pcenter()[0]);
+	  }
+	  
 	  inline bool allign_H_Large( const point2d& Left, const point2d& Right)
 	  {return allign_H_Large(img_influ(Left), img_influ(Right));}
 	  
@@ -328,8 +550,100 @@ namespace mymln
 	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
 	  }
 	  
-	    inline bool allign_size_height( const point2d& Left, const point2d& Right)
+	  inline bool allign_H_min( const point2d& Left, const point2d& Right)
+	  {return allign_H_min(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_min( const Label Left, const Label Right)
+	  {
+	      short int allignH = label_allign_min_(1, Left, Right) * 2;
+	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
+	  }
+	  
+	  inline bool allign_H_max( const point2d& Left, const point2d& Right)
+	  {return allign_H_max(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_max( const Label Left, const Label Right)
+	  {
+	      short int allignH = label_allign_max_(1, Left, Right) * 2;
+	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
+	  }
+	  
+	  
+	  inline bool allign_size_height( const point2d& Left, const point2d& Right)
 	  {return allign_size_height(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity( const point2d& Left, const point2d& Right)
+	  {return allign_proximity(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity( const Label Left, const Label Right)
+	  {
+	      short int SizeL0 = label_size_(0, Left);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      short int Dis = _bboxgp[Left].pmin()[1] - _bboxgp[Right].pmin()[1];
+	      if(Dis < 0)
+		Dis = -Dis; 
+	    return  Dis < SizeL0 * 1.5f;
+	  }
+	  
+	  inline bool allign_proximity_line( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_line(img_influ(Left), img_influ(Right));}
+
+
+	  inline bool allign_size_height_line( const point2d& Left, const point2d& Right)
+	  {
+	    return  allign_size_height_line(img_influ(Left), img_influ(Right));
+	  }
+
+	  inline bool allign_size_height_line( const Label Left, const Label Right)
+	  {
+	      short int SizeL = lines_bbox[lines_union[Left]].len(0);
+	      short int SizeR = lines_bbox[lines_union[Right]].len(0);
+	    return  SizeR > (SizeL / 2) && SizeR < (SizeL * 2);
+	  }
+	  
+	  inline bool allign_proximity_line( const Label Left, const Label Right)
+	  {
+	      box2d LB = lines_bbox[lines_union[Left]];
+	      box2d RB = lines_bbox[lines_union[Right]];
+	      
+	      int DisA = LB.pmax()[1] - RB.pmin()[1];
+	      int DisB = RB.pmax()[1] - LB.pmin()[1];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      unsigned int HB = RB.len(0);
+
+	      if(HA < HB)
+	      { HA = HB; }
+	      return  (DisA * 5) < HA;
+	  }
+	  
+	  
+	  
+	  
+	  inline bool allign_proximity_large( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_large(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity_large( const Label Left, const Label Right)
+	  {
+	      short int SizeL0 = label_size_(0, Left);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      short int Dis = _bboxgp[Left].pmin()[1] - _bboxgp[Right].pmin()[1];
+	      if(Dis < 0)
+		Dis = -Dis; 
+	    return  Dis < SizeL0 * 3;
+	  }
+	  
+	  
 	  
 	  inline bool allign_size_height( const Label Left, const Label Right)
 	  {
@@ -374,6 +688,34 @@ namespace mymln
 	    short int allignV = label_allign_(0, Left, Right) * 2;
 	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
 	  }
+	  
+	  inline bool allign_V_line( const point2d& Left, const point2d& Right)
+	  {return allign_V_line(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_V_line( Label Left, Label Right)
+	  {
+	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(allignV<0){allignV = -allignV;}
+	    return  allignV < lines_bbox[lines_union[Left]].len(0) && allignV < lines_bbox[lines_union[Right]].len(0);
+	  }
+	  
+	  inline bool allign_center_line( const point2d& Left, const point2d& Right)
+	  {return allign_center_line(img_influ(Left), img_influ(Right));}
+	  inline bool allign_center_line( Label Left, Label Right)
+	  {
+	    short int allignC = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(allignC<0){allignC = -allignC;}
+	    return  allignC * 5 < lines_bbox[lines_union[Left]].len(0);
+	  }
+
+	  inline bool allign_smaller_line( const point2d& Left, const point2d& Right)
+	  {return allign_smaller_line(img_influ(Left), img_influ(Right));}
+	  inline bool allign_smaller_line( Label Left, Label Right)
+	  {
+	    return  lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 2);
+	  }
+
+
 	  inline bool allign_V_large( const point2d& Left, const point2d& Right)
 	  {return allign_V_large(img_influ(Left), img_influ(Right));}
 	  
@@ -391,6 +733,18 @@ namespace mymln
 	  {
 	    short int allignV = label_allign_(0, Left, Right) / 2;
 	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	  }
+	  
+	  inline bool allign_base_line_line(const point2d& Left, const point2d& Right)
+	  {return allign_base_line_line(img_influ(Left), img_influ(Right));}
+	  inline bool allign_base_line_line(const Label Left, const Label Right)
+	  {
+	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	     if(allignV<0){allignV = -allignV;}
+	    allignV *= 1.5f;
+	    return  
+	      allignV < lines_bbox[lines_union[Left]].len(0) &&
+	      lines_bbox[lines_union[Left]].pcenter()[0] < lines_bbox[lines_union[Right]].pcenter()[0];
 	  }
 	  
 	  
@@ -421,6 +775,8 @@ namespace mymln
 	    std::cout << "      lines(s) : " << CLine << std::endl;
 	  
 	  }
+	  void debug_save_paragraphs(std::string file)
+	  {  mymln::debug::save_label_image(img, paragraphs_union , file);}
 	  void debug_save_lines(std::string file)
 	  {  mymln::debug::save_label_image(img, lines_union , file);}
 	  void debug_save_separators(std::string file)
@@ -431,6 +787,12 @@ namespace mymln
 	  { return fun_mask_(containers_mask); }
 	  vertex_image<point2d,bool> fun_mask_alone_letters()
 	  { return fun_mask_(alone_letters_mask); }
+	   vertex_image<point2d,bool> fun_mask_implicit_separators_left()
+	  { return fun_mask_(implicit_separators_left_mask); }
+	  vertex_image<point2d,bool> fun_mask_implicit_separators_right()
+	  { return fun_mask_(implicit_separators_right_mask); }
+	  vertex_image<point2d,bool> fun_mask_all_letters()
+	  {return fun_mask_(all_letters_mask);}
 	  vertex_image<point2d,bool> fun_mask_all()
 	  {  
 	    typedef vertex_image<point2d,bool> v_ima_g;
@@ -450,6 +812,10 @@ namespace mymln
 	  { return image_mask_(containers_mask); }
 	  image2d<bool> image_mask_separators()
 	  { return image_mask_(separators_mask); }
+	  image2d<bool> image_mask_implicit_separators_left()
+	  { return image_mask_(implicit_separators_left_mask); }
+	  image2d<bool> image_mask_implicit_separators_right()
+	  { return image_mask_(implicit_separators_right_mask); }
 	  image2d<bool> image_mask_letters()
 	  { return image_mask_(letters_mask); }
 	  image2d<bool> image_mask_noise()
@@ -461,6 +827,8 @@ namespace mymln
 	  image2d<bool> image_mask_end_lines()
 	  { return image_mask_(end_lines_mask); }
 	  
+	  mln::util::array<box2d> bbox_mask_lines()
+	  { return lines_bbox; }	  
 	  mln::util::array<box2d> bbox_mask_containers()
 	  { return bbox_mask_(containers_mask); }
 	  mln::util::array<box2d> bbox_mask_separators()
@@ -482,30 +850,42 @@ namespace mymln
 	  Label get_label(point2d point)
 	  { return img_influ(point); }
 	  
-	  unsigned int get_line_length(point2d point)
+	  inline unsigned int get_line_length(point2d point)
 	  { return get_line_length(img_influ(point)); }
 	  
-	  unsigned int get_line_length(Label L)
+	  inline unsigned int get_line_length(Label L)
 	  { return lines_len[lines_union[L]]; }
 	  
-	  unsigned int get_beginning_of_line(point2d point)
+	  inline unsigned int get_line_width(point2d point)
+	  { return get_line_width(img_influ(point)); }
+	  
+	  inline unsigned int get_line_width(Label L)
+	  { return lines_bbox[lines_union[L]].len(1); }
+
+	  inline bool line_has(point2d Line, point2d Point)
+	  { return line_has(img_influ(Line), Point); }
+
+	  inline bool line_has(Label Line, point2d Point)
+	  { return lines_bbox[lines_union[Line]].has(Point); }
+	  
+	  inline unsigned int get_beginning_of_line(point2d point)
 	  { return get_beginning_of_line(img_influ(point)); }
 	  
-	  unsigned int get_beginning_of_line(Label L)
+	  inline unsigned int get_beginning_of_line(Label L)
 	  { return lines_first_label[lines_union[L]]; }
 	  
-	  unsigned int get_end_of_line(point2d point)
+	  inline unsigned int get_end_of_line(point2d point)
 	  { return get_end_of_line(img_influ(point)); }
 	  
-	  unsigned int get_end_of_line(Label L)
+	  inline unsigned int get_end_of_line(Label L)
 	  { return lines_last_label[lines_union[L]]; }
 	  
 	  
-	  unsigned int get_parent_line(point2d point)
+	  inline unsigned int get_parent_line(point2d point)
 	  { return lines_union[img_influ(point)]; }
 	  
 	  
-	  unsigned int get_parent_line(Label L)
+	  inline unsigned int get_parent_line(Label L)
 	  { return lines_union[L]; }
 	  
 	  
@@ -514,20 +894,45 @@ namespace mymln
 	    lines_first_label.fill(0);
 	    lines_last_label.fill(0);
 	    lines_len.fill(0);
+	    start_lines_mask(0) = false;
+	    end_lines_mask(0) = false;
+	    
 	    cook_lines_();
 	  }
+	  inline void reset_implicit_separators()
+	  { implicit_separators_union.reset(); }
 	  inline void cook_lines()
 	  {
-	    lines_len = mln::util::array<unsigned int>(CLine + 1);
-	    lines_first_label = mln::util::array<unsigned int>(CLine + 1);
-	    lines_last_label = mln::util::array<unsigned int>(CLine + 1);
+	    lines_len = mln::util::array<unsigned int>(NLine + 1);
+	    lines_first_label = mln::util::array<unsigned int>(NLine + 1);
+	    lines_last_label = mln::util::array<unsigned int>(NLine + 1);
 	    start_lines_mask = fun::i2v::array<bool>(Areas_Number_);
 	    end_lines_mask = fun::i2v::array<bool>(Areas_Number_);
 	    start_end_lines_mask = fun::i2v::array<bool>(Areas_Number_);
+	    lines_bbox = mln::util::array<box2d>(NLine + 1);
 	    lines_len.fill(0);
 	    start_lines_mask(0) = false;
 	    end_lines_mask(0) = false;
 	    cook_lines_();
+	  }
+	  
+	  
+	  inline void cook_separators()
+	  {
+	    separators_len_left = mln::util::array<unsigned int>(NImpSep + 1);
+	    separators_middle = mln::util::array<unsigned int>(NImpSep + 1);
+	    separators_len_left.fill(0);
+	    separators_middle.fill(0);
+	    cook_separators_();
+	  }
+	  
+	  inline void cook_separators_right()
+	  {
+	    separators_len_right = mln::util::array<unsigned int>(NImpSep + 1);
+	    separators_middle.resize(NImpSep + 1);
+	    separators_len_right.fill(0);
+	     separators_middle.fill(0);
+	    cook_separators_right_();
 	  }
 	  inline void propage_line_link()
 	  { lines_union.propage_links(); }
@@ -575,35 +980,251 @@ namespace mymln
 	inline bool contain_implicit_separator(const Label lbl)
 	{return implicit_separators_union[lbl] != 0; }
 
-	inline void add_to_separator(const point2d& point)
-	{ add_to_separator(img_influ(point)); }
-	inline void add_to_separator(const Label lbl)
-	{ implicit_separators_union[lbl] = CImpSep; }
+
+	
+	inline void add_to_separator_left(const point2d& point)
+	{ add_to_separator_left(img_influ(point));  }
+	inline void add_to_separator_left(const Label lbl)
+	{ implicit_separators_union[lbl] = CImpSep; implicit_separators_left_mask(lbl) = true; }
+	
+	inline void add_to_separator_right(const point2d& point)
+	{ add_to_separator_right(img_influ(point));  }
+	inline void add_to_separator_right(const Label lbl)
+	{ implicit_separators_union[lbl] = CImpSep; implicit_separators_right_mask(lbl) = true; }
 	
 	inline void invalidate_implicit_separator(const point2d& point)
-	{ invalidate_implicit_separator(img_influ(point)); }
+	{ invalidate_implicit_separator(img_influ(point));  }
 	inline void invalidate_implicit_separator(Label lbl)
-	{ implicit_separators_union[lbl] = 0; }
+	{
+	  implicit_separators_union[lbl] = 0;
+	  implicit_separators_left_mask(lbl) = false;
+	  implicit_separators_right_mask(lbl) = false;
+	}
 
 	inline Label& operator[](point2d i)
-	{ return img_influ(i); }
+	{ return img_influ(i);}
 	
-	inline point2d& operator[](Label i)
-	{ return _bboxgp[i].pcenter(); }
+	inline point2d operator[](Label i)
+	{ 
+	  point2d p = _bboxgp[i].pcenter();
+	  return p;
+	}
+	inline void tag_label(const point2d& point, std::string tag)
+	{ tag_label(img_influ(point), tag);}
+	inline void tag_label(Label lbl, std::string tag)
+	{tag_lbl[lbl] = tag;}
+	/* ITER ON LINES */
+	inline void cook_lines_iter()
+	{cook_lines_iter_();}
+	
+	inline unsigned int lines_iter_value()
+	{return lines_seq[SeqP]; }
+	inline void lines_iter_start()
+	{ SeqP = 0; }
+	inline void lines_iter_next_line()
+	{ SeqP = lines_seq_pos[get_beginning_of_line(SeqP) + 1]; }
+	inline void lines_iter_next_letter()
+	{ SeqP++; while(lines_iter_valid() && !lines_seq[SeqP]){SeqP++;} }
+	inline void lines_iter_valid()
+	{ return SeqP < Areas_Number_; }
       private:
+	fun::i2v::array<bool> implicit_separators_left_mask;
+	fun::i2v::array<bool> implicit_separators_right_mask;
+	mln::util::array<unsigned int> separators_len_right;
+	mln::util::array<unsigned int> separators_len_left;
+	mln::util::array<unsigned int> separators_middle;
+	
+	
+	
+	inline void cook_separators_()
+	{
+	  implicit_separators_left_mask(0) = false;
+	  for(unsigned int N = 1; N < implicit_separators_union.size(); N++)
+	  {
+	      if(implicit_separators_union[N] != 0)
+	      {
+		 separators_len_left[implicit_separators_union[N]]++;
+		 separators_middle[implicit_separators_union[N]] += _bboxgp[N].pmin()[1];
+	      }
+	  }
+	  
+	  /* WARNING : This method to compute the middle value is correct */
+	  /* and faster than merge the computing of the middle value and the */
+	  /* computing of the lenght of the line . However this doesn't works */
+	  /* if you are trying to use very big image or if you work with a 16 BITS*/
+	  /* processor */
+	  for(unsigned int N = 1; N < NImpSep + 1; N++)
+	  {
+	      if(separators_len_left[N] != 0)
+	      {
+		if(separators_len_left[N] != 0)
+		 separators_middle[N] /= separators_len_left[N]; 
+	      }
+	  }
+
+	  
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(separators_len_left[implicit_separators_union[N]] < 3)
+	    {
+	      separators_len_left[implicit_separators_union[N]] = 0;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_left_mask(N) = false;
+	    }
+	    else if (
+	      _bboxgp[N].pmin()[1] < separators_middle[implicit_separators_union[N]] - 10 ||
+	      _bboxgp[N].pmin()[1] > separators_middle[implicit_separators_union[N]] + 10
+	      )
+	    {
+	      
+	      separators_len_left[implicit_separators_union[N]]--;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_left_mask(N) = false;
+	    }
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(!start_lines_mask(N) || implicit_separators_union[N] == 0)
+	    {
+	      if( separators_len_left[implicit_separators_union[N]] > 0)
+		separators_len_left[implicit_separators_union[N]]--;
+	    }
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(separators_len_left[implicit_separators_union[N]] < 2)
+	    {
+	      separators_len_left[implicit_separators_union[N]] = 0;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_left_mask(N) = false;
+	    }
+	  }
+	}
+	
+	inline void cook_separators_right_()
+	{
+	  implicit_separators_right_mask(0) = false;
+	  for(unsigned int N = 1; N < implicit_separators_union.size(); N++)
+	  {
+	      if(implicit_separators_union[N] != 0)
+	      {
+		 separators_len_right[implicit_separators_union[N]]++;
+		 separators_middle[implicit_separators_union[N]] += _bboxgp[N].pmax()[1];
+	      }
+	  }
+	  
+	  /* WARNING : This method to compute the middle value is correct */
+	  /* and faster than merge the computing of the middle value and the */
+	  /* computing of the lenght of the line . However this doesn't works */
+	  /* if you are trying to use very big image or if you work with a 16 BITS*/
+	  /* processor */
+	  for(unsigned int N = 1; N < NImpSep + 1; N++)
+	  {
+	      if(separators_len_right[N] != 0)
+	      {
+		if(separators_len_right[N] != 0)
+		 separators_middle[N] /= separators_len_right[N]; 
+	      }
+	  }
+
+	  
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(separators_len_right[implicit_separators_union[N]] < 3)
+	    {
+	      separators_len_right[implicit_separators_union[N]] = 0;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_right_mask(N) = false;
+	    }
+	    else if (
+	      _bboxgp[N].pmax()[1] < separators_middle[implicit_separators_union[N]] - 10 ||
+	      _bboxgp[N].pmax()[1] > separators_middle[implicit_separators_union[N]] + 10
+	      )
+	    {
+	      
+	      separators_len_right[implicit_separators_union[N]]--;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_right_mask(N) = false;
+	    }
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(!end_lines_mask(N) || implicit_separators_union[N] == 0)
+	    {
+	      if( separators_len_right[implicit_separators_union[N]] > 0)
+	      separators_len_right[implicit_separators_union[N]]--;
+	    }
+	  }
+	  for(unsigned int N = 1; N < Areas_Number_; N++)
+	  {
+	    if(separators_len_right[implicit_separators_union[N]] < 2)
+	    {
+	      separators_len_right[implicit_separators_union[N]] = 0;
+	      implicit_separators_union[N] = 0;
+	      implicit_separators_right_mask(N) = false;
+	    }
+	  }
+	}
+	
 	
 	// PRIVATE DATA ON LINES
 	mln::util::array<unsigned int> lines_len;
 	mln::util::array<unsigned int> lines_first_label;
 	mln::util::array<unsigned int> lines_last_label;
+	mln::util::array<unsigned int> lines_seq;
+	mln::util::array<unsigned int> lines_seq_pos;
+	mln::util::array<box2d> lines_bbox;
+	mln::util::array<Label> lines_split;
 	fun::i2v::array<bool> start_lines_mask;
 	fun::i2v::array<bool> end_lines_mask;
 	fun::i2v::array<bool> start_end_lines_mask;
+	unsigned int SeqP;
 	
 
-	
+	  inline void cook_lines_iter_()
+	  {
+	    lines_seq = mln::util::array<unsigned int>(Areas_Number_);
+	    lines_seq_pos = mln::util::array<unsigned int>(NLine + 1);
+	    
+	    lines_seq.fill(0);
+	    lines_seq_pos.fill(0);
+	    for(unsigned int N = 0; N < NLine + 1; N++)
+	    {
+	      lines_seq[SeqP] = lines_first_label[N];
+	      lines_seq_pos[N] = SeqP;
+	      SeqP += lines_len[N];
+	    }
+	    for(unsigned int N = 1; N < Areas_Number_; N++)
+	    {
+	      if(contain_line(N) && !start_lines_mask(N))
+	      {
+		SeqP = lines_seq_pos[get_beginning_of_line(N)];
+		SeqP++;
+		
+		while( lines_seq[SeqP] && _bboxgp[lines_seq[SeqP]].pmin()[1] < _bboxgp[N].pmin()[1] )
+		   SeqP++;
+		if(!lines_seq[SeqP])
+		{lines_seq[SeqP] = N;}
+		else
+		{
+		  unsigned int Swap1, Swap2;
+		  Swap1 = lines_seq[SeqP];
+		  lines_seq[SeqP] = N;
+		  while(lines_seq[SeqP])
+		  {
+		    Swap2 = lines_seq[SeqP];
+		    lines_seq[SeqP] = Swap1;
+		    Swap1 = Swap2;
+		  }
+		  lines_seq[SeqP] = Swap1;
+		}
+	      }
+	    }
+	  }
+	  
 	  inline void cook_lines_()
 	  {
+	    Cooked_CLine = CLine;
 	    for(unsigned int N = 1; N < lines_union.size(); N++)
 	    {
 	      if(lines_union[N] != 0)
@@ -628,18 +1249,34 @@ namespace mymln
 	      }
 	    }
 
-	    
 	    /* SECOND STEP OF THE COOKING */
-	    for(unsigned int N = 0; N < CLine + 1; N++)
+	    for(unsigned int N = 0; N < lines_first_label.size(); N++)
 	    {
 	      if( lines_first_label[N] != 0)
 	      {
+		 lines_bbox[N] = box2d();
 		 start_lines_mask(lines_first_label[N]) = true;
 		 end_lines_mask(lines_last_label[N]) = true;
 		 start_end_lines_mask(lines_first_label[N]) = true;
 		 start_end_lines_mask(lines_last_label[N]) = true;
 	      }
+	      else
+	      {
+		// USEFULL ONLY FOR DEBUG WHEN WE NEED TO DRAW ALL THE BOUNDING BOX
+		// NOTE:REMOVE IT FOR THE FINAL RELEASE 
+		lines_bbox[N] = box2d();
+	      }
 	    }
+ 
+	    /* THE LAST STEP OF COOKING */
+	    for(unsigned int N = 1; N < lines_union.size(); N++)
+	    {
+	      if(lines_union[N] && lines_first_label[lines_union[N]])
+	      {
+		lines_bbox[lines_union[N]].merge(_bboxgp[N]);
+	      }
+	    }
+	    
 	  }
 	
 	
@@ -654,6 +1291,16 @@ namespace mymln
 	inline Float label_ratio_(Label label)
 	{
 	  return ((Float)_bboxgp[label].len(0)) / ((Float)_bboxgp[label].len(1));
+	}
+	inline short int label_allign_min_(const unsigned int N, const Label l1, const Label l2)
+	{
+	   short int AFactor = _bboxgp[l1].pmin()[N] - _bboxgp[l2].pmin()[N];
+	  return AFactor < 0 ? -AFactor : AFactor;
+	}
+	inline short int label_allign_max_(const unsigned int N, const Label l1, const Label l2)
+	{
+	   short int AFactor = _bboxgp[l1].pmax()[N] - _bboxgp[l2].pmax()[N];
+	  return AFactor < 0 ? -AFactor : AFactor;
 	}
 	inline short int label_allign_(const unsigned int N, const Label l1, const Label l2)
 	{
@@ -741,10 +1388,13 @@ namespace mymln
 	fun::i2v::array<bool> separators_mask;
 	fun::i2v::array<bool> letters_mask;
 	fun::i2v::array<bool> alone_letters_mask;
+	fun::i2v::array<bool> all_letters_mask;
 	fun::i2v::array<bool> containers_mask;
 	fun::i2v::array<bool> noise_mask;
 	
+	mln::util::array<std::string> tag_lbl;
 	
+	unsigned int Cooked_CLine;
 	unsigned int CLine;
 	unsigned int NLine;
 	unsigned int CImpSep;
@@ -755,6 +1405,22 @@ namespace mymln
 	unsigned int CSep ;
 	unsigned int CSepH ;
 	unsigned int CSepV ;
+	
+	mymln::util::union_find<Label> paragraphs_union;
+	unsigned int CPar ;
+	unsigned int NPar ;
+	mln::util::array<unsigned int> paragraphs_first_label;
+	mln::util::array<unsigned int> paragraphs_last_label;
+	mln::util::array<box2d> paragraphs_bbox;
+		  
+	inline void cook_paragraphs_()
+	{
+	  
+	}
+	  
+	
+	
+	
 	
 	/* RANGE DATA */
 	Float _VSepRatio_Min; // The ratio is computed with the bounding box
@@ -780,6 +1446,7 @@ namespace mymln
 	
 	/* IMPLICIT SEPARATOR DETECTION */
 	mymln::util::union_find<Label> implicit_separators_union;
+	mymln::util::union_find<Label> implicit_separators_union_right;
     };
   }
 }

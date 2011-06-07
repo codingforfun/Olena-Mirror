@@ -12,7 +12,6 @@
 #include <mln/core/var.hh>
 #include <mln/accu/shape/bbox.hh>
 #include <mln/fun/i2v/array.hh>
-#include <mln/fun/p2b/all.hh>
 #include <mln/util/graph.hh>
 #include <mln/util/timer.hh>
 #include <mln/debug/draw_graph.hh>
@@ -40,6 +39,7 @@
 #include <my/util/vector_bbox.hh>
 #include <my/util/vector_bbox_group.hh>
 #include <my/document/document.hh>
+#include <my/document/separator.hh>
 
 #include <my/document/clean.hh>
 using namespace mln;
@@ -114,24 +114,53 @@ void Process(std::string File, std::string Dir)
 	
     }
     //mymln::debug::save_label_image(ima_influ, "influ_" + File);
+   
     mymln::document::clean_containers_items(doc);
     mymln::document::clean_letters_items(doc);
-    mymln::document::clean_get_lines(doc,  Dir + "/" + "line_graph_" + File, doc.image_mask_letters());
-    mymln::document::clean_dot_items(doc, Dir + "/" + "dot_graph_" + File, doc.image_mask_letters());  
+    mymln::document::clean_get_lines(doc);
+    mymln::document::clean_letters_alone(doc);
+    mymln::document::clean_dot_items(doc);  
     doc.cook_lines();
     mymln::document::clean_quote_items(doc, Dir + "/" + "quote_graph_" + File, doc.image_mask_letters());
-  
-    doc.stat();
+    
+    
+      mymln::document::separators::separators_find_allign(doc);
+      mymln::document::separators::separators_make_clean(doc);
+      doc.cook_separators();
+      doc.cook_line_splitting();
+      mymln::document::clean_line_link_item(doc);
+      mymln::document::clean_proximity_lines(doc);
+      mymln::document::clean_quote_lines(doc);
+	    
+      doc.reset_implicit_separators();
+      mymln::document::separators::separators_find_allign_right(doc);
+      mymln::document::separators::separators_make_clean(doc);
+      doc.cook_separators_right();
+      doc.cook_line_splitting_exclusive();
+      mymln::document::clean_line_link_item(doc);
+      mymln::document::clean_proximity_lines(doc);
+      mymln::document::clean_quote_lines(doc);
+
+    
+    doc.recook_lines();
+    
+    mymln::document::clean_paragraph_items(doc, Dir + "/" + "para_graph_" + File, doc.image_mask_letters());
+   
     std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
     //io::ppm::save(ima_influ, "separator.ppm");
    //io::pbm::save(doc.image_mask_separators(),"separators");
-    io::pbm::save(doc.image_mask_letters(),Dir + "/" + "letters_" + File);
-    io::pbm::save(doc.image_mask_alone_letters(),Dir + "/" + "letters_alone_" + File);
-    io::pbm::save(doc.image_mask_separators(),Dir + "/" + "separators_" + File);
-    io::pbm::save(doc.image_mask_containers(),Dir + "/" + "containers_" + File);
-    io::pbm::save(doc.image_mask_noise(),Dir + "/" + "noise_" + File);
-    io::pbm::save(doc.image_mask_start_lines(), Dir + "/" + "start_line_" + File);
-    doc.debug_save_lines(Dir + "/" + "lines_" + File);
+   // io::pbm::save(doc.image_mask_letters(),Dir + "/" + "letters_" + File);
+    //io::pbm::save(doc.image_mask_alone_letters(),Dir + "/" + "letters_alone_" + File);
+    //io::pbm::save(doc.image_mask_separators(),Dir + "/" + "separators_" + File);
+    //io::pbm::save(doc.image_mask_containers(),Dir + "/" + "containers_" + File);
+    //io::pbm::save(doc.image_mask_noise(),Dir + "/" + "noise_" + File);
+  
+    
+         
+    doc.debug_save_paragraphs(Dir + "/" + "lines_" + File);
+    //mymln::debug::save_graph_image(doc.fun_mask_implicit_separators_left(), doc.image_mask_letters(), Dir + "/" + "graph_imp_sep_line_" + File);
+    //doc.debug_save_separators(Dir + "/" + "imp_sep_graph_" + File);
+    
  /*  typedef vertex_image<point2d,bool> v_ima_g;
    v_ima_g mask = doc.fun_mask_letters();
 */
@@ -170,8 +199,8 @@ void Process(std::string File, std::string Dir)
     // mymln::debug::save_graph_image(doc.fun_mask_separators(), ima, "separator_graph_" + File);
     //mymln::debug::save_graph_image(area_grph, doc.image_mask_letters(), Dir + "/" + "graph_" + File);
     //mymln::debug::save_graph_image(doc.fun_mask_letters(), doc.image_mask_letters(), Dir + "/" + "container_graph_" + File);
-     //mymln::debug::save_graph_image(doc.fun_mask_end_lines(), doc.image_mask_letters(), Dir + "/" + "graph_start_line_" + File);
-   //mymln::debug::save_boxes_image(doc.bbox_mask_letters(), ima, "lbox_" + File);
+mln::util::array<box2d> linebx = doc.bbox_mask_lines();
+   mymln::debug::save_boxes_image(linebx, doc.image_mask_letters(), Dir + "/" + "lbox_" + File);
       //mymln::debug::save_boxes_image(doc.bbox_enlarge_mask_letters(10, 0), ima, "linebox_" + File);
 }
 

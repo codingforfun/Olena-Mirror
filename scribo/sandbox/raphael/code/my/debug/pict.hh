@@ -41,6 +41,7 @@ namespace mymln
 	io::ppm::save(ima_color, file);
       }
       
+      
       template<typename p_v> inline void save_graph_image(p_v& pv, unsigned int SizeX, unsigned int SizeY, std::string file)
       {
 	image2d<value::rgb8> ima_graph(SizeY, SizeX);
@@ -69,10 +70,14 @@ namespace mymln
       }
       template<typename I> inline void save_boxes_image(mln::util::array<box2d>  boxes, I source, std::string file)
       {
-	image2d<bool> out(source.domain());
-	  data::fill(out, false);
+	image2d<bool> out;
+	mln::initialize(out, source);
 	  for(unsigned int N = 0 ; N < boxes.size(); N++)
 	  {
+	    if(!boxes[N].is_valid()){continue;}
+	    if((boxes[N]).pmin()[0] < 0 || (boxes[N]).pmin()[1] < 0 || (boxes[N]).pmax()[0] < 0 || (boxes[N]).pmax()[1] < 0 ){continue;}
+	     if((boxes[N]).pmax()[0] > source.domain().pmax()[0] || (boxes[N]).pmax()[1] > source.domain().pmax()[1] ){continue;}
+	     if((boxes[N]).pmin()[0] > source.domain().pmax()[0] || (boxes[N]).pmin()[1] > source.domain().pmax()[1] ){continue;}
 	    data::fill((out | (boxes[N])).rw(), true);
 	  }
 	io::pbm::save(out , file);

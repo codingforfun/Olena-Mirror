@@ -18,9 +18,19 @@ namespace mymln
 	 mark_link.fill(0);
 	 size_ = max_size;
 	}
-	
+	inline void reset()
+	{
+	 mark.fill(0);
+	 mark_link.fill(0);
+	}
+	inline bool is_self_link(const Label A)
+	{return mark_link[A] == A;}
+	inline void invalidate_link(const Label A)
+	{ mark_link[A] = 0; }
 	inline void add_self_link(const Label A)
 	{ mark_link[A] = A; }
+	inline unsigned int link(const unsigned int index)
+	{return mark_link[index]; }
 	inline void add_link(const Label A, const Label B)
 	{
 
