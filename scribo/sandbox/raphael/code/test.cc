@@ -127,25 +127,32 @@ void Process(std::string File, std::string Dir)
       mymln::document::separators::separators_find_allign(doc);
       mymln::document::separators::separators_make_clean(doc);
       doc.cook_separators();
+       std::cout << "-> compute separator left " << endl;
       doc.cook_line_splitting();
+     
       mymln::document::clean_line_link_item(doc);
       mymln::document::clean_proximity_lines(doc);
       mymln::document::clean_quote_lines(doc);
-	    
       doc.reset_implicit_separators();
+       std::cout << "-> clean separator right " << endl;
       mymln::document::separators::separators_find_allign_right(doc);
       mymln::document::separators::separators_make_clean(doc);
+      std::cout << "-> compute separator right " << endl;
       doc.cook_separators_right();
       doc.cook_line_splitting_exclusive();
+       std::cout << "-> clean separator right " << endl;
       mymln::document::clean_line_link_item(doc);
       mymln::document::clean_proximity_lines(doc);
+       std::cout << "-> clean " << endl;
       mymln::document::clean_quote_lines(doc);
-
+      mymln::document::clean_alone_letters_lines(doc, Dir + "/" + "alone_graph_" + File, doc.image_mask_letters());
+      doc.recook_lines();
+      mymln::document::remove_alone_letter(doc);
     
     doc.recook_lines();
     
     mymln::document::clean_paragraph_items(doc, Dir + "/" + "para_graph_" + File, doc.image_mask_letters());
-   
+    doc.cook_paragraphs();
     std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
     //io::ppm::save(ima_influ, "separator.ppm");
    //io::pbm::save(doc.image_mask_separators(),"separators");
@@ -157,7 +164,8 @@ void Process(std::string File, std::string Dir)
   
     
          
-    doc.debug_save_paragraphs(Dir + "/" + "lines_" + File);
+    //doc.debug_save_lines(Dir + "/" + "lines_" + File);
+    doc.debug_save_all(Dir + "/" + "debug_" + File, ima);
     //mymln::debug::save_graph_image(doc.fun_mask_implicit_separators_left(), doc.image_mask_letters(), Dir + "/" + "graph_imp_sep_line_" + File);
     //doc.debug_save_separators(Dir + "/" + "imp_sep_graph_" + File);
     
@@ -199,8 +207,9 @@ void Process(std::string File, std::string Dir)
     // mymln::debug::save_graph_image(doc.fun_mask_separators(), ima, "separator_graph_" + File);
     //mymln::debug::save_graph_image(area_grph, doc.image_mask_letters(), Dir + "/" + "graph_" + File);
     //mymln::debug::save_graph_image(doc.fun_mask_letters(), doc.image_mask_letters(), Dir + "/" + "container_graph_" + File);
-mln::util::array<box2d> linebx = doc.bbox_mask_lines();
+    mln::util::array<box2d> linebx = doc.bbox_mask_lines();
    mymln::debug::save_boxes_image(linebx, doc.image_mask_letters(), Dir + "/" + "lbox_" + File);
+   
       //mymln::debug::save_boxes_image(doc.bbox_enlarge_mask_letters(10, 0), ima, "linebox_" + File);
 }
 

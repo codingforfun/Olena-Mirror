@@ -28,12 +28,23 @@ namespace mymln
 	inline void invalidate_link(const Label A)
 	{ mark_link[A] = 0; }
 	inline void add_self_link(const Label A)
-	{ mark_link[A] = A; }
+	{ 
+	  if(!A){return;}
+	  if(mark_link[A] == 0)
+	    mark_link[A] = A;
+	  else
+	  {
+	    unsigned int Pos = find_parent_(A);
+	    if(Pos)
+	      mark_link[Pos] = A;
+	      mark_link[A] = A;
+	  }
+	}
 	inline unsigned int link(const unsigned int index)
 	{return mark_link[index]; }
 	inline void add_link(const Label A, const Label B)
 	{
-
+	   if(!B || !A){return;}
 	   unsigned int Pos = find_parent_(A);
 	   if(mark_link[B] == 0)
 	   {
@@ -84,7 +95,14 @@ namespace mymln
 	inline unsigned int find_parent_(const Label A)
 	{
 	  unsigned int Pos = A;
-	  while(Pos != mark_link[Pos] && Pos != 0){Pos = mark_link[Pos];}
+	  unsigned int OldPos = A;
+	  while(Pos != mark_link[Pos] && Pos != 0)
+	  {
+	    
+	    Pos = mark_link[Pos];
+	    mark_link[OldPos] = mark_link[Pos];
+	    OldPos = Pos;
+	  }
 	  return Pos;
 	}
       	mln::util::array<unsigned int> mark;	

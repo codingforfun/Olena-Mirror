@@ -315,30 +315,33 @@ namespace mymln
     {
        typedef vertex_image<point2d,bool> v_ima_g;
 	typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
-	v_ima_g mask = doc.fun_mask_letters();
+	v_ima_g mask = doc.fun_mask_all_letters();
 	mln_piter_(v_ima_g) v(mask.domain());
 	typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
 	nbh_t nbh(mask);
 	mln_niter_(nbh_t) q(nbh, v);
 	for_all(v)
 	{
-	  if(doc.contain_letter(v))
-	  {
 	    if(doc.contain_line(v))
 	    {
 	      for_all(q)
 	      {
-		if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_proximity(q,v))
+		if(doc.contain_line(q))
 		{
-		  doc.add_to_line_link(v, q);
-		}
-		else if(doc.allign_size_height_line(q,v) && doc.allign_proximity_line(q,v) && doc.allign_V_line(q, v))
-		{
-		   doc.add_to_line_link(v, q);
+		  if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_proximity(q,v))
+		  {
+		    doc.add_to_line_link(v, q);
+		  }
+		  else if(doc.allign_size_height_line(q,v))
+		  {
+		    if(doc.allign_proximity_line(q,v) && doc.allign_V_line(q, v))
+		    {
+			doc.add_to_line_link(v, q);
+		    }
+		  }
 		}
 	      }
 	    }
-	  }
 	}
 	doc.propage_line_link();
     }
@@ -352,7 +355,7 @@ namespace mymln
 	    #endif
        typedef vertex_image<point2d,bool> v_ima_g;
 	typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
-	v_ima_g mask = doc.fun_mask_start_lines();
+	v_ima_g mask = doc.fun_mask_start_end_lines();
 	mln_piter_(v_ima_g) v(mask.domain());
 	typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
 	nbh_t nbh(mask);
@@ -364,41 +367,71 @@ namespace mymln
 	  {
 	    if(doc.contain_line(v) && doc.get_beginning_of_line(v) == doc[v])
 	    {
-	      doc.jump_to_paragraph(v);  
+	      doc.jump_to_paragraph(v);
+	      if(!doc.contain_paragraph(v))
+	      { doc.add_to_paragraph(v); }
+	      
 	      for_all(q)
 	      {
-		if(doc.allign_H_Large(q,v) && doc.allign_size(q, v))
+		if(doc.allign_H_Large(q,v) && doc.allign_size(q, v) && doc.allign_proximity_V_line(v,q))
 		{
 		  if(doc.contain_paragraph(q))
 		  {
-		    if(!doc.contain_paragraph(v))
-		      {
-			doc.add_to_paragraph(v);
-			
-		      }
-		    doc.add_to_paragraph_link(q, v);
+		     doc.add_to_paragraph(q);
+		     doc.add_to_paragraph_link(q, v);
 		     draw::line(out, q,v, mln::literal::green);
 		  }
 		  else
 		  {
-		    
-		    if(!doc.contain_paragraph(v))
-		    {
-		      doc.add_to_paragraph(q);
-		      doc.add_to_paragraph(v);
-		      doc.add_to_paragraph_self_link(q);
-		      doc.add_to_paragraph_link(q, v);
-		    }
-		    else
-		    {
-		      doc.add_to_paragraph(q);
-		      doc.add_to_paragraph_link(v, q);
-		    }
+		    doc.add_to_paragraph(q);
+		    doc.add_to_paragraph_link(v, q);
 		    draw::line(out, q,v, mln::literal::magenta);
 		  }
 		 
 		}
 	      }
+	    }
+	    else if(doc.contain_line(v) && doc.get_end_of_line(v) == doc[v]){}
+	    else if(doc.contain_line(v))
+	    {
+	      for_all(q)
+	      {
+		if(
+		  doc.get_beginning_of_line(q) == doc[q] &&
+		  doc.allign_H_Large(q,v) &&
+		  doc.allign_size(q, v) &&
+		  doc.allign_proximity_V_line(v,q) &&
+		  doc.allign_bottom_line(q,v)
+		  )
+		{
+		  if(doc.contain_paragraph(q))
+		  {
+		    doc.jump_to_paragraph(q);
+		    if(!doc.contain_paragraph(v))
+		    {
+		      doc.add_to_paragraph(v);
+		      doc.add_to_paragraph_link(q, v);
+		    }
+		    else
+		    {
+		      doc.add_to_paragraph_link(v, q);
+		    }
+		    draw::line(out, q,v, mln::literal::blue);
+		  }
+		  else
+		  {
+		    doc.jump_to_paragraph(v);
+		    if(!doc.contain_paragraph(v))
+		    {
+		      doc.add_to_paragraph(v);
+		    }
+		    doc.add_to_paragraph(q);
+		    doc.add_to_paragraph_link(v, q);
+		    draw::line(out, q,v, mln::literal::blue);
+		  }
+		}
+	      }
+	      
 	    }
 	  }
 	}
@@ -426,8 +459,7 @@ namespace mymln
 		doc.get_line_length(q) < 5 &&
 		doc.allign_smaller_line(v,q) && 
 		doc.get_line_length(v) > 3 &&
-		doc.allign_proximity_line(v,q) &&
-		doc.allign_V_line(v,q) 
+		doc.allign_proximity_line(v,q) 
 		)
 	      {
 		if(doc.allign_base_line_line(v,q) && doc.get_line_length(q) < 3)
@@ -437,8 +469,60 @@ namespace mymln
 	      }
 	    }
 	  }
+      }
+      doc.propage_line_link();
+      }
+      template<typename L, typename F, typename D>
+      void clean_alone_letters_lines(mymln::document::document<L,F,D>& doc, std::string dgb_out,image2d<bool> s)
+      {
+		    image2d<value::rgb8> out;
+	    mln::initialize(out, s);
+	typedef vertex_image<point2d,bool> v_ima_g;
+	typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+	v_ima_g mask = doc.fun_mask_alone_letters();
+	mln_piter_(v_ima_g) v(mask.domain());
+	typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+	nbh_t nbh(mask);
+	mln_niter_(nbh_t) q(nbh, v);
+	for_all(v)
+	{
+	  if(doc.contain_line(v))
+	  {
+	    for_all(q)
+	    {
+	       draw::line(out, q,v, mln::literal::red);
+	      if(doc.line_has(v,q))
+	      {doc.add_to_line_link(v, q); draw::line(out, q,v, mln::literal::green);}
+	      
+	    }
+	  }
+	}
+	doc.propage_line_link();
+	io::ppm::save(mln::debug::superpose(out, s, literal::white),dgb_out);
+      }
+      
+      template<typename L, typename F, typename D>
+      void remove_alone_letter(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+	typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+	v_ima_g mask = doc.fun_mask_alone_letters();
+	mln_piter_(v_ima_g) v(mask.domain());
+	typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+	nbh_t nbh(mask);
+	mln_niter_(nbh_t) q(nbh, v);
+	for_all(v)
+	{
+	    for_all(q)
+	    {
+	      if(doc.in_header(q) || doc.in_footer(q)){continue;}
+	      doc.add_noise(q);
+	    }
 	}
       }
+  
+    
+  
   }
   }
   
