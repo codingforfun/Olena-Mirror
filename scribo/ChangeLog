@@ -1,5 +1,11 @@
 2011-05-27  Sylvain Lobry  <lobry@lrde.epita.fr>
 
+	Modified weights in the choose function.
+
+	* scribo/inverse_video/choose.hh: Here.
+
+2011-05-27  Sylvain Lobry  <lobry@lrde.epita.fr>
+
 	Added a choose function, to be used with handle_collisions.
 
 	* scribo/inverse_video/handle_collisions.hh: Prototype fixed.

@@ -101,8 +101,8 @@ namespace scribo
       double score_ratio_area = scribo::inverse_video::ratio_area(line, line_inverse);
 
       score =
-	score_nb_comps * 0.5 +
-	score_ratio_area * 0.5;
+	score_nb_comps * 0.4 +
+	score_ratio_area * 0.6;
 
       scribo::inverse_video::internal::handle_score (score, input, line, line_inverse);
 
