@@ -9,9 +9,17 @@ namespace mymln
 {
   namespace document
   {
-    void clean_letter_aberation()
+    template<typename L, typename F, typename D>
+    void clean_letters_aberations_big(document<L,F,D> doc, mln::util::array<box2> bouningbox_letters, mln::util::array<box2> middle_box_lines, mymln::util::union_find<L> letters_union, )
     {
-      
+      for(int N = 0; N < letters_union.size(); N++)
+      {
+	if(letters_union[N])
+	{
+	  doc.get_letter_middle_height(N) * 3 < doc.get_bbox(N).len(0);
+	  doc.add_noise(N);
+	}
+      }
     }
   }
 }

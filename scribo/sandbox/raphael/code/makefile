@@ -1,13 +1,18 @@
 speed:
-	g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena -O3 -fwhole-program
-	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin ima.pbm
+	ccache g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena -O3 -fwhole-program
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
 std:
 	
-	g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena
-	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin ima.pbm
+	ccache g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin  -P ~/Bureau/test/bin/script ima.pbm
 release:
-	g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena -DNDEBUG -O2
-	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin ima.pbm
+	ccache g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena -DNDEBUG -O2
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
+debug:
+	ccache g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena -DNDEBUG -ggdb
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
+test:
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
 clean:
 	rm -r -f ../bin/*
 

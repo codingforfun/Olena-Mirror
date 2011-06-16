@@ -1,6 +1,7 @@
 
 #include <vector>
-#include <mln/io/all.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/io/ppm/all.hh>
 
 #include <mln/core/site_set/p_vertices.hh>
 #include <mln/core/image/graph_elt_window.hh>
@@ -16,21 +17,20 @@
 #include <mln/util/timer.hh>
 #include <mln/debug/draw_graph.hh>
 #include <mln/debug/println.hh>
-#include <mln/transform/all.hh>
+#include <mln/transform/influence_zone_geodesic.hh>
 #include <mln/make/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/influence_zone_adjacency_graph.hh>
 #include <mln/make/w_window2d.hh>
-#include <mln/labeling/all.hh>
+#include <mln/labeling/value_and_compute.hh>
 #include <mln/make/image.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u.hh>
-#include <mln/data/all.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/algebra/all.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/core/image/graph_elt_neighborhood.hh>
-#include <mln/literal/all.hh>
 #include <mln/graph/compute.hh>
 
 #include <mln/draw/plot.hh>
@@ -42,10 +42,21 @@
 #include <my/document/separator.hh>
 
 #include <my/document/clean.hh>
+#include <my/document/recognition.hh>
+
+#include <my/runtime/runtime.hh>
+#include <my/runtime/lib.hh>
+
 using namespace mln;
 using namespace std;
-void Process(std::string File, std::string Dir)
+void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::int_u<16> ,float,short>& runtime)
 {
+  // RUNTIME
+  
+  runtime.add_variable("FILE", Dir + "/" + File);
+  runtime.add_variable("DIR", Dir);
+  runtime.add_variable("DEBUG_FILE", Dir + "/debug_" + File); 
+  
   
    std::cout << "Processing : " << File << endl;
     /* CREATE GRAPH */
@@ -61,24 +72,19 @@ void Process(std::string File, std::string Dir)
     
 
     uint16 areas_detected;
-      timer.start();
-    image2d<uint16> ima_blob = labeling::blobs(ima, c8(), areas_detected);
-     std::cout << "CREATE BLOBS : " << timer.stop() << endl;
-     timer.restart();
-       timer.start();
+      mln_VAR( couple , mln::labeling::value_and_compute(ima, true, c8(), areas_detected, accu::shape::bbox<point2d>()));
+      image2d<uint16> ima_blob = couple.first();
+      util::array<box2d> boxes = couple.second().first();
+      //image2d<uint16> ima_blob = labeling::blobs(ima, c8(), areas_detected);
+
     image2d<uint16> ima_influ = transform::influence_zone_geodesic(ima_blob, c8());
-     std::cout << "CREATE INFLUENCE ZONE GEODESIC : " << timer.stop() << endl;
-     timer.restart();
-       timer.start();
+
     util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c8(), areas_detected);
   //  mymln::debug::save_label_image(ima_influ, Dir + "/influ_" + File); 
     
-    std::cout << "CREATE GRAPH : " << timer.stop() << endl;
-    
-    
+
     /* COMPUTE GRAPH POINT POSITION */
-    timer.restart();
-    util::array<box2d> boxes = labeling::compute(accu::meta::shape::bbox(), ima_blob, areas_detected);
+    //util::array<box2d> boxes = labeling::compute(accu::meta::shape::bbox(), ima_blob, areas_detected);
     typedef p_vertices<util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
     typedef graph_elt_neighborhood<util::graph, g_vertices_p> g_nbh;    
     fun::i2v::array<point2d> graph_points(areas_detected + 1);
@@ -87,18 +93,20 @@ void Process(std::string File, std::string Dir)
     {graph_points(N + 1) = boxes[N + 1].pcenter();}
     g_vertices_p area_grph(grph, graph_points);
     
-    std::cout << "COMPUTE GRAPH POINT POSITION : " << timer.stop() << endl;
     
+    
+    
+     std::cout << "INITIALIZING : " << timer.stop() << endl;
+     timer.restart();
      /* WORK ON GRAPH */
      
-    
-     
-      timer.restart();
-     
     mymln::document::document<uint16,float,short> doc(ima_blob, ima_influ, boxes, area_grph, areas_detected);
+    runtime.set_current_document(&doc);
+    doc.debug_set_image(ima);
     doc.vertical_separator_ratio_range(0.0f, 0.2f);
     doc.horizontal_separator_ratio_range(6.0f, 1000.0f);
     doc.container_volume_range(40, 100);
+    
     for (uint16 N = 1; N <=  areas_detected; N++)
     {
 
@@ -114,113 +122,139 @@ void Process(std::string File, std::string Dir)
 	
     }
     //mymln::debug::save_label_image(ima_influ, "influ_" + File);
-   
+   /*
     mymln::document::clean_containers_items(doc);
     mymln::document::clean_letters_items(doc);
     mymln::document::clean_get_lines(doc);
-    mymln::document::clean_letters_alone(doc);
-    mymln::document::clean_dot_items(doc);  
-    doc.cook_lines();
-    mymln::document::clean_quote_items(doc, Dir + "/" + "quote_graph_" + File, doc.image_mask_letters());
+      
+
     
+    mymln::document::clean_letters_alone(doc);
+    doc.cook_lines(); 
+    mymln::document::clean_included_letters(doc);
+    doc.recook_lines();
+    mymln::document::clean_dot_items(doc);  
+    doc.recook_lines();
+    mymln::document::clean_quote_items(doc);
+    doc.recook_lines();
+ 
+    
+    mymln::document::clean_between(doc);
+    doc.recook_lines();
+    doc.compute_letter_middle_height();
+    doc.compute_letter_middle_width();
+    mymln::document::clean_odd_letters(doc);
+    doc.recook_lines();
+    
+*/
+    
+    /*doc.compute_letter_middle_space();
+    mymln::document::clean_lines_space(doc, Dir + "/" + "quote_graph_" + File, doc.image_mask_letters());
+     doc.recook_lines();*/
+     
+/*
     
       mymln::document::separators::separators_find_allign(doc);
       mymln::document::separators::separators_make_clean(doc);
       doc.cook_separators();
-       std::cout << "-> compute separator left " << endl;
       doc.cook_line_splitting();
-     
+
+    
       mymln::document::clean_line_link_item(doc);
-      mymln::document::clean_proximity_lines(doc);
+      mymln::document::clean_proximity_lines(doc); 
       mymln::document::clean_quote_lines(doc);
+      doc.recook_lines();
+
+
+      
+      
       doc.reset_implicit_separators();
-       std::cout << "-> clean separator right " << endl;
       mymln::document::separators::separators_find_allign_right(doc);
-      mymln::document::separators::separators_make_clean(doc);
-      std::cout << "-> compute separator right " << endl;
+      mymln::document::separators::separators_make_clean_right(doc);
       doc.cook_separators_right();
       doc.cook_line_splitting_exclusive();
-       std::cout << "-> clean separator right " << endl;
-      mymln::document::clean_line_link_item(doc);
-      mymln::document::clean_proximity_lines(doc);
-       std::cout << "-> clean " << endl;
-      mymln::document::clean_quote_lines(doc);
-      mymln::document::clean_alone_letters_lines(doc, Dir + "/" + "alone_graph_" + File, doc.image_mask_letters());
+      mymln::document::clean_line_link_item(doc);   
+
+      mymln::document::clean_proximity_lines(doc);      
+      mymln::document::clean_quote_lines(doc);  
+      mymln::document::clean_alone_letters_lines(doc);
       doc.recook_lines();
+      
+
+      doc.compute_letter_middle_height();
+      doc.compute_letter_middle_width();
+      mymln::document::clean_odd_letters(doc);
+      doc.recook_lines();
+      */
+   /*
+    mymln::document::clean_lines_space(doc, Dir + "/" + "alone_graph_" + File, doc.image_mask_letters());
+     doc.recook_lines();*/
+   
+   /*
       mymln::document::remove_alone_letter(doc);
     
     doc.recook_lines();
     
-    mymln::document::clean_paragraph_items(doc, Dir + "/" + "para_graph_" + File, doc.image_mask_letters());
+    mymln::document::clean_paragraph_items(doc);
     doc.cook_paragraphs();
-    std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
-    //io::ppm::save(ima_influ, "separator.ppm");
-   //io::pbm::save(doc.image_mask_separators(),"separators");
-   // io::pbm::save(doc.image_mask_letters(),Dir + "/" + "letters_" + File);
-    //io::pbm::save(doc.image_mask_alone_letters(),Dir + "/" + "letters_alone_" + File);
-    //io::pbm::save(doc.image_mask_separators(),Dir + "/" + "separators_" + File);
-    //io::pbm::save(doc.image_mask_containers(),Dir + "/" + "containers_" + File);
-    //io::pbm::save(doc.image_mask_noise(),Dir + "/" + "noise_" + File);
-  
+
     
+    mymln::document::clean_paragraphs_up(doc);
+    doc.recook_paragraphs();
+
+    mymln::document::clean_paragraphs_large(doc);
+    doc.recook_paragraphs();
+    mymln::document::clean_included_paragraphs(doc);
+    doc.recook_paragraphs();
+    std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
+
+        doc.recook_lines();
+    */
+      runtime.run();
+      
+      
+    
+
+	/*    
+    doc.cook_lines_iter();
+    std::cout << doc.get_first_line();
+    
+    
+    
+    
+     doc.compute_letter_middle_space();
+     
+     mymln::document::recognize_minus(doc);
+     mymln::document::recognize_dot(doc);
+    for(int Line = doc.get_first_line(); Line; doc.get_next_line(Line))
+    {
+          std::cout << doc.get_line_string(Line) << endl;
+    }
          
     //doc.debug_save_lines(Dir + "/" + "lines_" + File);
-    doc.debug_save_all(Dir + "/" + "debug_" + File, ima);
-    //mymln::debug::save_graph_image(doc.fun_mask_implicit_separators_left(), doc.image_mask_letters(), Dir + "/" + "graph_imp_sep_line_" + File);
-    //doc.debug_save_separators(Dir + "/" + "imp_sep_graph_" + File);
+    //doc.debug_save_all(Dir + "/" + "debug_" + File, ima);
+    */
     
- /*  typedef vertex_image<point2d,bool> v_ima_g;
-   v_ima_g mask = doc.fun_mask_letters();
-*/
-  /*image2d<bool> out(3500,3500);
-  
-
-
-
-    mln_piter_(v_ima_g) v(mask.domain());
-    typedef graph_elt_neighborhood_if<util::graph, g_vertices_p, v_ima_g> nbh_t;
-    nbh_t nbh(mask);
-    mln_niter_(nbh_t) q(nbh, v);
-    
-    unsigned int fnds = 0;
-    for_all(v)
-    {
-      unsigned int nds = 0;
-      for_all(q)
-      {	
-	nds++;
-	
-	draw::line(out, q,v, true);
-      }
-      if(nds > 0)
-      {
-	std::cout << v << endl;
-	fnds++;
-      }
-      
-      
-    }*/
-   //mymln::debug::draw_graph(out, mask);
-    //io::pbm::save(out, "maskltt.dgb");
-   //std::cout << "NODES:" << fnds << endl;
-   //  mymln::debug::save_graph_image(area_grph, ima, "graph_" + File);
-    // mymln::debug::save_graph_image(doc.fun_mask_separators(), ima, "separator_graph_" + File);
-    //mymln::debug::save_graph_image(area_grph, doc.image_mask_letters(), Dir + "/" + "graph_" + File);
-    //mymln::debug::save_graph_image(doc.fun_mask_letters(), doc.image_mask_letters(), Dir + "/" + "container_graph_" + File);
-    mln::util::array<box2d> linebx = doc.bbox_mask_lines();
-   mymln::debug::save_boxes_image(linebx, doc.image_mask_letters(), Dir + "/" + "lbox_" + File);
-   
-      //mymln::debug::save_boxes_image(doc.bbox_enlarge_mask_letters(10, 0), ima, "linebox_" + File);
 }
 
 
 int main( int argc, char** argv)
 {
-   if(argc <= 1){Process("ima.pbm", "");}
+   mymln::runtime::runtime< value::int_u<16> ,float,short> run;
+   mymln::runtime::load_clean(run);
+   mymln::runtime::load_debug(run);
+   mymln::runtime::load_cooking(run);
+   mymln::runtime::load_string(run);
+   mymln::runtime::load_system(run);
+   mymln::runtime::load_separators(run);
+   mymln::runtime::load_compute(run);
+   if(argc <= 1){Process("ima.pbm", "", run);}
    else
    {
      bool dir = false;
+     bool prog = false;
      std::string Dir = "";
+     std::string Prog = "";
      for(int N = 1 ; N < argc; N++)
      {
        if(dir)
@@ -228,12 +262,20 @@ int main( int argc, char** argv)
 	 Dir = argv[N];
 	 dir = false;
        }
+       else if(prog)
+       { 
+	 Prog = argv[N];
+	 run.load(Prog. c_str());
+	 prog = false;
+       }
        else
        {
 	if(!strcmp(argv[N], "-D"))
 	{ dir = true;}
+	else if(!strcmp(argv[N], "-P"))
+	{ prog = true; }
 	else
-	{ Process(argv[N], Dir); }
+	{ Process(argv[N], Dir, run); }
        }
      }
    }
