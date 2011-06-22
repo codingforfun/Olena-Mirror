@@ -45,6 +45,7 @@ namespace mymln
 	{
 	  img = ima;
 	  _bboxgp = bboxgp;
+	  _bboxgp_influ = mln::util::array<box2d>(Areas + 1);
 	  _area_graph = area_graph;
 	  separators_mask = fun::i2v::array<bool>(Areas + 1);
 	  containers_mask = fun::i2v::array<bool>(Areas + 1);
@@ -53,17 +54,18 @@ namespace mymln
 	  Hseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  Vseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  noise_mask = fun::i2v::array<bool>(Areas + 1);
+	  temp_letter = fun::i2v::array<bool>(Areas + 1);
 	  alone_letters_mask = fun::i2v::array<bool>(Areas + 1);
 	  implicit_separators_left_mask = fun::i2v::array<bool>(Areas + 1);
 	  implicit_separators_right_mask = fun::i2v::array<bool>(Areas + 1);
 	  kill_mask = fun::i2v::array<bool>(Areas + 1);
+	  all_mask = fun::i2v::array<bool>(Areas + 1);
 	  CImpSep = 1;
 	  NImpSep = 2;
 	  lines_union = mymln::util::union_find<Label>(Areas + 1);
 	  implicit_separators_union = mymln::util::union_find<Label>(Areas + 1);
 	  debug_buffer_enable = false;
 	  paragraphs_union = mymln::util::union_find<Label>(Areas + 1);
-	  
 	  tag_lbl = mln::util::array<std::string>(Areas + 1);
 	  Btag_lbl = mln::util::array<bool>(Areas + 1);
 	  lines_split = mln::util::array<Label>(Areas + 1);
@@ -79,8 +81,14 @@ namespace mymln
 	  CPar = 1;
 	  NPar = 2;
 	  Areas_Number_ = Areas + 1;
-	  
+	  sep_right_cooked = false;
+	  lines_cooked = false;
+	  Enable_Debug_Buffer = false; // Remanant version of debug_buffer_enable
 	}
+	inline bool killed(const Label lbl)
+	{return kill_mask(lbl);}
+	inline void kill(const Label lbl)
+	{kill_mask(lbl) = true;all_mask(lbl) = false;}
 	inline unsigned int count()
 	{return Areas_Number_;}
 	/* OPERATION ON PAGE */
@@ -123,6 +131,11 @@ namespace mymln
 	    }
 	  }
 	}
+	
+	
+	
+	
+	
 	inline bool contain_paragraph(const point2d& point)
 	{return contain_paragraph(img_influ(point));}
 	inline bool contain_paragraph(const Label lbl)
@@ -349,7 +362,13 @@ namespace mymln
 	
 	inline void jump_to_line(const point2d& point)
 	{ jump_to_line(img_influ(point)); }
+
+	inline bool contain_start_line(const point2d& point)
+	{ return contain_start_line(img_influ(point)); }
 	
+	inline bool contain_end_line(const point2d& point)
+	{ return contain_end_line(img_influ(point)); }
+
 	inline bool contain_line(const point2d& point)
 	{ return contain_line(img_influ(point)); }
 	
@@ -379,8 +398,60 @@ namespace mymln
 	    add_new_line(lbl);
 	}
 	
+	inline bool contain_line_self_link(const Label lbl)
+	{ return lines_union[lbl].is_self_link();}
+	inline bool move_line_self_link(const Label lbl)
+	{ 
+	  if(lines_union[lbl] && lines_union[lbl].is_self_link())
+	  {
+	    if(lines_first_label[lines_union[lbl]] == lbl)
+	    {
+	      if(lines_union[lines_last_label[lines_union[lbl]]] == 0) // CHECK IF THE LAST LABEL HAS NOT BEEN REMOVED
+		recook_lines();
+	      
+	      lines_union.add_link(lines_last_label[lines_union[lbl]], lbl);
+	      lines_union.add_self_link(lines_last_label[lines_union[lbl]]);
+	    }
+	    else if(lines_last_label[lines_union[lbl]] == lbl)
+	    {
+	      if(lines_union[lines_first_label[lines_union[lbl]]] == 0) // CHECK IF THE FIRST LABEL HAS NOT BEEN REMOVED
+		recook_lines();
+	      
+	      lines_union.add_link(lines_first_label[lines_union[lbl]], lbl);
+	      lines_union.add_self_link(lines_first_label[lines_union[lbl]]);
+	    }
+	    else
+	    {
+	      if(lines_union[lines_first_label[lines_union[lbl]]])
+	      {
+		lines_union.add_link(lines_first_label[lines_union[lbl]], lbl);
+		lines_union.add_self_link(lines_first_label[lines_union[lbl]]);
+	      }
+	      else if(lines_first_label[lines_union[lbl]])
+	      {
+		lines_union.add_link(lines_last_label[lines_union[lbl]], lbl);
+		lines_union.add_self_link(lines_last_label[lines_union[lbl]]);
+	      }
+	      else
+	      {
+		recook_lines();
+		lines_union.add_link(lines_first_label[lines_union[lbl]], lbl);
+		lines_union.add_self_link(lines_first_label[lines_union[lbl]]);
+	      }
+	    }
+	    return true;
+	  }
+	  return false;
+	}
+	
 	inline bool contain_line(const Label lbl)
 	{ return lines_union[lbl] != 0;}
+	
+	inline bool contain_start_line(const Label lbl)
+	{ return  start_lines_mask(lbl);}
+	
+	inline bool contain_end_line(const Label lbl)
+	{ return  start_lines_mask(lbl);}
 	
 	inline void add_noise(const point2d& point)
 	{add_noise(img_influ(point));}
@@ -397,20 +468,31 @@ namespace mymln
 	  Hseparator_mask(lbl) = false;
 	  Vseparator_mask(lbl) = false;
 	  alone_letters_mask(lbl) = false;
-	  
+	  all_letters_mask(lbl) = false;
+	  if(lines_cooked)
+	  {
+	    start_end_lines_mask(lbl) = false;
+	    end_lines_mask(lbl) = false;
+	    start_lines_mask(lbl) = false;
+	  }
 	  noise_mask(lbl) = true;
 	  lines_union[lbl] = 0;
 	}
 	void inline add(Label lbl, int link)
 	{
+	  all_mask(lbl) = true;
 	  if (link == 0){add_noise(lbl);}
 	  else if (link > 30){ add_separator(lbl);}
-	  else { add_letter(lbl);}
+	  else 
+	  {
+	    add_letter(lbl);
+	  }
 	  
 	  /* SET UP SPECIAL MASK TO FALSE */
 	  implicit_separators_left_mask(lbl) = false;
 	  implicit_separators_right_mask(lbl) = false;
 	  kill_mask(lbl) = false;
+	  temp_letter(lbl) = false;
 	}
 	void inline invalid_letter(const point2d& point)
 	{invalid_letter(img_influ(point));}
@@ -444,6 +526,7 @@ namespace mymln
 	  alone_letters_mask(lbl) = true;
 	  noise_mask(lbl) = false;
 	  all_letters_mask(lbl) = true;
+	  temp_letter = false;
 	}
 	void add_letter_coerce(const Label lbl)
 	{
@@ -456,12 +539,18 @@ namespace mymln
 	      Hseparator_mask(lbl) = false;
 	      alone_letters_mask(lbl) = false;	      
 	      noise_mask(lbl) = false;
+	      temp_letter = false;
 	}
 	void add_letter(const Label lbl)
 	{ 
 	      CLet++;
 	      if(label_valid_size_Min_(lbl, 3) || label_valid_size_Min_Large_(lbl, 2))
 	      {
+		if(letter_ratio_XY(lbl) > 20)
+		{add_separator(lbl); return;}
+		if(letter_ratio_YX(lbl) > 10)
+		{add_separator(lbl); return;}
+		
 	      img_influ(_bboxgp[lbl].pcenter()) = lbl;
 	      letters_mask(lbl) = true;
 	      all_letters_mask(lbl) = true;
@@ -470,7 +559,7 @@ namespace mymln
 	      Vseparator_mask(lbl) = false;
 	      Hseparator_mask(lbl) = false;
 	      alone_letters_mask(lbl) = false;
-	      
+	      temp_letter = false;
 	       noise_mask(lbl) = false;
 	      }
 	      else
@@ -491,12 +580,14 @@ namespace mymln
 	    noise_mask(lbl) = false;
 	    alone_letters_mask(lbl) = false;
 	    all_letters_mask(lbl) = false;
+	    
 	  }
 	  else
 		add_noise(lbl);
 	}
 	void add_Hseparator(const Label lbl)
 	{
+	  _bboxgp_influ[lbl] = _bboxgp[lbl].to_larger(4);
 	   CSep++;
 	   containers_mask(lbl) = false;
 	   Vseparator_mask(lbl) = false;
@@ -509,6 +600,7 @@ namespace mymln
 	}
 	void add_Vseparator(const Label lbl)
 	{
+	  _bboxgp_influ[lbl] = _bboxgp[lbl].to_larger(4);
 	   CSep++;
 	   containers_mask(lbl) = false;
 	   Vseparator_mask(lbl) = true;
@@ -519,10 +611,19 @@ namespace mymln
 	    noise_mask(lbl) = false;
 	    all_letters_mask(lbl) = false;
 	}
+	bool inline separator_has(const point2d& A, const point2d& B)
+	{
+	  return _bboxgp_influ[img_influ(A)].has(B) || separator_has(img_influ(A), img_influ(B));
+	}
+	bool inline separator_has(const Label A,const Label B)
+	{
+	  return _bboxgp_influ[A].has(_bboxgp[B].pmin()) || _bboxgp_influ[A].has(_bboxgp[B].pmax());
+	}
 	void inline add_separator(const point2d& point)
 	{add_letter(img_influ(point)); }
 	void add_separator(const Label lbl)
 	  { 
+	    
 	    if(label_valid_ratio_(lbl, _VSepRatio_Min,_VSepRatio_Max))
 	      add_Vseparator(lbl);
 	    else if(label_valid_ratio_(lbl, _HSepRatio_Min,_HSepRatio_Max))
@@ -539,6 +640,11 @@ namespace mymln
 	  
 	  bool inline contain_separator(const Label lbl)
 	  {return contain_(lbl, separators_mask);}
+	  
+	  bool inline contain_Vseparator(const Label lbl)
+	  {return contain_(lbl, Vseparator_mask);}
+	  	  bool inline contain_Hseparator(const Label lbl)
+	  {return contain_(lbl, Hseparator_mask);}
 	  
 	  bool inline contain_letter(const Label lbl)
 	  {return contain_(lbl, letters_mask);}
@@ -588,6 +694,7 @@ namespace mymln
 	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
 	    return  (!allignV < 0) && allignV * 2 > lines_bbox[lines_union[Left]].len(0);
 	  }
+			  
 	  
 	  inline bool allign_top( const Label Left, const Label Right)
 	  {
@@ -595,6 +702,23 @@ namespace mymln
 	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
+	  inline bool allign_top_large( const point2d& Left, const point2d& Right)
+	  {return allign_top_large(img_influ(Left), img_influ(Right));}
+	  
+	    inline bool allign_top_large( const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right);
+	    return  allignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
+	  }
+	  
+	  inline bool allign_bottom_large( const point2d& Left, const point2d& Right)
+	  {return allign_bottom_large(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_bottom_large( const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right);
+	    return  allignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) < (_bboxgp[Right].pcenter()[0]);
+	  }
 	  
 	  inline bool allign_up_line( const point2d& Left, const point2d& Right)
 	  {return allign_up_line(img_influ(Left), img_influ(Right));}
@@ -628,7 +752,7 @@ namespace mymln
 	  inline bool allign_left( const Label Left, const Label Right)
 	  {
 	      
-	    return  _bboxgp[Left].pmin()[0] >  _bboxgp[Right].pmin()[0];
+	    return  _bboxgp[Left].pmin()[1] >  _bboxgp[Right].pmin()[1];
 	  }
 	  	  
 	  inline bool allign_right( const point2d& Left, const point2d& Right)
@@ -637,10 +761,19 @@ namespace mymln
 	  inline bool allign_right( const Label Left, const Label Right)
 	  {
 	      
-	    return  _bboxgp[Left].pmin()[0] <  _bboxgp[Right].pmin()[0];
+	    return  _bboxgp[Left].pmin()[1] <  _bboxgp[Right].pmin()[1];
 	  }
 	  
 	  
+	  
+	  inline bool allign_H_large_one( const point2d& Left, const point2d& Right)
+	  {return allign_H_large_one(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_large_one( const Label Left, const Label Right)
+	  {
+	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
+	    return  allignV <= label_size_(1, Left) + 2;
+	  }
 	  
 	  inline bool allign_H_large( const point2d& Left, const point2d& Right)
 	  {return allign_H_large(img_influ(Left), img_influ(Right));}
@@ -650,7 +783,18 @@ namespace mymln
 	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
 	    return  allignV < label_size_(1, Left);
 	  }
+
+
+	  inline bool allign_H_strict( const point2d& Left, const point2d& Right)
+	  {return allign_H(img_influ(Left), img_influ(Right));}
 	  
+	  inline bool allign_H_strict( const Label Left, const Label Right)
+	  {
+	      short int allignH = label_allign_(1, Left, Right) * 5;
+	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
+	  }
+
+
 	  inline bool allign_H( const point2d& Left, const point2d& Right)
 	  {return allign_H(img_influ(Left), img_influ(Right));}
 	  
@@ -659,6 +803,29 @@ namespace mymln
 	      short int allignH = label_allign_(1, Left, Right) * 2;
 	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
 	  }
+	  
+	  
+	  inline bool allign_H_min_paragraph( const point2d& Left, const point2d& Right)
+	  {return allign_H_min_paragraph(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_min_paragraph( const Label Left, const Label Right)
+	  {
+	    short int allignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
+	    allignH *= 2;
+	    return  allignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
+	  }
+	  
+	  
+	  inline bool allign_H_max_paragraph( const point2d& Left, const point2d& Right)
+	  {return allign_H_max_paragraph(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_max_paragraph( const Label Left, const Label Right)
+	  {
+	    short int allignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
+	    allignH *= 2;
+	    return  allignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
+	  }
+	  
 	  
 	  inline bool allign_H_min( const point2d& Left, const point2d& Right)
 	  {return allign_H_min(img_influ(Left), img_influ(Right));}
@@ -681,6 +848,56 @@ namespace mymln
 	  
 	  inline bool allign_size_height( const point2d& Left, const point2d& Right)
 	  {return allign_size_height(img_influ(Left), img_influ(Right));}
+
+
+	 inline bool allign_proximity_top_strict( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_top(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity_top_strict( const Label Left, const Label Right)
+	  {
+	      box2d LB = _bboxgp[Left];
+	      box2d RB = _bboxgp[Right];
+	      
+	      int DisA = LB.pmax()[0] - RB.pmin()[0];
+	      int DisB = RB.pmax()[0] - LB.pmin()[0];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      unsigned int HB = LB.len(1);
+
+	      if(HB > HA)
+	      { HA = HB; }
+	      return  (DisA * 2) < HA;
+	  }
+
+
+	 inline bool allign_proximity_top( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_top(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity_top( const Label Left, const Label Right)
+	  {
+	      box2d LB = _bboxgp[Left];
+	      box2d RB = _bboxgp[Right];
+	      
+	      int DisA = LB.pmax()[0] - RB.pmin()[0];
+	      int DisB = RB.pmax()[0] - LB.pmin()[0];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      unsigned int HB = LB.len(1);
+
+	      if(HB > HA)
+	      { HA = HB; }
+	      return  (DisA * 2) < HA * 3;
+	  }
+	
+	
 	
 	  inline bool allign_proximity_V( const point2d& Left, const point2d& Right)
 	  {return allign_proximity_V(img_influ(Left), img_influ(Right));}
@@ -752,7 +969,33 @@ namespace mymln
 	      return  (DisA * 2) < HA && (DisA * 2) < HB;
 	  }
 	  
+
+
+	  inline bool allign_proximity_paragraph_up_large( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_paragraph_up_large(img_influ(Left), img_influ(Right));}
 	  
+	   inline bool allign_proximity_paragraph_up_large( const Label Left, const Label Right)
+	  {
+	      box2d LB = paragraphs_bbox[paragraphs_union[Left]];
+	      box2d RB = paragraphs_bbox[paragraphs_union[Right]];
+	      
+	      int DisA = LB.pmax()[0] - RB.pmin()[0];
+	      int DisB = RB.pmax()[0] - LB.pmin()[0];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = lines_bbox[paragraphs_first_line[paragraphs_union[Left]]].len(0);
+	      unsigned int HB = lines_bbox[paragraphs_first_line[paragraphs_union[Right]]].len(0);
+
+	      if(HA < HB)
+	      { HA = HB; }
+	      return  (DisA) < HA;
+	  }
+
+
+
 	  inline bool allign_proximity_paragraph_up( const point2d& Left, const point2d& Right)
 	  {return allign_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
 	  
@@ -778,6 +1021,21 @@ namespace mymln
 	  
 	  inline bool allign_proximity_line_large( const point2d& Left, const point2d& Right)
 	  {return allign_proximity_line_large(img_influ(Left), img_influ(Right));}
+
+
+	  inline bool allign_size_height_paragraph_line( const point2d& Left, const point2d& Right)
+	  {
+	    return  allign_size_height_paragraph_line(img_influ(Left), img_influ(Right));
+	  }
+
+	  inline bool allign_size_height_paragraph_line( const Label Left, const Label Right)
+	  {
+	      short int SizeL = lines_bbox[paragraphs_first_line[paragraphs_union[Left]]].len(0);
+	      short int SizeR = lines_bbox[paragraphs_first_line[paragraphs_union[Right]]].len(0);
+	    return  SizeR > (SizeL / 2.2f) && SizeR < (SizeL * 2.2);
+	  }
+
+
 
 	  inline bool allign_size_height_line( const point2d& Left, const point2d& Right)
 	  {
@@ -816,6 +1074,32 @@ namespace mymln
 	      short int SizeL = _bboxgp[lines_union[Left]].len(1);
 	      short int SizeR = _bboxgp[lines_union[Right]].len(1);
 	    return  SizeR >= (SizeL / 5) && SizeR <= (SizeL * 5);
+	  }
+
+	  inline bool allign_size_width( const point2d& Left, const point2d& Right)
+	  {
+	    return  allign_size_width(img_influ(Left), img_influ(Right));
+	  }
+
+	  inline bool allign_size_width( const Label Left, const Label Right)
+	  {
+	      short int SizeL = _bboxgp[Left].len(1);
+	      short int SizeR = _bboxgp[Right].len(1);
+	    return  SizeR >= (SizeL / 2) && SizeR <= (SizeL * 2);
+	  }
+	  
+
+	  
+	  inline bool allign_size_width_strict( const point2d& Left, const point2d& Right)
+	  {
+	    return  allign_size_width_strict(img_influ(Left), img_influ(Right));
+	  }
+
+	  inline bool allign_size_width_strict( const Label Left, const Label Right)
+	  {
+	      short int SizeL = _bboxgp[Left].len(1);
+	      short int SizeR = _bboxgp[Right].len(1);
+	    return  SizeR >= (SizeL / 1.5f) && SizeR <= (SizeL * 1.5f);
 	  }
 	  
 	  
@@ -1094,6 +1378,22 @@ namespace mymln
 	  }
 	  
 
+	  inline bool allign_half_line_letter( const point2d& Left, const point2d& Right)
+	  {return allign_half_line_letter(img_influ(Left), img_influ(Right));}
+	    inline bool allign_half_line_letter( Label Left, Label Right)
+	  {
+	    return  lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 8);
+	  }
+
+
+	  inline bool allign_smaller_paragraph( const point2d& Left, const point2d& Right)
+	  {return allign_smaller_paragraph(img_influ(Left), img_influ(Right));}
+	  inline bool allign_smaller_paragraph( Label Left, Label Right)
+	  {
+	    return  paragraphs_bbox[paragraphs_union[Left]].len(1) > (paragraphs_bbox[paragraphs_union[Right]].len(1));
+	  }
+
+
 	  inline bool allign_smaller_line( const point2d& Left, const point2d& Right)
 	  {return allign_smaller_line(img_influ(Left), img_influ(Right));}
 	  inline bool allign_smaller_line( Label Left, Label Right)
@@ -1115,6 +1415,15 @@ namespace mymln
 	  {
 	    short int allignV = label_allign_(0, Left, Right);
 	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	  }
+	  
+	  	  inline bool allign_V_side( const point2d& Left, const point2d& Right)
+	  {return allign_V_side(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_V_side( const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right);
+	    return  allignV * 4 < label_size_(0, Left);
 	  }
 	  
 	  
@@ -1164,7 +1473,13 @@ namespace mymln
 	    return lines_bbox[lines_union[Left]].pmin()[0] < lines_bbox[lines_union[Right]].pmin()[0];
 	  }
 	  
-	  
+	  inline bool allign_base_line_strict(const point2d& Left, const point2d& Right)
+	  {return allign_base_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool allign_base_line_strict(const Label Left, const Label Right)
+	  {
+	    short int allignV = label_allign_(0, Left, Right) * 1.7f;
+	    return  allignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
+	  }	  
 	  
 	  inline bool allign_base_line(const point2d& Left, const point2d& Right)
 	  {return allign_base_line(img_influ(Left), img_influ(Right));}
@@ -1187,8 +1502,8 @@ namespace mymln
 	  {
 	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
 	    return
-	      _bboxgp[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
-	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 20);
+	      lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 30);
 	  }
 	  
 	  void stat()
@@ -1201,20 +1516,201 @@ namespace mymln
 	    std::cout << "      lines(s) : " << CLine << std::endl;
 	  
 	  }
+	  void debug_breakpoint()
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      debug_save_buffer("break.ppm");
+	      std::system("eog break.ppm");
+	      debug_buffer_enable = true;
+	      Enable_Debug_Buffer = true;
+	    }
+	    else
+	    {
+	      debug_save_all("break.ppm");
+	      std::system("eog break.ppm");
+	    }
+	  }
 	  void debug_set_image(image2d<bool>& source)
 	  {debug_source = source;}
+	  
+	  /// ADD TEMP LETTER
+	  /// description : add a label to the letter mask. The label will remain a letter while
+	  /// reset_temp_letter is not called
+	  /// WARNING: The old type of the label is still activated
+	  inline void add_temp_letter(const point2d& Lbl)
+	  {
+	    add_temp_letter(img_influ(Lbl));
+	  }
+	  inline void add_temp_letter(const Label lbl)
+	  {
+	    if(!all_letters_mask(lbl))
+	    {
+	      letters_mask(lbl) = true;
+	      all_letters_mask(lbl) = true;
+	      temp_letter(lbl) = true;
+	    }
+	  }
+	  inline void reset_temp_letter()
+	  {
+	    for(int N = 0; N < Areas_Number_; N++)
+	    {
+	      if(temp_letter(N))
+	      {
+		  letters_mask(N) = false;
+		  all_letters_mask(N) = false;
+		  start_end_lines_mask(N) = false;
+		  end_lines_mask(N) = false;
+		  start_lines_mask(N) = false;
+	      } 
+	    }
+	  }
+	   inline void debug_disable_buffer()
+	  {
+	      debug_buffer_enable = false;
+	  }
+	  inline void debug_enable_buffer()
+	  {
+	    if(Enable_Debug_Buffer)
+	    {
+	      debug_buffer_enable = true;
+	    }
+	    else
+	    {
+	      debug_create_buffer();
+	    }
+	  }
 	  inline void debug_create_buffer()
 	  {
 	    mln::initialize(debug_buffer,img_influ);
 	    debug_buffer_enable = true;
+	    Enable_Debug_Buffer = true;
+	  }
+	  inline void debug_save_dot_graph(std::string file)
+	  {
+	    fstream filestream(file.c_str(), fstream::in | fstream::out);
+	    filestream << "graph 1 { " << std::endl;  
+	      typedef vertex_image<point2d,bool> v_ima_g;
+	      typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+	      v_ima_g mask = fun_mask_all_letters();
+	      mln_piter_(v_ima_g) v(mask.domain());
+	      typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+	      nbh_t nbh(mask);
+	      mln_niter_(nbh_t) q(nbh, v);
+	      for(int N = 0; N < Areas_Number_; N++)
+	      {
+		filestream 
+		<< "_" 
+		<< N 
+		<< " [pos=\""<<_bboxgp[N].pcenter()[1] 
+		<< ".0," << img_influ.domain().pmax()[0] - _bboxgp[N].pcenter()[0] 
+		<< ".0\" "
+		<< "shape=\"box\" "
+		<< "width=\"" << ((Float)_bboxgp[N].len(1)) / 70.0f  << ".0\" "
+		<< "height=\"" <<  ((Float)_bboxgp[N].len(0)) / 70.0f << ".0\" "
+		<< "label=\""<< get_tag(N) <<"\" "
+		<< "];"
+		
+		<< std::endl;
+	      }
+	      for_all(v)
+	      {
+		  for_all(q)
+		  {
+		    if(contain_letter(q) && contain_letter(v))
+		    {
+		      if(contain_alone_letter(q) || contain_alone_letter(v))
+		      {
+			
+			filestream<< "_" << img_influ(q) << " -- _" << img_influ(v) << " [style=\"dotted\"]";
+		      }
+		      else
+		      {
+			if(same_line(q,v))
+			{filestream<< "_" << img_influ(q) << " -- _" << img_influ(v) << " [color=\"green\"]";}
+			else
+			{filestream<< "_" << img_influ(q) << " -- _" << img_influ(v) << ";" << std::endl;}
+		      }
+		    }
+		    else
+		    {
+		      filestream<< "_" << img_influ(q) << " -- _" << img_influ(v) << " [style=\"dotted\" color=\"red\"]";
+		    }
+		      
+		  }
+	      }
+	    filestream<< "}" << std::endl;
+	    filestream.close();
 	  }
 	  
 	  inline void debug_save_buffer(std::string file)
 	  {
 	    debug_buffer_enable = false;
+	    Enable_Debug_Buffer = false;
 	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
 	  }
-	  
+	  inline void debug_save_buffer_paragraphs(std::string file)
+	  {
+	    Enable_Debug_Buffer = false;
+	    debug_buffer_enable = false;
+	    for(unsigned int N = 0; N < paragraphs_bbox.size(); N++)
+	    {
+	      if(paragraphs_bbox[N].is_valid())
+	      {
+		draw::box(debug_buffer, paragraphs_bbox[N], mln::literal::red);
+		if(paragraphs_bbox_influ[N].is_valid())
+		{
+		  draw::box(debug_buffer, paragraphs_bbox_influ[N], mln::literal::orange);
+		}
+	      }
+
+	    }
+	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
+	  }
+	  inline void debug_save_buffer_lines(std::string file)
+	  {
+	    Enable_Debug_Buffer = false;
+	    debug_buffer_enable = false;
+	    for(unsigned int N = 0; N < paragraphs_bbox.size(); N++)
+	    {
+	      if(lines_bbox[N].is_valid())
+	      {
+		draw::box(debug_buffer, lines_bbox[N], mln::literal::blue);
+	      }
+
+	    }
+	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
+	  }
+	  inline void debug_draw_box_red_buffer(const point2d& L)
+	  {debug_draw_box_red_buffer(img_influ(L));}
+	  inline void debug_draw_box_green_buffer(const point2d& L)
+	  {debug_draw_box_green_buffer(img_influ(L));}
+	  inline void debug_draw_box_red_buffer(const Label L)
+	  {
+	    if(debug_buffer_enable)
+	      draw::box(debug_buffer, _bboxgp[L], mln::literal::red);
+	  }
+	  inline void debug_draw_box_green_buffer(const Label L)
+	  {
+	    if(debug_buffer_enable)
+	      draw::box(debug_buffer,_bboxgp[L], mln::literal::green);
+	  }	  
+	  inline void debug_draw_box_green_influence_buffer(const Label L)
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      draw::box(debug_buffer,_bboxgp[L], mln::literal::green);
+	      draw::box(debug_buffer,_bboxgp_influ[L], mln::literal::green);
+	    }
+	  }	
+	  inline void debug_draw_box_red_influence_buffer(const Label L)
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      draw::box(debug_buffer,_bboxgp[L], mln::literal::red);
+	      draw::box(debug_buffer,_bboxgp_influ[L], mln::literal::red);
+	    }
+	  }
 	  inline void debug_draw_line_red_buffer(const point2d& A,const point2d& B )
 	  {
 	    if(debug_buffer_enable)
@@ -1225,35 +1721,31 @@ namespace mymln
 	    if(debug_buffer_enable)
 	      draw::line(debug_buffer, A, B, mln::literal::green);
 	  }
-	  
-	  void debug_save_union(std::string file)
-	  {debug_save_union(file, debug_source);}
-	  void debug_save_union(std::string file, image2d<bool> source)
+	  inline void debug_draw_line_orange_buffer(const point2d& A,const point2d& B )
 	  {
-	    image2d<value::rgb8> ima_color;
-	    mln::initialize(ima_color,img_influ);
-	    
-	    for(unsigned int N = 1; N < lines_union.size(); N++)
+	    if(debug_buffer_enable)
+	      draw::line(debug_buffer, A, B, mln::literal::orange);
+	  }
+	  template<typename UnionData>
+	  void debug_union(mymln::util::union_find<UnionData> dat)
+	  {
+	    if(debug_buffer_enable)
 	    {
-	      if(lines_union[N])
+	      for(unsigned int N = 1; N < dat.size(); N++)
 	      {
-		if(N == lines_union.link(N))
-		  draw::box(ima_color, _bboxgp[N], mln::literal::blue);
-		else
-		  draw::line(ima_color, _bboxgp[N].pcenter(), _bboxgp[lines_union.link(N)].pcenter(), mln::literal::blue);
+		if(dat[N])
+		{
+		  if(N == dat.link(N))
+		    draw::box(debug_buffer, _bboxgp[N], mln::literal::blue);
+		  else
+		    draw::line(debug_buffer, _bboxgp[N].pcenter(), _bboxgp[dat.link(N)].pcenter(), mln::literal::blue);
+		}
+		else if(dat.link(N) != 0)
+		{
+		  draw::line(debug_buffer, _bboxgp[N].pcenter(), _bboxgp[dat.link(N)].pcenter(), mln::literal::red);
+		}
 	      }
 	    }
-	    for(unsigned int N = 1; N < paragraphs_union.size(); N++)
-	    {
-	      if(paragraphs_union[N])
-	      {
-		if(N == paragraphs_union.link(N))
-		  draw::box(ima_color, _bboxgp[N], mln::literal::red);
-		else
-		  draw::line(ima_color, _bboxgp[N].pcenter(), _bboxgp[paragraphs_union.link(N)].pcenter(), mln::literal::red);
-	      }
-	    }
-	    io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
 	  }
 	  void debug_save_lines(std::string file)
 	  {debug_save_lines(file, debug_source);}
@@ -1280,7 +1772,48 @@ namespace mymln
 	  }
 	  
 	  
-	  
+	  void debug_save_all_separators(std::string file)
+	  {debug_save_all_separators(file, debug_source);}
+	  void debug_save_all_separators(std::string file, image2d<bool> source)
+	  {
+	    image2d<value::rgb8> ima_color;
+	    mln::initialize(ima_color,img_influ);
+	    
+	    for(unsigned int N = 0; N < _bboxgp.size(); N++)
+	    {
+	      if(_bboxgp[N].is_valid() && (contain_letter(N) || contain_alone_letter(N)))
+	      {
+		if(sep_right_cooked)
+		{
+		  if(implicit_separators_right_mask(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::red);
+		  else if(implicit_separators_left_mask(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::cyan);
+		  else if(temp_letter(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
+		  else
+		    draw::box(ima_color, _bboxgp[N], mln::literal::green);
+		}
+		else
+		{
+		  if(implicit_separators_left_mask(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::cyan);
+		  else if(implicit_separators_right_mask(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::red);
+		  else if(temp_letter(N))
+		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
+		  else
+		    draw::box(ima_color, _bboxgp[N], mln::literal::green);
+		}
+	      }
+	      else if(_bboxgp[N].is_valid() && contain_separator(N))
+	      {
+		  draw::box(ima_color, _bboxgp[N], mln::literal::yellow);
+	      }
+	    }
+	    
+	     io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
+	  }
 	  
 	  
 	  void debug_save_all(std::string file)
@@ -1294,7 +1827,15 @@ namespace mymln
 	    {
 	      if(_bboxgp[N].is_valid() && contain_letter(N))
 	      {
-		draw::box(ima_color, _bboxgp[N], mln::literal::cyan);
+		if(temp_letter(N))
+		  draw::box(ima_color, _bboxgp[N], mln::literal::teal);
+		else
+		  draw::box(ima_color, _bboxgp[N], mln::literal::cyan);
+	      }
+	      else if(_bboxgp[N].is_valid() && contain_separator(N))
+	      {
+		draw::box(ima_color, _bboxgp[N], mln::literal::green);
+		draw::box(ima_color, _bboxgp_influ[N], mln::literal::green);
 	      }
 	    }
 	    
@@ -1369,9 +1910,7 @@ namespace mymln
 	  {return fun_mask_(all_letters_mask);}
 	  vertex_image<point2d,bool> fun_mask_all()
 	  {  
-	    typedef vertex_image<point2d,bool> v_ima_g;
-	    v_ima_g result(_area_graph);
-	    return result; 
+	    return fun_mask_(all_mask);
 	  }
 	  vertex_image<point2d,bool> fun_mask_letters()
 	  { return fun_mask_(letters_mask); }
@@ -1456,7 +1995,12 @@ namespace mymln
 	  { return lines_bbox[lines_union[L]].len(1); }
 	  
 
-
+	  inline Float letter_ratio_YX(const point2d& point)
+	  {return letter_ratio_YX(img_influ(point));}
+	  inline Float letter_ratio_YX(Label Letter)
+	  {
+	    return (Float)_bboxgp[Letter].len(0) / (Float)_bboxgp[Letter].len(1);
+	  }
 	  inline Float letter_ratio_XY(const point2d& point)
 	  {return letter_ratio_XY(img_influ(point));}
 	  inline Float letter_ratio_XY(Label Letter)
@@ -1529,7 +2073,22 @@ namespace mymln
 	      lines_influ_bbox[lines_union[L2]].has(lines_influ_bbox[lines_union[L1]].pmin()) ||
 	      lines_influ_bbox[lines_union[L2]].has(lines_influ_bbox[lines_union[L1]].pmax()) ;
 	  }
-
+	  inline bool allign_size_x_height( const point2d& Left, const point2d& Right)
+	  {return allign_size_x_height(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_size_x_height( const Label Left, const Label Right)
+	  {
+	     short int SizeL0 = label_size_(0, Left);
+	      short int SizeR0 = label_size_(0, Right);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int SizeR1 = label_size_(1, Right);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
+	    return  SizeR0 > (SizeL0 / 3) && SizeR0 < (SizeL0);
+	  }
+	  
 	  inline bool allign_size_large_inside( const point2d& Left, const point2d& Right)
 	  {return allign_size_large_inside(img_influ(Left), img_influ(Right));}
 	  
@@ -1632,6 +2191,7 @@ namespace mymln
 	     separators_middle.fill(0);
 	    cook_separators_right_();
 	  }
+
 	  inline void propage_line_link()
 	  { lines_union.propage_links(); }
 	  /*image_if<image2d<Label> masked_image_letters()
@@ -1677,6 +2237,34 @@ namespace mymln
 
 	inline bool contain_implicit_separator(const Label lbl)
 	{return implicit_separators_union[lbl] != 0; }
+	
+	inline void merge_separators(const point2d& A, const point2d& B)
+	{
+	  merge_separators(img_influ(A), img_influ(B));
+	}
+	inline void merge_separators(const Label A, const Label B)
+	{
+	  
+	  if( A && B && !kill_mask(A) && !kill_mask(B) && A != B)
+	  {
+	    img_influ(_bboxgp[B].pcenter()) = A;
+	    _bboxgp[A].merge(_bboxgp[B]);
+
+	    _bboxgp[B] = box2d();
+
+	    _bboxgp_influ[A].merge(_bboxgp_influ[B]);
+	    _bboxgp_influ[B] = box2d();
+	    separators_mask(B) = false;
+	    separators_mask(A) = true;
+	    Vseparator_mask(B) = false;
+	    Hseparator_mask(B) = false;
+	    kill_mask(B) = true;
+	    all_mask(B) = false;
+	  }
+	  
+	  
+	}
+	
 	inline void merge(const point2d& A, const point2d& B)
 	{
 	  merge(img_influ(A), img_influ(B));
@@ -1689,6 +2277,7 @@ namespace mymln
 	    _bboxgp[A].merge(_bboxgp[B]);
 	    _bboxgp[B] = box2d();
 	    kill_mask(B) = true;
+	    all_mask(B) = false;
 	    if(letters_mask(A) && letters_mask(B))
 	    {
 	      if(lines_union.is_self_link(B))
@@ -1760,7 +2349,7 @@ namespace mymln
 	  implicit_separators_right_mask(lbl) = false;
 	}
 
-	inline Label& operator[](point2d i)
+	inline const Label& operator[](point2d i)
 	{ return img_influ(i);}
 	
 	inline point2d operator[](Label i)
@@ -1807,14 +2396,19 @@ namespace mymln
 	inline void recook_paragraphs()
 	{
 	  paragraphs_len.fill(0);
+	  paragraphs_letter_len.fill(0);
 	  cook_paragraphs_();
 	}
 	inline void cook_paragraphs()
 	{
 	  paragraphs_bbox = mln::util::array<box2d>(NPar + 1);
 	  paragraphs_len = mln::util::array<unsigned int>(NPar + 1);
+	  paragraphs_letter_len = mln::util::array<unsigned int>(NPar + 1);
+	  
 	  paragraphs_first_line = mln::util::array<unsigned int>(NPar + 1);
 	  paragraphs_bbox_influ = mln::util::array<box2d>(NPar + 1);
+	  paragraphs_len.fill(0);
+	   paragraphs_letter_len.fill(0);
 	  cook_paragraphs_();
 	}
 	
@@ -1835,6 +2429,18 @@ namespace mymln
 	  lines_width = mln::util::array<unsigned int>(NLine + 1);
 	  lines_width.fill(0);
 	  compute_letter_middle_width_();
+	}
+	inline void compute_paragraph_middle_height()
+	{
+	  paragraphs_mid_height = mln::util::array<unsigned int>(NPar + 1);
+	  paragraphs_mid_width.fill(0);
+	  compute_paragraph_middle_height_();
+	}
+	inline void compute_paragraph_middle_width()
+	{
+	  paragraphs_mid_width = mln::util::array<unsigned int>(NPar + 1);
+	  paragraphs_mid_width.fill(0);
+	  compute_paragraph_middle_width_();
 	}
 	inline void recompute_letter_middle_space()
 	{
@@ -1867,7 +2473,35 @@ namespace mymln
 	{return get_letter_middle_width(img_influ(point));}
 	inline unsigned int get_letter_middle_width(const Label lbl)
 	{return lines_width[lines_union[lbl]];}
+
+
+	inline bool compatible_paragraph_middle_width(const point2d& A, const point2d& B)
+	{ return compatible_paragraph_middle_width(img_influ(A), img_influ(B));}
+	inline bool compatible_paragraph_middle_width(const Label A, const Label B)
+	{
+	  short int LA = lines_bbox[paragraphs_first_line[paragraphs_union[A]]].len(0);
+	  short int LB = lines_bbox[paragraphs_first_line[paragraphs_union[A]]].len(0);
+	  if(LA > LB)
+	  {LA = LB;}
+	  return get_paragraph_middle_width_diff(A, B) * 8 < LA;
+	}
+	inline int get_paragraph_middle_width_diff(const point2d& A, const point2d& B)
+	{return get_paragraph_middle_width_diff(img_influ(A), img_influ(B));}
+	inline int get_paragraph_middle_width_diff(const Label A, const Label B)
+	{
+	  int diff = paragraphs_mid_width[paragraphs_union[A]] - paragraphs_mid_width[paragraphs_union[B]];
+	  if(diff < 0){diff = -diff;}
+	  return diff;
+	}
+
+	inline unsigned int get_paragraph_middle_width(const point2d& point)
+	{return get_letter_paragraph_width(img_influ(point));}
+	inline unsigned int get_paragraph_middle_width(const Label lbl)
+	{return paragraphs_mid_width[paragraphs_union[lbl]];}
 	
+	
+	inline unsigned int get_line_ID(const point2d& lbl)
+	{return get_line_ID(img_influ(lbl));}	
 	inline unsigned int get_line_ID(const Label lbl)
 	{
 	  return lines_union[lbl];
@@ -1893,6 +2527,26 @@ namespace mymln
 	{
 	  if(lines_seq_pos[line_ID] == line_ID){ line_ID = 0; }
 	  line_ID = lines_seq_pos[line_ID];
+	}
+	inline void get_next_line(Label& line_ID)
+	{
+	  if(lines_seq_pos[line_ID] == line_ID){ line_ID = 0; }
+	  line_ID = lines_seq_pos[line_ID];
+	}
+	inline unsigned int return_next_line(const Label& line_ID)
+	{
+	  if(lines_seq_pos[line_ID] == line_ID){ return 0; }
+	  return lines_seq_pos[line_ID];
+	}
+	inline void get_previous_line(Label& line_ID)
+	{
+	  if(lines_seq_pos_reverse[line_ID] == line_ID){ line_ID = 0; }
+	  line_ID = lines_seq_pos_reverse[line_ID];
+	}
+	inline unsigned int return_previous_line(const Label& line_ID)
+	{
+	  if(lines_seq_pos_reverse[line_ID] == line_ID){ return 0; }
+	  return lines_seq_pos_reverse[line_ID];
 	}
 	inline void get_next_letter(Label& lbl)
 	{
@@ -1925,7 +2579,23 @@ namespace mymln
 	 }
 	 return line;
 	}
+	inline void reserve_previous_next_line()
+	{
+	  lines_seq_pos = mln::util::array<unsigned int>(NLine + 1);
+	  lines_seq_pos_reverse = mln::util::array<unsigned int>(NLine + 1);
+	}
+	inline void add_line_previous(const point2d& A,const point2d& Prev)
+	{add_line_previous(img_influ(A),img_influ(Prev)); }
+	inline void add_line_next(const point2d& A, const point2d& Next)
+	{add_line_next(img_influ(A),img_influ(Next)); }
+	inline void add_line_previous(const Label A,const Label Prev)
+	{lines_seq_pos_reverse[get_line_ID(A)] = get_line_ID(Prev); }
+	inline void add_line_next(const Label A, const Label Next)
+	{lines_seq_pos[get_line_ID(A)] = get_line_ID(Next); }
       private:
+	bool Enable_Debug_Buffer;
+	fun::i2v::array<bool> temp_letter;
+	
 	fun::i2v::array<bool> implicit_separators_left_mask;
 	fun::i2v::array<bool> implicit_separators_right_mask;
 	mln::util::array<unsigned int> separators_len_right;
@@ -1933,7 +2603,8 @@ namespace mymln
 	mln::util::array<unsigned int> separators_middle;
 	mln::util::array<unsigned int> separators_marging;
 	
-	
+	bool sep_right_cooked;
+	bool lines_cooked;
 	inline void cook_separators_()
 	{
 	  implicit_separators_left_mask(0) = false;
@@ -1998,6 +2669,7 @@ namespace mymln
 
 	inline void cook_separators_right_()
 	{
+	  sep_right_cooked = true;
 	  implicit_separators_right_mask(0) = false;
 	  for(unsigned int N = 1; N < implicit_separators_union.size(); N++)
 	  {
@@ -2068,6 +2740,7 @@ namespace mymln
 	mln::util::array<unsigned int> lines_last_label;
 	mln::util::array<unsigned int> lines_seq;
 	mln::util::array<unsigned int> lines_seq_pos;
+	mln::util::array<unsigned int> lines_seq_pos_reverse;
 	mln::util::array<box2d> lines_bbox;
 	mln::util::array<box2d> lines_influ_bbox;
 	mln::util::array<Label> lines_split;
@@ -2206,9 +2879,11 @@ namespace mymln
 	    std::cout << count << endl;
 	     std::cout << "linear";
 	  }
-	  
+	  //NOTE: THIS FUNCTION IS ONE VERY COMMON FUNCTION
+	  // PLEASE OPTIMIZE ME
 	  inline void cook_lines_()
 	  {
+	    lines_cooked = true;
 	    Cooked_CLine = CLine;
 	    for(unsigned int N = 1; N < lines_union.size(); N++)
 	    {
@@ -2402,6 +3077,7 @@ namespace mymln
 	fun::i2v::array<bool> containers_mask;
 	fun::i2v::array<bool> noise_mask;
 	fun::i2v::array<bool> kill_mask;
+	fun::i2v::array<bool> all_mask;
 	
 	mln::util::array<std::string> tag_lbl;
 	mln::util::array<bool> Btag_lbl;
@@ -2417,20 +3093,59 @@ namespace mymln
 	unsigned int CSep ;
 	unsigned int CSepH ;
 	unsigned int CSepV ;
+
 	
 	mymln::util::union_find<Label> paragraphs_union;
 	unsigned int CPar ;
 	unsigned int NPar ;
 	mln::util::array<unsigned int> paragraphs_first_label;
 	mln::util::array<unsigned int> paragraphs_last_label;
+	mln::util::array<unsigned int> paragraphs_mid_width;
+	mln::util::array<unsigned int> paragraphs_mid_height;
 	mln::util::array<unsigned int> paragraphs_assoc;
 	mln::util::array<unsigned int> paragraphs_len;
+	mln::util::array<unsigned int> paragraphs_letter_len;
 	/* NOTE THESE ARRAYS MUST BE INITIALIZEDD WITH THE NUMBER OF PARAGRAPH */
 
 
 	mln::util::array<box2d> paragraphs_bbox;
 	mln::util::array<box2d> paragraphs_bbox_influ;
 	mln::util::array<unsigned int> paragraphs_first_line;
+	
+	
+	  inline void  compute_paragraph_middle_width_()
+	  {
+	    for(unsigned int N = 1; N < Areas_Number_; N++)
+	    {
+	      if(paragraphs_union[N])
+	      {
+			paragraphs_mid_width[paragraphs_union[N]] += _bboxgp[N].len(1);
+	      }
+	    }
+	    for(unsigned int N = 1; N < paragraphs_mid_width.size() && N < paragraphs_letter_len.size(); N++)
+	    {
+		    if(paragraphs_letter_len[N])
+		    {
+		      
+		    	paragraphs_mid_width[N] /= paragraphs_letter_len[N];
+		    }
+	    }
+	  }
+	  inline void  compute_paragraph_middle_height_()
+	  {
+	    for(unsigned int N = 1; N < Areas_Number_; N++)
+	    {
+	      if(paragraphs_union[N])
+	      {
+			paragraphs_mid_height[paragraphs_union[N]] += _bboxgp[N].len(0);
+	      }
+	    }
+	    for(unsigned int N = 1; N < paragraphs_mid_height.size() && N < paragraphs_letter_len.size(); N++)
+	    {
+		    if(paragraphs_len[N])
+		    	paragraphs_mid_height[N] /= paragraphs_letter_len[N]; 
+	    }
+	  }
 	inline void first_recognition()
 	{
 	  
@@ -2463,6 +3178,7 @@ namespace mymln
 	    if(lines_len[N] && paragraphs_union[lines_first_label[N]])
 	    {
 	      paragraphs_len[paragraphs_union[lines_first_label[N]]]++;
+	      paragraphs_letter_len[paragraphs_union[lines_first_label[N]]] += lines_len[N];
 	      if(paragraphs_first_line[paragraphs_union[lines_first_label[N]]])
 	      {
 		if(
@@ -2526,6 +3242,7 @@ namespace mymln
 	
 	
 	 mln::util::array<box2d> _bboxgp;
+	 mln::util::array<box2d> _bboxgp_influ;
 	
 	/* DOCUMENT DATA */
 	g_vertices_p _area_graph;

@@ -17,7 +17,12 @@ namespace mymln
 	 mark.fill(0);
 	 mark_link.fill(0);
 	 size_ = max_size;
+	 Nset = 2;
+	 Cset = 1;
 	}
+	inline unsigned int new_set()
+	{Cset = Nset; Nset++; return Cset;}
+	
 	inline void reset()
 	{
 	 mark.fill(0);
@@ -57,7 +62,7 @@ namespace mymln
 	      }
 	      else
 	      {
-		mark_link[A] = B;
+		mark_link[B] = A;
 	      }
 	    }
 	   }
@@ -72,7 +77,11 @@ namespace mymln
 	     else
 	     {
 	        mark_link[B] = Pos;
-		mark_link[PosB] = Pos;
+		mark_link[A] = Pos;
+		if(PosB != 0)
+		{
+		  mark_link[PosB] = Pos;
+		}
 	     }
 	   }    
 	}
@@ -108,6 +117,8 @@ namespace mymln
       	mln::util::array<unsigned int> mark;	
 	mln::util::array<unsigned int> mark_link;
 	unsigned int size_;
+	unsigned int Nset;
+	unsigned int Cset;
     };
   }
 }

@@ -15,6 +15,9 @@ namespace mymln
 	  run.add_function("separators.make_clean_right", &(mymln::document::separators::separators_make_clean_right));  
 	  run.add_function("separators.find_allign_left", &(mymln::document::separators::separators_find_allign));
 	  run.add_function("separators.make_clean_left", &(mymln::document::separators::separators_find_allign));
+	  run.add_function("separators.rebuild",  &(mymln::document::separators::separators_rebuild));
+	    run.add_function("separators.merge",  &(mymln::document::separators::separators_merge));
+	  
     }
     
     template<typename L, typename F, typename D>
@@ -30,6 +33,7 @@ namespace mymln
 	  run.add_function("clean.quote_items", &(mymln::document::clean_quote_items));
 	  run.add_function("clean.between", &(mymln::document::clean_between));
 	  
+	  run.add_function("clean.line_space", &(mymln::document::clean_line_space));
 	  run.add_function("clean.line_link_item", &(mymln::document::clean_line_link_item));
 	  run.add_function("clean.proximity_lines", &(mymln::document::clean_proximity_lines));
 	  run.add_function("clean.quote_lines", &(mymln::document::clean_quote_lines));
@@ -45,18 +49,45 @@ namespace mymln
 	  run.add_function("clean.backward_letters", &(mymln::document::clean_backward_letters));
 	  run.add_function("clean.paragraphs_tab", &(mymln::document::clean_paragraphs_tab));
 	  run.add_function("clean.proximity_letters", &(mymln::document::clean_proximity_letters));
+	  run.add_function("clean.letter_previous_next_line", &(mymln::document::clean_letter_previous_next_line));
+	  run.add_function("clean.V_lines", &(mymln::document::clean_V_lines));
 	  
+	  run.add_function("clean.paragraphs_end_line", &(mymln::document::clean_paragraphs_end_line));
+	  run.add_function("find.previous_next_line", &(mymln::document::find_previous_next_line));
     }
 
     template<typename L, typename F, typename D>
     void lib_debug_save_all(mymln::document::document<L,F,D>& doc, std::string file)
     { doc.debug_save_all(file); }
     template<typename L, typename F, typename D>
+    void lib_debug_save_all_separators(mymln::document::document<L,F,D>& doc, std::string file)
+    { doc.debug_save_all_separators(file); }
+    template<typename L, typename F, typename D>
+    void lib_debug_save_buffer_paragraphs(mymln::document::document<L,F,D>& doc, std::string file)
+    { doc.debug_save_buffer_paragraphs(file); }
+    template<typename L, typename F, typename D>
+    void lib_debug_save_buffer_lines(mymln::document::document<L,F,D>& doc, std::string file)
+    { doc.debug_save_buffer_lines(file); }
+    template<typename L, typename F, typename D>
     void lib_debug_save_buffer(mymln::document::document<L,F,D>& doc, std::string file)
     { doc.debug_save_buffer(file); }
     template<typename L, typename F, typename D>
     void lib_debug_create_buffer(mymln::document::document<L,F,D>& doc)
     { doc.debug_create_buffer(); }
+        template<typename L, typename F, typename D>
+    void lib_debug_enable_buffer(mymln::document::document<L,F,D>& doc)
+    { doc.debug_enable_buffer(); }
+        template<typename L, typename F, typename D>
+    void lib_debug_disable_buffer(mymln::document::document<L,F,D>& doc)
+    { doc.debug_disable_buffer(); }
+    
+    template<typename L, typename F, typename D>
+    void lib_debug_save_dot_graph(mymln::document::document<L,F,D>& doc, std::string file)
+    { doc.debug_save_dot_graph(file); }
+    
+    template<typename L, typename F, typename D>
+    void lib_debug_breakpoint(mymln::document::document<L,F,D>& doc)
+    { doc.debug_breakpoint(); }
     
     template<typename L, typename F, typename D>
     void load_debug(runtime<L,F,D>& run)
@@ -64,6 +95,13 @@ namespace mymln
       run.add_function_string("debug.save", &(lib_debug_save_all));
       run.add_function("debug.create_buffer", &(lib_debug_create_buffer));
       run.add_function_string("debug.save_buffer", &(lib_debug_save_buffer));
+      run.add_function_string("debug.save_dot_graph", &(lib_debug_save_dot_graph));
+      run.add_function_string("debug.save_separators", &(lib_debug_save_all_separators));
+      run.add_function_string("debug.save_buffer_paragraphs", &(lib_debug_save_buffer_paragraphs));
+      run.add_function_string("debug.save_buffer_lines", &(lib_debug_save_buffer_lines));
+      run.add_function("debug.enable_buffer", &(lib_debug_enable_buffer));
+      run.add_function("debug.disable_buffer", &(lib_debug_disable_buffer));
+      run.add_function("break", &(lib_debug_breakpoint));
     }
 
 
@@ -122,10 +160,22 @@ namespace mymln
     void lib_compute_letter_middle_width(mymln::document::document<L,F,D>& doc)
     { doc.compute_letter_middle_width(); }
     template<typename L, typename F, typename D>
+    void lib_compute_paragraph_middle_height(mymln::document::document<L,F,D>& doc)
+    { doc.compute_paragraph_middle_height(); }
+     template<typename L, typename F, typename D>
+    void lib_compute_paragraph_middle_width(mymln::document::document<L,F,D>& doc)
+    { doc.compute_paragraph_middle_width(); }
+     template<typename L, typename F, typename D>
+    void lib_compute_letter_middle_space(mymln::document::document<L,F,D>& doc)
+    { doc.compute_letter_middle_space(); }
+    template<typename L, typename F, typename D>
     void load_compute(runtime<L,F,D>& run)
     {
       run.add_function("compute.letter_middle_height", &(lib_compute_letter_middle_height));
       run.add_function("compute.letter_middle_width", &(lib_compute_letter_middle_width));
+      run.add_function("compute.letter_middle_space", &(lib_compute_letter_middle_space));
+      run.add_function("compute.paragraph_middle_width", &(lib_compute_paragraph_middle_width));
+      run.add_function("compute.paragraph_middle_height", &(lib_compute_paragraph_middle_height));
     }
     
     

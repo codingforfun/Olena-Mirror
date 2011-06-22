@@ -2,6 +2,8 @@
 #include <vector>
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/all.hh>
+#include <mln/io/pgm/all.hh>
+#include <mln/io/magick/all.hh>
 
 #include <mln/core/site_set/p_vertices.hh>
 #include <mln/core/image/graph_elt_window.hh>
@@ -40,7 +42,7 @@
 #include <my/util/vector_bbox_group.hh>
 #include <my/document/document.hh>
 #include <my/document/separator.hh>
-
+#include <my/document/outline.hh>
 #include <my/document/clean.hh>
 #include <my/document/recognition.hh>
 
@@ -56,6 +58,7 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
   runtime.add_variable("FILE", Dir + "/" + File);
   runtime.add_variable("DIR", Dir);
   runtime.add_variable("DEBUG_FILE", Dir + "/debug_" + File); 
+  
   
   
    std::cout << "Processing : " << File << endl;
@@ -103,8 +106,8 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     mymln::document::document<uint16,float,short> doc(ima_blob, ima_influ, boxes, area_grph, areas_detected);
     runtime.set_current_document(&doc);
     doc.debug_set_image(ima);
-    doc.vertical_separator_ratio_range(0.0f, 0.2f);
-    doc.horizontal_separator_ratio_range(6.0f, 1000.0f);
+    doc.horizontal_separator_ratio_range(0.0f, 0.2f);
+    doc.vertical_separator_ratio_range(6.0f, 1000.0f);
     doc.container_volume_range(40, 100);
     
     for (uint16 N = 1; N <=  areas_detected; N++)
@@ -206,12 +209,12 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     doc.recook_paragraphs();
     mymln::document::clean_included_paragraphs(doc);
     doc.recook_paragraphs();
-    std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
+    
 
         doc.recook_lines();
     */
       runtime.run();
-      
+      std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
       
     
 
@@ -265,7 +268,7 @@ int main( int argc, char** argv)
        else if(prog)
        { 
 	 Prog = argv[N];
-	 run.load(Prog. c_str());
+	 run.load(Prog.c_str());
 	 prog = false;
        }
        else
