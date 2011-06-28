@@ -1,6 +1,5 @@
 #ifndef INC_RUNTIME
 #define INC_RUNTIME
-
 using namespace mln;
 using namespace std;
 namespace mymln
@@ -89,11 +88,11 @@ namespace mymln
 	  doc_local_fun = map<string, int >();
 	  call_stack = stack<int>();
 	}
-	
 	void run()
 	{
 	  for(CP = 0; CP < program_instruction.size(); CP++)
 	  {
+	    
 	    if(!program_instruction[CP].compare("end"))
 	      ret();
 	    else if(program_argument2[CP].compare(""))

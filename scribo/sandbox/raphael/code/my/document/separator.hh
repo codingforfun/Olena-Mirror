@@ -29,8 +29,6 @@ namespace mymln
 	      {
 		sep_union[doc[v]] = sep_union.new_set();
 		sep_union.add_self_link(doc[v]);
-		/*doc.debug_union(sep_union);
-		doc.debug_breakpoint();*/
 	      }
 		for_all(q)
 		{

@@ -42,19 +42,22 @@
 #include <my/util/vector_bbox_group.hh>
 #include <my/document/document.hh>
 #include <my/document/separator.hh>
-#include <my/document/outline.hh>
 #include <my/document/clean.hh>
 #include <my/document/recognition.hh>
 
 #include <my/runtime/runtime.hh>
 #include <my/runtime/lib.hh>
 
+#include <my/data/page.hh>
+#include <my/preprocessing/preprocessing.hh>
+
 using namespace mln;
 using namespace std;
+
 void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::int_u<16> ,float,short>& runtime)
 {
   // RUNTIME
-  
+
   runtime.add_variable("FILE", Dir + "/" + File);
   runtime.add_variable("DIR", Dir);
   runtime.add_variable("DEBUG_FILE", Dir + "/debug_" + File); 
@@ -69,11 +72,15 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
    mln::util::timer timer;
    timer.start();
    io::pbm::load(ima, Dir + "/" + File);
+   mymln::preprocessing::denoise(ima, c8());
    std::cout << "LOADING FILE : " << timer.stop() << endl;
    timer.restart();
 
-    
-
+   
+   
+   
+   
+   
     uint16 areas_detected;
       mln_VAR( couple , mln::labeling::value_and_compute(ima, true, c8(), areas_detected, accu::shape::bbox<point2d>()));
       image2d<uint16> ima_blob = couple.first();
@@ -213,9 +220,14 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
 
         doc.recook_lines();
     */
+   
+   
       runtime.run();
       std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
       
+      
+      //mymln::data::page<uint16,float,short> page(doc);
+      //page.export_HTML( Dir + "/" + File + ".html");
     
 
 	/*    
@@ -240,7 +252,8 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     
 }
 
-
+	  
+	  
 int main( int argc, char** argv)
 {
    mymln::runtime::runtime< value::int_u<16> ,float,short> run;
@@ -268,7 +281,10 @@ int main( int argc, char** argv)
        else if(prog)
        { 
 	 Prog = argv[N];
+
+	  
 	 run.load(Prog.c_str());
+	
 	 prog = false;
        }
        else
@@ -278,7 +294,7 @@ int main( int argc, char** argv)
 	else if(!strcmp(argv[N], "-P"))
 	{ prog = true; }
 	else
-	{ Process(argv[N], Dir, run); }
+	{ Process(argv[N], Dir, run);  }
        }
      }
    }

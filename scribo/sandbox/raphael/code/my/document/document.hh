@@ -6,7 +6,6 @@
 #include<my/debug/pict.hh>
 #include <mln/util/graph.hh>
 
-
 using namespace mln;
 namespace mymln
 {
@@ -310,7 +309,7 @@ namespace mymln
 	inline void add_to_line(const point2d& point)
 	{ add_to_line(img_influ(point)); }
 	
-
+  
 	inline void add_to_line_link(const point2d& A, const point2d& B)
 	{ add_to_line_link(img_influ(A), img_influ(B)); }
 	inline bool same_line(const point2d& A, const point2d& B)
@@ -398,11 +397,13 @@ namespace mymln
 	    add_new_line(lbl);
 	}
 	
+
+	
 	inline bool contain_line_self_link(const Label lbl)
 	{ return lines_union[lbl].is_self_link();}
 	inline bool move_line_self_link(const Label lbl)
 	{ 
-	  if(lines_union[lbl] && lines_union[lbl].is_self_link())
+	  if(lines_union[lbl] && lines_union.is_self_link(lbl))
 	  {
 	    if(lines_first_label[lines_union[lbl]] == lbl)
 	    {
@@ -456,8 +457,14 @@ namespace mymln
 	inline void add_noise(const point2d& point)
 	{add_noise(img_influ(point));}
 	
-	inline unsigned int size(){return Areas_Number_;}
-
+	/// DEPRECIATED
+	/// THE METHOD SIZE IS HERE ONLY TO USE THE SAME SYNTAX AS MILENA ARRAYS
+	/// USE count() INSTEED
+	inline unsigned int size(){return Areas_Number_;} 
+	
+	
+	inline unsigned int line_count(){return lines_bbox.size();}
+	inline unsigned int paragraph_count(){return paragraphs_bbox.size();}
 	
 	void add_noise(Label lbl)
 	{
@@ -729,9 +736,27 @@ namespace mymln
 	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
+	  inline bool allign_paragraph_center(const point2d& Left, const point2d& Right)
+	  {return allign_paragraph_center(img_influ(Left), img_influ(Right));}
+	  inline  bool allign_paragraph_center(const Label Left, const Label Right)
+	  {
+	    short int Diff = paragraphs_bbox[paragraphs_union[Left]].pcenter()[1] - paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
+	    if(Diff < 0){Diff = -Diff;}
+	    return Diff < paragraphs_bbox[paragraphs_union[Left]].len(1)/ 30 && Diff < paragraphs_bbox[paragraphs_union[Right]].len(1) / 30;
+	  }
 	  
-	  
-	  
+	
+	  inline bool allign_line_center(const point2d& Left, const point2d& Right)
+	  {return allign_line_center(img_influ(Left), img_influ(Right));}
+	  inline  bool allign_line_center(const Label Left, const Label Right)
+	  {
+	    short int Diff = lines_bbox[lines_union[Left]].pcenter()[1] - lines_bbox[lines_union[Right]].pcenter()[1];
+	    if(Diff < 0){Diff = -Diff;}
+	    return Diff < lines_bbox[lines_union[Left]].len(1)/ 30 && Diff < lines_bbox[lines_union[Right]].len(1) / 30;
+	  }
+	
+	
+	
 	  
 	  inline bool allign_up_line_line( const point2d& Left, const point2d& Right)
 	  {return allign_up_line_line(img_influ(Left), img_influ(Right));}
@@ -783,6 +808,16 @@ namespace mymln
 	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
 	    return  allignV < label_size_(1, Left);
 	  }
+	  
+	  inline bool allign_H_tube( const point2d& Left, const point2d& Right)
+	  {return allign_H_tube(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_H_tube( const Label Left, const Label Right)
+	  {
+	    return  _bboxgp[Left].pmin()[1] <= _bboxgp[Right].pcenter()[1] &&
+	    _bboxgp[Left].pmax()[1] >= _bboxgp[Right].pcenter()[1];
+	  }
+	  
 
 
 	  inline bool allign_H_strict( const point2d& Left, const point2d& Right)
@@ -995,6 +1030,30 @@ namespace mymln
 	  }
 
 
+	  inline bool allign_proximity_paragraph_up_medium( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
+	  
+	   inline bool allign_proximity_paragraph_up_medium( const Label Left, const Label Right)
+	  {
+	      box2d LB = paragraphs_bbox[paragraphs_union[Left]];
+	      box2d RB = paragraphs_bbox[paragraphs_union[Right]];
+	      
+	      int DisA = LB.pmax()[0] - RB.pmin()[0];
+	      int DisB = RB.pmax()[0] - LB.pmin()[0];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = lines_bbox[paragraphs_first_line[paragraphs_union[Left]]].len(0);
+	      unsigned int HB = lines_bbox[paragraphs_first_line[paragraphs_union[Right]]].len(0);
+
+	      if(HA < HB)
+	      { HA = HB; }
+	      return  (DisA * 2) < HA;
+	  }
+
+
 
 	  inline bool allign_proximity_paragraph_up( const point2d& Left, const point2d& Right)
 	  {return allign_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
@@ -1018,6 +1077,7 @@ namespace mymln
 	      { HA = HB; }
 	      return  (DisA * 5) < HA;
 	  }
+
 	  
 	  inline bool allign_proximity_line_large( const point2d& Left, const point2d& Right)
 	  {return allign_proximity_line_large(img_influ(Left), img_influ(Right));}
@@ -1385,6 +1445,26 @@ namespace mymln
 	    return  lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 8);
 	  }
 
+	  inline bool allign_small_item( const point2d& Left, const point2d& Right)
+	  {return allign_small_item(img_influ(Left), img_influ(Right));}
+	    inline bool allign_small_item( Label Left, Label Right)
+	  {
+	    return  
+	      lines_bbox[lines_union[Left]].len(0) < (_bboxgp[Right].len(0) * 12) &&
+	      lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 2);
+	  }
+
+	  inline bool allign_small_item_line( const point2d& Left, const point2d& Right)
+	  {return allign_small_item(img_influ(Left), img_influ(Right));}
+	    inline bool allign_small_item_line( Label Left, Label Right)
+	  {
+	    return  
+	      lines_bbox[lines_union[Left]].len(0) < (lines_bbox[lines_union[Right]].len(0) * 12) &&
+	      lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 2);
+	  }
+
+
+
 
 	  inline bool allign_smaller_paragraph( const point2d& Left, const point2d& Right)
 	  {return allign_smaller_paragraph(img_influ(Left), img_influ(Right));}
@@ -1496,14 +1576,40 @@ namespace mymln
 	    Float AFactor = label_allign_(1, Left, Right);
 	    return AFactor < label_size_(1,Left);
 	  }
+	  
+	  
+	   inline bool paragraph_start_with_tab_strict(const point2d& Point)
+	  { return paragraph_start_with_tab_strict(img_influ(Point));}
+	  inline bool paragraph_start_with_tab_strict(const Label Paragraph)
+	  {
+	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
+	    return
+	      lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40) &&
+	      lines_bbox[FirstLine].pmax()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmax()[1] -
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40)
+	      ;
+	  }
+	  
 	  inline bool paragraph_start_with_tab(const point2d& Point)
 	  { return paragraph_start_with_tab(img_influ(Point));}
 	  inline bool paragraph_start_with_tab(const Label Paragraph)
 	  {
 	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
+	    
+	    if(lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 30))
+	    {
+	      debug_draw_box_green_influence_buffer(lines_first_label[FirstLine]); // ERASE ME
+	    }
+	    else
+	    {
+	      debug_draw_box_red_influence_buffer(lines_first_label[FirstLine]); // ERASE ME
+	    }
 	    return
 	      lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
-	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 30);
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40) 
+	      ;
 	  }
 	  
 	  void stat()
@@ -1516,10 +1622,13 @@ namespace mymln
 	    std::cout << "      lines(s) : " << CLine << std::endl;
 	  
 	  }
+	  
+	  
 	  void debug_breakpoint()
 	  {
 	    if(debug_buffer_enable)
 	    {
+
 	      debug_save_buffer("break.ppm");
 	      std::system("eog break.ppm");
 	      debug_buffer_enable = true;
@@ -1671,11 +1780,37 @@ namespace mymln
 	  {
 	    Enable_Debug_Buffer = false;
 	    debug_buffer_enable = false;
-	    for(unsigned int N = 0; N < paragraphs_bbox.size(); N++)
+	    for(unsigned int N = 0; N < lines_bbox.size(); N++)
 	    {
 	      if(lines_bbox[N].is_valid())
 	      {
 		draw::box(debug_buffer, lines_bbox[N], mln::literal::blue);
+	      }
+
+	    }
+	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
+	  }
+	  inline void debug_save_buffer_paragraphs_lines(std::string file)
+	  {
+	    Enable_Debug_Buffer = false;
+	    debug_buffer_enable = false;
+	    for(unsigned int N = 0; N < lines_bbox.size(); N++)
+	    {
+	      if(lines_bbox[N].is_valid())
+	      {
+		draw::box(debug_buffer, lines_bbox[N], mln::literal::blue);
+	      }
+
+	    }
+	    	    for(unsigned int N = 0; N < paragraphs_bbox.size(); N++)
+	    {
+	      if(paragraphs_bbox[N].is_valid())
+	      {
+		draw::box(debug_buffer, paragraphs_bbox[N], mln::literal::red);
+		if(paragraphs_bbox_influ[N].is_valid())
+		{
+		  draw::box(debug_buffer, paragraphs_bbox_influ[N], mln::literal::orange);
+		}
 	      }
 
 	    }
@@ -1968,6 +2103,10 @@ namespace mymln
 	  
 	  inline box2d get_paragraph_bbox(Label L)
 	  { return paragraphs_bbox[paragraphs_union[L]]; }
+	  
+	  /// USE THIS METHOD ONLY IF YOU KNOW THE PARAGRAPH ID
+	  inline box2d get_paragraph_bbox_direct(unsigned int ID)
+	  { return paragraphs_bbox[ID]; }
 
 
 	  inline box2d get_line_bbox(const point2d& point)
@@ -1981,13 +2120,21 @@ namespace mymln
 	  
 	  inline unsigned int get_paragraph_length(Label L)
 	  { return paragraphs_len[paragraphs_union[L]]; }
+	  
+	  /// USE THIS METHOD ONLY IF YOU KNOW THE PARAGRAPH ID
+	  inline unsigned int get_paragraph_length_direct(unsigned int ID)
+	  { return paragraphs_len[ID]; }
 
 	  inline unsigned int get_line_length(const point2d& point)
 	  { return get_line_length(img_influ(point)); }
 	  
 	  inline unsigned int get_line_length(Label L)
 	  { return lines_len[lines_union[L]]; }
-	  
+
+	  /// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
+	  inline unsigned int get_line_length_direct(unsigned int ID)
+	  { return lines_len[ID]; }
+
 	  inline unsigned int get_line_width(point2d point)
 	  { return get_line_width(img_influ(point)); }
 	  
@@ -2016,6 +2163,10 @@ namespace mymln
 	    if(D<0)D=-D;
 	    return D * 3 < get_line_bbox(Letter).len(0);
 	  }
+	  
+	  
+	  
+	  
 	  
 	  inline bool line_size_small(const point2d& point)
 	  { return line_size_small(img_influ(point)); }
@@ -2053,6 +2204,16 @@ namespace mymln
 	      paragraphs_bbox_influ[paragraphs_union[Par1]].has(paragraphs_bbox[paragraphs_union[Par2]].pmax()) ;
 	  }
 
+	  inline bool paragraph_included_influence_line(point2d Par1, point2d Line2)
+	  { return paragraph_included_influence_line(img_influ(Par1), img_influ(Line2)); }
+	  inline bool paragraph_included_influence_line(Label Par1, Label Line2)
+	  { 
+	    return 
+	      paragraphs_bbox_influ[paragraphs_union[Par1]].has(lines_bbox[lines_union[Line2]].pmin()) &&
+	      paragraphs_bbox_influ[paragraphs_union[Par1]].has(lines_bbox[lines_union[Line2]].pmax()) ;
+	  }
+
+
 	  inline bool paragraph_included(point2d Par1, point2d Par2)
 	  { return paragraph_included(img_influ(Par1), img_influ(Par2)); }
 	  inline bool paragraph_included(Label Par1, Label Par2)
@@ -2073,6 +2234,22 @@ namespace mymln
 	      lines_influ_bbox[lines_union[L2]].has(lines_influ_bbox[lines_union[L1]].pmin()) ||
 	      lines_influ_bbox[lines_union[L2]].has(lines_influ_bbox[lines_union[L1]].pmax()) ;
 	  }
+	  
+	  
+	   inline bool paragraph_influence_reciprocal(const point2d& L1, const point2d& L2)
+	  {return paragraph_influence_reciprocal(img_influ(L1), img_influ(L2));}
+	  
+	  inline bool paragraph_influence_reciprocal(Label L1, Label L2)
+	  {
+	    return 
+	      paragraphs_bbox_influ[paragraphs_union[L1]].has(paragraphs_bbox_influ[paragraphs_union[L2]].pmin()) ||
+	      paragraphs_bbox_influ[paragraphs_union[L1]].has(paragraphs_bbox_influ[paragraphs_union[L2]].pmax()) ||
+	      paragraphs_bbox_influ[paragraphs_union[L2]].has(paragraphs_bbox_influ[paragraphs_union[L1]].pmin()) ||
+	      paragraphs_bbox_influ[paragraphs_union[L2]].has(paragraphs_bbox_influ[paragraphs_union[L1]].pmax()) ;
+	  }
+	  
+	  
+	  
 	  inline bool allign_size_x_height( const point2d& Left, const point2d& Right)
 	  {return allign_size_x_height(img_influ(Left), img_influ(Right));}
 	  
@@ -2499,6 +2676,9 @@ namespace mymln
 	inline unsigned int get_paragraph_middle_width(const Label lbl)
 	{return paragraphs_mid_width[paragraphs_union[lbl]];}
 	
+	/// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
+	inline unsigned int get_paragraph_middle_width_direct(const unsigned int ID)
+	{return paragraphs_mid_width[ID];}	
 	
 	inline unsigned int get_line_ID(const point2d& lbl)
 	{return get_line_ID(img_influ(lbl));}	
@@ -3186,7 +3366,7 @@ namespace mymln
 		  lines_bbox[N].pmin()[0]
 		  )
 		{
-		  paragraphs_first_line[paragraphs_union[lines_first_label[N]]] = N;
+		    paragraphs_first_line[paragraphs_union[lines_first_label[N]]] = N;
 		}
 	      }
 	      else

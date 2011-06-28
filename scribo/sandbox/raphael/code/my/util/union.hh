@@ -89,9 +89,7 @@ namespace mymln
 	{
 	    for(unsigned int N = 1; N < size_; N++)
 	    {
-	      unsigned int Pos = N;
-	      while(Pos != mark_link[Pos] && Pos != 0){Pos = mark_link[Pos]; }
-	      mark[N] = mark[Pos];
+	      mark[N] = mark[find_parent_(N)];
 	    }
 	}
 	inline unsigned int size()
@@ -111,6 +109,7 @@ namespace mymln
 	    Pos = mark_link[Pos];
 	    mark_link[OldPos] = mark_link[Pos];
 	    OldPos = Pos;
+	    if(Pos == A){return A;}
 	  }
 	  return Pos;
 	}

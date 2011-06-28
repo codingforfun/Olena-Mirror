@@ -59,7 +59,7 @@ namespace mymln
       
       return out;
     }
-    
+
     template <typename I, typename N>
     image2d<value::int_u8> luminance(const Image<I>& iz_)
     {
@@ -82,6 +82,8 @@ namespace mymln
         template <typename I>
     image2d<bool> binarize_outline(const Image<I>& iz_)
     {return mymln::document::outline(mymln::document::luminance(iz_), c8());}
+    
+    
     
   }
 }

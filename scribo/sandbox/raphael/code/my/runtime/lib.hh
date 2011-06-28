@@ -51,9 +51,15 @@ namespace mymln
 	  run.add_function("clean.proximity_letters", &(mymln::document::clean_proximity_letters));
 	  run.add_function("clean.letter_previous_next_line", &(mymln::document::clean_letter_previous_next_line));
 	  run.add_function("clean.V_lines", &(mymln::document::clean_V_lines));
-	  
+	  run.add_function("clean.rebuild_letters", &(mymln::document::clean_rebuild_letters));
+	
 	  run.add_function("clean.paragraphs_end_line", &(mymln::document::clean_paragraphs_end_line));
 	  run.add_function("find.previous_next_line", &(mymln::document::find_previous_next_line));
+	  
+	  run.add_function("clean.finalize_line", &(mymln::document::clean_finalize_line));
+	    run.add_function("clean.finalize_paragraph", &(mymln::document::clean_finalize_paragraph));
+	    
+	    run.add_function("clean.center_paragraphs", &(mymln::document::clean_center_paragraphs));
     }
 
     template<typename L, typename F, typename D>
@@ -88,6 +94,9 @@ namespace mymln
     template<typename L, typename F, typename D>
     void lib_debug_breakpoint(mymln::document::document<L,F,D>& doc)
     { doc.debug_breakpoint(); }
+    template<typename L, typename F, typename D>
+    void lib_debug_save_buffer_paragraphs_lines(mymln::document::document<L,F,D>& doc, std::string file)
+    { doc.debug_save_buffer_paragraphs_lines(file); }
     
     template<typename L, typename F, typename D>
     void load_debug(runtime<L,F,D>& run)
@@ -98,9 +107,11 @@ namespace mymln
       run.add_function_string("debug.save_dot_graph", &(lib_debug_save_dot_graph));
       run.add_function_string("debug.save_separators", &(lib_debug_save_all_separators));
       run.add_function_string("debug.save_buffer_paragraphs", &(lib_debug_save_buffer_paragraphs));
+      run.add_function_string("debug.save_buffer_paragraphs_lines", &(lib_debug_save_buffer_paragraphs_lines));
       run.add_function_string("debug.save_buffer_lines", &(lib_debug_save_buffer_lines));
       run.add_function("debug.enable_buffer", &(lib_debug_enable_buffer));
       run.add_function("debug.disable_buffer", &(lib_debug_disable_buffer));
+
       run.add_function("break", &(lib_debug_breakpoint));
     }
 

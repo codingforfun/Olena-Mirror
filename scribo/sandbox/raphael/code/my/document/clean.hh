@@ -211,15 +211,21 @@ namespace mymln
 	    {
 	      if (
 		doc.allign_H_large(v2, q2) &&
-		doc.allign_top(v2, q2) &&
+		
 		doc.line_has(v2, q2) &&
 		doc.letter_ratio_XY(q2) < 2 &&
 		doc.allign_size_width_large(v2, q2))
 	      {
+		if(doc.allign_top(v2, q2))
+		{
+		
 		doc.add_to_line_link(v2, q2);
 		doc.add_letter_coerce(q2);
 		if(doc.allign_H(v2,q2))
-		  {doc.merge(v2,q2); doc.tag_label(v2, "i");}
+		  {doc.merge(v2,q2); doc.tag_label(v2, "i");doc.debug_draw_line_green_buffer(q2,v2);}
+		else if(doc.allign_H_tube(v2, q2))
+		  {doc.merge(v2,q2); doc.tag_label(v2, "i");doc.debug_draw_line_green_buffer(q2,v2);}
+		}
 	      }
 	    }
 	  }
@@ -574,9 +580,11 @@ namespace mymln
 		)
 	      {
 		if(doc.allign_base_line_line(v,q) && doc.get_line_length(q) < 3)
-		{doc.add_to_line_link(v, q);}
+		{doc.add_to_line_link(v, q); doc.debug_draw_line_green_buffer(q,v);}
 		else if(doc.allign_up_line_line(v,q))
-		{doc.add_to_line_link(v, q);}
+		{doc.add_to_line_link(v, q); doc.debug_draw_line_red_buffer(q,v);}
+		else if (doc.line_influence_has(v,q) && doc.allign_top_large(v,q) && doc.allign_small_item_line(v,q) && !doc.allign_up_line_line(v,q))
+		{ doc.add_to_line_link(v, q); doc.debug_draw_line_orange_buffer(q,v);}
 	      }
 	    }
 	  }
@@ -644,9 +652,9 @@ namespace mymln
 		{
 			if(doc.contain_line(N))
 				if (doc.get_letter_middle_height(N) * 3 < doc.get_bbox(N).len(0))
-					doc.add_noise(N);
+				{doc.move_line_self_link(N); doc.add_noise(N);}
 				else if(doc.get_letter_middle_width(N) * 4 < doc.get_bbox(N).len(1))
-					doc.add_noise(N);
+				{doc.move_line_self_link(N); doc.add_noise(N);}
 		}
   } 
   
@@ -753,7 +761,19 @@ namespace mymln
 			doc.allign_size_height_line(v, q))
 		      {
 			if(doc.line_influence_reciprocal(q, v))
-			doc.add_to_paragraph_link(v,q);
+			{
+			  doc.add_to_paragraph_link(v,q);
+			  doc.debug_draw_line_green_buffer(v,q);
+			}
+			else if
+			  (
+			  doc.return_next_line(doc[v]) == doc.return_next_line(doc[q]) &&
+			  doc.return_previous_line(doc[v]) == doc.return_previous_line(doc[q]) &&
+			  doc.same_paragraph( doc.return_previous_line(doc[v]), doc.return_next_line(doc[v]))
+			  )
+			{
+			  doc.debug_draw_line_red_buffer(v,q);
+			}
 		      }
 		    }
 		  }
@@ -1079,6 +1099,199 @@ namespace mymln
 		    }
 		    doc.propage_paragraph_link();
       }
+      
+      template<typename L, typename F, typename D>
+      void clean_finalize_line(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_start_end_lines();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      if(doc.contain_line(v))
+		      {
+			for_all(q)
+			{
+			  if(doc.allign_V_line(q,v) && !doc.same_line(q,v))
+			  {
+			    if(doc.same_paragraph(q,v))
+			    {
+			      if(doc.compatible_paragraph_middle_width(q,v))
+			      {
+				doc.debug_draw_line_orange_buffer(q,v);
+				doc.add_to_line_link(v, q);
+			      }
+			    }
+			    else
+			    {
+			      if(doc.paragraph_included_influence(q,v) || doc.paragraph_included_influence(v,q))
+			      {
+				if(doc.compatible_paragraph_middle_width(q, v))
+				{
+				  if(
+				      doc.return_next_line(doc[q]) == doc.return_next_line(doc[v]) ||
+				      doc.return_previous_line(doc[q]) == doc.return_previous_line(doc[v])
+				    )
+				  {
+				   if(doc.get_line_length(q) < 4 || doc.get_line_length(v) < 4  )
+				    doc.debug_draw_line_green_buffer(q,v);
+				   doc.add_to_line_link(v, q);
+				   doc.add_to_paragraph_link(v, q);
+				  }
+				}
+			      }
+			     
+			    }
+			  }
+			}
+		      }
+		    }
+		     doc.propage_line_link();
+		     doc.propage_paragraph_link();
+      }
+  
+  
+  
+  
+  
+  
+        template<typename L, typename F, typename D>
+      void clean_rebuild_letters(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_letters();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      if(doc.contain_line(v)) 
+		      {
+			for_all(q)
+			{
+			  if(doc.contain_line(q))
+			  {
+			      doc.debug_draw_line_orange_buffer(q,v);
+			  }
+			}
+		      }
+		    }
+		     doc.propage_line_link();
+		     doc.propage_paragraph_link();
+      }
+  
+  
+        template<typename L, typename F, typename D>
+      void clean_center_paragraphs(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_start_end_lines();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      for_all(q)
+		      {
+			if(!doc.same_paragraph(q,v) && doc.allign_size_height_line(q,v))
+			{
+			 if(
+			   doc.allign_paragraph_center(q,v) &&
+			   doc.allign_proximity_paragraph_up_large(q,v) &&
+			   doc.allign_top_paragraph(q,v) &&
+			   doc.allign_size_height_line_strict(q,v) &&
+			   doc.compatible_paragraph_middle_width(q,v) &&
+			   !doc.paragraph_start_with_tab(q)
+			   )  
+			 {
+			   if(doc.get_paragraph_length(q) < 2)
+			   {
+			     if(!doc.decal_left_paragraph(q,v))
+			     {
+			      doc.debug_draw_line_green_buffer(q,v);
+			      doc.add_to_paragraph_link(v, q);
+			     }
+			   }
+			   else
+			   {
+			      doc.debug_draw_line_green_buffer(q,v);
+			      doc.add_to_paragraph_link(v, q);
+			   }
+			 }
+			}
+		      }
+		    }
+		    doc.propage_line_link();
+		     doc.propage_paragraph_link();
+		    
+      }
+  
+  
+  
+  
+  
+  
+      template<typename L, typename F, typename D>
+      void clean_finalize_paragraph(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_start_end_lines();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      for_all(q)
+		      {
+			if(!doc.same_paragraph(q,v) && doc.paragraph_influence_reciprocal(q,v))
+			{
+			  if(
+			      doc.paragraph_included_influence_line(q,v)||
+			      doc.paragraph_included_influence_line(v, q))
+			  {
+			    if(
+			      doc.allign_V_line(v,q) &&
+			      doc.allign_size_height_line(v, q) &&
+			      !doc.paragraph_included_influence(v, q) &&
+			      !doc.paragraph_included_influence(q, v)
+			      
+			      )
+			      
+			    {
+			      doc.debug_draw_line_green_buffer(q,v);
+			      doc.add_to_paragraph_link(q,v);
+			      doc.add_to_line_link(q,v);
+			    }
+			  }
+			  else if( doc.get_paragraph_length(q) == 1 && doc.allign_size_width_line(q,v))
+			  {
+			    if(doc.allign_V_line(q,v))
+			    {
+			    doc.debug_draw_line_red_buffer(q,v);
+			    }
+			  }
+			}
+		      }
+		    }
+		    doc.propage_line_link();
+		     doc.propage_paragraph_link();
+		    
+      }
+  
+  
+  
+  
+  
   
   }
   }
