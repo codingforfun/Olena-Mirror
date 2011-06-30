@@ -17,6 +17,7 @@ namespace mymln
 	  run.add_function("separators.make_clean_left", &(mymln::document::separators::separators_find_allign));
 	  run.add_function("separators.rebuild",  &(mymln::document::separators::separators_rebuild));
 	    run.add_function("separators.merge",  &(mymln::document::separators::separators_merge));
+	     run.add_function("separators.find_wrong",  &(mymln::document::separators::separators_find_wrong));
 	  
     }
     
@@ -60,6 +61,11 @@ namespace mymln
 	    run.add_function("clean.finalize_paragraph", &(mymln::document::clean_finalize_paragraph));
 	    
 	    run.add_function("clean.center_paragraphs", &(mymln::document::clean_center_paragraphs));
+	    
+	    
+	    run.add_function("clean.paragraphs_couple",  &(mymln::document::clean_paragraphs_couple));
+	    
+	    run.add_function("clean.paragraphs_first_line", &(mymln::document::clean_paragraphs_first_line));
     }
 
     template<typename L, typename F, typename D>

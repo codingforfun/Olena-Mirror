@@ -1,4 +1,4 @@
-
+#define NREMOTE
 #include <vector>
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/all.hh>
@@ -51,6 +51,10 @@
 #include <my/data/page.hh>
 #include <my/preprocessing/preprocessing.hh>
 
+#ifndef NREMOTE
+#include <my/debug/remote/document_remote.hh>
+#include <my/debug/remote/lib.hh>
+#endif
 using namespace mln;
 using namespace std;
 
@@ -252,11 +256,23 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     
 }
 
-	  
-	  
+#ifndef NREMOTE
+// THIS IS USED TO CREATE A FILTER WITHOUT RECOMPILING
+mymln::document::debug::remote< value::int_u<16> ,float,short> rem;
+template<typename L, typename F, typename D>
+    void clean_remote(mymln::document::document<L,F,D>& doc)
+    {
+      rem.filter(doc);
+    }
+#endif
+    
+    
 int main( int argc, char** argv)
 {
    mymln::runtime::runtime< value::int_u<16> ,float,short> run;
+   #ifndef NREMOTE
+   rem = mymln::document::debug::remote< value::int_u<16> ,float,short>();
+   #endif
    mymln::runtime::load_clean(run);
    mymln::runtime::load_debug(run);
    mymln::runtime::load_cooking(run);
@@ -269,6 +285,7 @@ int main( int argc, char** argv)
    {
      bool dir = false;
      bool prog = false;
+     bool remote = false;
      std::string Dir = "";
      std::string Prog = "";
      for(int N = 1 ; N < argc; N++)
@@ -287,12 +304,26 @@ int main( int argc, char** argv)
 	
 	 prog = false;
        }
+       #ifndef NREMOTE
+       else if(remote)
+       {
+	 Prog = argv[N];
+	 rem.load(Prog.c_str());
+	 remote = false;
+	 run.add_function("@remote", clean_remote);
+	 mymln::document::debug::load(rem);
+       }
+       #endif
        else
        {
 	if(!strcmp(argv[N], "-D"))
 	{ dir = true;}
 	else if(!strcmp(argv[N], "-P"))
 	{ prog = true; }
+	#ifndef NREMOTE
+	else if(!strcmp(argv[N], "--Remote"))
+	{ remote = true; }
+	#endif
 	else
 	{ Process(argv[N], Dir, run);  }
        }

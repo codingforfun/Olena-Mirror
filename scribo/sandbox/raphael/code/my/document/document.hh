@@ -52,6 +52,7 @@ namespace mymln
 	  all_letters_mask = fun::i2v::array<bool>(Areas + 1);
 	  Hseparator_mask =  fun::i2v::array<bool>(Areas + 1);
 	  Vseparator_mask =  fun::i2v::array<bool>(Areas + 1);
+	  image_mask =  fun::i2v::array<bool>(Areas + 1);
 	  noise_mask = fun::i2v::array<bool>(Areas + 1);
 	  temp_letter = fun::i2v::array<bool>(Areas + 1);
 	  alone_letters_mask = fun::i2v::array<bool>(Areas + 1);
@@ -312,6 +313,8 @@ namespace mymln
   
 	inline void add_to_line_link(const point2d& A, const point2d& B)
 	{ add_to_line_link(img_influ(A), img_influ(B)); }
+	inline void invalidate_line_link(const point2d& A)
+	{ invalidate_line_link(img_influ(A)); }
 	inline bool same_line(const point2d& A, const point2d& B)
 	{ return  same_line(img_influ(A), img_influ(B)); }
 	inline bool same_line(const Label A, const Label B)
@@ -362,6 +365,9 @@ namespace mymln
 	inline void jump_to_line(const point2d& point)
 	{ jump_to_line(img_influ(point)); }
 
+	inline bool contain_start_paragraph(const point2d& point)
+	{ return contain_start_paragraph(img_influ(point)); }
+
 	inline bool contain_start_line(const point2d& point)
 	{ return contain_start_line(img_influ(point)); }
 	
@@ -388,7 +394,8 @@ namespace mymln
 	
 	inline void add_to_line_link(const Label A, const Label B)
 	{lines_union.add_link(A, B);}
-
+	inline void invalidate_line_link(const Label A)
+	{lines_union.invalidate_link(A);}
 	inline void jump_to_line(const Label lbl)
 	{ 
 	  if(lines_union[lbl] != 0)
@@ -451,6 +458,9 @@ namespace mymln
 	inline bool contain_start_line(const Label lbl)
 	{ return  start_lines_mask(lbl);}
 	
+	inline bool contain_start_paragraph(const Label lbl)
+	{ return  paragraphs_first_line[paragraphs_union[lbl]] == lines_union[lbl];}
+	
 	inline bool contain_end_line(const Label lbl)
 	{ return  start_lines_mask(lbl);}
 	
@@ -487,6 +497,7 @@ namespace mymln
 	}
 	void inline add(Label lbl, int link)
 	{
+	  image_mask(lbl) = false;
 	  all_mask(lbl) = true;
 	  if (link == 0){add_noise(lbl);}
 	  else if (link > 30){ add_separator(lbl);}
@@ -521,6 +532,21 @@ namespace mymln
 	{add_letter(img_influ(point)); }
 	void inline add_letter_coerce(const point2d& point)
 	{add_letter_coerce(img_influ(point)); }
+	
+	
+	void add_image(const Label lbl)
+	{
+	  image_mask(lbl) = true;
+	  separators_mask(lbl) = false;
+	  containers_mask(lbl) = false;
+	  Vseparator_mask(lbl) = false;
+	  Hseparator_mask(lbl) = false;
+	  alone_letters_mask(lbl) = false;
+	  noise_mask(lbl) = false;
+	  all_letters_mask(lbl) = false;
+	  temp_letter = false;
+	}
+	
 	void add_alone_letter(const point2d& point)
 	{add_alone_letter(img_influ(point));}
 	void add_alone_letter(const Label lbl)
@@ -572,6 +598,41 @@ namespace mymln
 	      else
 		add_noise(lbl);
 	}
+	inline bool is_big_element_V(const point2d& point)
+	{return is_big_element_V(img_influ(point));}
+	inline bool is_big_element_V(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 13;
+	}
+	inline bool is_big_element_H(const point2d& point)
+	{return is_big_element_H(img_influ(point));}
+	inline bool is_big_element_H(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 13;
+	}
+	
+	
+	
+	
+	
+	inline bool is_very_big_element_V(const point2d& point)
+	{return is_very_big_element_V(img_influ(point));}
+	inline bool is_very_big_element_V(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 6;
+	}
+	inline bool is_very_big_element_H(const point2d& point)
+	{return is_very_big_element_H(img_influ(point));}
+	inline bool is_very_big_element_H(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 6;
+	}
+	
+	
+	
+	
+	
+	
 	void inline add_container(const point2d& point)
 	{add_container(img_influ(point)); }
 	void add_container(const Label lbl)
@@ -736,6 +797,7 @@ namespace mymln
 	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
+	  
 	  inline bool allign_paragraph_center(const point2d& Left, const point2d& Right)
 	  {return allign_paragraph_center(img_influ(Left), img_influ(Right));}
 	  inline  bool allign_paragraph_center(const Label Left, const Label Right)
@@ -744,7 +806,14 @@ namespace mymln
 	    if(Diff < 0){Diff = -Diff;}
 	    return Diff < paragraphs_bbox[paragraphs_union[Left]].len(1)/ 30 && Diff < paragraphs_bbox[paragraphs_union[Right]].len(1) / 30;
 	  }
-	  
+	  inline bool allign_paragraph_center_strict(const point2d& Left, const point2d& Right)
+	  {return allign_paragraph_center_strict(img_influ(Left), img_influ(Right));}
+	  inline  bool allign_paragraph_center_strict(const Label Left, const Label Right)
+	  {
+	    short int Diff = paragraphs_bbox[paragraphs_union[Left]].pcenter()[1] - paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
+	    if(Diff < 0){Diff = -Diff;}
+	    return Diff < paragraphs_bbox[paragraphs_union[Left]].len(1)/ 60 && Diff < paragraphs_bbox[paragraphs_union[Right]].len(1) / 60;
+	  }  
 	
 	  inline bool allign_line_center(const point2d& Left, const point2d& Right)
 	  {return allign_line_center(img_influ(Left), img_influ(Right));}
@@ -1028,10 +1097,13 @@ namespace mymln
 	      { HA = HB; }
 	      return  (DisA) < HA;
 	  }
+	  
+	  
+	  
 
 
 	  inline bool allign_proximity_paragraph_up_medium( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
+	  {return allign_proximity_paragraph_up_medium(img_influ(Left), img_influ(Right));}
 	  
 	   inline bool allign_proximity_paragraph_up_medium( const Label Left, const Label Right)
 	  {
@@ -1095,6 +1167,19 @@ namespace mymln
 	    return  SizeR > (SizeL / 2.2f) && SizeR < (SizeL * 2.2);
 	  }
 
+
+
+	  inline bool allign_size_height_line_medium( const point2d& Left, const point2d& Right)
+	  {
+	    return  allign_size_height_line_medium(img_influ(Left), img_influ(Right));
+	  }
+
+	  inline bool allign_size_height_line_medium( const Label Left, const Label Right)
+	  {
+	      short int SizeL = lines_bbox[lines_union[Left]].len(0);
+	      short int SizeR = lines_bbox[lines_union[Right]].len(0);
+	    return  SizeR > (SizeL / 1.8f) && SizeR < (SizeL * 1.8f);
+	  }
 
 
 	  inline bool allign_size_height_line( const point2d& Left, const point2d& Right)
@@ -1286,6 +1371,35 @@ namespace mymln
 	    return  paragraphs_bbox[paragraphs_union[Left]].pmin()[1] > paragraphs_bbox[paragraphs_union[Right]].pmin()[1]
 	     + (paragraphs_bbox[paragraphs_union[Right]].len(1) / 20) ;
 	  }
+
+
+
+
+	  inline bool allign_proximity_left( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_left(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity_left( const Label Left, const Label Right)
+	  {
+	      box2d LB = _bboxgp[Left];
+	      box2d RB = _bboxgp[Right];
+	      
+	      int DisA = LB.pmax()[1] - RB.pmin()[1];
+	      int DisB = RB.pmax()[1] - LB.pmin()[1];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      unsigned int VA = LB.len(1);
+
+
+	      if(VA > HA)
+	      { HA = VA; }    
+	      return  (DisA) * 3 < HA * 2;
+	  }
+
+
 
 
 	  inline bool allign_proximity_large_left( const point2d& Left, const point2d& Right)
@@ -1538,7 +1652,10 @@ namespace mymln
 	      allignV < lines_bbox[lines_union[Left]].len(0) &&
 	      lines_bbox[lines_union[Left]].pcenter()[0] < lines_bbox[lines_union[Right]].pcenter()[0];
 	  }
-	  
+	  inline bool is_start_end_line(const point2d& point)
+	  {return is_start_end_line(img_influ(point));}
+	  inline bool is_start_end_line(const Label lbl)
+	  {return start_end_lines_mask(lbl);}
 	  inline bool allign_bottom(const point2d& Left, const point2d& Right)
 	  {return allign_bottom(img_influ(Left), img_influ(Right));}
 	  inline bool allign_bottom(const Label Left, const Label Right)
@@ -2033,6 +2150,8 @@ namespace mymln
 	  {  mymln::debug::save_label_image(img, implicit_separators_union , file);}
 	  vertex_image<point2d,bool> fun_mask_separators()
 	  { return fun_mask_(separators_mask); }
+	  vertex_image<point2d,bool> fun_mask_V_separators()
+	  { return fun_mask_(Vseparator_mask); }
 	  vertex_image<point2d,bool> fun_mask_containers()
 	  { return fun_mask_(containers_mask); }
 	  vertex_image<point2d,bool> fun_mask_alone_letters()
@@ -2047,6 +2166,8 @@ namespace mymln
 	  {  
 	    return fun_mask_(all_mask);
 	  }
+	  vertex_image<point2d,bool> fun_mask_image()
+	  { return fun_mask_(image_mask); }
 	  vertex_image<point2d,bool> fun_mask_letters()
 	  { return fun_mask_(letters_mask); }
 	   vertex_image<point2d,bool> fun_mask_start_lines()
@@ -2194,6 +2315,15 @@ namespace mymln
 	      _bboxgp[Par1].has(_bboxgp[Par2].pmin()) &&
 	      _bboxgp[Par1].has(_bboxgp[Par2].pmax()) ;
 	  }
+
+	  inline bool letter_included_center(point2d Par1, point2d Par2)
+	  { return letter_included_center(img_influ(Par1), img_influ(Par2)); }
+	  inline bool letter_included_center(Label Par1, Label Par2)
+	  { 
+	    return 
+	      _bboxgp[Par1].has(_bboxgp[Par2].pcenter());
+	  }
+
 
 	  inline bool paragraph_included_influence(point2d Par1, point2d Par2)
 	  { return paragraph_included_influence(img_influ(Par1), img_influ(Par2)); }
@@ -3258,7 +3388,7 @@ namespace mymln
 	fun::i2v::array<bool> noise_mask;
 	fun::i2v::array<bool> kill_mask;
 	fun::i2v::array<bool> all_mask;
-	
+	fun::i2v::array<bool> image_mask; 
 	mln::util::array<std::string> tag_lbl;
 	mln::util::array<bool> Btag_lbl;
 	

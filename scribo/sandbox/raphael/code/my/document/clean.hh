@@ -196,7 +196,20 @@ namespace mymln
 		doc.add_to_line_link(v, q);
 		doc.add_letter_coerce(q);
 	      }
+	      else if(
+		doc.is_start_end_line(v) &&
+		doc.allign_base_line(v, q) &&
+		doc.allign_small_item(v,q) &&
+		!doc.contain_alone_letter(v) &&
+		doc.allign_proximity_large_left(v,q) &&
+		doc.letter_ratio_YX(q) >= 1
+		)
+	      {
+		  doc.debug_draw_line_green_buffer(v,q);
+		  doc.add_to_line_link(v,q);
+	      }
 	    }
+	    
 	  }
 	}
 	mask = doc.fun_mask_alone_letters();
@@ -380,9 +393,12 @@ namespace mymln
 	    {
 	      for_all(q)
 	      {
-		if(doc.same_line(q,v)){continue;}
+		
+		if(doc.same_line(q,v)){ continue;}
+		
 		if(doc.contain_alone_letter(q))
 		{
+		  
 		  if(doc.allign_V(q,v) && doc.allign_proximity_strict(q, v) && doc.allign_size_height(q, v))
 		  {
 		    doc.add_to_line_link(v, q);
@@ -391,7 +407,8 @@ namespace mymln
 		  		    
 		}
 		else if(doc.contain_line(q))
-		{
+		{ 
+		  
 		  if(doc.allign_V(q,v) && doc.allign_size_height_line_strict(q, v) && doc.allign_proximity_strict(q,v))
 		  {
 		    doc.add_to_line_link(v, q);
@@ -399,12 +416,13 @@ namespace mymln
 		  }
 		  else if(doc.allign_size_height_line(q,v))
 		  {
+		   
 		    if(doc.allign_proximity_line(q,v) && doc.allign_V_line_strict(q, v))
 		    {
 			doc.add_to_line_link(v, q);
 			doc.debug_draw_line_green_buffer(v,q);
 		    }
-		    else if(doc.line_influence_reciprocal(q, v) && doc.allign_V_line_strict(q, v))
+		    else if(doc.line_influence_reciprocal(q, v) && doc.allign_V_line_strict(q, v) && doc.allign_size_height_line(q,v))
 		    {
 		      doc.add_to_line_link(v, q);
 		      doc.debug_draw_line_red_buffer(v,q);
@@ -419,15 +437,22 @@ namespace mymln
 		      doc.allign_proximity_line(v,q)
 		      )
 		    {
-		      doc.debug_draw_line_orange_buffer(v,q);
 		      doc.debug_draw_box_red_buffer(v);
 		       doc.debug_draw_box_green_buffer(q);
 		   doc.add_to_line_link(v, q);
 		    }
+		    
+		    else if(doc.allign_V(q,v) && doc.allign_proximity_strict(q,v))
+		    {
+		      doc.debug_draw_line_orange_buffer(q,v);
+		      doc.add_to_line_link(v, q);
+		    }
 		  }
+		  
 		  
 
 		}
+		
 	      }
 	    }
 	}
@@ -491,7 +516,7 @@ namespace mymln
 	      {
 		if(
 		  doc.allign_H_large(q,v) &&
-		  doc.allign_size_height_line(q, v) &&
+		  doc.allign_size_height_line_medium(q, v) &&
 		  doc.allign_proximity_V_line(v,q) &&
 		  doc.allign_size_width_line(q, v)
 		  )
@@ -506,7 +531,7 @@ namespace mymln
 		    doc.add_to_paragraph(q);
 		    doc.add_to_paragraph_link(v, q);
 		  }
-		 
+		  doc.debug_draw_line_red_buffer(v,q);
 		}
 	      }
 	    }
@@ -518,7 +543,7 @@ namespace mymln
 		if(
 		  doc.get_beginning_of_line(q) == doc[q] &&
 		  doc.allign_H_large(q,v) &&
-		  doc.allign_size_height_line(q, v) &&
+		  doc.allign_size_height_line_medium(q, v) &&
 		  doc.allign_size_width_line(q, v) &&
 		  doc.allign_proximity_V_line(v,q) &&
 		  doc.allign_bottom_line(q,v)
@@ -546,7 +571,11 @@ namespace mymln
 		    }
 		    doc.add_to_paragraph(q);
 		    doc.add_to_paragraph_link(v, q);
+		    
+		   
 		  }
+		  
+		   doc.debug_draw_line_green_buffer(v,q);
 		}
 	      }
 	      
@@ -829,9 +858,10 @@ namespace mymln
 		{
 		  doc.add_noise(KillMe[Killer]);
 		  doc.kill(KillMe[Killer]);
+		  doc.invalidate_line_link(KillMe[Killer]);
 		  Killer++;
 		}
-
+		doc.propage_line_link();
   }
 
 
@@ -1000,7 +1030,7 @@ namespace mymln
 			    doc.return_next_line(doc.get_line_ID(v)) == doc.return_next_line(doc.get_line_ID(q)) &&
 			    doc.return_previous_line(doc.get_line_ID(v)) == doc.return_previous_line(doc.get_line_ID(q)) &&
 			    doc.allign_V_line(v, q) &&
-			    doc.allign_size_height_line(v, q) &&
+			    doc.allign_size_height_line_medium(v, q) &&
 			    !doc.killed(doc[q])
 			    )
 			  {
@@ -1175,15 +1205,20 @@ namespace mymln
 		      {
 			for_all(q)
 			{
-			  if(doc.contain_line(q))
+			  if(doc.contain_line(q) && doc.same_line(q,v))
 			  {
-			      doc.debug_draw_line_orange_buffer(q,v);
+			     if(
+			       doc.letter_included_center(v,q) && doc.allign_small_item(v,q))
+			     {
+			       doc.debug_draw_line_orange_buffer(v,q);
+			       doc.merge(q,v);
+			     }
+			     
 			  }
 			}
 		      }
 		    }
 		     doc.propage_line_link();
-		     doc.propage_paragraph_link();
       }
   
   
@@ -1219,6 +1254,11 @@ namespace mymln
 			      doc.debug_draw_line_green_buffer(q,v);
 			      doc.add_to_paragraph_link(v, q);
 			     }
+			     else if(doc.allign_paragraph_center_strict(q,v))
+			     {
+				doc.debug_draw_line_orange_buffer(q,v);
+				doc.add_to_paragraph_link(v, q);
+			     }
 			   }
 			   else
 			   {
@@ -1234,9 +1274,78 @@ namespace mymln
 		    
       }
   
-  
-  
-  
+ 
+         template<typename L, typename F, typename D>
+      void clean_paragraphs_first_line(mymln::document::document<L,F,D>& doc)
+      {
+		    typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_all_letters();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      if(doc.contain_paragraph(v) && doc.get_paragraph_length(v) > 1 && doc.contain_start_paragraph(v))
+		      {
+			for_all(q)
+			{
+			  if(
+			    doc.same_paragraph(q,v) &&
+			    !doc.same_line(q,v) &&
+			    doc.allign_left(v,q) &&
+			    doc.allign_V_line(v,q)
+			    )
+			  {
+			    doc.debug_draw_line_green_buffer(q,v);
+			      doc.debug_draw_box_green_buffer(q);
+			      doc.add_to_line_link(v,q);
+			  }
+			}
+		      }
+		    }
+		    doc.propage_line_link();
+      }
+ 
+ 
+        template<typename L, typename F, typename D>
+      void clean_paragraphs_couple(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_all_letters();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      if(doc.contain_paragraph(v) && doc.get_paragraph_length(v) == 1)
+		      {
+			for_all(q)
+			{
+			  if(
+			    doc.contain_paragraph(q) &&
+			    doc.get_paragraph_length(q) == 1 &&
+			    !doc.same_paragraph(q,v) &&
+			    doc.allign_proximity_paragraph_up_medium(q,v) &&
+			    doc.compatible_paragraph_middle_width(q,v) &&
+			    !doc.decal_left_paragraph(q, v) &&
+			    doc.allign_top_paragraph(q,v) &&
+			    doc.allign_size_height_paragraph_line(q,v) &&
+			    (doc.contain_start_line(q) || doc.contain_start_line(v)) && // THESE TWO LINES CONATIN MAYBE SOME ERROR
+			    doc.allign_H_paragraph(q,v) // FIX THE PROBLEM BEFORE TO START IT
+			    )
+			  {
+			    doc.debug_draw_line_green_buffer(q,v);
+			    doc.add_to_paragraph_link(q,v);
+			  }
+			}
+		      }
+		    }
+		    doc.propage_paragraph_link();
+      }
   
   
       template<typename L, typename F, typename D>

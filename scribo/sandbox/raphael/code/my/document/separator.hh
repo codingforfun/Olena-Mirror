@@ -10,7 +10,37 @@ namespace mymln
   {
       namespace separators
       {
-	//TODO: CHANGER contain_Hseparator en VSeparator Le H c etait pour le test
+	
+	
+	template<typename L, typename F, typename D>
+	void separators_find_wrong(mymln::document::document<L,F,D>& doc)
+	{
+	  
+	    typedef vertex_image<point2d,bool> v_ima_g;
+	    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+	    v_ima_g mask = doc.fun_mask_V_separators();
+	    mln_piter_(v_ima_g) v(mask.domain());
+	    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+	    nbh_t nbh(mask);
+	    mln_niter_(nbh_t) q(nbh, v);
+	    mymln::util::union_find<L> sep_union(doc.size());
+	    for_all(v)
+	    {
+	      if(doc.contain_letter(v))
+	      {
+		for_all(q)
+		{
+		  if(doc.is_big_element_V(q)){continue;}
+		  if(doc.allign_proximity_strict(q,v) && doc.allign_V(q,v) && doc.allign_size(q,v))
+		  {doc.debug_draw_line_red_buffer(q,v); doc.add_letter_coerce(q);}
+		  else if(doc.allign_V(q,v) && doc.allign_size(q,v) && doc.allign_proximity_left(v,q))
+		  {doc.debug_draw_line_red_buffer(q,v); doc.add_letter_coerce(q);}
+		}
+	      }
+	    }
+	  
+	}
+	
 	template<typename L, typename F, typename D>
 	void separators_rebuild(mymln::document::document<L,F,D>& doc)
 	{
@@ -27,8 +57,11 @@ namespace mymln
 	      if(!doc[v]){continue;}
 	      if(doc.contain_Vseparator(doc[v]) && !sep_union[doc[v]])
 	      {
+
 		sep_union[doc[v]] = sep_union.new_set();
 		sep_union.add_self_link(doc[v]);
+		if(doc.is_very_big_element_V(v))
+		{ continue; }
 	      }
 		for_all(q)
 		{
@@ -256,6 +289,11 @@ namespace mymln
 			  count[doc[q]]++;
 			}
 		      }
+		      else if(doc.allign_proximity_strict(q,v) && doc.allign_left(v,q) && doc.allign_V(q,v) && doc.same_line(q, v))
+		      {
+			count[doc[q]]++;
+			doc.debug_draw_line_orange_buffer(v, q);
+		      }
 		      
 		  }
 		}
@@ -307,6 +345,11 @@ namespace mymln
 			  doc.debug_draw_box_green_buffer(q);
 			  doc.debug_draw_line_green_buffer(v, q);
 			}
+		      }
+		      else if(doc.allign_proximity_strict(q,v) && doc.allign_right(v,q)  && doc.allign_V(q,v) && doc.same_line(q, v))
+		      {
+			count[doc[q]]++;
+			doc.debug_draw_line_orange_buffer(v, q);
 		      }
 		      
 		  }
