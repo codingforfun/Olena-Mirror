@@ -44,7 +44,6 @@
 #include <my/document/separator.hh>
 #include <my/document/clean.hh>
 #include <my/document/recognition.hh>
-
 #include <my/runtime/runtime.hh>
 #include <my/runtime/lib.hh>
 
@@ -72,7 +71,6 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     /* CREATE GRAPH */
       typedef value::int_u<16> uint16;
     image2d<bool> ima;
-    
    mln::util::timer timer;
    timer.start();
    io::pbm::load(ima, Dir + "/" + File);

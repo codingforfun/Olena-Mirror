@@ -59,7 +59,59 @@ namespace mymln
       
       return out;
     }
+    template <typename I, typename N>
+    image2d<bool> threshold(const Image<I>& iz_, const Neighborhood<N>& nbh_)
+    {
 
+      const I& iz = exact(iz_);
+      const N& nbh = exact(nbh_);
+
+      
+     image2d<bool> out(iz.domain());
+     
+      mln_pixter(const I)    p(iz);
+      mln_nixter(const I, N) n(p, nbh);
+   
+      for_all(p)
+      {
+	unsigned int count = 0;
+	int variate = 0;
+	for_all(n)
+	{
+	    variate += n.val();
+	    count++;
+	}
+	variate /= count;
+	variate -= p.val();
+	if(variate > 10)
+	{
+	  out.element(p.offset()) = true;
+	}
+      }
+      
+   
+      for_all(p)
+      {
+	unsigned int count = 0;
+	int variate = 0;
+	if(out.element(p.offset()))
+	{
+	  for_all(n)
+	  {
+	    if(out.element(n.offset()))
+	      count++;
+	  }
+	  if(count == 0)
+	  {
+	    out.element(p.offset()) = false;
+	  }
+	}
+      }
+      
+      
+      
+      return out;
+    }
     template <typename I, typename N>
     image2d<value::int_u8> luminance(const Image<I>& iz_)
     {

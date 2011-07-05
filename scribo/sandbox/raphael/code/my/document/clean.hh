@@ -144,7 +144,7 @@ namespace mymln
 	       if((!doc.contain_line(q)))
 	       {
 		 // draw::line(out, q,v, mln::literal::blue);
-		 if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_proximity_large(q, v) )
+		 if(doc.allign_V(q,v) && doc.allign_size_medium(q, v) && doc.allign_proximity_large(q, v) )
 		 {
 		   doc.add_to_line_link(v, q);
 		   All_Alone = false;
@@ -152,7 +152,7 @@ namespace mymln
 	       }
 	       else
 	       {
-		 if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_proximity_large(q, v))
+		 if(doc.allign_V(q,v) && doc.allign_size_medium(q, v) && doc.allign_proximity_large(q, v))
 		 {
 		  doc.add_to_line_link(q, v);
 		  All_Alone = false;
@@ -303,6 +303,53 @@ namespace mymln
 	 doc.propage_line_link();
 	 doc.recook_lines();
       }
+      
+      
+      
+      
+      
+      template<typename L, typename F, typename D>
+      void clean_apostrophe_items(mymln::document::document<L,F,D>& doc)
+      {
+      typedef vertex_image<point2d,bool> v_ima_g;
+      typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+      v_ima_g mask = doc.fun_mask_start_end_lines();
+      mln_piter_(v_ima_g) v(mask.domain());
+      typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+      nbh_t nbh(mask);
+      mln_niter_(nbh_t) q(nbh, v);
+      for_all(v)
+      {
+	  if(doc.contain_line(v) )
+	  {
+	    for_all(q)
+	    { 
+	      if(
+		doc.get_line_length(q) == 1 &&
+		doc.line_reciprocal(q,v) &&
+		doc.allign_top(v,q) &&
+		doc.letter_ratio_YX(q) > 1 &&
+		!doc.allign_H_tube(v,q) &&
+		doc.allign_proximity_strict_left(v,q) &&
+		doc.allign_small_item_large(v,q)
+		
+		)
+	      {
+		doc.debug_draw_line_green_buffer(q,v);
+		doc.add_to_line_link(v,q);
+	      }
+	    }
+	  }
+	}
+	 doc.propage_line_link();
+	 doc.recook_lines();
+      }
+      
+      
+      
+      
+      
+      
     
     template<typename L, typename F, typename D>
     void clean_line_link_item(mymln::document::document<L,F,D>& doc)
@@ -474,7 +521,7 @@ namespace mymln
 	    L End = 0;
 	      for_all(q)
 	      {
-		if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_proximity(q,v))
+		if(doc.allign_V(q,v) && doc.allign_size_medium(q, v) && doc.allign_proximity(q,v))
 		{
 		  if(doc[q] == doc.get_beginning_of_line(q))
 		  {Start = doc[q]; }
@@ -485,7 +532,7 @@ namespace mymln
 	      }
 	      if(Start && End){doc.add_to_line_link(Start, doc[v]);}
 	}
-	doc.propage_paragraph_link();
+	doc.propage_line_link();
 	
     }
  
@@ -1167,10 +1214,14 @@ namespace mymln
 				      doc.return_previous_line(doc[q]) == doc.return_previous_line(doc[v])
 				    )
 				  {
-				   if(doc.get_line_length(q) < 4 || doc.get_line_length(v) < 4  )
-				    doc.debug_draw_line_green_buffer(q,v);
-				   doc.add_to_line_link(v, q);
-				   doc.add_to_paragraph_link(v, q);
+				   //if(doc.get_line_length(q) < 4 || doc.get_line_length(v) < 4  )
+				     
+				     if(doc.get_paragraph_length(v) < 3 || doc.get_line_length(q) < 3)
+				     {
+					doc.debug_draw_line_green_buffer(q,v);
+					doc.add_to_line_link(v, q);
+					doc.add_to_paragraph_link(v, q);
+				     }
 				  }
 				}
 			      }
@@ -1396,10 +1447,37 @@ namespace mymln
 		     doc.propage_paragraph_link();
 		    
       }
+	template<typename L, typename F, typename D>
+      void clean_ellipsis(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_start_end_lines();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      for_all(q)
+		      {
+			if(
+			  doc.get_line_length(q) == 3 &&
+			  doc.allign_base_line_line_strict(v, q) &&
+			  doc.allign_smaller_line_strict(v,q) &&
+			  doc.allign_proximity_large_left(v,q)
+			  )
+			{
+			  doc.debug_draw_line_green_buffer(q,v);
+			  doc.add_to_line_link(v,q);
+			}
+		      }
+		    }
+		    doc.propage_line_link();
+      }
   
   
-  
-  
+
   
   
   }

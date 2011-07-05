@@ -1,6 +1,6 @@
 #ifndef INC_RUNTIME_LIB
 #define INC_RUNTIME_LIB
-
+#include<my/document/image.hh>
 using namespace mln;
 using namespace std;
 namespace mymln
@@ -66,6 +66,12 @@ namespace mymln
 	    run.add_function("clean.paragraphs_couple",  &(mymln::document::clean_paragraphs_couple));
 	    
 	    run.add_function("clean.paragraphs_first_line", &(mymln::document::clean_paragraphs_first_line));
+	    run.add_function("clean.ellipsis", &(mymln::document::clean_ellipsis));
+	    run.add_function("clean.apostrophe_items", &(mymln::document::clean_apostrophe_items));
+	    
+	    
+	    run.add_function("image.bad_paragraph", &(mymln::document::image_bad_paragraph));
+	    run.add_function("image.anomalies_paragraph", &(mymln::document::image_anomalies_paragraph));
     }
 
     template<typename L, typename F, typename D>

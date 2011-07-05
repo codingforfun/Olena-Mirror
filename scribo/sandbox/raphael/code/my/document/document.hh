@@ -58,6 +58,7 @@ namespace mymln
 	  alone_letters_mask = fun::i2v::array<bool>(Areas + 1);
 	  implicit_separators_left_mask = fun::i2v::array<bool>(Areas + 1);
 	  implicit_separators_right_mask = fun::i2v::array<bool>(Areas + 1);
+	  anomaly_mask = fun::i2v::array<bool>(Areas + 1);
 	  kill_mask = fun::i2v::array<bool>(Areas + 1);
 	  all_mask = fun::i2v::array<bool>(Areas + 1);
 	  CImpSep = 1;
@@ -509,6 +510,7 @@ namespace mymln
 	  /* SET UP SPECIAL MASK TO FALSE */
 	  implicit_separators_left_mask(lbl) = false;
 	  implicit_separators_right_mask(lbl) = false;
+	  anomaly_mask(lbl) = false;
 	  kill_mask(lbl) = false;
 	  temp_letter(lbl) = false;
 	}
@@ -546,6 +548,25 @@ namespace mymln
 	  all_letters_mask(lbl) = false;
 	  temp_letter = false;
 	}
+	
+	
+	
+	void add_anomaly(const point2d& point)
+	{add_anomaly(img_influ(point));}
+	void add_anomaly(const Label lbl)
+	{anomaly_mask(lbl) = true;}
+	
+	
+	void remove_anomaly(const point2d& point)
+	{remove_anomaly(img_influ(point));}	
+	void remove_anomaly(const Label lbl)
+	{anomaly_mask(lbl) = false;}	
+	
+	
+	bool contain_anomaly(const point2d& point)
+	{return contain_anomaly(img_influ(point));}
+	void contain_anomaly(const Label lbl)
+	{return anomaly_mask(lbl);}		
 	
 	void add_alone_letter(const point2d& point)
 	{add_alone_letter(img_influ(point));}
@@ -1399,7 +1420,26 @@ namespace mymln
 	      return  (DisA) * 3 < HA * 2;
 	  }
 
-
+	  inline bool allign_proximity_strict_left( const point2d& Left, const point2d& Right)
+	  {return allign_proximity_strict_left(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_proximity_strict_left( const Label Left, const Label Right)
+	  {
+	      box2d LB = _bboxgp[Left];
+	      box2d RB = _bboxgp[Right];
+	      
+	      int DisA = LB.pmax()[1] - RB.pmin()[1];
+	      int DisB = RB.pmax()[1] - LB.pmin()[1];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }      
+	      unsigned int HA = LB.len(0);
+	      unsigned int VA = LB.len(1);
+	      if(VA > HA)
+	      { HA = VA; }	      
+	      return  (DisA) * 2 < HA;
+	  }
 
 
 	  inline bool allign_proximity_large_left( const point2d& Left, const point2d& Right)
@@ -1499,6 +1539,23 @@ namespace mymln
 	  }
 	  
 	  
+	  inline bool allign_size_medium( const point2d& Left, const point2d& Right)
+	  {return allign_size_medium(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool allign_size_medium( const Label Left, const Label Right)
+	  {
+	     short int SizeL0 = label_size_(0, Left);
+	      short int SizeR0 = label_size_(0, Right);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int SizeR1 = label_size_(1, Right);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
+	    return  SizeR0 > (SizeL0 / 3) && SizeR0 < (SizeL0 * 3);
+	  }
+	  
+	  
 	  inline bool allign_size_height_max( const point2d& Left, const point2d& Right)
 	  {return allign_size_height_max(img_influ(Left), img_influ(Right));}
 	  
@@ -1567,7 +1624,14 @@ namespace mymln
 	      lines_bbox[lines_union[Left]].len(0) < (_bboxgp[Right].len(0) * 12) &&
 	      lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 2);
 	  }
-
+	  inline bool allign_small_item_large( const point2d& Left, const point2d& Right)
+	  {return allign_small_item_large(img_influ(Left), img_influ(Right));}
+	    inline bool allign_small_item_large( Label Left, Label Right)
+	  {
+	    return  
+	      lines_bbox[lines_union[Left]].len(0) < (_bboxgp[Right].len(0) * 12) &&
+	      lines_bbox[lines_union[Left]].len(0)*2 > (_bboxgp[Right].len(0) * 3);
+	  }
 	  inline bool allign_small_item_line( const point2d& Left, const point2d& Right)
 	  {return allign_small_item(img_influ(Left), img_influ(Right));}
 	    inline bool allign_small_item_line( Label Left, Label Right)
@@ -1594,7 +1658,12 @@ namespace mymln
 	  {
 	    return  lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 2);
 	  }
-
+	  inline bool allign_smaller_line_strict( const point2d& Left, const point2d& Right)
+	  {return allign_smaller_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool allign_smaller_line_strict( Label Left, Label Right)
+	  {
+	    return  lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 3);
+	  }
 	  inline bool allign_smaller_line_letter( const point2d& Left, const point2d& Right)
 	  {return allign_smaller_line_letter(img_influ(Left), img_influ(Right));}
 	  inline bool allign_smaller_line_letter( Label Left, Label Right)
@@ -2170,6 +2239,8 @@ namespace mymln
 	  { return fun_mask_(image_mask); }
 	  vertex_image<point2d,bool> fun_mask_letters()
 	  { return fun_mask_(letters_mask); }
+	  vertex_image<point2d,bool> fun_mask_anomalies()
+	  { return fun_mask_(anomaly_mask); }
 	   vertex_image<point2d,bool> fun_mask_start_lines()
 	  { return fun_mask_(start_lines_mask); }
 	  vertex_image<point2d,bool> fun_mask_end_lines()
@@ -2351,6 +2422,18 @@ namespace mymln
 	    return 
 	      paragraphs_bbox[paragraphs_union[Par1]].has(paragraphs_bbox[paragraphs_union[Par2]].pmin()) &&
 	      paragraphs_bbox[paragraphs_union[Par1]].has(paragraphs_bbox[paragraphs_union[Par2]].pmax()) ;
+	  }
+	  
+	  inline bool line_reciprocal(const point2d& L1, const point2d& L2)
+	  {return line_reciprocal(img_influ(L1), img_influ(L2));}
+	  
+	  inline bool line_reciprocal(Label L1, Label L2)
+	  {
+	    return 
+	      lines_bbox[lines_union[L1]].has(lines_bbox[lines_union[L2]].pmin()) ||
+	      lines_bbox[lines_union[L1]].has(lines_bbox[lines_union[L2]].pmax()) ||
+	      lines_bbox[lines_union[L2]].has(lines_bbox[lines_union[L1]].pmin()) ||
+	      lines_bbox[lines_union[L2]].has(lines_bbox[lines_union[L1]].pmax()) ;
 	  }
 	  
 	  inline bool line_influence_reciprocal(const point2d& L1, const point2d& L2)
@@ -2541,9 +2624,12 @@ namespace mymln
 	}
 	inline bool contain_implicit_separator(const point2d& point)
 	{ return contain_implicit_separator(img_influ(point)); }
-
+	inline bool contain_noise(const point2d& point)
+	{ return contain_noise(img_influ(point)); }
 	inline bool contain_implicit_separator(const Label lbl)
 	{return implicit_separators_union[lbl] != 0; }
+	inline bool contain_noise(const Label lbl)
+	{return noise_mask(lbl); }
 	
 	inline void merge_separators(const point2d& A, const point2d& B)
 	{
@@ -3389,6 +3475,7 @@ namespace mymln
 	fun::i2v::array<bool> kill_mask;
 	fun::i2v::array<bool> all_mask;
 	fun::i2v::array<bool> image_mask; 
+	fun::i2v::array<bool> anomaly_mask;
 	mln::util::array<std::string> tag_lbl;
 	mln::util::array<bool> Btag_lbl;
 	
