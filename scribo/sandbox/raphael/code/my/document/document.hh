@@ -1,6 +1,25 @@
 #ifndef INC_DOCUMENT_DOC
 #define INC_DOCUMENT_DOC
 #include <mln/accu/shape/bbox.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
+#include <mln/debug/draw_graph.hh>
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/transform/influence_zone_geodesic.hh>
+#include <mln/make/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/make/influence_zone_adjacency_graph.hh>
+#include <mln/make/w_window2d.hh>
+#include <mln/labeling/value_and_compute.hh>
+#include <mln/make/image.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_u.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/algebra/vec.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
+#include <mln/graph/compute.hh>
 #include<my/util/vector_bbox_group.hh>
 #include<my/util/union.hh>
 #include<my/debug/pict.hh>
@@ -9,9 +28,11 @@
 using namespace mln;
 namespace mymln
 {
+
   namespace document
   {
-
+  /// THE CLASS DOCUMENT STORE DATA THAT ALLOW THE USER TO PERFORM OPPERATIONS ON A DOCUMENT
+  /// DESCRIBED BY A GRAPH
     template<typename Label, typename Float, typename Data>
     class document
     {
@@ -86,6 +107,10 @@ namespace mymln
 	  lines_cooked = false;
 	  Enable_Debug_Buffer = false; // Remanant version of debug_buffer_enable
 	}
+	inline unsigned int height()
+	{return img_influ.domain().height();}
+	inline unsigned int width()
+	{return img_influ.domain().width();}
 	inline bool killed(const Label lbl)
 	{return kill_mask(lbl);}
 	inline void kill(const Label lbl)
@@ -102,7 +127,10 @@ namespace mymln
 	{ return p[0] > ((img_influ.domain().len(0) / 8) * 7);}
 	inline bool in_footer(Label lbl)
 	{ return in_footer(_bboxgp[lbl]); }
-	
+	inline bool is_word(const point2d& p)
+	{ return is_word(img_influ(p)); }
+	inline bool is_word(const Label lbl)
+	{ return lines_space[lbl] < lines_width[lbl] / 15.0f; }
 	/* OPERATION ON PARAGRAPH */
 	inline bool link_paragraphs()
 	{
@@ -337,6 +365,43 @@ namespace mymln
 	{return  lines_bbox[lines_union[A]].len(0) < _bboxgp[A].len(0) * 2 ;}
 
 
+	inline bool is_line_artefact(const point2d& A)
+	{return is_line_artefact(img_influ(A));}
+	inline bool is_line_artefact(const Label A)
+	{
+	  return  lines_bbox[lines_union[A]].len(0) > _bboxgp[A].len(0) * 24;
+	}
+
+	inline void clean_noise_lines()
+	{
+	  for(int N = 0;N < Areas_Number_; N++)
+	  {
+	    if(noise_mask(N))
+	    {
+		if(lines_union[N] || lines_union.link(N))
+		{
+		    lines_union.invalidate_link(N);
+		    lines_union[N] = 0;
+		    
+		}
+	    }
+	  }
+	  for(int N = 0;N < Areas_Number_; N++)
+	  {	  
+	    if(lines_union[N] && lines_union[lines_first_label[lines_union[N]]])
+	    {
+
+	      lines_union.add_link(lines_first_label[lines_union[N]], N);
+	    }
+	    else if(lines_union[N])
+	    {
+	      lines_union.add_self_link_coerce(N);
+	      lines_first_label[lines_union[N]] = N;
+	    }
+	  }
+	}
+
+
 	inline bool in_end_of_line(const point2d& A)
 	{return in_end_of_line(img_influ(A));}
 	inline bool in_end_of_line(const Label A)
@@ -413,19 +478,28 @@ namespace mymln
 	{ 
 	  if(lines_union[lbl] && lines_union.is_self_link(lbl))
 	  {
+	    
+	    if(lines_len[lbl] < 2){ return false; } // THE ITEM IS ALONE ON THE LINE
+	    
 	    if(lines_first_label[lines_union[lbl]] == lbl)
 	    {
-	      if(lines_union[lines_last_label[lines_union[lbl]]] == 0) // CHECK IF THE LAST LABEL HAS NOT BEEN REMOVED
-		recook_lines();
 	      
+	      if(lines_union[lines_last_label[lines_union[lbl]]] == 0) // CHECK IF THE LAST LABEL HAS NOT BEEN REMOVED
+	      {
+		  if(lines_len[lbl] < 3){ return false; } // THE LINE HAS TWO ITEM AND ONE HAS BEEN REMOVED
+		recook_lines();
+	      }
 	      lines_union.add_link(lines_last_label[lines_union[lbl]], lbl);
 	      lines_union.add_self_link(lines_last_label[lines_union[lbl]]);
 	    }
 	    else if(lines_last_label[lines_union[lbl]] == lbl)
 	    {
+
 	      if(lines_union[lines_first_label[lines_union[lbl]]] == 0) // CHECK IF THE FIRST LABEL HAS NOT BEEN REMOVED
+	      {
+		if(lines_len[lbl] < 3){ return false; } // THE LINE HAS TWO ITEM AND ONE HAS BEEN REMOVED
 		recook_lines();
-	      
+	      }
 	      lines_union.add_link(lines_first_label[lines_union[lbl]], lbl);
 	      lines_union.add_self_link(lines_first_label[lines_union[lbl]]);
 	    }
@@ -463,7 +537,7 @@ namespace mymln
 	{ return  paragraphs_first_line[paragraphs_union[lbl]] == lines_union[lbl];}
 	
 	inline bool contain_end_line(const Label lbl)
-	{ return  start_lines_mask(lbl);}
+	{ return  end_lines_mask(lbl);}
 	
 	inline void add_noise(const point2d& point)
 	{add_noise(img_influ(point));}
@@ -1203,6 +1277,22 @@ namespace mymln
 	  }
 
 
+
+	  inline bool allign_size_height_line_artefact( const point2d& Line, const point2d& Artefact)
+	  {
+	    return  allign_size_height_line_artefact(img_influ(Line), img_influ(Artefact));
+	  }
+
+	  inline bool allign_size_height_line_artefact( const Label Line, const Label Artefact)
+	  {
+	      short int SizeL = lines_bbox[lines_union[Line]].len(0);
+	      short int SizeR = _bboxgp[Artefact].len(0);
+	    return  SizeR > (SizeL / 2.3f) && SizeR < (SizeL * 1.1f);
+	  }
+
+
+
+
 	  inline bool allign_size_height_line( const point2d& Left, const point2d& Right)
 	  {
 	    return  allign_size_height_line(img_influ(Left), img_influ(Right));
@@ -1587,6 +1677,21 @@ namespace mymln
 	    return  allignV < lines_bbox[lines_union[Left]].len(0) && allignV < lines_bbox[lines_union[Right]].len(0);
 	  }
 	  
+	  
+	  
+	  inline bool allign_V_line_artefact( const point2d& Line, const point2d& Artefact)
+	  {return allign_V_line_artefact(img_influ(Line), img_influ(Artefact));}
+	  
+	  inline bool allign_V_line_artefact( Label Line, Label Artefact)
+	  {
+	    short int allignV = lines_bbox[lines_union[Line]].pcenter()[0] - _bboxgp[Artefact].pcenter()[0];
+	    if(allignV<0){allignV = -allignV;}
+	    allignV *= 5;
+	    return  allignV < lines_bbox[lines_union[Line]].len(0) && allignV < _bboxgp[Artefact].len(0);
+	  }
+	  
+	  
+	  
 	  	  inline bool allign_V_line_strict( const point2d& Left, const point2d& Right)
 	  {return allign_V_line_strict(img_influ(Left), img_influ(Right));}
 	  
@@ -1640,7 +1745,6 @@ namespace mymln
 	      lines_bbox[lines_union[Left]].len(0) < (lines_bbox[lines_union[Right]].len(0) * 12) &&
 	      lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 2);
 	  }
-
 
 
 
@@ -2002,6 +2106,26 @@ namespace mymln
 	    }
 	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
 	  }
+	  inline void debug_draw_string(const point2d& P, const char* string)
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      mln_VAR(pmin, _bboxgp[img_influ(P)].pmax());
+	      mln_VAR(pmax, _bboxgp[img_influ(P)].pmax());
+	      pmin[0] = _bboxgp[img_influ(P)].pmin()[0];
+	      pmin[1] = pmin[1] + 3;
+	      pmax[0] = pmin[0] + 20;
+	      pmax[1] = pmin[1] + 11;
+	      box2d font_size(pmin, pmax);
+	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
+	    }
+	  }
+	  
+	  inline void debug_draw_string(const point2d& P,int value)
+	  {
+	    debug_draw_string(P, itoa(value).c_str());
+	  }
+	  
 	  inline void debug_draw_box_red_buffer(const point2d& L)
 	  {debug_draw_box_red_buffer(img_influ(L));}
 	  inline void debug_draw_box_green_buffer(const point2d& L)
@@ -2326,13 +2450,21 @@ namespace mymln
 	  /// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
 	  inline unsigned int get_line_length_direct(unsigned int ID)
 	  { return lines_len[ID]; }
-
+	   /// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
+	  inline box2d get_line_bbox_direct(unsigned int ID)
+	  { return lines_bbox[ID]; }
 	  inline unsigned int get_line_width(point2d point)
 	  { return get_line_width(img_influ(point)); }
 	  
 	  inline unsigned int get_line_width(Label L)
 	  { return lines_bbox[lines_union[L]].len(1); }
 	  
+
+	  /// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
+	  inline unsigned int get_line_parent(unsigned int ID)
+	  { return  paragraphs_union[lines_first_label[ID]]; }
+
+
 
 	  inline Float letter_ratio_YX(const point2d& point)
 	  {return letter_ratio_YX(img_influ(point));}
@@ -2414,6 +2546,14 @@ namespace mymln
 	      paragraphs_bbox_influ[paragraphs_union[Par1]].has(lines_bbox[lines_union[Line2]].pmax()) ;
 	  }
 
+	  inline bool paragraph_included_letter(point2d Par1, point2d Letter2)
+	  { return paragraph_included_letter(img_influ(Par1), img_influ(Letter2)); }
+	  inline bool paragraph_included_letter(Label Par1, Label Letter2)
+	  { 
+	    return 
+	      paragraphs_bbox[paragraphs_union[Par1]].has(_bboxgp[Letter2].pmin()) &&
+	      paragraphs_bbox[paragraphs_union[Par1]].has(_bboxgp[Letter2].pmax()) ;
+	  }
 
 	  inline bool paragraph_included(point2d Par1, point2d Par2)
 	  { return paragraph_included(img_influ(Par1), img_influ(Par2)); }
@@ -2855,6 +2995,25 @@ namespace mymln
 	{return get_letter_middle_space(img_influ(point));}
 	inline unsigned int get_letter_middle_space(const Label lbl)
 	{return lines_space[lines_union[lbl]];}
+	
+	
+	inline short int get_line_distance(const point2d& Line, const point2d& Item)
+	{ return get_line_distance(img_influ(Line), img_influ(Item));}
+	inline short int get_line_distance(const Label Line, const Label Item)
+	{
+	  short int DisLeft = _bboxgp[Item].pmin()[1] - lines_bbox[lines_union[Line]].pmax()[1];
+	  if(DisLeft < 0){DisLeft = -DisLeft;}
+	  short int DisRight = _bboxgp[Item].pmax()[1] - lines_bbox[lines_union[Line]].pmin()[1];
+	  if(DisRight < 0){DisRight = -DisRight;}
+	  short int DisUp = _bboxgp[Item].pmin()[0] - lines_bbox[lines_union[Line]].pmax()[0];
+	  if(DisUp < 0){DisUp = -DisUp;}
+	  short int DisDown = _bboxgp[Item].pmax()[0] - lines_bbox[lines_union[Line]].pmin()[0];
+	  if(DisDown < 0){DisDown = -DisDown;}
+	  if(DisLeft > DisRight){DisLeft = DisRight;}
+	  if(DisUp > DisDown){DisUp = DisDown;}
+	  if(DisUp > DisLeft){return DisLeft;}
+	  else{return DisUp;}
+	}
 	
 	
 	inline unsigned int get_letter_middle_height(const point2d& point)
@@ -3404,6 +3563,7 @@ namespace mymln
 	  Data SY = label_size_(1, label);
 	  return SX >= Min && SY >= Min || SX >= Min * 2 || SY >= Min * 2;
 	}
+
 	inline bool label_valid_ratio_(Label label, Float Min, Float Max)
 	{
 	  Float Ratio = label_ratio_(label);
@@ -3653,6 +3813,20 @@ namespace mymln
 	/* IMPLICIT SEPARATOR DETECTION */
 	mymln::util::union_find<Label> implicit_separators_union;
 	mymln::util::union_find<Label> implicit_separators_union_right;
+	
+	
+	std::string itoa(int value)
+	{
+	  std::string output = "";
+	  if(value < 0){output+="-"; value = -value;}
+	  while(value >= 10)
+	  {
+	    output = (char)('0' + (value % 10)) + output;
+	    value /= 10;
+	  }
+	  output = (char)('0' + value) + output;
+	  return output;
+	}
     };
   }
 }

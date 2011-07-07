@@ -9,7 +9,7 @@ namespace mymln
     {
       std::string output = "";
       if(value < 0){output+="-"; value = -value;}
-      while(value > 10)
+      while(value >= 10)
       {
 	output = (char)('0' + (value % 10)) + output;
 	value /= 10;
@@ -43,6 +43,10 @@ namespace mymln
 	{
 	  Font_Size_ = px;
 	}
+	int get_font_size()
+	{
+	  return Font_Size_;
+	}
 	// WARNING THIS FUNCTION USE iota
 	// iota is define only in mymln::data
 	// this is not a standart function you can use everywhere
@@ -55,7 +59,7 @@ namespace mymln
 	  output += "position:absolute;";
 	  output += "left:" + itoa(pmin_X) + ";";
 	  output += "top:" + itoa(pmin_Y) + ";";
-	  output += "}";
+	  output += "} \n";
 	  // FIXME
 	  return output;
 	}

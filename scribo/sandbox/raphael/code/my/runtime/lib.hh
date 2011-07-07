@@ -68,10 +68,11 @@ namespace mymln
 	    run.add_function("clean.paragraphs_first_line", &(mymln::document::clean_paragraphs_first_line));
 	    run.add_function("clean.ellipsis", &(mymln::document::clean_ellipsis));
 	    run.add_function("clean.apostrophe_items", &(mymln::document::clean_apostrophe_items));
-	    
-	    
+	    run.add_function("clean.finalize_letters", &(mymln::document::clean_finalize_letters));
+	    run.add_function("clean.lines_artefacts", &(mymln::document::clean_lines_artefacts));
 	    run.add_function("image.bad_paragraph", &(mymln::document::image_bad_paragraph));
 	    run.add_function("image.anomalies_paragraph", &(mymln::document::image_anomalies_paragraph));
+	    
     }
 
     template<typename L, typename F, typename D>

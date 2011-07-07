@@ -34,6 +34,7 @@
 #include <mln/algebra/vec.hh>
 #include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/graph/compute.hh>
+#include <my/draw/string.hh>
 
 #include <mln/draw/plot.hh>
 #include <my/debug/pict.hh>
@@ -54,6 +55,16 @@
 #include <my/debug/remote/document_remote.hh>
 #include <my/debug/remote/lib.hh>
 #endif
+
+
+
+
+#ifndef NDEMO
+#include <demo/demo_extract_paragraphs.hh>
+#endif
+
+
+
 using namespace mln;
 using namespace std;
 
@@ -133,126 +144,24 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
       doc.add(N, (uint16)link);
 	
     }
-    //mymln::debug::save_label_image(ima_influ, "influ_" + File);
-   /*
-    mymln::document::clean_containers_items(doc);
-    mymln::document::clean_letters_items(doc);
-    mymln::document::clean_get_lines(doc);
-      
-
     
-    mymln::document::clean_letters_alone(doc);
-    doc.cook_lines(); 
-    mymln::document::clean_included_letters(doc);
-    doc.recook_lines();
-    mymln::document::clean_dot_items(doc);  
-    doc.recook_lines();
-    mymln::document::clean_quote_items(doc);
-    doc.recook_lines();
- 
-    
-    mymln::document::clean_between(doc);
-    doc.recook_lines();
-    doc.compute_letter_middle_height();
-    doc.compute_letter_middle_width();
-    mymln::document::clean_odd_letters(doc);
-    doc.recook_lines();
-    
-*/
-    
-    /*doc.compute_letter_middle_space();
-    mymln::document::clean_lines_space(doc, Dir + "/" + "quote_graph_" + File, doc.image_mask_letters());
-     doc.recook_lines();*/
-     
-/*
-    
-      mymln::document::separators::separators_find_allign(doc);
-      mymln::document::separators::separators_make_clean(doc);
-      doc.cook_separators();
-      doc.cook_line_splitting();
-
-    
-      mymln::document::clean_line_link_item(doc);
-      mymln::document::clean_proximity_lines(doc); 
-      mymln::document::clean_quote_lines(doc);
-      doc.recook_lines();
-
-
-      
-      
-      doc.reset_implicit_separators();
-      mymln::document::separators::separators_find_allign_right(doc);
-      mymln::document::separators::separators_make_clean_right(doc);
-      doc.cook_separators_right();
-      doc.cook_line_splitting_exclusive();
-      mymln::document::clean_line_link_item(doc);   
-
-      mymln::document::clean_proximity_lines(doc);      
-      mymln::document::clean_quote_lines(doc);  
-      mymln::document::clean_alone_letters_lines(doc);
-      doc.recook_lines();
-      
-
-      doc.compute_letter_middle_height();
-      doc.compute_letter_middle_width();
-      mymln::document::clean_odd_letters(doc);
-      doc.recook_lines();
-      */
-   /*
-    mymln::document::clean_lines_space(doc, Dir + "/" + "alone_graph_" + File, doc.image_mask_letters());
-     doc.recook_lines();*/
-   
-   /*
-      mymln::document::remove_alone_letter(doc);
-    
-    doc.recook_lines();
-    
-    mymln::document::clean_paragraph_items(doc);
-    doc.cook_paragraphs();
-
-    
-    mymln::document::clean_paragraphs_up(doc);
-    doc.recook_paragraphs();
-
-    mymln::document::clean_paragraphs_large(doc);
-    doc.recook_paragraphs();
-    mymln::document::clean_included_paragraphs(doc);
-    doc.recook_paragraphs();
-    
-
-        doc.recook_lines();
-    */
-   
-   
       runtime.run();
       std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
+      mymln::data::page<uint16,float,short> page(doc);
+      page.export_HTML(Dir + "/debug_" + File + ".html");
+ 
       
       
-      //mymln::data::page<uint16,float,short> page(doc);
-      //page.export_HTML( Dir + "/" + File + ".html");
-    
-
-	/*    
-    doc.cook_lines_iter();
-    std::cout << doc.get_first_line();
-    
-    
-    
-    
-     doc.compute_letter_middle_space();
-     
-     mymln::document::recognize_minus(doc);
-     mymln::document::recognize_dot(doc);
-    for(int Line = doc.get_first_line(); Line; doc.get_next_line(Line))
-    {
-          std::cout << doc.get_line_string(Line) << endl;
-    }
-         
-    //doc.debug_save_lines(Dir + "/" + "lines_" + File);
-    //doc.debug_save_all(Dir + "/" + "debug_" + File, ima);
-    */
-    
+      
+      
+      // THE DEMOS START HERE
+#ifndef NDEMO
+      demo_extract_paragraphs(doc);
+#endif NDEMO
+      
+      
 }
+
 
 #ifndef NREMOTE
 // THIS IS USED TO CREATE A FILTER WITHOUT RECOMPILING

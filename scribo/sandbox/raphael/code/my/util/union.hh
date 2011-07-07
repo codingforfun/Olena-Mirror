@@ -32,6 +32,11 @@ namespace mymln
 	{return mark_link[A] == A;}
 	inline void invalidate_link(const Label A)
 	{ mark_link[A] = 0; }
+	inline void add_self_link_coerce(const Label A)
+	{
+	  if(!A){return;}
+	  mark_link[A] = A;
+	}
 	inline void add_self_link(const Label A)
 	{ 
 	  if(!A){return;}

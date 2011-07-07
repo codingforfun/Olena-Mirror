@@ -37,8 +37,10 @@ namespace mymln
 			    
 			    )
 			  {
+			    doc.move_line_self_link(doc[v]);
 			    doc.debug_draw_line_green_buffer(q,v);
 			    doc.debug_draw_box_green_buffer(v);
+			    doc.add_noise(v);
 			  }
 			}
 		      }
@@ -58,23 +60,33 @@ namespace mymln
 		    mln_niter_(nbh_t) q(nbh, v);
 		    for_all(v)
 		    {
+		      if(doc.contain_end_line(v))
+		      {
+			doc.debug_draw_string(v, doc.get_line_length(v));
+		      }
 		      if(
 			doc.contain_paragraph(v) &&
 			doc.get_paragraph_length(v) < 3 &&
-			doc.get_line_length(v) < 4
+			doc.get_line_length(v)  < 20
 			)
 		      {
+			unsigned int noise_count = 0;
 			for_all(q)
 			{
 			  if(doc.contain_noise(q))
 			  {
-			    doc.debug_draw_line_green_buffer(q,v);
-			    doc.debug_draw_box_green_buffer(v);
+
+			    noise_count++;
 			  }
+			}
+			if(noise_count > 3)
+			{
+			  doc.move_line_self_link(doc[v]);
+			  doc.debug_draw_box_green_buffer(v);
+			  doc.add_noise(v);
 			}
 		      }
 		    }
-		    doc.propage_line_link();
       }
   }
 }

@@ -728,9 +728,9 @@ namespace mymln
 		{
 			if(doc.contain_line(N))
 				if (doc.get_letter_middle_height(N) * 3 < doc.get_bbox(N).len(0))
-				{doc.move_line_self_link(N); doc.add_noise(N);}
+				{doc.move_line_self_link(N); doc.add_noise(N); doc.invalidate_line_link(N);}
 				else if(doc.get_letter_middle_width(N) * 4 < doc.get_bbox(N).len(1))
-				{doc.move_line_self_link(N); doc.add_noise(N);}
+				{doc.move_line_self_link(N); doc.add_noise(N); doc.invalidate_line_link(N);}
 		}
   } 
   
@@ -1476,8 +1476,91 @@ namespace mymln
 		    doc.propage_line_link();
       }
   
-  
 
+      template<typename L, typename F, typename D>
+      void clean_finalize_letters(mymln::document::document<L,F,D>& doc)
+      {
+	typedef vertex_image<point2d,bool> v_ima_g;
+		    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+		    v_ima_g mask = doc.fun_mask_letters();
+		    mln_piter_(v_ima_g) v(mask.domain());
+		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+		    nbh_t nbh(mask);
+		    mln_niter_(nbh_t) q(nbh, v);
+		    for_all(v)
+		    {
+		      
+		      if(doc.contain_noise(v))
+		      {
+			unsigned int Count = 0;
+			bool HasLink = false;
+			L line = 0;
+			for_all(q)
+			{
+			    if(doc.contain_paragraph(q) && doc.contain_line(q) && doc.paragraph_included_letter(q,v))
+			    {
+			      if(doc.allign_V_line_artefact(q,v) && doc.allign_size_height_line_artefact(q,v))
+			      {
+				HasLink = true;
+				if(!line)
+				  line = doc[q];
+				else if(doc.get_line_distance(q,v) < doc.get_line_distance(doc[line], v))
+				  line = doc[q];
+			      }
+			      else if(doc.allign_top_large(q,v) && !doc.allign_V(q,v))
+			      {
+				Count++;
+			      }
+			    }
+
+			}
+			if(Count > 0 && HasLink)
+			{
+			  doc.debug_draw_box_green_buffer(v);
+			  doc.debug_draw_line_green_buffer(v, doc[line]);
+			    doc.debug_draw_string(v, Count);
+			    doc.add_to_line_link(doc[line],v);
+			    doc.add_to_paragraph_link(doc[line], v);
+			}
+		      }
+		    }
+		    
+		    doc.propage_line_link();
+		     doc.propage_paragraph_link();
+		    
+      }
+      
+      template<typename L, typename F, typename D>
+      void clean_lines_artefacts(mymln::document::document<L,F,D>& doc)
+      {
+	//image2d<value::rgb8> out;
+	//mln::initialize(out, s);
+	typedef vertex_image<point2d,bool> v_ima_g;
+	typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
+	v_ima_g mask = doc.fun_mask_letters();
+	mln_piter_(v_ima_g) v(mask.domain());
+	typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
+	nbh_t nbh(mask);
+	mln_niter_(nbh_t) q(nbh, v);
+	for_all(v)
+	{
+	  if(doc.contain_line(v))
+	  {
+	    for_all(q)
+	    {
+	       //draw::line(out, q,v, mln::literal::red);
+	      if(doc.same_line(v,q) && doc.is_line_artefact(q))
+	      {
+		doc.debug_draw_string(q, "ARTEFACT");
+		doc.add_noise(q);
+	      }
+	    }
+	  }
+	}
+	doc.clean_noise_lines();
+	doc.propage_line_link();
+	//io::ppm::save(mln::debug::superpose(out, s, literal::white),dgb_out);
+      }
   
   
   }
