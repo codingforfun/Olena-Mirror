@@ -11,10 +11,10 @@ namespace mymln
     void load_separators(runtime<L,F,D>& run)
     {
       
-	  run.add_function("separators.find_allign_right", &(mymln::document::separators::separators_find_allign_right));
+	  run.add_function("separators.find_align_right", &(mymln::document::separators::separators_find_align_right));
 	  run.add_function("separators.make_clean_right", &(mymln::document::separators::separators_make_clean_right));  
-	  run.add_function("separators.find_allign_left", &(mymln::document::separators::separators_find_allign));
-	  run.add_function("separators.make_clean_left", &(mymln::document::separators::separators_find_allign));
+	  run.add_function("separators.find_align_left", &(mymln::document::separators::separators_find_align));
+	  run.add_function("separators.make_clean_left", &(mymln::document::separators::separators_make_clean));
 	  run.add_function("separators.rebuild",  &(mymln::document::separators::separators_rebuild));
 	    run.add_function("separators.merge",  &(mymln::document::separators::separators_merge));
 	     run.add_function("separators.find_wrong",  &(mymln::document::separators::separators_find_wrong));
@@ -69,7 +69,11 @@ namespace mymln
 	    run.add_function("clean.ellipsis", &(mymln::document::clean_ellipsis));
 	    run.add_function("clean.apostrophe_items", &(mymln::document::clean_apostrophe_items));
 	    run.add_function("clean.finalize_letters", &(mymln::document::clean_finalize_letters));
+	    run.add_function("clean.finalize_separators", &(mymln::document::clean_finalize_separators));
 	    run.add_function("clean.lines_artefacts", &(mymln::document::clean_lines_artefacts));
+	    run.add_function("clean.finalize_little_paragraphs", &(mymln::document::clean_finalize_little_paragraphs));
+	    run.add_function("clean.finalize_punctuation", &(mymln::document::clean_finalize_punctuation));
+	    run.add_function("clean.finalize_alone_paragraphs", &(mymln::document::clean_finalize_alone_paragraphs));
 	    run.add_function("image.bad_paragraph", &(mymln::document::image_bad_paragraph));
 	    run.add_function("image.anomalies_paragraph", &(mymln::document::image_anomalies_paragraph));
 	    

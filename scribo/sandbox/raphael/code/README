@@ -1,0 +1,16 @@
+
+** MAKE **
+
+make release create an executable without the demos
+make demo create an executable  with all the demos inside
+
+** COMMAND LINE **
+
+the syntax is
+  ./test.elf -D WORKING_DIRECTORY -P SCRIP_FILE IMAGE
+All the debug file will have the following name :
+  (WORKING_DIRECTORY)/debug_(IMAGE)
+if you are trying to process all the file of a directory like
+    ./test.elf -D . -P SCRIP_FILE pbm/*.pbm
+the debug files will be stored into debug_pbm/ .
+The directory must exist.

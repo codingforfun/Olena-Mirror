@@ -51,7 +51,11 @@ namespace mymln
 	      lines.append(line(doc_.get_line_bbox_direct(N), N));
 	      if(paragraphs_IDS[doc_.get_line_parent(N)] >= 0)
 	      {
-		paragraphs[paragraphs_IDS[doc_.get_line_parent(N)]].add_line(lines[lines.size() - 1]);
+		paragraphs[paragraphs_IDS[doc_.get_line_parent(N)]].add_line(
+						lines[lines.size() - 1],
+						doc_.contain_start_paragraph_direct(N),
+						doc_.contain_end_paragraph_direct(N)
+									    );
 	      }
 	    }
 	  }
@@ -73,7 +77,13 @@ namespace mymln
 	{
 	  images.append(Image);
 	}
-	
+	void compute_alignements()
+	{
+	  for(int N = 0; N < paragraphs.size(); N++)
+	  {
+	    paragraphs[N].compute_alignements();
+	  }
+	}
 	inline void export_PRima(std::string file, const char qname)
 	{
 	  

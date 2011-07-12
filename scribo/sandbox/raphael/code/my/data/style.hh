@@ -18,7 +18,7 @@ namespace mymln
       return output;
     }
     
-    enum text_allign
+    enum text_align
     {
       Left,
       Right,
@@ -37,7 +37,7 @@ namespace mymln
 	{
 	  Font_ = "arial";
 	  Font_Size_ = 12;
-	  Allign_ = Left;
+	  Align_ = Left;
 	}
 	void set_font_size(int px)
 	{
@@ -47,6 +47,12 @@ namespace mymln
 	{
 	  return Font_Size_;
 	}
+	void set_text_align(text_align align)
+	{Align_ = align;}
+	text_align get_text_align()
+	{return Align_;}
+	std::string get_text_align_string()
+	{return align_to_string_(Align_);}
 	// WARNING THIS FUNCTION USE iota
 	// iota is define only in mymln::data
 	// this is not a standart function you can use everywhere
@@ -55,7 +61,7 @@ namespace mymln
 	  std::string output = "st" + itoa(ID) + "{";
 	  output += "font-family:" + Font_  + ";";
 	  output += "font-size:" + itoa(Font_Size_) + "px;";
-	  output += "text-align:" + allign_to_string_(Allign_) + ";";
+	  output += "text-align:" + align_to_string_(Align_) + ";";
 	  output += "position:absolute;";
 	  output += "left:" + itoa(pmin_X) + ";";
 	  output += "top:" + itoa(pmin_Y) + ";";
@@ -67,11 +73,11 @@ namespace mymln
 	
 		std::string Font_;
 	unsigned int Font_Size_;
-	text_allign Allign_;
+	text_align Align_;
 	
-	std::string allign_to_string_(text_allign allign)
+	std::string align_to_string_(text_align align)
 	{
-	  switch(allign)
+	  switch(align)
 	  {
 	    case Left: return "left"; 
 	    case Right: return "right"; 

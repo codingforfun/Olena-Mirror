@@ -9,6 +9,9 @@ std:
 	ccache g++ test.cc -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena
 	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin  -P ~/Bureau/test/bin/script ima.pbm
 release:
+	ccache g++ test.cc -msse3 -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena $(QT4) $(QT4_LIB) -DNDEBUG -DNDEMO -O2 -march=native 
+	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
+dem:
 	ccache g++ test.cc -msse3 -o ~/Bureau/test/bin/test.elf -I . -I ./../../../../milena $(QT4) $(QT4_LIB) -DNDEBUG -O2 -march=native 
 	~/Bureau/test/bin/test.elf -D ~/Bureau/test/bin -P ~/Bureau/test/bin/script ima.pbm
 debug:

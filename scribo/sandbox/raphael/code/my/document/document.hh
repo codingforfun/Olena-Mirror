@@ -114,7 +114,10 @@ namespace mymln
 	inline bool killed(const Label lbl)
 	{return kill_mask(lbl);}
 	inline void kill(const Label lbl)
-	{kill_mask(lbl) = true;all_mask(lbl) = false;}
+	{
+	  kill_mask(lbl) = true;
+	  all_mask(lbl) = false;
+	}
 	inline unsigned int count()
 	{return Areas_Number_;}
 	/* OPERATION ON PAGE */
@@ -365,6 +368,7 @@ namespace mymln
 	{return  lines_bbox[lines_union[A]].len(0) < _bboxgp[A].len(0) * 2 ;}
 
 
+
 	inline bool is_line_artefact(const point2d& A)
 	{return is_line_artefact(img_influ(A));}
 	inline bool is_line_artefact(const Label A)
@@ -425,14 +429,12 @@ namespace mymln
 
 
 
-	inline void add_new_line(const point2d& point)
-	{ add_new_line(img_influ(point)); }
-	
-	inline void jump_to_line(const point2d& point)
-	{ jump_to_line(img_influ(point)); }
+
 
 	inline bool contain_start_paragraph(const point2d& point)
 	{ return contain_start_paragraph(img_influ(point)); }
+	inline bool contain_end_paragraph(const point2d& point)
+	{ return contain_end_paragraph(img_influ(point)); }
 
 	inline bool contain_start_line(const point2d& point)
 	{ return contain_start_line(img_influ(point)); }
@@ -447,6 +449,39 @@ namespace mymln
 	{ return contain_line_start(img_influ(point)); }
 	inline bool contain_line_start(const Label lbl)
 	{ return lines_first_label(lbl); }
+	
+	
+	inline bool contain_line(const Label lbl)
+	{ return lines_union[lbl] != 0;}
+	
+	inline bool contain_start_line(const Label lbl)
+	{ return  start_lines_mask(lbl);}
+	
+	inline bool contain_start_paragraph(const Label lbl)
+	{ return  paragraphs_first_line[paragraphs_union[lbl]] == lines_union[lbl];}
+	
+	inline bool contain_end_paragraph(const Label lbl)
+	{ return  paragraphs_last_line[paragraphs_union[lbl]] == lines_union[lbl];}
+	
+	///DIRECT VERSION OF contain_start_paragraph. A LINE ID MUST BE PASSED
+	inline bool contain_start_paragraph_direct(const unsigned int line_ID)
+	{ return  paragraphs_first_line[paragraphs_union[lines_first_label[line_ID]]] == line_ID;}
+	///DIRECT VERSION OF contain_end_paragraph. A LINE ID MUST BE PASSED
+	inline bool contain_end_paragraph_direct(const unsigned int line_ID)
+	{ return  paragraphs_last_line[paragraphs_union[lines_last_label[line_ID]]] == line_ID;}
+	
+	
+	inline bool contain_end_line(const Label lbl)
+	{ return  end_lines_mask(lbl);}
+	
+	
+	
+	
+	inline void add_new_line(const point2d& point)
+	{ add_new_line(img_influ(point)); }
+	
+	inline void jump_to_line(const point2d& point)
+	{ jump_to_line(img_influ(point)); }
 	
 	inline void add_to_line(const Label lbl)
 	{ lines_union[lbl] = CLine; }
@@ -527,17 +562,7 @@ namespace mymln
 	  return false;
 	}
 	
-	inline bool contain_line(const Label lbl)
-	{ return lines_union[lbl] != 0;}
-	
-	inline bool contain_start_line(const Label lbl)
-	{ return  start_lines_mask(lbl);}
-	
-	inline bool contain_start_paragraph(const Label lbl)
-	{ return  paragraphs_first_line[paragraphs_union[lbl]] == lines_union[lbl];}
-	
-	inline bool contain_end_line(const Label lbl)
-	{ return  end_lines_mask(lbl);}
+
 	
 	inline void add_noise(const point2d& point)
 	{add_noise(img_influ(point));}
@@ -846,73 +871,73 @@ namespace mymln
 	  
 	  /* ALLIGN FUNCTION */
 	  
-	  inline bool allign_top( const point2d& Left, const point2d& Right)
-	  {return allign_top(img_influ(Left), img_influ(Right));}
+	  inline bool align_top( const point2d& Left, const point2d& Right)
+	  {return align_top(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_top_line( const point2d& Left, const point2d& Right)
-	  {return allign_top_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_top_line( const point2d& Left, const point2d& Right)
+	  {return align_top_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_top_line( const Label Left, const Label Right)
+	  inline bool align_top_line( const Label Left, const Label Right)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	    return  (!allignV < 0) && allignV * 2 > lines_bbox[lines_union[Left]].len(0);
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    return  (!alignV < 0) && alignV * 2 > lines_bbox[lines_union[Left]].len(0);
 	  }
 			  
 	  
-	  inline bool allign_top( const Label Left, const Label Right)
+	  inline bool align_top( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right);
-	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
+	    short int alignV = label_align_(0, Left, Right);
+	    return  alignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
-	  inline bool allign_top_large( const point2d& Left, const point2d& Right)
-	  {return allign_top_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_top_large( const point2d& Left, const point2d& Right)
+	  {return align_top_large(img_influ(Left), img_influ(Right));}
 	  
-	    inline bool allign_top_large( const Label Left, const Label Right)
+	    inline bool align_top_large( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right);
-	    return  allignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
+	    short int alignV = label_align_(0, Left, Right);
+	    return  alignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
-	  inline bool allign_bottom_large( const point2d& Left, const point2d& Right)
-	  {return allign_bottom_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_bottom_large( const point2d& Left, const point2d& Right)
+	  {return align_bottom_large(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_bottom_large( const Label Left, const Label Right)
+	  inline bool align_bottom_large( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right);
-	    return  allignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) < (_bboxgp[Right].pcenter()[0]);
+	    short int alignV = label_align_(0, Left, Right);
+	    return  alignV < lines_bbox[lines_union[Left]].len(0) * 2 && (_bboxgp[Left].pcenter()[0]) < (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
-	  inline bool allign_up_line( const point2d& Left, const point2d& Right)
-	  {return allign_up_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_up_line( const point2d& Left, const point2d& Right)
+	  {return align_up_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_up_line( const Label Left, const Label Right)
+	  inline bool align_up_line( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 1.3f;
-	    return  allignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
+	    short int alignV = label_align_(0, Left, Right) * 1.3f;
+	    return  alignV < label_size_(0, Left) && (_bboxgp[Left].pcenter()[0]) > (_bboxgp[Right].pcenter()[0]);
 	  }
 	  
 	  
-	  inline bool allign_paragraph_center(const point2d& Left, const point2d& Right)
-	  {return allign_paragraph_center(img_influ(Left), img_influ(Right));}
-	  inline  bool allign_paragraph_center(const Label Left, const Label Right)
+	  inline bool align_paragraph_center(const point2d& Left, const point2d& Right)
+	  {return align_paragraph_center(img_influ(Left), img_influ(Right));}
+	  inline  bool align_paragraph_center(const Label Left, const Label Right)
 	  {
 	    short int Diff = paragraphs_bbox[paragraphs_union[Left]].pcenter()[1] - paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
 	    if(Diff < 0){Diff = -Diff;}
 	    return Diff < paragraphs_bbox[paragraphs_union[Left]].len(1)/ 30 && Diff < paragraphs_bbox[paragraphs_union[Right]].len(1) / 30;
 	  }
-	  inline bool allign_paragraph_center_strict(const point2d& Left, const point2d& Right)
-	  {return allign_paragraph_center_strict(img_influ(Left), img_influ(Right));}
-	  inline  bool allign_paragraph_center_strict(const Label Left, const Label Right)
+	  inline bool align_paragraph_center_strict(const point2d& Left, const point2d& Right)
+	  {return align_paragraph_center_strict(img_influ(Left), img_influ(Right));}
+	  inline  bool align_paragraph_center_strict(const Label Left, const Label Right)
 	  {
 	    short int Diff = paragraphs_bbox[paragraphs_union[Left]].pcenter()[1] - paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
 	    if(Diff < 0){Diff = -Diff;}
 	    return Diff < paragraphs_bbox[paragraphs_union[Left]].len(1)/ 60 && Diff < paragraphs_bbox[paragraphs_union[Right]].len(1) / 60;
 	  }  
 	
-	  inline bool allign_line_center(const point2d& Left, const point2d& Right)
-	  {return allign_line_center(img_influ(Left), img_influ(Right));}
-	  inline  bool allign_line_center(const Label Left, const Label Right)
+	  inline bool align_line_center(const point2d& Left, const point2d& Right)
+	  {return align_line_center(img_influ(Left), img_influ(Right));}
+	  inline  bool align_line_center(const Label Left, const Label Right)
 	  {
 	    short int Diff = lines_bbox[lines_union[Left]].pcenter()[1] - lines_bbox[lines_union[Right]].pcenter()[1];
 	    if(Diff < 0){Diff = -Diff;}
@@ -922,32 +947,32 @@ namespace mymln
 	
 	
 	  
-	  inline bool allign_up_line_line( const point2d& Left, const point2d& Right)
-	  {return allign_up_line_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_up_line_line( const point2d& Left, const point2d& Right)
+	  {return align_up_line_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_up_line_line( const Label Left, const Label Right)
+	  inline bool align_up_line_line( const Label Left, const Label Right)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	    if(allignV < 0){allignV = -allignV; }
-	    allignV *= 1.4f;
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(alignV < 0){alignV = -alignV; }
+	    alignV *= 1.4f;
 	    return  
-	      allignV < lines_bbox[lines_union[Left]].len(0) &&
+	      alignV < lines_bbox[lines_union[Left]].len(0) &&
 	      (lines_bbox[lines_union[Left]].pcenter()[0]) > (lines_bbox[lines_union[Left]].pcenter()[0]);
 	  }
 	  
-	  inline bool allign_left( const point2d& Left, const point2d& Right)
-	  {return allign_left(img_influ(Left), img_influ(Right));}
+	  inline bool align_left( const point2d& Left, const point2d& Right)
+	  {return align_left(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_left( const Label Left, const Label Right)
+	  inline bool align_left( const Label Left, const Label Right)
 	  {
 	      
 	    return  _bboxgp[Left].pmin()[1] >  _bboxgp[Right].pmin()[1];
 	  }
 	  	  
-	  inline bool allign_right( const point2d& Left, const point2d& Right)
-	  {return allign_right(img_influ(Left), img_influ(Right));}
+	  inline bool align_right( const point2d& Left, const point2d& Right)
+	  {return align_right(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_right( const Label Left, const Label Right)
+	  inline bool align_right( const Label Left, const Label Right)
 	  {
 	      
 	    return  _bboxgp[Left].pmin()[1] <  _bboxgp[Right].pmin()[1];
@@ -955,104 +980,123 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool allign_H_large_one( const point2d& Left, const point2d& Right)
-	  {return allign_H_large_one(img_influ(Left), img_influ(Right));}
+	  inline bool align_H_large_one( const point2d& Left, const point2d& Right)
+	  {return align_H_large_one(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_large_one( const Label Left, const Label Right)
+	  inline bool align_H_large_one( const Label Left, const Label Right)
 	  {
-	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
-	    return  allignV <= label_size_(1, Left) + 2;
+	      short int alignV = label_align_(1, Left, Right) * 1.5f;
+	    return  alignV <= label_size_(1, Left) + 2;
 	  }
 	  
-	  inline bool allign_H_large( const point2d& Left, const point2d& Right)
-	  {return allign_H_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_H_large( const point2d& Left, const point2d& Right)
+	  {return align_H_large(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_large( const Label Left, const Label Right)
+	  inline bool align_H_large( const Label Left, const Label Right)
 	  {
-	      short int allignV = label_allign_(1, Left, Right) * 1.5f;
-	    return  allignV < label_size_(1, Left);
+	      short int alignV = label_align_(1, Left, Right) * 1.5f;
+	    return  alignV < label_size_(1, Left);
 	  }
+
+
+	  inline bool align_paragraph_H_tube( const point2d& Left, const point2d& Right)
+	  {return align_paragraph_H_tube(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_tube( const point2d& Left, const point2d& Right)
-	  {return allign_H_tube(img_influ(Left), img_influ(Right));}
+	  inline bool align_paragraph_H_tube( const Label Left, const Label Right)
+	  {
+	    return  paragraphs_bbox[paragraphs_union[Left]].pmin()[1] <=  paragraphs_bbox[paragraphs_union[Right]].pcenter()[1] &&
+	    paragraphs_bbox[paragraphs_union[Left]].pmax()[1] >= paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
+	  }
+
+	  inline bool align_H_tube( const point2d& Left, const point2d& Right)
+	  {return align_H_tube(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_tube( const Label Left, const Label Right)
+	  inline bool align_H_tube( const Label Left, const Label Right)
 	  {
 	    return  _bboxgp[Left].pmin()[1] <= _bboxgp[Right].pcenter()[1] &&
 	    _bboxgp[Left].pmax()[1] >= _bboxgp[Right].pcenter()[1];
 	  }
 	  
-
-
-	  inline bool allign_H_strict( const point2d& Left, const point2d& Right)
-	  {return allign_H(img_influ(Left), img_influ(Right));}
+	  inline bool align_V_tube_line( const point2d& Left, const point2d& Right)
+	  {return align_V_tube_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_strict( const Label Left, const Label Right)
+	  inline bool align_V_tube_line( const Label Left, const Label Right)
 	  {
-	      short int allignH = label_allign_(1, Left, Right) * 5;
-	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
-	  }
-
-
-	  inline bool allign_H( const point2d& Left, const point2d& Right)
-	  {return allign_H(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_H( const Label Left, const Label Right)
-	  {
-	      short int allignH = label_allign_(1, Left, Right) * 2;
-	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
+	    return  lines_bbox[lines_union[Left]].pmin()[0] <= lines_bbox[lines_union[Right]].pcenter()[0] &&
+	    lines_bbox[lines_union[Left]].pmax()[0] >= lines_bbox[lines_union[Right]].pcenter()[0];
 	  }
 	  
 	  
-	  inline bool allign_H_min_paragraph( const point2d& Left, const point2d& Right)
-	  {return allign_H_min_paragraph(img_influ(Left), img_influ(Right));}
+
+	  inline bool align_H_strict( const point2d& Left, const point2d& Right)
+	  {return align_H(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_H_min_paragraph( const Label Left, const Label Right)
+	  inline bool align_H_strict( const Label Left, const Label Right)
 	  {
-	    short int allignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
-	    allignH *= 2;
-	    return  allignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
+	      short int alignH = label_align_(1, Left, Right) * 5;
+	    return  alignH < label_size_(1, Left) && alignH < label_size_(1, Right);
 	  }
-	  
-	  
-	  inline bool allign_H_max_paragraph( const point2d& Left, const point2d& Right)
-	  {return allign_H_max_paragraph(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_H_max_paragraph( const Label Left, const Label Right)
-	  {
-	    short int allignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
-	    allignH *= 2;
-	    return  allignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
-	  }
-	  
-	  
-	  inline bool allign_H_min( const point2d& Left, const point2d& Right)
-	  {return allign_H_min(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_H_min( const Label Left, const Label Right)
-	  {
-	      short int allignH = label_allign_min_(1, Left, Right) * 2;
-	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
-	  }
-	  
-	  inline bool allign_H_max( const point2d& Left, const point2d& Right)
-	  {return allign_H_max(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_H_max( const Label Left, const Label Right)
-	  {
-	      short int allignH = label_allign_max_(1, Left, Right) * 2;
-	    return  allignH < label_size_(1, Left) && allignH < label_size_(1, Right);
-	  }
-	  
-	  
-	  inline bool allign_size_height( const point2d& Left, const point2d& Right)
-	  {return allign_size_height(img_influ(Left), img_influ(Right));}
 
 
-	 inline bool allign_proximity_top_strict( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_top(img_influ(Left), img_influ(Right));}
+	  inline bool align_H( const point2d& Left, const point2d& Right)
+	  {return align_H(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_top_strict( const Label Left, const Label Right)
+	  inline bool align_H( const Label Left, const Label Right)
+	  {
+	      short int alignH = label_align_(1, Left, Right) * 2;
+	    return  alignH < label_size_(1, Left) && alignH < label_size_(1, Right);
+	  }
+	  
+	  
+	  inline bool align_H_min_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_H_min_paragraph(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_H_min_paragraph( const Label Left, const Label Right)
+	  {
+	    short int alignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
+	    alignH *= 2;
+	    return  alignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
+	  }
+	  
+	  
+	  inline bool align_H_max_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_H_max_paragraph(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_H_max_paragraph( const Label Left, const Label Right)
+	  {
+	    short int alignH = paragraphs_bbox[paragraphs_union[Left]].pmin()[1] - paragraphs_bbox[paragraphs_union[Right]].pmin()[1];
+	    alignH *= 2;
+	    return  alignH < paragraphs_bbox[paragraphs_union[Left]].len(0);
+	  }
+	  
+	  
+	  inline bool align_H_min( const point2d& Left, const point2d& Right)
+	  {return align_H_min(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_H_min( const Label Left, const Label Right)
+	  {
+	      short int alignH = label_align_min_(1, Left, Right) * 2;
+	    return  alignH < label_size_(1, Left) && alignH < label_size_(1, Right);
+	  }
+	  
+	  inline bool align_H_max( const point2d& Left, const point2d& Right)
+	  {return align_H_max(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_H_max( const Label Left, const Label Right)
+	  {
+	      short int alignH = label_align_max_(1, Left, Right) * 2;
+	    return  alignH < label_size_(1, Left) && alignH < label_size_(1, Right);
+	  }
+	  
+	  
+	  inline bool align_size_height( const point2d& Left, const point2d& Right)
+	  {return align_size_height(img_influ(Left), img_influ(Right));}
+
+
+	 inline bool align_proximity_top_strict( const point2d& Left, const point2d& Right)
+	  {return align_proximity_top(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_proximity_top_strict( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1073,10 +1117,10 @@ namespace mymln
 	  }
 
 
-	 inline bool allign_proximity_top( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_top(img_influ(Left), img_influ(Right));}
+	 inline bool align_proximity_top( const point2d& Left, const point2d& Right)
+	  {return align_proximity_top(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_top( const Label Left, const Label Right)
+	  inline bool align_proximity_top( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1098,10 +1142,10 @@ namespace mymln
 	
 	
 	
-	  inline bool allign_proximity_V( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_V(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_V( const point2d& Left, const point2d& Right)
+	  {return align_proximity_V(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_V( const Label Left, const Label Right)
+	  inline bool align_proximity_V( const Label Left, const Label Right)
 	  {
 	      short int SizeL0 = label_size_(0, Left);
 	      short int SizeL1 = label_size_(1, Left);
@@ -1115,10 +1159,10 @@ namespace mymln
 	  }
 	
 	
-	  inline bool allign_proximity( const point2d& Left, const point2d& Right)
-	  {return allign_proximity(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity( const point2d& Left, const point2d& Right)
+	  {return align_proximity(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity( const Label Left, const Label Right)
+	  inline bool align_proximity( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1141,10 +1185,10 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool allign_proximity_strict( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_strict(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_strict( const point2d& Left, const point2d& Right)
+	  {return align_proximity_strict(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_strict( const Label Left, const Label Right)
+	  inline bool align_proximity_strict( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1170,10 +1214,10 @@ namespace mymln
 	  
 
 
-	  inline bool allign_proximity_paragraph_up_large( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_paragraph_up_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_paragraph_up_large( const point2d& Left, const point2d& Right)
+	  {return align_proximity_paragraph_up_large(img_influ(Left), img_influ(Right));}
 	  
-	   inline bool allign_proximity_paragraph_up_large( const Label Left, const Label Right)
+	   inline bool align_proximity_paragraph_up_large( const Label Left, const Label Right)
 	  {
 	      box2d LB = paragraphs_bbox[paragraphs_union[Left]];
 	      box2d RB = paragraphs_bbox[paragraphs_union[Right]];
@@ -1197,10 +1241,10 @@ namespace mymln
 	  
 
 
-	  inline bool allign_proximity_paragraph_up_medium( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_paragraph_up_medium(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_paragraph_up_medium( const point2d& Left, const point2d& Right)
+	  {return align_proximity_paragraph_up_medium(img_influ(Left), img_influ(Right));}
 	  
-	   inline bool allign_proximity_paragraph_up_medium( const Label Left, const Label Right)
+	   inline bool align_proximity_paragraph_up_medium( const Label Left, const Label Right)
 	  {
 	      box2d LB = paragraphs_bbox[paragraphs_union[Left]];
 	      box2d RB = paragraphs_bbox[paragraphs_union[Right]];
@@ -1222,10 +1266,10 @@ namespace mymln
 
 
 
-	  inline bool allign_proximity_paragraph_up( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_paragraph_up( const point2d& Left, const point2d& Right)
+	  {return align_proximity_paragraph_up(img_influ(Left), img_influ(Right));}
 	  
-	   inline bool allign_proximity_paragraph_up( const Label Left, const Label Right)
+	   inline bool align_proximity_paragraph_up( const Label Left, const Label Right)
 	  {
 	      box2d LB = paragraphs_bbox[paragraphs_union[Left]];
 	      box2d RB = paragraphs_bbox[paragraphs_union[Right]];
@@ -1245,17 +1289,18 @@ namespace mymln
 	      return  (DisA * 5) < HA;
 	  }
 
-	  
-	  inline bool allign_proximity_line_large( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_line_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_line_extra_large( const point2d& Left, const point2d& Right)
+	  {return align_proximity_line_extra_large(img_influ(Left), img_influ(Right));}	  
+	  inline bool align_proximity_line_large( const point2d& Left, const point2d& Right)
+	  {return align_proximity_line_large(img_influ(Left), img_influ(Right));}
 
 
-	  inline bool allign_size_height_paragraph_line( const point2d& Left, const point2d& Right)
+	  inline bool align_size_height_paragraph_line( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_height_paragraph_line(img_influ(Left), img_influ(Right));
+	    return  align_size_height_paragraph_line(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_height_paragraph_line( const Label Left, const Label Right)
+	  inline bool align_size_height_paragraph_line( const Label Left, const Label Right)
 	  {
 	      short int SizeL = lines_bbox[paragraphs_first_line[paragraphs_union[Left]]].len(0);
 	      short int SizeR = lines_bbox[paragraphs_first_line[paragraphs_union[Right]]].len(0);
@@ -1264,12 +1309,12 @@ namespace mymln
 
 
 
-	  inline bool allign_size_height_line_medium( const point2d& Left, const point2d& Right)
+	  inline bool align_size_height_line_medium( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_height_line_medium(img_influ(Left), img_influ(Right));
+	    return  align_size_height_line_medium(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_height_line_medium( const Label Left, const Label Right)
+	  inline bool align_size_height_line_medium( const Label Left, const Label Right)
 	  {
 	      short int SizeL = lines_bbox[lines_union[Left]].len(0);
 	      short int SizeR = lines_bbox[lines_union[Right]].len(0);
@@ -1278,12 +1323,12 @@ namespace mymln
 
 
 
-	  inline bool allign_size_height_line_artefact( const point2d& Line, const point2d& Artefact)
+	  inline bool align_size_height_line_artefact( const point2d& Line, const point2d& Artefact)
 	  {
-	    return  allign_size_height_line_artefact(img_influ(Line), img_influ(Artefact));
+	    return  align_size_height_line_artefact(img_influ(Line), img_influ(Artefact));
 	  }
 
-	  inline bool allign_size_height_line_artefact( const Label Line, const Label Artefact)
+	  inline bool align_size_height_line_artefact( const Label Line, const Label Artefact)
 	  {
 	      short int SizeL = lines_bbox[lines_union[Line]].len(0);
 	      short int SizeR = _bboxgp[Artefact].len(0);
@@ -1293,51 +1338,49 @@ namespace mymln
 
 
 
-	  inline bool allign_size_height_line( const point2d& Left, const point2d& Right)
+	  inline bool align_size_height_line( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_height_line(img_influ(Left), img_influ(Right));
+	    return  align_size_height_line(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_height_line( const Label Left, const Label Right)
+	  inline bool align_size_height_line( const Label Left, const Label Right)
 	  {
 	      short int SizeL = lines_bbox[lines_union[Left]].len(0);
 	      short int SizeR = lines_bbox[lines_union[Right]].len(0);
 	    return  SizeR > (SizeL / 2.2f) && SizeR < (SizeL * 2.2);
 	  }
 	  
-	  inline bool allign_size_height_line_strict( const point2d& Left, const point2d& Right)
+	  inline bool align_size_height_line_strict( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_height_line_strict(img_influ(Left), img_influ(Right));
+	    return  align_size_height_line_strict(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_height_line_strict( const Label Left, const Label Right)
+	  inline bool align_size_height_line_strict( const Label Left, const Label Right)
 	  {
 	      short int SizeL = lines_bbox[lines_union[Left]].len(0);
 	      short int SizeR = lines_bbox[lines_union[Right]].len(0);
 	    return  SizeR > (SizeL / 1.3f) && SizeR < (SizeL * 1.3);
 	  }
 	  
-	  	  inline bool allign_proximity_line( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_line(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_size_width_large( const point2d& Left, const point2d& Right)
+
+	  inline bool align_size_width_large( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_width_large(img_influ(Left), img_influ(Right));
+	    return  align_size_width_large(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_width_large( const Label Left, const Label Right)
+	  inline bool align_size_width_large( const Label Left, const Label Right)
 	  {
 	      short int SizeL = _bboxgp[lines_union[Left]].len(1);
 	      short int SizeR = _bboxgp[lines_union[Right]].len(1);
 	    return  SizeR >= (SizeL / 5) && SizeR <= (SizeL * 5);
 	  }
 
-	  inline bool allign_size_width( const point2d& Left, const point2d& Right)
+	  inline bool align_size_width( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_width(img_influ(Left), img_influ(Right));
+	    return  align_size_width(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_width( const Label Left, const Label Right)
+	  inline bool align_size_width( const Label Left, const Label Right)
 	  {
 	      short int SizeL = _bboxgp[Left].len(1);
 	      short int SizeR = _bboxgp[Right].len(1);
@@ -1346,12 +1389,12 @@ namespace mymln
 	  
 
 	  
-	  inline bool allign_size_width_strict( const point2d& Left, const point2d& Right)
+	  inline bool align_size_width_strict( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_width_strict(img_influ(Left), img_influ(Right));
+	    return  align_size_width_strict(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_width_strict( const Label Left, const Label Right)
+	  inline bool align_size_width_strict( const Label Left, const Label Right)
 	  {
 	      short int SizeL = _bboxgp[Left].len(1);
 	      short int SizeR = _bboxgp[Right].len(1);
@@ -1361,32 +1404,37 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool allign_size_width_line( const point2d& Left, const point2d& Right)
+	  inline bool align_size_width_line( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_width_line(img_influ(Left), img_influ(Right));
+	    return  align_size_width_line(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_width_line( const Label Left, const Label Right)
+	  inline bool align_size_width_line( const Label Left, const Label Right)
 	  {
 	      short int SizeL = lines_bbox[lines_union[Left]].len(1);
 	      short int SizeR = lines_bbox[lines_union[Right]].len(1);
 	    return  SizeR > (SizeL / 4) && SizeR < (SizeL * 4);
 	  }
 	  
-	  inline bool allign_size_width_paragraph( const point2d& Left, const point2d& Right)
+	  inline bool align_size_width_paragraph( const point2d& Left, const point2d& Right)
 	  {
-	    return  allign_size_width_paragraph(img_influ(Left), img_influ(Right));
+	    return  align_size_width_paragraph(img_influ(Left), img_influ(Right));
 	  }
 
-	  inline bool allign_size_width_paragraph( const Label Left, const Label Right)
+	  inline bool align_size_width_paragraph( const Label Left, const Label Right)
 	  {
 	      short int SizeL = paragraphs_bbox[paragraphs_union[Left]].len(1);
 	      short int SizeR = paragraphs_bbox[paragraphs_union[Right]].len(1);
 	    return  SizeR > ((SizeL * 2) / 3) && SizeR < ((SizeL * 3) / 2);
 	  }
 	  
+	  inline bool align_proximity_line_left( const point2d& Left, const point2d& Right)
+	  {return align_proximity_line_left(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_line( const Label Left, const Label Right)
+	  inline bool align_proximity_line( const point2d& Left, const point2d& Right)
+	  {return align_proximity_line(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_proximity_line( const Label Left, const Label Right)
 	  {
 	      box2d LB = lines_bbox[lines_union[Left]];
 	      box2d RB = lines_bbox[lines_union[Right]];
@@ -1406,8 +1454,22 @@ namespace mymln
 	      return  (DisA * 5) < HA;
 	  }
 	  
-	  
-	  inline bool allign_proximity_line_large( const Label Left, const Label Right)
+	  inline bool align_proximity_line_left( const Label Left, const Label Right)
+	  {
+	      box2d LB = lines_bbox[lines_union[Left]];
+	      box2d RB = lines_bbox[lines_union[Right]];
+	      
+	      int DisA = LB.pmax()[1] - RB.pmin()[1];
+	      int DisB = RB.pmax()[1] - LB.pmin()[1];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      return  (DisA * 5) < HA;
+	  }
+	  inline bool align_proximity_line_large( const Label Left, const Label Right)
 	  {
 	      box2d LB = lines_bbox[lines_union[Left]];
 	      box2d RB = lines_bbox[lines_union[Right]];
@@ -1426,12 +1488,31 @@ namespace mymln
 	      { HA = HB; }
 	      return  (DisA * 2) < HA;
 	  }
+
+	  inline bool align_proximity_line_extra_large( const Label Left, const Label Right)
+	  {
+	      box2d LB = lines_bbox[lines_union[Left]];
+	      box2d RB = lines_bbox[lines_union[Right]];
+	      
+	      int DisA = LB.pmax()[1] - RB.pmin()[1];
+	      int DisB = RB.pmax()[1] - LB.pmin()[1];
+	      if(DisA < 0){DisA = -DisA;}
+	      if(DisB < 0){DisB = -DisB;}
+	      if(DisA > DisB)
+	      { DisA = DisB; }
+	      
+	      unsigned int HA = LB.len(0);
+	      unsigned int HB = RB.len(0);
+
+	      if(HA < HB)
+	      { HA = HB; }
+	      return  (DisA) < HA * 2;
+	  }
 	  
+	  inline bool align_proximity_V_line( const point2d& Left, const point2d& Right)
+	  {return align_proximity_V_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_V_line( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_V_line(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool allign_proximity_V_line( const Label Left, const Label Right)
+	  inline bool align_proximity_V_line( const Label Left, const Label Right)
 	  {
 	      box2d LB = lines_bbox[lines_union[Left]];
 	      box2d RB = lines_bbox[lines_union[Right]];
@@ -1451,9 +1532,9 @@ namespace mymln
 	      return  (DisA * 1.5f) < HA;
 	  }
 
-	  inline bool allign_H_paragraph( const point2d& Left, const point2d& Right)
-	  {return allign_H_paragraph(img_influ(Left), img_influ(Right));}
-	  inline bool allign_H_paragraph( const Label Left, const Label Right )
+	  inline bool align_H_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_H_paragraph(img_influ(Left), img_influ(Right));}
+	  inline bool align_H_paragraph( const Label Left, const Label Right )
 	  {
 	    short int Dis = paragraphs_bbox[paragraphs_union[Left]].pcenter()[1] - paragraphs_bbox[paragraphs_union[Right]].pcenter()[1];
 	    if(Dis < 0){Dis = -Dis;}
@@ -1462,9 +1543,9 @@ namespace mymln
 		Dis * 2 < paragraphs_bbox[paragraphs_union[Left]].len(1);
 	  }
 	  
-	  inline bool allign_top_paragraph( const point2d& Left, const point2d& Right)
-	  {return allign_top_paragraph(img_influ(Left), img_influ(Right));}
-	  inline bool allign_top_paragraph( const Label Left, const Label Right )
+	  inline bool align_top_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_top_paragraph(img_influ(Left), img_influ(Right));}
+	  inline bool align_top_paragraph( const Label Left, const Label Right )
 	  {return  paragraphs_bbox[paragraphs_union[Left]].pmin()[0] > paragraphs_bbox[paragraphs_union[Right]].pmax()[0]; }
 	  
 	  inline bool decal_left_paragraph(const point2d& Left, const point2d& Right)
@@ -1486,10 +1567,10 @@ namespace mymln
 
 
 
-	  inline bool allign_proximity_left( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_left(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_left( const point2d& Left, const point2d& Right)
+	  {return align_proximity_left(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_left( const Label Left, const Label Right)
+	  inline bool align_proximity_left( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1510,10 +1591,10 @@ namespace mymln
 	      return  (DisA) * 3 < HA * 2;
 	  }
 
-	  inline bool allign_proximity_strict_left( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_strict_left(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_strict_left( const point2d& Left, const point2d& Right)
+	  {return align_proximity_strict_left(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_strict_left( const Label Left, const Label Right)
+	  inline bool align_proximity_strict_left( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1532,10 +1613,10 @@ namespace mymln
 	  }
 
 
-	  inline bool allign_proximity_large_left( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_large_left(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_large_left( const point2d& Left, const point2d& Right)
+	  {return align_proximity_large_left(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_large_left( const Label Left, const Label Right)
+	  inline bool align_proximity_large_left( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1560,10 +1641,10 @@ namespace mymln
 	  }
 
 
-	  inline bool allign_proximity_large( const point2d& Left, const point2d& Right)
-	  {return allign_proximity_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_proximity_large( const point2d& Left, const point2d& Right)
+	  {return align_proximity_large(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_proximity_large( const Label Left, const Label Right)
+	  inline bool align_proximity_large( const Label Left, const Label Right)
 	  {
 	      box2d LB = _bboxgp[Left];
 	      box2d RB = _bboxgp[Right];
@@ -1589,17 +1670,17 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool allign_size_height( const Label Left, const Label Right)
+	  inline bool align_size_height( const Label Left, const Label Right)
 	  {
 	     short int SizeL = label_size_(0, Left);
 	      short int SizeR = label_size_(0, Right);
 	    return  SizeR > (SizeL / 3) && SizeR < (SizeL * 3);
 	  }
 
-	  inline bool allign_size_strict( const point2d& Left, const point2d& Right)
-	  {return allign_size(img_influ(Left), img_influ(Right));}
+	  inline bool align_size_strict( const point2d& Left, const point2d& Right)
+	  {return align_size(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size_strict( const Label Left, const Label Right)
+	  inline bool align_size_strict( const Label Left, const Label Right)
 	  {
 	     short int SizeL0 = label_size_(0, Left);
 	      short int SizeR0 = label_size_(0, Right);
@@ -1612,10 +1693,10 @@ namespace mymln
 	    return  SizeR0 > (SizeL0 / 2) && SizeR0 < (SizeL0 * 2);
 	  }
 
-	  inline bool allign_size( const point2d& Left, const point2d& Right)
-	  {return allign_size(img_influ(Left), img_influ(Right));}
+	  inline bool align_size( const point2d& Left, const point2d& Right)
+	  {return align_size(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size( const Label Left, const Label Right)
+	  inline bool align_size( const Label Left, const Label Right)
 	  {
 	     short int SizeL0 = label_size_(0, Left);
 	      short int SizeR0 = label_size_(0, Right);
@@ -1629,10 +1710,10 @@ namespace mymln
 	  }
 	  
 	  
-	  inline bool allign_size_medium( const point2d& Left, const point2d& Right)
-	  {return allign_size_medium(img_influ(Left), img_influ(Right));}
+	  inline bool align_size_medium( const point2d& Left, const point2d& Right)
+	  {return align_size_medium(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size_medium( const Label Left, const Label Right)
+	  inline bool align_size_medium( const Label Left, const Label Right)
 	  {
 	     short int SizeL0 = label_size_(0, Left);
 	      short int SizeR0 = label_size_(0, Right);
@@ -1646,10 +1727,10 @@ namespace mymln
 	  }
 	  
 	  
-	  inline bool allign_size_height_max( const point2d& Left, const point2d& Right)
-	  {return allign_size_height_max(img_influ(Left), img_influ(Right));}
+	  inline bool align_size_height_max( const point2d& Left, const point2d& Right)
+	  {return align_size_height_max(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size_height_max( const Label Left, const Label Right)
+	  inline bool align_size_height_max( const Label Left, const Label Right)
 	  {
 	     short int SizeL = label_size_(0, Left);
 	      short int SizeR = label_size_(0, Right);
@@ -1657,89 +1738,97 @@ namespace mymln
 	  }
 	  
 	  
-	  inline bool allign_V( const point2d& Left, const point2d& Right)
-	  {return allign_V(img_influ(Left), img_influ(Right));}
+	  inline bool align_V( const point2d& Left, const point2d& Right)
+	  {return align_V(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_V( const Label Left, const Label Right)
+	  inline bool align_V( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 2;
-	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	    short int alignV = label_align_(0, Left, Right) * 2;
+	    return  alignV < label_size_(0, Left) && alignV < label_size_(0, Right);
 	  }
 	  
-	  inline bool allign_V_line( const point2d& Left, const point2d& Right)
-	  {return allign_V_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_V_line( const point2d& Left, const point2d& Right)
+	  {return align_V_line(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_V_line( Label Left, Label Right)
+	  inline bool align_V_line( Label Left, Label Right)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	    if(allignV<0){allignV = -allignV;}
-	    allignV *= 2;
-	    return  allignV < lines_bbox[lines_union[Left]].len(0) && allignV < lines_bbox[lines_union[Right]].len(0);
-	  }
-	  
-	  
-	  
-	  inline bool allign_V_line_artefact( const point2d& Line, const point2d& Artefact)
-	  {return allign_V_line_artefact(img_influ(Line), img_influ(Artefact));}
-	  
-	  inline bool allign_V_line_artefact( Label Line, Label Artefact)
-	  {
-	    short int allignV = lines_bbox[lines_union[Line]].pcenter()[0] - _bboxgp[Artefact].pcenter()[0];
-	    if(allignV<0){allignV = -allignV;}
-	    allignV *= 5;
-	    return  allignV < lines_bbox[lines_union[Line]].len(0) && allignV < _bboxgp[Artefact].len(0);
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(alignV<0){alignV = -alignV;}
+	    alignV *= 2;
+	    return  alignV < lines_bbox[lines_union[Left]].len(0) && alignV < lines_bbox[lines_union[Right]].len(0);
 	  }
 	  
 	  
 	  
-	  	  inline bool allign_V_line_strict( const point2d& Left, const point2d& Right)
-	  {return allign_V_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool align_V_line_artefact( const point2d& Line, const point2d& Artefact)
+	  {return align_V_line_artefact(img_influ(Line), img_influ(Artefact));}
 	  
-	  inline bool allign_V_line_strict( Label Left, Label Right)
+	  inline bool align_V_line_artefact( Label Line, Label Artefact)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	    if(allignV<0){allignV = -allignV;}
-	    allignV *= 4;
-	    return  allignV < lines_bbox[lines_union[Left]].len(0) && allignV < lines_bbox[lines_union[Right]].len(0);
+	    short int alignV = lines_bbox[lines_union[Line]].pcenter()[0] - _bboxgp[Artefact].pcenter()[0];
+	    if(alignV<0){alignV = -alignV;}
+	    alignV *= 5;
+	    return  alignV < lines_bbox[lines_union[Line]].len(0) && alignV < _bboxgp[Artefact].len(0);
 	  }
 	  
 	  
-	  inline bool allign_center_line( const point2d& Left, const point2d& Right)
-	  {return allign_center_line(img_influ(Left), img_influ(Right));}
-	  inline bool allign_center_line( Label Left, Label Right)
+	  
+	  	  inline bool align_V_line_strict( const point2d& Left, const point2d& Right)
+	  {return align_V_line_strict(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_V_line_strict( Label Left, Label Right)
 	  {
-	    short int allignC = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	    if(allignC<0){allignC = -allignC;}
-	    return  allignC * 5 < lines_bbox[lines_union[Left]].len(0);
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(alignV<0){alignV = -alignV;}
+	    alignV *= 4;
+	    return  alignV < lines_bbox[lines_union[Left]].len(0) && alignV < lines_bbox[lines_union[Right]].len(0);
+	  }
+	  
+	  
+	  inline bool align_center_line( const point2d& Left, const point2d& Right)
+	  {return align_center_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_center_line( Label Left, Label Right)
+	  {
+	    short int alignC = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	    if(alignC<0){alignC = -alignC;}
+	    return  alignC * 5 < lines_bbox[lines_union[Left]].len(0);
 	  }
 	  
 
-	  inline bool allign_half_line_letter( const point2d& Left, const point2d& Right)
-	  {return allign_half_line_letter(img_influ(Left), img_influ(Right));}
-	    inline bool allign_half_line_letter( Label Left, Label Right)
+
+	  inline bool align_half_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_half_paragraph(img_influ(Left), img_influ(Right));}
+	    inline bool align_half_paragraph( Label Left, Label Right)
+	  {
+	    return  paragraphs_bbox[paragraphs_union[Left]].len(1) > (paragraphs_bbox[paragraphs_union[Right]].len(1) * 2);
+	  }
+
+	  inline bool align_half_line_letter( const point2d& Left, const point2d& Right)
+	  {return align_half_line_letter(img_influ(Left), img_influ(Right));}
+	    inline bool align_half_line_letter( Label Left, Label Right)
 	  {
 	    return  lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 8);
 	  }
 
-	  inline bool allign_small_item( const point2d& Left, const point2d& Right)
-	  {return allign_small_item(img_influ(Left), img_influ(Right));}
-	    inline bool allign_small_item( Label Left, Label Right)
+	  inline bool align_small_item( const point2d& Left, const point2d& Right)
+	  {return align_small_item(img_influ(Left), img_influ(Right));}
+	    inline bool align_small_item( Label Left, Label Right)
 	  {
 	    return  
 	      lines_bbox[lines_union[Left]].len(0) < (_bboxgp[Right].len(0) * 12) &&
 	      lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 2);
 	  }
-	  inline bool allign_small_item_large( const point2d& Left, const point2d& Right)
-	  {return allign_small_item_large(img_influ(Left), img_influ(Right));}
-	    inline bool allign_small_item_large( Label Left, Label Right)
+	  inline bool align_small_item_large( const point2d& Left, const point2d& Right)
+	  {return align_small_item_large(img_influ(Left), img_influ(Right));}
+	    inline bool align_small_item_large( Label Left, Label Right)
 	  {
 	    return  
 	      lines_bbox[lines_union[Left]].len(0) < (_bboxgp[Right].len(0) * 12) &&
 	      lines_bbox[lines_union[Left]].len(0)*2 > (_bboxgp[Right].len(0) * 3);
 	  }
-	  inline bool allign_small_item_line( const point2d& Left, const point2d& Right)
-	  {return allign_small_item(img_influ(Left), img_influ(Right));}
-	    inline bool allign_small_item_line( Label Left, Label Right)
+	  inline bool align_small_item_line( const point2d& Left, const point2d& Right)
+	  {return align_small_item(img_influ(Left), img_influ(Right));}
+	    inline bool align_small_item_line( Label Left, Label Right)
 	  {
 	    return  
 	      lines_bbox[lines_union[Left]].len(0) < (lines_bbox[lines_union[Right]].len(0) * 12) &&
@@ -1748,122 +1837,122 @@ namespace mymln
 
 
 
-	  inline bool allign_smaller_paragraph( const point2d& Left, const point2d& Right)
-	  {return allign_smaller_paragraph(img_influ(Left), img_influ(Right));}
-	  inline bool allign_smaller_paragraph( Label Left, Label Right)
+	  inline bool align_smaller_paragraph( const point2d& Left, const point2d& Right)
+	  {return align_smaller_paragraph(img_influ(Left), img_influ(Right));}
+	  inline bool align_smaller_paragraph( Label Left, Label Right)
 	  {
 	    return  paragraphs_bbox[paragraphs_union[Left]].len(1) > (paragraphs_bbox[paragraphs_union[Right]].len(1));
 	  }
 
 
-	  inline bool allign_smaller_line( const point2d& Left, const point2d& Right)
-	  {return allign_smaller_line(img_influ(Left), img_influ(Right));}
-	  inline bool allign_smaller_line( Label Left, Label Right)
+	  inline bool align_smaller_line( const point2d& Left, const point2d& Right)
+	  {return align_smaller_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_smaller_line( Label Left, Label Right)
 	  {
 	    return  lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 2);
 	  }
-	  inline bool allign_smaller_line_strict( const point2d& Left, const point2d& Right)
-	  {return allign_smaller_line_strict(img_influ(Left), img_influ(Right));}
-	  inline bool allign_smaller_line_strict( Label Left, Label Right)
+	  inline bool align_smaller_line_strict( const point2d& Left, const point2d& Right)
+	  {return align_smaller_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool align_smaller_line_strict( Label Left, Label Right)
 	  {
 	    return  lines_bbox[lines_union[Left]].len(0) > (lines_bbox[lines_union[Right]].len(0) * 3);
 	  }
-	  inline bool allign_smaller_line_letter( const point2d& Left, const point2d& Right)
-	  {return allign_smaller_line_letter(img_influ(Left), img_influ(Right));}
-	  inline bool allign_smaller_line_letter( Label Left, Label Right)
+	  inline bool align_smaller_line_letter( const point2d& Left, const point2d& Right)
+	  {return align_smaller_line_letter(img_influ(Left), img_influ(Right));}
+	  inline bool align_smaller_line_letter( Label Left, Label Right)
 	  {
 	    return  lines_bbox[lines_union[Left]].len(0) > (_bboxgp[Right].len(0) * 1.5f);
 	  }
 
-	  inline bool allign_V_large( const point2d& Left, const point2d& Right)
-	  {return allign_V_large(img_influ(Left), img_influ(Right));}
+	  inline bool align_V_large( const point2d& Left, const point2d& Right)
+	  {return align_V_large(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_V_large( const Label Left, const Label Right)
+	  inline bool align_V_large( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right);
-	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	    short int alignV = label_align_(0, Left, Right);
+	    return  alignV < label_size_(0, Left) && alignV < label_size_(0, Right);
 	  }
 	  
-	  	  inline bool allign_V_side( const point2d& Left, const point2d& Right)
-	  {return allign_V_side(img_influ(Left), img_influ(Right));}
+	  	  inline bool align_V_side( const point2d& Left, const point2d& Right)
+	  {return align_V_side(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_V_side( const Label Left, const Label Right)
+	  inline bool align_V_side( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right);
-	    return  allignV * 4 < label_size_(0, Left);
+	    short int alignV = label_align_(0, Left, Right);
+	    return  alignV * 4 < label_size_(0, Left);
 	  }
 	  
 	  
-	   inline bool allign_V_extra_large( const point2d& Left, const point2d& Right)
-	  {return allign_V_extra_large(img_influ(Left), img_influ(Right));}
+	   inline bool align_V_extra_large( const point2d& Left, const point2d& Right)
+	  {return align_V_extra_large(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_V_extra_large( const Label Left, const Label Right)
+	  inline bool align_V_extra_large( const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) / 2;
-	    return  allignV < label_size_(0, Left) && allignV < label_size_(0, Right);
+	    short int alignV = label_align_(0, Left, Right) / 2;
+	    return  alignV < label_size_(0, Left) && alignV < label_size_(0, Right);
 	  }
 	  
-	  inline bool allign_base_line_line(const point2d& Left, const point2d& Right)
-	  {return allign_base_line_line(img_influ(Left), img_influ(Right));}
-	  inline bool allign_base_line_line(const Label Left, const Label Right)
+	  inline bool align_base_line_line(const point2d& Left, const point2d& Right)
+	  {return align_base_line_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_base_line_line(const Label Left, const Label Right)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
-	     if(allignV<0){allignV = -allignV;}
-	    allignV *= 1.5f;
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - lines_bbox[lines_union[Right]].pcenter()[0];
+	     if(alignV<0){alignV = -alignV;}
+	    alignV *= 1.5f;
 	    return  
-	      allignV < lines_bbox[lines_union[Left]].len(0) &&
+	      alignV < lines_bbox[lines_union[Left]].len(0) &&
 	      lines_bbox[lines_union[Left]].pcenter()[0] < lines_bbox[lines_union[Right]].pcenter()[0];
 	  }
-	  inline bool allign_base_line_line_strict(const point2d& Left, const point2d& Right)
-	  {return allign_base_line_line_strict(img_influ(Left), img_influ(Right));}
-	  inline bool allign_base_line_line_strict(const Label Left, const Label Right)
+	  inline bool align_base_line_line_strict(const point2d& Left, const point2d& Right)
+	  {return align_base_line_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool align_base_line_line_strict(const Label Left, const Label Right)
 	  {
-	    short int allignV = lines_bbox[lines_union[Left]].pcenter()[0] - _bboxgp[Right].pcenter()[0];
-	     if(allignV<0){allignV = -allignV;}
-	    allignV *= 3;
+	    short int alignV = lines_bbox[lines_union[Left]].pcenter()[0] - _bboxgp[Right].pcenter()[0];
+	     if(alignV<0){alignV = -alignV;}
+	    alignV *= 3;
 	    return  
-	      allignV < lines_bbox[lines_union[Left]].len(0) &&
+	      alignV < lines_bbox[lines_union[Left]].len(0) &&
 	      lines_bbox[lines_union[Left]].pcenter()[0] < lines_bbox[lines_union[Right]].pcenter()[0];
 	  }
 	  inline bool is_start_end_line(const point2d& point)
 	  {return is_start_end_line(img_influ(point));}
 	  inline bool is_start_end_line(const Label lbl)
 	  {return start_end_lines_mask(lbl);}
-	  inline bool allign_bottom(const point2d& Left, const point2d& Right)
-	  {return allign_bottom(img_influ(Left), img_influ(Right));}
-	  inline bool allign_bottom(const Label Left, const Label Right)
+	  inline bool align_bottom(const point2d& Left, const point2d& Right)
+	  {return align_bottom(img_influ(Left), img_influ(Right));}
+	  inline bool align_bottom(const Label Left, const Label Right)
 	  {
 	    return _bboxgp[Left].pmin()[0] < _bboxgp[Right].pmin()[0];
 	  }
 	  
-	  inline bool allign_bottom_line(const point2d& Left, const point2d& Right)
-	  {return allign_bottom_line(img_influ(Left), img_influ(Right));}
-	  inline bool allign_bottom_line(const Label Left, const Label Right)
+	  inline bool align_bottom_line(const point2d& Left, const point2d& Right)
+	  {return align_bottom_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_bottom_line(const Label Left, const Label Right)
 	  {
 	    return lines_bbox[lines_union[Left]].pmin()[0] < lines_bbox[lines_union[Right]].pmin()[0];
 	  }
 	  
-	  inline bool allign_base_line_strict(const point2d& Left, const point2d& Right)
-	  {return allign_base_line_strict(img_influ(Left), img_influ(Right));}
-	  inline bool allign_base_line_strict(const Label Left, const Label Right)
+	  inline bool align_base_line_strict(const point2d& Left, const point2d& Right)
+	  {return align_base_line_strict(img_influ(Left), img_influ(Right));}
+	  inline bool align_base_line_strict(const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 1.7f;
-	    return  allignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
+	    short int alignV = label_align_(0, Left, Right) * 1.7f;
+	    return  alignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
 	  }	  
 	  
-	  inline bool allign_base_line(const point2d& Left, const point2d& Right)
-	  {return allign_base_line(img_influ(Left), img_influ(Right));}
-	  inline bool allign_base_line(const Label Left, const Label Right)
+	  inline bool align_base_line(const point2d& Left, const point2d& Right)
+	  {return align_base_line(img_influ(Left), img_influ(Right));}
+	  inline bool align_base_line(const Label Left, const Label Right)
 	  {
-	    short int allignV = label_allign_(0, Left, Right) * 1.5f;
-	    return  allignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
+	    short int alignV = label_align_(0, Left, Right) * 1.5f;
+	    return  alignV < label_size_(0, Left) && _bboxgp[Left].pcenter()[0] < _bboxgp[Right].pcenter()[0];
 	  }
-	  inline bool allign_Space_Factor(const point2d& Left, const point2d& Right)
-	  {return allign_Space_Factor(img_influ(Left), img_influ(Right));}
+	  inline bool align_Space_Factor(const point2d& Left, const point2d& Right)
+	  {return align_Space_Factor(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_Space_Factor( const Label Left, const Label Right)
+	  inline bool align_Space_Factor( const Label Left, const Label Right)
 	  {
-	    Float AFactor = label_allign_(1, Left, Right);
+	    Float AFactor = label_align_(1, Left, Right);
 	    return AFactor < label_size_(1,Left);
 	  }
 	  
@@ -1886,22 +1975,21 @@ namespace mymln
 	  inline bool paragraph_start_with_tab(const Label Paragraph)
 	  {
 	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
-	    
-	    if(lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
-	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 30))
-	    {
-	      debug_draw_box_green_influence_buffer(lines_first_label[FirstLine]); // ERASE ME
-	    }
-	    else
-	    {
-	      debug_draw_box_red_influence_buffer(lines_first_label[FirstLine]); // ERASE ME
-	    }
 	    return
 	      lines_bbox[FirstLine].pmin()[1] > paragraphs_bbox[paragraphs_union[Paragraph]].pmin()[1] +
 	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40) 
 	      ;
 	  }
-	  
+	  inline bool paragraph_end_with_return(const point2d& Point)
+	  { return paragraph_end_with_return(img_influ(Point));}
+	  inline bool paragraph_end_with_return(const Label Paragraph)
+	  {
+	    Label LastLine = paragraphs_last_line[paragraphs_union[Paragraph]];
+	    return
+	      lines_bbox[LastLine].pmax()[1] < paragraphs_bbox[paragraphs_union[Paragraph]].pmax()[1] -
+	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 20) 
+	      ;
+	  }	  
 	  void stat()
 	  {
 	    std::cout << "document :" << std::endl;
@@ -2106,6 +2194,46 @@ namespace mymln
 	    }
 	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
 	  }
+	  
+	  
+	  inline void debug_draw_line_string(const Label Id,int value)
+	  {
+	    debug_draw_line_string(Id, itoa(value).c_str());
+	  }
+	  inline void debug_draw_line_string(const Label Id, const char* string)
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      mln_VAR(pmin,lines_bbox[Id].pmax());
+	      mln_VAR(pmax, lines_bbox[Id].pmax());
+	      pmin[0] = lines_bbox[Id].pmin()[0];
+	      pmin[1] = pmin[1] + 3;
+	      pmax[0] = pmin[0] + 20;
+	      pmax[1] = pmin[1] + 11;
+	      box2d font_size(pmin, pmax);
+	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
+	    }
+	  }
+	  
+	  
+	  inline void debug_draw_paragraph_string(const Label Id,int value)
+	  {
+	    debug_draw_paragraph_string(Id, itoa(value).c_str());
+	  }
+	  inline void debug_draw_paragraph_string(const Label Id, const char* string)
+	  {
+	    if(debug_buffer_enable)
+	    {
+	      mln_VAR(pmin, paragraphs_bbox[Id].pmin());
+	      mln_VAR(pmax, paragraphs_bbox[Id].pmin());
+	      pmin[0] -= 23;
+	      pmin[1] = pmin[1] + 3;
+	      pmax[0] = pmin[0] + 20;
+	      pmax[1] = pmin[1] + 11;
+	      box2d font_size(pmin, pmax);
+	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
+	    }
+	  }
 	  inline void debug_draw_string(const point2d& P, const char* string)
 	  {
 	    if(debug_buffer_enable)
@@ -2235,9 +2363,9 @@ namespace mymln
 		  else if(implicit_separators_left_mask(N))
 		    draw::box(ima_color, _bboxgp[N], mln::literal::cyan);
 		  else if(temp_letter(N))
-		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
-		  else
 		    draw::box(ima_color, _bboxgp[N], mln::literal::green);
+		  else
+		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
 		}
 		else
 		{
@@ -2246,9 +2374,9 @@ namespace mymln
 		  else if(implicit_separators_right_mask(N))
 		    draw::box(ima_color, _bboxgp[N], mln::literal::red);
 		  else if(temp_letter(N))
-		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
-		  else
 		    draw::box(ima_color, _bboxgp[N], mln::literal::green);
+		  else
+		    draw::box(ima_color, _bboxgp[N], mln::literal::olive);
 		}
 	      }
 	      else if(_bboxgp[N].is_valid() && contain_separator(N))
@@ -2337,6 +2465,9 @@ namespace mymln
 
 	    io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
 	  }
+
+	  
+	  
 	  void debug_save_paragraphs(std::string file)
 	  {  mymln::debug::save_label_image(img, paragraphs_union , file);}
 	  void debug_save_separators(std::string file)
@@ -2509,7 +2640,14 @@ namespace mymln
 	    D * 2 < get_line_bbox(Letter).len(0) && 
 	    get_line_bbox(Letter).pcenter()[0] + (get_line_bbox(Letter).len(0) / 5) < _bboxgp[Letter].pcenter()[0];
 	  }
-
+	  inline bool line_included(point2d Line1, point2d Line2)
+	  { return line_included(img_influ(Line1), img_influ(Line2)); }
+	  inline bool line_included(Label Line1, Label Line2)
+	  { 
+	    return 
+	      lines_bbox[lines_union[Line1]].has(lines_bbox[lines_union[Line2]].pmin()) &&
+	      lines_bbox[lines_union[Line1]].has(lines_bbox[lines_union[Line2]].pmax()) ;
+	  }
 	  inline bool letter_included(point2d Par1, point2d Par2)
 	  { return letter_included(img_influ(Par1), img_influ(Par2)); }
 	  inline bool letter_included(Label Par1, Label Par2)
@@ -2603,10 +2741,10 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool allign_size_x_height( const point2d& Left, const point2d& Right)
-	  {return allign_size_x_height(img_influ(Left), img_influ(Right));}
+	  inline bool align_size_x_height( const point2d& Left, const point2d& Right)
+	  {return align_size_x_height(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size_x_height( const Label Left, const Label Right)
+	  inline bool align_size_x_height( const Label Left, const Label Right)
 	  {
 	     short int SizeL0 = label_size_(0, Left);
 	      short int SizeR0 = label_size_(0, Right);
@@ -2619,10 +2757,10 @@ namespace mymln
 	    return  SizeR0 > (SizeL0 / 3) && SizeR0 < (SizeL0);
 	  }
 	  
-	  inline bool allign_size_large_inside( const point2d& Left, const point2d& Right)
-	  {return allign_size_large_inside(img_influ(Left), img_influ(Right));}
+	  inline bool align_size_large_inside( const point2d& Left, const point2d& Right)
+	  {return align_size_large_inside(img_influ(Left), img_influ(Right));}
 	  
-	  inline bool allign_size_large_inside( const Label Left, const Label Right)
+	  inline bool align_size_large_inside( const Label Left, const Label Right)
 	  {
 	     short int SizeL0 = label_size_(0, Left);
 	      short int SizeR0 = label_size_(0, Right);
@@ -2762,14 +2900,36 @@ namespace mymln
 	  else
 	    add_new_separator(lbl);
 	}
-	inline bool contain_implicit_separator(const point2d& point)
-	{ return contain_implicit_separator(img_influ(point)); }
+	
 	inline bool contain_noise(const point2d& point)
 	{ return contain_noise(img_influ(point)); }
-	inline bool contain_implicit_separator(const Label lbl)
-	{return implicit_separators_union[lbl] != 0; }
+
 	inline bool contain_noise(const Label lbl)
 	{return noise_mask(lbl); }
+	
+	
+	
+	inline bool contain_implicit_separator(const point2d& point)
+	{ return contain_implicit_separator(img_influ(point)); }
+	inline bool contain_implicit_separator(const Label lbl)
+	{return implicit_separators_union[lbl] != 0; }	
+	
+	bool contain_implicit_separator_fixed(const point2d& point)
+	{return contain_implicit_separator_fixed(img_influ(point));}	
+	bool contain_implicit_separator_fixed(const Label Id)
+	{return implicit_separators_left_mask(Id) || implicit_separators_right_mask(Id);}
+	
+	bool contain_implicit_separator_left(const point2d& point)
+	{return contain_implicit_separator_left(img_influ(point));}
+	bool contain_implicit_separator_left(const Label Id)
+	{return implicit_separators_left_mask(Id);}
+	
+	bool contain_implicit_separator_right(const point2d& point)
+	{return contain_implicit_separator_right(img_influ(point));}
+	bool contain_implicit_separator_right(const Label Id)
+	{return implicit_separators_right_mask(Id);}
+	
+
 	
 	inline void merge_separators(const point2d& A, const point2d& B)
 	{
@@ -2875,12 +3035,33 @@ namespace mymln
 	
 	inline void invalidate_implicit_separator(const point2d& point)
 	{ invalidate_implicit_separator(img_influ(point));  }
+	
 	inline void invalidate_implicit_separator(Label lbl)
 	{
-	  implicit_separators_union[lbl] = 0;
-	  implicit_separators_left_mask(lbl) = false;
-	  implicit_separators_right_mask(lbl) = false;
+	  if(sep_left_cooked)
+	  {
+	    implicit_separators_union[lbl] = 0;
+	    implicit_separators_right_mask(lbl) = false;   
+	  }
+	  else
+	  {
+	    implicit_separators_union[lbl] = 0;
+	    implicit_separators_left_mask(lbl) = false;
+	  }
 	}
+
+
+	inline void invalidate_all_implicit_separator(const point2d& point)
+	{ invalidate_all_implicit_separator(img_influ(point));  }
+	
+	inline void invalidate_all_implicit_separator(Label lbl)
+	{
+	    implicit_separators_union[lbl] = 0;
+	    implicit_separators_right_mask(lbl) = false;   
+	    implicit_separators_left_mask(lbl) = false;
+	}
+
+
 
 	inline const Label& operator[](point2d i)
 	{ return img_influ(i);}
@@ -2939,6 +3120,7 @@ namespace mymln
 	  paragraphs_letter_len = mln::util::array<unsigned int>(NPar + 1);
 	  
 	  paragraphs_first_line = mln::util::array<unsigned int>(NPar + 1);
+	  paragraphs_last_line = mln::util::array<unsigned int>(NPar + 1);
 	  paragraphs_bbox_influ = mln::util::array<box2d>(NPar + 1);
 	  paragraphs_len.fill(0);
 	   paragraphs_letter_len.fill(0);
@@ -3027,6 +3209,15 @@ namespace mymln
 	{return lines_width[lines_union[lbl]];}
 
 
+	inline bool compatible_paragraph_height(const point2d& A, const point2d& B)
+	{ return compatible_paragraph_height(img_influ(A), img_influ(B));}
+	inline bool compatible_paragraph_height(const Label A, const Label B)
+	{
+	  short int LA = lines_bbox[paragraphs_first_line[paragraphs_union[A]]].len(0);
+	  short int LB = lines_bbox[paragraphs_first_line[paragraphs_union[B]]].len(0);
+	  return  LA < 1.4f * LB && LA * 1.4f > LB;
+	}
+
 	inline bool compatible_paragraph_middle_width(const point2d& A, const point2d& B)
 	{ return compatible_paragraph_middle_width(img_influ(A), img_influ(B));}
 	inline bool compatible_paragraph_middle_width(const Label A, const Label B)
@@ -3060,6 +3251,10 @@ namespace mymln
 	inline unsigned int get_line_ID(const Label lbl)
 	{
 	  return lines_union[lbl];
+	}
+	inline unsigned int get_first_line_ID(const point2d& lbl)
+	{
+	  return get_first_line_ID(img_influ(lbl));
 	}
 	inline unsigned int get_first_line_ID(const Label lbl)
 	{
@@ -3159,9 +3354,11 @@ namespace mymln
 	mln::util::array<unsigned int> separators_marging;
 	
 	bool sep_right_cooked;
+	bool sep_left_cooked;
 	bool lines_cooked;
 	inline void cook_separators_()
 	{
+	  sep_left_cooked = true;
 	  implicit_separators_left_mask(0) = false;
 	  for(int N = 1; N < implicit_separators_union.size(); N++)
 	  {
@@ -3462,6 +3659,12 @@ namespace mymln
 		end_lines_mask(N) = false;
 		start_end_lines_mask(N) =false;
 	      }
+	      else
+	      {
+		start_lines_mask(N) = false;
+		end_lines_mask(N) = false;
+		start_end_lines_mask(N) =false;		
+	      }
 	    }
 
 	    /* SECOND STEP OF THE COOKING */
@@ -3526,17 +3729,17 @@ namespace mymln
 	{
 	  return ((Float)_bboxgp[label].len(0)) / ((Float)_bboxgp[label].len(1));
 	}
-	inline short int label_allign_min_(const unsigned int N, const Label l1, const Label l2)
+	inline short int label_align_min_(const unsigned int N, const Label l1, const Label l2)
 	{
 	   short int AFactor = _bboxgp[l1].pmin()[N] - _bboxgp[l2].pmin()[N];
 	  return AFactor < 0 ? -AFactor : AFactor;
 	}
-	inline short int label_allign_max_(const unsigned int N, const Label l1, const Label l2)
+	inline short int label_align_max_(const unsigned int N, const Label l1, const Label l2)
 	{
 	   short int AFactor = _bboxgp[l1].pmax()[N] - _bboxgp[l2].pmax()[N];
 	  return AFactor < 0 ? -AFactor : AFactor;
 	}
-	inline short int label_allign_(const unsigned int N, const Label l1, const Label l2)
+	inline short int label_align_(const unsigned int N, const Label l1, const Label l2)
 	{
 	   short int AFactor = _bboxgp[l1].pcenter()[N] - _bboxgp[l2].pcenter()[N];
 	  return AFactor < 0 ? -AFactor : AFactor;
@@ -3668,7 +3871,7 @@ namespace mymln
 	mln::util::array<box2d> paragraphs_bbox;
 	mln::util::array<box2d> paragraphs_bbox_influ;
 	mln::util::array<unsigned int> paragraphs_first_line;
-	
+	mln::util::array<unsigned int> paragraphs_last_line;
 	
 	  inline void  compute_paragraph_middle_width_()
 	  {
@@ -3736,6 +3939,21 @@ namespace mymln
 	    {
 	      paragraphs_len[paragraphs_union[lines_first_label[N]]]++;
 	      paragraphs_letter_len[paragraphs_union[lines_first_label[N]]] += lines_len[N];
+	      
+	      if(paragraphs_last_line[paragraphs_union[lines_first_label[N]]])
+	      {
+		if(
+		  lines_bbox[paragraphs_last_line[paragraphs_union[lines_first_label[N]]]].pmax()[0] < 
+		  lines_bbox[N].pmax()[0]
+		  )
+		{
+		    paragraphs_last_line[paragraphs_union[lines_first_label[N]]] = N;
+		}
+	      }
+	      else
+	      {paragraphs_last_line[paragraphs_union[lines_first_label[N]]] = N;}
+	      
+	      
 	      if(paragraphs_first_line[paragraphs_union[lines_first_label[N]]])
 	      {
 		if(

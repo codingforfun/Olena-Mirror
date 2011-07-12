@@ -5,10 +5,10 @@
 // COMPUTED
 
 template<typename L,typename F,typename D>
-void demo_extract_paragraphs(const document<L,F,D>& doc)
+void demo_extract_paragraphs(mymln::document::document<L,F,D>& doc)
 {
   
-  std::cout << "Demo : extract paragraphs" << std::endl;
+  std::cout << "   ==   Demo : extract paragraphs   ==   " << std::endl;
       for(int Id = 0; Id < doc.paragraph_count(); Id++)
       {
 	// get_paragraph_length_direct must be use because here
@@ -22,10 +22,13 @@ void demo_extract_paragraphs(const document<L,F,D>& doc)
 	    // here we can directly extract all the info that the document contain on the paragraph
 	    // by using the methods *_direct
 	    std::cout 
-	    << "Paragraph : " 
+	    << "Paragraph : len = " 
 	    << doc.get_paragraph_length_direct(Id)
+	    << " bbox = "
 	    << doc.get_paragraph_bbox_direct(Id)
-	    std::endl;
+	    << std::endl;
 	  }
+	 
       }
+   std::cout << "PRESS ENTER TO CONTINUE"; std::cin.get();
 }

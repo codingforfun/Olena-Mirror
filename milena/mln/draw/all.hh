@@ -44,6 +44,7 @@ namespace mln
 # include <mln/draw/box_plain.hh>
 # include <mln/draw/line.hh>
 # include <mln/draw/plot.hh>
+# include <mln/draw/string.hh>
 
 
 #endif // ! MLN_DRAW_ALL_HH

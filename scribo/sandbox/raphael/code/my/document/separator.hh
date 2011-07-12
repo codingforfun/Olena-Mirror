@@ -31,9 +31,9 @@ namespace mymln
 		for_all(q)
 		{
 		  if(doc.is_big_element_V(q)){continue;}
-		  if(doc.allign_proximity_strict(q,v) && doc.allign_V(q,v) && doc.allign_size(q,v))
+		  if(doc.align_proximity_strict(q,v) && doc.align_V(q,v) && doc.align_size(q,v))
 		  {doc.debug_draw_line_red_buffer(q,v); doc.add_letter_coerce(q);}
-		  else if(doc.allign_V(q,v) && doc.allign_size(q,v) && doc.allign_proximity_left(v,q))
+		  else if(doc.align_V(q,v) && doc.align_size(q,v) && doc.align_proximity_left(v,q))
 		  {doc.debug_draw_line_red_buffer(q,v); doc.add_letter_coerce(q);}
 		}
 	      }
@@ -79,8 +79,8 @@ namespace mymln
 		  else if(
 			
 			doc.letter_ratio_XY (q) <= 1 &&
-			doc.allign_H_large_one(q, v) &&
-			doc.allign_proximity_top_strict(q,v)
+			doc.align_H_large_one(q, v) &&
+			doc.align_proximity_top_strict(q,v)
 			)
 		      {
 			sep_union.add_link(doc[v], doc[q]);
@@ -140,7 +140,7 @@ namespace mymln
 
 	}
 	template<typename L, typename F, typename D>
-	void separators_find_allign(mymln::document::document<L,F,D>& doc)
+	void separators_find_align(mymln::document::document<L,F,D>& doc)
 	{
 	    typedef vertex_image<point2d,bool> v_ima_g;
 	    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
@@ -167,7 +167,7 @@ namespace mymln
 		    if((!doc.contain_implicit_separator(q)))
 		    {
 		      // draw::line(out, q,v, mln::literal::blue);
-		      if(doc.allign_H_min(q,v) && doc.allign_size(q, v))
+		      if(doc.align_H_min(q,v) && doc.align_size(q, v))
 		      {
 			doc.add_to_separator_link(v, q);
 			  All_Alone = false;
@@ -175,7 +175,7 @@ namespace mymln
 		    }
 		    else
 		    {
-		      if(doc.allign_H_min(q,v) && doc.allign_size(q, v))
+		      if(doc.align_H_min(q,v) && doc.align_size(q, v))
 		      {
 			doc.add_to_separator_link(q, v);
 			 All_Alone = false;
@@ -192,7 +192,7 @@ namespace mymln
 	
 	
 	template<typename L, typename F, typename D>
-	void separators_find_allign_right(mymln::document::document<L,F,D>& doc)
+	void separators_find_align_right(mymln::document::document<L,F,D>& doc)
 	{
 	    typedef vertex_image<point2d,bool> v_ima_g;
 	    typedef p_vertices<mln::util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
@@ -219,7 +219,7 @@ namespace mymln
 		    if((!doc.contain_implicit_separator(q)))
 		    {
 		      // draw::line(out, q,v, mln::literal::blue);
-		      if(doc.allign_H_max(q,v) && doc.allign_size(q, v))
+		      if(doc.align_H_max(q,v) && doc.align_size(q, v))
 		      {
 			doc.debug_draw_line_green_buffer(v, q);
 			doc.add_to_separator_link(v, q);
@@ -230,7 +230,7 @@ namespace mymln
 		    }
 		    else
 		    {
-		      if(doc.allign_H_max(q,v) && doc.allign_size(q, v))
+		      if(doc.align_H_max(q,v) && doc.align_size(q, v))
 		      {
 			doc.debug_draw_line_green_buffer(v, q);
 			doc.add_to_separator_link(q, v);
@@ -276,7 +276,7 @@ namespace mymln
 		      if(doc.contain_implicit_separator(q) && doc.same_implicit_separator(q,v) )
 		      {
 			// draw::line(out, q,v, mln::literal::blue);
-			if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_right(v,q))
+			if(doc.align_V(q,v) && doc.align_size(q, v) && doc.align_right(v,q))
 			{
 			  count[doc[q]]++;
 			}
@@ -284,12 +284,12 @@ namespace mymln
 		      }
 		      else if (doc.contain_implicit_separator(q))
 		      {
-			if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_right(v,q) && doc.allign_proximity_strict(v, q))
+			if(doc.align_V(q,v) && doc.align_size(q, v) && doc.align_right(v,q) && doc.align_proximity_strict(v, q))
 			{
 			  count[doc[q]]++;
 			}
 		      }
-		      else if(doc.allign_proximity_strict(q,v) && doc.allign_left(v,q) && doc.allign_V(q,v) && doc.same_line(q, v))
+		      else if(doc.align_proximity_strict(q,v) && doc.align_left(v,q) && doc.align_V(q,v) && doc.same_line(q, v))
 		      {
 			count[doc[q]]++;
 			doc.debug_draw_line_orange_buffer(v, q);
@@ -330,7 +330,7 @@ namespace mymln
 		      if(doc.contain_implicit_separator(q) && doc.same_implicit_separator(q,v) )
 		      {
 			// draw::line(out, q,v, mln::literal::blue);
-			if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_right(q,v))
+			if(doc.align_V(q,v) && doc.align_size(q, v) && doc.align_right(q,v))
 			{
 			  count[doc[q]]++;
 			  doc.debug_draw_box_red_buffer(q);
@@ -339,14 +339,14 @@ namespace mymln
 		      }
 		      else if (doc.contain_implicit_separator(q))
 		      {
-			if(doc.allign_V(q,v) && doc.allign_size(q, v) && doc.allign_right(q,v) && doc.allign_proximity_strict(v, q))
+			if(doc.align_V(q,v) && doc.align_size(q, v) && doc.align_right(q,v) && doc.align_proximity_strict(v, q))
 			{
 			  count[doc[q]]++;
 			  doc.debug_draw_box_green_buffer(q);
 			  doc.debug_draw_line_green_buffer(v, q);
 			}
 		      }
-		      else if(doc.allign_proximity_strict(q,v) && doc.allign_right(v,q)  && doc.allign_V(q,v) && doc.same_line(q, v))
+		      else if(doc.align_proximity_strict(q,v) && doc.align_right(v,q)  && doc.align_V(q,v) && doc.same_line(q, v))
 		      {
 			count[doc[q]]++;
 			doc.debug_draw_line_orange_buffer(v, q);
@@ -395,7 +395,7 @@ namespace mymln
 		      if(doc.contain_implicit_separator(q) && doc.same_implicit_separator(q,v))
 		      {
 			// draw::line(out, q,v, mln::literal::blue);
-			if(doc.allign_V(q,v) && doc.allign_size(q, v))
+			if(doc.align_V(q,v) && doc.align_size(q, v))
 			{
 			  count[doc[q]]++;
 			}

@@ -61,6 +61,14 @@
 
 #ifndef NDEMO
 #include <demo/demo_extract_paragraphs.hh>
+#include <demo/demo_label_to_point.hh>
+#include <demo/demo_draw_full_graph.hh>
+#include <demo/demo_draw_line_graph.hh>
+#include <demo/demo_draw_line_length.hh>
+#include <demo/demo_draw_tab.hh>
+#include <demo/demo_compute_align.hh>
+#include <demo/demo_compute_align_page.hh>
+#include <demo/demo_draw_implicit_separators.hh>
 #endif
 
 
@@ -98,16 +106,11 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
       mln_VAR( couple , mln::labeling::value_and_compute(ima, true, c8(), areas_detected, accu::shape::bbox<point2d>()));
       image2d<uint16> ima_blob = couple.first();
       util::array<box2d> boxes = couple.second().first();
-      //image2d<uint16> ima_blob = labeling::blobs(ima, c8(), areas_detected);
 
     image2d<uint16> ima_influ = transform::influence_zone_geodesic(ima_blob, c8());
-
     util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c8(), areas_detected);
-  //  mymln::debug::save_label_image(ima_influ, Dir + "/influ_" + File); 
-    
 
     /* COMPUTE GRAPH POINT POSITION */
-    //util::array<box2d> boxes = labeling::compute(accu::meta::shape::bbox(), ima_blob, areas_detected);
     typedef p_vertices<util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
     typedef graph_elt_neighborhood<util::graph, g_vertices_p> g_nbh;    
     fun::i2v::array<point2d> graph_points(areas_detected + 1);
@@ -147,8 +150,8 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
     
       runtime.run();
       std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
-      mymln::data::page<uint16,float,short> page(doc);
-      page.export_HTML(Dir + "/debug_" + File + ".html");
+      //mymln::data::page<uint16,float,short> page(doc);
+     // page.export_HTML(Dir + "/debug_" + File + ".html");
  
       
       
@@ -156,10 +159,16 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
       
       // THE DEMOS START HERE
 #ifndef NDEMO
-      demo_extract_paragraphs(doc);
-#endif NDEMO
-      
-      
+      //demo_extract_paragraphs(doc);
+      //demo_label_to_point(doc);
+      //demo_draw_full_graph(doc);
+      //demo_draw_line_graph(doc);
+      //demo_draw_line_length(doc);
+      //demo_draw_tab(doc);
+      demo_compute_align(doc);
+      demo_compute_align_page(doc);
+      //demo_draw_implicit_separators(doc);
+#endif
 }
 
 
