@@ -148,7 +148,7 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
 	
     }
     
-      runtime.run();
+      runtime.run_debug();
       std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
       //mymln::data::page<uint16,float,short> page(doc);
      // page.export_HTML(Dir + "/debug_" + File + ".html");
@@ -159,15 +159,15 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
       
       // THE DEMOS START HERE
 #ifndef NDEMO
-      //demo_extract_paragraphs(doc);
-      //demo_label_to_point(doc);
-      //demo_draw_full_graph(doc);
-      //demo_draw_line_graph(doc);
-      //demo_draw_line_length(doc);
-      //demo_draw_tab(doc);
+      demo_extract_paragraphs(doc);
+      demo_label_to_point(doc);
+      demo_draw_full_graph(doc);
+      demo_draw_line_graph(doc);
+      demo_draw_line_length(doc);
+      demo_draw_tab(doc);
       demo_compute_align(doc);
       demo_compute_align_page(doc);
-      //demo_draw_implicit_separators(doc);
+      demo_draw_implicit_separators(doc);
 #endif
 }
 

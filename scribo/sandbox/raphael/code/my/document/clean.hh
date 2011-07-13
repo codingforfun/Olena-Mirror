@@ -1024,27 +1024,30 @@ namespace mymln
 		    typedef graph_elt_neighborhood_if<mln::util::graph, g_vertices_p, v_ima_g> nbh_t;
 		    nbh_t nbh(mask);
 		    mln_niter_(nbh_t) q(nbh, v);
+		    
 		    for_all(v)
 		    {
-		      if(doc.contain_line(v))
+		      L lv = doc[v];
+		      if(doc.contain_line(lv))
 		      {
 			for_all(q)
 			{
+			  L lq = doc[q];
 			  if(
-			    doc.contain_line(q) &&
-			    !doc.same_line(q, v) &&
-			    doc.align_H_large(q, v) &&
-			    doc.align_size_height_line(q,v))
+			    doc.contain_line(lq) &&
+			    !doc.same_line(lq, lv) &&
+			    doc.align_H_large(lq, lv) &&
+			    doc.align_size_height_line(lq,lv))
 			  {
-			    if(doc.align_top_large(q,v))
+			    if(doc.align_top_large(lq,lv))
 			    {
 			      doc.debug_draw_line_green_buffer(q,v);
-			      doc.add_line_previous(q,v);
+			      doc.add_line_previous(lq,lv);
 			    }
-			    else if(doc.align_bottom_large(q,v))
+			    else if(doc.align_bottom_large(lq,lv))
 			    {
 			       doc.debug_draw_line_red_buffer(q,v);
-			       doc.add_line_next(q,v);
+			       doc.add_line_next(lq,lv);
 			    }
 			  }
 			}

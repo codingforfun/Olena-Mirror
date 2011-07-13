@@ -107,34 +107,55 @@ namespace mymln
 	  lines_cooked = false;
 	  Enable_Debug_Buffer = false; // Remanant version of debug_buffer_enable
 	}
+	
+	// This method only return the height of the document
 	inline unsigned int height()
 	{return img_influ.domain().height();}
+	// This method only return the height of the document
 	inline unsigned int width()
 	{return img_influ.domain().width();}
+	// Return true if the label has been killed
 	inline bool killed(const Label lbl)
 	{return kill_mask(lbl);}
+	// Return kill a label
 	inline void kill(const Label lbl)
 	{
 	  kill_mask(lbl) = true;
 	  all_mask(lbl) = false;
 	}
+	// Return the number of Label in the document
 	inline unsigned int count()
 	{return Areas_Number_;}
 	/* OPERATION ON PAGE */
+	
+	// Return true if the point is in the header
 	inline bool in_header(const point2d& p)
 	{ return p[0] < (img_influ.domain().len(0) / 8);}
+	// Return true if the label is in the header
 	inline bool in_header(Label lbl)
 	{ return in_header(_bboxgp[lbl]); }
-	
+
+	// Return true if the point is in the footer
 	inline bool in_footer(const point2d& p)
 	{ return p[0] > ((img_influ.domain().len(0) / 8) * 7);}
+	// Return true if the label is in the footer
 	inline bool in_footer(Label lbl)
 	{ return in_footer(_bboxgp[lbl]); }
+	
+	// Return true if the point is in a line composed only by a single word
+	// lines space must be cooked before
+	// WARNING : This method is depreciated
 	inline bool is_word(const point2d& p)
 	{ return is_word(img_influ(p)); }
+	
+	// Same thing as is_word(const point2d& p) but with a Label
 	inline bool is_word(const Label lbl)
 	{ return lines_space[lbl] < lines_width[lbl] / 15.0f; }
+	
+	
 	/* OPERATION ON PARAGRAPH */
+	
+	// precomputes the links in the paragraphs_union
 	inline bool link_paragraphs()
 	{
 	  paragraphs_union[0] = 0;
@@ -167,38 +188,58 @@ namespace mymln
 	
 	
 	
-	
+	// Tests if the point is a part of a paragraph
 	inline bool contain_paragraph(const point2d& point)
 	{return contain_paragraph(img_influ(point));}
+	// Tests if the label is a part of a paragraph
 	inline bool contain_paragraph(const Label lbl)
 	{return paragraphs_union[lbl] != 0;}
+	// add the point to the current paragraph
 	inline void add_to_paragraph(const point2d& point)
 	{add_to_paragraph(img_influ(point));}
+	// add the labeltothecurrent paragraph
 	inline void add_to_paragraph(const Label lbl)
 	{paragraphs_union[lbl] = CPar;}
-	
+
+	// creates a new paragraph and define it as the current paragraph
+	// NOTE : The point is here only for compatibility reason
+	// it should be the first point to add to the new paragraph
 	inline void add_new_paragraph(const point2d& point)
 	{add_new_paragraph(img_influ(point));}
+	// creates a new paragraph and define it as the current paragraph
+	// NOTE : The label is here only for compatibility reason
+	// it should be the first label to add to the new paragraph
 	inline void add_new_paragraph(const Label lbl)
 	{CPar = NPar; NPar++;}
 	
+	// Add a paragraph link between two points. A will be the parent
 	inline void add_to_paragraph_link(const point2d& A, const point2d& B)
 	{add_to_paragraph_link(img_influ(A),img_influ(B));}
+	// Add a paragraph link between two labels. A will be the parent
 	inline void add_to_paragraph_link(const Label A, const Label B)
 	{paragraphs_union.add_link(A, B);}
 	
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent
 	inline void add_to_paragraph_self_link(const point2d& A)
 	{add_to_paragraph_self_link(img_influ(A));}
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent	
 	inline void add_to_paragraph_self_link(const Label A)
 	{paragraphs_union.add_self_link(A);}
 	
+	// Propage all the paragraph links
 	inline void propage_paragraph_link()
 	{paragraphs_union.propage_links();}
 	
+	// Set the paragraph that contain the point "point" as the current paragraph
+	// WARNING: If the point is not inside a paragraph the result is undefined
 	inline void jump_to_paragraph(const point2d& point)
 	{
 	  jump_to_paragraph(img_influ(point));
 	}
+	// Set the paragraph that contain the label "lbl" as the current paragraph
+	// WARNING: If the label is not inside a paragraph the result is undefined
 	inline void jump_to_paragraph(const Label lbl)
 	{ 
 	  if(paragraphs_union[lbl] != 0)
@@ -206,9 +247,14 @@ namespace mymln
 	  else
 	    add_new_paragraph(lbl);
 	}
+	
+	
 	/* OPERATION ON LINES */
+	
+	// prepare the line tobe splitted at the specified point
 	inline void split_line_exclusive(const point2d& point)
 	{split_line_exclusive(img_influ(point));}
+	// prepare the line tobe splitted at the specified label
 	inline void split_line_exclusive(const Label lbl)
 	{
 	  if(lbl == 0){return;}
@@ -232,9 +278,10 @@ namespace mymln
 	  
 	}
 	
-	
+	// prepare the line tobe splitted at the specified point	
 	inline void split_line(const point2d& point)
 	{split_line(img_influ(point));}
+	// prepare the line tobe splitted at the specified label
 	inline void split_line(const Label lbl)
 	{
 	  if(lbl == 0){return;}
@@ -258,17 +305,15 @@ namespace mymln
 	  
 	}
 	
-	
+	// Split all the lines prepared with split_line_exclusive
 	inline void cook_line_splitting_exclusive()
 	{
-	  std::cout << "--> start union exclusive" << std::endl;
 	  for(unsigned int N = 1; N < Areas_Number_; N++)
 	  {
 	    lines_union.invalidate_link(N);
 	    if(end_lines_mask(N) || implicit_separators_right_mask(N))
 	      split_line_exclusive(N);
 	  }
-	   std::cout << "--> start linking" << std::endl;
 	  for(unsigned int N = 1; N < Areas_Number_; N++)
 	  {
 	    if(lines_union.is_self_link(N))
@@ -284,7 +329,6 @@ namespace mymln
 	  }
 	  lines_union[0] = 0;
 	  lines_union.invalidate_link(0);
-	  std::cout << "--> propage union " << std::endl;
 	  for(unsigned int N = 1; N < Areas_Number_; N++)
 	  {
 	    if(!contain_line(N) || lines_union.is_self_link(N))
@@ -296,11 +340,11 @@ namespace mymln
 	    if(pos != 0 && pos != N && pos < Areas_Number_ )
 	    {lines_union[N] = lines_union[pos]; lines_union.add_link(pos,N);}
 	  }
-	 std::cout << "--> end propage union " << std::endl;
 	  //lines_union.propage_links();lines_union
 	  cook_lines();
 	}
-	
+
+	// Split all the lines prepared with split_line
 	inline void cook_line_splitting()
 	{
 	  for(unsigned int N = 1; N < Areas_Number_; N++)
@@ -337,38 +381,105 @@ namespace mymln
 	  //lines_union.propage_links();lines_union
 	  cook_lines();
 	}
+	
+	
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent 
+	inline void add_to_line_self_link(const Label A)
+	{lines_union.add_self_link(A);}
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent 
 	inline void add_to_line_self_link(const point2d& point)
 	{ add_to_line_self_link(img_influ(point));}
+
+	// Set the line that contain the point "point" as the current line
+	// WARNING: If the point is not inside a line the result is undefined
+	inline void jump_to_line(const point2d& point)
+	{ jump_to_line(img_influ(point)); }
+	// Set the line that contain the point "point" as the current line
+	// WARNING: If the point is not inside a line the result is undefined
+	inline void jump_to_line(const Label lbl)
+	{ 
+	  if(lines_union[lbl] != 0)
+	    CLine = lines_union[lbl];
+	  else
+	    add_new_line(lbl);
+	}	
+
+
+	inline void add_new_line(const point2d& point)
+	{ add_new_line(img_influ(point)); }
+	inline void add_new_line(const Label lbl)
+	{ CLine = NLine; NLine++; }
+	
+	
+
+	
+
+	// Add the point to the current line
 	inline void add_to_line(const point2d& point)
 	{ add_to_line(img_influ(point)); }
-	
-  
-	inline void add_to_line_link(const point2d& A, const point2d& B)
-	{ add_to_line_link(img_influ(A), img_influ(B)); }
+	// Add the label to the current line
+	inline void add_to_line(const Label lbl)
+	{ lines_union[lbl] = CLine; }
+
+	// The label A will be linked with nothing
+	inline void invalidate_line_link(const Label A)
+	{lines_union.invalidate_link(A);}
+	// The point A will be linked with nothing
 	inline void invalidate_line_link(const point2d& A)
 	{ invalidate_line_link(img_influ(A)); }
+	
+	
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent 
+	inline void add_to_line_link(const point2d& A, const point2d& B)
+	{ add_to_line_link(img_influ(A), img_influ(B)); }
+	// Set A as a self paragraph link. That means that A is it's
+	// own parent 
+	inline void add_to_line_link(const Label A, const Label B)
+	{lines_union.add_link(A, B);}
+
+	// Tests if A and B are in the same line
 	inline bool same_line(const point2d& A, const point2d& B)
 	{ return  same_line(img_influ(A), img_influ(B)); }
+	// Tests if A and B are in the same line
 	inline bool same_line(const Label A, const Label B)
 	{ return  lines_union[A] == lines_union[B]; }
+	
+	// Tests if A and B are in the same paragraph
 	inline bool same_paragraph(const point2d& A, const point2d& B)
 	{ return  same_paragraph(img_influ(A), img_influ(B)); }
+	// Tests if A and B are in the same paragraph
 	inline bool same_paragraph(const Label A, const Label B)
 	{ return  paragraphs_union[A] == paragraphs_union[B]; }
-	
+
+	// Return true if the point A is in the beginning of the line
 	inline bool in_beginning_of_line(const point2d& A)
 	{return in_beginning_of_line(img_influ(A));}
+	// Return true if the label A is in the beginning of the line
 	inline bool in_beginning_of_line(const Label A)
 	{return lines_bbox[lines_union[A]].len(1) / 8 + lines_bbox[lines_union[A]].pmin()[1] > _bboxgp[A].pmax()[1];}
 
+	// Return true if the point A is in the end of the line
+	inline bool in_end_of_line(const point2d& A)
+	{return in_end_of_line(img_influ(A));}
+	// Return true if the point A is in the end of the line
+	inline bool in_end_of_line(const Label A)
+	{return  lines_bbox[lines_union[A]].pmax()[1] - lines_bbox[lines_union[A]].len(1) / 8 < _bboxgp[A].pmax()[1];}
 
+
+
+
+	// Return true if the point can be use as a clasic element of the line_base
+	// (i.e : it is not a . , ' " ...) 
 	inline bool is_line_representative(const point2d& A)
 	{return is_line_representative(img_influ(A));}
 	inline bool is_line_representative(const Label A)
 	{return  lines_bbox[lines_union[A]].len(0) < _bboxgp[A].len(0) * 2 ;}
 
 
-
+	// Tests if the point is an artefact according to the bounding box of the line
 	inline bool is_line_artefact(const point2d& A)
 	{return is_line_artefact(img_influ(A));}
 	inline bool is_line_artefact(const Label A)
@@ -376,6 +487,8 @@ namespace mymln
 	  return  lines_bbox[lines_union[A]].len(0) > _bboxgp[A].len(0) * 24;
 	}
 
+	// remove all the labels that have been marked as noise
+	// from the lines_union
 	inline void clean_noise_lines()
 	{
 	  for(int N = 0;N < Areas_Number_; N++)
@@ -386,7 +499,6 @@ namespace mymln
 		{
 		    lines_union.invalidate_link(N);
 		    lines_union[N] = 0;
-		    
 		}
 	    }
 	  }
@@ -406,11 +518,8 @@ namespace mymln
 	}
 
 
-	inline bool in_end_of_line(const point2d& A)
-	{return in_end_of_line(img_influ(A));}
-	inline bool in_end_of_line(const Label A)
-	{return  lines_bbox[lines_union[A]].pmax()[1] - lines_bbox[lines_union[A]].len(1) / 8 < _bboxgp[A].pmax()[1];}
-
+	// return the space between the bounding box of A and
+	// the bounding box of B
 	inline unsigned int space(const point2d& A,const point2d& B)
 	{return space(img_influ(A), img_influ(B));}
 	inline unsigned int space(const Label A, const Label B)
@@ -430,38 +539,45 @@ namespace mymln
 
 
 
-
+	// Return true if the point is a part of the first line of a paragraph
 	inline bool contain_start_paragraph(const point2d& point)
 	{ return contain_start_paragraph(img_influ(point)); }
-	inline bool contain_end_paragraph(const point2d& point)
-	{ return contain_end_paragraph(img_influ(point)); }
-
-	inline bool contain_start_line(const point2d& point)
-	{ return contain_start_line(img_influ(point)); }
-	
-	inline bool contain_end_line(const point2d& point)
-	{ return contain_end_line(img_influ(point)); }
-
-	inline bool contain_line(const point2d& point)
-	{ return contain_line(img_influ(point)); }
-	
-	inline bool contain_line_start(const point2d& point)
-	{ return contain_line_start(img_influ(point)); }
-	inline bool contain_line_start(const Label lbl)
-	{ return lines_first_label(lbl); }
-	
-	
-	inline bool contain_line(const Label lbl)
-	{ return lines_union[lbl] != 0;}
-	
-	inline bool contain_start_line(const Label lbl)
-	{ return  start_lines_mask(lbl);}
-	
+	// Return true if the label is a part of the first line of a paragraph
 	inline bool contain_start_paragraph(const Label lbl)
 	{ return  paragraphs_first_line[paragraphs_union[lbl]] == lines_union[lbl];}
 	
+	
+	// Return true if the point is a part of the last line of the paragraph
+	inline bool contain_end_paragraph(const point2d& point)
+	{ return contain_end_paragraph(img_influ(point)); }
+	// Return true if the label is a part of the last line of the paragraph
 	inline bool contain_end_paragraph(const Label lbl)
 	{ return  paragraphs_last_line[paragraphs_union[lbl]] == lines_union[lbl];}
+	// Tests if the point is the first component of the line	
+	inline bool contain_start_line(const point2d& point)
+	{ return contain_start_line(img_influ(point)); }
+	// Tests if the label is the last component of the line
+	inline bool contain_start_line(const Label lbl)
+	{ return  start_lines_mask(lbl);}
+	
+	// Tests if the point is the last component of the line
+	inline bool contain_end_line(const point2d& point)
+	{ return contain_end_line(img_influ(point)); }
+	// Tests if the label is the last component of the line
+	inline bool contain_end_line(const Label lbl)
+	{ return  end_lines_mask(lbl);}
+	
+	// Tests if the point is inside a line
+	inline bool contain_line(const point2d& point)
+	{ return contain_line(img_influ(point)); }
+	// Tests if the label is inside a line
+	inline bool contain_line(const Label lbl)
+	{ return lines_union[lbl] != 0;}
+	
+
+	
+
+
 	
 	///DIRECT VERSION OF contain_start_paragraph. A LINE ID MUST BE PASSED
 	inline bool contain_start_paragraph_direct(const unsigned int line_ID)
@@ -471,44 +587,23 @@ namespace mymln
 	{ return  paragraphs_last_line[paragraphs_union[lines_last_label[line_ID]]] == line_ID;}
 	
 	
-	inline bool contain_end_line(const Label lbl)
-	{ return  end_lines_mask(lbl);}
+
 	
 	
-	
-	
-	inline void add_new_line(const point2d& point)
-	{ add_new_line(img_influ(point)); }
-	
-	inline void jump_to_line(const point2d& point)
-	{ jump_to_line(img_influ(point)); }
-	
-	inline void add_to_line(const Label lbl)
-	{ lines_union[lbl] = CLine; }
-	
-	inline void add_new_line(const Label lbl)
-	{ CLine = NLine; NLine++; }
-	
-	
-	inline void add_to_line_self_link(const Label A)
-	{lines_union.add_self_link(A);}
-	
-	inline void add_to_line_link(const Label A, const Label B)
-	{lines_union.add_link(A, B);}
-	inline void invalidate_line_link(const Label A)
-	{lines_union.invalidate_link(A);}
-	inline void jump_to_line(const Label lbl)
-	{ 
-	  if(lines_union[lbl] != 0)
-	    CLine = lines_union[lbl];
-	  else
-	    add_new_line(lbl);
-	}
 	
 
 	
+
+	// Tests if the Label as been marked as a line self link
+	// See add_line_self_link
 	inline bool contain_line_self_link(const Label lbl)
 	{ return lines_union[lbl].is_self_link();}
+	
+	// Move the line self link when the label containing the self link
+	// must be removed
+	// NOTE : A LOT OF OPTIMIZATIONS AND CORRECTIONS CAN BE DONE HERE
+	// WARNING : Depreciated, please don't use it and replace it by methods
+	// like clean_noise_lines
 	inline bool move_line_self_link(const Label lbl)
 	{ 
 	  if(lines_union[lbl] && lines_union.is_self_link(lbl))
@@ -564,37 +659,22 @@ namespace mymln
 	
 
 	
-	inline void add_noise(const point2d& point)
-	{add_noise(img_influ(point));}
+
 	
-	/// DEPRECIATED
+	/// WARNING: DEPRECIATED
 	/// THE METHOD SIZE IS HERE ONLY TO USE THE SAME SYNTAX AS MILENA ARRAYS
 	/// USE count() INSTEED
 	inline unsigned int size(){return Areas_Number_;} 
 	
 	
+	// Return the number of line in the document
 	inline unsigned int line_count(){return lines_bbox.size();}
+	// Return the number of paragraph in the document
 	inline unsigned int paragraph_count(){return paragraphs_bbox.size();}
 	
-	void add_noise(Label lbl)
-	{
-	  separators_mask(lbl) = false;
-	  letters_mask(lbl) = false;
-	  alone_letters_mask(lbl) = false;
-	  containers_mask(lbl) = false;
-	  Hseparator_mask(lbl) = false;
-	  Vseparator_mask(lbl) = false;
-	  alone_letters_mask(lbl) = false;
-	  all_letters_mask(lbl) = false;
-	  if(lines_cooked)
-	  {
-	    start_end_lines_mask(lbl) = false;
-	    end_lines_mask(lbl) = false;
-	    start_lines_mask(lbl) = false;
-	  }
-	  noise_mask(lbl) = true;
-	  lines_union[lbl] = 0;
-	}
+	// Add the label to the document
+	// Some pre-processing operatios will be released to
+	// classify the label
 	void inline add(Label lbl, int link)
 	{
 	  image_mask(lbl) = false;
@@ -613,62 +693,52 @@ namespace mymln
 	  kill_mask(lbl) = false;
 	  temp_letter(lbl) = false;
 	}
+	
+	// Add the point to the noise
+	inline void add_noise(const point2d& point)
+	{add_noise(img_influ(point));}
+	// Add the label to the noise
+	inline void add_noise(Label lbl)
+	{
+	  separators_mask(lbl) = false;
+	  letters_mask(lbl) = false;
+	  alone_letters_mask(lbl) = false;
+	  containers_mask(lbl) = false;
+	  Hseparator_mask(lbl) = false;
+	  Vseparator_mask(lbl) = false;
+	  alone_letters_mask(lbl) = false;
+	  all_letters_mask(lbl) = false;
+	  if(lines_cooked)
+	  {
+	    start_end_lines_mask(lbl) = false;
+	    end_lines_mask(lbl) = false;
+	    start_lines_mask(lbl) = false;
+	  }
+	  noise_mask(lbl) = true;
+	  lines_union[lbl] = 0;
+	}
+
+	// The point will not be consider as a letter
 	void inline invalid_letter(const point2d& point)
 	{invalid_letter(img_influ(point));}
+	// The label will not be consider as a letter
 	void invalid_letter(Label lbl)
 	{letters_mask(lbl) = false;}
+	// The point will not be consider as a separator
 	void inline invalid_separator(const point2d& point)
 	{invalid_separator(img_influ(point));}
+	// The label will not be consider as a separator
 	void invalid_separator(Label lbl)
 	{
 	  separators_mask(lbl) = false;
 	  Vseparator_mask(lbl) = false;
 	  Hseparator_mask(lbl) = false;
 	}
-	void inline invalid_container(const point2d& point)
-	{invalid_container(img_influ(point));}
-	void invalid_container(const Label lbl)
-	{containers_mask(lbl) = false;}
-	void inline add_letter(const point2d& point)
-	{add_letter(img_influ(point)); }
-	void inline add_letter_coerce(const point2d& point)
-	{add_letter_coerce(img_influ(point)); }
 	
-	
-	void add_image(const Label lbl)
-	{
-	  image_mask(lbl) = true;
-	  separators_mask(lbl) = false;
-	  containers_mask(lbl) = false;
-	  Vseparator_mask(lbl) = false;
-	  Hseparator_mask(lbl) = false;
-	  alone_letters_mask(lbl) = false;
-	  noise_mask(lbl) = false;
-	  all_letters_mask(lbl) = false;
-	  temp_letter = false;
-	}
-	
-	
-	
-	void add_anomaly(const point2d& point)
-	{add_anomaly(img_influ(point));}
-	void add_anomaly(const Label lbl)
-	{anomaly_mask(lbl) = true;}
-	
-	
-	void remove_anomaly(const point2d& point)
-	{remove_anomaly(img_influ(point));}	
-	void remove_anomaly(const Label lbl)
-	{anomaly_mask(lbl) = false;}	
-	
-	
-	bool contain_anomaly(const point2d& point)
-	{return contain_anomaly(img_influ(point));}
-	void contain_anomaly(const Label lbl)
-	{return anomaly_mask(lbl);}		
-	
+	// The point will now be consider as an alone letter
 	void add_alone_letter(const point2d& point)
 	{add_alone_letter(img_influ(point));}
+	// The label will now be consider as an alone letter
 	void add_alone_letter(const Label lbl)
 	{
 	  letters_mask(lbl) = false;
@@ -681,19 +751,18 @@ namespace mymln
 	  all_letters_mask(lbl) = true;
 	  temp_letter = false;
 	}
-	void add_letter_coerce(const Label lbl)
-	{
-	  
-	      letters_mask(lbl) = true;
-	      all_letters_mask(lbl) = true;
-	      separators_mask(lbl) = false;
-	      containers_mask(lbl) = false;
-	      Vseparator_mask(lbl) = false;
-	      Hseparator_mask(lbl) = false;
-	      alone_letters_mask(lbl) = false;	      
-	      noise_mask(lbl) = false;
-	      temp_letter = false;
-	}
+	
+	
+	// The point will not be consider as a container
+	void inline invalid_container(const point2d& point)
+	{invalid_container(img_influ(point));}
+	// The label will not be consider as a container
+	void invalid_container(const Label lbl)
+	{containers_mask(lbl) = false;}
+	// Add the point to the letters
+	void inline add_letter(const point2d& point)
+	{add_letter(img_influ(point)); }
+	// Add the label to the letters
 	void add_letter(const Label lbl)
 	{ 
 	      CLet++;
@@ -717,44 +786,33 @@ namespace mymln
 	      }
 	      else
 		add_noise(lbl);
-	}
-	inline bool is_big_element_V(const point2d& point)
-	{return is_big_element_V(img_influ(point));}
-	inline bool is_big_element_V(const Label lbl)
+	}	
+	
+	
+	// Add the point to the letters without doing the tests to check
+	// if the letter is valid
+	void inline add_letter_coerce(const point2d& point)
+	{add_letter_coerce(img_influ(point)); }
+	// Add the label to the letters without doing the tests to check
+	// if the letter is valid
+	void add_letter_coerce(const Label lbl)
 	{
-	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 13;
-	}
-	inline bool is_big_element_H(const point2d& point)
-	{return is_big_element_H(img_influ(point));}
-	inline bool is_big_element_H(const Label lbl)
-	{
-	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 13;
-	}
-	
-	
-	
-	
-	
-	inline bool is_very_big_element_V(const point2d& point)
-	{return is_very_big_element_V(img_influ(point));}
-	inline bool is_very_big_element_V(const Label lbl)
-	{
-	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 6;
-	}
-	inline bool is_very_big_element_H(const point2d& point)
-	{return is_very_big_element_H(img_influ(point));}
-	inline bool is_very_big_element_H(const Label lbl)
-	{
-	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 6;
+	  
+	      letters_mask(lbl) = true;
+	      all_letters_mask(lbl) = true;
+	      separators_mask(lbl) = false;
+	      containers_mask(lbl) = false;
+	      Vseparator_mask(lbl) = false;
+	      Hseparator_mask(lbl) = false;
+	      alone_letters_mask(lbl) = false;	      
+	      noise_mask(lbl) = false;
+	      temp_letter = false;
 	}
 	
-	
-	
-	
-	
-	
+	// Add the point to the containers
 	void inline add_container(const point2d& point)
 	{add_container(img_influ(point)); }
+	// Add the label to the containers
 	void add_container(const Label lbl)
 	{
 	  if(label_valid_size_Min_(lbl, 2))
@@ -773,6 +831,23 @@ namespace mymln
 	  else
 		add_noise(lbl);
 	}
+
+	// Add the point to the separators
+	void inline add_separator(const point2d& point)
+	{add_letter(img_influ(point)); }
+	// Add the point to the separators
+	void add_separator(const Label lbl)
+	{ 
+	  
+	  if(label_valid_ratio_(lbl, _VSepRatio_Min,_VSepRatio_Max))
+	    add_Vseparator(lbl);
+	  else if(label_valid_ratio_(lbl, _HSepRatio_Min,_HSepRatio_Max))
+	    add_Hseparator(lbl);
+	  else 
+	    add_container(lbl);
+	}
+
+	// Used by add_separator
 	void add_Hseparator(const Label lbl)
 	{
 	  _bboxgp_influ[lbl] = _bboxgp[lbl].to_larger(4);
@@ -786,6 +861,8 @@ namespace mymln
 	    noise_mask(lbl) = false;
 	    all_letters_mask(lbl) = false;
 	}
+	
+	// Used by add_separator
 	void add_Vseparator(const Label lbl)
 	{
 	  _bboxgp_influ[lbl] = _bboxgp[lbl].to_larger(4);
@@ -798,78 +875,221 @@ namespace mymln
 	   alone_letters_mask(lbl) = false;
 	    noise_mask(lbl) = false;
 	    all_letters_mask(lbl) = false;
+	}	
+
+	// Add the label to the images
+	// WARNING : NOT YET FINALIZED
+	void add_image(const Label lbl)
+	{
+	  image_mask(lbl) = true;
+	  separators_mask(lbl) = false;
+	  containers_mask(lbl) = false;
+	  Vseparator_mask(lbl) = false;
+	  Hseparator_mask(lbl) = false;
+	  alone_letters_mask(lbl) = false;
+	  noise_mask(lbl) = false;
+	  all_letters_mask(lbl) = false;
+	  temp_letter = false;
 	}
+	
+	
+	// The point will now be mark as an anomaly
+	void add_anomaly(const point2d& point)
+	{add_anomaly(img_influ(point));}
+	// The label will now be mark as an anomaly
+	void add_anomaly(const Label lbl)
+	{anomaly_mask(lbl) = true;}
+	
+	// The point will be mark as a normal point
+	void remove_anomaly(const point2d& point)
+	{remove_anomaly(img_influ(point));}
+	// The label will be mark as a normal label
+	void remove_anomaly(const Label lbl)
+	{anomaly_mask(lbl) = false;}	
+	
+	// Tests if the point is an anomaly
+	bool contain_anomaly(const point2d& point)
+	{return contain_anomaly(img_influ(point));}
+	// Tests if the label is an anomaly
+	void contain_anomaly(const Label lbl)
+	{return anomaly_mask(lbl);}		
+	
+
+
+
+	// Tests if the component defined by the point is
+	// a big element according to the height of the document
+	inline bool is_big_element_V(const point2d& point)
+	{return is_big_element_V(img_influ(point));}
+	// Tests if the component defined by the label is
+	// a big element according to the height of the document
+	inline bool is_big_element_V(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 13;
+	}
+	
+	// Tests if the component defined by the point is a
+	// big element according to the width of the document
+	inline bool is_big_element_H(const point2d& point)
+	{return is_big_element_H(img_influ(point));}
+	// Tests if the component defined by the point is a
+	// big element according to the height of the document
+	inline bool is_big_element_H(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 13;
+	}
+	
+	
+	
+	
+	// same thing as is_big_element_V but for very big element
+	inline bool is_very_big_element_V(const point2d& point)
+	{return is_very_big_element_V(img_influ(point));}
+	inline bool is_very_big_element_V(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(0) > img_influ.domain().len(0) / 6;
+	}
+	
+	// same thing as is_big_element_H but for very big element
+	inline bool is_very_big_element_H(const point2d& point)
+	{return is_very_big_element_H(img_influ(point));}
+	inline bool is_very_big_element_H(const Label lbl)
+	{
+	  return _bboxgp[lbl].len(1) > img_influ.domain().len(1) / 6;
+	}
+	
+	
+	
+	
+	
+	
+
+	// Tests if the extended bounding box of the separator
+	// defined by the point A contain the component defined by the point B
 	bool inline separator_has(const point2d& A, const point2d& B)
 	{
 	  return _bboxgp_influ[img_influ(A)].has(B) || separator_has(img_influ(A), img_influ(B));
 	}
+	
+	// Tests if the extended bounding box of the separator
+	// defined by the Label A contain the component defined by the point B
 	bool inline separator_has(const Label A,const Label B)
 	{
 	  return _bboxgp_influ[A].has(_bboxgp[B].pmin()) || _bboxgp_influ[A].has(_bboxgp[B].pmax());
 	}
-	void inline add_separator(const point2d& point)
-	{add_letter(img_influ(point)); }
-	void add_separator(const Label lbl)
-	  { 
-	    
-	    if(label_valid_ratio_(lbl, _VSepRatio_Min,_VSepRatio_Max))
-	      add_Vseparator(lbl);
-	    else if(label_valid_ratio_(lbl, _HSepRatio_Min,_HSepRatio_Max))
-	      add_Hseparator(lbl);
-	    else 
-	      add_container(lbl);
-	  }
-	  
+
+	  // Tests if the label is an alone letter
 	  bool inline contain_alone_letter(const Label lbl)
 	  {return contain_(lbl, alone_letters_mask);}
 	  
+	  // Tests if the point is an alone letter
 	  bool inline contain_alone_letter(const point2d& point)
 	  {return contain_alone_letter(img_influ(point));}
 	  
+	  // Tests if the label is a separator
 	  bool inline contain_separator(const Label lbl)
 	  {return contain_(lbl, separators_mask);}
 	  
+	  // Tests if the label is a Vseparator
 	  bool inline contain_Vseparator(const Label lbl)
 	  {return contain_(lbl, Vseparator_mask);}
-	  	  bool inline contain_Hseparator(const Label lbl)
+	  
+	  // Tests if the label is a HSeparator
+	  bool inline contain_Hseparator(const Label lbl)
 	  {return contain_(lbl, Hseparator_mask);}
 	  
+	  // Tests if the label is a letter
 	  bool inline contain_letter(const Label lbl)
 	  {return contain_(lbl, letters_mask);}
-	  
-	  
-	  
-	  bool inline contain_container(const Label lbl)
-	  {return contain_(lbl, containers_mask);}
-	  
-	  bool inline contain_separator(const point2d& point)
-	  {return contain_separator(img_influ(point));}
-	  
+	  // Tests if the point is a letter
 	  bool inline contain_letter(const point2d& point)
 	  {return contain_letter(img_influ(point));}
-	  
+	 
+
+	  // Tests if the point is a container
 	  bool inline contain_container(const point2d& point)
-	  {return contain_container(img_influ(point));}
+	  {return contain_container(img_influ(point));}	  
+	  // Tests if the label is a container
+	  bool inline contain_container(const Label lbl)
+	  {return contain_(lbl, containers_mask);}
+
+
+	  // Tests if the point is a separator
+	  bool inline contain_separator(const point2d& point)
+	  {return contain_separator(img_influ(point));}
+ 
+ 
+	  // Tests if a point is a part of noise
+	  inline bool contain_noise(const point2d& point)
+	  { return contain_noise(img_influ(point)); }
+	  // Tests if a label is a part of noise
+	  inline bool contain_noise(const Label lbl)
+	  {return noise_mask(lbl); }
 	  
+	  
+	  // Tests if the point is an implicit separator
+	  // NOTE:This method is used during the detection of implicit separators
+	  inline bool contain_implicit_separator(const point2d& point)
+	  { return contain_implicit_separator(img_influ(point)); }
+	  // Tests if the label is an implicit separator
+	  //NOTE:This method is used during the detection of implicit separators 
+	  inline bool contain_implicit_separator(const Label lbl)
+	  {return implicit_separators_union[lbl] != 0; }	
+	  
+	  // Tests if the point is an implicit separator
+	  //NOTE:This method is used after the detection of implicit separators
+	  bool contain_implicit_separator_fixed(const point2d& point)
+	  {return contain_implicit_separator_fixed(img_influ(point));}	
+	  // Tests if the point is an implicit separator
+	  //NOTE:This method is used after the detection of implicit separators
+	  bool contain_implicit_separator_fixed(const Label Id)
+	  {return implicit_separators_left_mask(Id) || implicit_separators_right_mask(Id);}
+	  
+	  // Tests if the point is a left implicit separator
+	  bool contain_implicit_separator_left(const point2d& point)
+	  {return contain_implicit_separator_left(img_influ(point));}
+	  // Tests if the point is a left implicit separator
+	  bool contain_implicit_separator_left(const Label Id)
+	  {return implicit_separators_left_mask(Id);}
+
+	  // Tests if the point is a right implicit separator
+	  bool contain_implicit_separator_right(const point2d& point)
+	  {return contain_implicit_separator_right(img_influ(point));}
+	  // Tests if the point is a right implicit separator
+	  bool contain_implicit_separator_right(const Label Id)
+	  {return implicit_separators_right_mask(Id);}
+ 
+
+	  
+	  //Obtains the bounding box associated with the point
 	  box2d inline get_bbox(const point2d& point)
 	  {return _bboxgp(img_influ(point));}
-	  
+	  //Obtains the bounding box associated with the label
 	  box2d inline get_bbox(const Label lbl)
 	  {return _bboxgp(lbl);}
-	  
+
+	  /* Defines the ratio range of Vseparators */
+	  /* WARNING : Depreciated */
 	  inline void vertical_separator_ratio_range(Float min, Float max)
 	  {_VSepRatio_Min = min; _VSepRatio_Max = max;}
-	  
+
+	  /* Defines the ratio range of Hseparators */
+	  /* WARNING : Depreciated */
 	  inline void horizontal_separator_ratio_range(Float min, Float max)
 	  {_HSepRatio_Min = min; _HSepRatio_Max = max;}
-	  
+
+	  /* Defines the volume range of letters */
+	  /* WARNING : Depreciated */
 	  inline void letter_volume_range(Data min, Data max)
 	  {_LeterVolume_Min = min; _LeterVolume_Max = max;}
 	  
+	  /* Defines the volume range of comtainers */
+	  /* WARNING : Depreciated */
 	  inline void container_volume_range(Data min, Data max)
 	  {_ContainerVolume_Min = min; _ContainerVolume_Max = max;}
 	  
 	  /* ALLIGN FUNCTION */
+	  /* The working of these function is explain in the quickreference guide */
 	  
 	  inline bool align_top( const point2d& Left, const point2d& Right)
 	  {return align_top(img_influ(Left), img_influ(Right));}
@@ -1548,6 +1768,10 @@ namespace mymln
 	  inline bool align_top_paragraph( const Label Left, const Label Right )
 	  {return  paragraphs_bbox[paragraphs_union[Left]].pmin()[0] > paragraphs_bbox[paragraphs_union[Right]].pmax()[0]; }
 	  
+	  
+	  
+	  
+	  
 	  inline bool decal_left_paragraph(const point2d& Left, const point2d& Right)
 	  {return decal_left_paragraph(img_influ(Left), img_influ(Right));}
 	  inline bool decal_left_paragraph( const Label Left, const Label Right )
@@ -1955,10 +2179,45 @@ namespace mymln
 	    Float AFactor = label_align_(1, Left, Right);
 	    return AFactor < label_size_(1,Left);
 	  }
+	  	  inline bool align_size_x_height( const point2d& Left, const point2d& Right)
+	  {return align_size_x_height(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_size_x_height( const Label Left, const Label Right)
+	  {
+	     short int SizeL0 = label_size_(0, Left);
+	      short int SizeR0 = label_size_(0, Right);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int SizeR1 = label_size_(1, Right);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
+	    return  SizeR0 > (SizeL0 / 3) && SizeR0 < (SizeL0);
+	  }
+	  
+	  inline bool align_size_large_inside( const point2d& Left, const point2d& Right)
+	  {return align_size_large_inside(img_influ(Left), img_influ(Right));}
+	  
+	  inline bool align_size_large_inside( const Label Left, const Label Right)
+	  {
+	     short int SizeL0 = label_size_(0, Left);
+	      short int SizeR0 = label_size_(0, Right);
+	      short int SizeL1 = label_size_(1, Left);
+	      short int SizeR1 = label_size_(1, Right);
+	      short int Swap = 0;
+	      if(SizeL0 < SizeL1)
+	      { SizeL0 = SizeL1; }
+	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
+	    return  SizeR0 > (SizeL0 / 5) && SizeR0 < (SizeL0);
+	  }
 	  
 	  
+	  /* Test if the paragraph starts with a tab and if the line doesn't end */
+	  /* with a return */
 	   inline bool paragraph_start_with_tab_strict(const point2d& Point)
 	  { return paragraph_start_with_tab_strict(img_influ(Point));}
+	   /* Test if the paragraph starts with a tab and if the line doesn't end */
+	  /* with a return */
 	  inline bool paragraph_start_with_tab_strict(const Label Paragraph)
 	  {
 	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
@@ -1969,9 +2228,10 @@ namespace mymln
 	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40)
 	      ;
 	  }
-	  
+	  /* Test if the paragraph starts with a tab */
 	  inline bool paragraph_start_with_tab(const point2d& Point)
 	  { return paragraph_start_with_tab(img_influ(Point));}
+	   /* Test if the paragraph starts with a tab */
 	  inline bool paragraph_start_with_tab(const Label Paragraph)
 	  {
 	    Label FirstLine = paragraphs_first_line[paragraphs_union[Paragraph]];
@@ -1980,8 +2240,10 @@ namespace mymln
 	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 40) 
 	      ;
 	  }
+	  // Tests if the paragraph ends with a return
 	  inline bool paragraph_end_with_return(const point2d& Point)
 	  { return paragraph_end_with_return(img_influ(Point));}
+	  // Tests if the paragraph ends with a return
 	  inline bool paragraph_end_with_return(const Label Paragraph)
 	  {
 	    Label LastLine = paragraphs_last_line[paragraphs_union[Paragraph]];
@@ -1989,38 +2251,9 @@ namespace mymln
 	      lines_bbox[LastLine].pmax()[1] < paragraphs_bbox[paragraphs_union[Paragraph]].pmax()[1] -
 	      (paragraphs_bbox[paragraphs_union[Paragraph]].len(1) / 20) 
 	      ;
-	  }	  
-	  void stat()
-	  {
-	    std::cout << "document :" << std::endl;
-	    std::cout << "   letter(s) : " << CLet << std::endl;
-	    std::cout << "   separator(s) : " << CSep << std::endl;
-	    std::cout << "      vertical separator(s) : " << CSepV << std::endl;
-	    std::cout << "      horizontal separator(s) : " << CSepH << std::endl;
-	    std::cout << "      lines(s) : " << CLine << std::endl;
-	  
 	  }
-	  
-	  
-	  void debug_breakpoint()
-	  {
-	    if(debug_buffer_enable)
-	    {
 
-	      debug_save_buffer("break.ppm");
-	      std::system("eog break.ppm");
-	      debug_buffer_enable = true;
-	      Enable_Debug_Buffer = true;
-	    }
-	    else
-	    {
-	      debug_save_all("break.ppm");
-	      std::system("eog break.ppm");
-	    }
-	  }
-	  void debug_set_image(image2d<bool>& source)
-	  {debug_source = source;}
-	  
+
 	  /// ADD TEMP LETTER
 	  /// description : add a label to the letter mask. The label will remain a letter while
 	  /// reset_temp_letter is not called
@@ -2038,6 +2271,8 @@ namespace mymln
 	      temp_letter(lbl) = true;
 	    }
 	  }
+	  
+	  // Reset all the temp letters
 	  inline void reset_temp_letter()
 	  {
 	    for(int N = 0; N < Areas_Number_; N++)
@@ -2052,10 +2287,54 @@ namespace mymln
 	      } 
 	    }
 	  }
-	   inline void debug_disable_buffer()
+
+	  
+	  // Display the stat of the document
+	  // WARNING : Depreciated , use the class page insteed
+	  void stat()
+	  {
+	    std::cout << "document :" << std::endl;
+	    std::cout << "   letter(s) : " << CLet << std::endl;
+	    std::cout << "   separator(s) : " << CSep << std::endl;
+	    std::cout << "      vertical separator(s) : " << CSepV << std::endl;
+	    std::cout << "      horizontal separator(s) : " << CSepH << std::endl;
+	    std::cout << "      lines(s) : " << CLine << std::endl;
+	  }
+	  
+	  
+	  
+	  // Add a breakpoint.
+	  // If a debug buffer is enable then the debug buffer is displayed
+	  // Else it will display the debug image of the document
+	  void debug_breakpoint()
+	  {
+	    if(debug_buffer_enable)
+	    {
+
+	      debug_save_buffer("break.ppm");
+	      std::system("eog break.ppm");
+	      debug_buffer_enable = true;
+	      Enable_Debug_Buffer = true;
+	    }
+	    else
+	    {
+	      debug_save_all("break.ppm");
+	      std::system("eog break.ppm");
+	    }
+	  }
+	  
+	  // Set the image used as a background when a debug command is called
+	  void debug_set_image(image2d<bool>& source)
+	  {debug_source = source;}
+	  
+	  // If a debug buffer is activate the debug buffer will be disable
+	  // However the debuf buffer will nit be reseted
+	  inline void debug_disable_buffer()
 	  {
 	      debug_buffer_enable = false;
 	  }
+	  // Enable the debug buffer. This is usefull only when a debug buffer has been disable
+	  // otherwise when a debug buffer is created, it is automaticaly enable
 	  inline void debug_enable_buffer()
 	  {
 	    if(Enable_Debug_Buffer)
@@ -2067,12 +2346,18 @@ namespace mymln
 	      debug_create_buffer();
 	    }
 	  }
+	  
+	  // Create a debug buffer
 	  inline void debug_create_buffer()
 	  {
 	    mln::initialize(debug_buffer,img_influ);
 	    debug_buffer_enable = true;
 	    Enable_Debug_Buffer = true;
 	  }
+	  
+	  
+	  // Export the current graph used by the document into
+	  // a dot file
 	  inline void debug_save_dot_graph(std::string file)
 	  {
 	    fstream filestream(file.c_str(), fstream::in | fstream::out);
@@ -2130,12 +2415,19 @@ namespace mymln
 	    filestream.close();
 	  }
 	  
+	  // Save the current debug buffer, otherwise nothing happend
+	  // NOTE : if the debug buffer is disable nothing will happend too
 	  inline void debug_save_buffer(std::string file)
 	  {
+	    if(debug_buffer_enable)
+	    {
+	      io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
+	    }
 	    debug_buffer_enable = false;
 	    Enable_Debug_Buffer = false;
-	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
+
 	  }
+	  // Same thing as debug_save_buffer with the paragraphs drawn in background
 	  inline void debug_save_buffer_paragraphs(std::string file)
 	  {
 	    Enable_Debug_Buffer = false;
@@ -2154,6 +2446,8 @@ namespace mymln
 	    }
 	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
 	  }
+	  
+	  // Same thing as debug_save_buffer with the lines draw in background
 	  inline void debug_save_buffer_lines(std::string file)
 	  {
 	    Enable_Debug_Buffer = false;
@@ -2168,6 +2462,8 @@ namespace mymln
 	    }
 	    io::ppm::save(mln::debug::superpose(debug_buffer, debug_source, literal::white) , file);
 	  }
+	  
+	  // A mix between debug_save_buffer_paragraphs and debug_save_buffer_lines
 	  inline void debug_save_buffer_paragraphs_lines(std::string file)
 	  {
 	    Enable_Debug_Buffer = false;
@@ -2196,12 +2492,17 @@ namespace mymln
 	  }
 	  
 	  
+	  //Draw an Int near the line Id
 	  inline void debug_draw_line_string(const Label Id,int value)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    debug_draw_line_string(Id, itoa(value).c_str());
+	    #endif
 	  }
+	  //Draw a string near the line Id
 	  inline void debug_draw_line_string(const Label Id, const char* string)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      mln_VAR(pmin,lines_bbox[Id].pmax());
@@ -2213,15 +2514,20 @@ namespace mymln
 	      box2d font_size(pmin, pmax);
 	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
 	    }
+	    #endif
 	  }
 	  
-	  
+	  // Draw an int near the paragraph Id
 	  inline void debug_draw_paragraph_string(const Label Id,int value)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    debug_draw_paragraph_string(Id, itoa(value).c_str());
+	    #endif
 	  }
+	  // Draw a string near the paragraph Id
 	  inline void debug_draw_paragraph_string(const Label Id, const char* string)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      mln_VAR(pmin, paragraphs_bbox[Id].pmin());
@@ -2233,9 +2539,12 @@ namespace mymln
 	      box2d font_size(pmin, pmax);
 	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
 	    }
+	    #endif
 	  }
+	  // Draw a string near the component associated with point P
 	  inline void debug_draw_string(const point2d& P, const char* string)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      mln_VAR(pmin, _bboxgp[img_influ(P)].pmax());
@@ -2247,61 +2556,95 @@ namespace mymln
 	      box2d font_size(pmin, pmax);
 	      mln::draw::string(debug_buffer, string,font_size , mln::literal::red);
 	    }
+	    #endif
 	  }
 	  
+	  // Draw an int near the component associated with point P
 	  inline void debug_draw_string(const point2d& P,int value)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    debug_draw_string(P, itoa(value).c_str());
+	    #endif
 	  }
 	  
+	  // draw a red box arround the component associated with the point L
 	  inline void debug_draw_box_red_buffer(const point2d& L)
 	  {debug_draw_box_red_buffer(img_influ(L));}
+	  // draw a green box arround the component associated with the point L
 	  inline void debug_draw_box_green_buffer(const point2d& L)
 	  {debug_draw_box_green_buffer(img_influ(L));}
+	  // draw a red box arround the component defined by the label L
 	  inline void debug_draw_box_red_buffer(const Label L)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	      draw::box(debug_buffer, _bboxgp[L], mln::literal::red);
+	    #endif
 	  }
+	  // draw a green box arround the component defined by the label L
 	  inline void debug_draw_box_green_buffer(const Label L)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	      draw::box(debug_buffer,_bboxgp[L], mln::literal::green);
+	    #endif
 	  }	  
+	  
+	  // draw the enlarged bounding box arround the component defined by the label L
 	  inline void debug_draw_box_green_influence_buffer(const Label L)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      draw::box(debug_buffer,_bboxgp[L], mln::literal::green);
 	      draw::box(debug_buffer,_bboxgp_influ[L], mln::literal::green);
 	    }
-	  }	
+	    #endif
+	  }
+	  
+	  // draw the enlarged bounding box arround the component defined by the label L
 	  inline void debug_draw_box_red_influence_buffer(const Label L)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      draw::box(debug_buffer,_bboxgp[L], mln::literal::red);
 	      draw::box(debug_buffer,_bboxgp_influ[L], mln::literal::red);
 	    }
+	    #endif
 	  }
+	  
+	  // draw a red line on a debug buffer from A to B
 	  inline void debug_draw_line_red_buffer(const point2d& A,const point2d& B )
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	      draw::line(debug_buffer, A, B, mln::literal::red);
+	    #endif
 	  }
+	  // draw a green line on a debug buffer from A to B
 	  inline void debug_draw_line_green_buffer(const point2d& A,const point2d& B )
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	      draw::line(debug_buffer, A, B, mln::literal::green);
+	    #endif
 	  }
+	  // draw an orange line on a debug buffer from A to B
 	  inline void debug_draw_line_orange_buffer(const point2d& A,const point2d& B )
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	      draw::line(debug_buffer, A, B, mln::literal::orange);
+	    #endif
 	  }
+	  
+	  // draw debug informations associated with an union class.
+	  // it is draw on a debug buffer
 	  template<typename UnionData>
 	  void debug_union(mymln::util::union_find<UnionData> dat)
 	  {
+	    #ifndef NDEBUGGRAPH
 	    if(debug_buffer_enable)
 	    {
 	      for(unsigned int N = 1; N < dat.size(); N++)
@@ -2319,9 +2662,14 @@ namespace mymln
 		}
 	      }
 	    }
+	    #endif
 	  }
+	  //save a debug image that contain informations on lines
+	  //no debug buffer is required
 	  void debug_save_lines(std::string file)
-	  {debug_save_lines(file, debug_source);}
+	  {debug_save_lines(file, debug_source);}  
+	  //save a debug image that contain informations on lines and specified the background
+	  //no debug buffer is required
 	  void debug_save_lines(std::string file, image2d<bool> source)
 	  {
 	    	    image2d<value::rgb8> ima_color;
@@ -2344,9 +2692,12 @@ namespace mymln
 	     io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
 	  }
 	  
-	  
+	  //save a debug image that contain informations on separators
+	  //no debug buffer is required	  
 	  void debug_save_all_separators(std::string file)
 	  {debug_save_all_separators(file, debug_source);}
+	  //save a debug image that contain informations on separators and specified the background
+	  //no debug buffer is required
 	  void debug_save_all_separators(std::string file, image2d<bool> source)
 	  {
 	    image2d<value::rgb8> ima_color;
@@ -2388,15 +2739,18 @@ namespace mymln
 	     io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
 	  }
 	  
-	  
+	  //save a debug image that contain everything (line, separator ...)
+	  //no debug buffer is required
 	  void debug_save_all(std::string file)
 	  {debug_save_all(file, debug_source);}
+	  //save a debug image that contain everything (line, separator ...) and specified the background
+	  //no debug buffer is required
 	  void debug_save_all(std::string file, image2d<bool> source)
 	  {
 	    image2d<value::rgb8> ima_color;
 	    mln::initialize(ima_color,img_influ);
 	    
-	    	    for(unsigned int N = 0; N < _bboxgp.size(); N++)
+	    for(unsigned int N = 0; N < _bboxgp.size(); N++)
 	    {
 	      if(_bboxgp[N].is_valid() && contain_letter(N))
 	      {
@@ -2436,13 +2790,6 @@ namespace mymln
 		draw::box(ima_color, lines_bbox[N], mln::literal::blue);
 	      }
 	    }
-	    for(unsigned int N = 0; N < lines_influ_bbox.size(); N++)
-	    {
-	      if(lines_influ_bbox[N].is_valid())
-	      {
-		//draw::box(ima_color, lines_influ_bbox[N], mln::literal::cyan);
-	      }
-	    }
 	    for(unsigned int N = 0; N < paragraphs_bbox.size(); N++)
 	    {
 	      if(paragraphs_bbox[N].is_valid())
@@ -2453,16 +2800,7 @@ namespace mymln
 		  draw::box(ima_color, paragraphs_bbox_influ[N], mln::literal::orange);
 		}
 	      }
-
 	    }
-	     for(unsigned int N = 0; N < _bboxgp.size(); N++)
-	    {
-	      if(_bboxgp[N].is_valid() && (implicit_separators_left_mask(N) || implicit_separators_right_mask(N)))
-	      {
-	//	draw::box(ima_color, _bboxgp[N], mln::literal::yellow);
-	      }
-	    }
-
 	    io::ppm::save(mln::debug::superpose(ima_color, source, literal::white) , file);
 	  }
 
@@ -2542,12 +2880,14 @@ namespace mymln
 	  mln::util::array<box2d> bbox_enlarge_mask_noise(short int x, short int y)
 	  { return bbox_mask_enlarge_(noise_mask, x, y); }
 	  
+	  // get the label associated with the point
 	  Label get_label(const point2d& point)
 	  { return img_influ(point); }
 
+	  // Get the bounding box of the paragraph that contain the point
 	  inline box2d get_paragraph_bbox(const point2d& point)
 	  { return get_paragraph_bbox(img_influ(point)); }
-	  
+	  // Get the bounding box of the paragraph that contain the label
 	  inline box2d get_paragraph_bbox(Label L)
 	  { return paragraphs_bbox[paragraphs_union[L]]; }
 	  
@@ -2555,16 +2895,17 @@ namespace mymln
 	  inline box2d get_paragraph_bbox_direct(unsigned int ID)
 	  { return paragraphs_bbox[ID]; }
 
-
+	  // Get the bounding box of the line that contain the point
 	  inline box2d get_line_bbox(const point2d& point)
 	  { return get_line_bbox(img_influ(point)); }
-	  
+	  // Get the bounding box of the line that contain the label
 	  inline box2d get_line_bbox(Label L)
 	  { return lines_bbox[lines_union[L]]; }
 
+	  // Get the number of line in the paragraph that contain the point
 	  inline unsigned int get_paragraph_length(const point2d& point)
 	  { return get_paragraph_length(img_influ(point)); }
-	  
+	  // Get the number of line in the paragraph that contain the label
 	  inline unsigned int get_paragraph_length(Label L)
 	  { return paragraphs_len[paragraphs_union[L]]; }
 	  
@@ -2572,9 +2913,10 @@ namespace mymln
 	  inline unsigned int get_paragraph_length_direct(unsigned int ID)
 	  { return paragraphs_len[ID]; }
 
+	  // Get the number of letter in the line that contain the point 
 	  inline unsigned int get_line_length(const point2d& point)
 	  { return get_line_length(img_influ(point)); }
-	  
+	  // Get the number of letter in the line that contain the label
 	  inline unsigned int get_line_length(Label L)
 	  { return lines_len[lines_union[L]]; }
 
@@ -2584,9 +2926,10 @@ namespace mymln
 	   /// USE THIS METHOD ONLY IF YOU KNOW THE LINE ID
 	  inline box2d get_line_bbox_direct(unsigned int ID)
 	  { return lines_bbox[ID]; }
+	  // Get the width of the line that contain the point
 	  inline unsigned int get_line_width(point2d point)
 	  { return get_line_width(img_influ(point)); }
-	  
+	  // Get the width of the line that contain the label
 	  inline unsigned int get_line_width(Label L)
 	  { return lines_bbox[lines_union[L]].len(1); }
 	  
@@ -2741,37 +3084,7 @@ namespace mymln
 	  
 	  
 	  
-	  inline bool align_size_x_height( const point2d& Left, const point2d& Right)
-	  {return align_size_x_height(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool align_size_x_height( const Label Left, const Label Right)
-	  {
-	     short int SizeL0 = label_size_(0, Left);
-	      short int SizeR0 = label_size_(0, Right);
-	      short int SizeL1 = label_size_(1, Left);
-	      short int SizeR1 = label_size_(1, Right);
-	      short int Swap = 0;
-	      if(SizeL0 < SizeL1)
-	      { SizeL0 = SizeL1; }
-	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
-	    return  SizeR0 > (SizeL0 / 3) && SizeR0 < (SizeL0);
-	  }
-	  
-	  inline bool align_size_large_inside( const point2d& Left, const point2d& Right)
-	  {return align_size_large_inside(img_influ(Left), img_influ(Right));}
-	  
-	  inline bool align_size_large_inside( const Label Left, const Label Right)
-	  {
-	     short int SizeL0 = label_size_(0, Left);
-	      short int SizeR0 = label_size_(0, Right);
-	      short int SizeL1 = label_size_(1, Left);
-	      short int SizeR1 = label_size_(1, Right);
-	      short int Swap = 0;
-	      if(SizeL0 < SizeL1)
-	      { SizeL0 = SizeL1; }
-	      if(SizeR0 < SizeR1){SizeR0 = SizeR1;}
-	    return  SizeR0 > (SizeL0 / 5) && SizeR0 < (SizeL0);
-	  }
+
 	  inline bool paragraph_has(point2d Par, point2d Point)
 	  { return paragraph_has(img_influ(Par), Point); }
 
@@ -2868,6 +3181,7 @@ namespace mymln
 	  {return masked_image_(letters_mask); }*/	 
 	  
 	 /* IMPLICIT SEPARATORS */ 
+	 
 	inline void add_new_separator(const point2d& point)
 	{ add_new_separator(img_influ(point));}
 	inline void add_new_separator(const Label lbl)
@@ -2891,8 +3205,12 @@ namespace mymln
 	inline void propage_separator_link()
 	{ implicit_separators_union.propage_links(); }
 	
+	// Set the separator that contain the point "point" as the current separator
+	// WARNING: If the point is not inside a separator the result is undefined
 	inline void jump_to_separator(const point2d& point)
 	{ jump_to_separator(img_influ(point)); }
+	// Set the separator that contain the point "point" as the current separator
+	// WARNING: If the point is not inside a separator the result is undefined
 	inline void jump_to_separator(const Label lbl)
 	{ 
 	  if(implicit_separators_union[lbl] != 0)
@@ -2901,33 +3219,7 @@ namespace mymln
 	    add_new_separator(lbl);
 	}
 	
-	inline bool contain_noise(const point2d& point)
-	{ return contain_noise(img_influ(point)); }
 
-	inline bool contain_noise(const Label lbl)
-	{return noise_mask(lbl); }
-	
-	
-	
-	inline bool contain_implicit_separator(const point2d& point)
-	{ return contain_implicit_separator(img_influ(point)); }
-	inline bool contain_implicit_separator(const Label lbl)
-	{return implicit_separators_union[lbl] != 0; }	
-	
-	bool contain_implicit_separator_fixed(const point2d& point)
-	{return contain_implicit_separator_fixed(img_influ(point));}	
-	bool contain_implicit_separator_fixed(const Label Id)
-	{return implicit_separators_left_mask(Id) || implicit_separators_right_mask(Id);}
-	
-	bool contain_implicit_separator_left(const point2d& point)
-	{return contain_implicit_separator_left(img_influ(point));}
-	bool contain_implicit_separator_left(const Label Id)
-	{return implicit_separators_left_mask(Id);}
-	
-	bool contain_implicit_separator_right(const point2d& point)
-	{return contain_implicit_separator_right(img_influ(point));}
-	bool contain_implicit_separator_right(const Label Id)
-	{return implicit_separators_right_mask(Id);}
 	
 
 	
@@ -3335,13 +3627,13 @@ namespace mymln
 	  lines_seq_pos_reverse = mln::util::array<unsigned int>(NLine + 1);
 	}
 	inline void add_line_previous(const point2d& A,const point2d& Prev)
-	{add_line_previous(img_influ(A),img_influ(Prev)); }
+	{lines_seq_pos_reverse[lines_union[img_influ(A)]] = lines_union[img_influ(Prev)]; }
 	inline void add_line_next(const point2d& A, const point2d& Next)
-	{add_line_next(img_influ(A),img_influ(Next)); }
+	{lines_seq_pos[lines_union[img_influ(A)]] = lines_union[img_influ(Next)];}
 	inline void add_line_previous(const Label A,const Label Prev)
-	{lines_seq_pos_reverse[get_line_ID(A)] = get_line_ID(Prev); }
+	{lines_seq_pos_reverse[lines_union[A]] = lines_union[Prev]; }
 	inline void add_line_next(const Label A, const Label Next)
-	{lines_seq_pos[get_line_ID(A)] = get_line_ID(Next); }
+	{lines_seq_pos[lines_union[A]] = lines_union[Next]; }
       private:
 	bool Enable_Debug_Buffer;
 	fun::i2v::array<bool> temp_letter;

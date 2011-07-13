@@ -88,6 +88,31 @@ namespace mymln
 	  doc_local_fun = map<string, int >();
 	  call_stack = stack<int>();
 	}
+	
+	
+	void run_debug()
+	{
+	  mln::util::timer timer; timer.start();
+	  for(CP = 0; CP < program_instruction.size(); CP++)
+	  {
+	    
+	    if(!program_instruction[CP].compare("end"))
+	      ret();
+	    else if(program_argument2[CP].compare(""))
+	      call_function(program_instruction[CP], get_variable(program_argument[CP]), get_variable(program_argument2[CP]));
+	    else if(program_argument[CP].compare(""))
+	      call_function(program_instruction[CP], get_variable(program_argument[CP]));
+	    else if(program_instruction[CP].compare(""))
+	      call_function(program_instruction[CP]);
+	    if(program_instruction[CP].compare(""))
+	    {
+	      float time = timer.stop() ;
+	      if(time < 0.001f){time = 0.0f;}
+	      std::cout << program_instruction[CP] << " : " << time << std::endl;  timer.restart();
+	    }
+	  }
+	}
+	
 	void run()
 	{
 	  for(CP = 0; CP < program_instruction.size(); CP++)

@@ -2,7 +2,7 @@
 ** MAKE **
 
 make release create an executable without the demos
-make demo create an executable  with all the demos inside
+make dem create an executable  with all the demos inside
 
 ** COMMAND LINE **
 
