@@ -50,7 +50,7 @@
 
 #include <my/data/page.hh>
 #include <my/preprocessing/preprocessing.hh>
-
+#include <mln/transform/influence_and_graph.hh>
 #ifndef NREMOTE
 #include <my/debug/remote/document_remote.hh>
 #include <my/debug/remote/lib.hh>
@@ -107,9 +107,23 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
       image2d<uint16> ima_blob = couple.first();
       util::array<box2d> boxes = couple.second().first();
 
-    image2d<uint16> ima_influ = transform::influence_zone_geodesic(ima_blob, c8());
-    util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c8(), areas_detected);
 
+    
+    /* WARNING : this part use a part of milena influence_and_graph created for this project */
+    /* in order to optimize the creation of the graph (from ~1.6s to ~1.1) */
+    /* if thecode segfault at the initialization please uncoment the old code bellow */
+ 
+    /* NOTE: THE OLD CODE */
+    //image2d<uint16> ima_influ = transform::influence_zone_geodesic(ima_blob, c8());
+    //util::graph grph = make::influence_zone_adjacency_graph(ima_influ, c8(), areas_detected);
+
+    /* NOTE: THE NEW CODE */
+    image2d<uint16> ima_influ;
+    mln::initialize(ima_influ, ima_blob);
+    util::graph grph = transform::influence_and_graph(ima_blob, ima_influ, c8(), areas_detected);
+    
+    
+    
     /* COMPUTE GRAPH POINT POSITION */
     typedef p_vertices<util::graph, fun::i2v::array<mln::point2d> > g_vertices_p;
     typedef graph_elt_neighborhood<util::graph, g_vertices_p> g_nbh;    
