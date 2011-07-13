@@ -52,50 +52,59 @@ namespace mymln
 	    nbh_t nbh(mask);
 	    mln_niter_(nbh_t) q(nbh, v);
 	    mymln::util::union_find<L> sep_union(doc.size());
+	    bool Change = false;
 	    for_all(v)
 	    {
-	      if(!doc[v]){continue;}
-	      if(doc.contain_Vseparator(doc[v]) && !sep_union[doc[v]])
+	      L lv = doc[v];
+	      if(!lv){continue;}
+	      if(doc.contain_Vseparator(lv) && !sep_union[lv])
 	      {
 
-		sep_union[doc[v]] = sep_union.new_set();
-		sep_union.add_self_link(doc[v]);
-		if(doc.is_very_big_element_V(v))
+		sep_union[lv] = sep_union.new_set();
+		sep_union.add_self_link(lv);
+		Change = true;
+		if(doc.is_very_big_element_V(lv))
 		{ continue; }
 	      }
 		for_all(q)
 		{
-		  if(doc.contain_Vseparator(doc[q])){continue;}
-		  if(doc.contain_Vseparator(doc[v]) &&
-		    doc.separator_has(v, q))
+		  L lq = doc[q];
+		  if(doc.contain_Vseparator(lq)){continue;}
+		  if(doc.contain_Vseparator(lv) &&
+		    doc.separator_has(lv, lq))
 		  {
 		   
-		    doc.add_Vseparator(doc[q]);
-		    doc.debug_draw_box_red_buffer(doc[q]);
-		    sep_union[doc[q]] =  sep_union[doc[v]];
-		    sep_union.add_link(doc[v], doc[q]);
+		    doc.add_Vseparator(lq);
+		    doc.debug_draw_box_red_buffer(lq);
+		    sep_union[lq] =  sep_union[lv];
+		    sep_union.add_link(lv, lq);
+		    Change = true;
 
 		  }
 		  else if(
 			
-			doc.letter_ratio_XY (q) <= 1 &&
-			doc.align_H_large_one(q, v) &&
-			doc.align_proximity_top_strict(q,v)
+			doc.letter_ratio_XY (lq) <= 1 &&
+			doc.align_H_large_one(lq, lv) &&
+			doc.align_proximity_top_strict(lq,lv)
 			)
 		      {
-			sep_union.add_link(doc[v], doc[q]);
+			sep_union.add_link(lv, lq);
+			Change = true;
 		      }
 		}
 	    }
-	    doc.debug_union(sep_union);
-	    sep_union.propage_links();
-	    for(int N = 0; N < doc.size(); N++)
+	    //doc.debug_union(sep_union);
+	    if(Change)
 	    {
-	      if(sep_union[N])
+	      sep_union.propage_links();
+	      for(int N = 0; N < doc.size(); N++)
 	      {
-		if(!doc.contain_Vseparator(N))
+		if(sep_union[N])
 		{
-		  doc.add_Vseparator(N);	
+		  if(!doc.contain_Vseparator(N))
+		  {
+		    doc.add_Vseparator(N);
+		  }
 		}
 	      }
 	    }

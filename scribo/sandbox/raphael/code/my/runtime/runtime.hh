@@ -108,7 +108,9 @@ namespace mymln
 	    {
 	      float time = timer.stop() ;
 	      if(time < 0.001f){time = 0.0f;}
-	      std::cout << program_instruction[CP] << " : " << time << std::endl;  timer.restart();
+	      if(time > 0.035f)
+	      {std::cout << program_instruction[CP] << " : " << time << std::endl;  }
+	      timer.restart();
 	    }
 	  }
 	}

@@ -401,21 +401,23 @@ namespace mymln
 	mln_niter_(nbh_t) q(nbh, v);
 	for_all(v)
 	{
-	    if(doc.contain_line(v))
+	    L lv = doc[v];
+	    if(doc.contain_line(lv))
 	    {
 	      for_all(q)
 	      {
+	      L lq = doc[q];
 		  if(
-		    doc.contain_line(q) &&
-		    !doc.same_line(q,v) &&
-		    doc.get_line_length(q) == 1 &&
-		    doc.line_influence_has(v,q) &&
-		    !doc.align_H_large(v,q) &&
-		    (doc.align_base_line_strict(v,q) || doc.align_V(v,q))
+		    doc.contain_line(lq) &&
+		    !doc.same_line(lq,lv) &&
+		    doc.get_line_length(lq) == 1 &&
+		    doc.line_influence_has(lv,q) &&
+		    !doc.align_H_large(lv,lq) &&
+		    (doc.align_base_line_strict(lv,lq) || doc.align_V(lv,lq))
 		    )
 		  {
 		    doc.debug_draw_line_green_buffer(q,v);
-		      doc.add_to_line_link(q,v); 
+		      doc.add_to_line_link(lq,lv); 
 		  }
 	      }
 	    }
@@ -436,63 +438,64 @@ namespace mymln
 	mln_niter_(nbh_t) q(nbh, v);
 	for_all(v)
 	{
+	    L lv = doc[v];
 	    if(doc.contain_line(v))
 	    {
 	      for_all(q)
 	      {
+		L lq = doc[q];
+		if(doc.same_line(lq,lv)){ continue;}
 		
-		if(doc.same_line(q,v)){ continue;}
-		
-		if(doc.contain_alone_letter(q))
+		if(doc.contain_alone_letter(lq))
 		{
 		  
-		  if(doc.align_V(q,v) && doc.align_proximity_strict(q, v) && doc.align_size_height(q, v))
+		  if(doc.align_V(lq,lv) && doc.align_proximity_strict(lq, lv) && doc.align_size_height(lq, lv))
 		  {
-		    doc.add_to_line_link(v, q);
+		    doc.add_to_line_link(lv, lq);
 		
 		  }
 		  		    
 		}
-		else if(doc.contain_line(q))
+		else if(doc.contain_line(lq))
 		{ 
 		  
-		  if(doc.align_V(q,v) && doc.align_size_height_line_strict(q, v) && doc.align_proximity_strict(q,v))
+		  if(doc.align_V(lq,lv) && doc.align_size_height_line_strict(lq, lv) && doc.align_proximity_strict(lq,lv))
 		  {
-		    doc.add_to_line_link(v, q);
+		    doc.add_to_line_link(lv, lq);
 		    
 		  }
-		  else if(doc.align_size_height_line(q,v))
+		  else if(doc.align_size_height_line(lq,lv))
 		  {
 		   
-		    if(doc.align_proximity_line(q,v) && doc.align_V_line_strict(q, v))
+		    if(doc.align_proximity_line(lq,lv) && doc.align_V_line_strict(lq, lv))
 		    {
-			doc.add_to_line_link(v, q);
+			doc.add_to_line_link(lv, lq);
 			doc.debug_draw_line_green_buffer(v,q);
 		    }
-		    else if(doc.line_influence_reciprocal(q, v) && doc.align_V_line_strict(q, v) && doc.align_size_height_line(q,v))
+		    else if(doc.line_influence_reciprocal(lq, lv) && doc.align_V_line_strict(lq, lv) && doc.align_size_height_line(lq,lv))
 		    {
-		      doc.add_to_line_link(v, q);
+		      doc.add_to_line_link(lv, lq);
 		      doc.debug_draw_line_red_buffer(v,q);
 		    }
 		    else if(
 		      
-		      doc.line_influence_reciprocal(q, v) &&
-		      !doc.same_line(q,v) &&
-		      doc.align_V(q,v) &&
-		      doc.align_size_x_height(v,q) &&
-		      doc.get_line_length(v) > 4 &&
-		      doc.align_proximity_line(v,q)
+		      doc.line_influence_reciprocal(lq, lv) &&
+		      !doc.same_line(lq,lv) &&
+		      doc.align_V(lq,lv) &&
+		      doc.align_size_x_height(lv,lq) &&
+		      doc.get_line_length(lv) > 4 &&
+		      doc.align_proximity_line(lv,lq)
 		      )
 		    {
 		      doc.debug_draw_box_red_buffer(v);
 		       doc.debug_draw_box_green_buffer(q);
-		   doc.add_to_line_link(v, q);
+		   doc.add_to_line_link(lv, lq);
 		    }
 		    
-		    else if(doc.align_V(q,v) && doc.align_proximity_strict(q,v))
+		    else if(doc.align_V(lq,lv) && doc.align_proximity_strict(lq,lv))
 		    {
 		      doc.debug_draw_line_orange_buffer(q,v);
-		      doc.add_to_line_link(v, q);
+		      doc.add_to_line_link(lv, lq);
 		    }
 		  }
 		  

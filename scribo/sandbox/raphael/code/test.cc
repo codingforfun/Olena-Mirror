@@ -148,7 +148,7 @@ void Process(std::string File, std::string Dir, mymln::runtime::runtime< value::
 	
     }
     
-      runtime.run_debug();
+      runtime.run();
       std::cout << "WORK ON GRAPH : " << timer.stop() << endl;
       //mymln::data::page<uint16,float,short> page(doc);
      // page.export_HTML(Dir + "/debug_" + File + ".html");
