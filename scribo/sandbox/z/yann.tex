@@ -1,0 +1,69 @@
+* Identification des éléments non texte
+---------------------------------------
+
+2 possibilités :
+
+
+- K-mean => Classe fond + 2 classes objets => je retiens que les classes objets.
+
+Images pour illustrer le rapport :
+Rejouer /work/lazzara/olena/scribo/sandbox/green/demo/clustering/kmean3d/kmean3d.cc
+
+
+- Regmax =>
+
+Ensemble de fonctions utiles :
+/work/lazzara/olena/scribo/sandbox/green/tools/labeling/
+
+Example d'appel :
+/work/lazzara/olena/scribo/sandbox/green/doc/labeling/mp00307c_bis/mp00307c.sh.gz
+
+Images pour illustrer le rapport :
+/work/lazzara/olena/scribo/sandbox/green/doc/labeling/mp00307c (sur d'avoir toutes les images intermédiaires)
+/work/lazzara/olena/scribo/sandbox/green/doc/labeling/
+
+
+
+* Reconnaissance du type de document
+------------------------------------
+
+/work/lazzara/olena/scribo/sandbox/green/exp/annotating/bench/bench.cc.
+
+=> - Calcule des descripteurs
+   - Calcule seuils
+
+
+FIXME: faire une routine à partir des seuils qui auront été calculés.
+Warning : prend en compte que 2 sous-population! -> voir comment gérer
+plus de 2 si besoin.
+
+
+
+Images pour illustrer le rapport :
+Rejouer bench
+
+
+
+Base d'apprentissage :
+/lrde/doc/sip/image/images/c_o_p_y_r_i_g_h_t_e_d/classif_icdar_versus_afp
+
+
+
+* Outils pour histogrammes
+--------------------------
+
+
+- Nouveaux accu histogrammes :
+/work/lazzara/olena/scribo/sandbox/green/mln/accu/stat/*
+
+Warning : la version hsl a des problèmes de quantification =>
+histogramme sur float => Problème!
+
+
+- Nouvelles Routines de calcul sur les histogrammes :
+grep -R ``*_histo(.*)''
+
+ex : /work/lazzara/olena/scribo/sandbox/green/exp/annotating/bench/bench.cc
+
+
+
