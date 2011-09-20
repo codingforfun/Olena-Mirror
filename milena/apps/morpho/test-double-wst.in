@@ -1,5 +1,6 @@
-# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-# Laboratory (LRDE).
+#! /bin/sh
+
+# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,10 +15,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-# Applied examples of Milena.
-SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity morpho
+set -ex
 
-# Examples from papers.
-SUBDIRS += papers
+srcdir="@top_srcdir@/milena/apps/morpho"
+
+time ./double-wst "$srcdir/bird.pgm" 50  bird50.pgm
+time ./double-wst "$srcdir/bird.pgm" 100 bird100.pgm
+time ./double-wst "$srcdir/bird.pgm" 150 bird150.pgm

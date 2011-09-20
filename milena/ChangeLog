@@ -1,3 +1,15 @@
+2011-09-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	New experimentation with 2D and 1D watershed transforms.
+
+	* apps/morpho/double-wst.cc: New.
+	* apps/morpho/test-double-wst.in: New.
+	* apps/morpho/bird.pgm: New.
+	Imported from http://links.uwaterloo.ca/Repository/PGM/ and
+	converted into ASCII PBM.
+	* apps/morpho/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add morpho.
+
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Scribo build system.
