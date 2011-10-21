@@ -187,6 +187,10 @@ namespace mln
       template <unsigned m>
       void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
 
+      // rgb8 -> rgb.
+      template <unsigned m>
+      void from_to_(const value::rgb<8>& from, value::qt::rgb32& to);
+
       // int_u -> qt::rgb32.
       template <unsigned m>
       void from_to_(const value::int_u<m>& from, value::qt::rgb32& to);

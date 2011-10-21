@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,6 +82,10 @@ namespace mln
 
     namespace over_load
     {
+
+      // rgb8 -> rgb.
+      template <unsigned m>
+      void from_to_(const value::rgb8& from, value::qt::rgb32& to);
 
       // int_u -> rgb.
       template <unsigned m>
@@ -762,6 +767,15 @@ namespace mln
 
     namespace over_load
     {
+
+      // rgb8 -> qt::rgb32
+      template <unsigned m>
+      void
+      from_to_(const value::rgb8& from, value::qt::rgb32& to)
+      {
+	to = value::qt::rgb32(from.red(), from.green(), from.blue());
+      }
+
 
       // int_u -> qt::rgb32
       template <unsigned m>
