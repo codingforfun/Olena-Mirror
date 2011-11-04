@@ -33,11 +33,21 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "interface.hh"
+#include <mln/util/timer.hh>
+#include <mln/data/fill.hh>
+#include <mln/literal/colors.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/io/ppm/load.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/data/paste.hh>
+
+#include <mln/core/image/gimp-image.hh>
+
+//#include "interface.hh"
 
 #include "plugin-intl.hh"
 
-#include "build-image.hh"
+//#include "build-image.hh"
 
 /*  Constants  */
 
@@ -64,7 +74,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 int main(int argc, char **argv)
 {
   int result;
-  getchar();
+//  getchar();
   result = gimp_main(&PLUG_IN_INFO, argc, argv);
   return result;
 }
@@ -85,9 +95,9 @@ query (void)
 			  "Perform many image processing using Milena library",
 			  "Olena Team <olena@lrde.epita.fr>",
 			  "EPITA Research and Development Laboratory (LRDE)",
-			  "2007-2011",
+			  "2011",
 			  N_("Milena toolbox..."),
-			  "RGB*, GRAY*, INDEXED*",
+			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
@@ -107,10 +117,7 @@ run (const gchar      *name,
 
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpPixelRgn       in, out;
   gint32             image_ID;
-  gint               x1, y1, x2, y2;
-  gint		     width, height;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -121,62 +128,51 @@ run (const gchar      *name,
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  guint32 valtype = gimp_drawable_type(drawable->drawable_id);
+  if (valtype == GIMP_RGB_IMAGE)
+  {
+    typedef mln::gimp_image<GIMP_RGB_IMAGE> I;
+    {
+      mln::util::timer t;
+      t.start();
+      I tmp(drawable);
+      t.stop();
+      std::cout << "Milena Gimp image built in " << t << "s" << std::endl;
+      t.restart();
 
-  width = drawable->width;
-  height = drawable->height;
+      mln::data::fill(tmp, mln::literal::red);
 
-  gimp_pixel_rgn_init(&out, drawable, 0, 0, width, height, TRUE, TRUE);
-  gimp_pixel_rgns_register(1, &out);
+      t.stop();
+      std::cout << "Gimp image filled in " << t << "s" << std::endl;
 
-  std::cout << "Run - with data: " << out.data << std::endl;
+      tmp(mln::point2d(0,0)) = mln::value::rgb8(255, 0, 0);
+      tmp(mln::point2d(1,0)) = mln::value::rgb8(0, 0, 255);
+      tmp(mln::point2d(0,1)) = mln::value::rgb8(0, 255, 0);
+      tmp(mln::point2d(1,1)) = mln::value::rgb8(0, 255, 0);
+    }
+  }
+  else if (valtype == GIMP_GRAY_IMAGE)
+  {
+    typedef mln::gimp_image<GIMP_GRAY_IMAGE> I;
+    {
+      mln::util::timer t;
+      t.start();
+      I tmp(drawable);
+      t.stop();
+      std::cout << "Milena Gimp image built in " << t << "s" << std::endl;
+      t.restart();
 
-  I tmp(&out);
+      mln::data::fill(tmp, 125);
 
-  //mln::data::fill(tmp, mln::literal::black);
-  // mln_piter_(I) p(tmp.domain());
-  // for_all(p)
-  //   tmp(p) = mln::value::rgb8(0, 0, 0);
+      t.stop();
+      std::cout << "Gimp image filled in " << t << "s" << std::endl;
 
-  tmp(mln::point2d(0,0)) = mln::value::rgb8(0, 255, 0);
-  tmp(mln::point2d(1,0)) = mln::value::rgb8(0, 255, 0);
-  tmp(mln::point2d(0,1)) = mln::value::rgb8(0, 255, 0);
-  tmp(mln::point2d(1,1)) = mln::value::rgb8(0, 255, 0);
-
-  mln::io::ppm::save(tmp, "/tmp/gimp_image.ppm");
-  //   std::cout <<  ".";
-  // std::cout << std::endl;
-
-
-  // build_milena_image(&in, & out);
-
-  // if (strcmp (name, PROCEDURE_NAME) == 0)
-  // {
-  //   switch (run_mode)
-  //   {
-  //     case GIMP_RUN_NONINTERACTIVE:
-  // 	break;
-
-  //     case GIMP_RUN_INTERACTIVE:
-  //     	dialog (image_ID, drawable);
-  // 	break;
-
-  //     case GIMP_RUN_WITH_LAST_VALS:
-  // 	break;
-
-  //     default:
-  // 	break;
-  //   }
-  // }
-  // else
-  // {
-  //   status = GIMP_PDB_CALLING_ERROR;
-  // }
-
-  // gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-
-  // gimp_displays_flush ();
-  // gimp_drawable_detach (drawable);
+      tmp(mln::point2d(0,0)) = 64;
+      tmp(mln::point2d(1,0)) = 150;
+      tmp(mln::point2d(0,1)) = 255;
+      tmp(mln::point2d(1,1)) = 0;
+    }
+  }
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;

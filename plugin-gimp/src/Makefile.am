@@ -22,7 +22,7 @@ milena_CPPFLAGS = \
 	@GIMP_CFLAGS@				\
 	-I$(includedir)				\
 
-CXXFLAGS = -g -O0
+CXXFLAGS = -g -O3 -DNDEBUG
 
 LDADD = $(GIMP_LIBS)
 
