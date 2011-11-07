@@ -28,6 +28,7 @@
 #include <mln/data/convert.hh>
 #include <mln/data/paste_without_localization.hh>
 #include <mln/core/image/dmorph/image_if.hh>
+#include <mln/data/paste.hh>
 
 
 preferences_dialog::preferences_dialog(QWidget *parent)
@@ -75,10 +76,10 @@ preferences_dialog::~preferences_dialog()
 }
 
 
-void preferences_dialog::set_current_image(const mln::image2d<mln::value::rgb8>& ima, gint32 image_id)
+void preferences_dialog::set_current_image(const mln::gimp_image<GIMP_RGB_IMAGE>& ima)
 {
   current_image_ = ima;
-  image_id_ = image_id;
+  image_id_ = ima.gimp_image_id_();
 }
 
 
@@ -192,17 +193,16 @@ void preferences_dialog::diplay_result()
 {
   std::cout << "Creating result image" << std::endl;
 
-  // Make sure there is not border in input image.
-  mln::border::resize(current_image_, 0);
-
   // Getting retrieved document.
   const scribo::document<L>& doc = runner_.result();
 
-  image2d<value::qt::rgb32> in_32 = data::convert(value::qt::rgb32(), current_image_);
+  image2d<value::rgb8> in_24; // FIXME: to be removed!
+  data::paste(current_image_, in_24);
+  image2d<value::qt::rgb32> in_32 = data::convert(value::qt::rgb32(), in_24);
 
   int
-    width = current_image_.bbox().width(),
-    height = current_image_.bbox().height();
+    width = current_image_.domain().width(),
+    height = current_image_.domain().height();
 
   // Get active drawable in input image.
   gint32 drawable_id = gimp_image_get_active_drawable(image_id_);

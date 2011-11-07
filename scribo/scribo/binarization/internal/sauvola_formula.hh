@@ -83,8 +83,8 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-      bool b;
-      double skewness_;
+      // bool b;
+      // double skewness_;
 
       inline
       double

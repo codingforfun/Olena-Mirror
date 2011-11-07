@@ -33,8 +33,17 @@
 /// GIMP image wrapper.
 /// \todo Handle mln::duplicate(gimp_image)
 
+
+# include <iostream>
+# include <sstream>
+
+extern "C"
+{
+// Qt define this macro which collides with GTK symbols.
+//# undef signals
 # include <libgimp/gimp.h>
 # include <libgimp/gimpui.h>
+}
 
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -50,9 +59,6 @@
 # include <mln/core/pixter2d.hh>
 # include <mln/core/w_window.hh>
 
-
-# include <iostream>
-# include <sstream>
 
 namespace mln
 {
@@ -331,7 +337,10 @@ namespace mln
     /// Gimp Image method
 
     /// Give a hook to the GimpDrawable.
-    GimpDrawable* gimp_drawable_();
+    GimpDrawable* gimp_drawable_() const;
+
+    /// Return GimpDrawable's image ID.
+    gint32 gimp_image_id_() const;
   };
 
 
@@ -519,9 +528,16 @@ namespace mln
 
   template <GimpImageType TI>
   GimpDrawable*
-  gimp_image<TI>::gimp_drawable_()
+  gimp_image<TI>::gimp_drawable_() const
   {
     return this->data_->drawable_;
+  }
+
+  template <GimpImageType TI>
+  gint32
+  gimp_image<TI>::gimp_image_id_() const
+  {
+    return gimp_drawable_get_image(this->data_->drawable_->drawable_id);
   }
 
 

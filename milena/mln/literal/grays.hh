@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,7 +62,10 @@ namespace mln
     /// Literal dark gray.
     extern const dark_gray_t& dark_gray;
 
+
 # ifndef MLN_INCLUDE_ONLY
+
+#  ifndef MLN_WO_GLOBAL_VARS
 
     const light_gray_t& light_gray = light_gray_t();
 
@@ -69,7 +73,9 @@ namespace mln
 
     const dark_gray_t& dark_gray = dark_gray_t();
 
-# endif // !MLN_INCLUDE_ONLY
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

@@ -18,20 +18,15 @@
 #ifndef SCRIBO_DEMO_VIEWER_PREFERENCES_DIALOG_HH
 # define SCRIBO_DEMO_VIEWER_PREFERENCES_DIALOG_HH
 
-extern "C"
-{
-#include <libgimp/gimp.h>
-}
+# include <mln/core/image/gimp_image.hh>
 
-
-# include <QtGui>
 # include <preferences_dialog.ui.h>
 
 # include <runner.hh>
 
 # include <mln/core/image/image2d.hh>
 # include <scribo/core/def/lbl_type.hh>
-
+# include <QtGui>
 
 class preferences_dialog : public QDialog, private Ui::PreferencesDialog
 {
@@ -43,7 +38,7 @@ public:
   preferences_dialog(QWidget *parent = 0);
   ~preferences_dialog();
 
-  void set_current_image(const mln::image2d<mln::value::rgb8>& ima, gint32 image_id);
+  void set_current_image(const mln::gimp_image<GIMP_RGB_IMAGE>& ima);
 
 private slots:
   void on_optionList_currentRowChanged(int row);
@@ -63,7 +58,7 @@ private: // Attributes
   runner runner_;
   QProgressDialog pdialog_;
 
-  mln::image2d<mln::value::rgb8> current_image_;
+  mln::gimp_image<GIMP_RGB_IMAGE> current_image_;
   gint32 image_id_;
 };
 

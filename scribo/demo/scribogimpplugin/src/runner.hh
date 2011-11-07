@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -17,8 +18,10 @@
 #ifndef SCRIBO_DEMO_VIEWER_RUNNER_HH
 # define SCRIBO_DEMO_VIEWER_RUNNER_HH
 
-# include <QtGui>
+# include <mln/core/image/gimp_image.hh>
 
+# include <QtCore>
+# include <QtGui>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/int_u16.hh>
@@ -26,6 +29,7 @@
 # include <scribo/core/def/lbl_type.hh>
 
 using namespace mln;
+
 
 enum RunMode
 {
@@ -42,7 +46,7 @@ public:
 
   runner(QObject *parent = 0);
 
-  void start_demat(const image2d<value::rgb8>& filename);
+  void start_demat(const gimp_image<GIMP_RGB_IMAGE>& filename);
 
   const doc_t& result() const;
 
@@ -58,14 +62,14 @@ signals:
   void finished();
 
 private: // members
-  image2d<bool> preprocess(const image2d<value::rgb8>& ima);
-  void process(const image2d<value::rgb8>& original_ima,
+  image2d<bool> preprocess(const gimp_image<GIMP_RGB_IMAGE>& ima);
+  void process(const gimp_image<GIMP_RGB_IMAGE>& original_ima,
 	       const image2d<bool>& processed_ima);
 
   virtual void run();
 
 private: // attributes
-  QList<image2d<value::rgb8> > args_;
+  QList<gimp_image<GIMP_RGB_IMAGE> > args_;
   RunMode mode_;
   int step_;
 

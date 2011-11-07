@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -183,9 +183,9 @@ namespace mln
 
     const olive_t& olive = olive_t();
 
-#  endif
+#  endif // ! MLN_WO_GLOBAL_VARS
 
-# endif
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

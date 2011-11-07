@@ -16,7 +16,6 @@
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "runner.hh"
-
 #include <mln/core/image/image2d.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/magick/load.hh>
@@ -68,7 +67,7 @@ void runner::stop()
 // Demat related stuff
 
 void
-runner::start_demat(const image2d<value::rgb8>& image)
+runner::start_demat(const gimp_image<GIMP_RGB_IMAGE>& image)
 {
   args_.clear();
   args_ << image;
@@ -90,7 +89,7 @@ runner::progress_value()
 }
 
 image2d<bool>
-runner::preprocess(const image2d<value::rgb8>& ima)
+runner::preprocess(const gimp_image<GIMP_RGB_IMAGE>& ima)
 {
   emit new_step("Preprocessing");
 
@@ -114,15 +113,21 @@ runner::preprocess(const image2d<value::rgb8>& ima)
 
   emit new_progress_max_value(f.nsteps());
 
+
+  // FIXME : to be removed. Used to convert gimp_image
+  image2d<value::rgb8> ima_;
+  mln::initialize(ima_, ima);
+  data::paste(ima, ima_);
+
   // Perform preprocessing.
-  f(ima);
+  f(ima_);
 
   qDebug() << "Preprocess Done.";
   return f.output;
 }
 
 
-void runner::process(const image2d<value::rgb8>& original_ima,
+void runner::process(const gimp_image<GIMP_RGB_IMAGE>& original_ima,
 		     const image2d<bool>& processed_ima)
 {
   emit new_step("Page segmentation");
@@ -150,8 +155,14 @@ void runner::process(const image2d<value::rgb8>& original_ima,
 
   emit new_progress_max_value(f.nsteps());
 
+  // FIXME : to be removed. Used to convert gimp_image
+  image2d<value::rgb8> ima_;
+  mln::initialize(ima_, original_ima);
+  data::paste(original_ima, ima_);
+
+
   // Perform text detection.
-  f(original_ima, processed_ima);
+  f(ima_, processed_ima);
 
   doc_ = f.doc;
 

@@ -1,16 +1,14 @@
 #include "config.h"
 
-extern "C"
-{
-#include <libgimp/gimp.h>
-}
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 
 #undef MLN_WO_GLOBAL_VARS
-#include <gimp-image.hh>
+
+#include <mln/core/image/gimp_image.hh>
+
 
 #include <QApplication>
 #include <QMainWindow>
@@ -26,6 +24,7 @@ extern "C"
 #include <mln/io/ppm/save.hh>
 
 #include <preferences_dialog.hh>
+
 
 extern "C"
 {
@@ -143,26 +142,17 @@ extern "C"
     // Begin of GIMP2Milena image
     // ==========================
 
-      // FIXME: move into the switch/case below.
-      GimpPixelRgn      in;
-      gint32 x1, y1, x2, y2;
+    gint32 drawable_id = param[2].data.d_drawable;
+    GimpDrawable *drawable = gimp_drawable_get(drawable_id);
 
-      gint32 drawable_id = param[2].data.d_drawable;
-      GimpDrawable *drawable = gimp_drawable_get(drawable_id);
+    typedef mln::gimp_image<GIMP_RGB_IMAGE> I;
 
-      gimp_drawable_mask_bounds(drawable_id, &x1, &y1, &x2, &y2);
-      gint32 width = drawable->width;
-      gint32 height = drawable->height;
-
-      gimp_pixel_rgn_init(&in, drawable, x1, y1, x2, y2, FALSE, FALSE);
-
-      typedef mln::gimp_image<GIMP_RGB_IMAGE> I;
-      I tmp(&in);
-      mln::image2d<mln::value::rgb8> input(height, width);
-      std::cout << "Paste data into Olena image" << std::endl;
-      mln::data::paste(tmp, input);
-      mln::io::ppm::save(input, "/tmp/gimp_out.ppm");
-      std::cout << "Paste data into Olena image: Done." << std::endl;
+    mln::util::timer t;
+    t.start();
+    I input(drawable);
+    t.stop();
+    std::cout << "Milena Gimp image built in " << t << "s" << std::endl;
+    t.restart();
 
       // // Create a new image
       // gint32 new_image_id = gimp_image_new(width,
@@ -170,7 +160,7 @@ extern "C"
       // 					   gimp_image_base_type(param[1].data.d_image));
       // /* create new layer */
       // gint32 new_layer_id = gimp_layer_new(new_image_id,
-      // 					   "titi",
+      // 					   "DIA Output",
       // 					   width, height,
       // 					   gimp_drawable_type(drawable_id),
       // 					   100,
@@ -210,7 +200,7 @@ extern "C"
       case GIMP_RUN_INTERACTIVE:
       {
 	preferences_dialog dialog;
-	dialog.set_current_image(input, param[1].data.d_image);
+	dialog.set_current_image(input);
 	dialog.show();
 
 	// Run application.
@@ -238,7 +228,12 @@ extern "C"
       }
       break;
     }
+
+    t.stop();
+    std::cout << "Gimp image processed in " << t << "s" << std::endl;
+
   }
+
 }
 
 
