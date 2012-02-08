@@ -1,4 +1,5 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,12 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+# Benchmarks for the ICIP 2011 submission and the GRETSI 2011 paper.
+
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
 AM_CXXFLAGS = $(APPS_CXXFLAGS_NODEBUG)
 
 EXTRA_DIST = lena1024.pgm lena2048.pgm
+
+## ---------- ##
+## Dilation.  ##
+## ---------- ##
 
 noinst_PROGRAMS =				\
   dilation-lena					\
@@ -124,3 +131,24 @@ test-dilation-lena-bench: test-dilation-lena-bench.in Makefile
 CLEANFILES = test-dilation-lena-bench
 
 TESTS = test-dilation-lena-bench
+
+
+## --------------------- ##
+## Watershed transform.  ##
+## --------------------- ##
+
+noinst_PROGRAMS +=				\
+  watershed-lena
+
+watershed_lena_SOURCES = watershed-lena.cc
+
+MOSTLYCLEANFILES +=				\
+  watershed-lena-out-512-nongen.pgm		\
+  watershed-lena-out-512-gen.pgm		\
+  watershed-lena-out-512-fast.pgm		\
+  watershed-lena-out-1024-nongen.pgm		\
+  watershed-lena-out-1024-gen.pgm		\
+  watershed-lena-out-1024-fast.pgm		\
+  watershed-lena-out-2048-nongen.pgm		\
+  watershed-lena-out-2048-gen.pgm		\
+  watershed-lena-out-2048-fast.pgm

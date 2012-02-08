@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +30,7 @@
 # include <mln/metal/none.hh>
 
 # include "apps/bench/static_window.hh"
+# include "apps/bench/static_neighborhood.hh"
 # include "apps/bench/static_dpoints_pixter.hh"
 
 
@@ -65,6 +66,34 @@ namespace mln
     {
       typedef static_dpoints_bkd_pixter< const image2d<T>, static_window<D, n> > ret;
     };
+
+
+    // nixter
+
+    template <typename T, typename D, unsigned n>
+    struct fwd_nixter< image2d<T>, static_neighborhood<D, n> >
+    {
+      typedef static_dpoints_fwd_pixter< image2d<T>, static_neighborhood<D, n> > ret;
+    };
+
+    template <typename T, typename D, unsigned n>
+    struct fwd_nixter< const image2d<T>, static_neighborhood<D, n> >
+    {
+      typedef static_dpoints_fwd_pixter< const image2d<T>, static_neighborhood<D, n> > ret;
+    };
+
+    template <typename T, typename D, unsigned n>
+    struct bkd_nixter< image2d<T>, static_neighborhood<D, n> >
+    {
+      typedef static_dpoints_bkd_pixter< image2d<T>, static_neighborhood<D, n> > ret;
+    };
+
+    template <typename T, typename D, unsigned n>
+    struct bkd_nixter< const image2d<T>, static_neighborhood<D, n> >
+    {
+      typedef static_dpoints_bkd_pixter< const image2d<T>, static_neighborhood<D, n> > ret;
+    };
+
 
     // FIXME: Also handle mln::image1d<T> and mln::image3d<T>.
 
