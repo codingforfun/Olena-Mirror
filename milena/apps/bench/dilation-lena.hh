@@ -24,26 +24,29 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef APPS_BENCH_DILATION_LENA_HH
-#define  APPS_BENCH_DILATION_LENA_HH
+# define APPS_BENCH_DILATION_LENA_HH
 
 /// \file
 /// \brief Dilation benchmark cases.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/window2d.hh>
+// FIXME: Rename as dilation.hh (there is no specific reference to
+// lena here).
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/window2d.hh>
 
-#include <mln/value/int_u8.hh>
+# include <mln/value/int_u8.hh>
 
-#include <mln/accu/stat/max.hh>
+# include <mln/io/pgm/load.hh>
+# include <mln/io/pgm/save.hh>
 
-#include <mln/util/timer.hh>
+# include <mln/accu/stat/max.hh>
 
-#include "apps/bench/static_window.hh"
-#include "apps/bench/static_dpoints_pixter.hh"
-#include "apps/bench/trait.hh"
+# include <mln/util/timer.hh>
+
+# include "apps/bench/static_window.hh"
+# include "apps/bench/static_dpoints_pixter.hh"
+# include "apps/bench/trait.hh"
 
 
 namespace nongen
@@ -119,16 +122,16 @@ namespace nongen_1ptr
   {
     typedef mln::value::int_u8 val_t;
     // Offsets corresponding to a 4-c window on INPUT.
-    ptrdiff_t win_offset[4] = { &input.at_(-1,  0) - &input.at_(0, 0),
-				&input.at_(+1,  0) - &input.at_(0, 0),
-				&input.at_( 0, -1) - &input.at_(0, 0),
-				&input.at_( 0, +1) - &input.at_(0, 0) };
+    const ptrdiff_t win_offset[4] = { &input.at_(-1,  0) - &input.at_(0, 0),
+				      &input.at_(+1,  0) - &input.at_(0, 0),
+				      &input.at_( 0, -1) - &input.at_(0, 0),
+				      &input.at_( 0, +1) - &input.at_(0, 0) };
 
     image output;
     initialize(output, input);
     // Offset between a the pixel located at the same position in
     // INPUT and OUTPUT.
-    ptrdiff_t output_offset = &output.at_(0,  0) - &input.at_(0, 0);
+    const ptrdiff_t output_offset = &output.at_(0, 0) - &input.at_(0, 0);
 
     for (unsigned int r = 0; r < input.nrows(); ++r)  // Iterate on rows.
       {
