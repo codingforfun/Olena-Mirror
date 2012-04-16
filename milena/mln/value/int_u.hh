@@ -181,6 +181,12 @@ namespace mln
       int_u& operator=(const mln::literal::one_t&);
       /// \}
 
+      template <unsigned m>
+      int_u(const int_u<m>& other)
+      {
+	this->handle_() = static_cast<enc_>(other.to_enc());
+      }
+
       /// Conversion to an unsigned integer.
       operator unsigned() const;
 
@@ -261,6 +267,15 @@ namespace mln
       {
 	to_ = static_cast<double>(from);
       }
+
+      template <unsigned n, unsigned n2>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, value::int_u<n2>& to_)
+      {
+	to_ = static_cast<unsigned>(from);
+      }
+
 
 
     } // end of namespace mln::convert::over_load

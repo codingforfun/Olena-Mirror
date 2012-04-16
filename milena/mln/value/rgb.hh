@@ -283,7 +283,9 @@ namespace mln
       /// Constructor from a algebra::vec.
       rgb<n>(const algebra::vec<3, int>& rhs);
       rgb<n>(const algebra::vec<3, unsigned>& rhs);
-      rgb<n>(const algebra::vec<3, int_u<n> >& rhs);
+
+      template <unsigned m>
+      rgb<n>(const algebra::vec<3, int_u<m> >& rhs);
       rgb<n>(const algebra::vec<3, float>& rhs);
 
       // Conversion to the interoperation type.
@@ -316,10 +318,16 @@ namespace mln
       /// \}
 
       /// Assignment.
+      template <unsigned m>
+      rgb<n>& operator=(const rgb<m>& rhs);
+
       rgb<n>& operator=(const rgb<n>& rhs);
 
       /// Zero value.
       static const rgb<n> zero;
+
+      // friend class access
+      template <unsigned> friend struct rgb;
     };
 
 
@@ -438,8 +446,9 @@ namespace mln
     }
 
     template <unsigned n>
+    template <unsigned m>
     inline
-    rgb<n>::rgb(const algebra::vec<3, int_u<n> >& v)
+    rgb<n>::rgb(const algebra::vec<3, int_u<m> >& v)
     {
       this->v_ = v;
     }
@@ -639,6 +648,18 @@ namespace mln
       this->v_[2] = 0;
     }
 
+
+
+    template <unsigned n>
+    template <unsigned m>
+    inline
+    rgb<n>&
+    rgb<n>::operator=(const rgb<m>& rhs)
+    {
+      this->v_ = rhs.v_;
+      return *this;
+    }
+
     template <unsigned n>
     inline
     rgb<n>&
@@ -649,6 +670,8 @@ namespace mln
       this->v_ = rhs.v_;
       return *this;
     }
+
+
 
     template <unsigned n>
     const rgb<n> rgb<n>::zero(0,0,0);

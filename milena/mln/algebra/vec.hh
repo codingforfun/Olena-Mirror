@@ -198,6 +198,8 @@ namespace mln
       vec& operator=(const literal::origin_t&);
       /// \}
 
+      vec(const literal::one_t&);
+
       vec(const vec<n, T>& rhs);
 
       template <typename U>
@@ -448,6 +450,13 @@ namespace mln
     {
       this->set_all(0);
     }
+    
+    template <unsigned n, typename T>
+    inline
+    vec<n,T>::vec(const literal::one_t&)
+    {
+      this->set_all(1);
+    }
 
     template <unsigned n, typename T>
     inline
@@ -473,6 +482,8 @@ namespace mln
       this->set_all(0);
       return *this;
     }
+
+   
 
     template <unsigned n, typename T>
     inline
