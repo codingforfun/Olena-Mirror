@@ -233,7 +233,7 @@ namespace mln
 	mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
 	window2d& win = nbh.hook_win_();
 	convert::from_to(values, win);
-	mln_postcondition(win.is_neighbable_());
+	//mln_postcondition(win.is_neighbable_());
       }
 
       template <unsigned R, unsigned C>
