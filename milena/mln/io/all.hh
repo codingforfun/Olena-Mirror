@@ -58,6 +58,7 @@ namespace mln
 # include <mln/io/txt/all.hh>
 # include <mln/io/off/all.hh>
 # include <mln/io/fld/all.hh>
+# include <mln/io/flo/all.hh>
 
 
 /*--------------------------------------------------.
