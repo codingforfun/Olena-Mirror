@@ -68,5 +68,6 @@ namespace mln
 # include <mln/fun/v2v/saturate.hh>
 # include <mln/fun/v2v/wrap.hh>
 
+# include <mln/fun/v2v/vec2d_f_to_rgb.hh>
 
 #endif // ! MLN_FUN_V2V_ALL_HH
