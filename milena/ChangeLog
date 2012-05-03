@@ -1,3 +1,11 @@
+2012-05-03  Sylvain Lobry  <lobry@lrde.epita.fr>
+
+	Added .flo i/o routines.
+
+	* mln/io/flo/load.hh,
+	* mln/io/flo/save.hh,
+	* mln/io/flo/all.hh: New.
+
 2011-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen generated files.
