@@ -1,5 +1,12 @@
 2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up tests/data/transform-lambda.cc.
+
+	* tests/data/transform-lambda.cc (main): Remove a useless lambda.
+	Do not write the output image on the standard output.
+
+2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add an optional test to exercise mln::transform with lambdas.
 
 	* tests/data/transform-lambda.cc: New.

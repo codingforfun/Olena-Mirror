@@ -35,7 +35,6 @@
 
 #include <mln/data/transform.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
 
 /*----------------.
@@ -111,10 +110,7 @@ main()
   I input(3, 3);
   debug::iota(input);
 
-  auto sqr = [](V x) { return x * x; };
-
   I output = data::transform(input, to_fun([](V x) { return x * x; }));
-  debug::println(output);
 
   // FIXME: Or use mln::test instead?
   mln_piter_(I) p(output.domain());
