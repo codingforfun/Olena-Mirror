@@ -1,5 +1,15 @@
 2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::transform with lambdas with more than one argument.
+
+	* tests/data/transform-lambda.cc (mln::fun::C< R (*)(A1, A2) >):
+	New explicit class template specialization.
+	(mln::category< R (*)(A1, A2) >): Likewise.
+	(main): Use `mln::test::predicate' and a binary lambda to check
+	the output instead of a hand-made browsing.
+
+2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify and generalize the wrapping of lambdas in Milena functions.
 
 	* tests/data/transform-lambda.cc (first_arg_of, return_of):

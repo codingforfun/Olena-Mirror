@@ -36,6 +36,55 @@
 #include <mln/data/transform.hh>
 #include <mln/debug/iota.hh>
 
+#include <mln/test/predicate.hh>
+
+
+/*---------------------------------------------------.
+| Extension of mln::fun::C to 2-argument functions.  |
+`---------------------------------------------------*/
+
+// FIXME: To be completed, revamped and moved into Milena.
+namespace mln
+{
+
+  /// Category declaration for a unary C function.
+  template <typename R, typename A1, typename A2>
+  struct category< R (*)(A1, A2) >
+  {
+    typedef C_Function<void> ret;
+  };
+
+  namespace fun
+  {
+
+    /// Wrapper of a pointer to a 2-argument function into a Milena
+    /// function.
+    template <typename R, typename A1, typename A2>
+    struct C< R (*)(A1, A2) >
+      :
+      // FIXME: Hard-coded base class, so as to make this part of the
+      // code as small as possible for this test.
+      //
+      // This functor should inherit from either `Function_vv2b' or
+      // `Function_vv2b', depending on the result type.  See how it is
+      // implemented in `C< R (*)(A) >' (located in mln/fun/c.hh).
+      Function_vv2b< C< R (*)(A1, A2) > >
+    {
+      C() {}
+      C(R (*f)(A1, A2)) : f_(f) {}
+      typedef R result;
+      R operator()(const mlc_unqualif(A1)& a, const mlc_unqualif(A2)& b) const
+      {
+	return f_(a, b);
+      }
+    protected:
+      R (*f_)(A1, A2);
+    };
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln::fun
+
 
 /*----------------.
 | Lambda traits.  |
@@ -92,8 +141,6 @@ main()
 
   I output = data::transform(input, to_fun([](V x) { return x * x; }));
 
-  // FIXME: Or use mln::test instead?
-  mln_piter_(I) p(output.domain());
-  for_all(p)
-    mln_assertion(output(p) = math::sqr(input(p)));
+  mln_assertion(test::predicate(output, input,
+				to_fun([](V x, V y) { return x == y * y; })));
 }
