@@ -1,3 +1,12 @@
+2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add an optional test to exercise mln::transform with lambdas.
+
+	* tests/data/transform-lambda.cc: New.
+	* tests/data/Makefile.am (EXTRA_PROGRAMS)
+	(transform_lambda_SOURCES): New.
+	(extra-check): New (phony) target.
+
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Scribo build system.

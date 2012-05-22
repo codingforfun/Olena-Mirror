@@ -74,3 +74,15 @@ MOSTLYCLEANFILES =				\
   median-out_line.pgm				\
   median-out_rect.pgm				\
   median_fast-out.pgm
+
+
+# FIXME: We should introduce a conditional (e.g named HAVE_CXX_LAMBDA)
+# to guard these lines, and make them actually part of the test suite
+# if the C++ compiler found by `configure' supports lambda
+# abstractions.
+EXTRA_PROGRAMS = transform-lambda
+transform_lambda_SOURCES = transform-lambda.cc
+
+.PHONY: extra-check
+extra-check: transform-lambda
+	./transform-lambda$(EXEEXT)
