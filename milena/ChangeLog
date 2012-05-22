@@ -1,5 +1,16 @@
 2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify and generalize the wrapping of lambdas in Milena functions.
+
+	* tests/data/transform-lambda.cc (first_arg_of, return_of):
+	Remove traits.
+	(fun_ptr): New trait.
+	(to_fun): Adjust.  Use `fun_ptr' instead of `first_arg_of' and
+	`return_of' to create a more general pointer-to-function-based
+	Milena functor.
+
+2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up tests/data/transform-lambda.cc.
 
 	* tests/data/transform-lambda.cc (main): Remove a useless lambda.

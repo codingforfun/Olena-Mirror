@@ -41,38 +41,20 @@
 | Lambda traits.  |
 `----------------*/
 
-// Metaprogramming traits for the deduction of return and argument
-// types of lambda asbtractions.  Inspired from
+// Metaprogramming trait for the deduction of the pointer-to-function
+// type equivalent to the type of a lambda asbtraction.  Inspired from
 // http://stackoverflow.com/questions/6512019/can-we-get-the-type-of-a-lambda-argument
 
-/// Deduce the type of \p F's first argument.
 template <typename F>
-struct first_arg_of
+struct fun_ptr
 {
-  template <typename Ret, typename A, typename... Rest>
-  static A
-  helper(Ret (F::*)(A, Rest...));
+  template <typename Ret, typename... Rest>
+  static auto
+  helper(Ret (F::*)(Rest...)) -> Ret(*)(Rest...);
 
-  template <typename Ret, typename A, typename... Rest>
-  static A
-  helper(Ret (F::*)(A, Rest...) const);
-
-  typedef decltype( helper(&F::operator()) ) type;
-};
-
-/// Deduce the type of \p F's first argument.
-///
-/// This traits works with lambdas, whereas std::result_of does not.
-template <typename F>
-struct return_of
-{
-  template <typename Ret, typename A, typename... Rest>
-  static Ret
-  helper(Ret (F::*)(A, Rest...));
-
-  template <typename Ret, typename A, typename... Rest>
-  static Ret
-  helper(Ret (F::*)(A, Rest...) const);
+  template <typename Ret, typename... Rest>
+  static auto
+  helper(Ret (F::*)(Rest...) const) -> Ret(*)(Rest...);
 
   typedef decltype( helper(&F::operator()) ) type;
 };
@@ -82,13 +64,11 @@ struct return_of
 | Conversion routine.  |
 `---------------------*/
 
-/// Convert a lambda abstraction into a Milena function (functor).
-
 template <typename F>
 auto
-to_fun (F f) -> mln::fun::C< typename return_of<F>::type (*) (typename first_arg_of<F>::type) >
+to_fun (F f) -> mln::fun::C< typename fun_ptr<F>::type >
 {
-  return mln::fun::C< typename return_of<F>::type (*) (typename first_arg_of<F>::type) > (f);
+  return mln::fun::C< typename fun_ptr<F>::type > (f);
 }
 
 
