@@ -1,3 +1,9 @@
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have configure find an archiver.
+
+	* configure.ac: Invoke AM_PROG_AR.
+
 2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/apps/morphers/Makefile.

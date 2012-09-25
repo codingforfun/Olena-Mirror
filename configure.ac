@@ -175,6 +175,8 @@ AC_ARG_ENABLE([all],
 ## Libraries set up.  ##
 ## ------------------ ##
 
+AM_PROG_AR
+
 # Use Libtool.
 # To be replaced by a call to LT_INIT as soon as Libtool 2.2 is used.
 AC_PROG_LIBTOOL
