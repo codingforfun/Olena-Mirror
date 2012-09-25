@@ -1,5 +1,9 @@
 2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Configure milena/apps/camera-process/Makefile.
+
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Ask configure to try to find OpenCV.
 
 	* configure.ac: Here.

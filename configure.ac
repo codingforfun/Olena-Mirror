@@ -572,6 +572,7 @@ AM_CONDITIONAL([ENABLE_APPS], [test "x$enable_apps" = "xyes"])
 # Ask for the creation of applications' Makefiles.
 AC_CONFIG_FILES([
   milena/apps/Makefile
+    milena/apps/camera-process/Makefile
     milena/apps/constrained-connectivity/Makefile
     milena/apps/graph-morpho/Makefile
     milena/apps/mesh-segm-skel/Makefile
