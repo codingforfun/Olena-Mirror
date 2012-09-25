@@ -268,6 +268,13 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
                    [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
                    [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
 
+# ---------------- #
+# OpenCV library.  #
+# ---------------- #
+
+OLN_WITH_LIB([OPENCV], [opencv/cv.h], [opencv_core], [opencv],
+             [OPENCV], [-lopencv_highgui])
+
 # ---------------------------- #
 # (Bundled) trimesh2 library.  #
 # ---------------------------- #

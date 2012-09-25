@@ -1,5 +1,11 @@
 2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Ask configure to try to find OpenCV.
+
+	* configure.ac: Here.
+
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have configure find an archiver.
 
 	* configure.ac: Invoke AM_PROG_AR.
