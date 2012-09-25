@@ -1,5 +1,16 @@
 2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	New app: camera stream processing (using OpenCV for capture).
+
+	* milena/apps/camera-process/camprocess.cc,
+	* milena/apps/camera-process/process.hh,
+	* milena/apps/camera-process/process.cc,
+	* milena/apps/camera-process/Makefile.am:
+	New.
+	* milena/apps/Makefile.am (SUBDIRS): Add camera-process.
+
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix file names in apps/morphers/recorder-bft.
 
 	* apps/morphers/recorder-bft.cc,

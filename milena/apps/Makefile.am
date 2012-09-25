@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -18,6 +18,9 @@
 
 # Applied examples of Milena.
 SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity morphers
+
+# Video stream processing (using OpenCV for capture).
+SUBDIRS += camera-process
 
 # Examples from papers.
 SUBDIRS += papers
