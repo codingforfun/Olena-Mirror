@@ -1,3 +1,12 @@
+2012-09-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make apps/camera-process/process detect large, white objects.
+
+	* apps/camera-process/process.cc (process): Here.
+	(min_rgb_comp): New functor.
+	* apps/camera-process/camprocess.cc: Set the size of the captured
+	image to 640x480 pixels.
+
 2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	New app: camera stream processing (using OpenCV for capture).

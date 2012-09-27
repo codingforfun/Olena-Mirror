@@ -51,6 +51,10 @@ int main()
       exit(1);
     }
 
+  // Set the size of the captured image.
+  cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 640);
+  cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, 480);
+
   // Create a GUI window.
   cvNamedWindow("Window", CV_WINDOW_AUTOSIZE);
 
