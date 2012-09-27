@@ -1,5 +1,9 @@
 2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/k1/neighb2d.hh: New neighborhoods.
+
+2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	More routines working on images immersed in K1.
 
 	* mln/core/concept/function.hh: Add Function_vvvv2v concept.
