@@ -47,6 +47,11 @@ namespace mln
       bool is_2_face(const point2d& p);
 
 
+      /// \overload
+      bool is_2_face(const mln::def::coord& row,
+		     const mln::def::coord& col);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -55,9 +60,14 @@ namespace mln
       inline
       bool is_2_face(const point2d& p)
       {
-	return internal::face_dim(p) == 2;
+	return is_2_face(p.row(), p.col());
       }
 
+      bool is_2_face(const mln::def::coord& row,
+		     const mln::def::coord& col)
+      {
+	return internal::face_dim(row, col) == 2;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

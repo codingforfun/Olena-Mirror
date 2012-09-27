@@ -1,33 +1,71 @@
 2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	More routines working on images immersed in K1.
+
+	* mln/core/concept/function.hh: Add Function_vvvv2v concept.
+
+	* mln/world/k1/display_enlarged.hh,
+	* mln/world/k1/internal/face_dim.hh,
+	* mln/world/k1/is_0_face.hh,
+	* mln/world/k1/is_1_face.hh,
+	* mln/world/k1/is_1_face_horizontal.hh,
+	* mln/world/k1/is_1_face_vertical.hh,
+	* mln/world/k1/is_2_face.hh,
+	* mln/world/k1/is_primary_face.hh: Add overloads.
+
+	* mln/world/k1/fill_0_from_1_faces.hh,
+	* mln/world/k1/fill_0_from_2_faces.hh,
+	* mln/world/k1/fill_0_from_primary_faces.hh,
+	* mln/world/k1/fill_1_from_2_faces.hh,
+	* mln/world/k1/fill_1_from_aux_2_faces.hh,
+	* mln/world/k1/fill_2_from_1_faces.hh,
+	* mln/world/k1/immerse.hh,
+	* mln/world/k1/immerse_and_duplicate_2_to_0_1_faces.hh,
+	* mln/world/k1/immerse_and_duplicate_2_to_1_faces.hh: New.
+
+	* mln/world/k1/un_immerse.hh: Write it.
+
+	* tests/world/k1/Makefile.am,
+	* tests/world/k1/fill_0_from_1_faces.cc,
+	* tests/world/k1/fill_0_from_2_faces.cc,
+	* tests/world/k1/fill_0_from_primary_faces.cc,
+	* tests/world/k1/fill_1_from_2_faces.cc,
+	* tests/world/k1/fill_1_from_aux_2_faces.cc,
+	* tests/world/k1/fill_2_from_1_faces.cc,
+	* tests/world/k1/immerse_and_duplicate_2_to_0_1_faces.cc,
+	* tests/world/k1/immerse_and_duplicate_2_to_1_faces.cc,
+	* tests/world/k1/un_immerse.cc: New tests.
+
+2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Initial commit of tools to work in K1.
 
-	* milena/mln/world/k1/display_enlarged.hh,
-	* milena/mln/world/k1/immerse.hh,
-	* milena/mln/world/k1/internal/face_dim.hh,
-	* milena/mln/world/k1/is_0_face.hh,
-	* milena/mln/world/k1/is_0_or_1_face.hh,
-	* milena/mln/world/k1/is_1_face.hh,
-	* milena/mln/world/k1/is_1_face_horizontal.hh,
-	* milena/mln/world/k1/is_1_face_vertical.hh,
-	* milena/mln/world/k1/is_2_face.hh,
-	* milena/mln/world/k1/is_primary_face.hh,
-	* milena/mln/world/k1/un_immerse.hh: New.
+	* mln/world/k1/display_enlarged.hh,
+	* mln/world/k1/immerse.hh,
+	* mln/world/k1/internal/face_dim.hh,
+	* mln/world/k1/is_0_face.hh,
+	* mln/world/k1/is_0_or_1_face.hh,
+	* mln/world/k1/is_1_face.hh,
+	* mln/world/k1/is_1_face_horizontal.hh,
+	* mln/world/k1/is_1_face_vertical.hh,
+	* mln/world/k1/is_2_face.hh,
+	* mln/world/k1/is_primary_face.hh,
+	* mln/world/k1/un_immerse.hh: New.
 
-	* milena/tests/world/k1/Makefile.am,
-	* milena/tests/world/k1/display_enlarged.cc,
-	* milena/tests/world/k1/immerse.cc,
-	* milena/tests/world/k1/is_0_face.cc,
-	* milena/tests/world/k1/is_0_or_1_face.cc,
-	* milena/tests/world/k1/is_1_face.cc,
-	* milena/tests/world/k1/is_1_face_horizontal.cc,
-	* milena/tests/world/k1/is_1_face_vertical.cc,
-	* milena/tests/world/k1/is_2_face.cc,
-	* milena/tests/world/k1/is_primary_face.cc: New tests.
+	* tests/world/k1/Makefile.am,
+	* tests/world/k1/display_enlarged.cc,
+	* tests/world/k1/immerse.cc,
+	* tests/world/k1/is_0_face.cc,
+	* tests/world/k1/is_0_or_1_face.cc,
+	* tests/world/k1/is_1_face.cc,
+	* tests/world/k1/is_1_face_horizontal.cc,
+	* tests/world/k1/is_1_face_vertical.cc,
+	* tests/world/k1/is_2_face.cc,
+	* tests/world/k1/is_primary_face.cc: New tests.
 
-	* milena/tests/world/Makefile.am: Add Subdir.
+	* tests/world/Makefile.am: Add Subdir.
 
-	* milena/mln/make/image.hh: Add overloads.
+	* mln/make/image.hh: Add overloads.
 
 2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
 

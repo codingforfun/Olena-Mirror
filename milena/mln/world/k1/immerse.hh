@@ -66,6 +66,14 @@ namespace mln
       namespace internal
       {
 
+	/// Return the equivalent point in K1 from a point in K0.
+	inline
+	point2d immerse_point(const point2d& p)
+	{
+	  point2d tmp(2 * p.row(), 2 * p.col());
+	  return tmp;
+	}
+
 	/// \brief Return the equivalent domain in K1 from a domain in
 	/// K0.
 	template <typename B>
@@ -77,15 +85,7 @@ namespace mln
 
 	  mln_deduce(B, site, delta) one;
 	  one.set_all(1);
-	  return B(2 * b.pmin() - one, 2 * b.pmax() + one);
-	}
-
-	inline
-	point2d
-	immerse_point(const point2d& p)
-	{
-	  point2d tmp(2 * p.row(), 2 * p.col());
-	  return tmp;
+	  return B(immerse_point(b.pmin()) - one, immerse_point(b.pmax()) + one);
 	}
 
       } // end of namespace mln::world::k1::internal

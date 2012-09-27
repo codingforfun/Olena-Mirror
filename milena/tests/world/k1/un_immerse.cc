@@ -24,57 +24,31 @@
 // executable file might be covered by the GNU General Public License.
 
 /// \file
-///
-/// \brief Check if site is a 0 face.
 
-#ifndef MLN_WORLD_K1_IS_0_FACE_HH
-# define MLN_WORLD_K1_IS_0_FACE_HH
+#include <mln/core/image/image2d.hh>
+#include <mln/world/k1/un_immerse.hh>
+#include <mln/make/box2d.hh>
+#include <mln/data/compare.hh>
 
-# include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/internal/face_dim.hh>
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace world
-  {
+  int refvals[2][2] = {
+    {3, 3},
+    {3, 3}
+  };
+  image2d<int> ref = make::image(refvals);
 
-    namespace k1
-    {
+  int vals[5][5] = {
+    {1, 2, 1, 2, 1 },
+    {2, 3, 2, 3, 2 },
+    {1, 2, 1, 2, 1 },
+    {2, 3, 2, 3, 2 },
+    {1, 2, 1, 2, 1 }
+  };
+  image2d<int> imak1 = make::image(vals, point2d(-1, -1));
 
-      /// \brief Check if site is a 0 face
-      bool is_0_face(const point2d& p);
-
-      /// \overload
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-
-      // Facade
-
-      inline
-      bool is_0_face(const point2d& p)
-      {
-	return is_0_face(p.row(), p.col());
-      }
-
-      inline
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col)
-      {
-	return internal::face_dim(row, col) == 0;
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::world::k1
-
-  } // end of namespace mln::world
-
-} // end of namespace mln
-
-#endif // ! MLN_WORLD_K1_IS_0_FACE_HH
+  image2d<int> imak0 = world::k1::un_immerse(imak1);
+  mln_assertion(imak0 == ref);
+}

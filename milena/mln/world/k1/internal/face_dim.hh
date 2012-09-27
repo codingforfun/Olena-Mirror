@@ -47,6 +47,9 @@ namespace mln
 	/// \brief Returns the dimension of site in K1.
 	unsigned face_dim(const point2d& p);
 
+	/// \overload
+	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -56,7 +59,13 @@ namespace mln
 	inline
 	unsigned face_dim(const point2d& p)
 	{
-	  return (p[0] % 2 == 0) + (p[1] % 2 == 0);
+	  return face_dim(p.row(), p.col());
+	}
+
+	inline
+	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col)
+	{
+	  return (row % 2 == 0) + (col % 2 == 0);
 	}
 
 

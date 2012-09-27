@@ -114,21 +114,21 @@ namespace mln
 	{
 	  for (mln::def::coord col = min_col; col <= max_col; ++col)
 	  {
-	    if (is_0_face(point2d(row, col)))
+	    if (is_0_face(row, col))
 	    {
 	      output.at_(row * shift, col * shift) = ima_k1.at_(row, col);
 	    }
-	    else if (is_1_face_vertical(point2d(row, col)))
+	    else if (is_1_face_vertical(row, col))
 	    {
 	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
 	    	output.at_(row * shift + j, col * shift) = ima_k1.at_(row, col);
 	    }
-	    else if (is_1_face_horizontal(point2d(row, col)))
+	    else if (is_1_face_horizontal(row, col))
 	    {
 	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
 	    	output.at_(row * shift, col * shift  + j) = ima_k1.at_(row, col);
 	    }
-	    else if (is_2_face(point2d(row, col)))
+	    else if (is_2_face(row, col))
 	    {
 	      for (mln::def::coord i = -(shift - 1); i <  (shift + 3); ++i)
 	    	for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)

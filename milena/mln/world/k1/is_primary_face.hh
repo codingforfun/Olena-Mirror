@@ -47,6 +47,11 @@ namespace mln
       bool is_primary_face(const point2d& p);
 
 
+      /// \overload
+      bool is_primary_face(const mln::def::coord& row,
+			   const mln::def::coord& col);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -56,6 +61,13 @@ namespace mln
       bool is_primary_face(const point2d& p)
       {
 	return is_2_face(p);
+      }
+
+      inline
+      bool is_primary_face(const mln::def::coord& row,
+			   const mln::def::coord& col)
+      {
+	return is_2_face(row, col);
       }
 
 

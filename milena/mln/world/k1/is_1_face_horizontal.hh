@@ -47,6 +47,10 @@ namespace mln
       bool is_1_face_horizontal(const point2d& p);
 
 
+      /// \overload
+      bool is_1_face_horizontal(const mln::def::coord& row,
+				const mln::def::coord& col);
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -55,9 +59,14 @@ namespace mln
       inline
       bool is_1_face_horizontal(const point2d& p)
       {
-	return is_1_face(p) && p[1] % 2 == 0;
+	return is_1_face_horizontal(p.row(), p.col());
       }
 
+      bool is_1_face_horizontal(const mln::def::coord& row,
+				const mln::def::coord& col)
+      {
+	return is_1_face(row, col) && col % 2 == 0;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

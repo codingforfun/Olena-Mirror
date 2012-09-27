@@ -47,6 +47,11 @@ namespace mln
       bool is_1_face_vertical(const point2d& p);
 
 
+      /// \overload
+      bool is_1_face_vertical(const mln::def::coord& row,
+			      const mln::def::coord& col);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -55,7 +60,15 @@ namespace mln
       inline
       bool is_1_face_vertical(const point2d& p)
       {
-	return is_1_face(p) && p[0] % 2 == 0;
+	return is_1_face_vertical(p.row(), p.col());
+      }
+
+
+      inline
+      bool is_1_face_vertical(const mln::def::coord& row,
+			      const mln::def::coord& col)
+      {
+	return is_1_face(row, col) && row % 2 == 0;
       }
 
 

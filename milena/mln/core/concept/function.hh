@@ -43,6 +43,7 @@ namespace mln
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_v2b;
   template <typename E> struct Function_vv2v;
+  template <typename E> struct Function_vvvv2v;
   template <typename E> struct Function_vv2b;
 
 
@@ -183,6 +184,31 @@ namespace mln
   };
 
 
+  /*----------------------------------------.
+  | (Value, Value, Value, Value) -> Value.  |
+  `----------------------------------------*/
+
+  template <>
+  struct Function_vvvv2v<void> { typedef Function<void> super; };
+
+
+  /// \brief Base class for implementation of function-objects from
+  /// four values to a value.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  /// \ingroup modfun
+  //
+  template <typename E>
+  struct Function_vvvv2v : public Function<E>
+  {
+    typedef Function_vvvv2v<void> category;
+  protected:
+    Function_vvvv2v();
+    Function_vvvv2v(const Function_vvvv2v&);
+  };
+
+
   /*--------------------------.
   | (Value, Value) -> Boolean.|
   `--------------------------*/
@@ -293,6 +319,21 @@ namespace mln
   template <typename E>
   inline
   Function_vv2v<E>::Function_vv2v(const Function_vv2v<E>& rhs)
+    : Function<E>(rhs)
+  {
+  }
+
+  // Function_vvvv2v.
+
+  template <typename E>
+  inline
+  Function_vvvv2v<E>::Function_vvvv2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_vvvv2v<E>::Function_vvvv2v(const Function_vvvv2v<E>& rhs)
     : Function<E>(rhs)
   {
   }

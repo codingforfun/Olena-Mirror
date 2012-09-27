@@ -25,16 +25,18 @@
 
 /// \file
 ///
-/// \brief Un-immerse a 2D image from K1 to K0.
+/// \brief Immerse a 2D image into K1 and copy 2 faces data into 1
+/// faces.
 
-
-#ifndef MLN_WORLD_K1_UN_IMMERSE_HH
-# define MLN_WORLD_K1_UN_IMMERSE_HH
+#ifndef MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH
+# define MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/box.hh>
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/is_2_face.hh>
+# include <mln/world/k1/immerse.hh>
+# include <mln/world/k1/is_1_face_vertical.hh>
+# include <mln/world/k1/is_1_face_horizontal.hh>
 
 namespace mln
 {
@@ -45,69 +47,56 @@ namespace mln
     namespace k1
     {
 
-      /*! \brief Un-immerse a 2D image from K1 to K0.
+      /*! \brief Immerse a 2D image into K1 and copy 2 faces data into
+       *  1 faces.
 
-	\verbatim
+       Data is copied into 1 faces located at the bottom right of each
+       2 faces.
 
-	  -1 0 1 2 3
-	-1 . - . - .            0 1
-	 0 | o | o |          0 o o
-	 1 . - . - .      ->  1 o o
-	 2 | o | o |
-	 3 . - . - .
-
-	\endverbatim
+	           -1 0 1 2 3
+	 0 1     -1 . a . d .
+       0 a d      0 a a a d d
+       1 b c  ->  1 . a . d .
+	          2 b b b c c
+	 	  3 . b . c .
 
        */
       template <typename I>
-      mln_concrete(I) un_immerse(const Image<I>& ima);
+      mln_concrete(I)
+      immerse_and_duplicate_2_to_1_faces(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace internal
-      {
-
-	/// Return the equivalent point in K1 from a point in K0.
-	inline
-	point2d un_immerse_point(const point2d& p)
-	{
-	  point2d tmp(p.row() / 2, p.col() / 2);
-	  return tmp;
-	}
-
-	/// \brief Return the equivalent domain in K0 from a domain in
-	/// K1.
-	template <typename B>
-	inline
-	B domain_K0_from_K1(const Box<B>& b_)
-	{
-	  mln_precondition(exact(b_).is_valid());
-	  const B& b = exact(b_);
-	  return B(un_immerse_point(b.pmin()), un_immerse_point(b.pmax()));
-	}
-
-      } // end of namespace mln::world::k1::internal
-
-
-
       // Facade
 
       template <typename I>
-      mln_concrete(I) un_immerse(const Image<I>& ima_)
+      mln_concrete(I) immerse_and_duplicate_2_to_1_faces(const Image<I>& ima_)
       {
-	trace::entering("mln::world::k1::un_immerse");
+	trace::entering("mln::world::k1::immerse_and_duplicate_2_to_1_faces");
 	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
 
-	mln_concrete(I) output(internal::domain_K0_from_K1(ima.domain()));
+	mln_concrete(I) output = immerse(ima);
 
-	mln_piter(I) p(ima.domain());
+	mln_piter(I) p(output.domain());
 	for_all(p)
-	  if (is_2_face(p))
-	    output(internal::un_immerse_point(p)) = ima(p);
+	  if (is_1_face_vertical(p))
+	  {
+	    if (output.domain().has(p + left))
+	      output(p) = output(p + left);
+	    else // Handle left border
+	      output(p) = output(p + right);
+	  }
+	  else if (is_1_face_horizontal(p))
+	  {
+	    if (output.domain().has(p + up))
+	      output(p) = output(p + up);
+	    else  // Handle top border
+	      output(p) = output(p + down);
+	  }
 
-	trace::exiting("mln::world::k1::un_immerse");
+	trace::exiting("mln::world::k1::immerse_and_duplicate_2_to_1_faces");
 	return output;
       }
 
@@ -119,5 +108,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_UN_IMMERSE_HH
-
+#endif // ! MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH

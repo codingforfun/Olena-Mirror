@@ -47,6 +47,12 @@ namespace mln
       bool is_1_face(const point2d& p);
 
 
+      /// \overload
+      inline
+      bool is_1_face(const mln::def::coord& row,
+		     const mln::def::coord& col);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -55,7 +61,14 @@ namespace mln
       inline
       bool is_1_face(const point2d& p)
       {
-	return internal::face_dim(p) == 1;
+	return is_1_face(p.row(), p.col());
+      }
+
+      inline
+      bool is_1_face(const mln::def::coord& row,
+		     const mln::def::coord& col)
+      {
+	return internal::face_dim(row, col) == 1;
       }
 
 

@@ -25,13 +25,13 @@
 
 /// \file
 ///
-/// \brief Check if site is a 0 face.
+/// \brief Fill 1 faces in a K1 2D image using its primary faces.
 
-#ifndef MLN_WORLD_K1_IS_0_FACE_HH
-# define MLN_WORLD_K1_IS_0_FACE_HH
+#ifndef MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
+# define MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
 
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/internal/face_dim.hh>
+# include <mln/world/k1/fill_0_from_2_faces.hh>
 
 
 namespace mln
@@ -43,12 +43,27 @@ namespace mln
     namespace k1
     {
 
-      /// \brief Check if site is a 0 face
-      bool is_0_face(const point2d& p);
+      /*! \brief Fill 0 faces in a K1 2D image using its primary faces.
+
+	\param[in,out] inout A 2D image immersed in K1.
+	\param[in,out] f A functor computing a result from four values.
+
+	This function use the following neighborhood:
+
+	\verbatim
+	      x   x
+	        .
+	      x   x
+	\endverbatim
+
+
+       */
+      template <typename I, typename F>
+      void fill_0_from_primary_faces(Image<I>& inout, Function_vvvv2v<F>& f);
 
       /// \overload
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col);
+      template <typename I, typename A>
+      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -56,18 +71,32 @@ namespace mln
 
       // Facade
 
-      inline
-      bool is_0_face(const point2d& p)
+
+      template <typename I, typename F>
+      void fill_0_from_primary_faces(Image<I>& inout, Function_vvvv2v<F>& f)
       {
-	return is_0_face(p.row(), p.col());
+	trace::entering("mln::world::k1::fill_0_from_primary_faces");
+
+	mln_precondition(exact(inout).is_valid());
+
+	fill_0_from_2_faces(inout, f);
+
+	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
       }
 
-      inline
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col)
+
+      template <typename I, typename A>
+      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu)
       {
-	return internal::face_dim(row, col) == 0;
+	trace::entering("mln::world::k1::fill_0_from_primary_faces");
+
+	mln_precondition(exact(inout).is_valid());
+
+	fill_0_from_2_faces(inout, accu);
+
+	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -77,4 +106,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_IS_0_FACE_HH
+#endif // ! MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH

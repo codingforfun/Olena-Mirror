@@ -24,57 +24,71 @@
 // executable file might be covered by the GNU General Public License.
 
 /// \file
-///
-/// \brief Check if site is a 0 face.
 
-#ifndef MLN_WORLD_K1_IS_0_FACE_HH
-# define MLN_WORLD_K1_IS_0_FACE_HH
-
-# include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/internal/face_dim.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/make/box2d.hh>
+#include <mln/data/compare.hh>
+#include <mln/accu/math/sum.hh>
+#include <mln/world/k1/fill_1_from_2_faces.hh>
+#include <mln/border/fill.hh>
 
 
 namespace mln
 {
 
-  namespace world
+  struct sum_t : Function_vv2v<sum_t>
   {
+    typedef int result;
 
-    namespace k1
+    int operator()(const int& v1, const int& v2) const
     {
+      return v1 + v2;
+    }
 
-      /// \brief Check if site is a 0 face
-      bool is_0_face(const point2d& p);
+  };
 
-      /// \overload
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col);
-
-
-# ifndef MLN_INCLUDE_ONLY
+}
 
 
-      // Facade
 
-      inline
-      bool is_0_face(const point2d& p)
-      {
-	return is_0_face(p.row(), p.col());
-      }
+int main()
+{
+  using namespace mln;
 
-      inline
-      bool is_0_face(const mln::def::coord& row,
-		     const mln::def::coord& col)
-      {
-	return internal::face_dim(row, col) == 0;
-      }
+  int refvals[5][5] = {
+    {1, 3, 1, 3, 1},
+    {3, 3, 6, 3, 3},
+    {1, 6, 1, 6, 1},
+    {3, 3, 6, 3, 3},
+    {1, 3, 1, 3, 1}
+  };
+  image2d<int> ref = make::image(refvals, point2d(-1, -1));
 
-# endif // ! MLN_INCLUDE_ONLY
+  int vals[5][5] = {
+    {1, 0, 1, 0, 1 },
+    {0, 3, 0, 3, 0 },
+    {1, 0, 1, 0, 1 },
+    {0, 3, 0, 3, 0 },
+    {1, 0, 1, 0, 1 }
+  };
+  image2d<int> imak1 = make::image(vals, point2d(-1, -1));
 
-    } // end of namespace mln::world::k1
+  /// Make sure the border is set to 0 to get deterministic results.
+  border::fill(imak1, 0);
 
-  } // end of namespace mln::world
 
-} // end of namespace mln
+  // Overload with accumulator
+  {
+    accu::math::sum<int> accu;
+    world::k1::fill_1_from_2_faces(imak1, accu);
+    mln_assertion(ref == imak1);
+  }
 
-#endif // ! MLN_WORLD_K1_IS_0_FACE_HH
+  // Overload with function
+  {
+    sum_t f;
+    world::k1::fill_1_from_2_faces(imak1, f);
+    mln_assertion(ref == imak1);
+  }
+
+}
