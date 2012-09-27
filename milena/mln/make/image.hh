@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -37,6 +37,9 @@
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
+# include <mln/make/box1d.hh>
+# include <mln/make/box2d.hh>
+# include <mln/make/box3d.hh>
 # include <mln/opt/at.hh>
 
 
@@ -54,8 +57,11 @@ namespace mln
     /// \return A 1D image.
     ///
     template <typename V, unsigned L>
-    mln::image1d<V> image(V (&values)[L]);
+    mln::image1d<V> image(V (&values)[L], const point1d& pmin);
 
+    /// \overload pmin = (0)
+    template <typename V, unsigned L>
+    mln::image1d<V> image(V (&values)[L]);
 
     /// Create an image2d from an 2D array of values.
     ///
@@ -63,6 +69,10 @@ namespace mln
     ///
     /// \return A 2D image.
     ///
+    template <typename V, unsigned R, unsigned C>
+    mln::image2d<V> image(V (&values)[R][C], const point2d& pmin);
+
+    /// \overload pmin = (0,0)
     template <typename V, unsigned R, unsigned C>
     mln::image2d<V> image(V (&values)[R][C]);
 
@@ -74,6 +84,10 @@ namespace mln
     /// \return A 3D image.
     ///
     template <typename V, unsigned S, unsigned R, unsigned C>
+    mln::image3d<V> image(V (&values)[S][R][C], const point3d& pmin);
+
+    /// \overload pmin = (0,0,0)
+    template <typename V, unsigned S, unsigned R, unsigned C>
     mln::image3d<V> image(V (&values)[S][R][C]);
 
 
@@ -82,13 +96,36 @@ namespace mln
 
     template <typename V, unsigned L>
     mln::image1d<V>
-    image(V (&values)[L])
+    image(V (&values)[L], const point1d& pmin)
     {
       mlc_bool(L != 0)::check();
-      mln::image1d<V> tmp(L);
+      mln::image1d<V> tmp(make::box1d(pmin.ind(), pmin.ind() + L - 1));
       const def::coord ninds = static_cast<def::coord>(L);
       for (def::coord ind = 0; ind < ninds; ++ind)
-	tmp(point1d(ind)) = values[ind];
+	tmp(point1d(pmin.ind() + ind)) = values[ind];
+      return tmp;
+    }
+
+    template <typename V, unsigned L>
+    mln::image1d<V>
+    image(V (&values)[L])
+    {
+      return image(values, point1d(0));
+    }
+
+    template <typename V, unsigned R, unsigned C>
+    mln::image2d<V>
+    image(V (&values)[R][C], const point2d& pmin)
+    {
+      mlc_bool(R != 0 && C != 0)::check();
+      mln::image2d<V> tmp(make::box2d(pmin.row(), pmin.col(),
+				      pmin.row() + R - 1, pmin.col() + C - 1));
+      const def::coord
+	nrows = static_cast<def::coord>(R),
+	ncols = static_cast<def::coord>(C);
+      for (def::coord row = 0; row < nrows; ++row)
+	for (def::coord col = 0; col < ncols; ++col)
+	  opt::at(tmp, pmin.row() + row, pmin.col() + col) = values[row][col];
       return tmp;
     }
 
@@ -96,23 +133,16 @@ namespace mln
     mln::image2d<V>
     image(V (&values)[R][C])
     {
-      mlc_bool(R != 0 && C != 0)::check();
-      mln::image2d<V> tmp(R, C);
-      const def::coord
-	nrows = static_cast<def::coord>(R),
-	ncols = static_cast<def::coord>(C);
-      for (def::coord row = 0; row < nrows; ++row)
-	for (def::coord col = 0; col < ncols; ++col)
-	  opt::at(tmp, row, col) = values[row][col];
-      return tmp;
+      return image(values, point2d(0, 0));
     }
 
     template <typename V, unsigned S, unsigned R, unsigned C>
     mln::image3d<V>
-    image(V (&values)[S][R][C])
+    image(V (&values)[S][R][C], const point3d& pmin)
     {
       mlc_bool(S != 0 && R != 0 && C != 0)::check();
-      mln::image3d<V> tmp(S, R, C);
+      mln::image3d<V> tmp(make::box3d(pmin.sli(), pmin.row(), pmin.col(),
+				      pmin.sli() + S - 1, pmin.row() + R - 1, pmin.col() + C - 1));
       const def::coord
 	nslis = static_cast<def::coord>(S),
 	nrows = static_cast<def::coord>(R),
@@ -120,8 +150,15 @@ namespace mln
       for (def::coord sli = 0; sli < nslis; ++sli)
 	for (def::coord row = 0; row < nrows; ++row)
 	  for (def::coord col = 0; col < ncols; ++col)
-	    opt::at(tmp, sli, row, col) = values[sli][row][col];
+	    opt::at(tmp, pmin.sli() + sli, pmin.row() + row, pmin.col() + col) = values[sli][row][col];
       return tmp;
+    }
+
+    template <typename V, unsigned S, unsigned R, unsigned C>
+    mln::image3d<V>
+    image(V (&values)[S][R][C])
+    {
+      return image(values, point3d(0, 0, 0));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

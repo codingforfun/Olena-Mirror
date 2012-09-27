@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,4 +19,5 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
   binary_2d 					\
-  inter_pixel
+  inter_pixel					\
+  k1

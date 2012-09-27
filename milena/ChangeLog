@@ -1,3 +1,34 @@
+2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Initial commit of tools to work in K1.
+
+	* milena/mln/world/k1/display_enlarged.hh,
+	* milena/mln/world/k1/immerse.hh,
+	* milena/mln/world/k1/internal/face_dim.hh,
+	* milena/mln/world/k1/is_0_face.hh,
+	* milena/mln/world/k1/is_0_or_1_face.hh,
+	* milena/mln/world/k1/is_1_face.hh,
+	* milena/mln/world/k1/is_1_face_horizontal.hh,
+	* milena/mln/world/k1/is_1_face_vertical.hh,
+	* milena/mln/world/k1/is_2_face.hh,
+	* milena/mln/world/k1/is_primary_face.hh,
+	* milena/mln/world/k1/un_immerse.hh: New.
+
+	* milena/tests/world/k1/Makefile.am,
+	* milena/tests/world/k1/display_enlarged.cc,
+	* milena/tests/world/k1/immerse.cc,
+	* milena/tests/world/k1/is_0_face.cc,
+	* milena/tests/world/k1/is_0_or_1_face.cc,
+	* milena/tests/world/k1/is_1_face.cc,
+	* milena/tests/world/k1/is_1_face_horizontal.cc,
+	* milena/tests/world/k1/is_1_face_vertical.cc,
+	* milena/tests/world/k1/is_2_face.cc,
+	* milena/tests/world/k1/is_primary_face.cc: New tests.
+
+	* milena/tests/world/Makefile.am: Add Subdir.
+
+	* milena/mln/make/image.hh: Add overloads.
+
 2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/debug/draw_graph.hh: Add a new overload and fix comments.
