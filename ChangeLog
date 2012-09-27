@@ -1,3 +1,7 @@
+2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/world/k1/Makefile.am.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries

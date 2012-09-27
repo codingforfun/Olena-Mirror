@@ -535,6 +535,7 @@ AC_CONFIG_FILES([
       milena/tests/world/binary_2d/Makefile
       milena/tests/world/inter_pixel/Makefile
         milena/tests/world/inter_pixel/dim2/Makefile
+      milena/tests/world/k1/Makefile
 ])
 
 dnl<<lrde
