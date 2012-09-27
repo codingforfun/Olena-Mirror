@@ -20,6 +20,9 @@
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/morpho/elementary/gradient_internal.hh>
 
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
 
 namespace mln
 {

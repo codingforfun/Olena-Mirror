@@ -1,3 +1,14 @@
+2012-09-27  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
+
+	* abraham/img/lena.pgm,
+	* jardonnet/virtual/lena.pgm,
+	* theo/esiee/laurent/ismm09/lca.hh,
+	* theo/esiee/laurent/ismm09/main.cc,
+	* theo/esiee/laurent/ismm09/pseudo_tree.hh,
+	* theo/mln/morpho/canvas/lena.pgm.gz,
+	* theo/topology/README,
+	* theo/topology/kk/kk2d.hh: Update.
+
 2009-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some bench + canvas + subsampling + browsing code.

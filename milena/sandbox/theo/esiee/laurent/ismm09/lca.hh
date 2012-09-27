@@ -65,7 +65,7 @@ namespace mln
       for (unsigned i = 0; i < roots.size(); ++i)
 	to_treat.push(roots[i]);
 
-      unsigned euler_edge = 0;
+      unsigned euler_edge = 1;  // FIXME: c'etait 0 mais ca fait planter plus bas...
       mln_ch_value(I, bool) deja_vu;
       initialize(deja_vu, edge_children);
       data::fill(deja_vu, false);
@@ -79,7 +79,7 @@ namespace mln
 	if (deja_vu(e))
 	  euler_tour_depth_[euler_edge] = euler_tour_depth_[euler_edge - 1] - 1;
 	else
-	  euler_tour_depth_[euler_edge] = euler_tour_depth_[euler_edge - 1] + 1;
+	  euler_tour_depth_[euler_edge] = euler_tour_depth_[euler_edge - 1] + 1; // ...FIXME: ici (pas deja vu) et euler_edge - 1 == -1 sort du tableau
 
 	if (!deja_vu(e))
 	{

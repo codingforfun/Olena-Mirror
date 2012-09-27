@@ -79,6 +79,11 @@ namespace mln
 // 		  << time_ << std::endl;
 //       }
 
+      double ms() const
+      {
+	return double(std::clock()) * 1000.f / CLOCKS_PER_SEC;
+      }
+
     private:
 
       bool running_;

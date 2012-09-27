@@ -477,6 +477,14 @@ namespace mln
 	    while (! deja_vu(e))
 	      {
 		std::cout << e << " [" << aa(e) << "] -> ";
+		// std::cout.flush();
+		// if (! (aa(e) != 0 && aa(epar(e)) != 0) )
+		//   {
+		//     std::cout << std::endl
+		// 	      << "aa(e) = " << aa(e) << std::endl
+		// 	      << "aa(epar(e)) = " << aa(epar(e)) << std::endl;
+		//   }
+
 		mln_invariant(aa(e) != 0 && aa(epar(e)) != 0); // aa is valid
 		mln_invariant(aa(epar(e)) >= aa(e));           // edge parenthood goes with 'aa' increasing
 		deja_vu(e) = true;
@@ -530,6 +538,7 @@ namespace mln
       E e_ = lca(edge[l1],edge[l2]);
       
       mln_invariant(g_line.has(e_)); // e_ is a valid edge.
+
       mln_invariant(aa(e_) != 0);    // aa is valid at e_.
       
       // The attribute value propagates from the lca to the current edge

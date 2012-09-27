@@ -9,7 +9,10 @@
 
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
+
 #include <mln/morpho/attribute/height.hh>
+#include <mln/morpho/attribute/volume.hh>
+
 #include <mln/labeling/compute.hh>
 #include <mln/accu/math/count.hh>
 
@@ -99,6 +102,7 @@ int main(int argc, char* argv[])
     typedef morpho::tree::data<g_t,s_t> tree_t;
     tree_t t(g, s, cplx2d::e2e());
 
+    // morpho::attribute::volume<g_t> a_;
     morpho::attribute::height<g_t> a_;
     mln_VAR(h, morpho::tree::compute_attribute_image(a_, t));
     debug::println("h | nodes:", h | t.nodes());
@@ -111,7 +115,7 @@ int main(int argc, char* argv[])
 
     mln_leaf_piter_(tree_t) p(t);
     for_all(p)
-      a[w(p)] = h(p);
+      a[w(p)] = h(p) + 1; // FIXME: safety (so we can test that a or aa != 0) 
 
     std::cout << "a = " << std::endl;
     for (unsigned i = 1; i <= l_max; ++i)
@@ -121,20 +125,20 @@ int main(int argc, char* argv[])
   }
 
 
-//   util::array<L> l_ = sort_by_increasing_attributes(a, l_max);
+  util::array<L> l_ = sort_by_increasing_attributes(a, l_max);
 
-//   {
-//     std::cout << "l_:" << std::endl;
-//     for (unsigned i = 1; i <= l_max; ++i)
-//       std::cout << l_[i] << "(" << a[l_[i]] << ") ";
-//     std::cout << std::endl
-// 	      << std::endl;
-//   }
+  {
+    std::cout << "l_:" << std::endl;
+    for (unsigned i = 1; i <= l_max; ++i)
+      std::cout << l_[i] << "(" << a[l_[i]] << ") ";
+    std::cout << std::endl
+	      << std::endl;
+  }
 
 
 
   // -> pseudo-tree
 
-//   compute_pseudo_tree(w_ext, g, l_, a, e_to_l1_l2);
+  compute_pseudo_tree(w_ext, g, l_, a, e_to_l1_l2);
 
 }

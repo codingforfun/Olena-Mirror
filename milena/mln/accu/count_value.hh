@@ -34,8 +34,30 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/metal/is_a.hh>
 
+
 namespace mln
 {
+
+  namespace accu
+  {
+    template <typename V>
+    struct count_value;
+  }
+
+  namespace trait
+  {
+
+    template <typename V>
+    struct accumulator_< accu::count_value<V> >
+    {
+      typedef accumulator::has_untake::yes     has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_v    when_pix;
+    };
+
+  } // end of namespace mln::trait
+
 
   namespace accu
   {
