@@ -1,5 +1,18 @@
 2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New value types.
+
+	* mln/value/next.hh: Add support for unsignedh.
+
+	* mln/value/range.hh,
+	* mln/value/unsignedh.hh,
+	* tests/value/range.cc,
+	* tests/value/unsignedh.cc: New.
+
+	* tests/value/Makefile.am: Add targets.
+
+2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New routine for filling internal border in K1.
 
 	* mln/world/k1/fill_0_1_faces_internal_border.hh,

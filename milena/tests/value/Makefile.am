@@ -31,15 +31,17 @@ check_PROGRAMS =				\
   interop					\
   label						\
   proxy						\
+  range						\
   rgb8						\
   scalar					\
   set						\
-  sign
-#  float01				
-#  float01_bis			
-#  float01_f		
-#  graylevel	
-#  graylevel_f					
+  sign						\
+  unsignedh
+#  float01
+#  float01_bis
+#  float01_f
+#  graylevel
+#  graylevel_f
 
 bool_SOURCES = bool.cc
 equiv_SOURCES = equiv.cc
@@ -54,10 +56,12 @@ int_u8_SOURCES = int_u8.cc
 interop_SOURCES = interop.cc
 label_SOURCES = label.cc
 proxy_SOURCES = proxy.cc
+range_SOURCES = range.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 sign_SOURCES = sign.cc
+unsignedh_SOURCES = unsignedh.cc
 
 #<<lrde
 # FIXME: Not distributed (yet).

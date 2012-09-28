@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,9 +29,10 @@
 
 /// \file
 ///
-/// Return a given value incremented by 1.
+/// Return the next value.
 
 # include <mln/value/label.hh>
+# include <mln/value/unsignedh.hh>
 
 
 namespace mln
@@ -74,6 +76,14 @@ namespace mln
 	return v.next();
       }
 
+
+      inline
+      mln::value::unsignedh
+      next_unsignedh(const mln::value::unsignedh& v)
+      {
+	return mln::value::succ(v);
+      }
+
     } // end of namespace mln::value::implementation
 
 
@@ -91,6 +101,12 @@ namespace mln
 	return implementation::next_label(v);
       }
 
+      inline
+      unsignedh
+      next_dispatch(const unsignedh& v)
+      {
+	return implementation::next_unsignedh(v);
+      }
 
       template <typename V>
       inline
