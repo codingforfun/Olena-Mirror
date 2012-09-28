@@ -18,6 +18,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   display_enlarged				\
+  fill_0_1_faces_internal_border		\
   fill_0_from_1_faces				\
   fill_0_from_2_faces				\
   fill_0_from_primary_faces			\
@@ -37,6 +38,7 @@ check_PROGRAMS =				\
   un_immerse
 
 display_enlarged_SOURCES = display_enlarged.cc
+fill_0_1_faces_border_SOURCES = fill_0_1_faces_border.cc
 fill_0_from_1_faces_SOURCES = fill_0_from_1_faces.cc
 fill_0_from_2_faces_SOURCES = fill_0_from_2_faces.cc
 fill_0_from_primary_faces_SOURCES = fill_0_from_primary_faces.cc

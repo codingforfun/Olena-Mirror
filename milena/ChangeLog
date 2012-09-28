@@ -1,3 +1,12 @@
+2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	New routine for filling internal border in K1.
+
+	* mln/world/k1/fill_0_1_faces_internal_border.hh,
+	* tests/world/k1/fill_0_1_faces_internal_border.cc: New.
+
+	* tests/world/k1/Makefile.am: New target.
+
 2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/world/k1/neighb2d.hh: New neighborhoods.
