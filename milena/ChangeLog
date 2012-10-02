@@ -1,3 +1,8 @@
+2012-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/site_relative_iterator_base.hh: Fix a
+	precondition (ticket #256).
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants (ticket #43)
