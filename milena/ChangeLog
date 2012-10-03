@@ -1,3 +1,10 @@
+2012-10-03  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
+	Add Moravec corner detection.
+
+	* mln/detection/corner/moravec.hh: New.
+	* mln/detection/corner/moravec_criterion.hh: New.
+
 2012-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/internal/site_relative_iterator_base.hh: Fix a
