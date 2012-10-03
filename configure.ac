@@ -452,6 +452,8 @@ AC_CONFIG_FILES([
       milena/tests/data/approx/Makefile
       milena/tests/data/naive/Makefile
     milena/tests/debug/Makefile
+    milena/tests/detection/Makefile
+      milena/tests/detection/corner/Makefile
     milena/tests/display/Makefile
     milena/tests/draw/Makefile
     milena/tests/estim/Makefile

@@ -1,3 +1,10 @@
+2012-10-03  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
+	Configure Makefiles under milena/tests/detection.
+
+	* configure.ac: Configure milena/tests/detection/Makefile and
+	milena/tests/detection/corner/Makefile.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries
