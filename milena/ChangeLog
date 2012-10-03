@@ -1,5 +1,9 @@
 2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/world/k1/Makefile.am: Fix target names.
+
+2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Replace unsignedh type by intsub.
 
 	* mln/value/unsignedh.hh,
