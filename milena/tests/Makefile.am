@@ -28,6 +28,7 @@ SUBDIRS =					\
   core						\
   data						\
   debug						\
+  detection					\
   display					\
   draw						\
   estim						\
@@ -102,7 +103,7 @@ EXTRA_DIST += 					\
   img/lena_raw.pbm				\
   img/lena_raw.pgm				\
   img/test_bw.tif				\
+  img/test_corner_detection.pgm			\
   img/test_gl.tif				\
   img/test_rgb8.tif				\
   img/tiny.png
-

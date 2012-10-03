@@ -1,5 +1,16 @@
 2012-10-03  Jonathan Fabrizio <jonathan@lrde.epita.fr>
 
+	Add test for Moravec corner detection.
+
+	* tests/Makefile.am (SUBDIRS): Add detection.
+	(EXTRA_DIST): Add img/test_corner_detection.pgm.
+	* tests/detection/Makefile.am: New.
+	* tests/detection/corner/Makefile.am: New.
+	* tests/img/test_corner_detection.pgm: New.
+	* tests/detection/corner/moravec.cc: New.
+
+2012-10-03  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
 	Add Moravec corner detection.
 
 	* mln/detection/corner/moravec.hh: New.
