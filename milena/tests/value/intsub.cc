@@ -26,19 +26,53 @@
 /// \file
 
 #include <cassert>
-#include <mln/value/unsignedh.hh>
-
+#include <mln/value/intsub.hh>
+#include <mln/value/inc.hh>
+#include <mln/value/dec.hh>
+#include <mln/value/succ.hh>
+#include <mln/value/prev.hh>
+#include <mln/math/mean.hh>
 
 int main()
 {
+  using namespace mln;
   using namespace mln::value;
 
-  unsignedh i = 2;
-  i.goto_succ();
+  // i == 2
+  intsub<2> i = 2;
+  inc(i);
 
   // i == 2.5
-  assert(i == 2 + half);
+  mln_assertion(i == half + 2);
 
   // (2.5 + 0.5) / 2 == 1.5
-  assert(mean(i, half) == 1 + half);
+  mln_assertion(mean(i, half) == 1 + half);
+
+  // i == 3
+  inc(i);
+  mln_assertion(i == intsub<2>(3));
+
+  // i == 2.5
+  dec(i);
+  mln_assertion(i == intsub<2>(2,2));
+  dec(i);
+
+  // i == 2.5
+  mln_assertion(succ(i) == 2 + half);
+
+  // i == 1.5
+  mln_assertion(prev(i) == 2 - half);
+
+  // i == 6
+  i *= 3;
+  mln_assertion(i == 6);
+
+  // j = 6
+  intsub<4> j = i;
+  mln_assertion(j == 6);
+
+  // j = 6.25
+  inc(j);
+  mln_assertion(j == 6 + quarter);
+
 }

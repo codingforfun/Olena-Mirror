@@ -1,5 +1,17 @@
 2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Replace unsignedh type by intsub.
+
+	* mln/value/unsignedh.hh,
+	* tests/value/unsignedh.cc: Remove.
+
+	* mln/value/intsub.hh,
+	* tests/value/intsub.cc: New.
+
+	* tests/value/Makefile.am: Change target name.
+
+2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New routines to browse values into a value set.
 
 	* mln/accu/label_used.hh,

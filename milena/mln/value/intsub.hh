@@ -1,0 +1,569 @@
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+#ifndef MLN_VALUE_INTSUB_HH
+# define MLN_VALUE_INTSUB_HH
+
+/// \file
+///
+/// Define a subdivided integer value class.
+
+# include <cstdlib>
+# include <iostream>
+# include <sstream>
+# include <mln/value/internal/value_like.hh>
+# include <mln/value/internal/encoding.hh>
+# include <mln/value/internal/limits.hh>
+# include <mln/value/concept/integer.hh>
+# include <mln/value/iota.hh>
+# include <mln/value/prev.hh>
+# include <mln/value/succ.hh>
+
+
+namespace mln
+{
+
+  // Forward declaration
+  namespace value {
+    template <unsigned n> class intsub;
+  }
+
+  namespace trait
+  {
+
+    template <unsigned n>
+    struct set_precise_unary_< op::uminus, mln::value::intsub<n> >
+    {
+      typedef mln::value::intsub<n> ret;
+    };
+
+
+    template <unsigned n>
+    struct value_< mln::value::intsub<n> >
+    {
+    private:
+      typedef mln::value::intsub<n> self_;
+      typedef typename mln::value::internal::encoding_signed_<32>::ret enc_;
+    public:
+
+      enum constants_ {
+	dim = 1,
+	nbits = 32,
+	card  = mln_value_card_from_(32/n) // FIXME: Really?
+      };
+
+      typedef trait::value::nature::integer nature;
+      typedef trait::value::kind::data      kind;
+      typedef mln_value_quant_from_(card)   quant;
+
+      static const self_ max() { return mln::value::internal::limits<int>::max() / n; }
+      static const self_ min() { return - max(); }
+      static const self_ epsilon() { return 0; }
+
+      typedef mln::value::intsub<n> comp;
+
+      typedef mln::value::intsub<n> sum;
+
+      static const char* name()
+      {
+	static std::string
+	  s = mln::value::internal::make_generic_name("intsub", n);
+	return s.c_str();
+      }
+
+    };
+
+  } // end of namespace mln::trait
+
+
+
+  namespace value
+  {
+
+    template <unsigned n>
+    class intsub
+      : public Integer< intsub<n> >,
+	public internal::value_like_< int,    // Equivalent.
+				      typename internal::encoding_signed_<32>::ret, // Enc.
+				      int,         // Interoperation.
+				      intsub<n> >   // Exact.
+    {
+    public:
+      intsub();
+      intsub(const intsub<n>& rhs);
+      /// Construct an intsub with value : \p int_part + 1 / \p denominator.
+      intsub(int int_part, unsigned denominator);
+      intsub(int i);
+
+      intsub<n>& operator=(const intsub<n>& rhs);
+      intsub<n>& operator=(int i);
+
+      /// Is an integer value.
+      bool is_integer() const;
+
+      /// Convert this intsub to a larger intsub type.
+      template <unsigned m>
+      operator intsub<m>();
+
+      /*! \internal Increment by value::iota::value() the
+	value to the next one.
+       */
+      void inc_();
+      /*! \internal Decrement by value::iota::value() the
+	value to the next one.
+       */
+      void dec_();
+
+      /*!\internal Return the integer part of this value.
+       */
+      int to_int() const;
+
+      /*!\internal Construct a intsub using an encoding value. */
+      static intsub<n> make_from_enc_(int enc);
+
+      /// Unary operator minus.
+      intsub<n> operator-() const;
+
+    };
+
+
+    // Safety
+    template <> struct intsub<0>;
+
+//  rounding
+
+    template <unsigned n>
+    intsub<n> floor(const intsub<n>& i);
+    template <unsigned n>
+    intsub<n> ceil(const intsub<n>& i);
+
+
+//  comparison
+
+    template <unsigned n>
+    bool operator==(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename V>
+    bool operator==(const intsub<n>& l, const V& r);
+    template <unsigned n>
+    bool operator<=(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n>
+    bool operator!=(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n>
+    bool operator>=(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n>
+    bool operator>(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n>
+    bool operator<(const intsub<n>& l, const intsub<n>& r);
+
+// arithmetics
+
+    template <unsigned n>
+    intsub<n> operator+(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    intsub<n> operator+(const intsub<n>& l, const O& r);
+    template <typename O, unsigned n>
+    intsub<n> operator+(const O& r, const intsub<n>& l);
+    template <unsigned n>
+    void operator+=(intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    void operator+=(intsub<n>& l, const O& r);
+
+    template <unsigned n>
+    intsub<n> operator-(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    intsub<n> operator-(const intsub<n>& l, const O& r);
+    template <typename O, unsigned n>
+    intsub<n> operator-(const O& r, const intsub<n>& l);
+    template <unsigned n>
+    void operator-=(intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    void operator-=(intsub<n>& l, const O& r);
+
+    template <unsigned n>
+    intsub<n> operator*(const intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    intsub<n> operator*(const intsub<n>& l, const O& r);
+    template <typename O, unsigned n>
+    intsub<n> operator*(const O& r, const intsub<n>& l);
+    template <unsigned n>
+    void operator*=(intsub<n>& l, const intsub<n>& r);
+    template <unsigned n, typename O>
+    void operator*=(intsub<n>& l, const O& r);
+
+//  other ops
+
+    template <unsigned n>
+    intsub<n> min(const intsub<n>& u1, const intsub<n>& u2);
+    template <unsigned n>
+    intsub<n> max(const intsub<n>& u1, const intsub<n>& u2);
+    template <unsigned n>
+    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2);
+    template <unsigned n>
+    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2,
+		   const intsub<n>& v3, const intsub<n>& v4);
+
+//  <<
+
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const intsub<n>& i);
+
+    template <unsigned n>
+    struct iota<intsub<n> >
+    {
+      static intsub<n> value();
+    };
+
+  } // end of namespace mln::value
+
+  extern const value::intsub<2> half;
+  extern const value::intsub<4> quarter;
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+  //  half
+
+#  ifndef MLN_WO_GLOBAL_VARS
+
+  const value::intsub<2> half = value::intsub<2>(0, 2);
+  const value::intsub<4> quarter = value::intsub<4>(0, 4);
+
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+
+
+  namespace value
+  {
+
+    template <unsigned n>
+    intsub<n>::intsub()
+    {
+    }
+
+    template <unsigned n>
+    intsub<n>::intsub(const intsub<n>& rhs)
+    {
+      this->v_ = rhs.v_;
+    }
+
+    template <unsigned n>
+    intsub<n>::intsub(int i)
+    {
+      this->v_ = n * i;
+    }
+
+    template <unsigned n>
+    intsub<n>::intsub(int int_part, unsigned denominator)
+    {
+      // FIXME: better error handling ?
+      if (denominator > n)
+	std::abort();
+
+      this->v_ = int_part * n + denominator / n;
+    }
+
+
+    template <unsigned n>
+    intsub<n>&
+    intsub<n>::operator=(const intsub<n>& rhs)
+    {
+      this->v_ = rhs.v_;
+      return *this;
+    }
+
+    template <unsigned n>
+    intsub<n>&
+    intsub<n>::operator=(int i)
+    {
+      this->v_ = n * i;
+      return *this;
+    }
+
+    template <unsigned n>
+    intsub<n> intsub<n>::make_from_enc_(int enc)
+    {
+      intsub<n> i;
+      i.v_ = enc;
+      return i;
+    }
+
+    template <unsigned n>
+    bool
+    intsub<n>::is_integer() const
+    {
+      return this->v_ % n == 0;
+    }
+
+    template <unsigned n>
+    template <unsigned m>
+    intsub<n>::operator intsub<m>()
+    {
+      // FIXME: better error handling ?
+      if (n > m)
+	std::abort();
+      return intsub<m>::make_from_enc_(this->v_ * (m / n));
+    }
+
+    template <unsigned n>
+    void
+    intsub<n>::inc_()
+    {
+      this->v_ += iota<intsub<n> >::value().to_enc();
+    }
+
+    template <unsigned n>
+    void
+    intsub<n>::dec_()
+    {
+      this->v_ -= iota<intsub<n> >::value().to_enc();
+    }
+
+    template <unsigned n>
+    int
+    intsub<n>::to_int() const
+    {
+      return this->v_ / n;
+    }
+
+    template <unsigned n>
+    intsub<n>
+    intsub<n>::operator-() const
+    {
+      return intsub<n>::make_from_enc_(this->v_ * -1);
+    }
+
+    // Iota
+    template <unsigned n>
+    intsub<n>
+    iota<intsub<n> >::value()
+    {
+      return intsub<n>(0,n);
+    }
+
+
+//  rounding
+
+
+    template <unsigned n>
+    intsub<n> floor(const intsub<n>& i)
+    {
+      return i.is_integer() ? i : value::prev(i);
+    }
+
+    template <unsigned n>
+    intsub<n> ceil(const intsub<n>& i)
+    {
+      return i.is_integer() ? i : value::succ(i);
+    }
+
+
+
+//  comparison
+
+    template <unsigned n>
+    bool operator==(const intsub<n>& l, const intsub<n>& r)
+    {
+      return l.to_enc() == r.to_enc();
+    }
+
+    template <unsigned n>
+    bool operator==(const intsub<n>& l, const int& r)
+    {
+      return l == intsub<n>(r);
+    }
+
+    template <unsigned n>
+    bool operator<=(const intsub<n>& l, const intsub<n>& r)
+    {
+      return l.to_enc() <= r.to_enc();
+    }
+
+    template <unsigned n>
+    bool operator!=(const intsub<n>& l, const intsub<n>& r)
+    {
+      return ! (l == r);
+    }
+
+    template <unsigned n>
+    bool operator>=(const intsub<n>& l, const intsub<n>& r)
+    {
+      return r <= l;
+    }
+
+    template <unsigned n>
+    bool operator>(const intsub<n>& l, const intsub<n>& r)
+    {
+      return ! (l <= r);
+    }
+
+    template <unsigned n>
+    bool operator<(const intsub<n>& l, const intsub<n>& r)
+    {
+      return r > l;
+    }
+
+
+// arithmetics
+
+    template <unsigned n>
+    intsub<n> operator+(const intsub<n>& l, const intsub<n>& r)
+    {
+      return intsub<n>::make_from_enc_(l.to_enc() + r.to_enc());
+    }
+
+    template <unsigned n>
+    intsub<n> operator+(const intsub<n>& l, int r)
+    {
+      return l + intsub<n>(r);
+    }
+
+    template <unsigned n>
+    intsub<n> operator+(int l, const intsub<n>& r)
+    {
+      return r + l;
+    }
+
+    template <unsigned n>
+    void operator+=(intsub<n>& l, const intsub<n>& r)
+    {
+      l = l + r;
+    }
+
+    template <unsigned n>
+    void operator+=(intsub<n>& l, int r)
+    {
+      l = l + intsub<n>(r);
+    }
+
+    template <unsigned n>
+    intsub<n> operator-(const intsub<n>& l, const intsub<n>& r)
+    {
+      return intsub<n>::make_from_enc_(l.to_enc() - r.to_enc());
+    }
+
+    template <unsigned n>
+    intsub<n> operator-(const intsub<n>& l, int r)
+    {
+      return l - intsub<n>(r);
+    }
+
+    template <unsigned n>
+    intsub<n> operator-(int l, const intsub<n>& r)
+    {
+      return - r + l;
+    }
+
+    template <unsigned n>
+    void operator-=(intsub<n>& l, const intsub<n>& r)
+    {
+      l = l - r;
+    }
+
+    template <unsigned n>
+    void operator-=(intsub<n>& l, int r)
+    {
+      l = l - intsub<n>(r);
+    }
+
+    template <unsigned n>
+    intsub<n> operator*(const intsub<n>& l, const intsub<n>& r)
+    {
+      return intsub<n>::make_from_enc_(l.to_enc() * r.to_enc() / n);
+    }
+
+    template <unsigned n>
+    intsub<n> operator*(const intsub<n>& l, int r)
+    {
+      return l * intsub<n>(r);
+    }
+
+    template <unsigned n>
+    intsub<n> operator*(int l, const intsub<n>& r)
+    {
+      return r * l;
+    }
+
+    template <unsigned n>
+    void operator*=(intsub<n>& l, const intsub<n>& r)
+    {
+      l = l * r;
+    }
+
+    template <unsigned n>
+    void operator*=(intsub<n>& l, int r)
+    {
+      l = l * intsub<n>(r);
+    }
+
+
+//  other ops
+
+    template <unsigned n>
+    intsub<n> min(const intsub<n>& v1, const intsub<n>& v2)
+    {
+      return intsub<n>::make_from_enc_(v1.to_enc() < v2.to_enc() ? v1.to_enc() : v2.to_enc());
+    }
+
+    template <unsigned n>
+    intsub<n> max(const intsub<n>& v1, const intsub<n>& v2)
+    {
+      return intsub<n>::make_from_enc_(v1.to_enc() > v2.to_enc() ? v1.to_enc() : v2.to_enc());
+    }
+
+    template <unsigned n>
+    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2)
+    {
+      return intsub<n>::make_from_enc_((v1.to_enc() + v2.to_enc()) / 2);
+    }
+
+    template <unsigned n>
+    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2,
+		   const intsub<n>& v3, const intsub<n>& v4)
+    {
+      return intsub<n>::make_from_enc_((v1.to_enc() + v2.to_enc()
+					+ v3.to_enc() + v4.to_enc()) / 4);
+    }
+
+
+//  <<
+
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const intsub<n>& i)
+    {
+      if (i.is_integer())
+	return ostr << i.to_int();
+      else
+	return ostr << floor(i).to_int() << ".5";
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+#endif // ! MLN_VALUE_INTSUB_HH

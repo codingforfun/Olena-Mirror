@@ -36,7 +36,7 @@ check_PROGRAMS =				\
   scalar					\
   set						\
   sign						\
-  unsignedh
+  intsub
 #  float01
 #  float01_bis
 #  float01_f
@@ -61,7 +61,7 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 sign_SOURCES = sign.cc
-unsignedh_SOURCES = unsignedh.cc
+intsub_SOURCES = intsub.cc
 
 #<<lrde
 # FIXME: Not distributed (yet).
