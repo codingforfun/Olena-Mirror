@@ -198,7 +198,7 @@ namespace mln
       // mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
       (void) value;
 
-      unsigned label_count = value::next(nlabels);
+      unsigned label_count = value::succ(nlabels);
       static fun::i2v::array<V> f(0);
       int diff_size = f.size() - label_count;
       if (diff_size < 0)

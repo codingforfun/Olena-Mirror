@@ -136,8 +136,8 @@ namespace mln
       /// Self decrement.
       label<n>& operator--();
 
-      /// Return the next value.
-      label<n> next() const;
+      /// Return the successive value.
+      label<n> succ() const;
 
       /// Return the previous value.
       label<n> prev() const;
@@ -260,7 +260,7 @@ namespace mln
     template <unsigned n>
     inline
     label<n>
-    label<n>::next() const
+    label<n>::succ() const
     {
       return label<n>(this->v_ + 1);
     }

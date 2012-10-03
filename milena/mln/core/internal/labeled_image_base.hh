@@ -281,7 +281,7 @@ namespace mln
   labeled_image_base<I,E>::update_data(const fun::i2v::array<mln_value(I)>& relabel_fun)
   {
     util::array<accu::shape::bbox<mln_psite(I)> >
-      new_bboxes(mln::value::next(this->data_->nlabels_));
+      new_bboxes(mln::value::succ(this->data_->nlabels_));
 
     exact(this)->init_update_data_();
 

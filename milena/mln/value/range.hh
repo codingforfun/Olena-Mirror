@@ -233,7 +233,7 @@ namespace mln
     {
       unsigned n = 1;
       T v = lower_;
-      for (; v != upper_; v = value::next(v))
+      for (; v != upper_; v = value::succ(v))
 	n += 1;
 
       return n;
@@ -323,7 +323,7 @@ namespace mln
     are_adjacent(const range<T>& r1, const range<T>& r2)
     {
       return span(r1, r2).length() == r1.length() + r2.length()
-	+ (value::next(r2.lower()) - r2.lower());
+	+ (value::succ(r2.lower()) - r2.lower());
     }
 
     template <typename T>

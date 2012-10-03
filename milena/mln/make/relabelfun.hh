@@ -88,7 +88,7 @@ namespace mln
 
       const F& fv2b = exact(fv2b_);
 
-      unsigned nlabels_i = value::next(nlabels);
+      unsigned nlabels_i = value::succ(nlabels);
       V tmp_nlabels = literal::zero;
       fun::i2v::array<V> fi2v(nlabels_i, literal::zero);
       for (V i = 1; i < nlabels_i; ++i)
@@ -111,7 +111,7 @@ namespace mln
 
       const F& fv2v = exact(fv2v_);
 
-      unsigned nlabels_i = value::next(nlabels);
+      unsigned nlabels_i = value::succ(nlabels);
 
       util::array<V> new_labels(nlabels_i, mln_max(V));
       new_labels(0) = literal::zero;

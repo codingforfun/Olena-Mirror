@@ -1,3 +1,24 @@
+2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	New routines to browse values into a value set.
+
+	* mln/accu/label_used.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/superpose.hh,
+	* mln/make/relabelfun.hh,
+	* mln/set/compute_with_weights.hh,
+	* mln/value/label.hh,
+	* mln/value/range.hh: Rename value::next to value::succ.
+
+	* mln/value/dec.hh,
+	* mln/value/inc.hh,
+	* mln/value/iota.hh,
+	* mln/value/next.hh,
+	* mln/value/prev.hh,
+	* mln/value/succ.hh: New.
+
 2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	New value types.

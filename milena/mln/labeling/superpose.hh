@@ -98,7 +98,7 @@ namespace mln
       mln_concrete(I) output = duplicate(lhs);
 
       util::array<mln_value(J)>
-	rebase_lbl(value::next(rhs_nlabels));
+	rebase_lbl(value::succ(rhs_nlabels));
 
       rebase_lbl(0) = 0;
       for (unsigned i = 1; i <= rhs_nlabels; ++i)

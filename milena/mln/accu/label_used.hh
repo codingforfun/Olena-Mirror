@@ -118,7 +118,7 @@ namespace mln
     label_used<L>::take(const argument& l)
     {
       if (label_used_.size() <= l)
-	label_used_.resize(value::next(l), false);
+	label_used_.resize(value::succ(l), false);
 
       label_used_(l) = true;
     }

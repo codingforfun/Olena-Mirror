@@ -189,7 +189,7 @@ namespace mln
 
 	  internal::compute_with_weights_tests(a, w, label);
 
-	  util::array<A> accus(value::next(nlabels), a);
+	  util::array<A> accus(value::succ(nlabels), a);
 
 	  mln_piter(I) p(w.domain());
 	  for_all(p)

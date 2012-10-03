@@ -24,15 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_VALUE_NEXT_HH
-# define MLN_VALUE_NEXT_HH
+#ifndef MLN_VALUE_SUCC_HH
+# define MLN_VALUE_SUCC_HH
 
 /// \file
 ///
-/// Return the next value.
+/// Return the succ value.
 
+# include <mln/value/iota.hh>
 # include <mln/value/label.hh>
-# include <mln/value/unsignedh.hh>
 
 
 namespace mln
@@ -43,7 +43,7 @@ namespace mln
 
     template <typename V>
     V
-    next(const V&);
+    succ(const V&);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,28 +60,20 @@ namespace mln
 	template <typename V>
 	inline
 	V
-	next(const V& v)
+	succ(const V& v)
 	{
-	  return v + 1;
+	  return v + mln::value::iota<V>::value();
 	}
 
       } // end of namespace mln::value::implementation::generic
 
 
-      template <unsigned n>
+      template <typename V>
       inline
-      mln::value::label<n>
-      next_label(const mln::value::label<n>& v)
+      V
+      succ_method(const V& v)
       {
-	return v.next();
-      }
-
-
-      inline
-      mln::value::unsignedh
-      next_unsignedh(const mln::value::unsignedh& v)
-      {
-	return mln::value::succ(v);
+	return v.succ();
       }
 
     } // end of namespace mln::value::implementation
@@ -96,24 +88,17 @@ namespace mln
       template <unsigned n>
       inline
       label<n>
-      next_dispatch(const label<n>& v)
+      succ_dispatch(const label<n>& v)
       {
-	return implementation::next_label(v);
-      }
-
-      inline
-      unsignedh
-      next_dispatch(const unsignedh& v)
-      {
-	return implementation::next_unsignedh(v);
+	return implementation::succ_method(v);
       }
 
       template <typename V>
       inline
       V
-      next_dispatch(const V& v)
+      succ_dispatch(const V& v)
       {
-	return implementation::generic::next(v);
+	return implementation::generic::succ(v);
       }
 
     } // end of namespace mln::value::internal
@@ -125,9 +110,9 @@ namespace mln
     template <typename V>
     inline
     V
-    next(const V& v)
+    succ(const V& v)
     {
-      return internal::next_dispatch(v);
+      return internal::succ_dispatch(v);
     }
 
 
@@ -138,4 +123,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_VALUE_NEXT_HH
+#endif // ! MLN_VALUE_SUCC_HH
