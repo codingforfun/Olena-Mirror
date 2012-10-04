@@ -1,5 +1,14 @@
 2012-10-04  Jonathan Fabrizio <jonathan@lrde.epita.fr>
 
+	Add test for Harris corner detection.
+
+	* tests/detection/corner/Makefile.am (check_PROGRAMS): Add harris.
+	(harris_SOURCES): add harris.
+	(MOSTLYCLEANFILES): add harris-result
+	* tests/detection/corner/harris.cc: New.
+
+2012-10-04  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
 	Add Harris corner detection.
 
 	* mln/detection/corner/harris.hh: New.
