@@ -1,3 +1,10 @@
+2012-10-04  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
+	Add Harris corner detection.
+
+	* mln/detection/corner/harris.hh: New.
+	* mln/detection/corner/harris_criterion.hh: New.
+
 2012-10-03  Jonathan Fabrizio <jonathan@lrde.epita.fr>
 
 	Add test for Moravec corner detection.
