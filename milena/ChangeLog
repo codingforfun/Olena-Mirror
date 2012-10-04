@@ -1,5 +1,16 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Replace range class with interval and improve it.
+
+	* mln/value/range.hh,
+	* tests/value/range.cc: Rename as...
+	* mln/value/interval.hh,
+	* tests/value/interval.cc: ... this and improve it.
+
+	* tests/value/Makefile.am: Update target name.
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve value::intsub class.
 
 	* mln/value/intsub.hh: Improve class.

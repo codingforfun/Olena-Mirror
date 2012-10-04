@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,14 +26,172 @@
 #ifndef MLN_VALUE_INTERVAL_HH
 # define MLN_VALUE_INTERVAL_HH
 
-/*! \file
- *
- * \brief Define an interval between two values.
- *
- * \todo Likewise, code value::not_equal(t), less_than, etc.
- */
+/// \file
+///
+/// Define an interval.
 
-# include <mln/core/concept/object.hh>
+# include <cstdlib>
+# include <iostream>
+# include <mln/value/inc.hh>
+# include <mln/value/concept/interval.hh>
+
+namespace mln
+{
+
+  namespace value
+  {
+
+    /// \brief Interval of values.
+    template <typename T>
+    class interval : public value::Interval<interval<T> >
+    {
+    public:
+      typedef T enc;
+      typedef T equiv;
+
+      interval();
+      interval(T first, T last);
+
+      interval& operator=(const interval& rhs);
+
+      /// Return True if a value is within this interval.
+      bool has(const T& v) const;
+
+      /// Return the distance between the first and the last value.
+      T length() const;
+
+      /// Return the ith value in this interval.
+      T ith_element(unsigned i) const;
+
+      /// Return the index of value \p v in this interval.
+      unsigned index_of(const T& v) const;
+
+      /// Return the number of values in this interval.
+      unsigned nelements() const;
+
+      /// Return True if this interval contains only one value.
+      bool is_degenerated() const;
+
+      /// The first value included in this interval.
+      const T& first() const;
+      /// The last value included in this interval.
+      const T& last() const;
+
+    private:
+      T first_;
+      T last_;
+      unsigned nelements_;
+    };
+
+    //  comparison
+
+    template <typename T>
+    bool
+    operator==(const interval<T>& lhs, const interval<T>& rhs);
+
+    template <typename T>
+    bool
+    operator!=(const interval<T>& lhs, const interval<T>& rhs);
+
+    // deactivation of ordering related operators
+
+    template <typename T>
+    void operator<(const interval<T>&, const interval<T>&);
+
+    template <typename T>
+    void operator<=(const interval<T>&, const interval<T>&);
+
+    template <typename T>
+    void operator>(const interval<T>&, const interval<T>&);
+
+    template <typename T>
+    void operator>=(const interval<T>&, const interval<T>&);
+
+    //  set ops
+
+    /*! \p r1 and \p r2 intersection is empty and the number of
+      elements in the span is equal to the sum of the number of
+      elements in \p r1 and \p r2.
+
+      \verbatim
+          span(r1,r2)
+      <-------------------->
+          r1         r2
+      [x--x--x] [x--x--x--x]
+      <------->-<---------->
+          ^    ^     ^
+	  |    |     |
+	  |  iota    |
+	  |          |
+      length(r1)  length(r2)
+      \endverbatim
+
+    */
+    template <typename T>
+    bool
+    are_adjacent(const interval<T>& r1, const interval<T>& r2);
+
+    /* \brief Return true if \p r1 and \p r2 intersect.
+     */
+    template <typename T>
+    bool
+    do_intersect(const interval<T>& r1, const interval<T>& r2);
+
+    /* \brief Perform the intersection of \p r1 and \p r2.
+     */
+    template <typename T>
+    interval<T>
+    inter(const interval<T>& r1, const interval<T>& r2);
+
+    //  min / max
+
+    /*! \brief Re-implementation of the min function.
+      \sa math::min
+    */
+    template <typename T>
+    interval<T>
+    min_(const interval<T>& r1, const interval<T>& r2);
+
+    /*! \brief Re-implementation of the max function.
+      \sa math::max
+    */
+    template <typename T>
+    interval<T>
+    max_(const interval<T>& r1, const interval<T>& r2);
+
+    /// \brief Compute the span of \p r1 and \p r2.
+    template <typename T>
+    interval<T>
+    span(const interval<T>& r1, const interval<T>& r2);
+
+    //  op<<
+
+    template <typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const interval<T>& i);
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+// for sorting purpose
+
+namespace std
+{
+
+  template <typename T>
+  struct less< mln::value::interval<T> >
+  {
+    bool operator()(const mln::value::interval<T>& l,
+		    const mln::value::interval<T>& r) const;
+  };
+
+} // std
+
+
+
+# ifndef MLN_INCLUDE_ONLY
 
 
 namespace mln
@@ -42,61 +200,196 @@ namespace mln
   namespace value
   {
 
-    /// FIXME: Doc!
 
     template <typename T>
-    struct interval_ : public Object< interval_<T> >
+    interval<T>::interval()
     {
-      interval_(const T& from, const T& to);
-      T from, to;
-
-      template <typename U>
-      operator interval_<U>() const;
-    };
-    
-
-    template <typename T>
-    interval_<T>
-    interval(const T& from, const T& to);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename T>
-    inline
-    interval_<T>::interval_(const T& from, const T& to)
-      : from(from),
-	to(to)
-    {
-      mln_precondition(from <= to);
     }
 
     template <typename T>
-    template <typename U>
-    inline
-    interval_<T>::operator interval_<U>() const
+    interval<T>::interval(T first, T last)
     {
-      mln_invariant(from <= to);
-      interval_<U> tmp(from, to);
-      mln_postcondition(tmp.from <= tmp.to);
-      return tmp;
+      mln_precondition(last >= first);
+      first_ = first;
+      last_ = last;
+
+      nelements_ = 0;
+      for (T v = first_; v <= last_; value::inc(v))
+	++nelements_;
     }
 
     template <typename T>
-    inline
-    interval_<T>
-    interval(const T& from, const T& to)
+    interval<T>&
+    interval<T>::operator=(const interval& rhs)
     {
-      mln_precondition(from <= to);
-      interval_<T> tmp(from, to);
-      return tmp;
+      first_ = rhs.first_;
+      last_ = rhs.last_;
+      return *this;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+    template <typename T>
+    bool
+    interval<T>::has(const T& v) const
+    {
+      return first_ <= v && v <= last_;
+    }
+
+    template <typename T>
+    T
+    interval<T>::length() const
+    {
+      return last_ - first_;
+    }
+
+    template <typename T>
+    T
+    interval<T>::ith_element(unsigned i) const
+    {
+      return first_ + i * iota<T>::value();
+    }
+
+    template <typename T>
+    unsigned
+    interval<T>::index_of(const T& v) const
+    {
+      return (v - first_) / iota<T>::value();
+    }
+
+    template <typename T>
+    unsigned
+    interval<T>::nelements() const
+    {
+      return nelements_;
+    }
+
+    template <typename T>
+    bool
+    interval<T>::is_degenerated() const
+    {
+      return last_ == first_;
+    }
+
+    template <typename T>
+    const T&
+    interval<T>::first() const
+    {
+      return first_;
+    }
+
+    template <typename T>
+    const T&
+    interval<T>::last() const
+    {
+      return last_;
+    }
+
+
+    //  comparison
+
+    template <typename T>
+    bool
+    operator==(const interval<T>& lhs, const interval<T>& rhs)
+    {
+      return lhs.first() == rhs.first() && lhs.last() == rhs.last();
+    }
+
+    template <typename T>
+    bool
+    operator!=(const interval<T>& lhs, const interval<T>& rhs)
+    {
+      return ! (lhs == rhs);
+    }
+
+
+    //  set ops
+
+    template <typename T>
+    bool
+    are_adjacent(const interval<T>& r1, const interval<T>& r2)
+    {
+      return span(r1, r2).length() == r1.length() + r2.length()
+	+ value::iota<T>::value();
+    }
+
+    template <typename T>
+    bool
+    do_intersect(const interval<T>& r1, const interval<T>& r2)
+    {
+      return span(r1, r2).length() <= r1.length() + r2.length();
+    }
+
+    template <typename T>
+    interval<T>
+    inter(const interval<T>& r1, const interval<T>& r2)
+    {
+      mln_precondition(do_intersect(r1, r2));
+      return interval<T>(std::max(r1.first(), r2.first()),
+			 std::min(r1.last(), r2.last()));
+    }
+
+
+    template <typename T>
+    interval<T>
+    min_(const interval<T>& r1, const interval<T>& r2)
+    {
+      return interval<T>(std::min(r1.first(), r2.first()),
+			 std::min(r1.last(), r2.last()));
+    }
+
+    template <typename T>
+    interval<T>
+    max_(const interval<T>& r1, const interval<T>& r2)
+    {
+      return interval<T>(std::max(r1.first(), r2.first()),
+			 std::max(r1.last(), r2.last()));
+    }
+
+
+    //  span
+
+    template <typename T>
+    interval<T>
+    span(const interval<T>& r1, const interval<T>& r2)
+    {
+      return interval<T>(std::min(r1.first(), r2.first()),
+			 std::max(r1.last(), r2.last()));
+    }
+
+
+
+    //  op<<
+
+    template <typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const interval<T>& i)
+    {
+      if (i.is_degenerated())
+	return ostr << '{' << i.first() << '}';
+      else
+	return ostr << '[' << i.first() << ',' << i.last() << ']';
+    }
+
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INTERVAL_HH
+namespace std
+{
+
+  template <typename T>
+  bool less< mln::value::interval<T> >::operator()(
+    const mln::value::interval<T>& l,
+    const mln::value::interval<T>& r) const
+  {
+    mln_precondition(l.is_degenerated() && r.is_degenerated());
+    return l.first() < r.first();
+  }
+
+} // std
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+#endif // ndef MLN_VALUE_INTERVAL_HH

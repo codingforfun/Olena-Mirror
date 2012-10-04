@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -31,7 +31,7 @@ check_PROGRAMS =				\
   interop					\
   label						\
   proxy						\
-  range						\
+  interval					\
   rgb8						\
   scalar					\
   set						\
@@ -56,7 +56,7 @@ int_u8_SOURCES = int_u8.cc
 interop_SOURCES = interop.cc
 label_SOURCES = label.cc
 proxy_SOURCES = proxy.cc
-range_SOURCES = range.cc
+interval_SOURCES = interval.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc

@@ -29,16 +29,19 @@
 #include <vector>
 #include <algorithm>
 
-#include <mln/value/unsignedh.hh>
-#include <mln/value/range.hh>
+#include <mln/value/intsub.hh>
+#include <mln/value/interval.hh>
+#include <mln/value/inc.hh>
 
-static const char *ref[] = { "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5" };
+# include <mln/math/min.hh>
+# include <mln/math/max.hh>
 
 int main()
 {
   using namespace mln::value;
+  using namespace mln;
 
-  typedef range<unsignedh> R;
+  typedef interval<intsub<2> > R;
 
   {
     R r(0, 0);
@@ -63,9 +66,39 @@ int main()
     assert(r.length() == 4);
     assert(r.nelements() == 9);
 
-    int ref_i = 0;
-    for (unsignedh v = r.first(); v != r.last(); v.goto_succ())
-      mln_assertion(static_cast<std::string>(v) == ref[ref_i++]);
+    int ref_i = 2;
+    for (intsub<2> v = r.first(); v <= r.last(); inc(v))
+      mln_assertion(v.to_enc() == ref_i++);
+  }
+
+  {
+    // are_adjacent / span / do_intersect
+    R r1(3, 4);
+    R r2(4.5, 6);
+    mln_assertion(r1 != r2);
+    mln_assertion(are_adjacent(r1, r2));
+    mln_assertion(span(r1, r2) == R(3,6));
+    mln_assertion(!do_intersect(r1, r2));
+
+    // Interset / Inter
+    R r3(1, 3.5);
+    mln_assertion(do_intersect(r1, r3));
+    mln_assertion(inter(r1, r3) == R(3, 3.5));
+
+    // Min / Max
+    mln_assertion(math::min(r1, r3) == R(1, 3.5));
+    mln_assertion(math::max(r1, r3) == R(3, 4));
+  }
+
+  // Access from/to indexes.
+  {
+    R r1(7.5, 11.5);
+    mln_assertion(r1.index_of(7.5) == 0);
+    mln_assertion(r1.index_of(9.5) == 4);
+    mln_assertion(r1.index_of(11.5) == 8);
+    mln_assertion(r1.ith_element(0) == 7.5);
+    mln_assertion(r1.ith_element(4) == 9.5);
+    mln_assertion(r1.ith_element(8) == 11.5);
   }
 
 }
