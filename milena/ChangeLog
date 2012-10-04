@@ -1,5 +1,9 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/value/concept/interval.hh: New. Add value::Interval concept.
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an accumulator median based on intervals.
 
 	* mln/accu/stat/median_interval.hh,
