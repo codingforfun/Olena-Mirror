@@ -1,5 +1,13 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve value::intsub class.
+
+	* mln/value/intsub.hh: Improve class.
+
+	* tests/value/intsub.cc: Add more tests.
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/value/builtin/ops.hh: Handle all the comparison operators.
 
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>

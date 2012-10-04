@@ -26,12 +26,16 @@
 /// \file
 
 #include <cassert>
+#include <mln/math/mean.hh>
 #include <mln/value/intsub.hh>
 #include <mln/value/inc.hh>
 #include <mln/value/dec.hh>
 #include <mln/value/succ.hh>
 #include <mln/value/prev.hh>
 #include <mln/math/mean.hh>
+#include <mln/math/min.hh>
+#include <mln/math/ceil.hh>
+#include <mln/math/floor.hh>
 
 int main()
 {
@@ -47,6 +51,10 @@ int main()
 
   // (2.5 + 0.5) / 2 == 1.5
   mln_assertion(mean(i, half) == 1 + half);
+
+  // (2.5 + 2) / 2 = 2.25
+  intsub<4> res = mean(i, intsub<2>(2));
+  mln_assertion(res == 2.25);
 
   // i == 3
   inc(i);
@@ -75,4 +83,27 @@ int main()
   inc(j);
   mln_assertion(j == 6 + quarter);
 
+  // k = 10.25
+  intsub<8> k(10.25);
+  mln_assertion(k == 10 + quarter);
+
+  // sum(j,k,2) == 18.5
+  mln_assertion(j + k + 2 == 18.5);
+
+  // min(i,l) == 2.5
+  intsub<2> l(2.5);
+  mln_assertion(mln::math::min(i, l) == 2.5);
+
+  // mean(6,2,2.5,3) = 3.375
+  mln_assertion(mean(i, intsub<2>(2), l, intsub<2>(3)) == 3.375);
+
+  // ceil(2.5)
+  mln_assertion(math::ceil(l) == 3);
+  mln_assertion(math::floor(l) == 2);
+
+  // median(6,2,2.5,3) = 2.75
+  mln_assertion(median(i, intsub<2>(2), l, intsub<2>(3)) == 2.75);
+
+  // median(6,2) = 4
+  mln_assertion(median(i, intsub<2>(2)) == 4);
 }

@@ -33,10 +33,12 @@
 # include <cstdlib>
 # include <iostream>
 # include <sstream>
+# include <algorithm>
+# include <mln/core/routine/ops.hh>
+# include <mln/value/ops.hh>
+# include <mln/value/builtin/ops.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/internal/encoding.hh>
-# include <mln/value/internal/limits.hh>
-# include <mln/value/concept/integer.hh>
+# include <mln/value/concept/floating.hh>
 # include <mln/value/iota.hh>
 # include <mln/value/prev.hh>
 # include <mln/value/succ.hh>
@@ -65,13 +67,13 @@ namespace mln
     {
     private:
       typedef mln::value::intsub<n> self_;
-      typedef typename mln::value::internal::encoding_signed_<32>::ret enc_;
+      typedef int enc_;
     public:
 
       enum constants_ {
 	dim = 1,
 	nbits = 32,
-	card  = mln_value_card_from_(32/n) // FIXME: Really?
+	card  = mln_value_card_from_(32) / n
       };
 
       typedef trait::value::nature::integer nature;
@@ -103,12 +105,12 @@ namespace mln
   {
 
     template <unsigned n>
-    class intsub
-      : public Integer< intsub<n> >,
-	public internal::value_like_< int,    // Equivalent.
-				      typename internal::encoding_signed_<32>::ret, // Enc.
-				      int,         // Interoperation.
-				      intsub<n> >   // Exact.
+    class intsub :
+      public value::Floating< intsub<n> >,
+      public value::internal::value_like_< float,    // Equivalent.
+					   int, // Enc.
+					   float,         // Interoperation.
+					   intsub<n> >   // Exact.
     {
     public:
       intsub();
@@ -116,9 +118,13 @@ namespace mln
       /// Construct an intsub with value : \p int_part + 1 / \p denominator.
       intsub(int int_part, unsigned denominator);
       intsub(int i);
+      intsub(float i);
+      intsub(double i);
 
       intsub<n>& operator=(const intsub<n>& rhs);
       intsub<n>& operator=(int i);
+      intsub<n>& operator=(float i);
+      intsub<n>& operator=(double i);
 
       /// Is an integer value.
       bool is_integer() const;
@@ -143,92 +149,61 @@ namespace mln
       /*!\internal Construct a intsub using an encoding value. */
       static intsub<n> make_from_enc_(int enc);
 
+      /// Conversion to a float.
+      operator float() const;
+
       /// Unary operator minus.
       intsub<n> operator-() const;
 
+      /// Explicit conversion towards equivalent type.
+      float to_equiv() const;
+
+      /// Explicit conversion towards interoperation type.
+      float to_interop() const;
     };
 
 
     // Safety
     template <> struct intsub<0>;
 
-//  rounding
+    //  rounding
 
+    /// Re-implementation of the floor function. \sa math::floor
     template <unsigned n>
-    intsub<n> floor(const intsub<n>& i);
+    intsub<n> floor_(const intsub<n>& i);
+    /// Re-implementation of the ceil function. \sa math::ceil
     template <unsigned n>
-    intsub<n> ceil(const intsub<n>& i);
+    intsub<n> ceil_(const intsub<n>& i);
+
+    // Other ops (overloads of generic ones)
+
+    /// Re-implementation of the min function. \sa math::min
+    template <unsigned n>
+    intsub<n> min_(const intsub<n>& u1, const intsub<n>& u2);
+    /// Re-implementation of the max function. \sa math::max
+    template <unsigned n>
+    intsub<n> max_(const intsub<n>& u1, const intsub<n>& u2);
+
+    /// Specific implementation of the mean function.
+    template <unsigned n>
+    intsub<2*n> mean(const intsub<n>& v1, const intsub<n>& v2);
+
+    /// Specific implementation of the mean function.
+    template <unsigned n>
+    intsub<4*n> mean(const intsub<n>& v1, const intsub<n>& v2,
+		     const intsub<n>& v3, const intsub<n>& v4);
+
+    /// Specific implementation of the median function.
+    template <unsigned n>
+    intsub<2*n> median(const intsub<n>& v1, const intsub<n>& v2);
+
+    /// Specific implementation of the median function.
+    template <unsigned n>
+    intsub<4*n> median(const intsub<n>& v1, const intsub<n>& v2,
+		       const intsub<n>& v3, const intsub<n>& v4);
 
 
-//  comparison
-
-    template <unsigned n>
-    bool operator==(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename V>
-    bool operator==(const intsub<n>& l, const V& r);
-    template <unsigned n>
-    bool operator<=(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n>
-    bool operator!=(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n>
-    bool operator>=(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n>
-    bool operator>(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n>
-    bool operator<(const intsub<n>& l, const intsub<n>& r);
-
-// arithmetics
-
-    template <unsigned n>
-    intsub<n> operator+(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    intsub<n> operator+(const intsub<n>& l, const O& r);
-    template <typename O, unsigned n>
-    intsub<n> operator+(const O& r, const intsub<n>& l);
-    template <unsigned n>
-    void operator+=(intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    void operator+=(intsub<n>& l, const O& r);
-
-    template <unsigned n>
-    intsub<n> operator-(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    intsub<n> operator-(const intsub<n>& l, const O& r);
-    template <typename O, unsigned n>
-    intsub<n> operator-(const O& r, const intsub<n>& l);
-    template <unsigned n>
-    void operator-=(intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    void operator-=(intsub<n>& l, const O& r);
-
-    template <unsigned n>
-    intsub<n> operator*(const intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    intsub<n> operator*(const intsub<n>& l, const O& r);
-    template <typename O, unsigned n>
-    intsub<n> operator*(const O& r, const intsub<n>& l);
-    template <unsigned n>
-    void operator*=(intsub<n>& l, const intsub<n>& r);
-    template <unsigned n, typename O>
-    void operator*=(intsub<n>& l, const O& r);
-
-//  other ops
-
-    template <unsigned n>
-    intsub<n> min(const intsub<n>& u1, const intsub<n>& u2);
-    template <unsigned n>
-    intsub<n> max(const intsub<n>& u1, const intsub<n>& u2);
-    template <unsigned n>
-    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2);
-    template <unsigned n>
-    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2,
-		   const intsub<n>& v3, const intsub<n>& v4);
-
-//  <<
-
-    template <unsigned n>
-    std::ostream&
-    operator<<(std::ostream& ostr, const intsub<n>& i);
+    // Iota
 
     template <unsigned n>
     struct iota<intsub<n> >
@@ -236,13 +211,17 @@ namespace mln
       static intsub<n> value();
     };
 
+    typedef intsub<1> intsub1;
+    typedef intsub<2> intsub2;
+    typedef intsub<4> intsub4;
+
+
   } // end of namespace mln::value
 
   extern const value::intsub<2> half;
   extern const value::intsub<4> quarter;
 
 # ifndef MLN_INCLUDE_ONLY
-
 
   //  half
 
@@ -257,6 +236,27 @@ namespace mln
 
   namespace value
   {
+
+    namespace internal
+    {
+
+      /// \internal Test if (f * v) is an integer; an error less than
+      /// epsilon is ok
+      bool
+      mult_is_integer(float f, int v)
+      {
+	float a = f * v;
+	float b = float(unsigned(a));
+	const float epsilon = 0.00001f;
+
+	if (a > b)
+	  return a - b < epsilon;
+	else
+	  return b - a < epsilon;
+      }
+
+    } // end of namespace mln::value::internal
+
 
     template <unsigned n>
     intsub<n>::intsub()
@@ -276,12 +276,24 @@ namespace mln
     }
 
     template <unsigned n>
+    intsub<n>::intsub(float i)
+    {
+      mln_precondition(internal::mult_is_integer(i, n));
+      this->v_ = n * i;
+    }
+
+    template <unsigned n>
+    intsub<n>::intsub(double i)
+    {
+      mln_precondition(internal::mult_is_integer(i, n));
+      this->v_ = n * i;
+    }
+
+
+    template <unsigned n>
     intsub<n>::intsub(int int_part, unsigned denominator)
     {
-      // FIXME: better error handling ?
-      if (denominator > n)
-	std::abort();
-
+      mln_precondition(denominator <= n);
       this->v_ = int_part * n + denominator / n;
     }
 
@@ -303,6 +315,25 @@ namespace mln
     }
 
     template <unsigned n>
+    intsub<n>&
+    intsub<n>::operator=(float i)
+    {
+      mln_precondition(internal::mult_is_integer(i, n));
+      this->v_ = n * i;
+      return *this;
+    }
+
+    template <unsigned n>
+    intsub<n>&
+    intsub<n>::operator=(double i)
+    {
+      mln_precondition(internal::mult_is_integer(i, n));
+      this->v_ = n * i;
+      return *this;
+    }
+
+
+    template <unsigned n>
     intsub<n> intsub<n>::make_from_enc_(int enc)
     {
       intsub<n> i;
@@ -321,10 +352,8 @@ namespace mln
     template <unsigned m>
     intsub<n>::operator intsub<m>()
     {
-      // FIXME: better error handling ?
-      if (n > m)
-	std::abort();
-      return intsub<m>::make_from_enc_(this->v_ * (m / n));
+      mln_precondition(n <= m);
+      return intsub<m>::make_from_enc_(this->v_ * m / n);
     }
 
     template <unsigned n>
@@ -349,13 +378,34 @@ namespace mln
     }
 
     template <unsigned n>
+    intsub<n>::operator float() const
+    {
+      return to_equiv();
+    }
+
+    template <unsigned n>
     intsub<n>
     intsub<n>::operator-() const
     {
       return intsub<n>::make_from_enc_(this->v_ * -1);
     }
 
+    template <unsigned n>
+    float
+    intsub<n>::to_equiv() const
+    {
+      return float(this->v_) / float(n);
+    }
+
+    template <unsigned n>
+    float
+    intsub<n>::to_interop() const
+    {
+      return float(this->v_) / float(n);
+    }
+
     // Iota
+
     template <unsigned n>
     intsub<n>
     iota<intsub<n> >::value()
@@ -364,200 +414,81 @@ namespace mln
     }
 
 
-//  rounding
-
+    //  rounding
 
     template <unsigned n>
-    intsub<n> floor(const intsub<n>& i)
+    intsub<n> floor_(const intsub<n>& i)
     {
       return i.is_integer() ? i : value::prev(i);
     }
 
     template <unsigned n>
-    intsub<n> ceil(const intsub<n>& i)
+    intsub<n> ceil_(const intsub<n>& i)
     {
       return i.is_integer() ? i : value::succ(i);
     }
 
 
-
-//  comparison
-
-    template <unsigned n>
-    bool operator==(const intsub<n>& l, const intsub<n>& r)
-    {
-      return l.to_enc() == r.to_enc();
-    }
+    // Other operators (overloads of generic ones)
 
     template <unsigned n>
-    bool operator==(const intsub<n>& l, const int& r)
-    {
-      return l == intsub<n>(r);
-    }
-
-    template <unsigned n>
-    bool operator<=(const intsub<n>& l, const intsub<n>& r)
-    {
-      return l.to_enc() <= r.to_enc();
-    }
-
-    template <unsigned n>
-    bool operator!=(const intsub<n>& l, const intsub<n>& r)
-    {
-      return ! (l == r);
-    }
-
-    template <unsigned n>
-    bool operator>=(const intsub<n>& l, const intsub<n>& r)
-    {
-      return r <= l;
-    }
-
-    template <unsigned n>
-    bool operator>(const intsub<n>& l, const intsub<n>& r)
-    {
-      return ! (l <= r);
-    }
-
-    template <unsigned n>
-    bool operator<(const intsub<n>& l, const intsub<n>& r)
-    {
-      return r > l;
-    }
-
-
-// arithmetics
-
-    template <unsigned n>
-    intsub<n> operator+(const intsub<n>& l, const intsub<n>& r)
-    {
-      return intsub<n>::make_from_enc_(l.to_enc() + r.to_enc());
-    }
-
-    template <unsigned n>
-    intsub<n> operator+(const intsub<n>& l, int r)
-    {
-      return l + intsub<n>(r);
-    }
-
-    template <unsigned n>
-    intsub<n> operator+(int l, const intsub<n>& r)
-    {
-      return r + l;
-    }
-
-    template <unsigned n>
-    void operator+=(intsub<n>& l, const intsub<n>& r)
-    {
-      l = l + r;
-    }
-
-    template <unsigned n>
-    void operator+=(intsub<n>& l, int r)
-    {
-      l = l + intsub<n>(r);
-    }
-
-    template <unsigned n>
-    intsub<n> operator-(const intsub<n>& l, const intsub<n>& r)
-    {
-      return intsub<n>::make_from_enc_(l.to_enc() - r.to_enc());
-    }
-
-    template <unsigned n>
-    intsub<n> operator-(const intsub<n>& l, int r)
-    {
-      return l - intsub<n>(r);
-    }
-
-    template <unsigned n>
-    intsub<n> operator-(int l, const intsub<n>& r)
-    {
-      return - r + l;
-    }
-
-    template <unsigned n>
-    void operator-=(intsub<n>& l, const intsub<n>& r)
-    {
-      l = l - r;
-    }
-
-    template <unsigned n>
-    void operator-=(intsub<n>& l, int r)
-    {
-      l = l - intsub<n>(r);
-    }
-
-    template <unsigned n>
-    intsub<n> operator*(const intsub<n>& l, const intsub<n>& r)
-    {
-      return intsub<n>::make_from_enc_(l.to_enc() * r.to_enc() / n);
-    }
-
-    template <unsigned n>
-    intsub<n> operator*(const intsub<n>& l, int r)
-    {
-      return l * intsub<n>(r);
-    }
-
-    template <unsigned n>
-    intsub<n> operator*(int l, const intsub<n>& r)
-    {
-      return r * l;
-    }
-
-    template <unsigned n>
-    void operator*=(intsub<n>& l, const intsub<n>& r)
-    {
-      l = l * r;
-    }
-
-    template <unsigned n>
-    void operator*=(intsub<n>& l, int r)
-    {
-      l = l * intsub<n>(r);
-    }
-
-
-//  other ops
-
-    template <unsigned n>
-    intsub<n> min(const intsub<n>& v1, const intsub<n>& v2)
+    intsub<n> min_(const intsub<n>& v1, const intsub<n>& v2)
     {
       return intsub<n>::make_from_enc_(v1.to_enc() < v2.to_enc() ? v1.to_enc() : v2.to_enc());
     }
 
     template <unsigned n>
-    intsub<n> max(const intsub<n>& v1, const intsub<n>& v2)
+    intsub<n> max_(const intsub<n>& v1, const intsub<n>& v2)
     {
       return intsub<n>::make_from_enc_(v1.to_enc() > v2.to_enc() ? v1.to_enc() : v2.to_enc());
     }
 
+    // FIXME: Make use of mean_() overloads with math::mean. Require
+    // to fix an issue with the return type which differs according to
+    // the overload : with 2 (intsub<2*n>) or 4 (intsub<4*n>)
+    // arguments.
     template <unsigned n>
-    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2)
+    intsub<2*n> mean(const intsub<n>& v1, const intsub<n>& v2)
     {
-      return intsub<n>::make_from_enc_((v1.to_enc() + v2.to_enc()) / 2);
+      return intsub<2*n>::make_from_enc_((v1.to_enc() + v2.to_enc()));
     }
 
+    // FIXME: Make use of mean_() overloads with math::mean. Require
+    // to fix an issue with the return type which differs according to
+    // the overload : with 2 (intsub<2*n>) or 4 (intsub<4*n>)
+    // arguments.
     template <unsigned n>
-    intsub<n> mean(const intsub<n>& v1, const intsub<n>& v2,
-		   const intsub<n>& v3, const intsub<n>& v4)
+    intsub<4*n> mean(const intsub<n>& v1, const intsub<n>& v2,
+		     const intsub<n>& v3, const intsub<n>& v4)
     {
-      return intsub<n>::make_from_enc_((v1.to_enc() + v2.to_enc()
-					+ v3.to_enc() + v4.to_enc()) / 4);
+      return mean_(mean_(v1, v2), mean_(v3, v4));
     }
 
-
-//  <<
-
+    // FIXME: Make use of median_() overloads with
+    // math::median. Require to fix an issue with the return type
+    // which differs according to the overload : with 2 (intsub<2*n>)
+    // or 4 (intsub<4*n>) arguments.
     template <unsigned n>
-    std::ostream&
-    operator<<(std::ostream& ostr, const intsub<n>& i)
+    intsub<2*n> median(const intsub<n>& v1, const intsub<n>& v2)
     {
-      if (i.is_integer())
-	return ostr << i.to_int();
-      else
-	return ostr << floor(i).to_int() << ".5";
+      return mean(v1, v2);
+    }
+
+    // FIXME: Make use of median_() overloads with
+    // math::median. Require to fix an issue with the return type
+    // which differs according to the overload : with 2 (intsub<2*n>)
+    // or 4 (intsub<4*n>) arguments.
+    template <unsigned n>
+    intsub<4*n> median(const intsub<n>& v1, const intsub<n>& v2,
+		       const intsub<n>& v3, const intsub<n>& v4)
+    {
+      std::vector<intsub<n> > vec(4);
+      vec.push_back(v1);
+      vec.push_back(v2);
+      vec.push_back(v3);
+      vec.push_back(v4);
+      std::sort(vec.begin(), vec.end());
+      return mean(vec[1], vec[2]);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
