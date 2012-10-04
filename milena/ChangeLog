@@ -1,3 +1,15 @@
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add mathematical tools.
+
+	* mln/fun/vv2v/mean.hh,
+	* mln/fun/vvvv2v/mean.hh,
+	* mln/math/ceil.hh,
+	* mln/math/floor.hh,
+	* mln/math/max.hh,
+	* mln/math/mean.hh,
+	* mln/math/min.hh: New.
+
 2012-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/world/k1/Makefile.am: Fix target names.

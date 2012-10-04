@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009. 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,51 +23,54 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MATH_MAX_HH
-# define MLN_MATH_MAX_HH
+#ifndef MLN_FUN_VVVV2V_MEAN_HH
+# define MLN_FUN_VVVV2V_MEAN_HH
 
-/*! \file
- *
- * \brief Define max routine.
- */
+/// \file
+///
+/// Functor that computes the mean of two values.
+
+# include <mln/core/concept/function.hh>
+# include <mln/math/mean.hh>
 
 
 namespace mln
 {
 
-  namespace math
+  namespace fun
   {
 
-    /// Return the maximum of two values.
-    template <typename T>
-    T max(const T& v1, const T& v2);
+    namespace vvvv2v
+    {
 
+      // FIXME: Doc.
 
-  } // end of namespace mln::math
+      /// \brief A functor computing the mean of two values.
+      template <typename T, typename R=T>
+      struct mean : public Function_vvvv2v< mean<T> >
+      {
+	typedef R result;
+	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
+      };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /// \internal Generic implementation of the maximum function.
-  template <typename T>
-  T max_(const T& v1, const T& v2)
-  {
-    return v1 > v2 ? v1 : v2;
-  }
-
-  namespace math
-  {
-
-    template <typename T>
-    T max(const T& v1, const T& v2)
-    {
-      return max_(exact(v1), exact(v2));
-    }
-
-  } // end of namespace mln::math
+      template <typename T>
+      inline
+      R
+      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
+      {
+	return R(mln::math::mean(v1, v2, v3, v4));
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::vvvv2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MATH_MAX_HH
+#endif // ! MLN_FUN_VVVV2V_MEAN_HH

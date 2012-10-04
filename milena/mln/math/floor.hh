@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009. 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,14 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MATH_MAX_HH
-# define MLN_MATH_MAX_HH
+#ifndef MLN_MATH_FLOOR_HH
+# define MLN_MATH_FLOOR_HH
 
 /*! \file
  *
- * \brief Define max routine.
+ * \brief Define floor routine.
  */
 
+# include <cmath>
 
 namespace mln
 {
@@ -39,29 +39,29 @@ namespace mln
   namespace math
   {
 
-    /// Return the maximum of two values.
+    /// \brief Return the nearest integer not greater than \p v1.
     template <typename T>
-    T max(const T& v1, const T& v2);
+    T floor(const T& v1);
 
 
   } // end of namespace mln::math
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /// \internal Generic implementation of the maximum function.
+  /// \internal Generic implementation of the floor function.
   template <typename T>
-  T max_(const T& v1, const T& v2)
+  T floor_(const T& v1)
   {
-    return v1 > v2 ? v1 : v2;
+    return std::floor(v1);
   }
 
   namespace math
   {
 
     template <typename T>
-    T max(const T& v1, const T& v2)
+    T floor(const T& v1)
     {
-      return max_(exact(v1), exact(v2));
+      return floor_(exact(v1));
     }
 
   } // end of namespace mln::math
@@ -71,4 +71,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MATH_MAX_HH
+#endif // ! MLN_MATH_FLOOR_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,22 +39,34 @@ namespace mln
   namespace math
   {
 
+    /// Return the minimum of two values.
     template <typename T>
     T min(const T& v1, const T& v2);
 
 
+  } // end of namespace mln::math
+
 # ifndef MLN_INCLUDE_ONLY
 
+  /// \internal Generic implementation of the minimum function.
+  template <typename T>
+  T min_(const T& v1, const T& v2)
+  {
+    return v1 < v2 ? v1 : v2;
+  }
+
+  namespace math
+  {
+
     template <typename T>
-    inline
     T min(const T& v1, const T& v2)
     {
-      return v1 < v2 ? v1 : v2;
+      return min_(exact(v1), exact(v2));
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::math
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
