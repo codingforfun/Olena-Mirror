@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -26,6 +26,7 @@ check_PROGRAMS =				\
   max						\
   max_h						\
   median_h					\
+  median_interval				\
   mean						\
   rank
 
@@ -33,6 +34,7 @@ deviation_SOURCES = deviation.cc
 var_SOURCES = var.cc
 mean_SOURCES = mean.cc
 median_h_SOURCES = median_h.cc
+median_interval_SOURCES = median_interval.cc
 min_SOURCES = min.cc
 min_h_SOURCES = min_h.cc
 max_SOURCES = max.cc

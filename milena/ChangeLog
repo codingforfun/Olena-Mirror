@@ -1,5 +1,14 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an accumulator median based on intervals.
+
+	* mln/accu/stat/median_interval.hh,
+	* tests/accu/stat/median_interval.cc: New.
+
+	* tests/accu/stat/Makefile.am: New target.
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename interval::nelements() to interval::nvalues().
 
 	* mln/value/interval.hh,
