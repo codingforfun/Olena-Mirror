@@ -1,5 +1,9 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/value/builtin/ops.hh: Handle all the comparison operators.
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add mathematical tools.
 
 	* mln/fun/vv2v/mean.hh,

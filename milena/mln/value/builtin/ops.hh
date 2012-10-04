@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,7 @@
 // into a value::scalar_ (which is a value::Scalar); as a consequence,
 // the definition of an object should only handle the single case
 // "Object (op) Scalar".
-// 
+//
 // For instance:
 //   an expression such as " int * Image<I> "
 //   is transformed into   "  I  * scalar_<int> "
@@ -297,7 +298,7 @@
   }								\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
- 
+
 # define mln_internal_builtins_opeq_obj_(De, Symb)		\
 								\
   mln_internal_##De##_bi_opeq_obj_(Symb,   signed char);	\
@@ -603,7 +604,9 @@ namespace mln
 
   // Ops "bi < obj" and "obj < bi"
   mln_internal_builtins_op_less_(decl, <, less);
-
+  mln_internal_builtins_op_less_(decl, <=, leq);
+  mln_internal_builtins_op_less_(decl, >, greater);
+  mln_internal_builtins_op_less_(decl, >=, geq);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -642,6 +645,9 @@ namespace mln
 
   // Ops "bi < obj" and "obj < bi"
   mln_internal_builtins_op_less_(def, <, less);
+  mln_internal_builtins_op_less_(def, <=, leq);
+  mln_internal_builtins_op_less_(def, >, greater);
+  mln_internal_builtins_op_less_(def, >=, geq);
 
 
 # endif // ! MLN_INCLUDE_ONLY
