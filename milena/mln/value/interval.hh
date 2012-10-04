@@ -67,7 +67,7 @@ namespace mln
       unsigned index_of(const T& v) const;
 
       /// Return the number of values in this interval.
-      unsigned nelements() const;
+      unsigned nvalues() const;
 
       /// Return True if this interval contains only one value.
       bool is_degenerated() const;
@@ -80,7 +80,7 @@ namespace mln
     private:
       T first_;
       T last_;
-      unsigned nelements_;
+      unsigned nvalues_;
     };
 
     //  comparison
@@ -213,9 +213,9 @@ namespace mln
       first_ = first;
       last_ = last;
 
-      nelements_ = 0;
+      nvalues_ = 0;
       for (T v = first_; v <= last_; value::inc(v))
-	++nelements_;
+	++nvalues_;
     }
 
     template <typename T>
@@ -245,6 +245,7 @@ namespace mln
     T
     interval<T>::ith_element(unsigned i) const
     {
+      mln_precondition(i < nvalues());
       return first_ + i * iota<T>::value();
     }
 
@@ -252,14 +253,15 @@ namespace mln
     unsigned
     interval<T>::index_of(const T& v) const
     {
+      mln_precondition(has(v));
       return (v - first_) / iota<T>::value();
     }
 
     template <typename T>
     unsigned
-    interval<T>::nelements() const
+    interval<T>::nvalues() const
     {
-      return nelements_;
+      return nvalues_;
     }
 
     template <typename T>

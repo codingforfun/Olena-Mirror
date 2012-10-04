@@ -1,5 +1,12 @@
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename interval::nelements() to interval::nvalues().
+
+	* mln/value/interval.hh,
+	* tests/value/interval.cc: Rename nelements() to nvalues().
+
+2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Replace range class with interval and improve it.
 
 	* mln/value/range.hh,
