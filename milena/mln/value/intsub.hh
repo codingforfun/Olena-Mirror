@@ -115,12 +115,17 @@ namespace mln
     public:
       intsub();
       intsub(const intsub<n>& rhs);
+      template <unsigned m>
+      intsub(const intsub<m>& rhs);
       /// Construct an intsub with value : \p int_part + 1 / \p denominator.
       intsub(int int_part, unsigned denominator);
+      intsub(const literal::zero_t&);
       intsub(int i);
       intsub(float i);
       intsub(double i);
 
+      template <unsigned m>
+      intsub<n>& operator=(const intsub<m>& rhs);
       intsub<n>& operator=(const intsub<n>& rhs);
       intsub<n>& operator=(int i);
       intsub<n>& operator=(float i);
@@ -246,7 +251,7 @@ namespace mln
       mult_is_integer(float f, int v)
       {
 	float a = f * v;
-	float b = float(unsigned(a));
+	float b = float(int(a));
 	const float epsilon = 0.00001f;
 
 	if (a > b)
@@ -267,6 +272,21 @@ namespace mln
     intsub<n>::intsub(const intsub<n>& rhs)
     {
       this->v_ = rhs.v_;
+    }
+
+    template <unsigned n>
+    template <unsigned m>
+    intsub<n>::intsub(const intsub<m>& rhs)
+    {
+      mln_precondition(m < n);
+      this->v_ = rhs.to_enc() * (n / m);
+    }
+
+
+    template <unsigned n>
+    intsub<n>::intsub(const literal::zero_t&)
+    {
+      this->v_ = 0;
     }
 
     template <unsigned n>
@@ -303,6 +323,16 @@ namespace mln
     intsub<n>::operator=(const intsub<n>& rhs)
     {
       this->v_ = rhs.v_;
+      return *this;
+    }
+
+    template <unsigned n>
+    template <unsigned m>
+    intsub<n>&
+    intsub<n>::operator=(const intsub<m>& rhs)
+    {
+      mln_precondition(m < n);
+      this->v_ = rhs.to_enc() * (n / m);
       return *this;
     }
 
