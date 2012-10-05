@@ -35,7 +35,10 @@
 # include <mln/value/interval.hh>
 # include <mln/value/intsub.hh>
 # include <mln/util/array.hh>
-
+# include <mln/value/dec.hh>
+# include <mln/value/inc.hh>
+# include <mln/value/prev.hh>
+# include <mln/value/succ.hh>
 
 namespace mln
 {
@@ -54,12 +57,13 @@ namespace mln
       //
       template <unsigned n>
       struct median_interval
-	: public mln::accu::internal::base< const value::intsub<n>&, median_interval<n> >
+	: public mln::accu::internal::base< const value::intsub<2*n>&, median_interval<n> >
       {
 	typedef value::intsub<n> argument;
+	typedef value::intsub<1> index_t;
 
-	median_interval(const value::interval<value::intsub<n> >& inter);
-	median_interval(const value::intsub<n>& first, const value::intsub<n>& last);
+	median_interval(const value::interval<argument>& inter);
+	median_interval(const argument& first, const argument& last);
 
 	/// Manipulators.
 	/// \{
@@ -70,7 +74,7 @@ namespace mln
 	/// \}
 
 	/// Get the value of the accumulator.
-	const value::intsub<n>& to_result() const;
+	const value::intsub<2*n>& to_result() const;
 
 	/// Check whether this accu is able to return a result.
 	/// Always true here.
@@ -83,19 +87,23 @@ namespace mln
 
 	mutable unsigned sum_minus_, sum_plus_;
 
-	mutable bool valid_;
+	mutable bool result_ready;
 
-	/// the median index
-	mutable unsigned i_;
-	/// the median argument
-	mutable value::intsub<n> t_;
+	/// the median value
+	mutable value::intsub<2*n> t_;
 
-	value::interval<value::intsub<n> > inter_;
+	/// The median index.
+	mutable index_t n_;
+
+	value::interval<argument > inter_;
 
 	// Auxiliary methods
 	void go_minus_() const;
 	void go_plus_() const;
 	void update_() const;
+
+	index_t find_n1_() const;
+
       };
 
     } // end of mln::accu::stat
@@ -107,14 +115,14 @@ namespace mln
     {
 
       template <unsigned n>
-      median_interval<n>::median_interval(const value::interval<value::intsub<n> >& inter)
+      median_interval<n>::median_interval(const value::interval<argument >& inter)
 	: inter_(inter)
       {
 	init();
       }
 
       template <unsigned n>
-      median_interval<n>::median_interval(const value::intsub<n>& first, const value::intsub<n>& last)
+      median_interval<n>::median_interval(const argument& first, const argument& last)
 	: inter_(first, last)
       {
 	init();
@@ -132,13 +140,13 @@ namespace mln
 	++h_[index];
 	++sum_;
 
-	if (index < i_)
+	if (index < n_)
 	  ++sum_minus_;
-	else if (index > i_)
+	else if (index > n_)
 	  ++sum_plus_;
 
-	if (valid_)
-	  valid_ = false;
+	if (result_ready)
+	  result_ready = false;
       }
 
       template <unsigned n>
@@ -146,21 +154,22 @@ namespace mln
       void
       median_interval<n>::take(const median_interval<n>& other)
       {
+	mln_precondition(inter_ == other.inter_);
+
 	for (unsigned i = 0; i < h_.size(); ++i)
 	  h_[i] += other.h_[i];
 
 	// sum_minus_
-	for (unsigned i = 0; i < i_; ++i)
+	for (unsigned i = 0; i < n_; ++i)
 	  sum_minus_ += other.h_[i];
 
 	// sum_plus_
-	for (unsigned i = i_ + 1; i < h_.nelements(); ++i)
+	for (unsigned i = n_ + 1; i < h_.nelements(); ++i)
 	  sum_plus_ += other.h_[i];
 
-	if (valid_)
-	  valid_ = false;
+	if (result_ready)
+	  result_ready = false;
       }
-
 
       template <unsigned n>
       void
@@ -175,13 +184,13 @@ namespace mln
 	--h_[index];
 	--sum_;
 
-	if (index < i_)
+	if (index < n_)
 	  --sum_minus_;
-	else if (index > i_)
+	else if (index > n_)
 	  --sum_plus_;
 
-	if (valid_)
-	  valid_ = false;
+	if (result_ready)
+	  result_ready = false;
       }
 
       template <unsigned n>
@@ -191,15 +200,19 @@ namespace mln
 	h_.resize(inter_.nvalues(), 0);
 	sum_minus_ = 0;
 	sum_plus_ = 0;
-	i_ = inter_.nvalues() / 2;
-	t_ = inter_.ith_element(i_);
+	sum_ = 0;
+	n_ = int(inter_.nvalues() / 2);
+	t_ = inter_.ith_element(n_);
+	result_ready = true;
       }
 
       template <unsigned n>
-      const value::intsub<n>&
+      const value::intsub<2*n>&
       median_interval<n>::to_result() const
       {
-	if (! valid_)
+	mln_precondition(is_valid());
+
+	if (! result_ready)
 	  update_();
 	return t_;
       }
@@ -208,7 +221,7 @@ namespace mln
       bool
       median_interval<n>::is_valid() const
       {
-	return true;
+	return sum_ > 1;
       }
 
       template <unsigned n>
@@ -216,9 +229,9 @@ namespace mln
       void
       median_interval<n>::update_() const
       {
-	valid_ = true;
+	result_ready = true;
 
-	if (sum_ == 0)
+	if (sum_ < 1)
 	  return;
 
 	if (2 * sum_minus_ > sum_)
@@ -227,7 +240,7 @@ namespace mln
 	  if (2 * sum_plus_ > sum_)
 	    go_plus_();
 	  else
-	    if (h_[i_] == 0)
+	    if (h_[n_] == 0)
 	      {
 		// go to the heaviest side
 		if (sum_plus_ > sum_minus_)
@@ -237,23 +250,44 @@ namespace mln
 	      }
       }
 
-
       template <unsigned n>
       void
       median_interval<n>::go_minus_() const
       {
 	do
 	  {
-	    sum_plus_ += h_[i_];
+	    sum_plus_ += h_[n_];
 	    do
-	      --i_;
-	    while (h_[i_] == 0);
-	    sum_minus_ -= h_[i_];
+	      dec(n_);
+	    while (h_[n_] == 0);
+	    sum_minus_ -= h_[n_];
 	  }
 	while (2 * sum_minus_ > sum_);
-	t_ = inter_.ith_element(i_);
-      }
 
+	// The number of values is odd, the current index corresponds
+	// to the exact median.
+	// OR
+	// We need to take the mean of the (n/2)-th and (n/2+1)-th value, so
+	// if this is the same value, we just return it.
+	if (sum_ % 2 || (sum_minus_ + h_[n_] > sum_ / 2))
+	{
+	  t_ = inter_.ith_element(n_);
+	  return;
+	}
+
+	// The number of values is even, we need to effectively take
+	// the mean of the (n/2)-th and (n/2+1)-th values which are
+	// different.
+	index_t n1 = find_n1_();
+	if (n1 == h_.nelements())
+	  n1 = n_;
+
+	value::intsub<2> index = mean(n_, n1);
+
+	t_ = inter_.ith_element(index)
+	  + (index.is_integer() ? literal::zero
+	     : value::iota<value::intsub<2*n> >::value());
+      }
 
       template <unsigned n>
       void
@@ -261,15 +295,51 @@ namespace mln
       {
 	do
 	  {
-	    sum_minus_ += h_[i_];
+	    sum_minus_ += h_[n_];
 	    do
-	      ++i_;
-	    while (h_[i_] == 0);
-	    sum_plus_ -= h_[i_];
+	      inc(n_);
+	    while (h_[n_] == 0);
+	    sum_plus_ -= h_[n_];
 	  }
 	while (2 * sum_plus_ > sum_);
-	t_ = inter_.ith_element(i_);
+
+
+	// The number of values is odd, the current index corresponds
+	// to the exact median.
+	// OR
+	// We need to take the mean of the (n/2)-th and (n/2+1)-th value, so
+	// if this is the same value, we just return it.
+	if (sum_ % 2 || (sum_minus_ + h_[n_] > sum_ / 2))
+	{
+	  t_ = inter_.ith_element(n_);
+	  return;
+	}
+
+	// The number of values is even, we need to effectively take
+	// the mean of the (n/2)-th and (n/2+1)-th values which are
+	// different.
+	index_t n1 = find_n1_();
+	if (n1 == -1)
+	  n1 = n_;
+
+	value::intsub<2> index = mean(n_, n1);
+
+	t_ = inter_.ith_element(index)
+	  + (index.is_integer() ? literal::zero
+	     : value::iota<value::intsub<2*n> >::value());
       }
+
+      template <unsigned n>
+      typename median_interval<n>::index_t
+      median_interval<n>::find_n1_() const
+      {
+	index_t id = value::succ(n_);
+	while (id < h_.nelements() && h_[id] == 0)
+	  inc(id);
+
+	return id;
+      }
+
 
       template <unsigned n>
       std::ostream& operator<<(std::ostream& ostr, const median_interval<n>& m)

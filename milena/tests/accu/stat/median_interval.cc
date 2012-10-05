@@ -30,21 +30,215 @@ int main()
 {
   using namespace mln;
 
+  // Empty
   {
-    accu::stat::median_interval<2> med(2, 5);
-
-    med.take(2);
-    med.take(2);
-    med.take(2.5);
-    med.take(2.5);
-    med.take(4.5);
-    med.take(4.5);
-    med.take(4.5);
-    med.take(4.5);
-    med.take(5);
-    med.take(5);
-    med.take(5);
-
-    mln_assertion(med.to_result() == 4.5);
+    // FIXME: How should it behave ?
+    accu::stat::median_interval<1> med(1, 4);
+    mln_assertion(!med.is_valid());
   }
+
+  // Single value
+  {
+    // FIXME: How should it behave ?
+    accu::stat::median_interval<1> med(1, 4);
+    med.take(1);
+    mln_assertion(!med.is_valid());
+  }
+
+  // Same value several times (odd count)
+  {
+    accu::stat::median_interval<1> med(1, 4);
+    med.take(1);
+    med.take(1);
+    med.take(1);
+    mln_assertion(med.to_result() == 1);
+  }
+
+  // Same value several times (even count)
+  {
+    accu::stat::median_interval<1> med(1, 4);
+    med.take(1);
+    med.take(1);
+    med.take(1);
+    med.take(1);
+    mln_assertion(med.to_result() == 1);
+  }
+
+  // Same value several times + one different higher value.
+  {
+    accu::stat::median_interval<1> med(0, 4);
+    med.take(0);
+    med.take(1);
+    med.take(1);
+    med.take(2);
+    mln_assertion(med.to_result() == 1);
+  }
+
+
+  // Various values
+  {
+    accu::stat::median_interval<1> med(0, 4);
+    med.take(0);
+    med.take(1);
+    med.take(1);
+    med.take(3);
+    med.take(3);
+    med.take(4);
+    mln_assertion(med.to_result() == 2);
+  }
+
+
+  // Various values
+  {
+    accu::stat::median_interval<1> med(0, 4);
+    med.take(0);
+    med.take(1);
+    med.take(1);
+    med.take(2);
+    med.take(2);
+    med.take(3);
+    med.take(3);
+    med.take(4);
+    mln_assertion(med.to_result() == 2);
+  }
+
+  // Same value several times + one different higher value.
+  {
+    accu::stat::median_interval<1> med(1, 4);
+    med.take(1);
+    med.take(1);
+    med.take(1);
+    med.take(2);
+    mln_assertion(med.to_result() == 1);
+  }
+
+  // Same value several times + one different lower value.
+  {
+    accu::stat::median_interval<1> med(1, 4);
+    med.take(1);
+    med.take(2);
+    med.take(2);
+    med.take(2);
+    mln_assertion(med.to_result() == 2);
+  }
+
+  // Same value several times + one different higher value with
+  // subdivided interval.
+  {
+    accu::stat::median_interval<2> med(1, 4);
+    med.take(1);
+    med.take(1);
+    med.take(1);
+    med.take(2);
+    mln_assertion(med.to_result() == 1);
+  }
+
+  // Same value several times + one different lower value with
+  // subdivided interval.
+  {
+    accu::stat::median_interval<2> med(1, 4);
+    med.take(1);
+    med.take(2);
+    med.take(2);
+    med.take(2);
+    mln_assertion(med.to_result() == 2);
+  }
+
+  // Odd number of values
+  {
+    accu::stat::median_interval<1> med(1, 8);
+    med.take(1);
+    med.take(5);
+    med.take(2);
+    med.take(8);
+    med.take(7);
+    mln_assertion(med.to_result() == 5);
+  }
+
+  // Even number of values
+  {
+    accu::stat::median_interval<1> med(1, 8);
+    med.take(1);
+    med.take(6);
+    med.take(2);
+    med.take(8);
+    med.take(7);
+    med.take(2);
+    mln_assertion(med.to_result() == 4);
+  }
+
+  // Based on a subdivided interval
+  {
+    accu::stat::median_interval<2> med(3.5, 6.5);
+
+    med.take(4.5);
+    med.take(6);
+    med.take(4.5);
+    med.take(6);
+
+    mln_assertion(med.to_result() == 5.25);
+  }
+
+  // Using 0 as value.
+  {
+    accu::stat::median_interval<2> med(0, 4);
+
+    med.take(0);
+    med.take(1);
+    med.take(2);
+    med.take(3);
+    med.take(4);
+
+    mln_assertion(med.to_result() == 2);
+  }
+
+  // Using 0 as value.
+  {
+    accu::stat::median_interval<2> med(0, 5);
+
+    med.take(0);
+    med.take(1);
+    med.take(2);
+    med.take(3);
+    med.take(4);
+    med.take(5);
+
+    mln_assertion(med.to_result() == 2.5);
+  }
+
+  // Integer Interval with negative values.
+  {
+    accu::stat::median_interval<1> med(-2, 3);
+
+    med.take(-1);
+    med.take(-2);
+    med.take(2);
+    med.take(3);
+
+    mln_assertion(med.to_result() == 0.5);
+  }
+
+  // Subdivided Interval with negative values.
+  {
+    accu::stat::median_interval<2> med(-2, 3);
+
+    med.take(-1);
+    med.take(-2);
+    med.take(2);
+    med.take(3);
+
+    mln_assertion(med.to_result() == 0.5);
+  }
+
+  // Subdivided Interval with negative values.
+  {
+    accu::stat::median_interval<1> med(-2, 3);
+
+    med.take(-1);
+    med.take(-2);
+    med.take(2);
+    med.take(3);
+    mln_assertion(med.to_result() == 0.5);
+  }
+
 }

@@ -1,5 +1,13 @@
 2012-10-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve accu::median_interval.
+
+	* mln/accu/stat/median_interval.hh: Improve it.
+
+	* tests/accu/stat/median_interval.cc: Add more tests.
+
+2012-10-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/value/intsub.hh: Add more constructors.
 
 2012-10-04  Guillaume Lazzara  <z@lrde.epita.fr>
