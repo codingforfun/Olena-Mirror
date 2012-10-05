@@ -18,13 +18,16 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS = 		\
 moravec				\
-harris
+harris				\
+achard
 
 moravec_SOURCES = moravec.cc
 harris_SOURCES = harris.cc
+achard_SOURCES = achard.cc
 
 TESTS = $(check_PROGRAMS)
 
 MOSTLYCLEANFILES =		\
 moravec-result.ppm		\
-harris-result.ppm
+harris-result.ppm		\
+achard-result.ppm
