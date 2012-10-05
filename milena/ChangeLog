@@ -1,3 +1,10 @@
+2012-10-05  Jonathan Fabrizio <jonathan@lrde.epita.fr>
+
+	Add Achard corner detection.
+
+	* mln/detection/corner/achard.hh: New.
+	* mln/detection/corner/achard_criterion.hh: New.
+
 2012-10-04  Jonathan Fabrizio <jonathan@lrde.epita.fr>
 
 	Add test for Harris corner detection.
