@@ -1,3 +1,11 @@
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Highlight an overload resolution problem in proxies with g++-4.7.
+
+	* tests/util/timer.cc: New test.
+	* tests/util/Makefile.am (check_PROGRAMS): Add timer.
+	(timer_SOURCES): New.
+
 2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revive headers required by the RGB component functors.

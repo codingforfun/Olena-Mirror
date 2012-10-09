@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -32,6 +32,7 @@ check_PROGRAMS =				\
   ord_pair					\
   set 						\
   soft_heap 					\
+  timer						\
   tree						\
   tree_fast					\
   tree_to_fast
@@ -49,6 +50,7 @@ ord_SOURCES = ord.cc
 ord_pair_SOURCES = ord_pair.cc
 set_SOURCES = set.cc
 soft_heap_SOURCES = soft_heap.cc
+timer_SOURCES = timer.cc
 tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
 tree_to_fast_SOURCES = tree_to_fast.cc
