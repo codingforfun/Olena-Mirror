@@ -25,16 +25,14 @@
 
 /// \file
 ///
-/// \brief Immerse a 2D image into K1.
+/// \brief Check if site is a primary face.
 
-#ifndef MLN_WORLD_K1_IMMERSE_HH
-# define MLN_WORLD_K1_IMMERSE_HH
+#ifndef MLN_WORLD_K2_IS_PRIMARY_FACE_HH
+# define MLN_WORLD_K2_IS_PRIMARY_FACE_HH
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/box.hh>
 # include <mln/core/alias/point2d.hh>
+# include <mln/world/k1/is_2_face.hh>
 
-# include <mln/world/kn/immerse.hh>
 
 namespace mln
 {
@@ -42,69 +40,43 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace k2
     {
 
-      /*! \brief Immerse a 2D image into K1.
+      /// \brief Check if site is a primary face
+      bool is_primary_face(const point2d& p);
 
-	\param[in] ima 2D Image in K0.
-	\param[in] new_type Value type of the immersed image.
-
-	\return A 2D image immersed in k1 of value type \tparam V.
-
-	\verbatim
-
-	           -1 0 1 2 3
-	 0 1     -1 . - . - .
-       0 o o      0 | o | o |
-       1 o o  ->  1 . - . - .
-	          2 | o | o |
-	 	  3 . - . - .
-
-	\endverbatim
-
-       */
-      template <typename I, typename V>
-      mln_concrete(I) immerse(const Image<I>& ima, const V& new_type);
 
       /// \overload
-      /// new_type is set to mln_value(I).
-      template <typename I>
-      mln_concrete(I) immerse(const Image<I>& ima);
+      bool is_primary_face(const mln::def::coord& row,
+			   const mln::def::coord& col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       // Facade
 
-      template <typename I, typename V>
-      mln_concrete(I)
-      immerse(const Image<I>& ima, const V& new_type)
+      inline
+      bool is_primary_face(const point2d& p)
       {
-	trace::entering("mln::world::k1::immerse");
-	mln_precondition(exact(ima).is_valid());
-
-	mln_concrete(I) output = kn::immerse(ima, 1, V());
-
-	trace::exiting("mln::world::k1::immerse");
-	return output;
+	return is_primary_face(p.row(), p.col());
       }
 
-
-      template <typename I>
-      mln_concrete(I)
-      immerse(const Image<I>& ima)
+      inline
+      bool is_primary_face(const mln::def::coord& row,
+			   const mln::def::coord& col)
       {
-	typedef mln_value(I) V;
-	return immerse(ima, V());
+	return !((row % 4) + (col % 4));
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::k2
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_IMMERSE_HH
+#endif // ! MLN_WORLD_K2_IS_PRIMARY_FACE_HH

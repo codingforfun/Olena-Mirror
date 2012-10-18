@@ -1,5 +1,25 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce K2 and Kn spaces.
+
+	* mln/world/k1/immerse.hh: Make use of kn::immerse.
+
+	* mln/world/k2/convert_on_access.hh,
+	* mln/world/k2/fill_0_from_1_faces.hh,
+	* mln/world/k2/fill_1_from_2_faces.hh,
+	* mln/world/k2/fill_non_primary_from_primary_faces.hh,
+	* mln/world/k2/immerse.hh,
+	* mln/world/k2/immerse_with.hh,
+	* mln/world/k2/is_non_primary_face.hh,
+	* mln/world/k2/is_non_primary_face_cross.hh,
+	* mln/world/k2/is_non_primary_face_horizontal.hh,
+	* mln/world/k2/is_non_primary_face_vertical.hh,
+	* mln/world/k2/is_primary_face.hh,
+	* mln/world/k2/neighb2d.hh,
+	* mln/world/kn/immerse.hh: New.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Some fixes.
 
 	* mln/labeling/compute.hh: Fix include.

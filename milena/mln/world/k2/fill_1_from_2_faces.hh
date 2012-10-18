@@ -25,16 +25,15 @@
 
 /// \file
 ///
-/// \brief Immerse a 2D image into K1.
+/// \brief Fill 1 faces in a K2 2D image using its 2 faces.
 
-#ifndef MLN_WORLD_K1_IMMERSE_HH
-# define MLN_WORLD_K1_IMMERSE_HH
+#ifndef MLN_WORLD_K2_FILL_1_FROM_2_FACES_HH
+# define MLN_WORLD_K2_FILL_1_FROM_2_FACES_HH
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/box.hh>
 # include <mln/core/alias/point2d.hh>
+# include <mln/world/k1/is_1_face_vertical.hh>
+# include <mln/world/k1/is_1_face_horizontal.hh>
 
-# include <mln/world/kn/immerse.hh>
 
 namespace mln
 {
@@ -42,69 +41,78 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace k2
     {
 
-      /*! \brief Immerse a 2D image into K1.
+      /*! \brief Fill 1 faces in a K2 2D image using its 2 faces.
 
-	\param[in] ima 2D Image in K0.
-	\param[in] new_type Value type of the immersed image.
+	\param[in,out] inout A 2D image immersed in K2.
+	\param[in,out] accu An accumulator.
 
-	\return A 2D image immersed in k1 of value type \tparam V.
+	This function use the following neighborhoods:
+
+	* In case of vertical 1 faces:
 
 	\verbatim
+	      x | x
+	\endverbatim
 
-	           -1 0 1 2 3
-	 0 1     -1 . - . - .
-       0 o o      0 | o | o |
-       1 o o  ->  1 . - . - .
-	          2 | o | o |
-	 	  3 . - . - .
+	* In case of horizontal 1 face:
 
+	\verbatim
+	        x
+		-
+		x
 	\endverbatim
 
        */
-      template <typename I, typename V>
-      mln_concrete(I) immerse(const Image<I>& ima, const V& new_type);
-
-      /// \overload
-      /// new_type is set to mln_value(I).
-      template <typename I>
-      mln_concrete(I) immerse(const Image<I>& ima);
+      template <typename I, typename A>
+      void fill_1_from_2_faces(Image<I>& inout, const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       // Facade
 
-      template <typename I, typename V>
-      mln_concrete(I)
-      immerse(const Image<I>& ima, const V& new_type)
+
+      template <typename I, typename A>
+      void fill_1_from_2_faces(Image<I>& inout_, const Accumulator<A>& accu_)
       {
-	trace::entering("mln::world::k1::immerse");
-	mln_precondition(exact(ima).is_valid());
+	trace::entering("mln::world::k2::fill_1_from_2_faces");
 
-	mln_concrete(I) output = kn::immerse(ima, 1, V());
+	mln_precondition(exact(inout_).is_valid());
+	I& inout = exact(inout_);
+	(void) accu_;
 
-	trace::exiting("mln::world::k1::immerse");
-	return output;
+	A accu = A();
+	mln_piter(I) p(inout.domain());
+	for_all(p)
+	  if (k1::is_1_face_vertical(p))
+	  {
+	    accu.init();
+	    accu.take(inout(p + left));
+	    accu.take(inout(p + right));
+	    inout(p) = accu.to_result();
+	  }
+	  else if (k1::is_1_face_horizontal(p))
+	  {
+	    accu.init();
+	    accu.take(inout(p + up));
+	    accu.take(inout(p + down));
+	    inout(p) = accu.to_result();
+	  }
+
+	trace::exiting("mln::world::k2::fill_1_from_2_faces");
       }
 
-
-      template <typename I>
-      mln_concrete(I)
-      immerse(const Image<I>& ima)
-      {
-	typedef mln_value(I) V;
-	return immerse(ima, V());
-      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::k2
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_IMMERSE_HH
+#endif // ! MLN_WORLD_K2_FILL_1_FROM_2_FACES_HH
