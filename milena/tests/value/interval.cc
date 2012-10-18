@@ -101,4 +101,10 @@ int main()
     mln_assertion(r1.ith_element(8) == 11.5);
   }
 
+  {
+    interval<intsub<1> > r1(0, 255);
+    mln_assertion(r1.ith_element(0) == 0);
+    mln_assertion(r1.ith_element(4) == 4);
+  }
+
 }

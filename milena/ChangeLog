@@ -1,5 +1,9 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/value/interval.cc: Add more tests.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce level tag.
 
 	* mln/util/level.hh,
