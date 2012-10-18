@@ -40,7 +40,7 @@
 # include <mln/world/k1/fill_0_from_1_faces.hh>
 # include <mln/world/k1/fill_1_from_2_faces.hh>
 
-# include <mln/world/k2/convert_on_access.hh>
+# include <mln/world/k2/converters.hh>
 
 namespace mln
 {
@@ -73,9 +73,9 @@ namespace mln
 	\endverbatim
 
        */
-      template <typename I, typename V>
+      template <typename I, typename V, typename F>
       mln_ch_value(I, V)
-      immerse(const Image<I>& ima_, const unsigned n, const V& new_type);
+      immerse(const Image<I>& ima_, const unsigned n, const V& new_type, const F& converter_);
 
       /// \overload
       template <typename I>
@@ -116,13 +116,15 @@ namespace mln
 
       // Facade
 
-      template <typename I, typename V>
+      template <typename I, typename V, typename F>
       mln_ch_value(I, V)
-      immerse(const Image<I>& ima_, const unsigned n, const V& new_type)
+      immerse(const Image<I>& ima_, const unsigned n,
+	      const V& new_type, const F& converter_)
       {
 	trace::entering("mln::world::kn::immerse_with");
 	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
+	const F& converter = exact(converter_);
 	(void) new_type;
 
 	mln_ch_value(I,V)
@@ -133,7 +135,7 @@ namespace mln
 	for_all(p)
 	{
 	  V tmp;
-	  k2::convert_on_access(ima(p), tmp);
+	  tmp = converter(ima(p));
 	  output(internal::immerse_point(p, n)) = tmp;
 	}
 
@@ -146,7 +148,7 @@ namespace mln
       immerse(const Image<I>& ima, const unsigned n)
       {
 	typedef mln_value(I) V;
-	return immerse(ima, n, V());
+	return immerse(ima, n, V(), k2::generic_converter<V,V>());
       }
 
 

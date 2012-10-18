@@ -34,7 +34,7 @@
 # include <mln/world/k2/is_non_primary_face_vertical.hh>
 # include <mln/world/k2/is_non_primary_face_horizontal.hh>
 # include <mln/world/k2/is_non_primary_face_cross.hh>
-# include <mln/world/k2/convert_on_access.hh>
+# include <mln/world/k2/converters.hh>
 
 namespace mln
 {
@@ -76,10 +76,16 @@ namespace mln
 	\endverbatim
 
        */
+      template <typename I, typename A, typename F>
+      void fill_non_primary_from_primary_faces(Image<I>& inout_,
+					       Accumulator<A>& accu_,
+					       const F& converter);
       /// \overload
-      template <typename I, typename A>
+      template <typename I, typename A, typename F>
       void fill_non_primary_from_primary_faces(Image<I>& inout,
-					       const Accumulator<A>& accu);
+					       const Accumulator<A>& accu,
+					       const F& converter);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -87,58 +93,56 @@ namespace mln
 
       // Facade
 
-      template <typename I, typename A>
+      template <typename I, typename A, typename F>
       void fill_non_primary_from_primary_faces(Image<I>& inout_,
-					       F& functor_)
+					       F& functor_,
+					       const F& converter_)
       {
 	trace::entering("mln::world::k2::fill_non_primary_from_primary_faces");
 
 	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
-	(void) accu_;
 	typedef typename A::argument V;
 
-	A& accu = exact(accu_);
+	const F& converter = exact(converter_);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (is_non_primary_face_vertical(p))
 	  {
-	    accu.init();
 	    V tmp1, tmp2;
 
-	    convert_on_access(inout(p + 2 * left), tmp1);
-	    convert_on_access(inout(p + 2 * right), tmp2);
-	    convert_on_access(f(tmp1, tmp2), inout(p));
+	    tmp1 = converter(inout(p + 2 * left));
+	    tmp2 = converter(inout(p + 2 * right));
+	    converter(f(tmp1, tmp2), inout(p));
 	  }
 	  else if (is_non_primary_face_horizontal(p))
 	  {
-	    accu.init();
 	    V tmp1, tmp2;
 
-	    convert_on_access(inout(p + 2 * up), tmp1);
-	    convert_on_access(inout(p + 2 * down), tmp2);
-	    convert_on_access(f(tmp1, tmp2), inout(p));
+	    tmp1 = converter(inout(p + 2 * up));
+	    tmp2 = converter(inout(p + 2 * down));
+	    converter(f(tmp1, tmp2), inout(p));
 	  }
 	  else if (is_non_primary_face_cross(p))
 	  {
-	    accu.init();
 	    V tmp1, tmp2, tmp3, tmp4;
 
-	    convert_on_access(inout(p + 2 * up_left), tmp1);
-	    convert_on_access(inout(p + 2 * up_right), tmp2);
-	    convert_on_access(inout(p + 2 * down_left), tmp3);
-	    convert_on_access(inout(p + 2 * down_right), tmp4);
-	    convert_on_access(f(tmp1, tmp2, tmp3, tmp4), inout(p));
+	    tmp1 = converter(inout(p + 2 * up_left));
+	    tmp2 = converter(inout(p + 2 * up_right));
+	    tmp3 = converter(inout(p + 2 * down_left));
+	    tmp4 = converter(inout(p + 2 * down_right));
+	    converter(f(tmp1, tmp2, tmp3, tmp4), inout(p));
 	  }
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_faces");
       }
 
 
-      template <typename I, typename A>
+      template <typename I, typename A, typename F>
       void fill_non_primary_from_primary_faces(Image<I>& inout_,
-					       Accumulator<A>& accu_)
+					       Accumulator<A>& accu_,
+					       const F& converter_)
       {
 	trace::entering("mln::world::k2::fill_non_primary_from_primary_faces");
 
@@ -148,6 +152,7 @@ namespace mln
 	typedef typename A::argument V;
 
 	A& accu = exact(accu_);
+	const F& converter = exact(converter_);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
@@ -156,45 +161,45 @@ namespace mln
 	    accu.init();
 	    V tmp;
 
-	    convert_on_access(inout(p + 2 * left), tmp);
+	    tmp = converter(inout(p + 2 * left));
 	    accu.take(tmp);
 
-	    convert_on_access(inout(p + 2 * right), tmp);
+	    tmp = converter(inout(p + 2 * right));
 	    accu.take(tmp);
 
-	    convert_on_access(accu.to_result(), inout(p));
+	    inout(p) = converter(accu.to_result());
 	  }
 	  else if (is_non_primary_face_horizontal(p))
 	  {
 	    accu.init();
 	    V tmp;
 
-	    convert_on_access(inout(p + 2 * up), tmp);
+	    tmp = converter(inout(p + 2 * up));
 	    accu.take(tmp);
 
-	    convert_on_access(inout(p + 2 * down), tmp);
+	    tmp = converter(inout(p + 2 * down));
 	    accu.take(tmp);
 
-	    convert_on_access(accu.to_result(), inout(p));
+	    inout(p) = converter(accu.to_result());
 	  }
 	  else if (is_non_primary_face_cross(p))
 	  {
 	    accu.init();
 	    V tmp;
 
-	    convert_on_access(inout(p + 2 * up_left), tmp);
+	    tmp = converter(inout(p + 2 * up_left));
 	    accu.take(tmp);
 
-	    convert_on_access(inout(p + 2 * up_right), tmp);
+	    tmp = converter(inout(p + 2 * up_right));
 	    accu.take(tmp);
 
-	    convert_on_access(inout(p + 2 * down_left), tmp);
+	    tmp = converter(inout(p + 2 * down_left));
 	    accu.take(tmp);
 
-	    convert_on_access(inout(p + 2 * down_right), tmp);
+	    tmp = converter(inout(p + 2 * down_right));
 	    accu.take(tmp);
 
-	    convert_on_access(accu.to_result(), inout(p));
+	    inout(p) = converter(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_faces");

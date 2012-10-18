@@ -1,5 +1,15 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Let the user specify conversion functions in K2 immersion.
+
+	* mln/world/k2/convert_on_access.hh: Rename as...
+	* mln/world/k2/converters.hh: ... this.
+
+	* mln/world/k2/fill_non_primary_from_primary_faces.hh,
+	* mln/world/kn/immerse.hh: Take a converter functor as argument.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/routine/ops.hh: Update comments.
 
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
