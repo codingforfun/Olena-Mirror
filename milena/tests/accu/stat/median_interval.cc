@@ -102,6 +102,19 @@ int main()
     mln_assertion(med.to_result() == 2);
   }
 
+  // Various values
+  {
+    accu::stat::median_interval<1> med(0, 4);
+    med.take(0);
+    med.take(1);
+    med.take(1);
+    med.take(2);
+    med.take(3);
+    med.take(3);
+    med.take(4);
+    mln_assertion(med.to_result() == 2);
+  }
+
   // Same value several times + one different higher value.
   {
     accu::stat::median_interval<1> med(1, 4);
@@ -239,6 +252,52 @@ int main()
     med.take(2);
     med.take(3);
     mln_assertion(med.to_result() == 0.5);
+  }
+
+
+  {
+    accu::stat::median_interval<1> med(0, 255);
+
+    med.take(126);
+    med.take(128);
+    mln_assertion(med.to_result() == 127);
+  }
+
+
+  {
+    accu::stat::median_interval<1> med(0, 255);
+
+    med.take(126);
+    med.take(128);
+    med.take(128);
+    med.take(128);
+    med.take(128);
+    med.take(130);
+    mln_assertion(med.to_result() == 128);
+  }
+
+  {
+    accu::stat::median_interval<1> med(0, 255);
+
+    med.take(126);
+    med.take(128);
+    med.take(129);
+    med.take(130);
+    med.take(130);
+    med.take(130);
+    mln_assertion(med.to_result() == 129.5);
+  }
+
+  // One value...
+  {
+    accu::stat::median_interval<1> med(0, 255);
+
+    med.take(128);
+    med.take(128);
+    med.take(124);
+    med.take(124);
+    std::cout << med.to_result() << std::endl;
+    mln_assertion(med.to_result() == 126);
   }
 
 }

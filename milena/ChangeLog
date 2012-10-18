@@ -1,5 +1,14 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix accu::stat::median_interval.
+
+	* mln/accu/stat/median_interval.hh: Fix bugs and add support for
+	a different return type.
+
+	* tests/accu/stat/median_interval.cc: Add more tests.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce K2 and Kn spaces.
 
 	* mln/world/k1/immerse.hh: Make use of kn::immerse.

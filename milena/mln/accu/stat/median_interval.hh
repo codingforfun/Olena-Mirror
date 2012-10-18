@@ -55,7 +55,7 @@ namespace mln
       ///
       /// \ingroup modaccuvalues
       //
-      template <unsigned n>
+      template <unsigned n, unsigned m=2*n>
       struct median_interval
 	: public mln::accu::internal::base< const value::intsub<2*n>&, median_interval<n> >
       {
@@ -114,23 +114,23 @@ namespace mln
     namespace stat
     {
 
-      template <unsigned n>
-      median_interval<n>::median_interval(const value::interval<argument >& inter)
+      template <unsigned n, unsigned m>
+      median_interval<n,m>::median_interval(const value::interval<argument >& inter)
 	: inter_(inter)
       {
 	init();
       }
 
-      template <unsigned n>
-      median_interval<n>::median_interval(const argument& first, const argument& last)
+      template <unsigned n, unsigned m>
+      median_interval<n,m>::median_interval(const argument& first, const argument& last)
 	: inter_(first, last)
       {
 	init();
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       void
-      median_interval<n>::take(const argument& t)
+      median_interval<n,m>::take(const argument& t)
       {
 	mln_precondition(inter_.has(t));
 
@@ -149,10 +149,10 @@ namespace mln
 	  result_ready = false;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       inline
       void
-      median_interval<n>::take(const median_interval<n>& other)
+      median_interval<n,m>::take(const median_interval<n,m>& other)
       {
 	mln_precondition(inter_ == other.inter_);
 
@@ -171,9 +171,9 @@ namespace mln
 	  result_ready = false;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       void
-      median_interval<n>::untake(const argument& t)
+      median_interval<n,m>::untake(const argument& t)
       {
 	mln_precondition(inter_.has(t));
 	mln_precondition(h_[inter_.index_of(t)] != 0);
@@ -193,11 +193,12 @@ namespace mln
 	  result_ready = false;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       void
-      median_interval<n>::init()
+      median_interval<n,m>::init()
       {
 	h_.resize(inter_.nvalues(), 0);
+	h_.fill(0);
 	sum_minus_ = 0;
 	sum_plus_ = 0;
 	sum_ = 0;
@@ -206,9 +207,9 @@ namespace mln
 	result_ready = true;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       const value::intsub<2*n>&
-      median_interval<n>::to_result() const
+      median_interval<n,m>::to_result() const
       {
 	mln_precondition(is_valid());
 
@@ -217,42 +218,36 @@ namespace mln
 	return t_;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       bool
-      median_interval<n>::is_valid() const
+      median_interval<n,m>::is_valid() const
       {
 	return sum_ > 1;
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       inline
       void
-      median_interval<n>::update_() const
+      median_interval<n,m>::update_() const
       {
 	result_ready = true;
 
 	if (sum_ < 1)
 	  return;
 
-	if (2 * sum_minus_ > sum_)
+	if (2 * sum_minus_ >= sum_)
 	  go_minus_();
 	else
-	  if (2 * sum_plus_ > sum_)
+	  if (2 * sum_plus_ >= sum_)
 	    go_plus_();
-	  else
-	    if (h_[n_] == 0)
-	      {
-		// go to the heaviest side
-		if (sum_plus_ > sum_minus_)
-		  go_plus_();
-		else
-		  go_minus_(); // default when both sides are balanced
-	      }
+	  else // Both sides are balanced
+	    if (h_[n_] == 0 || sum_ == 2)
+	      go_minus_();
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       void
-      median_interval<n>::go_minus_() const
+      median_interval<n,m>::go_minus_() const
       {
 	do
 	  {
@@ -289,9 +284,9 @@ namespace mln
 	     : value::iota<value::intsub<2*n> >::value());
       }
 
-      template <unsigned n>
+      template <unsigned n, unsigned m>
       void
-      median_interval<n>::go_plus_() const
+      median_interval<n,m>::go_plus_() const
       {
 	do
 	  {
@@ -329,9 +324,9 @@ namespace mln
 	     : value::iota<value::intsub<2*n> >::value());
       }
 
-      template <unsigned n>
-      typename median_interval<n>::index_t
-      median_interval<n>::find_n1_() const
+      template <unsigned n, unsigned m>
+      typename median_interval<n,m>::index_t
+      median_interval<n,m>::find_n1_() const
       {
 	index_t id = value::succ(n_);
 	while (id < h_.nelements() && h_[id] == 0)
@@ -341,10 +336,10 @@ namespace mln
       }
 
 
-      template <unsigned n>
-      std::ostream& operator<<(std::ostream& ostr, const median_interval<n>& m)
+      template <unsigned n, unsigned m>
+      std::ostream& operator<<(std::ostream& ostr, const median_interval<n,m>& med)
       {
-	return ostr << m.to_result();
+	return ostr << med.to_result();
       }
 
     } // end of namespace mln::accu::stat
