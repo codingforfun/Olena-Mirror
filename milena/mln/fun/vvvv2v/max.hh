@@ -23,15 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#ifndef MLN_FUN_VVVV2V_MAX_HH
+# define MLN_FUN_VVVV2V_MAX_HH
 
 /// \file
 ///
-/// Functor that computes the mean of two values.
+/// Functor that computes the max of two values.
 
 # include <mln/core/concept/function.hh>
-# include <mln/math/mean.hh>
+# include <mln/math/max.hh>
 
 
 namespace mln
@@ -45,9 +45,9 @@ namespace mln
 
       // FIXME: Doc.
 
-      /// \brief A functor computing the mean of two values.
+      /// \brief A functor computing the max of two values.
       template <typename T, typename R=T>
-      struct mean : public Function_vvvv2v< mean<T> >
+      struct max : public Function_vvvv2v< max<T> >
       {
 	typedef R result;
 	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
@@ -59,9 +59,9 @@ namespace mln
       template <typename T, typename R>
       inline
       R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
+      max<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
       {
-	return R(mln::math::mean(v1, v2, v3, v4));
+	return R(mln::math::max(v1, v2, v3, v4));
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -73,4 +73,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+#endif // ! MLN_FUN_VVVV2V_MAX_HH

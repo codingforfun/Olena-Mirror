@@ -43,6 +43,9 @@ namespace mln
     template <typename T>
     T max(const T& v1, const T& v2);
 
+    /// Return the maximum of four values.
+    template <typename T>
+    T max(const T& v1, const T& v2, const T& v3, const T& v4);
 
   } // end of namespace mln::math
 
@@ -55,6 +58,14 @@ namespace mln
     return v1 > v2 ? v1 : v2;
   }
 
+  /// \internal Generic implementation of the maximum function.
+  template <typename T>
+  T max_(const T& v1, const T& v2, const T& v3, const T& v4)
+  {
+    return max_(max_(exact(v1), exact(v2)), max_(exact(v3), exact(v4)));
+  }
+
+
   namespace math
   {
 
@@ -62,6 +73,12 @@ namespace mln
     T max(const T& v1, const T& v2)
     {
       return max_(exact(v1), exact(v2));
+    }
+
+    template <typename T>
+    T max(const T& v1, const T& v2, const T& v3, const T& v4)
+    {
+      return max_(exact(v1), exact(v2), exact(v3), exact(v4));
     }
 
   } // end of namespace mln::math

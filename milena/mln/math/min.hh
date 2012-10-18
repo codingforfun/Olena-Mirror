@@ -43,6 +43,9 @@ namespace mln
     template <typename T>
     T min(const T& v1, const T& v2);
 
+    /// Return the minimum of four values.
+    template <typename T>
+    T min(const T& v1, const T& v2, const T& v3, const T& v4);
 
   } // end of namespace mln::math
 
@@ -55,6 +58,14 @@ namespace mln
     return v1 < v2 ? v1 : v2;
   }
 
+  /// \internal Generic implementation of the minimum function.
+  template <typename T>
+  T min_(const T& v1, const T& v2, const T& v3, const T& v4)
+  {
+    return min_(min_(v1, v2), min_(v3, v4));
+  }
+
+
   namespace math
   {
 
@@ -62,6 +73,12 @@ namespace mln
     T min(const T& v1, const T& v2)
     {
       return min_(exact(v1), exact(v2));
+    }
+
+    template <typename T>
+    T min(const T& v1, const T& v2, const T& v3, const T& v4)
+    {
+      return min_(exact(v1), exact(v2), exact(v3), exact(v4));
     }
 
   } // end of namespace mln::math

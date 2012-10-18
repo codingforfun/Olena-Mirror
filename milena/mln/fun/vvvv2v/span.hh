@@ -23,15 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#ifndef MLN_FUN_VVVV2V_SPAN_HH
+# define MLN_FUN_VVVV2V_SPAN_HH
 
 /// \file
 ///
-/// Functor that computes the mean of two values.
+/// Functor that computes the spanimum of two values.
 
 # include <mln/core/concept/function.hh>
-# include <mln/math/mean.hh>
+# include <mln/value/interval.hh>
 
 
 namespace mln
@@ -45,23 +45,29 @@ namespace mln
 
       // FIXME: Doc.
 
-      /// \brief A functor computing the mean of two values.
-      template <typename T, typename R=T>
-      struct mean : public Function_vvvv2v< mean<T> >
+      /// \brief A functor computing the span of two interval values.
+      template <typename T>
+      struct span : public Function_vvvv2v< span<T> >
       {
-	typedef R result;
-	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
+	typedef value::interval<T> result;
+
+	value::interval<T> operator()(const value::interval<T>& v1,
+				      const value::interval<T>& v2,
+				      const value::interval<T>& v3,
+				      const value::interval<T>& v4) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename T, typename R>
-      inline
-      R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
+      template <typename T>
+      value::interval<T>
+      span<T>::operator()(const value::interval<T>& v1,
+			  const value::interval<T>& v2,
+			  const value::interval<T>& v3,
+			  const value::interval<T>& v4) const
       {
-	return R(mln::math::mean(v1, v2, v3, v4));
+	return value::span(v1, v2, v3, v4);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -73,4 +79,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+#endif // ! MLN_FUN_VVVV2V_SPAN_HH

@@ -1,3 +1,15 @@
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add functions.
+
+	* mln/fun/vv2v/span.hh,
+	* mln/fun/vvvv2v/max.hh,
+	* mln/fun/vvvv2v/min.hh,
+	* mln/fun/vvvv2v/span.hh: New.
+
+	* mln/math/max.hh,
+	* mln/math/min.hh: New overloads.
+
 2012-10-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve accu::median_interval.
