@@ -1,5 +1,11 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New span accumulator.
+
+	* mln/accu/math/span.hh: New.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add functions.
 
 	* mln/fun/vv2v/span.hh,
