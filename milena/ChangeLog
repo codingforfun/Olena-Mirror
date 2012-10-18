@@ -1,5 +1,16 @@
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Some fixes.
+
+	* mln/labeling/compute.hh: Fix include.
+
+	* mln/value/int_u.hh: Add iota definition.
+
+	* mln/value/interval.hh: Add span overloads and self_open()
+	method.
+
+2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New span accumulator.
 
 	* mln/accu/math/span.hh: New.

@@ -39,6 +39,7 @@
 # include <mln/value/concept/integer.hh>
 # include <mln/trait/value_.hh>
 # include <mln/debug/format.hh>
+# include <mln/value/iota.hh>
 
 # include <mln/value/internal/make_generic_name.hh>
 
@@ -159,6 +160,16 @@ namespace mln
     };
 
 
+    // Iota
+
+    template <unsigned n>
+    struct iota<int_u<n> >
+    {
+      static int_u<n> value();
+    };
+
+
+
     // Safety.
     template <> struct int_u<0>;
     template <> struct int_u<1>;
@@ -179,7 +190,6 @@ namespace mln
     // FIXME: Doc!
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, int_u<n>& i);
-
 
 
     // Conversions
@@ -298,6 +308,15 @@ namespace mln
     int_u<n>::next() const
     {
       return this->v_ + 1;
+    }
+
+    // Iota
+
+    template <unsigned n>
+    int_u<n>
+    iota<int_u<n> >::value()
+    {
+      return 1;
     }
 
     template <unsigned n>

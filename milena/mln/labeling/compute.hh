@@ -51,7 +51,7 @@
 # include <mln/util/array.hh>
 # include <mln/convert/from_to.hh>
 # include <mln/geom/ncols.hh>
-# include <mln/value/next.hh>
+# include <mln/value/succ.hh>
 
 
 namespace mln

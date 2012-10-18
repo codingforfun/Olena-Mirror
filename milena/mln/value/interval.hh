@@ -34,6 +34,8 @@
 # include <iostream>
 # include <mln/value/inc.hh>
 # include <mln/value/concept/interval.hh>
+# include <mln/util/level.hh>
+
 
 namespace mln
 {
@@ -50,6 +52,7 @@ namespace mln
       typedef T equiv;
 
       interval();
+      interval(T single);
       interval(T first, T last);
 
       interval& operator=(const interval& rhs);
@@ -76,6 +79,11 @@ namespace mln
       const T& first() const;
       /// The last value included in this interval.
       const T& last() const;
+
+      /// Open this interval and exclude first and last values from
+      /// it. The interval is then defined on [first + iota, last -
+      /// iota].
+      void self_open();
 
     private:
       T first_;
@@ -164,6 +172,12 @@ namespace mln
     interval<T>
     span(const interval<T>& r1, const interval<T>& r2);
 
+    /// \brief Compute the span of \p r1, \p r2, \p r3 and \p r4.
+    template <typename T>
+    interval<T>
+    span(const interval<T>& r1, const interval<T>& r2,
+	 const interval<T>& r3, const interval<T>& r4);
+
     //  op<<
 
     template <typename T>
@@ -205,6 +219,16 @@ namespace mln
     interval<T>::interval()
     {
     }
+
+    template <typename T>
+    interval<T>::interval(T single)
+    {
+      first_ = single;
+      last_ = single;
+
+      nvalues_ = 1;
+    }
+
 
     template <typename T>
     interval<T>::interval(T first, T last)
@@ -285,6 +309,18 @@ namespace mln
       return last_;
     }
 
+    template <typename T>
+    void
+    interval<T>::self_open()
+    {
+      mln_precondition(! is_degenerated());
+      mln_precondition(nvalues_ > 2);
+
+      first += iota<T>::value();
+      last_ -= iota<T>::value();
+      nvalues_ -= 2;
+    }
+
 
     //  comparison
 
@@ -302,8 +338,49 @@ namespace mln
       return ! (lhs == rhs);
     }
 
+    // thresholding
 
-    //  set ops
+    template <typename T, typename U>
+    inline
+    bool
+    operator<=(const interval<T>& i, const util::level_t<U>& v)
+    {
+      return i.first() <= v.value;
+    }
+
+    template <typename T, typename U>
+    inline
+    bool
+    operator>(const interval<T>& i, const util::level_t<U>& v)
+    {
+      return ! (i <= v);
+    }
+
+    template <typename T, typename U>
+    inline
+    bool
+    operator>=(const interval<T>& i, const util::level_t<U>& v)
+    {
+      return v.value <= i.last();
+    }
+
+    template <typename T, typename U>
+    inline
+    bool
+    operator<(const interval<T>& i, const util::level_t<U>& v)
+    {
+      return ! (i >= v);
+    }
+
+    template <typename T, typename U>
+    inline
+    bool
+    operator==(const interval<T>& i, const util::level_t<U>& v)
+    {
+      return i >= v && i <= v;
+    }
+
+    // set ops
 
     template <typename T>
     bool
@@ -355,6 +432,14 @@ namespace mln
     {
       return interval<T>(std::min(r1.first(), r2.first()),
 			 std::max(r1.last(), r2.last()));
+    }
+
+    template <typename T>
+    interval<T>
+    span(const interval<T>& r1, const interval<T>& r2,
+	 const interval<T>& r3, const interval<T>& r4)
+    {
+      return span(span(r1, r2), span(r3, r4));
     }
 
 
