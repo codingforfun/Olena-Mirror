@@ -28,6 +28,12 @@
 
 # include <mln/core/concept/value.hh>
 # include <mln/value/scalar.hh>
+# include <mln/data/transform.hh>
+# include <mln/fun/v2b/threshold_lt.hh>
+# include <mln/fun/v2b/threshold_le.hh>
+# include <mln/fun/v2b/threshold_gt.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
+# include <mln/fun/v2b/compare.hh>
 
 /// \file
 ///
@@ -55,21 +61,22 @@ namespace mln
 
     // Comparison Operators
 
-    template <typename T, typename U>
-    bool
-    operator<(const Object<T>& i, const level_t<U>& v);
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator<(const Image<I>& ima, const level_t<U>& v);
 
-    template <typename T, typename U>
-    bool
-    operator<(const level_t<U>& v, const Object<T>& i);
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator==(const Image<I>& ima, const level_t<U>& v);
 
-    template <typename T, typename U>
-    bool
-    operator==(const Object<T>& i, const level_t<U>& v);
 
-    template <typename T, typename U>
-    bool
-    operator==(const level_t<U>& v, const Object<T>& i);
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator>(const Image<I>& ima, const level_t<U>& v);
+
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator>=(const Image<I>& ima, const level_t<U>& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -80,6 +87,8 @@ namespace mln
     {
     }
 
+    // Helpers
+
     template <typename T>
     inline
     level_t<T> level(const T& value)
@@ -87,36 +96,42 @@ namespace mln
       return level_t<T>(value);
     }
 
-    template <typename T, typename U>
-    inline
-    bool
-    operator<(const Object<T>& i, const level_t<U>& v)
+
+    // Operators
+
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator<(const Image<I>& ima, const level_t<U>& v)
     {
-      return exact(i) < v.value;
+      return data::transform(ima, fun::v2b::threshold_lt<mln_value(I)>(v.value));
     }
 
-    template <typename T, typename U>
-    inline
-    bool
-    operator<(const level_t<U>& v, const Object<T>& i)
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator<=(const Image<I>& ima, const level_t<U>& v)
     {
-      return v.value < exact(i);
+      return data::transform(ima, fun::v2b::threshold_le<mln_value(I)>(v.value));
     }
 
-    template <typename T, typename U>
-    inline
-    bool
-    operator==(const Object<T>& i, const level_t<U>& v)
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator>(const Image<I>& ima, const level_t<U>& v)
     {
-      return exact(i) == v.value;
+      return data::transform(ima, fun::v2b::threshold_gt<mln_value(I)>(v.value));
     }
 
-    template <typename T, typename U>
-    inline
-    bool
-    operator==(const level_t<U>& v, const Object<T>& i)
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator>=(const Image<I>& ima, const level_t<U>& v)
     {
-      return v.value == exact(i);
+      return data::transform(ima, fun::v2b::threshold_ge<mln_value(I)>(v.value));
+    }
+
+    template <typename I, typename U>
+    mln_ch_value(I,bool)
+    operator==(const Image<I>& ima, const level_t<U>& v)
+    {
+      return data::transform(ima, fun::v2b::compare<mln_value(I)>(v.value));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

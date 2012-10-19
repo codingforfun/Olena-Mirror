@@ -23,20 +23,65 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <mln/core/image/image2d.hh>
+#include <mln/debug/iota.hh>
 #include <mln/util/level.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/data/compare.hh>
+#include <mln/make/image2d.hh>
 
 int main ()
 {
   using namespace mln;
 
-  util::level_t<int> l(3);
-  mln_assertion(2 < l);
-  mln_assertion(l > 2);
-  mln_assertion(l == 3);
+  bool vref_lt[] = {
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 0,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
+  };
+  image2d<bool> ref_lt = make::image2d(vref_lt);
 
-  value::int_u8 v = 4;
-  mln_assertion(!(v < l));
-  mln_assertion(v > l);
-  mln_assertion(!(v == l));
+  bool vref_le[] = {
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
+  };
+  image2d<bool> ref_le = make::image2d(vref_le);
+
+  bool vref_gt[] = {
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1
+  };
+  image2d<bool> ref_gt = make::image2d(vref_gt);
+
+  bool vref_ge[] = {
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1
+  };
+  image2d<bool> ref_ge = make::image2d(vref_ge);
+
+
+  image2d<unsigned> ima(5,5);
+  debug::iota(ima);
+
+  image2d<bool> imab_lt = (ima < util::level(15));
+  mln_assertion(imab_lt == ref_lt);
+
+  image2d<bool> imab_le = (ima <= util::level(15));
+  mln_assertion(imab_le == ref_le);
+
+  image2d<bool> imab_gt = (ima > util::level(15));
+  mln_assertion(imab_gt == ref_gt);
+
+  image2d<bool> imab_ge = (ima >= util::level(15));
+  mln_assertion(imab_ge == ref_ge);
 }

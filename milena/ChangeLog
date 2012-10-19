@@ -1,3 +1,11 @@
+2012-10-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Refine util::level operators.
+
+	* mln/util/level.hh: Add comparison operators with images.
+
+	* tests/util/level.cc: New tests.
+
 2012-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Let the user specify conversion functions in K2 immersion.
