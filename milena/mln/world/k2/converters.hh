@@ -166,7 +166,8 @@ namespace mln
       int
       interval_intsub_n_to_int<n>::operator()(const interval<intsub<n> >& from) const
       {
-	mln_precondition(from.is_degenerated());
+	if (!from.is_degenerated())
+	  abort();
 	return from.first();
       }
 
@@ -181,7 +182,8 @@ namespace mln
       value::int_u8
       interval_intsub_n_to_int_u8<n>::operator()(const interval<intsub<n> >& from) const
       {
-	mln_precondition(from.is_degenerated());
+	if (!from.is_degenerated())
+	  abort();
 	return from.first().to_interop();
       }
 
@@ -196,7 +198,8 @@ namespace mln
       intsub<n/2>
       interval_intsub_n_to_intsub_n_2<n>::operator()(const interval<intsub<n> >& from) const
       {
-	mln_precondition(from.is_degenerated());
+	if (!from.is_degenerated())
+	  abort();
 	return from.first().to_interop();
       }
 

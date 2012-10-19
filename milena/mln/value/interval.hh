@@ -313,7 +313,8 @@ namespace mln
     void
     interval<T>::self_open()
     {
-      mln_precondition(! is_degenerated());
+      if (is_degenerated())
+	abort();
       mln_precondition(nvalues_ > 2);
 
       first += iota<T>::value();
