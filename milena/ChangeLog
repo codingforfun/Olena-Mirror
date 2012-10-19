@@ -1,5 +1,13 @@
 2012-10-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New comparison functions.
+
+	* mln/fun/v2b/compare.hh,
+	* mln/fun/v2b/threshold_gt.hh,
+	* mln/fun/v2b/threshold_lt.hh: New.
+
+2012-10-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Force abort() on unsafe conversions.
 
 	* mln/value/interval.hh,
