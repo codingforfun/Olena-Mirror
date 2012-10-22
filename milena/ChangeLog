@@ -1,5 +1,13 @@
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Replace converters by safe_cast.
+
+	* mln/world/k2/converters.hh: Remove.
+
+	* mln/world/kn/safe_cast.hh: New.
+
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/value/interval.hh,
