@@ -33,6 +33,7 @@
 # include <cstdlib>
 # include <iostream>
 # include <sstream>
+# include <vector>
 # include <algorithm>
 # include <mln/core/routine/ops.hh>
 # include <mln/value/ops.hh>

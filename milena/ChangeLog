@@ -1,5 +1,14 @@
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/value/interval.hh,
+	* tests/value/interval.cc: Rename nvalues() to nelements().
+
+	* mln/value/intsub.hh: Add a missing include.
+
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add aliases for value::intsub.
 
 	* mln/value/intsub.hh

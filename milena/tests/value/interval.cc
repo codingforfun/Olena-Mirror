@@ -47,7 +47,7 @@ int main()
     R r(0, 0);
     assert(r.is_degenerated());
     assert(r.length() == 0);
-    assert(r.nvalues() == 1);
+    assert(r.nelements() == 1);
   }
 
   {
@@ -64,7 +64,7 @@ int main()
     R r(1, 5);
     assert(!r.is_degenerated());
     assert(r.length() == 4);
-    assert(r.nvalues() == 9);
+    assert(r.nelements() == 9);
 
     int ref_i = 2;
     for (intsub<2> v = r.first(); v <= r.last(); inc(v))

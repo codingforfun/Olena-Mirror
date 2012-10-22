@@ -43,6 +43,10 @@ namespace mln
   namespace value
   {
 
+    // Forward declaration.
+    template <unsigned n> class intsub;
+    template <unsigned n> class int_u;
+
     /// \brief Interval of values.
     template <typename T>
     class interval : public value::Interval<interval<T> >
@@ -70,7 +74,7 @@ namespace mln
       unsigned index_of(const T& v) const;
 
       /// Return the number of values in this interval.
-      unsigned nvalues() const;
+      unsigned nelements() const;
 
       /// Return True if this interval contains only one value.
       bool is_degenerated() const;
@@ -88,7 +92,7 @@ namespace mln
     private:
       T first_;
       T last_;
-      unsigned nvalues_;
+      unsigned nelements_;
     };
 
     //  comparison
@@ -184,6 +188,7 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const interval<T>& i);
 
+
   } // end of namespace mln::value
 
 } // end of namespace mln
@@ -226,7 +231,7 @@ namespace mln
       first_ = single;
       last_ = single;
 
-      nvalues_ = 1;
+      nelements_ = 1;
     }
 
 
@@ -237,9 +242,9 @@ namespace mln
       first_ = first;
       last_ = last;
 
-      nvalues_ = 0;
+      nelements_ = 0;
       for (T v = first_; v <= last_; value::inc(v))
-	++nvalues_;
+	++nelements_;
     }
 
     template <typename T>
@@ -269,7 +274,7 @@ namespace mln
     T
     interval<T>::ith_element(unsigned i) const
     {
-      mln_precondition(i < nvalues());
+      mln_precondition(i < nelements());
       return first_ + i * iota<T>::value();
     }
 
@@ -283,9 +288,9 @@ namespace mln
 
     template <typename T>
     unsigned
-    interval<T>::nvalues() const
+    interval<T>::nelements() const
     {
-      return nvalues_;
+      return nelements_;
     }
 
     template <typename T>
@@ -315,11 +320,11 @@ namespace mln
     {
       if (is_degenerated())
 	abort();
-      mln_precondition(nvalues_ > 2);
+      mln_precondition(nelements_ > 2);
 
       first += iota<T>::value();
       last_ -= iota<T>::value();
-      nvalues_ -= 2;
+      nelements_ -= 2;
     }
 
 
