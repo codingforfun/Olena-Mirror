@@ -20,4 +20,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   binary_2d 					\
   inter_pixel					\
-  k1
+  k1						\
+  k2 						\
+  kn

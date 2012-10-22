@@ -25,13 +25,13 @@
 
 /// \file
 ///
-/// \brief Fill 1 faces in a K1 2D image using its primary faces.
+/// \brief Check if site is a 1 face.
 
-#ifndef MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
-# define MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
+#ifndef MLN_WORLD_KN_IS_1_FACE_HORIZONTAL_HH
+# define MLN_WORLD_KN_IS_1_FACE_HORIZONTAL_HH
 
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/kn/fill_0_from_2_faces.hh>
+# include <mln/world/kn/is_1_face.hh>
 
 
 namespace mln
@@ -40,70 +40,40 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace kn
     {
 
-      /*! \brief Fill 0 faces in a K1 2D image using its primary faces.
+      /// \brief Check if site is a 1 face
+      bool is_1_face_horizontal(const point2d& p);
 
-	\param[in,out] inout A 2D image immersed in K1.
-	\param[in,out] f A functor computing a result from four values.
-
-	This function use the following neighborhood:
-
-	\verbatim
-	      x   x
-	        .
-	      x   x
-	\endverbatim
-
-
-       */
-      template <typename I, typename F>
-      void fill_0_from_primary_faces(Image<I>& inout, Function_vvvv2v<F>& f);
 
       /// \overload
-      template <typename I, typename A>
-      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu);
-
+      bool is_1_face_horizontal(const mln::def::coord& row,
+				const mln::def::coord& col);
 
 # ifndef MLN_INCLUDE_ONLY
 
 
       // Facade
 
-
-      template <typename I, typename F>
-      void fill_0_from_primary_faces(Image<I>& inout, Function_vvvv2v<F>& f)
+      inline
+      bool is_1_face_horizontal(const point2d& p)
       {
-	trace::entering("mln::world::k1::fill_0_from_primary_faces");
-
-	mln_precondition(exact(inout).is_valid());
-
-	kn::fill_0_from_2_faces(inout, f);
-
-	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
+	return is_1_face_horizontal(p.row(), p.col());
       }
 
-
-      template <typename I, typename A>
-      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu)
+      bool is_1_face_horizontal(const mln::def::coord& row,
+				const mln::def::coord& col)
       {
-	trace::entering("mln::world::k1::fill_0_from_primary_faces");
-
-	mln_precondition(exact(inout).is_valid());
-
-	kn::fill_0_from_2_faces(inout, accu);
-
-	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
+	return is_1_face(row, col) && col % 2 == 0;
       }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::kn
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
+#endif // ! MLN_WORLD_KN_IS_1_FACE_HORIZONTAL_HH

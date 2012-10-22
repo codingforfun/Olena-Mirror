@@ -26,7 +26,7 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/world/k1/immerse.hh>
+#include <mln/world/kn/immerse.hh>
 #include <mln/data/compare.hh>
 
 int main()
@@ -39,44 +39,51 @@ int main()
   };
   image2d<int> ima = make::image(ivals);
 
-  int vals[][5] = {
-    {0, 0, 0, 0, 0},
-    {0, 1, 0, 2, 0},
-    {0, 0, 0, 0, 0},
-    {0, 3, 0, 4, 0},
-    {0, 0, 0, 0, 0}
-  };
-  image2d<int> ref = make::image(vals, point2d(-1,-1));
-
-  int fvals[][5] = {
-    {5, 5, 5, 5, 5},
-    {5, 1, 5, 2, 5},
-    {5, 5, 5, 5, 5},
-    {5, 3, 5, 4, 5},
-    {5, 5, 5, 5, 5}
+  int fvals[][19] = {
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
+    {5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5},
+    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
   };
   image2d<int> ref_fill = make::image(fvals, point2d(-1,-1));
 
+
   {
-    image2d<int> immersed = world::k1::immerse(ima);
+    image2d<int> immersed = world::kn::immerse(ima, 4);
+
     mln_assertion(immersed.domain() == ref_fill.domain());
     mln_assertion(immersed(point2d(0,0)) == 1);
-    mln_assertion(immersed(point2d(0,2)) == 2);
-    mln_assertion(immersed(point2d(2,0)) == 3);
-    mln_assertion(immersed(point2d(2,2)) == 4);
+    mln_assertion(immersed(point2d(0,16)) == 2);
+    mln_assertion(immersed(point2d(16,0)) == 3);
+    mln_assertion(immersed(point2d(16,16)) == 4);
   }
 
   {
-    image2d<long> immersed = world::k1::immerse(ima, long());
+    image2d<long> immersed = world::kn::immerse(ima, 4, long());
     mln_assertion(immersed.domain() == ref_fill.domain());
     mln_assertion(immersed(point2d(0,0)) == 1);
-    mln_assertion(immersed(point2d(0,2)) == 2);
-    mln_assertion(immersed(point2d(2,0)) == 3);
-    mln_assertion(immersed(point2d(2,2)) == 4);
+    mln_assertion(immersed(point2d(0,16)) == 2);
+    mln_assertion(immersed(point2d(16,0)) == 3);
+    mln_assertion(immersed(point2d(16,16)) == 4);
   }
 
   {
-    image2d<long> immersed = world::k1::immerse(ima, long(), 5l);
+    image2d<long> immersed = world::kn::immerse(ima, 4, long(), 5l);
     mln_assertion(immersed == ref_fill);
   }
 

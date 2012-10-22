@@ -25,18 +25,14 @@
 
 /// \file
 ///
-/// \brief Immerse a 2D image into K1 and copy 2 faces data into 1
-/// faces.
+/// \brief Un-immerse a 2D image from K2 to K0.
 
-#ifndef MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH
-# define MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH
+
+#ifndef MLN_WORLD_K2_UN_IMMERSE_HH
+# define MLN_WORLD_K2_UN_IMMERSE_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/box.hh>
-# include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/immerse.hh>
-# include <mln/world/kn/is_1_face_vertical.hh>
-# include <mln/world/kn/is_1_face_horizontal.hh>
+# include <mln/world/kn/un_immerse.hh>
 
 namespace mln
 {
@@ -44,68 +40,75 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace k2
     {
 
-      /*! \brief Immerse a 2D image into K1 and copy 2 faces data into
-       *  1 faces.
+      /*! \brief Un-immerse a 2D image from K2 to K0.
 
-       Data is copied into 1 faces located at the bottom right of each
-       2 faces.
-
-	           -1 0 1 2 3
-	 0 1     -1 . a . d .
-       0 a d      0 a a a d d
-       1 b c  ->  1 . a . d .
-	          2 b b b c c
-	 	  3 . b . c .
+	\verbatim
+	-1 0 1 2 3 4 5 6 7
+	-1 . - . - . - . - .
+	0 | a |   | b |   |
+	1 . - . - . - . - .           0 1
+	2 |   |   |   |   |         0 a b
+	3 . - . - . - . - .    ->   1 c d
+	4 | c |   | d |   |
+	5 . - . - . - . - .
+	6 |   |   |   |   |
+	7 . - . - . - . - .
+	\endverbatim
 
        */
+      template <typename I, typename V>
+      mln_ch_value(I,V)
+      un_immerse(const Image<I>& ima, const V& new_value_type);
+
+      /// \overload
       template <typename I>
       mln_concrete(I)
-      immerse_and_duplicate_2_to_1_faces(const Image<I>& ima);
+      un_immerse(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      // Facade
 
-      template <typename I>
-      mln_concrete(I) immerse_and_duplicate_2_to_1_faces(const Image<I>& ima_)
+      template <typename I, typename V>
+      mln_ch_value(I,V)
+      un_immerse(const Image<I>& ima_, const V& new_value_type)
       {
-	trace::entering("mln::world::k1::immerse_and_duplicate_2_to_1_faces");
+	trace::entering("mln::world::k2::un_immerse");
 	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
 
-	mln_concrete(I) output = immerse(ima);
+	mln_ch_value(I,V) output = k2::un_immerse(ima, 2, new_value_type);
 
-	mln_piter(I) p(output.domain());
-	for_all(p)
-	  if (kn::is_1_face_vertical(p))
-	  {
-	    if (output.domain().has(p + left))
-	      output(p) = output(p + left);
-	    else // Handle left border
-	      output(p) = output(p + right);
-	  }
-	  else if (kn::is_1_face_horizontal(p))
-	  {
-	    if (output.domain().has(p + up))
-	      output(p) = output(p + up);
-	    else  // Handle top border
-	      output(p) = output(p + down);
-	  }
-
-	trace::exiting("mln::world::k1::immerse_and_duplicate_2_to_1_faces");
+	trace::exiting("mln::world::k2::un_immerse");
 	return output;
       }
 
+
+      template <typename I>
+      mln_concrete(I)
+      un_immerse(const Image<I>& ima_)
+      {
+	trace::entering("mln::world::k2::un_immerse");
+	mln_precondition(exact(ima_).is_valid());
+	const I& ima = exact(ima_);
+
+	mln_concrete(I) output = kn::un_immerse(ima, 2);
+
+	trace::exiting("mln::world::k2::un_immerse");
+	return output;
+      }
+
+
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::k2
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_IMMERSE_AND_DUPLICATE_2_TO_1_FACES_HH
+#endif // ! MLN_WORLD_K2_UN_IMMERSE_HH
+

@@ -26,61 +26,53 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
+#include <mln/world/k2/immerse.hh>
 #include <mln/data/compare.hh>
-#include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
-#include <mln/border/fill.hh>
-
-
-namespace mln
-{
-
-  struct sum_t : Function_vv2v<sum_t>
-  {
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2) const
-    {
-      return v1 + v2;
-    }
-
-  };
-
-}
-
-
 
 int main()
 {
   using namespace mln;
 
-  int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
+  int ivals[][2] = {
+    {1, 2},
+    {3, 4}
   };
-  image2d<int> ref = make::image(refvals, point2d(-1, -1));
+  image2d<int> ima = make::image(ivals);
 
-  int vals[5][5] = {
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
+  int fvals[][7] = {
+    {5, 5, 5, 5, 5, 5, 5},
+    {5, 1, 5, 5, 5, 2, 5},
+    {5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5},
+    {5, 5, 5, 5, 5, 5, 5},
+    {5, 3, 5, 5, 5, 4, 5},
+    {5, 5, 5, 5, 5, 5, 5}
   };
-  image2d<int> imakn = make::image(vals, point2d(-1, -1));
+  image2d<int> ref_fill = make::image(fvals, point2d(-1,-1));
 
-  /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
 
-  // Overload with function
   {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
-    mln_assertion(ref == imakn);
+    image2d<int> immersed = world::k2::immerse(ima);
+
+    mln_assertion(immersed.domain() == ref_fill.domain());
+    mln_assertion(immersed(point2d(0,0)) == 1);
+    mln_assertion(immersed(point2d(0,4)) == 2);
+    mln_assertion(immersed(point2d(4,0)) == 3);
+    mln_assertion(immersed(point2d(4,4)) == 4);
+  }
+
+  {
+    image2d<long> immersed = world::k2::immerse(ima, long());
+    mln_assertion(immersed.domain() == ref_fill.domain());
+    mln_assertion(immersed(point2d(0,0)) == 1);
+    mln_assertion(immersed(point2d(0,4)) == 2);
+    mln_assertion(immersed(point2d(4,0)) == 3);
+    mln_assertion(immersed(point2d(4,4)) == 4);
+  }
+
+  {
+    image2d<long> immersed = world::k2::immerse(ima, long(), 5l);
+    mln_assertion(immersed == ref_fill);
   }
 
 }

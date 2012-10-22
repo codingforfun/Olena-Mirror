@@ -1,5 +1,110 @@
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp khalimsky directory.
+
+	* mln/world/k1/immerse_with.hh,
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/k2/is_non_primary_2_face.hh,
+	* mln/world/k2/is_non_primary_2_face_center.hh,
+	* mln/world/k2/is_non_primary_2_face_horizontal.hh,
+	* mln/world/k2/is_non_primary_2_face_vertical.hh,
+	* mln/world/k2/is_primary_2_face.hh,
+	* mln/world/k2/un_immerse.hh,
+	* mln/world/kn/fill_0_1_faces_internal_border.hh,
+	* mln/world/kn/fill_0_from_1_faces.hh,
+	* mln/world/kn/fill_0_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh,
+	* mln/world/kn/fill_2_from_1_faces.hh,
+	* mln/world/kn/internal/face_dim.hh,
+	* mln/world/kn/internal/immerse_point.hh,
+	* mln/world/kn/is_0_face.hh,
+	* mln/world/kn/is_0_or_1_face.hh,
+	* mln/world/kn/is_1_face.hh,
+	* mln/world/kn/is_1_face_horizontal.hh,
+	* mln/world/kn/is_1_face_vertical.hh,
+	* mln/world/kn/is_2_face.hh,
+	* mln/world/kn/un_immerse.hh: New.
+
+	* mln/world/k1/fill_0_1_faces_internal_border.hh,
+	* mln/world/k1/fill_0_from_2_faces.hh,
+	* mln/world/k1/fill_1_from_aux_2_faces.hh,
+	* mln/world/k1/fill_2_from_1_faces.hh,
+	* mln/world/k1/is_0_face.hh,
+	* mln/world/k1/is_0_or_1_face.hh,
+	* mln/world/k1/is_1_face.hh,
+	* mln/world/k1/is_1_face_horizontal.hh,
+	* mln/world/k1/is_1_face_vertical.hh,
+	* mln/world/k1/is_2_face.hh,
+	* mln/world/k2/fill_0_from_1_faces.hh,
+	* mln/world/k2/fill_1_from_2_faces.hh,
+	* mln/world/k2/fill_non_primary_from_primary_faces.hh,
+	* mln/world/k2/immerse_with.hh,
+	* mln/world/k2/is_non_primary_face.hh,
+	* mln/world/k2/is_non_primary_face_cross.hh,
+	* mln/world/k2/is_non_primary_face_horizontal.hh,
+	* mln/world/k2/is_non_primary_face_vertical.hh,
+	* mln/world/k2/is_primary_face.hh: Remove.
+
+	* mln/world/k1/display_enlarged.hh,
+	* mln/world/k1/fill_0_from_1_faces.hh,
+	* mln/world/k1/fill_0_from_primary_faces.hh,
+	* mln/world/k1/fill_1_from_2_faces.hh,
+	* mln/world/k1/immerse.hh,
+	* mln/world/k1/immerse_and_duplicate_2_to_0_1_faces.hh,
+	* mln/world/k1/immerse_and_duplicate_2_to_1_faces.hh,
+	* mln/world/k1/internal/face_dim.hh,
+	* mln/world/kn/immerse.hh,
+	* mln/world/k1/is_primary_face.hh,
+	* mln/world/k1/un_immerse.hh,
+	* mln/world/k2/immerse.hh: Fix namespaces.
+
+	* tests/world/Makefile.am,
+	* tests/world/k1/Makefile.am,
+	* tests/world/k1/fill_0_from_1_faces.cc,
+	* tests/world/k1/fill_1_from_2_faces.cc,
+	* tests/world/k1/immerse.cc,
+	* tests/world/k1/un_immerse.cc: Update tests.
+
+	* tests/world/k1/fill_0_1_faces_internal_border.cc,
+	* tests/world/k1/fill_0_from_2_faces.cc,
+	* tests/world/k1/fill_1_from_aux_2_faces.cc,
+	* tests/world/k1/fill_2_from_1_faces.cc,
+	* tests/world/k1/is_0_face.cc,
+	* tests/world/k1/is_0_or_1_face.cc,
+	* tests/world/k1/is_1_face.cc,
+	* tests/world/k1/is_1_face_horizontal.cc,
+	* tests/world/k1/is_1_face_vertical.cc,
+	* tests/world/k1/is_2_face.cc: Remove.
+
+	* tests/world/k1/immerse_with.cc,
+	* tests/world/k2/Makefile.am,
+	* tests/world/k2/fill_non_primary_from_primary_2_faces.cc,
+	* tests/world/k2/immerse.cc,
+	* tests/world/k2/is_non_primary_2_face.cc,
+	* tests/world/k2/is_non_primary_2_face_center.cc,
+	* tests/world/k2/is_non_primary_2_face_horizontal.cc,
+	* tests/world/k2/is_non_primary_2_face_vertical.cc,
+	* tests/world/k2/is_primary_2_face.cc,
+	* tests/world/k2/un_immerse.cc,
+	* tests/world/kn/Makefile.am,
+	* tests/world/kn/fill_0_1_faces_internal_border.cc,
+	* tests/world/kn/fill_0_from_1_faces.cc,
+	* tests/world/kn/fill_0_from_2_faces.cc,
+	* tests/world/kn/fill_1_from_2_faces.cc,
+	* tests/world/kn/fill_1_from_aux_2_faces.cc,
+	* tests/world/kn/fill_2_from_1_faces.cc,
+	* tests/world/kn/immerse.cc,
+	* tests/world/kn/is_0_face.cc,
+	* tests/world/kn/is_0_or_1_face.cc,
+	* tests/world/kn/is_1_face.cc,
+	* tests/world/kn/is_1_face_horizontal.cc,
+	* tests/world/kn/is_1_face_vertical.cc,
+	* tests/world/kn/is_2_face.cc,
+	* tests/world/kn/un_immerse.cc: New.
+
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Replace converters by safe_cast.
 
 	* mln/world/k2/converters.hh: Remove.

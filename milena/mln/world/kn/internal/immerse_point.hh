@@ -24,63 +24,67 @@
 // executable file might be covered by the GNU General Public License.
 
 /// \file
+///
+/// \brief Returns the corresponding point in Kn from a point in K0.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
-#include <mln/data/compare.hh>
-#include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
-#include <mln/border/fill.hh>
+#ifndef MLN_WORLD_KN_IMMERSE_POINT_HH
+# define MLN_WORLD_KN_IMMERSE_POINT_HH
 
+# include <mln/core/alias/point2d.hh>
 
 namespace mln
 {
 
-  struct sum_t : Function_vv2v<sum_t>
+  namespace world
   {
-    typedef int result;
 
-    int operator()(const int& v1, const int& v2) const
+    namespace kn
     {
-      return v1 + v2;
-    }
 
-  };
-
-}
+      namespace internal
+      {
 
 
+	/// \brief Returns the corresponding point in Kn from a point
+	/// in K0.
+	point2d	immerse_point(const def::coord& row,
+			      const def::coord& col,
+			      const unsigned n);
 
-int main()
-{
-  using namespace mln;
+	/// \overload
+	point2d	immerse_point(const point2d& p, const unsigned n);
 
-  int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
-  };
-  image2d<int> ref = make::image(refvals, point2d(-1, -1));
 
-  int vals[5][5] = {
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
-  };
-  image2d<int> imakn = make::image(vals, point2d(-1, -1));
+# ifndef MLN_INCLUDE_ONLY
 
-  /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
 
-  // Overload with function
-  {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
-    mln_assertion(ref == imakn);
-  }
+	inline
+	point2d	immerse_point(const point2d& p, const unsigned n)
+	{
+	  return immerse_point(p.row(), p.col(), n);
+	}
 
-}
+
+	inline
+	point2d	immerse_point(const def::coord& row,
+			      const def::coord& col,
+			      const unsigned n)
+	{
+	  point2d tmp(std::pow(2u, n) * row, std::pow(2u, n) * col);
+	  return tmp;
+	}
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+      } // end of namespace mln::work::kn::internal
+
+    } // end of namespace mln::world::kn
+
+  } // end of namespace mln::world
+
+} // end of namespace mln
+
+#endif // ! MLN_WORLD_KN_IMMERSE_POINT_HH
+
+

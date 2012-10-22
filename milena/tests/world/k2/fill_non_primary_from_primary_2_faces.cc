@@ -29,15 +29,26 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
-#include <mln/border/fill.hh>
-
+#include <mln/world/k2/fill_non_primary_from_primary_2_faces.hh>
 
 namespace mln
 {
 
-  struct sum_t : Function_vv2v<sum_t>
+  struct sum4_t : Function_vvvv2v<sum4_t>
   {
+    typedef int argument;
+    typedef int result;
+
+    int operator()(const int& v1, const int& v2, const int& v3, const int& v4) const
+    {
+      return v1 + v2 + v3 + v4;
+    }
+
+  };
+
+  struct sum2_t : Function_vv2v<sum2_t>
+  {
+    typedef int argument;
     typedef int result;
 
     int operator()(const int& v1, const int& v2) const
@@ -55,32 +66,40 @@ int main()
 {
   using namespace mln;
 
-  int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
+  int refvals[][7] = {
+    {0, 0, 0, 0,  0, 0, 0},
+    {0, 1, 0, 3,  0, 2, 0},
+    {0, 0, 0, 0,  0, 0, 0},
+    {0, 4, 0, 10, 0, 6, 0},
+    {0, 0, 0, 0,  0, 0, 0},
+    {0, 3, 0, 7,  0, 4, 0},
+    {0, 0, 0, 0,  0, 0, 0}
   };
   image2d<int> ref = make::image(refvals, point2d(-1, -1));
 
-  int vals[5][5] = {
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
+  int vals[][7] = {
+    {0, 0, 0, 0, 0, 0, 0},
+    {0, 1, 0, 0, 0, 2, 0},
+    {0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0},
+    {0, 3, 0, 0, 0, 4, 0},
+    {0, 0, 0, 0, 0, 0, 0}
   };
-  image2d<int> imakn = make::image(vals, point2d(-1, -1));
 
-  /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
+  // Overload with accumulator
+  {
+    image2d<int> ima = make::image(vals, point2d(-1,-1));
+    accu::math::sum<int> accu;
+    world::k2::fill_non_primary_from_primary_2_faces(ima, accu);
+    mln_assertion(ref == ima);
+  }
 
   // Overload with function
   {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
-    mln_assertion(ref == imakn);
+    image2d<int> ima = make::image(vals, point2d(-1,-1));
+    world::k2::fill_non_primary_from_primary_2_faces(ima, sum2_t(), sum4_t());
+    mln_assertion(ref == ima);
   }
 
 }

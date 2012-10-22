@@ -25,15 +25,18 @@
 
 /// \file
 ///
-/// \brief Un-immerse a 2D image from K1 to K0.
+/// \brief Un-immerse a 2D image from KN to K0.
 
 
-#ifndef MLN_WORLD_K1_UN_IMMERSE_HH
-# define MLN_WORLD_K1_UN_IMMERSE_HH
+#ifndef MLN_WORLD_KN_UN_IMMERSE_HH
+# define MLN_WORLD_KN_UN_IMMERSE_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/world/kn/un_immerse.hh>
-
+# include <mln/core/concept/box.hh>
+# include <mln/core/alias/point2d.hh>
+# include <mln/world/kn/is_2_face.hh>
+# include <mln/world/kn/safe_cast.hh>
+# include <mln/world/kn/internal/immerse_point.hh>
 
 namespace mln
 {
@@ -41,73 +44,101 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace kn
     {
 
-      /*! \brief Un-immerse a 2D image from K1 to K0.
+      /*! \brief Un-immerse a 2D image from Kn to K0.
 
+	Example with n = 1:
 	\verbatim
-
 	  -1 0 1 2 3
 	-1 . - . - .            0 1
-	 0 | a | b |          0 a b
-	 1 . - . - .      ->  1 c d
-	 2 | c | d |
+	 0 | o | o |          0 o o
+	 1 . - . - .      ->  1 o o
+	 2 | o | o |
 	 3 . - . - .
-
 	\endverbatim
 
        */
       template <typename I, typename V>
       mln_ch_value(I,V)
-      un_immerse(const Image<I>& ima, const V& new_value_type);
+      un_immerse(const Image<I>& ima_, unsigned n,
+		 const V& new_value_type);
 
       /// \overload
       template <typename I>
       mln_concrete(I)
-      un_immerse(const Image<I>& ima);
+      un_immerse(const Image<I>& ima, unsigned n);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+      namespace internal
+      {
+
+	/// Return the equivalent point in Kn from a point in K0.
+	inline
+	point2d
+	un_immerse_point(const point2d& p, const unsigned n)
+	{
+	  point2d tmp(p.row() / std::pow(2u, n), p.col() / std::pow(2u, n));
+	  return tmp;
+	}
+
+	/// \brief Return the equivalent domain in K0 from a domain in
+	/// Kn.
+	template <typename B>
+	inline
+	B
+	domain_K0_from_Kn(const Box<B>& b_, const unsigned n)
+	{
+	  mln_precondition(exact(b_).is_valid());
+	  const B& b = exact(b_);
+	  return B(un_immerse_point(b.pmin(), n),
+		   un_immerse_point(b.pmax(), n));
+	}
+
+      } // end of namespace mln::world::kn::internal
+
+
+
 
       template <typename I, typename V>
       mln_ch_value(I,V)
-      un_immerse(const Image<I>& ima_, const V& new_value_type)
+      un_immerse(const Image<I>& ima_, unsigned n,
+		 const V& new_value_type)
       {
-	trace::entering("mln::world::k1::un_immerse");
+	trace::entering("mln::world::kn::un_immerse");
 	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
+	(void) new_value_type;
 
-	mln_ch_value(I,V) output = kn::un_immerse(ima, 2, new_value_type);
+	mln_concrete(I) output(internal::domain_K0_from_Kn(ima.domain(), n));
 
-	trace::exiting("mln::world::k1::un_immerse");
+	mln_piter(I) p(output.domain());
+	for_all(p)
+	  output(p) = safe_cast(ima(internal::immerse_point(p, n)));
+
+	trace::exiting("mln::world::kn::un_immerse");
 	return output;
       }
 
 
       template <typename I>
       mln_concrete(I)
-      un_immerse(const Image<I>& ima_)
+      un_immerse(const Image<I>& ima, unsigned n)
       {
-	trace::entering("mln::world::k1::un_immerse");
-	mln_precondition(exact(ima_).is_valid());
-	const I& ima = exact(ima_);
-
-	mln_concrete(I) output = kn::un_immerse(ima, 1);
-
-	trace::exiting("mln::world::k1::un_immerse");
-	return output;
+	typedef mln_value(I) V;
+	return un_immerse(ima, n, V());
       }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::kn
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_UN_IMMERSE_HH
+#endif // ! MLN_WORLD_KN_UN_IMMERSE_HH
 

@@ -24,63 +24,61 @@
 // executable file might be covered by the GNU General Public License.
 
 /// \file
+///
+/// \brief Returns the dimension of site in KN.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
-#include <mln/data/compare.hh>
-#include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
-#include <mln/border/fill.hh>
+#ifndef MLN_WORLD_KN_FACE_DIM_HH
+# define MLN_WORLD_KN_FACE_DIM_HH
 
+# include <mln/core/alias/point2d.hh>
 
 namespace mln
 {
 
-  struct sum_t : Function_vv2v<sum_t>
+  namespace world
   {
-    typedef int result;
 
-    int operator()(const int& v1, const int& v2) const
+    namespace kn
     {
-      return v1 + v2;
-    }
 
-  };
+      namespace internal
+      {
 
-}
+	/// \brief Returns the dimension of site in KN.
+	unsigned face_dim(const point2d& p);
+
+	/// \overload
+	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col);
 
 
+# ifndef MLN_INCLUDE_ONLY
 
-int main()
-{
-  using namespace mln;
 
-  int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
-  };
-  image2d<int> ref = make::image(refvals, point2d(-1, -1));
+	// Facade
 
-  int vals[5][5] = {
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
-  };
-  image2d<int> imakn = make::image(vals, point2d(-1, -1));
+	inline
+	unsigned face_dim(const point2d& p)
+	{
+	  return face_dim(p.row(), p.col());
+	}
 
-  /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
+	inline
+	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col)
+	{
+	  return (row % 2 == 0) + (col % 2 == 0);
+	}
 
-  // Overload with function
-  {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
-    mln_assertion(ref == imakn);
-  }
 
-}
+# endif // ! MLN_INCLUDE_ONLY
+
+      } // end of namespace mln::work::kn::internal
+
+    } // end of namespace mln::world::kn
+
+  } // end of namespace mln::world
+
+} // end of namespace mln
+
+#endif // ! MLN_WORLD_KN_FACE_DIM_HH
+
+

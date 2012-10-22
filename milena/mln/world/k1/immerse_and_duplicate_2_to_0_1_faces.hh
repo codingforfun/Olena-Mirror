@@ -35,9 +35,9 @@
 # include <mln/core/concept/box.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/k1/immerse.hh>
-# include <mln/world/k1/is_1_face_vertical.hh>
-# include <mln/world/k1/is_1_face_horizontal.hh>
-# include <mln/world/k1/is_0_face.hh>
+# include <mln/world/kn/is_1_face_vertical.hh>
+# include <mln/world/kn/is_1_face_horizontal.hh>
+# include <mln/world/kn/is_0_face.hh>
 
 
 namespace mln
@@ -83,21 +83,21 @@ namespace mln
 
 	mln_piter(I) p(output.domain());
 	for_all(p)
-	  if (is_1_face_vertical(p))
+	  if (kn::is_1_face_vertical(p))
 	  {
 	    if (output.domain().has(p + left))
 	      output(p) = output(p + left);
 	    else // Handle left border
 	      output(p) = output(p + right);
 	  }
-	  else if (is_1_face_horizontal(p))
+	  else if (kn::is_1_face_horizontal(p))
 	  {
 	    if (output.domain().has(p + up))
 	      output(p) = output(p + up);
 	    else  // Handle top border
 	      output(p) = output(p + down);
 	  }
-	  else if (is_0_face(p))
+	  else if (kn::is_0_face(p))
 	  {
 	    if (output.domain().has(p + up_left))
 	      output(p) = output(p + up_left);

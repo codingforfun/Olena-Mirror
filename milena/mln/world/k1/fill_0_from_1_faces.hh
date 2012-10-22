@@ -31,7 +31,9 @@
 # define MLN_WORLD_K1_FILL_0_FROM_1_FACES_HH
 
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/k1/is_0_face.hh>
+# include <mln/world/kn/is_0_face.hh>
+# include <mln/world/kn/is_1_face_vertical.hh>
+# include <mln/world/kn/is_1_face_horizontal.hh>
 
 
 namespace mln
@@ -46,24 +48,27 @@ namespace mln
       /*! \brief Fill 1 faces in a K1 2D image using its 2 faces.
 
 	\param[in,out] inout A 2D image immersed in K1.
-	\param[in,out] f A functor computing a result from four values.
+	\param[in,out] f A functor computing a result from two values.
 
-	This function use the following neighborhood:
+	This function use the following neighborhoods:
+
+	* In case of vertical 1 faces:
 
 	\verbatim
-	        |
-	       -.-
-		|
+	      x | x
 	\endverbatim
 
+	* In case of horizontal 1 face:
+
+	\verbatim
+	        x
+		-
+		x
+	\endverbatim
 
        */
       template <typename I, typename F>
-      void fill_0_from_1_faces(Image<I>& inout, Function_vvvv2v<F>& f);
-
-      /// \overload
-      template <typename I, typename A>
-      void fill_0_from_1_faces(Image<I>& inout, const Accumulator<A>& accu);
+      void fill_0_from_1_faces(Image<I>& inout, const Function_vvvv2v<F>& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,44 +78,19 @@ namespace mln
 
 
       template <typename I, typename F>
-      void fill_0_from_1_faces(Image<I>& inout_, Function_vvvv2v<F>& f_)
+      void fill_0_from_1_faces(Image<I>& inout_, const Function_vvvv2v<F>& f_)
       {
 	trace::entering("mln::world::k1::fill_0_from_1_faces");
 
 	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
-	F& f = exact(f_);
+	const F& f = exact(f_);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
-	  if (is_0_face(p))
-	    inout(p) = f(inout(p + up), inout(p + left), inout(p + right), inout(p + down));
-
-	trace::exiting("mln::world::k1::fill_0_from_1_faces");
-      }
-
-
-      template <typename I, typename A>
-      void fill_0_from_1_faces(Image<I>& inout_, const Accumulator<A>& accu_)
-      {
-	trace::entering("mln::world::k1::fill_0_from_1_faces");
-
-	mln_precondition(exact(inout_).is_valid());
-	I& inout = exact(inout_);
-	(void) accu_;
-
-	A accu = A();
-	mln_piter(I) p(inout.domain());
-	for_all(p)
-	  if (is_0_face(p))
-	  {
-	    accu.init();
-	    accu.take(inout(p + up));
-	    accu.take(inout(p + left));
-	    accu.take(inout(p + right));
-	    accu.take(inout(p + down));
-	    inout(p) = accu.to_result();
-	  }
+	  if (kn::is_0_face(p))
+	    inout(p) = f(inout(p + up), inout(p + left),
+			 inout(p + right), inout(p + down));
 
 	trace::exiting("mln::world::k1::fill_0_from_1_faces");
       }

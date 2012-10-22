@@ -29,7 +29,7 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
+#include <mln/world/kn/fill_1_from_aux_2_faces.hh>
 #include <mln/border/fill.hh>
 
 
@@ -56,13 +56,23 @@ int main()
   using namespace mln;
 
   int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
+    {1, 1, 1, 4, 1},
+    {1, 3, 5, 3, 4},
+    {1, 5, 1, 5, 1},
+    {4, 3, 5, 3, 1},
+    {1, 4, 1, 1, 1}
   };
   image2d<int> ref = make::image(refvals, point2d(-1, -1));
+
+  int auxvals[5][5] = {
+    {0, 0, 0, 0, 0 },
+    {0, 1, 0, 4, 0 },
+    {0, 0, 0, 0, 0 },
+    {0, 4, 0, 1, 0 },
+    {0, 0, 0, 0, 1 }
+  };
+  image2d<int> aux = make::image(auxvals, point2d(-1, -1));
+
 
   int vals[5][5] = {
     {1, 0, 1, 0, 1 },
@@ -76,10 +86,18 @@ int main()
   /// Make sure the border is set to 0 to get deterministic results.
   border::fill(imakn, 0);
 
+
+  // Overload with accumulator
+  {
+    accu::math::sum<int> accu;
+    world::kn::fill_1_from_aux_2_faces(imakn, aux, accu);
+    mln_assertion(ref == imakn);
+  }
+
   // Overload with function
   {
     sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
+    world::kn::fill_1_from_aux_2_faces(imakn, aux, f);
     mln_assertion(ref == imakn);
   }
 

@@ -27,20 +27,14 @@
 ///
 /// \brief Immerse a 2D image into Kn.
 
-#ifndef MLN_WORLD_Kn_IMMERSE_HH
-# define MLN_WORLD_Kn_IMMERSE_HH
+#ifndef MLN_WORLD_KN_IMMERSE_HH
+# define MLN_WORLD_KN_IMMERSE_HH
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/box.hh>
-# include <mln/core/alias/point2d.hh>
-# include <mln/value/interval.hh>
-# include <mln/fun/vv2v/span.hh>
-# include <mln/fun/vvvv2v/span.hh>
 
-# include <mln/world/k1/fill_0_from_1_faces.hh>
-# include <mln/world/k1/fill_1_from_2_faces.hh>
-
-# include <mln/world/k2/converters.hh>
+# include <mln/world/kn/internal/immerse_point.hh>
+# include <mln/world/kn/safe_cast.hh>
 
 namespace mln
 {
@@ -55,7 +49,7 @@ namespace mln
 
 	\param[in] ima 2D Image in K0.
 	\param[in] n Set in which space to immerse \p ima (ex: n=1 => k1).
-	\param[in] new_type Value type of the immersed image.
+	\param[in] new_value_type Value type of the immersed image.
 
 	\return A 2D image immersed in k\p n of value type \tparam V.
 
@@ -65,17 +59,26 @@ namespace mln
 
 	           -1 0 1 2 3
 	 0 1     -1 . - . - .
-       0 o o      0 | o | o |
-       1 o o  ->  1 . - . - .
-	          2 | o | o |
+       0 a b      0 | a | b |
+       1 c d  ->  1 . - . - .
+	          2 | c | d |
 	 	  3 . - . - .
 
 	\endverbatim
 
        */
-      template <typename I, typename V, typename F>
+      template <typename I, typename V>
       mln_ch_value(I, V)
-      immerse(const Image<I>& ima_, const unsigned n, const V& new_type, const F& converter_);
+      immerse(const Image<I>& ima, const unsigned n,
+	      const V& new_value_type);
+
+      /// \overload
+      /// \param[in] default_value 0, 1 and non-primary 2-faces values
+      /// are initialized with this value.
+      template <typename I, typename V>
+      mln_ch_value(I, V)
+      immerse(const Image<I>& ima, const unsigned n,
+	      const V& new_value_type, const V& default_value);
 
       /// \overload
       template <typename I>
@@ -88,14 +91,6 @@ namespace mln
       namespace internal
       {
 
-	/// Return the equivalent point in Kn from a point in K0.
-	inline
-	point2d immerse_point(const point2d& p, const unsigned n)
-	{
-	  point2d tmp(std::pow(2u, n) * p.row(), std::pow(2u, n) * p.col());
-	  return tmp;
-	}
-
 	/// \brief Return the equivalent domain in Kn from a domain in
 	/// K0.
 	template <typename B>
@@ -107,25 +102,24 @@ namespace mln
 
 	  mln_deduce(B, site, delta) one;
 	  one.set_all(1);
-	  return B(immerse_point(b.pmin(), n) - one, immerse_point(b.pmax(), n) + one);
+	  return B(immerse_point(b.pmin(), n) - one,
+		   immerse_point(b.pmax(), n) + one);
 	}
 
       } // end of namespace mln::world::kn::internal
 
 
 
-      // Facade
 
-      template <typename I, typename V, typename F>
+      template <typename I, typename V>
       mln_ch_value(I, V)
       immerse(const Image<I>& ima_, const unsigned n,
-	      const V& new_type, const F& converter_)
+	      const V& new_value_type)
       {
-	trace::entering("mln::world::kn::immerse_with");
+	trace::entering("mln::world::kn::immerse");
 	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
-	const F& converter = exact(converter_);
-	(void) new_type;
+	(void) new_value_type;
 
 	mln_ch_value(I,V)
 	  output(internal::domain_from_K0(ima.domain(), n));
@@ -133,22 +127,43 @@ namespace mln
 	// Filling Primary 2-Faces
 	mln_piter(I) p(ima.domain());
 	for_all(p)
-	{
-	  V tmp;
-	  tmp = converter(ima(p));
-	  output(internal::immerse_point(p, n)) = tmp;
-	}
+	  output(internal::immerse_point(p, n)) = safe_cast(ima(p));
 
-	trace::exiting("mln::world::kn::immerse_with");
+	trace::exiting("mln::world::kn::immerse");
 	return output;
       }
+
+
+      template <typename I, typename V>
+      mln_ch_value(I, V)
+      immerse(const Image<I>& ima_, const unsigned n,
+	      const V& new_value_type, const V& default_value)
+      {
+	trace::entering("mln::world::kn::immerse");
+	mln_precondition(exact(ima_).is_valid());
+	const I& ima = exact(ima_);
+	(void) new_value_type;
+
+	mln_ch_value(I,V)
+	  output(internal::domain_from_K0(ima.domain(), n));
+	data::fill(output, default_value);
+
+	// Filling Primary 2-Faces
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  output(internal::immerse_point(p, n)) = safe_cast(ima(p));
+
+	trace::exiting("mln::world::kn::immerse");
+	return output;
+      }
+
 
       template <typename I>
       mln_concrete(I)
       immerse(const Image<I>& ima, const unsigned n)
       {
 	typedef mln_value(I) V;
-	return immerse(ima, n, V(), k2::generic_converter<V,V>());
+	return immerse(ima, n, V());
       }
 
 
@@ -160,4 +175,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_Kn_IMMERSE_HH
+#endif // ! MLN_WORLD_KN_IMMERSE_HH

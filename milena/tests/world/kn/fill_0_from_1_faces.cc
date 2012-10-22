@@ -29,26 +29,8 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
+#include <mln/world/kn/fill_0_from_1_faces.hh>
 #include <mln/border/fill.hh>
-
-
-namespace mln
-{
-
-  struct sum_t : Function_vv2v<sum_t>
-  {
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2) const
-    {
-      return v1 + v2;
-    }
-
-  };
-
-}
-
 
 
 int main()
@@ -56,31 +38,32 @@ int main()
   using namespace mln;
 
   int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
+    {2, 1, 3, 1, 2},
+    {1, 0, 1, 0, 1},
+    {3, 1, 4, 1, 3},
+    {1, 0, 1, 0, 1},
+    {2, 1, 3, 1, 2}
   };
   image2d<int> ref = make::image(refvals, point2d(-1, -1));
 
   int vals[5][5] = {
+    {0, 1, 0, 1, 0 },
     {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
+    {0, 1, 0, 1, 0 },
     {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
+    {0, 1, 0, 1, 0 }
   };
-  image2d<int> imakn = make::image(vals, point2d(-1, -1));
+  image2d<int> imak1 = make::image(vals, point2d(-1, -1));
 
   /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
+  border::fill(imak1, 0);
 
-  // Overload with function
+
+  // Overload with accumulator
   {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
-    mln_assertion(ref == imakn);
+    accu::math::sum<int> accu;
+    world::kn::fill_0_from_1_faces(imak1, accu);
+    mln_assertion(ref == imak1);
   }
 
 }

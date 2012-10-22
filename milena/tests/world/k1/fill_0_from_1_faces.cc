@@ -76,14 +76,6 @@ int main()
   /// Make sure the border is set to 0 to get deterministic results.
   border::fill(imak1, 0);
 
-
-  // Overload with accumulator
-  {
-    accu::math::sum<int> accu;
-    world::k1::fill_0_from_1_faces(imak1, accu);
-    mln_assertion(ref == imak1);
-  }
-
   // Overload with function
   {
     sum_t f;

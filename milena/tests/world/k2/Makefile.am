@@ -17,26 +17,22 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  display_enlarged				\
-  fill_0_from_1_faces 				\
-  fill_1_from_2_faces				\
-  fill_0_from_primary_faces			\
+  fill_non_primary_from_primary_2_faces		\
+  is_non_primary_2_face				\
+  is_non_primary_2_face_center			\
+  is_non_primary_2_face_horizontal		\
+  is_non_primary_2_face_vertical		\
+  is_primary_2_face				\
   immerse					\
-  immerse_with					\
-  immerse_and_duplicate_2_to_1_faces		\
-  immerse_and_duplicate_2_to_0_1_faces		\
-  is_primary_face				\
   un_immerse
 
-display_enlarged_SOURCES = display_enlarged.cc
-fill_0_from_1_faces_SOURCES = fill_0_from_1_faces.cc
-fill_1_from_2_faces_SOURCES = fill_1_from_2_faces.cc
-fill_0_from_primary_faces_SOURCES = fill_0_from_primary_faces.cc
+fill_non_primary_from_primary_2_faces_SOURCES = fill_non_primary_from_primary_2_faces.cc
+is_non_primary_2_face_SOURCES = is_non_primary_2_face.cc
+is_non_primary_2_face_center_SOURCES = is_non_primary_2_face_center.cc
+is_non_primary_2_face_horizontal_SOURCES = is_non_primary_2_face_horizontal.cc
+is_non_primary_2_face_vertical_SOURCES = is_non_primary_2_face_vertical.cc
+is_primary_2_face_SOURCES = is_primary_2_face.cc
 immerse_SOURCES = immerse.cc
-immerse_with_SOURCES = immerse_with.cc
-immerse_and_duplicate_2_to_1_faces_SOURCES = immerse_and_duplicate_2_to_1_faces.cc
-immerse_and_duplicate_2_to_0_1_faces_SOURCES = immerse_and_duplicate_2_to_0_1_faces.cc
-is_primary_face_SOURCES = is_primary_face.cc
 un_immerse_SOURCES = un_immerse.cc
 
 TESTS = $(check_PROGRAMS)

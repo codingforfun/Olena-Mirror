@@ -29,7 +29,7 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
-#include <mln/world/k1/fill_1_from_2_faces.hh>
+#include <mln/world/kn/fill_1_from_2_faces.hh>
 #include <mln/border/fill.hh>
 
 
@@ -76,10 +76,11 @@ int main()
   /// Make sure the border is set to 0 to get deterministic results.
   border::fill(imakn, 0);
 
-  // Overload with function
+
+  // Overload with accumulator
   {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
+    accu::math::sum<int> accu;
+    world::kn::fill_1_from_2_faces(imakn, accu);
     mln_assertion(ref == imakn);
   }
 

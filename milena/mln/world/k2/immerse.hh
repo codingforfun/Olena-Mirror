@@ -31,8 +31,7 @@
 # define MLN_WORLD_K2_IMMERSE_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/box.hh>
-# include <mln/core/alias/point2d.hh>
+# include <mln/world/kn/immerse.hh>
 
 namespace mln
 {
@@ -45,72 +44,86 @@ namespace mln
 
       /*! \brief Immerse a 2D image into K2.
 
+	\param[in] ima A 2D image.
+	\param[in] new_value_type An instance of the value type used
+	in the resulting immersed image.
+
+	\return A 2D image immersed in K2 of type \tparam V.
+
 	\verbatim
-
-	           -1 0 1 2 3
-	 0 1     -1 . - . - .
-       0 o o      0 | o | o |
-       1 o o  ->  1 . - . - .
-	          2 | o | o |
-	 	  3 . - . - .
-
+	           -1 0 1 2 3 4 5 6 7
+	 0 1     -1 . - . - . - . - .
+       0 a b      0 | a |   | b |   |
+       1 c d  ->  1 . - . - . - . - .
+                  2 |   |   |   |   |
+		  3 . - . - . - . - .
+	          4 | c |   | d |   |
+	 	  5 . - . - . - . - .
+		  6 |   |   |   |   |
+		  7 . - . - . - . - .
 	\endverbatim
 
        */
+      template <typename I, typename V>
+      mln_ch_value(I, V)
+      immerse(const Image<I>& ima, const V& new_value_type);
+
+      /// \overload
       template <typename I>
-      mln_concrete(I) immerse(const Image<I>& ima);
+      mln_concrete(I)
+      immerse(const Image<I>& ima);
+
+      /// \overload
+      /// 0, 1 and non-primary 2-faces values are set to \p
+      /// default_value.
+      template <typename I, typename V>
+      mln_ch_value(I, V)
+      immerse(const Image<I>& ima, const V& new_value_type,
+	      const V& default_value);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace internal
-      {
-
-	/// Return the equivalent point in K2 from a point in K0.
-	inline
-	point2d immerse_point(const point2d& p)
-	{
-	  point2d tmp(4 * p.row(), 4 * p.col());
-	  return tmp;
-	}
-
-	/// \brief Return the equivalent domain in K2 from a domain in
-	/// K0.
-	template <typename B>
-	inline
-	B domain_from_K0(const Box<B>& b_)
-	{
-	  mln_precondition(exact(b_).is_valid());
-	  const B& b = exact(b_);
-
-	  mln_deduce(B, site, delta) one;
-	  one.set_all(1);
-	  return B(immerse_point(b.pmin()) - one, immerse_point(b.pmax()) + one);
-	}
-
-      } // end of namespace mln::world::k2::internal
-
-
-
-      // Facade
-
-      template <typename I>
-      mln_concrete(I) immerse(const Image<I>& ima_)
+      template <typename I, typename V>
+      mln_ch_value(I,V)
+      immerse(const Image<I>& ima, const V& new_value_type)
       {
 	trace::entering("mln::world::k2::immerse");
-	mln_precondition(exact(ima_).is_valid());
-	const I& ima = exact(ima_);
+	mln_precondition(exact(ima).is_valid());
 
-	mln_concrete(I) output(internal::domain_from_K0(ima.domain()));
+	mln_ch_value(I,V)
+	  output = kn::immerse(ima, 2, new_value_type);
 
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	{
-	  output(internal::immerse_point(p)) = ima(p);
-	  output(internal::immerse_point(p) + 2 * right) = ima(p);
-	  output(internal::immerse_point(p) + 2 * down) = ima(p);
-	  output(internal::immerse_point(p) + 2 * down_right) = ima(p);
-	}
+	trace::exiting("mln::world::k2::immerse");
+	return output;
+      }
+
+
+      template <typename I>
+      mln_concrete(I)
+      immerse(const Image<I>& ima)
+      {
+	trace::entering("mln::world::k2::immerse");
+	mln_precondition(exact(ima).is_valid());
+
+	mln_concrete(I)
+	  output = kn::immerse(ima, 2);
+
+	trace::exiting("mln::world::k2::immerse");
+	return output;
+      }
+
+
+      template <typename I, typename V>
+      mln_ch_value(I,V)
+      immerse(const Image<I>& ima, const V& new_value_type,
+	      const V& default_value)
+      {
+	trace::entering("mln::world::k2::immerse");
+	mln_precondition(exact(ima).is_valid());
+
+	mln_ch_value(I,V)
+	  output = kn::immerse(ima, 2, new_value_type, default_value);
 
 	trace::exiting("mln::world::k2::immerse");
 	return output;

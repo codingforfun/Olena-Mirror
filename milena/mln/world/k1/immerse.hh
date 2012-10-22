@@ -31,9 +31,6 @@
 # define MLN_WORLD_K1_IMMERSE_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/box.hh>
-# include <mln/core/alias/point2d.hh>
-
 # include <mln/world/kn/immerse.hh>
 
 namespace mln
@@ -48,43 +45,50 @@ namespace mln
       /*! \brief Immerse a 2D image into K1.
 
 	\param[in] ima 2D Image in K0.
-	\param[in] new_type Value type of the immersed image.
+	\param[in] new_value_type Value type of the immersed image.
 
 	\return A 2D image immersed in k1 of value type \tparam V.
 
 	\verbatim
-
 	           -1 0 1 2 3
 	 0 1     -1 . - . - .
        0 o o      0 | o | o |
        1 o o  ->  1 . - . - .
 	          2 | o | o |
 	 	  3 . - . - .
-
 	\endverbatim
 
        */
       template <typename I, typename V>
-      mln_concrete(I) immerse(const Image<I>& ima, const V& new_type);
+      mln_ch_value(I,V)
+      immerse(const Image<I>& ima, const V& new_value_type);
 
       /// \overload
       /// new_type is set to mln_value(I).
       template <typename I>
       mln_concrete(I) immerse(const Image<I>& ima);
 
+      /// \overload
+      /// 0, 1 and non-primary 2-faces values are set to \p
+      /// default_value.
+      template <typename I, typename V>
+      mln_ch_value(I, V)
+      immerse(const Image<I>& ima, const V& new_value_type,
+	      const V& default_value);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-      // Facade
 
       template <typename I, typename V>
-      mln_concrete(I)
-      immerse(const Image<I>& ima, const V& new_type)
+      mln_ch_value(I,V)
+      immerse(const Image<I>& ima, const V& new_value_type)
       {
 	trace::entering("mln::world::k1::immerse");
 	mln_precondition(exact(ima).is_valid());
+	(void) new_value_type;
 
-	mln_concrete(I) output = kn::immerse(ima, 1, V());
+	mln_ch_value(I,V) output = kn::immerse(ima, 1, V());
 
 	trace::exiting("mln::world::k1::immerse");
 	return output;
@@ -96,8 +100,25 @@ namespace mln
       immerse(const Image<I>& ima)
       {
 	typedef mln_value(I) V;
-	return immerse(ima, V());
+	return immerse(ima, 1);
       }
+
+
+      template <typename I, typename V>
+      mln_ch_value(I,V)
+      immerse(const Image<I>& ima, const V& new_value_type,
+	      const V& default_value)
+      {
+	trace::entering("mln::world::k2::immerse");
+	mln_precondition(exact(ima).is_valid());
+
+	mln_ch_value(I,V)
+	  output = kn::immerse(ima, 1, new_value_type, default_value);
+
+	trace::exiting("mln::world::k2::immerse");
+	return output;
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
