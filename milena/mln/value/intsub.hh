@@ -216,15 +216,12 @@ namespace mln
       static intsub<n> value();
     };
 
-    typedef intsub<1> intsub1;
-    typedef intsub<2> intsub2;
-    typedef intsub<4> intsub4;
-
 
   } // end of namespace mln::value
 
   extern const value::intsub<2> half;
   extern const value::intsub<4> quarter;
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -520,6 +517,7 @@ namespace mln
       std::sort(vec.begin(), vec.end());
       return mean(vec[1], vec[2]);
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

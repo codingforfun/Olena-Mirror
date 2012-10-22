@@ -1,5 +1,14 @@
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add aliases for value::intsub.
+
+	* mln/value/intsub.hh
+	* mln/value/intsub_1.hh
+	* mln/value/intsub_2.hh
+	* mln/value/intsub_4.hh
+
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix return type in functions.
 
 	* mln/fun/vv2v/max.hh,
