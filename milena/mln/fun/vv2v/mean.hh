@@ -43,26 +43,25 @@ namespace mln
     namespace vv2v
     {
 
-      // FIXME: Doc.
-
       /// \brief A functor computing the mean of two values.
-      template <typename L, typename R = L>
-      struct mean : public Function_vv2v< mean<L,R> >,
-		   private mlc_converts_to(R,L)::check_t
+      template <typename V, typename R = V>
+      struct mean : public Function_vv2v< mean<V,R> >,
+		   private mlc_converts_to(R,V)::check_t
       {
 	typedef R result;
-	R operator()(const L& v1, const L& v2) const;
+	typedef V argument;
+	R operator()(const V& v1, const V& v2) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename L, typename R>
+      template <typename V, typename R>
       inline
       R
-      mean<L,R>::operator()(const L& v1, const L& v2) const
+      mean<V,R>::operator()(const V& v1, const V& v2) const
       {
-	return R(mln::math::mean(v1, v2);
+	return R(mln::math::mean(v1, v2));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

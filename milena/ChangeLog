@@ -1,3 +1,11 @@
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix return type in functions.
+
+	* mln/fun/vv2v/max.hh,
+	* mln/fun/vv2v/mean.hh,
+	* mln/fun/vv2v/min.hh: Here.
+
 2012-10-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	New comparison functions.

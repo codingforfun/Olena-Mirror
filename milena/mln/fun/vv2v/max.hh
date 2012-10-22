@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,25 +43,25 @@ namespace mln
     namespace vv2v
     {
 
-      // FIXME: Doc.
-
       /// \brief A functor computing the maximum of two values.
-      template <typename V>
-      struct max : public Function_vv2v< max<V> >
+      template <typename V, typename R = V>
+      struct max : public Function_vv2v< max<V,R> >,
+		   private mlc_converts_to(R,V)::check_t
       {
-	typedef V result;
-	V operator()(const V& v1, const V& v2) const;
+	typedef R result;
+	typedef V argument;
+	R operator()(const V& v1, const V& v2) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename V, typename R>
       inline
-      V
-      max<V>::operator()(const V& v1, const V& v2) const
+      R
+      max<V,R>::operator()(const V& v1, const V& v2) const
       {
-	return mln::math::max(v1, v2);
+	return R(mln::math::max(v1, v2));
       }
 
 # endif // ! MLN_INCLUDE_ONLY
