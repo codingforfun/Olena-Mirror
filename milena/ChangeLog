@@ -1,5 +1,20 @@
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move util::level to world::kn and add new operators.
+
+	* mln/util/level.hh,
+	* tests/util/level.cc: Move...
+
+	* mln/world/kn/level.hh,
+	* tests/world/kn/level.cc: ... Here.
+
+	* tests/util/Makefile.am,
+	* tests/world/kn/Makefile.am: Update targets.
+
+	* mln/value/interval.hh: Remove operators.
+
+2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp khalimsky directory.
 
 	* mln/world/k1/immerse_with.hh,

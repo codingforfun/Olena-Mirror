@@ -30,6 +30,7 @@ check_PROGRAMS =				\
   is_1_face_vertical				\
   is_1_face_horizontal				\
   is_2_face					\
+  level						\
   un_immerse
 
 fill_0_1_faces_internal_border_SOURCES = fill_0_1_faces_internal_border.cc
@@ -45,6 +46,7 @@ is_1_face_SOURCES = is_1_face.cc
 is_1_face_vertical_SOURCES = is_1_face_vertical.cc
 is_1_face_horizontal_SOURCES = is_1_face_horizontal.cc
 is_2_face_SOURCES = is_2_face.cc
+level_SOURCES = level.cc
 un_immerse_SOURCES = un_immerse.cc
 
 

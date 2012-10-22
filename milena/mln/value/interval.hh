@@ -34,7 +34,6 @@
 # include <iostream>
 # include <mln/value/inc.hh>
 # include <mln/value/concept/interval.hh>
-# include <mln/util/level.hh>
 
 
 namespace mln
@@ -43,9 +42,6 @@ namespace mln
   namespace value
   {
 
-    // Forward declaration.
-    template <unsigned n> class intsub;
-    template <unsigned n> class int_u;
 
     /// \brief Interval of values.
     template <typename T>
@@ -344,47 +340,6 @@ namespace mln
       return ! (lhs == rhs);
     }
 
-    // thresholding
-
-    template <typename T, typename U>
-    inline
-    bool
-    operator<=(const interval<T>& i, const util::level_t<U>& v)
-    {
-      return i.first() <= v.value;
-    }
-
-    template <typename T, typename U>
-    inline
-    bool
-    operator>(const interval<T>& i, const util::level_t<U>& v)
-    {
-      return ! (i <= v);
-    }
-
-    template <typename T, typename U>
-    inline
-    bool
-    operator>=(const interval<T>& i, const util::level_t<U>& v)
-    {
-      return v.value <= i.last();
-    }
-
-    template <typename T, typename U>
-    inline
-    bool
-    operator<(const interval<T>& i, const util::level_t<U>& v)
-    {
-      return ! (i >= v);
-    }
-
-    template <typename T, typename U>
-    inline
-    bool
-    operator==(const interval<T>& i, const util::level_t<U>& v)
-    {
-      return i >= v && i <= v;
-    }
 
     // set ops
 

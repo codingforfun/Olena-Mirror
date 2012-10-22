@@ -25,13 +25,17 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
-#include <mln/util/level.hh>
+#include <mln/world/kn/level.hh>
 #include <mln/data/compare.hh>
 #include <mln/make/image2d.hh>
+#include <mln/value/interval.hh>
+#include <mln/value/intsub.hh>
 
 int main ()
 {
   using namespace mln;
+  using namespace mln::value;
+  using namespace mln::world::kn;
 
   bool vref_lt[] = {
     1, 1, 1, 1, 1,
@@ -73,15 +77,39 @@ int main ()
   image2d<unsigned> ima(5,5);
   debug::iota(ima);
 
-  image2d<bool> imab_lt = (ima < util::level(15));
-  mln_assertion(imab_lt == ref_lt);
+  // Comparison with images
+  {
+    image2d<bool> imab_lt = (ima < level(15));
+    mln_assertion(imab_lt == ref_lt);
 
-  image2d<bool> imab_le = (ima <= util::level(15));
-  mln_assertion(imab_le == ref_le);
+    image2d<bool> imab_le = (ima <= level(15));
+    mln_assertion(imab_le == ref_le);
 
-  image2d<bool> imab_gt = (ima > util::level(15));
-  mln_assertion(imab_gt == ref_gt);
+    image2d<bool> imab_gt = (ima > level(15));
+    mln_assertion(imab_gt == ref_gt);
 
-  image2d<bool> imab_ge = (ima >= util::level(15));
-  mln_assertion(imab_ge == ref_ge);
+    image2d<bool> imab_ge = (ima >= level(15));
+    mln_assertion(imab_ge == ref_ge);
+  }
+
+  // Comparison with intervals
+  {
+
+    interval<intsub<2> > i(3, 10);
+
+    mln_assertion(i < level(11));
+    mln_assertion(i <= level(3));
+    mln_assertion(i > level(2));
+    mln_assertion(i >= level(10));
+  }
+
+  {
+    // i is degenerated.
+    interval<intsub<2> > i(3, 3);
+    mln_assertion(i == level(3));
+    mln_assertion(i < level(4));
+    mln_assertion(i <= level(3));
+    mln_assertion(i > level(2));
+    mln_assertion(i >= level(2));
+  }
 }

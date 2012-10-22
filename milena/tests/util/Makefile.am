@@ -27,7 +27,6 @@ check_PROGRAMS =				\
   graph						\
   lazy_set					\
   lemmings					\
-  level						\
   line_graph 					\
   ord						\
   ord_pair					\
@@ -45,7 +44,6 @@ fibonacci_heap_SOURCES = fibonacci_heap.cc
 graph_SOURCES = graph.cc
 lazy_set_SOURCES = lazy_set.cc
 lemmings_SOURCES = lemmings.cc
-level_SOURCES = level.cc
 line_graph_SOURCES = line_graph.cc
 ord_SOURCES = ord.cc
 ord_pair_SOURCES = ord_pair.cc
