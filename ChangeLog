@@ -1,5 +1,9 @@
 2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Configure milena/tests/world/k{2,n}/Makefile.am.
+
+2012-09-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Configure milena/tests/world/k1/Makefile.am.
 
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
