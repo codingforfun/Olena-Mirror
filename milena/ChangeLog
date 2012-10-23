@@ -1,5 +1,10 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/accu/stat/median_h_interval.hh: Make it inherit from
+	accumulator base.
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new median accumulators.
 
 	* mln/accu/stat/median_few.hh,

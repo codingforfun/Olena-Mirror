@@ -32,6 +32,7 @@
 /// working on a specific interval.
 
 # include <vector>
+# include <mln/accu/internal/base.hh>
 # include <mln/value/interval.hh>
 # include <mln/trait/routine/mean.hh>
 
@@ -51,6 +52,7 @@ namespace mln
     template <typename T,
 	      typename R = mln_trait_routine_mean(2,T) >
     struct median_h_interval
+	: public mln::accu::internal::base< R, median_h_interval<T,R> >
     {
       typedef T argument;
       typedef R result;
@@ -61,6 +63,7 @@ namespace mln
       void init();
 
       void take(const argument& v);
+      void take(const median_h_interval<T,R>& v);
 
       // nota bene: no untake with this accumulator
 
@@ -108,6 +111,16 @@ namespace mln
       {
 	h_[inter_.index_of(v)] += 1;
 	nitems_ += 1;
+      }
+
+      template <typename T, typename R>
+      void
+      median_h_interval<T,R>::take(const median_h_interval<T,R>& other)
+      {
+	mln_precondition(other.inter_ == inter_);
+	for (unsigned i = 0; i < other.h_.size(); ++i)
+	  h_[i] += other.h_[i];
+	nitems_ += other.nitems_;
       }
 
       template <typename T, typename R>
