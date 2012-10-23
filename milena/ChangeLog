@@ -1,5 +1,14 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add data::compute_in_inner_border.
+
+	* mln/data/compute_in_inner_border.hh,
+	* tests/data/compute_in_inner_border.cc: New.
+
+	* tests/data/Makefile.am: New target.
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/safe_cast.hh: Add more conversions.
 
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>

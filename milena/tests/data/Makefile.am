@@ -24,6 +24,7 @@ check_PROGRAMS =				\
   compare					\
   compute					\
   compute_in_window				\
+  compute_in_inner_border			\
   convert					\
   fill						\
   fill_with_image				\
@@ -47,6 +48,7 @@ apply_SOURCES = apply.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
 compute_in_window_SOURCES = compute_in_window.cc
+compute_in_inner_border_SOURCES = compute_in_inner_border.cc
 convert_SOURCES = convert.cc
 fill_SOURCES = fill.cc
 fill_with_image_SOURCES = fill_with_image.cc
