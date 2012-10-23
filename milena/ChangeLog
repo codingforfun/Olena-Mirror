@@ -1,5 +1,9 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/value/intsub.hh: Add operator=(literal::zero).
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve support for mean and median functions.
 
 	* mln/fun/vv2v/median.hh,

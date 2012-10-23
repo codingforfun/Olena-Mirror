@@ -148,6 +148,7 @@ namespace mln
       template <unsigned m>
       intsub<n>& operator=(const intsub<m>& rhs);
       intsub<n>& operator=(const intsub<n>& rhs);
+      intsub<n>& operator=(const literal::zero_t&);
       intsub<n>& operator=(int i);
       intsub<n>& operator=(float i);
       intsub<n>& operator=(double i);
@@ -349,6 +350,14 @@ namespace mln
     {
       mln_precondition(m < n);
       this->v_ = rhs.to_enc() * (n / m);
+      return *this;
+    }
+
+    template <unsigned n>
+    intsub<n>&
+    intsub<n>::operator=(const literal::zero_t&)
+    {
+      this->v_ = 0;
       return *this;
     }
 
