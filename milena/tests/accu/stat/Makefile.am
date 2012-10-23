@@ -25,8 +25,9 @@ check_PROGRAMS =				\
   min_max					\
   max						\
   max_h						\
+  median_few					\
   median_h					\
-  median_interval				\
+  median_h_interval				\
   mean						\
   rank
 
@@ -34,7 +35,8 @@ deviation_SOURCES = deviation.cc
 var_SOURCES = var.cc
 mean_SOURCES = mean.cc
 median_h_SOURCES = median_h.cc
-median_interval_SOURCES = median_interval.cc
+median_few_SOURCES = median_few.cc
+median_h_interval_SOURCES = median_h_interval.cc
 min_SOURCES = min.cc
 min_h_SOURCES = min_h.cc
 max_SOURCES = max.cc

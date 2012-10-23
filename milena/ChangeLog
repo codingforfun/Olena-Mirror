@@ -1,3 +1,21 @@
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new median accumulators.
+
+	* mln/accu/stat/median_few.hh,
+	* mln/accu/stat/median_h_interval.hh,
+	* mln/trait/routine/mean.hh,
+	* tests/accu/stat/median_few.cc,
+	* tests/accu/stat/median_h_interval.cc: New.
+
+	* mln/value/int_u.hh,
+	* mln/value/intsub.hh: Specialize traits.
+
+	* tests/accu/stat/Makefile.am: New targets.
+
+	* mln/accu/stat/median_interval.hh,
+	* tests/accu/stat/median_interval.cc: Remove.
+
 2012-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Move util::level to world::kn and add new operators.

@@ -36,6 +36,7 @@
 # include <vector>
 # include <algorithm>
 # include <mln/core/routine/ops.hh>
+# include <mln/trait/routine/mean.hh>
 # include <mln/value/ops.hh>
 # include <mln/value/builtin/ops.hh>
 # include <mln/value/internal/value_like.hh>
@@ -97,6 +98,18 @@ namespace mln
       }
 
     };
+
+
+    namespace routine
+    {
+
+      template <unsigned nvalues, unsigned n>
+      struct mean< nvalues, mln::value::intsub<n> >
+      {
+	typedef mln::value::intsub<nvalues * n> ret;
+      };
+
+    } // end of namespace mln::trait::routine
 
   } // end of namespace mln::trait
 

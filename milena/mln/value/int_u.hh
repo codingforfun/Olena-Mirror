@@ -38,6 +38,7 @@
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/trait/value_.hh>
+# include <mln/trait/routine/mean.hh>
 # include <mln/debug/format.hh>
 # include <mln/value/iota.hh>
 
@@ -54,6 +55,7 @@ namespace mln
     }
     template <unsigned n> struct int_u;
     template <unsigned n> struct rgb;
+    template <unsigned n> class intsub;
   }
 
   namespace literal
@@ -71,7 +73,6 @@ namespace mln
     {
       typedef int ret;
     };
-
 
     template <unsigned n>
     struct value_< mln::value::int_u<n> >
@@ -107,6 +108,18 @@ namespace mln
       }
 
     };
+
+
+    namespace routine
+    {
+
+      template <unsigned nvalues, unsigned n>
+      struct mean< nvalues, mln::value::int_u<n> >
+      {
+	typedef mln::value::intsub<nvalues> ret;
+      };
+
+    } // end of namespace mln::trait::routine
 
   } // end of namespace mln::trait
 
