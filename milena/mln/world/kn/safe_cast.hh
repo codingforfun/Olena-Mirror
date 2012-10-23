@@ -88,11 +88,21 @@ namespace mln
     template <unsigned n>
     void safe_cast_(const interval<intsub<n> >& from, value::int_u8& to)
     {
-      to = intsub<n>(from.to_interop());
+      if (!from.is_degenerated())
+	abort();
+      to = intsub<n>(from.first());
     }
 
     template <unsigned n>
     void safe_cast_(const interval<intsub<n> >& from, int& to)
+    {
+      if (!from.is_degenerated())
+	abort();
+      to = from.first();
+    }
+
+    template <unsigned n>
+    void safe_cast_(const interval<intsub<n> >& from, intsub<n>& to)
     {
       if (!from.is_degenerated())
 	abort();

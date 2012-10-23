@@ -1,5 +1,9 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/safe_cast.hh: Add more conversions.
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add immerse_with_border.
 
 	* mln/world/k1/immerse_with_inner_border.hh,
