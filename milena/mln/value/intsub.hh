@@ -37,6 +37,7 @@
 # include <algorithm>
 # include <mln/core/routine/ops.hh>
 # include <mln/trait/routine/mean.hh>
+# include <mln/trait/routine/median.hh>
 # include <mln/value/ops.hh>
 # include <mln/value/builtin/ops.hh>
 # include <mln/value/internal/value_like.hh>
@@ -107,6 +108,12 @@ namespace mln
       struct mean< nvalues, mln::value::intsub<n> >
       {
 	typedef mln::value::intsub<nvalues * n> ret;
+      };
+
+      template <unsigned n>
+      struct median< mln::value::intsub<n> >
+      {
+	typedef mln::value::intsub<2*n> ret;
       };
 
     } // end of namespace mln::trait::routine
@@ -205,21 +212,19 @@ namespace mln
 
     /// Specific implementation of the mean function.
     template <unsigned n>
-    intsub<2*n> mean(const intsub<n>& v1, const intsub<n>& v2);
+    mln_trait_routine_mean(2,intsub<n>)
+    mean_(const intsub<n>& v1, const intsub<n>& v2);
 
     /// Specific implementation of the mean function.
     template <unsigned n>
-    intsub<4*n> mean(const intsub<n>& v1, const intsub<n>& v2,
-		     const intsub<n>& v3, const intsub<n>& v4);
+    mln_trait_routine_mean(4,intsub<n>)
+    mean_(const intsub<n>& v1, const intsub<n>& v2,
+    	  const intsub<n>& v3, const intsub<n>& v4);
 
     /// Specific implementation of the median function.
     template <unsigned n>
-    intsub<2*n> median(const intsub<n>& v1, const intsub<n>& v2);
-
-    /// Specific implementation of the median function.
-    template <unsigned n>
-    intsub<4*n> median(const intsub<n>& v1, const intsub<n>& v2,
-		       const intsub<n>& v3, const intsub<n>& v4);
+    mln_trait_routine_median(intsub<n>)
+    median_(const intsub<n>& v1, const intsub<n>& v2);
 
 
     // Iota
@@ -484,54 +489,27 @@ namespace mln
       return intsub<n>::make_from_enc_(v1.to_enc() > v2.to_enc() ? v1.to_enc() : v2.to_enc());
     }
 
-    // FIXME: Make use of mean_() overloads with math::mean. Require
-    // to fix an issue with the return type which differs according to
-    // the overload : with 2 (intsub<2*n>) or 4 (intsub<4*n>)
-    // arguments.
     template <unsigned n>
-    intsub<2*n> mean(const intsub<n>& v1, const intsub<n>& v2)
+    mln_trait_routine_mean(2,intsub<n>)
+    mean_(const intsub<n>& v1, const intsub<n>& v2)
     {
       return intsub<2*n>::make_from_enc_((v1.to_enc() + v2.to_enc()));
     }
 
-    // FIXME: Make use of mean_() overloads with math::mean. Require
-    // to fix an issue with the return type which differs according to
-    // the overload : with 2 (intsub<2*n>) or 4 (intsub<4*n>)
-    // arguments.
     template <unsigned n>
-    intsub<4*n> mean(const intsub<n>& v1, const intsub<n>& v2,
-		     const intsub<n>& v3, const intsub<n>& v4)
+    mln_trait_routine_mean(4,intsub<n>)
+    mean_(const intsub<n>& v1, const intsub<n>& v2,
+	  const intsub<n>& v3, const intsub<n>& v4)
     {
       return mean_(mean_(v1, v2), mean_(v3, v4));
     }
 
-    // FIXME: Make use of median_() overloads with
-    // math::median. Require to fix an issue with the return type
-    // which differs according to the overload : with 2 (intsub<2*n>)
-    // or 4 (intsub<4*n>) arguments.
     template <unsigned n>
-    intsub<2*n> median(const intsub<n>& v1, const intsub<n>& v2)
+    mln_trait_routine_median(intsub<n>)
+    median_(const intsub<n>& v1, const intsub<n>& v2)
     {
-      return mean(v1, v2);
+      return mean_(v1, v2);
     }
-
-    // FIXME: Make use of median_() overloads with
-    // math::median. Require to fix an issue with the return type
-    // which differs according to the overload : with 2 (intsub<2*n>)
-    // or 4 (intsub<4*n>) arguments.
-    template <unsigned n>
-    intsub<4*n> median(const intsub<n>& v1, const intsub<n>& v2,
-		       const intsub<n>& v3, const intsub<n>& v4)
-    {
-      std::vector<intsub<n> > vec(4);
-      vec.push_back(v1);
-      vec.push_back(v2);
-      vec.push_back(v3);
-      vec.push_back(v4);
-      std::sort(vec.begin(), vec.end());
-      return mean(vec[1], vec[2]);
-    }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

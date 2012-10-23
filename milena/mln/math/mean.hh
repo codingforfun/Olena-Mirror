@@ -26,7 +26,7 @@
 #ifndef MLN_MATH_MEAN_HH
 # define MLN_MATH_MEAN_HH
 
-# include <mln/trait/op/div.hh>
+# include <mln/trait/routine/mean.hh>
 # include <mln/metal/converts_to.hh>
 
 /*! \file
@@ -43,23 +43,23 @@ namespace mln
 
     /// Return the mean of two values.
     template <typename T>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(2,T)
     mean(const T& v1, const T& v2);
 
     /// \overload \pre Type U must be convertible towards type T.
     template <typename T, typename U>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(2,T)
     mean(const T& v1, const U& v2);
 
     /// Return the mean of four values.
     template <typename T>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(4,T)
     mean(const T& v1, const T& v2, const T& v3, const T& v4);
 
     /// \overload \pre Type T2, T3 and T4 must be convertible towards
     /// type T.
     template <typename T, typename T2, typename T3, typename T4>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(4,T)
     mean(const T& v1, const T2& v2, const T3& v3, const T4& v4);
 
 
@@ -69,7 +69,7 @@ namespace mln
 
   /// \internal Generic implementation of the mean of two values.
   template <typename T>
-  mln_trait_op_div(T,double)
+  mln_trait_routine_mean(2,T)
   mean_(const T& v1, const T& v2)
   {
     return (v1 + v2) / 2.;
@@ -77,24 +77,24 @@ namespace mln
 
   /// \internal Generic implementation of the mean of four values.
   template <typename T>
-  mln_trait_op_div(T,double)
+  mln_trait_routine_mean(4,T)
   mean_(const T& v1, const T& v2, const T& v3, const T& v4)
   {
-    return (v1 + v2 + v3 + v4) / 4;
+    return (v1 + v2 + v3 + v4) / 4.;
   }
 
   namespace math
   {
 
     template <typename T>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(2,T)
     mean(const T& v1, const T& v2)
     {
       return mean_(exact(v1), exact(v2));
     }
 
     template <typename T, typename U>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(2,T)
     mean(const T& v1, const U& v2)
     {
       mlc_converts_to(U,T)::check();
@@ -102,14 +102,14 @@ namespace mln
     }
 
     template <typename T>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(4,T)
     mean(const T& v1, const T& v2, const T& v3, const T& v4)
     {
       return mean_(v1, T(v2), T(v3), T(v4));
     }
 
     template <typename T, typename T2, typename T3, typename T4>
-    mln_trait_op_div(T,double)
+    mln_trait_routine_mean(4,T)
     mean(const T& v1, const T2& v2, const T3& v3, const T4& v4)
     {
       mlc_converts_to(T2,T)::check();

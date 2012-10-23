@@ -23,55 +23,25 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#include <mln/math/mean.hh>
+#include <mln/value/intsub.hh>
 
-/// \file
-///
-/// Functor that computes the mean of two values.
-
-# include <mln/core/concept/function.hh>
-# include <mln/trait/routine/mean.hh>
-# include <mln/math/mean.hh>
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace fun
+  mln_assertion(math::mean(2,3) == 2.5);
+
   {
+    value::intsub<2> v1(1.5);
+    value::intsub<2> v2(2);
+    mln_assertion(math::mean(v1, v2) == 1.75);
+  }
 
-    namespace vvvv2v
-    {
+  mln_assertion(math::mean(1,2,3,4) == 2.5);
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the mean of two values.
-      template <typename T, typename R = mln_trait_routine_mean(4,T) >
-      struct mean : public Function_vvvv2v< mean<T> >
-      {
-	typedef R result;
-	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
-      };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename T, typename R>
-      inline
-      R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
-      {
-	return R(mln::math::mean(v1, v2, v3, v4));
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::vvvv2v
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+  {
+    value::intsub<2> v1(1), v2(2), v3(3), v4(5);
+    mln_assertion(math::mean(v1, v2, v3, v4) == 2.75);
+  }
+}

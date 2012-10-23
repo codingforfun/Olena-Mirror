@@ -26,8 +26,8 @@
 #ifndef MLN_TRAIT_ROUTINE_MEAN_HH
 # define MLN_TRAIT_ROUTINE_MEAN_HH
 
-# define mln_trait_routine_mean(n,T) typename mln::trait::routine::mean<n,T>::ret
-# define mln_trait_routine_mean_(n,T) mln::trait::routine::mean<n,T>::ret
+# define mln_trait_routine_mean(n,T) typename mln::trait::routine::mean< n,T >::ret
+# define mln_trait_routine_mean_(n,T) mln::trait::routine::mean< n,T >::ret
 
 namespace mln
 {
@@ -56,6 +56,18 @@ namespace mln
       struct mean< nvalues, int >
       {
 	typedef mln::value::intsub<nvalues> ret;
+      };
+
+      template <unsigned nvalues>
+      struct mean< nvalues, float >
+      {
+	typedef float ret;
+      };
+
+      template <unsigned nvalues>
+      struct mean< nvalues, double >
+      {
+	typedef double ret;
       };
 
     } // end of namespace mln::trait::routine

@@ -1,5 +1,29 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve support for mean and median functions.
+
+	* mln/fun/vv2v/median.hh,
+	* mln/fun/vvvv2v/median.hh,
+	* mln/math/median.hh,
+	* mln/trait/routine/median.hh,
+	* tests/fun/vv2v/mean.cc,
+	* tests/fun/vv2v/median.cc,
+	* tests/math/mean.cc,
+	* tests/math/median.cc: New.
+
+	* mln/fun/vv2v/mean.hh,
+	* mln/fun/vvvv2v/mean.hh,
+	* mln/math/mean.hh,
+	* mln/value/intsub.hh: Use a dedicated trait to deduce the return
+	type of mean() function.
+
+	* mln/trait/routine/mean.hh: Add more specializations.
+
+	* tests/fun/vv2v/Makefile.am,
+	* tests/math/Makefile.am: Update targets.
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/accu/stat/median_h_interval.hh: Make it inherit from
 	accumulator base.
 

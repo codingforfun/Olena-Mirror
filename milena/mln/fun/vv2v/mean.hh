@@ -31,6 +31,7 @@
 /// Functor that computes the mean of two values.
 
 # include <mln/core/concept/function.hh>
+# include <mln/trait/routine/mean.hh>
 # include <mln/math/mean.hh>
 
 
@@ -44,7 +45,7 @@ namespace mln
     {
 
       /// \brief A functor computing the mean of two values.
-      template <typename V, typename R = V>
+      template <typename V, typename R = mln_trait_routine_mean(2,V) >
       struct mean : public Function_vv2v< mean<V,R> >,
 		   private mlc_converts_to(R,V)::check_t
       {

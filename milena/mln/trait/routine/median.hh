@@ -23,55 +23,57 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#ifndef MLN_TRAIT_ROUTINE_MEDIAN_HH
+# define MLN_TRAIT_ROUTINE_MEDIAN_HH
 
-/// \file
-///
-/// Functor that computes the mean of two values.
-
-# include <mln/core/concept/function.hh>
-# include <mln/trait/routine/mean.hh>
-# include <mln/math/mean.hh>
-
+# define mln_trait_routine_median(T) typename mln::trait::routine::median< T >::ret
+# define mln_trait_routine_median_(T) mln::trait::routine::median< T >::ret
 
 namespace mln
 {
 
-  namespace fun
+  // Forward Declaration
+  namespace value { template <unsigned n> class intsub; }
+
+  namespace trait
   {
 
-    namespace vvvv2v
+    namespace routine
     {
 
-      // FIXME: Doc.
+      // median
 
-      /// \brief A functor computing the mean of two values.
-      template <typename T, typename R = mln_trait_routine_mean(4,T) >
-      struct mean : public Function_vvvv2v< mean<T> >
+      template <typename T>
+      struct median
       {
-	typedef R result;
-	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
+	// undef
       };
 
 
-# ifndef MLN_INCLUDE_ONLY
+      // specializations
 
-      template <typename T, typename R>
-      inline
-      R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
+      template <>
+      struct median< int >
       {
-	return R(mln::math::mean(v1, v2, v3, v4));
-      }
+	typedef mln::value::intsub<2> ret;
+      };
 
-# endif // ! MLN_INCLUDE_ONLY
+      template <>
+      struct median< float >
+      {
+	typedef float ret;
+      };
 
-    } // end of namespace mln::fun::vvvv2v
+      template <>
+      struct median< double >
+      {
+	typedef double ret;
+      };
 
-  } // end of namespace mln::fun
+    } // end of namespace mln::trait::routine
+
+  } // end of namespace mln::routine
 
 } // end of namespace mln
 
-
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+#endif // ! MLN_TRAIT_ROUTINE_MEDIAN_HH

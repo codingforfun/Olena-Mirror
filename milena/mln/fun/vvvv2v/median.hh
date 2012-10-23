@@ -23,16 +23,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#ifndef MLN_FUN_VVVV2V_MEDIAN_HH
+# define MLN_FUN_VVVV2V_MEDIAN_HH
 
 /// \file
 ///
-/// Functor that computes the mean of two values.
+/// Functor that computes the median of two values.
 
 # include <mln/core/concept/function.hh>
-# include <mln/trait/routine/mean.hh>
-# include <mln/math/mean.hh>
+# include <mln/trait/routine/median.hh>
+# include <mln/math/median.hh>
 
 
 namespace mln
@@ -46,10 +46,11 @@ namespace mln
 
       // FIXME: Doc.
 
-      /// \brief A functor computing the mean of two values.
-      template <typename T, typename R = mln_trait_routine_mean(4,T) >
-      struct mean : public Function_vvvv2v< mean<T> >
+      /// \brief A functor computing the median of two values.
+      template <typename T, typename R = mln_trait_routine_median(T) >
+      struct median : public Function_vvvv2v< median<T> >
       {
+	typedef T argument;
 	typedef R result;
 	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
       };
@@ -60,9 +61,9 @@ namespace mln
       template <typename T, typename R>
       inline
       R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
+      median<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
       {
-	return R(mln::math::mean(v1, v2, v3, v4));
+	return R(mln::math::median(v1, v2, v3, v4));
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -74,4 +75,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+#endif // ! MLN_FUN_VVVV2V_MEDIAN_HH

@@ -23,55 +23,68 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_VVVV2V_MEAN_HH
-# define MLN_FUN_VVVV2V_MEAN_HH
+#include <mln/math/median.hh>
+#include <mln/value/intsub.hh>
 
-/// \file
-///
-/// Functor that computes the mean of two values.
-
-# include <mln/core/concept/function.hh>
-# include <mln/trait/routine/mean.hh>
-# include <mln/math/mean.hh>
-
-
-namespace mln
+template <typename T>
+void do_it(std::vector<T>& vec, float res)
 {
-
-  namespace fun
+  for (int i = 0; i < 3; ++i)
   {
-
-    namespace vvvv2v
+    for (int j = 0; j < 3; ++j)
     {
-
-      // FIXME: Doc.
-
-      /// \brief A functor computing the mean of two values.
-      template <typename T, typename R = mln_trait_routine_mean(4,T) >
-      struct mean : public Function_vvvv2v< mean<T> >
+      for (int k = 0; k < 3; ++k)
       {
-	typedef R result;
-	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
-      };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename T, typename R>
-      inline
-      R
-      mean<T,R>::operator()(const T& v1, const T& v2, const T& v3, const T& v4) const
-      {
-	return R(mln::math::mean(v1, v2, v3, v4));
+	mln_assertion(mln::math::median(vec[0], vec[1], vec[2], vec[3]) == res);
+	std::swap(vec[k], vec[k + 1]);
       }
+    }
+  }
+}
 
-# endif // ! MLN_INCLUDE_ONLY
+int main()
+{
+  using namespace mln;
 
-    } // end of namespace mln::fun::vvvv2v
+  {
+    mln_assertion(math::median(2,3) == 2.5);
+  }
 
-  } // end of namespace mln::fun
+  {
+    value::intsub<2> v1(1.5);
+    value::intsub<2> v2(2);
+    mln_assertion(math::median(v1, v2) == 1.75);
+  }
 
-} // end of namespace mln
+  {
+    std::vector<int> vec(4);
+    vec[0] = 1;
+    vec[1] = 2;
+    vec[2] = 3;
+    vec[3] = 4;
+
+    do_it(vec, 2.5);
+  }
+
+  {
+    std::vector<int> vec(4);
+    vec[0] = 0;
+    vec[1] = 0;
+    vec[2] = 6;
+    vec[3] = 24;
+
+    do_it(vec, 3);
+  }
 
 
-#endif // ! MLN_FUN_VVVV2V_MEAN_HH
+  {
+    std::vector<value::intsub<2> > vec(4);
+    vec[0] = 2;
+    vec[1] = 1.5;
+    vec[2] = 3;
+    vec[3] = 5;
+
+    do_it(vec, 2.5);
+  }
+
+}
