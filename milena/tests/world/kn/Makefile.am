@@ -24,6 +24,7 @@ check_PROGRAMS =				\
   fill_1_from_aux_2_faces			\
   fill_2_from_1_faces				\
   immerse					\
+  immerse_with_inner_border			\
   is_0_face					\
   is_0_or_1_face				\
   is_1_face					\
@@ -40,6 +41,7 @@ fill_1_from_2_faces_SOURCES = fill_1_from_2_faces.cc
 fill_1_from_aux_2_faces_SOURCES = fill_1_from_aux_2_faces.cc
 fill_2_from_1_faces_SOURCES = fill_2_from_1_faces.cc
 immerse_SOURCES = immerse.cc
+immerse_with_inner_border_SOURCES = immerse_with_inner_border.cc
 is_0_face_SOURCES = is_0_face.cc
 is_0_or_1_face_SOURCES = is_0_or_1_face.cc
 is_1_face_SOURCES = is_1_face.cc

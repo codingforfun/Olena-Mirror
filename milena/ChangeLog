@@ -1,5 +1,29 @@
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add immerse_with_border.
+
+	* mln/world/k1/immerse_with_inner_border.hh,
+	* mln/world/k2/immerse_with_inner_border.hh,
+	* mln/world/kn/immerse_with_inner_border.hh,
+	* mln/world/kn/internal/domain_from_k0.hh,
+	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh,
+	* tests/world/k1/immerse_with_inner_border.cc,
+	* tests/world/k2/immerse_with_inner_border.cc,
+	* tests/world/kn/immerse_with_inner_border.cc: New.
+
+	* mln/world/kn/immerse.hh,
+	* mln/world/kn/internal/immerse_point.hh: Rely on
+	immerse_with_inner_border.
+
+	* tests/world/k1/Makefile.am,
+	* tests/world/k2/Makefile.am,
+	* tests/world/kn/Makefile.am: Update targets.
+
+	* tests/world/k2/immerse.cc,
+	* tests/world/kn/immerse.cc: Fix tests.
+
+2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/value/intsub.hh: Add operator=(literal::zero).
 
 2012-10-23  Guillaume Lazzara  <z@lrde.epita.fr>

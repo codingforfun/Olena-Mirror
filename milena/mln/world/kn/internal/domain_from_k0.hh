@@ -25,13 +25,14 @@
 
 /// \file
 ///
-/// \brief Returns the corresponding point in Kn from a point in K0.
+/// \brief Return the equivalent domain in Kn from a domain in
+/// K0.
 
-#ifndef MLN_WORLD_KN_IMMERSE_POINT_HH
-# define MLN_WORLD_KN_IMMERSE_POINT_HH
+#ifndef MLN_WORLD_KN_DOMAIN_FROM_K0_HH
+# define MLN_WORLD_KN_DOMAIN_FROM_K0_HH
 
-# include <cmath>
-# include <mln/core/alias/point2d.hh>
+# include <mln/core/concept/box.hh>
+# include <mln/world/kn/internal/immerse_point.hh>
 
 namespace mln
 {
@@ -45,66 +46,47 @@ namespace mln
       namespace internal
       {
 
-
-	/// \brief Returns the corresponding point in Kn from a point
-	/// in K0.
-	point2d	immerse_point(const def::coord& row,
-			      const def::coord& col,
-			      const unsigned n,
-			      const unsigned inner_border_thickness);
-
-	/// \overload
-	/// \p inner_border_thickness is set to 0.
-	point2d	immerse_point(const def::coord& row,
-			      const def::coord& col,
-			      const unsigned n);
-
-	/// \overload
-	point2d	immerse_point(const point2d& p, const unsigned n,
-			      const unsigned inner_border_thickness);
+	/// \brief Return the equivalent domain in Kn from a domain in
+	/// K0.
+	template <typename B>
+	B
+	domain_from_k0(const Box<B>& b, const unsigned n,
+		       unsigned inner_border_thickness);
 
 	/// \overload
 	/// \p inner_border_thickness is set to 0.
-	point2d	immerse_point(const point2d& p, const unsigned n);
+	template <typename B>
+	B
+	domain_from_k0(const Box<B>& b, const unsigned n);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	point2d	immerse_point(const point2d& p, const unsigned n,
-			      const unsigned inner_border_thickness)
+	template <typename B>
+	B
+	domain_from_k0(const Box<B>& b_, const unsigned n,
+		       unsigned inner_border_thickness)
 	{
-	  return immerse_point(p.row(), p.col(), n,
-			       inner_border_thickness);
+	  mln_precondition(exact(b_).is_valid());
+	  const B& b = exact(b_);
+
+	  mln_deduce(B, site, delta) one;
+	  one.set_all(1);
+	  B bout = B(immerse_point(b.pmin(), n, inner_border_thickness)
+		     - (inner_border_thickness * 2 * one) - one,
+		     immerse_point(b.pmax(), n, inner_border_thickness)
+		     + (std::pow(2,n) - 1) * one + (inner_border_thickness * 2 * one));
+	  return bout;
 	}
 
-	inline
-	point2d	immerse_point(const point2d& p, const unsigned n)
+
+	template <typename B>
+	B
+	domain_from_k0(const Box<B>& b, const unsigned n)
 	{
-	  return immerse_point(p.row(), p.col(), n, 0);
+	  return domain_from_K0(b, n, 0);
 	}
-
-
-	inline
-	point2d	immerse_point(const def::coord& row,
-			      const def::coord& col,
-			      const unsigned n,
-			      const unsigned inner_border_thickness)
-	{
-	  point2d tmp(std::pow(2u, n) * row + 2 * inner_border_thickness,
-		      std::pow(2u, n) * col + 2* inner_border_thickness);
-	  return tmp;
-	}
-
-	inline
-	point2d	immerse_point(const def::coord& row,
-			      const def::coord& col,
-			      const unsigned n)
-	{
-	  return immerse_point(row, col, n, 0);
-	}
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -116,6 +98,6 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_KN_IMMERSE_POINT_HH
+#endif // ! MLN_WORLD_KN_DOMAIN_FROM_K0_HH
 
 

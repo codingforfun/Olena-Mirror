@@ -26,8 +26,9 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/world/k2/immerse.hh>
+#include <mln/world/k1/immerse_with_inner_border.hh>
 #include <mln/data/compare.hh>
+
 
 int main()
 {
@@ -39,42 +40,54 @@ int main()
   };
   image2d<int> ima = make::image(ivals);
 
-  int fvals[][9] = {
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 1, 5, 5, 5, 2, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 3, 5, 5, 5, 4, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5},
-    {5, 5, 5, 5, 5, 5, 5, 5, 5}
+  int val_k1wob[][5] = {
+    {0, 0, 0, 0, 0},
+    {0, 1, 0, 2, 0},
+    {0, 0, 0, 0, 0},
+    {0, 3, 0, 4, 0},
+    {0, 0, 0, 0, 0},
   };
-  image2d<int> ref_fill = make::image(fvals, point2d(-1,-1));
+  image2d<int> k1wob = make::image(val_k1wob, point2d(-1,-1));
 
+  int val_k1b[][9] = {
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 1, 0, 2, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 3, 0, 4, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0}
+  };
+  image2d<int> k1b = make::image(val_k1b, point2d(-1,-1));
 
+  // K1 with border.
   {
-    image2d<int> immersed = world::k2::immerse(ima);
-
-    mln_assertion(immersed.domain() == ref_fill.domain());
-    mln_assertion(immersed(point2d(0,0)) == 1);
-    mln_assertion(immersed(point2d(0,4)) == 2);
-    mln_assertion(immersed(point2d(4,0)) == 3);
+    image2d<long> immersed = world::k1::immerse_with_inner_border(ima, long(), 1);
+    mln_assertion(immersed.domain() == k1b.domain());
+    mln_assertion(immersed(point2d(2,2)) == 1);
+    mln_assertion(immersed(point2d(2,4)) == 2);
+    mln_assertion(immersed(point2d(4,2)) == 3);
+    mln_assertion(immersed(point2d(4,4)) == 4);
+  }
+  {
+    image2d<long> immersed = world::k1::immerse_with_inner_border(ima, long(), 0l, 1);
+    mln_assertion(immersed == k1b);
+  }
+  {
+    image2d<int> immersed = world::k1::immerse_with_inner_border(ima, 1);
+    mln_assertion(immersed.domain() == k1b.domain());
+    mln_assertion(immersed(point2d(2,2)) == 1);
+    mln_assertion(immersed(point2d(2,4)) == 2);
+    mln_assertion(immersed(point2d(4,2)) == 3);
     mln_assertion(immersed(point2d(4,4)) == 4);
   }
 
+  // K1 without border.
   {
-    image2d<long> immersed = world::k2::immerse(ima, long());
-    mln_assertion(immersed.domain() == ref_fill.domain());
-    mln_assertion(immersed(point2d(0,0)) == 1);
-    mln_assertion(immersed(point2d(0,4)) == 2);
-    mln_assertion(immersed(point2d(4,0)) == 3);
-    mln_assertion(immersed(point2d(4,4)) == 4);
-  }
-
-  {
-    image2d<long> immersed = world::k2::immerse(ima, long(), 5l);
-    mln_assertion(immersed == ref_fill);
+    image2d<long> immersed = world::k1::immerse_with_inner_border(ima, long(), 0l, 0);
+    mln_assertion(immersed == k1wob);
   }
 
 }

@@ -24,6 +24,7 @@ check_PROGRAMS =				\
   is_non_primary_2_face_vertical		\
   is_primary_2_face				\
   immerse					\
+  immerse_with_inner_border			\
   un_immerse
 
 fill_non_primary_from_primary_2_faces_SOURCES = fill_non_primary_from_primary_2_faces.cc
@@ -33,6 +34,7 @@ is_non_primary_2_face_horizontal_SOURCES = is_non_primary_2_face_horizontal.cc
 is_non_primary_2_face_vertical_SOURCES = is_non_primary_2_face_vertical.cc
 is_primary_2_face_SOURCES = is_primary_2_face.cc
 immerse_SOURCES = immerse.cc
+immerse_with_inner_border_SOURCES = immerse_with_inner_border.cc
 un_immerse_SOURCES = un_immerse.cc
 
 TESTS = $(check_PROGRAMS)

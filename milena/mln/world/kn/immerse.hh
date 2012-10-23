@@ -32,9 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/box.hh>
-
-# include <mln/world/kn/internal/immerse_point.hh>
-# include <mln/world/kn/safe_cast.hh>
+# include <mln/world/kn/immerse_with_inner_border.hh>
 
 namespace mln
 {
@@ -88,28 +86,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace internal
-      {
-
-	/// \brief Return the equivalent domain in Kn from a domain in
-	/// K0.
-	template <typename B>
-	inline
-	B domain_from_K0(const Box<B>& b_, const unsigned n)
-	{
-	  mln_precondition(exact(b_).is_valid());
-	  const B& b = exact(b_);
-
-	  mln_deduce(B, site, delta) one;
-	  one.set_all(1);
-	  return B(immerse_point(b.pmin(), n) - one,
-		   immerse_point(b.pmax(), n) + one);
-	}
-
-      } // end of namespace mln::world::kn::internal
-
-
-
 
       template <typename I, typename V>
       mln_ch_value(I, V)
@@ -122,12 +98,7 @@ namespace mln
 	(void) new_value_type;
 
 	mln_ch_value(I,V)
-	  output(internal::domain_from_K0(ima.domain(), n));
-
-	// Filling Primary 2-Faces
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  output(internal::immerse_point(p, n)) = safe_cast(ima(p));
+	  output = immerse_with_inner_border(ima, n, new_value_type, 0);
 
 	trace::exiting("mln::world::kn::immerse");
 	return output;
@@ -145,13 +116,8 @@ namespace mln
 	(void) new_value_type;
 
 	mln_ch_value(I,V)
-	  output(internal::domain_from_K0(ima.domain(), n));
-	data::fill(output, default_value);
-
-	// Filling Primary 2-Faces
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  output(internal::immerse_point(p, n)) = safe_cast(ima(p));
+	  output = immerse_with_inner_border(ima, n, new_value_type,
+					     default_value, 0);
 
 	trace::exiting("mln::world::kn::immerse");
 	return output;
