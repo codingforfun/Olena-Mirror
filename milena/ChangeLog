@@ -1,5 +1,21 @@
 2012-10-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Some fixes.
+
+	* mln/core/site_set/box.hh: Add shrink() method.
+
+	* mln/data/compute_in_inner_border.hh: Rewrite and add overloads.
+
+	* mln/trait/routine/mean.hh: New trait for builtins.
+
+	* mln/value/interval.hh: Fix overflow while counting elements.
+
+	* mln/value/intsub.hh: Add a constructor based on int_u8.
+
+	* mln/value/iota.hh: Add new specializations for builtins.
+
+2012-10-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add inner_border routines.
 
 	* mln/inner_border/extend.hh,

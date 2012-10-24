@@ -138,6 +138,10 @@ namespace mln
       intsub(const intsub<n>& rhs);
       template <unsigned m>
       intsub(const intsub<m>& rhs);
+
+      // FIXME: Really ?
+      intsub(const value::int_u<8>& rhs);
+
       /// Construct an intsub with value : \p int_part + 1 / \p denominator.
       intsub(int int_part, unsigned denominator);
       intsub(const literal::zero_t&);
@@ -299,6 +303,11 @@ namespace mln
       this->v_ = rhs.to_enc() * (n / m);
     }
 
+    template <unsigned n>
+    intsub<n>::intsub(const value::int_u<8>& rhs)
+    {
+      this->v_ = n * rhs.to_equiv();
+    }
 
     template <unsigned n>
     intsub<n>::intsub(const literal::zero_t&)

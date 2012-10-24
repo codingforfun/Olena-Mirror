@@ -59,6 +59,18 @@ namespace mln
       };
 
       template <unsigned nvalues>
+      struct mean< nvalues, unsigned >
+      {
+	typedef float ret; // FIXME: really ?
+      };
+
+      template <unsigned nvalues>
+      struct mean< nvalues, unsigned char >
+      {
+	typedef mln::value::intsub<nvalues> ret;
+      };
+
+      template <unsigned nvalues>
       struct mean< nvalues, float >
       {
 	typedef float ret;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -140,6 +140,12 @@ namespace mln
 
     /// Enlarge the box with a border \p b for dimension \p dim.
     void enlarge(unsigned dim, unsigned b);
+
+    /// Shrink the box with a border \p b.
+    void shrink(unsigned b);
+
+    /// Shrink the box with a border \p b for dimension \p dim.
+    void shrink(unsigned dim, unsigned b);
 
     /// Give a larger box.
     box<P> to_larger(unsigned b) const;
@@ -353,6 +359,31 @@ namespace mln
     mln_precondition(is_valid());
     pmin_[dim] = static_cast<mln_coord(P)>(pmin_[dim] - b);
     pmax_[dim] = static_cast<mln_coord(P)>(pmax_[dim] + b);
+    mln_postcondition(is_valid());
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::shrink(unsigned b)
+  {
+    mln_precondition(is_valid());
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      pmin_[i] = static_cast<mln_coord(P)>(pmin_[i] + b);
+      pmax_[i] = static_cast<mln_coord(P)>(pmax_[i] - b);
+    }
+    mln_postcondition(is_valid());
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::shrink(unsigned dim, unsigned b)
+  {
+    mln_precondition(is_valid());
+    pmin_[dim] = static_cast<mln_coord(P)>(pmin_[dim] + b);
+    pmax_[dim] = static_cast<mln_coord(P)>(pmax_[dim] - b);
     mln_postcondition(is_valid());
   }
 

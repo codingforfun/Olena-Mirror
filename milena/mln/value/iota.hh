@@ -56,6 +56,21 @@ namespace mln
       static int value();
     };
 
+    /// Specialization of \ref mln::value::internal::iota for unsigned
+    /// char.
+    template <>
+    struct iota<unsigned char>
+    {
+      static unsigned char value();
+    };
+
+    /// Specialization of \ref mln::value::internal::iota for char.
+    template <>
+    struct iota<char>
+    {
+      static char value();
+    };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -67,6 +82,18 @@ namespace mln
 
     int
     iota<int>::value()
+    {
+      return 1;
+    }
+
+    unsigned char
+    iota<unsigned char>::value()
+    {
+      return 1u;
+    }
+
+    char
+    iota<char>::value()
     {
       return 1;
     }

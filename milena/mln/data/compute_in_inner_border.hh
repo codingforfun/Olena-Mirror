@@ -32,6 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/accumulator.hh>
+# include <mln/inner_border/internal/on_frontiere.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 
@@ -58,6 +59,11 @@ namespace mln
     compute_in_inner_border(const Accumulator<A>& a, const Image<I>& input,
 			    unsigned inner_border_thickness);
 
+    /// \overload
+    /// inner_border_thickness is set to 1.
+    template <typename A, typename I>
+    mln_result(A)
+    compute_in_inner_border(const Accumulator<A>& a, const Image<I>& input);
 
     /// Compute an accumulator onto the inner border pixel values of
     /// the image \p input.
@@ -75,6 +81,12 @@ namespace mln
     compute_in_inner_border(Accumulator<A>& a, const Image<I>& input,
 			    unsigned inner_border_thickness);
 
+    /// \overload
+    /// inner_border_thickness is set to 1.
+    template <typename A, typename I>
+    mln_result(A)
+    compute_in_inner_border(Accumulator<A>& a, const Image<I>& input);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -85,10 +97,16 @@ namespace mln
 			    unsigned inner_border_thickness)
     {
       (void) a_;
-      A a;
+      A a(exact(a_));
       return compute_in_inner_border(a, input, inner_border_thickness);
     }
 
+    template <typename A, typename I>
+    mln_result(A)
+    compute_in_inner_border(const Accumulator<A>& a, const Image<I>& input)
+    {
+      return compute_in_inner_border(a, input, 1);
+    }
 
     template <typename A, typename I>
     mln_result(A)
@@ -106,72 +124,21 @@ namespace mln
 
       a.init();
 
-      unsigned inner_border_thickness_1 = inner_border_thickness - 1;
-      unsigned nrows_1 = geom::nrows(input) - 1;
-      unsigned ncols_1 = geom::ncols(input) - 1;
-
-      typedef mln_box(I) B;
-
-      /*
-	.--------------------.
-	|      b_top         |<------ Image domain
-	|--------------------|
-	| |                | |
-	|b|                |b|
-	| |                | |
-	|l|                |r|
-	|e|                |i|
-	|f|                |g|
-	|t|                |h|
-	| |                |t|
-	|--------------------|
-	|      b_bot         |
-	.--------------------.
-
-       */
-      B b_top = B(input.domain().pmin(),
-		  input.domain().pmin()
-		  + inner_border_thickness_1 * down
-		  + ncols_1 * right);
-      mln_piter(I) p_top(b_top);
-
-      B b_bot = B(input.domain().pmax()
-		  + inner_border_thickness_1 * up
-		  + ncols_1 * left,
-		  input.domain().pmax());
-      mln_piter(I) p_bot(b_bot);
-
-      B b_left = B(input.domain().pmin()
-      		   + inner_border_thickness * down,
-      		   input.domain().pmin()
-      		   + inner_border_thickness_1 * right
-      		   + (nrows_1 - inner_border_thickness) * down);
-      mln_piter(I) p_left(b_left);
-
-      B b_right = B(input.domain().pmax()
-      		    + inner_border_thickness_1 * left
-      		    + (nrows_1 - inner_border_thickness) * up,
-      		    input.domain().pmax()
-      		    + inner_border_thickness * up);
-      mln_piter(I) p_right(b_right);
-
-      mln_assertion(b_right.nsites() == b_left.nsites());
-      mln_assertion(b_top.nsites() == b_bot.nsites());
-
-      for_all_2(p_top, p_bot)
-      {
-      	a.take(input(p_top));
-      	a.take(input(p_bot));
-      }
-
-      for_all_2(p_left, p_right)
-      {
-      	a.take(input(p_left));
-      	a.take(input(p_right));
-      }
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	if (inner_border::internal::on_frontiere(p, input.domain(),
+						 inner_border_thickness))
+	  a.take(input(p));
 
       trace::exiting("mln::data::compute_in_inner_border");
       return a;
+    }
+
+    template <typename A, typename I>
+    mln_result(A)
+    compute_in_inner_border(Accumulator<A>& a, const Image<I>& input)
+    {
+      return compute_in_inner_border(a, input, 1);
     }
 
 

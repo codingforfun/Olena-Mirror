@@ -33,6 +33,7 @@
 # include <cstdlib>
 # include <iostream>
 # include <mln/value/inc.hh>
+# include <mln/value/succ.hh>
 # include <mln/value/concept/interval.hh>
 
 
@@ -238,9 +239,14 @@ namespace mln
       first_ = first;
       last_ = last;
 
-      nelements_ = 0;
-      for (T v = first_; v <= last_; value::inc(v))
-	++nelements_;
+      nelements_ = 1;
+      // The second condition in the for-loop is required in case of
+      // overflow...
+      if (first != last)
+      {
+	for (T v = value::succ(first_); v <= last_ && v > first_; value::inc(v))
+	  ++nelements_; // FIXME: overflow with unsigned char + [0,255]
+      }
     }
 
     template <typename T>
