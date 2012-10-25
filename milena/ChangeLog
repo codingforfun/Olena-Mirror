@@ -1,5 +1,14 @@
 2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add compute_tree_of_shapes algorithm.
+
+	* mln/util/hqueue.hh,
+	* mln/util/tree_of_shapes.hh,
+	* mln/world/kn/compute_tree_of_shapes.hh,
+	* mln/world/kn/internal/display.hh: New.
+
+2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various fixes.
 
 	* mln/accu/math/span.hh,
