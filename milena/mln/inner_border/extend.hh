@@ -59,7 +59,7 @@ namespace mln
     extend(const Image<I>& input_, unsigned inner_border_size)
     {
       trace::entering("mln::inner_border::extend");
-      mln_precondition(exact(input).is_valid());
+      mln_precondition(exact(input_).is_valid());
       const I& input = exact(input_);
 
       box2d b = input.domain(), bb = b;

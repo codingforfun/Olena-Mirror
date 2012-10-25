@@ -1,5 +1,12 @@
 2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix preconditions.
+
+	* mln/inner_border/extend.hh,
+	* mln/inner_border/fill.hh: Here.
+
+2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add tests for inner_border routines.
 
 	* tests/Makefile.am: Add inner_border subdir.

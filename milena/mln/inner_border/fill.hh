@@ -62,7 +62,7 @@ namespace mln
 	 const mln_value(I)& value)
     {
       trace::entering("mln::inner_border::fill");
-      mln_precondition(exact(input).is_valid());
+      mln_precondition(exact(input_).is_valid());
       I& input = exact(input_);
 
       mln_piter(I) p(input.domain());
