@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -36,6 +36,7 @@ SUBDIRS =					\
   geom						\
   graph 					\
   histo						\
+  inner_border					\
   io						\
   labeling					\
   linear					\

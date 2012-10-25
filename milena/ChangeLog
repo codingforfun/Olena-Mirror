@@ -1,5 +1,17 @@
 2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add tests for inner_border routines.
+
+	* tests/Makefile.am: Add inner_border subdir.
+
+	* tests/inner_border/Makefile.am,
+	* tests/inner_border/extend.cc,
+	* tests/inner_border/extend_and_fill.cc,
+	* tests/inner_border/extend_and_fill_with_inner_border.cc,
+	* tests/inner_border/fill.cc: New.
+
+2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add compute_tree_of_shapes algorithm.
 
 	* mln/util/hqueue.hh,
