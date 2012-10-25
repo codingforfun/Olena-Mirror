@@ -31,7 +31,6 @@
 /// Functor that computes the spanimum of two values.
 
 # include <mln/core/concept/function.hh>
-# include <mln/value/interval.hh>
 
 
 namespace mln
@@ -46,24 +45,22 @@ namespace mln
       // FIXME: Doc.
 
       /// \brief A functor computing the span of two interval values.
-      template <typename T>
-      struct span : public Function_vv2v< span<T> >
+      template <typename T, typename R = T>
+      struct span : public Function_vv2v< span<T,R> >
       {
-	typedef value::interval<T> result;
+	typedef R result;
 
-	value::interval<T> operator()(const value::interval<T>& v1,
-				      const value::interval<T>& v2) const;
+	R operator()(const T& v1, const T& v2) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename T>
-      value::interval<T>
-      span<T>::operator()(const value::interval<T>& v1,
-			  const value::interval<T>& v2) const
+      template <typename T, typename R>
+      R
+      span<T,R>::operator()(const T& v1, const T& v2) const
       {
-	return value::span(v1, v2);
+	return R(value::span(v1, v2));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

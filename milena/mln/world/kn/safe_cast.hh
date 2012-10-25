@@ -46,17 +46,6 @@ namespace mln
 
       using namespace mln::value;
 
-      // Forward declaration.
-      namespace internal {
-	template <typename Tsrc> struct to_be_casted_t;
-      }
-
-
-      /// \brief Safe convertion function for manipulating Kn-immersed
-      /// images.
-      template <typename Tsrc>
-      internal::to_be_casted_t<Tsrc> safe_cast(const Tsrc& src);
-
       /// \brief Safe convertion function for manipulating Kn-immersed
       /// images.
       template <typename Tdest, typename Tsrc>
@@ -85,19 +74,47 @@ namespace mln
       to = intsub<n>(from.to_interop());
     }
 
+    inline
+    void safe_cast_(const int_u8& from, interval<int_u8>& to)
+    {
+      to = from;
+    }
+
+    inline
+    void safe_cast_(const int_u8& from, int& to)
+    {
+      to = from.to_interop();
+    }
+
     template <unsigned n>
-    void safe_cast_(const interval<intsub<n> >& from, value::int_u8& to)
+    void safe_cast_(const interval<intsub<n> >& from, int_u8& to)
     {
       if (!from.is_degenerated())
-	abort();
+	std::abort();
       to = intsub<n>(from.first());
+    }
+
+    inline
+    void safe_cast_(const interval<int_u8>& from, int_u8& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first();
+    }
+
+    template <unsigned n>
+    void safe_cast_(const interval<int_u8>& from, intsub<n>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first().to_interop();
     }
 
     template <unsigned n>
     void safe_cast_(const interval<intsub<n> >& from, int& to)
     {
       if (!from.is_degenerated())
-	abort();
+	std::abort();
       to = from.first();
     }
 
@@ -105,7 +122,7 @@ namespace mln
     void safe_cast_(const interval<intsub<n> >& from, intsub<n>& to)
     {
       if (!from.is_degenerated())
-	abort();
+	std::abort();
       to = from.first();
     }
 
@@ -115,10 +132,22 @@ namespace mln
       to = interval<intsub<n> >(from);
     }
 
+    inline
+    void safe_cast_(const int& from, int_u8& to)
+    {
+      to = from;
+    }
+
     template <unsigned n>
     void safe_cast_(const intsub<n>& from, intsub<2*n>& to)
     {
       to = static_cast<intsub<2*n> >(from.to_int());
+    }
+
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, intsub<n/2>& to)
+    {
+      to = static_cast<intsub<n/2> >(from.to_int());
     }
 
     template <unsigned n>
@@ -151,34 +180,6 @@ namespace mln
 
     namespace kn
     {
-
-      namespace internal
-      {
-
-	template <typename Tsrc>
-	struct to_be_casted_t
-	{
-	  to_be_casted_t(const Tsrc& src) : src(src) {}
-	  Tsrc src;
-
-	  template <typename Tdest>
-	  operator Tdest const()
-	  {
-	    Tdest dest;
-	    safe_cast_(src, dest);
-	    return dest;
-	  }
-	};
-
-      } // end of namespace mln::world::kn::internal
-
-
-      template <typename Tsrc>
-      internal::to_be_casted_t<Tsrc> safe_cast(const Tsrc& src)
-      {
-	internal::to_be_casted_t<Tsrc> tmp(src);
-	return tmp;
-      }
 
       template <typename Tdest, typename Tsrc>
       Tdest safe_cast_to(const Tsrc& src)

@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_INNER_BORDER_ON_FRONTIERE_HH
-# define MLN_INNER_BORDER_ON_FRONTIERE_HH
+#ifndef MLN_INNER_BORDER_IS_ON_FRONTIERE_HH
+# define MLN_INNER_BORDER_IS_ON_FRONTIERE_HH
 
 /// \file
 ///
@@ -48,8 +48,14 @@ namespace mln
       /// border of the image.
       template <typename P>
       bool
-      on_frontiere(const mln_site(box<P>)& p, const box<P>& b,
-		   def::coord inner_border_size);
+      is_on_frontiere(const mln_site(box<P>)& p, const box<P>& b,
+		      def::coord inner_border_size);
+
+      /// \overload
+      /// inner_border_size is set to 1.
+      template <typename P>
+      bool
+      is_on_frontiere(const mln_site(box<P>)& p, const box<P>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,8 +64,8 @@ namespace mln
 
       inline
       bool
-      on_frontiere_2d(const point2d& p, const box2d& b,
-		      def::coord inner_border_size)
+      is_on_frontiere_2d(const point2d& p, const box2d& b,
+			 def::coord inner_border_size)
       {
 	for (int d = 0; d < 2; ++d)
 	  if ((p[d] >= b.pmin()[d]
@@ -75,30 +81,37 @@ namespace mln
 
       inline
       bool
-      on_frontiere_dispatch(const point2d& p, const box2d& b,
-			    def::coord inner_border_size)
+      is_on_frontiere_dispatch(const point2d& p, const box2d& b,
+			       def::coord inner_border_size)
       {
-	return on_frontiere_2d(p, b, inner_border_size);
+	return is_on_frontiere_2d(p, b, inner_border_size);
       }
 
       template <typename P>
       bool
-      on_frontiere_dispatch(const mln_site(box<P>)& p, const box<P>& b,
-			    def::coord inner_border_size)
+      is_on_frontiere_dispatch(const mln_site(box<P>)& p, const box<P>& b,
+			       def::coord inner_border_size)
       {
 	mlc_abort(P)::check(); // Not implemented.
 	return false;
       }
 
 
-      // Facade
+      // Facades
 
       template <typename P>
       bool
-      on_frontiere(const mln_site(box<P>)& p, const box<P>& b,
-		   def::coord inner_border_size)
+      is_on_frontiere(const mln_site(box<P>)& p, const box<P>& b,
+		      def::coord inner_border_size)
       {
-	return on_frontiere_dispatch(p, b, inner_border_size);
+	return is_on_frontiere_dispatch(p, b, inner_border_size);
+      }
+
+      template <typename P>
+      bool
+      is_on_frontiere(const mln_site(box<P>)& p, const box<P>& b)
+      {
+	return is_on_frontiere(p, b, 1);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -109,5 +122,5 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_INNER_BORDER_ON_FRONTIERE_HH
+#endif // ! MLN_INNER_BORDER_IS_ON_FRONTIERE_HH
 

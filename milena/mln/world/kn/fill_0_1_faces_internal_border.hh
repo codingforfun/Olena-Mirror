@@ -30,7 +30,7 @@
 #ifndef MLN_WORLD_KN_FILL_0_1_FACES_INTERNAL_BORDER_HH
 # define MLN_WORLD_KN_FILL_0_1_FACES_INTERNAL_BORDER_HH
 
-# include <mln/core/alias/point2d.hh>
+# include <mln/inner_border/fill.hh>
 
 
 namespace mln
@@ -57,7 +57,8 @@ namespace mln
 
        */
       template <typename I>
-      void fill_0_1_faces_internal_border(Image<I>& inout, const mln_value(I)& v);
+      void fill_0_1_faces_internal_border(Image<I>& inout,
+					  const mln_value(I)& v);
 
 
 
@@ -68,26 +69,15 @@ namespace mln
 
 
       template <typename I>
-      void fill_0_1_faces_internal_border(Image<I>& inout_, const mln_value(I)& v)
+      void fill_0_1_faces_internal_border(Image<I>& inout_,
+					  const mln_value(I)& v)
       {
 	trace::entering("mln::world::kn::fill_0_1_faces_internal_border");
 
 	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
 
-	// Horizontal borders
-	for (mln::def::coord col = geom::min_col(inout); col <= geom::max_col(inout); ++col)
-	{
-	  inout.at_(geom::min_row(inout), col) = v;
-	  inout.at_(geom::max_row(inout), col) = v;
-	}
-
-	// Vertical borders
-	for (mln::def::coord row = geom::min_row(inout); row <= geom::max_row(inout); ++row)
-	{
-	  inout.at_(row, geom::min_col(inout)) = v;
-	  inout.at_(row, geom::max_col(inout)) = v;
-	}
+	inner_border::fill(inout, v);
 
 	trace::exiting("mln::world::kn::fill_0_1_faces_internal_border");
       }

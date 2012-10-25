@@ -1,3 +1,30 @@
+2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various fixes.
+
+	* mln/accu/math/span.hh,
+	* mln/fun/vv2v/span.hh,
+	* mln/fun/vvvv2v/span.hh: Do not force the use of value::interval.
+
+	* mln/world/kn/fill_0_1_faces_internal_border.hh: Rely on
+	mln::inner_border::fill.
+
+	* mln/inner_border/internal/on_frontiere.hh: Rename as...
+	* mln/inner_border/internal/is_on_frontiere.hh: ... this.
+
+	* mln/data/compute_in_inner_border.hh,
+	* mln/inner_border/fill.hh: Rename on_frontiere as
+	is_on_frontiere.
+
+	* mln/value/interval.hh: Relax type of constructor arguments.
+
+	* mln/world/k2/is_primary_2_face.hh: Fix invalid test.
+
+	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh,
+	* mln/world/kn/un_immerse.hh: Make use of safe_cast_to.
+
+	* mln/world/kn/safe_cast.hh: Remove safe_cast() function.
+
 2012-10-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Some fixes.

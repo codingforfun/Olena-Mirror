@@ -32,7 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/accumulator.hh>
-# include <mln/inner_border/internal/on_frontiere.hh>
+# include <mln/inner_border/internal/is_on_frontiere.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 
@@ -126,8 +126,8 @@ namespace mln
 
       mln_piter(I) p(input.domain());
       for_all(p)
-	if (inner_border::internal::on_frontiere(p, input.domain(),
-						 inner_border_thickness))
+	if (inner_border::internal::is_on_frontiere(p, input.domain(),
+						    inner_border_thickness))
 	  a.take(input(p));
 
       trace::exiting("mln::data::compute_in_inner_border");

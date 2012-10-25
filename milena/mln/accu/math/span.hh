@@ -31,7 +31,6 @@
 /// Define an accumulator that computes a span.
 
 # include <mln/accu/internal/base.hh>
-# include <mln/value/interval.hh>
 
 namespace mln
 {
@@ -50,10 +49,10 @@ namespace mln
       ///
       /// \ingroup modaccuvalues
       //
-      template <typename T>
-      struct span : public mln::accu::internal::base< const value::interval<T>&, span<T> >
+      template <typename T, typename R = T>
+      struct span : public mln::accu::internal::base< const R&, span<T,R> >
       {
-	typedef value::interval<T> argument;
+	typedef T argument;
 
 	span();
 
@@ -62,11 +61,11 @@ namespace mln
 	void init();
 	void take_as_init_(const argument& t);
 	void take(const argument& t);
-	void take(const span<T>& other);
+	void take(const span<T,R>& other);
 	/// \}
 
 	/// Get the value of the accumulator.
-	const value::interval<T>& to_result() const;
+	const R& to_result() const;
 
 	/// Check whether this accu is able to return a result.
 	/// Always true here.
@@ -74,7 +73,7 @@ namespace mln
 
       protected:
 
-	value::interval<T> t_;
+	R t_;
 	bool is_valid_;
       };
 
@@ -88,32 +87,32 @@ namespace mln
     namespace math
     {
 
-      template <typename T>
+      template <typename T, typename R>
       inline
-      span<T>::span()
+      span<T,R>::span()
       {
 	init();
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
       void
-      span<T>::init()
+      span<T,R>::init()
       {
 	is_valid_ = false;
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
-      void span<T>::take_as_init_(const argument& t)
+      void span<T,R>::take_as_init_(const argument& t)
       {
 	t_ = t;
 	is_valid_ = true;
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
-      void span<T>::take(const argument& t)
+      void span<T,R>::take(const argument& t)
       {
 	if (is_valid_)
 	  this->t_ = value::span(this->t_, t);
@@ -125,10 +124,10 @@ namespace mln
 	}
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
       void
-      span<T>::take(const span<T>& other)
+      span<T,R>::take(const span<T,R>& other)
       {
 	mln_precondition(other.is_valid());
 
@@ -141,18 +140,18 @@ namespace mln
 	}
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
-      const value::interval<T>&
-      span<T>::to_result() const
+      const R&
+      span<T,R>::to_result() const
       {
 	return t_;
       }
 
-      template <typename T>
+      template <typename T, typename R>
       inline
       bool
-      span<T>::is_valid() const
+      span<T,R>::is_valid() const
       {
 	return is_valid_;
       }

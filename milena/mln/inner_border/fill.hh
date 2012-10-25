@@ -32,7 +32,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/data/paste.hh>
-# include <mln/inner_border/internal/on_frontiere.hh>
+# include <mln/inner_border/internal/is_on_frontiere.hh>
 
 namespace mln
 {
@@ -67,7 +67,7 @@ namespace mln
 
       mln_piter(I) p(input.domain());
       for_all(p)
-	if (internal::on_frontiere(p, input.domain(), border_size))
+	if (internal::is_on_frontiere(p, input.domain(), border_size))
 	  input(p) = value;
 
       trace::exiting("mln::inner_border::fill");

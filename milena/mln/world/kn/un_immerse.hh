@@ -113,11 +113,11 @@ namespace mln
 	const I& ima = exact(ima_);
 	(void) new_value_type;
 
-	mln_concrete(I) output(internal::domain_K0_from_Kn(ima.domain(), n));
+	mln_ch_value(I,V) output(internal::domain_K0_from_Kn(ima.domain(), n));
 
 	mln_piter(I) p(output.domain());
 	for_all(p)
-	  output(p) = safe_cast(ima(internal::immerse_point(p, n)));
+	  output(p) = safe_cast_to<V>(ima(internal::immerse_point(p, n)));
 
 	trace::exiting("mln::world::kn::un_immerse");
 	return output;

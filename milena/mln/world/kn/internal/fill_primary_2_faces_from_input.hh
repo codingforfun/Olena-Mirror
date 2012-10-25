@@ -83,11 +83,12 @@ namespace mln
 	  const J& ima = exact(ima_);
 
 	  // Filling Primary 2-Faces
+	  typedef mln_value(I) V;
 	  mln_piter(J) p(ima.domain());
 	  for_all(p)
 	  {
 	    mln_site(I) pout = internal::immerse_point(p, n, inner_border_thickness);
-	    ima_kn(pout) = safe_cast(ima(p));
+	    ima_kn(pout) = safe_cast_to<V>(ima(p));
 	  }
 
 	  trace::exiting("mln::world::kn::internal::fill_primary_2_faces_from_input");

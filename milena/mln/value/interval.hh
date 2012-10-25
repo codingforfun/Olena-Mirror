@@ -53,8 +53,12 @@ namespace mln
       typedef T equiv;
 
       interval();
-      interval(T single);
-      interval(T first, T last);
+
+      template <typename U>
+      interval(U single);
+
+      template <typename U>
+      interval(U first, U last);
 
       interval& operator=(const interval& rhs);
 
@@ -223,8 +227,10 @@ namespace mln
     }
 
     template <typename T>
-    interval<T>::interval(T single)
+    template <typename U>
+    interval<T>::interval(U single)
     {
+      mlc_converts_to(U,T)::check();
       first_ = single;
       last_ = single;
 
@@ -233,8 +239,10 @@ namespace mln
 
 
     template <typename T>
-    interval<T>::interval(T first, T last)
+    template <typename U>
+    interval<T>::interval(U first, U last)
     {
+      mlc_converts_to(U,T)::check();
       mln_precondition(last >= first);
       first_ = first;
       last_ = last;
@@ -245,7 +253,7 @@ namespace mln
       if (first != last)
       {
 	for (T v = value::succ(first_); v <= last_ && v > first_; value::inc(v))
-	  ++nelements_; // FIXME: overflow with unsigned char + [0,255]
+	  ++nelements_;
       }
     }
 
@@ -321,7 +329,7 @@ namespace mln
     interval<T>::self_open()
     {
       if (is_degenerated())
-	abort();
+	std::abort();
       mln_precondition(nelements_ > 2);
 
       first += iota<T>::value();

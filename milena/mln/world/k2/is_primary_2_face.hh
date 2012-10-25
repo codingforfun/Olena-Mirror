@@ -66,7 +66,7 @@ namespace mln
       bool is_primary_2_face(const mln::def::coord& row,
 			   const mln::def::coord& col)
       {
-	return !((row % 4) + (col % 4));
+	return row % 4 == 0 && col % 4 == 0;
       }
 
 
