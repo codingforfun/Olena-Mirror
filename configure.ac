@@ -469,6 +469,7 @@ AC_CONFIG_FILES([
     milena/tests/graph/Makefile
       milena/tests/graph/attribute/Makefile
     milena/tests/histo/Makefile
+    milena/tests/inner_border/Makefile
     milena/tests/io/Makefile
       milena/tests/io/dicom/Makefile
       milena/tests/io/dump/Makefile
