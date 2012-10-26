@@ -1,5 +1,5 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 EPITA Research and
-# Development Laboratory (LRDE).
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 EPITA
+# Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -539,6 +539,7 @@ AC_CONFIG_FILES([
       milena/tests/world/k1/Makefile
       milena/tests/world/k2/Makefile
       milena/tests/world/kn/Makefile
+        milena/tests/world/kn/accu/Makefile
 ])
 
 dnl<<lrde
