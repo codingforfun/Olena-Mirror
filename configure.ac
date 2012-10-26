@@ -540,6 +540,7 @@ AC_CONFIG_FILES([
       milena/tests/world/k2/Makefile
       milena/tests/world/kn/Makefile
         milena/tests/world/kn/accu/Makefile
+        milena/tests/world/kn/border/Makefile
 ])
 
 dnl<<lrde
