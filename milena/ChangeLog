@@ -1,5 +1,16 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle border effects while computing 1-faces values.
+
+	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh:
+	Duplicate 2-faces values in border.
+
+	* tests/world/k1/fill_1_from_2_faces.cc,
+	* tests/world/kn/fill_1_from_2_faces.cc,
+	* tests/world/kn/fill_1_from_aux_2_faces.cc: Update tests.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve interface of hqueues.
 
 	* mln/util/hqueue.hh: Do not return queues directly.

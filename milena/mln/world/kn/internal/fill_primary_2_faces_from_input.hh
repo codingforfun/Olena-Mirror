@@ -33,6 +33,7 @@
 
 # include <mln/world/kn/internal/immerse_point.hh>
 # include <mln/world/kn/safe_cast.hh>
+# include <mln/world/kn/border/adjust_duplicate_2_faces.hh>
 
 namespace mln
 {
@@ -90,6 +91,8 @@ namespace mln
 	    mln_site(I) pout = internal::immerse_point(p, n, inner_border_thickness);
 	    ima_kn(pout) = safe_cast_to<V>(ima(p));
 	  }
+
+	  kn::border::adjust_duplicate_2_faces(ima_kn, 1);
 
 	  trace::exiting("mln::world::kn::internal::fill_primary_2_faces_from_input");
 	}

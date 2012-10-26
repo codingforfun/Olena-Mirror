@@ -26,28 +26,11 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
+#include <mln/fun/vv2v/sum.hh>
 #include <mln/world/k1/fill_1_from_2_faces.hh>
-#include <mln/border/fill.hh>
-
-
-namespace mln
-{
-
-  struct sum_t : Function_vv2v<sum_t>
-  {
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2) const
-    {
-      return v1 + v2;
-    }
-
-  };
-
-}
+#include <mln/world/kn/border/duplicate_2_faces.hh>
 
 
 
@@ -55,31 +38,52 @@ int main()
 {
   using namespace mln;
 
-  int refvals[5][5] = {
-    {1, 3, 1, 3, 1},
-    {3, 3, 6, 3, 3},
-    {1, 6, 1, 6, 1},
-    {3, 3, 6, 3, 3},
-    {1, 3, 1, 3, 1}
-  };
-  image2d<int> ref = make::image(refvals, point2d(-1, -1));
-
-  int vals[5][5] = {
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 3, 0, 3, 0 },
-    {1, 0, 1, 0, 1 }
+  int vals[7][7] = {
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 3, 0, 3, 0, 3, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 3, 0, 3, 0, 3, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 3, 0, 3, 0, 3, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
   };
   image2d<int> imakn = make::image(vals, point2d(-1, -1));
-
-  /// Make sure the border is set to 0 to get deterministic results.
-  border::fill(imakn, 0);
+  world::kn::border::duplicate_2_faces(imakn);
 
   // Overload with function
   {
-    sum_t f;
-    world::k1::fill_1_from_2_faces(imakn, f);
+    int refvals[7][7] = {
+      {1, 6, 1, 6, 1, 6, 1 },
+      {6, 3, 6, 3, 6, 3, 6 },
+      {1, 6, 1, 6, 1, 6, 1 },
+      {6, 3, 6, 3, 6, 3, 6 },
+      {1, 6, 1, 6, 1, 6, 1 },
+      {6, 3, 6, 3, 6, 3, 6 },
+      {1, 6, 1, 6, 1, 6, 1 },
+    };
+
+    image2d<int> ref = make::image(refvals, point2d(-1, -1));
+
+    world::k1::fill_1_from_2_faces(imakn, fun::vv2v::sum<int>());
+    mln_assertion(ref == imakn);
+  }
+
+  // Overload with accumulator
+  {
+    int refvals[7][7] = {
+      {1, 3, 1, 3, 1, 3, 1 },
+      {3, 3, 6, 3, 6, 3, 3 },
+      {1, 6, 1, 6, 1, 6, 1 },
+      {3, 3, 6, 3, 6, 3, 3 },
+      {1, 6, 1, 6, 1, 6, 1 },
+      {3, 3, 6, 3, 6, 3, 3 },
+      {1, 3, 1, 3, 1, 3, 1 },
+    };
+
+    image2d<int> ref = make::image(refvals, point2d(-1, -1));
+
+    accu::math::sum<int> accu;;
+    world::k1::fill_1_from_2_faces(imakn, accu);
     mln_assertion(ref == imakn);
   }
 
