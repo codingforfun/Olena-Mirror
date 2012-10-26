@@ -69,11 +69,15 @@ namespace mln
       template <typename I, typename F>
       void fill_1_from_2_faces(Image<I>& inout, const Function_vv2v<F>& f);
 
+      /// \overload
+      template <typename I, typename A>
+      void fill_1_from_2_faces(Image<I>& inout, const Accumulator<A>& accu);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-      // Facade
+      // Facades
 
 
       template <typename I, typename F>
@@ -91,6 +95,38 @@ namespace mln
 	    inout(p) = f(inout(p + left), inout(p + right));
 	  else if (kn::is_1_face_horizontal(p))
 	    inout(p) = f(inout(p + up), inout(p + down));
+
+	trace::exiting("mln::world::k1::fill_1_from_2_faces");
+      }
+
+      template <typename I, typename A>
+      void fill_1_from_2_faces(Image<I>& inout_, const Accumulator<A>& accu_)
+      {
+	trace::entering("mln::world::k1::fill_1_from_2_faces");
+
+	mln_precondition(exact(inout_).is_valid());
+	I& inout = exact(inout_);
+	A accu(accu_);
+
+	mln_box(I) b = inout.domain();
+	mln_piter(I) p(b);
+	for_all(p)
+	  if (kn::is_1_face_vertical(p))
+	  {
+	    if (inout.domain().has(p + left))
+	      accu.take(inout(p + left));
+	    if (inout.domain().has(p + right))
+	      accu.take(inout(p + right));
+	    inout(p) = accu.to_result();
+	  }
+	  else if (kn::is_1_face_horizontal(p))
+	  {
+	    if (inout.domain().has(p + up))
+	      accu.take(inout(p + up));
+	    if (inout.domain().has(p + down))
+	      accu.take(inout(p + down));
+	    inout(p) = accu.to_result();
+	  }
 
 	trace::exiting("mln::world::k1::fill_1_from_2_faces");
       }
