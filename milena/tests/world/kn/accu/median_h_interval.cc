@@ -25,13 +25,13 @@
 
 #include <mln/value/interval.hh>
 #include <mln/value/intsub.hh>
-#include <mln/accu/stat/median_h_interval.hh>
+#include <mln/world/kn/accu/median_h_interval.hh>
 
 
 template <typename T>
 void doit(const mln::value::interval<T>& inter)
 {
-  typedef mln::accu::stat::median_h_interval<T> M;
+  typedef mln::world::kn::accu::median_h_interval<T> M;
 
   {
     M m(inter);

@@ -1,5 +1,23 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add specific accumulators to work in kn.
+
+	* mln/accu/stat/median_h_interval.hh,
+	* tests/accu/stat/median_h_interval.cc: Move...
+	* mln/world/kn/accu/median_h_interval.hh,
+	* tests/world/kn/accu/median_h_interval.cc: ... Here.
+
+	* mln/world/kn/accu/max_interval.hh,
+	* mln/world/kn/accu/min_interval.hh,
+	* tests/world/kn/accu/Makefile.am,
+	* tests/world/kn/accu/max_interval.cc,
+	* tests/world/kn/accu/min_interval.cc: New.
+
+	* tests/accu/stat/Makefile.am,
+	* tests/world/kn/Makefile.am: Update targets.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add kn::holes() and kn::saturate().
 
 	* mln/world/kn/holes.hh,

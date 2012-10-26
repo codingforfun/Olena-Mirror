@@ -16,6 +16,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS = accu
+
 check_PROGRAMS =				\
   fill_0_1_faces_internal_border		\
   fill_0_from_1_faces				\

@@ -1,5 +1,4 @@
-# Copyright (C) 2009, 2010, 2012 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,29 +17,12 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  deviation 					\
-  var						\
-  min						\
-  min_h						\
-  min_max					\
-  max						\
-  max_h						\
-  median_few					\
-  median_h					\
-  mean						\
-  rank
+  max_interval					\
+  median_h_interval				\
+  min_interval
 
-deviation_SOURCES = deviation.cc
-var_SOURCES = var.cc
-mean_SOURCES = mean.cc
-median_h_SOURCES = median_h.cc
-median_few_SOURCES = median_few.cc
-min_SOURCES = min.cc
-min_h_SOURCES = min_h.cc
-max_SOURCES = max.cc
-max_h_SOURCES = max_h.cc
-min_max_SOURCES = min_max.cc
-rank_SOURCES = rank.cc
+max_interval_SOURCES = max_interval.cc
+median_h_interval_SOURCES = median_h_interval.cc
+min_interval_SOURCES = min_interval.cc
 
 TESTS = $(check_PROGRAMS)
-
