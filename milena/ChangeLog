@@ -1,5 +1,12 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add sum functions.
+
+	* mln/fun/vv2v/sum.hh,
+	* mln/fun/vvvv2v/sum.hh: New.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add kn::border routines working on 2-faces.
 
 	* mln/world/kn/border/adjust_duplicate_2_faces.hh,
