@@ -1,5 +1,17 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Do not read outside images in fill functions with accumulators.
+
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/kn/fill_0_from_1_faces.hh,
+	* mln/world/kn/fill_0_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh,
+	* mln/world/kn/fill_2_from_1_faces.hh: Check if neighbor site is
+	in the domain.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various fixes.
 
 	* mln/util/hqueue.hh: Add a precondition.

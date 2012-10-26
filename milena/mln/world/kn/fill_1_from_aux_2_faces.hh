@@ -76,7 +76,7 @@ namespace mln
       /// \overload
       template <typename I, typename J, typename A>
       void fill_1_from_aux_2_faces(Image<I>& inout, const Image<J>& aux,
-					 const Accumulator<A>& accu);
+				   const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -123,20 +123,25 @@ namespace mln
 	(void) accu_;
 
 	A accu = A();
-	mln_piter(I) p(inout.domain());
+	mln_box(I) b = inout.domain();
+	mln_piter(I) p(b);
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	  {
 	    accu.init();
-	    accu.take(aux(p + left));
-	    accu.take(aux(p + right));
+	    if (aux.domain().has(p + left))
+	      accu.take(aux(p + left));
+	    if (aux.domain().has(p + right))
+	      accu.take(aux(p + right));
 	    inout(p) = accu.to_result();
 	  }
 	  else if (kn::is_1_face_horizontal(p))
 	  {
 	    accu.init();
-	    accu.take(aux(p + up));
-	    accu.take(aux(p + down));
+	    if (aux.domain().has(p + up))
+	      accu.take(aux(p + up));
+	    if (aux.domain().has(p + down))
+	      accu.take(aux(p + down));
 	    inout(p) = accu.to_result();
 	  }
 

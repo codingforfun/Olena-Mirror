@@ -87,15 +87,20 @@ namespace mln
 	(void) accu_;
 
 	A accu = A();
-	mln_piter(I) p(inout.domain());
+	mln_box(I) b = inout.domain();
+	mln_piter(I) p(b);
 	for_all(p)
 	  if (is_0_face(p))
 	  {
 	    accu.init();
-	    accu.take(inout(p + left));
-	    accu.take(inout(p + right));
-	    accu.take(inout(p + up));
-	    accu.take(inout(p + down));
+	    if (inout.domain().has(p + left))
+	      accu.take(inout(p + left));
+	    if (inout.domain().has(p + right))
+	      accu.take(inout(p + right));
+	    if (inout.domain().has(p + up))
+	      accu.take(inout(p + up));
+	    if (inout.domain().has(p + down))
+	      accu.take(inout(p + down));
 	    inout(p) = accu.to_result();
 	  }
 
