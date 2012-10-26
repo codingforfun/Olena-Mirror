@@ -1,3 +1,15 @@
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add kn::holes() and kn::saturate().
+
+	* mln/world/kn/holes.hh,
+	* mln/world/kn/internal/get_background_label.hh,
+	* mln/world/kn/saturate.hh,
+	* tests/world/kn/holes.cc,
+	* tests/world/kn/saturate.cc: New.
+
+	* tests/world/kn/Makefile.am: New targets.
+
 2012-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix preconditions.
