@@ -36,12 +36,9 @@
 
 # include <mln/core/alias/neighb2d.hh>
 
-# include <mln/data/compute.hh>
-
-# include <mln/accu/math/span.hh>
-
 # include <mln/value/dec.hh>
 # include <mln/value/inc.hh>
+# include <mln/value/interval.hh>
 
 # include <mln/util/hqueue.hh>
 # include <mln/util/tree_of_shapes.hh>
@@ -62,9 +59,16 @@ namespace mln
     {
 
       /// \brief Compute the tree of shape from a Kn 2D image.
+      /*!
+
+          \param[in] F A 2D image in Kn. It's values are considered of
+	  type value::interval<>.
+	  \param[in] inter Interval of the possible values in \p F.
+
+       */
       template <typename I>
       util::tree_of_shapes<I>
-      compute_tree_of_shapes(const Image<I>& F);
+      compute_tree_of_shapes(const Image<I>& F, const mln_value(I)& inter);
 
 
 #  ifndef MLN_INCLUDE_ONLY
@@ -87,7 +91,8 @@ namespace mln
 
 	  compute_tree_of_shapes_t();
 
-	  util::tree_of_shapes<I> operator()(const I& F_);
+	  util::tree_of_shapes<I> operator()(const I& F_,
+					     const mln_value(I)& inter);
 
 	  void do_union(P p_, P r_, T& zpar, U& rank, U& last);
 
@@ -104,7 +109,8 @@ namespace mln
 
 	  EV level_next_to_lcur(q_type& q);
 
-	  void sort(const Image<I>& F_, util::tree_of_shapes<I>& t, display& dsp);
+	  void sort(const Image<I>& F_, util::tree_of_shapes<I>& t,
+		    display& dsp);
 	  void canonicalize_tree(util::tree_of_shapes<I>& t);
 
 
@@ -117,8 +123,7 @@ namespace mln
 
 	  unsigned N;
 	  box2d D;
-
-	  V vspan_;
+	  mln_value(I) inter_;
 	};
 
 
@@ -207,18 +212,6 @@ namespace mln
 	}
 
 
-
-	// std::ostream&
-	// operator<<(std::ostream& ostr, const q_type& q)
-	// {
-	// 	ostr << "q = ";
-	// 	for (unsigned i = 0; i < q.size(); ++i)
-	// 	  if (! q[i].empty())
-	// 	    ostr << i << ':' << q[i].size() << "  ";
-	// 	return ostr;
-	// }
-
-
 	template <typename I>
 	void
 	compute_tree_of_shapes_t<I>::priority_push(q_type& q, const P& p, const I& F)
@@ -242,12 +235,25 @@ namespace mln
 	typename compute_tree_of_shapes_t<I>::EV
 	compute_tree_of_shapes_t<I>::upper_level_next_to_lcur(q_type& q, bool& found)
 	{
-	  for (EV l_ = lcur; l_ <= vspan_.last(); value::inc(l_))
+	  EV l_ = lcur;
+
+	  for (; l_ < inter_.last(); value::inc(l_))
+	  {
 	    if (! q[l_].empty())
 	    {
 	      found = true;
 	      return l_;
 	    }
+	  }
+
+	  // Avoid overflow on last element.
+	  if (l_ == inter_.last())
+	    if (! q[l_].empty())
+	    {
+	      found = true;
+	      return l_;
+	    }
+
 	  found = false;
 	  return EV();
 	}
@@ -256,12 +262,23 @@ namespace mln
 	typename compute_tree_of_shapes_t<I>::EV
 	compute_tree_of_shapes_t<I>::lower_level_next_to_lcur(q_type& q, bool& found)
 	{
-	  for (EV l_ = lcur; l_ >= vspan_.first(); value::dec(l_))
+	  EV l_ = lcur;
+
+	  for (; l_ > inter_.first(); value::dec(l_))
 	    if (! q[l_].empty())
 	    {
 	      found = true;
 	      return l_;
 	    }
+
+	  // Avoid overflow on first element.
+	  if (l_ == inter_.first())
+	    if (! q[l_].empty())
+	    {
+	      found = true;
+	      return l_;
+	    }
+
 	  found = false;
 	  return EV();
 	}
@@ -341,7 +358,7 @@ namespace mln
 	  mln_ch_value(I,bool) deja_vu(D), done(D);
 	  mln_piter(B) p(D);
 
-	  q_type q(vspan_);
+	  q_type q(inter_);
 
 	  for_all(p)
 	  {
@@ -445,19 +462,15 @@ namespace mln
 
 	template <typename I>
 	util::tree_of_shapes<I>
-	compute_tree_of_shapes_t<I>::operator()(const I& F)
+	compute_tree_of_shapes_t<I>::operator()(const I& F,
+						const mln_value(I)& inter)
 	{
 	  trace::entering("mln::world::kn::compute_tree_of_shapes");
 	  mln_precondition(F.is_valid());
 
-	  /// FIXME: Really ?
-	  /// Useful while sorting sites and constructing the hqueue.
-	  accu::math::span<V> accu;
-	  vspan_ = data::compute(accu, F | kn::is_2_face);
-	  /// End of FIXME
-
 	  N = F.nsites();
 	  D = F.domain();
+	  inter_ = inter;
 
 	  util::tree_of_shapes<I> t;
 
@@ -474,19 +487,24 @@ namespace mln
 
 
 
+
       template <typename I>
       util::tree_of_shapes<I>
-      compute_tree_of_shapes(const Image<I>& F)
+      compute_tree_of_shapes(const Image<I>& F,
+			     const mln_value(I)& inter)
       {
 	trace::entering("mln::world::kn::compute_tree_of_shapes");
 	mln_precondition(exact(F).is_valid());
+	typedef mln_value(I) V;
+	mlc_is_a(V, value::interval)::check();
 
 	util::tree_of_shapes<I>
-	  t = internal::compute_tree_of_shapes_t<I>()(exact(F));
+	  t = internal::compute_tree_of_shapes_t<I>()(exact(F), inter);
 
 	trace::exiting("mln::world::kn::compute_tree_of_shapes");
 	return t;
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

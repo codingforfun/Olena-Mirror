@@ -1,5 +1,24 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various fixes.
+
+	* mln/util/hqueue.hh: Add a precondition.
+
+	* mln/value/interval.hh: Relax types of the constructor arguments
+	and the counting of elements.
+
+	* mln/value/intsub.hh: Remove constructor from int_u8 and min/max
+	traits.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Pass interval of values
+	as argument and fix overlow issues.
+
+	* tests/value/interval.cc: Add more tests.
+
+	* tests/value/intsub.cc: Use math::mean and math::median.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add specific accumulators to work in kn.
 
 	* mln/accu/stat/median_h_interval.hh,

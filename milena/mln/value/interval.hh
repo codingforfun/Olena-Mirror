@@ -55,12 +55,12 @@ namespace mln
       interval();
 
       template <typename U>
-      interval(U single);
+      interval(const U& single);
 
-      template <typename U>
-      interval(U first, U last);
+      template <typename U, typename V>
+      interval(const U& first, const V& last);
 
-      interval& operator=(const interval& rhs);
+      // interval& operator=(const interval& rhs);
 
       /// Return True if a value is within this interval.
       bool has(const T& v) const;
@@ -228,7 +228,7 @@ namespace mln
 
     template <typename T>
     template <typename U>
-    interval<T>::interval(U single)
+    interval<T>::interval(const U& single)
     {
       mlc_converts_to(U,T)::check();
       first_ = single;
@@ -237,33 +237,18 @@ namespace mln
       nelements_ = 1;
     }
 
-
     template <typename T>
-    template <typename U>
-    interval<T>::interval(U first, U last)
+    template <typename U, typename V>
+    interval<T>::interval(const U& first, const V& last)
     {
       mlc_converts_to(U,T)::check();
+      mlc_converts_to(V,T)::check();
       mln_precondition(last >= first);
       first_ = first;
       last_ = last;
 
-      nelements_ = 1;
-      // The second condition in the for-loop is required in case of
-      // overflow...
-      if (first != last)
-      {
-	for (T v = value::succ(first_); v <= last_ && v > first_; value::inc(v))
-	  ++nelements_;
-      }
-    }
-
-    template <typename T>
-    interval<T>&
-    interval<T>::operator=(const interval& rhs)
-    {
-      first_ = rhs.first_;
-      last_ = rhs.last_;
-      return *this;
+      nelements_ = (last_ - first_)
+	/ static_cast<float>(iota<T>::value()) + 1.f;
     }
 
     template <typename T>

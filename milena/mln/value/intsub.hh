@@ -83,8 +83,6 @@ namespace mln
       typedef trait::value::kind::data      kind;
       typedef mln_value_quant_from_(card)   quant;
 
-      static const self_ max() { return mln::value::internal::limits<int>::max() / n; }
-      static const self_ min() { return - max(); }
       static const self_ epsilon() { return 0; }
 
       typedef mln::value::intsub<n> comp;
@@ -138,9 +136,6 @@ namespace mln
       intsub(const intsub<n>& rhs);
       template <unsigned m>
       intsub(const intsub<m>& rhs);
-
-      // FIXME: Really ?
-      intsub(const value::int_u<8>& rhs);
 
       /// Construct an intsub with value : \p int_part + 1 / \p denominator.
       intsub(int int_part, unsigned denominator);
@@ -301,12 +296,6 @@ namespace mln
     {
       mln_precondition(m < n);
       this->v_ = rhs.to_enc() * (n / m);
-    }
-
-    template <unsigned n>
-    intsub<n>::intsub(const value::int_u<8>& rhs)
-    {
-      this->v_ = n * rhs.to_equiv();
     }
 
     template <unsigned n>

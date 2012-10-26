@@ -135,6 +135,7 @@ namespace mln
     hqueue<T,P>::pop(const P& priority)
     {
       mln_precondition(!is_empty());
+      mln_precondition(priority < v_.size());
       T front = v_[priority].front();
       v_[priority].pop();
       return front;

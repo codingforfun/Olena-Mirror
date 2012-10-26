@@ -107,4 +107,22 @@ int main()
     mln_assertion(r1.ith_element(4) == 4);
   }
 
+
+  // Check of nelements()
+  {
+    interval<intsub<1> > r(0, 255);
+    mln_assertion(r.nelements() == 256);
+  }
+  {
+    interval<intsub<2> > r(0, 255);
+    mln_assertion(r.nelements() == 511);
+  }
+  {
+    interval<intsub<2> > r(3.5, 4.5);
+    mln_assertion(r.nelements() == 3);
+  }
+  {
+    interval<intsub<4> > r(2.25, 10.50);
+    mln_assertion(r.nelements() == 34);
+  }
 }
