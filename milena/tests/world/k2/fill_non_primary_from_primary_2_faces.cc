@@ -26,40 +26,11 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
+#include <mln/fun/vv2v/sum.hh>
+#include <mln/fun/vvvv2v/sum.hh>
 #include <mln/world/k2/fill_non_primary_from_primary_2_faces.hh>
-
-namespace mln
-{
-
-  struct sum4_t : Function_vvvv2v<sum4_t>
-  {
-    typedef int argument;
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2, const int& v3, const int& v4) const
-    {
-      return v1 + v2 + v3 + v4;
-    }
-
-  };
-
-  struct sum2_t : Function_vv2v<sum2_t>
-  {
-    typedef int argument;
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2) const
-    {
-      return v1 + v2;
-    }
-
-  };
-
-}
-
 
 
 int main()
@@ -98,7 +69,9 @@ int main()
   // Overload with function
   {
     image2d<int> ima = make::image(vals, point2d(-1,-1));
-    world::k2::fill_non_primary_from_primary_2_faces(ima, sum2_t(), sum4_t());
+    fun::vv2v::sum<int> f2;
+    fun::vvvv2v::sum<int> f4;
+    world::k2::fill_non_primary_from_primary_2_faces(ima, f2, f4);
     mln_assertion(ref == ima);
   }
 

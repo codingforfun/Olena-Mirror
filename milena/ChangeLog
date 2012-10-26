@@ -1,5 +1,31 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various fixes.
+
+	* mln/world/k1/fill_1_from_2_faces.hh: Fix initialization of the
+	accumulator.
+
+	* mln/world/k1/immerse_with.hh,
+	* mln/world/kn/fill_1_from_2_faces.hh: Add an overload with functions.
+
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh: Cast to a
+	specific type.
+
+	* mln/world/kn/fill_1_from_aux_2_faces.hh: Initialize the accumulator.
+
+	* mln/world/kn/internal/get_background_label.hh: Use mln::geom
+	routines.
+
+	* tests/world/k1/immerse_with.cc: Improve test.
+
+	* tests/world/k2/fill_non_primary_from_primary_2_faces.cc: Make
+	use of new functions.
+
+	* tests/world/kn/accu/max_interval.cc,
+	* tests/world/kn/accu/min_interval.cc: Fix test.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Handle border effects while computing 1-faces values.
 
 	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh:

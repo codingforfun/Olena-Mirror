@@ -34,7 +34,6 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 
-
 namespace mln
 {
 
@@ -70,6 +69,8 @@ namespace mln
       void fill_1_from_2_faces(Image<I>& inout, const Function_vv2v<F>& f);
 
       /// \overload
+      /// This implementation do not read values outside of the image
+      /// domain.
       template <typename I, typename A>
       void fill_1_from_2_faces(Image<I>& inout, const Accumulator<A>& accu);
 
@@ -89,7 +90,8 @@ namespace mln
 	I& inout = exact(inout_);
 	const F& f = exact(f_);
 
-	mln_piter(I) p(inout.domain());
+	mln_box(I) b = inout.domain();
+	mln_piter(I) p(b);
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	    inout(p) = f(inout(p + left), inout(p + right));
@@ -106,13 +108,13 @@ namespace mln
 
 	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
-	A accu(accu_);
+	A accu(exact(accu_));
 
-	mln_box(I) b = inout.domain();
-	mln_piter(I) p(b);
+	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	  {
+	    accu.init();
 	    if (inout.domain().has(p + left))
 	      accu.take(inout(p + left));
 	    if (inout.domain().has(p + right))
@@ -121,6 +123,7 @@ namespace mln
 	  }
 	  else if (kn::is_1_face_horizontal(p))
 	  {
+	    accu.init();
 	    if (inout.domain().has(p + up))
 	      accu.take(inout(p + up));
 	    if (inout.domain().has(p + down))

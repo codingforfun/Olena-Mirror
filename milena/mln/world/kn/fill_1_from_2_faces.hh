@@ -34,7 +34,6 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 
-
 namespace mln
 {
 
@@ -69,6 +68,12 @@ namespace mln
       template <typename I, typename A>
       void fill_1_from_2_faces(Image<I>& inout, const Accumulator<A>& accu);
 
+      /// \overload
+      /// This implementation duplicate 2-faces in border in order to
+      /// be able to read values outside of the image domain.
+      template <typename I, typename F>
+      void fill_1_from_2_faces(Image<I>& inout, const Function_vv2v<F>& f);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -83,11 +88,9 @@ namespace mln
 
 	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
-	(void) accu_;
 
-	A accu = A();
-	mln_box(I) b = inout.domain();
-	mln_piter(I) p(b);
+	A accu(exact(accu_));
+	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	  {
@@ -107,6 +110,26 @@ namespace mln
 	      accu.take(inout(p + down));
 	    inout(p) = accu.to_result();
 	  }
+
+	trace::exiting("mln::world::kn::fill_1_from_2_faces");
+      }
+
+
+      template <typename I, typename F>
+      void fill_1_from_2_faces(Image<I>& inout_, const Function_vv2v<F>& f_)
+      {
+	trace::entering("mln::world::kn::fill_1_from_2_faces");
+
+	mln_precondition(exact(inout_).is_valid());
+	I& inout = exact(inout_);
+	const F& f = exact(f_);
+
+	mln_piter(I) p(inout.domain());
+	for_all(p)
+	  if (kn::is_1_face_vertical(p))
+	    inout(p) = f(inout(p + left), inout(p + right));
+	  else if (is_1_face_horizontal(p))
+	    inout(p) = f(inout(p + up), inout(p + down));
 
 	trace::exiting("mln::world::kn::fill_1_from_2_faces");
       }

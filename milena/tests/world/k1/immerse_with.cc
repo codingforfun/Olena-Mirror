@@ -29,8 +29,8 @@
 #include <mln/world/k1/immerse_with.hh>
 #include <mln/data/compare.hh>
 #include <mln/border/fill.hh>
-#include <mln/fun/vv2v/max.hh>
-#include <mln/fun/vvvv2v/max.hh>
+#include <mln/fun/vv2v/sum.hh>
+#include <mln/fun/vvvv2v/sum.hh>
 
 int main()
 {
@@ -41,22 +41,25 @@ int main()
     {3, 4}
   };
   image2d<int> ima = make::image(ivals);
-  border::fill(ima, 0); // Make sure there is not border effect.
+  border::fill(ima, 0); // FIXME: to be removed when 0-face
+			// computation will handle borders.
 
   int fvals[][5] = {
-    {1, 1, 2, 2, 2},
-    {1, 1, 2, 2, 2},
-    {3, 3, 4, 4, 4},
-    {3, 3, 4, 4, 4},
-    {3, 3, 4, 4, 4}
+    {0, 2, 0,  4, 0},
+    {2, 1, 3,  2, 4},
+    {0, 4, 20, 6, 0},
+    {6, 3, 7,  4, 8},
+    {0, 6, 0,  8, 0}
   };
   image2d<int> ref = make::image(fvals, point2d(-1,-1));
 
+
   {
     image2d<long>
-      immersed = world::k1::immerse_with(ima, long(),
-					 fun::vv2v::max<long>(),
-					 fun::vvvv2v::max<long>());
+      immersed = world::k1::immerse_with(ima, long(), 0l,
+					 fun::vv2v::sum<long>(),
+					 fun::vvvv2v::sum<long>());
+
     mln_assertion(immersed == ref);
   }
 

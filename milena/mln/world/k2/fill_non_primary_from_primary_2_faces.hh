@@ -116,25 +116,27 @@ namespace mln
 	const F2& f_intermediate = exact(f_intermediate_);
 	const F4& f_center = exact(f_center_);
 
+	typedef mln_value(I) VI;
 	typedef mln_argument(F2) V2;
 	typedef mln_argument(F4) V4;
-	mln_piter(I) p(ima.domain());
+	mln_box(I) b = ima.domain();
+	mln_piter(I) p(b);
 	for_all(p)
 	  if (is_non_primary_2_face_vertical(p))
 	  {
-	    ima(p) = kn::safe_cast(
+	    ima(p) = kn::safe_cast_to<VI>(
 	      f_intermediate(kn::safe_cast_to<V2>(ima(p + 2 * left)),
 			     kn::safe_cast_to<V2>(ima(p + 2 * right))));
 	  }
 	  else if (is_non_primary_2_face_horizontal(p))
 	  {
-	    ima(p) = kn::safe_cast(
+	    ima(p) = kn::safe_cast_to<VI>(
 	      f_intermediate(kn::safe_cast_to<V2>(ima(p + 2 * up)),
 			     kn::safe_cast_to<V2>(ima(p + 2 * down))));
 	  }
 	  else if (is_non_primary_2_face_center(p))
 	  {
-	    ima(p) = kn::safe_cast(
+	    ima(p) = kn::safe_cast_to<VI>(
 	      f_center(kn::safe_cast_to<V4>(ima(p + 2 * up_left)),
 		       kn::safe_cast_to<V4>(ima(p + 2 * up_right)),
 		       kn::safe_cast_to<V4>(ima(p + 2 * down_left)),

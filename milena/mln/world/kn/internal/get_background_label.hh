@@ -32,6 +32,10 @@
 # define MLN_WORLD_KN_INTERNAL_GET_BACKGROUND_LABEL_HH
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/max_col.hh>
 
 namespace mln
 {
@@ -63,12 +67,11 @@ namespace mln
 
 	  const I& lab = exact(lab_);
 
-	  mln_box(I) dom = lab.domain();
 	  def::coord
-	    min_row = dom.pmin().row(),
-	    max_row = dom.pmax().row(),
-	    min_col = dom.pmin().col(),
-	    max_col = dom.pmax().col();
+	    min_row = geom::min_row(lab),
+	    max_row = geom::max_row(lab),
+	    min_col = geom::min_col(lab),
+	    max_col = geom::max_col(lab);
 
 	  has_bg_label = false;
 	  for (def::coord col = min_col; col <= max_col; ++col)

@@ -40,12 +40,6 @@ void doit(const mln::value::interval<T>& inter)
   }
 
   {
-    M m;
-    m.init();
-    mln_assertion(m.to_result() == mln_max(T));
-  }
-
-  {
     M m(inter);
     m.init();
     m.take(6);
@@ -103,6 +97,13 @@ int main()
     typedef value::intsub<2> T;
     value::interval<T> inter(0, 30);
     doit(inter);
+  }
+
+  // Checking default return value.
+  {
+    mln::world::kn::accu::min_interval<int> m;
+    m.init();
+    mln_assertion(m.to_result() == mln_max(int));
   }
 
 }

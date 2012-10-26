@@ -35,7 +35,6 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 
-
 namespace mln
 {
 
@@ -51,6 +50,11 @@ namespace mln
 	\param[in,out] inout A 2D image immersed in KN.
 	\param[in] aux A 2D image with the same domain as \p inout.
 	\param[in,out] f A functor computing a result from two values.
+
+	Warning: \p aux borders must have been initialized with
+	kn::border::duplicate_2_faces or have been immersed in Kn in
+	order to get valid values for 1-faces located in the
+	inner-border.
 
 	This function use the following neighborhoods:
 
@@ -71,7 +75,7 @@ namespace mln
       */
       template <typename I, typename J, typename F>
       void fill_1_from_aux_2_faces(Image<I>& inout, const Image<J>& aux,
-					 Function_vv2v<F>& f);
+				   Function_vv2v<F>& f);
 
       /// \overload
       template <typename I, typename J, typename A>
@@ -87,7 +91,7 @@ namespace mln
 
       template <typename I, typename J, typename F>
       void fill_1_from_aux_2_faces(Image<I>& inout_, const Image<J>& aux_,
-					 Function_vv2v<F>& f_)
+				   Function_vv2v<F>& f_)
       {
 	trace::entering("mln::world::kn::fill_1_from_aux_2_faces");
 
@@ -111,7 +115,7 @@ namespace mln
 
       template <typename I, typename J, typename A>
       void fill_1_from_aux_2_faces(Image<I>& inout_, const Image<J>& aux_,
-					 const Accumulator<A>& accu_)
+				   const Accumulator<A>& accu_)
       {
 	trace::entering("mln::world::kn::fill_1_from_aux_2_faces");
 
@@ -120,9 +124,8 @@ namespace mln
 	mln_precondition(exact(inout_).domain() == exact(aux_).domain());
 	I& inout = exact(inout_);
 	const J& aux = exact(aux_);
-	(void) accu_;
 
-	A accu = A();
+	A accu(exact(accu_));
 	mln_box(I) b = inout.domain();
 	mln_piter(I) p(b);
 	for_all(p)

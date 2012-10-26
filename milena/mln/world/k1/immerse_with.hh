@@ -67,7 +67,18 @@ namespace mln
 	0-faces are valued with function \p f4, considering a
 	4-connexity with its 1-face neighbors.
 
+	Inner-border 0 and 1 faces are initialized with \p
+	default_value.
        */
+      template <typename I, typename V, typename F2, typename F4>
+      mln_ch_value(I, V)
+      immerse_with(const Image<I>& ima, const V& new_value_type,
+		   const V& default_value,
+		   const Function_vv2v<F2>& f_1faces,
+		   const Function_vvvv2v<F4>& f_0faces);
+
+      /// \overload
+      /// 0 and 1 faces in the inner border are not initialized.
       template <typename I, typename V, typename F2, typename F4>
       mln_ch_value(I, V)
       immerse_with(const Image<I>& ima, const V& new_value_type,
@@ -99,6 +110,35 @@ namespace mln
 	const F4& f_0faces = exact(f_0faces_);
 
 	mln_ch_value(I,V) output = k1::immerse(ima, new_value_type);
+	k1::fill_1_from_2_faces(output, f_1faces);
+	k1::fill_0_from_1_faces(output, f_0faces);
+
+	trace::exiting("mln::world::k1::immerse_with");
+	return output;
+      }
+
+      template <typename I, typename V, typename F2, typename F4>
+      mln_ch_value(I, V)
+      immerse_with(const Image<I>& ima_, const V& new_value_type,
+		   const V& default_value,
+		   const Function_vv2v<F2>& f_1faces_,
+		   const Function_vvvv2v<F4>& f_0faces_)
+      {
+	trace::entering("mln::world::k1::immerse_with");
+	mln_precondition(exact(ima_).is_valid());
+
+	// FIXME: we cannot write that test because we rely on
+	//        safe_convert. So, even though some types may not
+	//        have conversions available by default, conversion
+	//        may work...
+	//mlc_converts_to(mln_result(F2), V)::check();
+	//mlc_converts_to(mln_result(F4), V)::check();
+
+	const I& ima = exact(ima_);
+	const F2& f_1faces = exact(f_1faces_);
+	const F4& f_0faces = exact(f_0faces_);
+
+	mln_ch_value(I,V) output = k1::immerse(ima, new_value_type, default_value);
 	k1::fill_1_from_2_faces(output, f_1faces);
 	k1::fill_0_from_1_faces(output, f_0faces);
 
