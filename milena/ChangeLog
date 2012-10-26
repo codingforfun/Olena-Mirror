@@ -1,5 +1,14 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing typedef in functions.
+
+	* mln/fun/vvvv2v/max.hh,
+	* mln/fun/vvvv2v/mean.hh,
+	* mln/fun/vvvv2v/median.hh,
+	* mln/fun/vvvv2v/min.hh: Here.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add sum functions.
 
 	* mln/fun/vv2v/sum.hh,

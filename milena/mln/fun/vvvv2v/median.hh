@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Functor that computes the median of two values.
+/// Functor that computes the median of four values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/trait/routine/median.hh>
@@ -44,9 +44,7 @@ namespace mln
     namespace vvvv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the median of two values.
+      /// \brief A functor computing the median of four values.
       template <typename T, typename R = mln_trait_routine_median(T) >
       struct median : public Function_vvvv2v< median<T> >
       {

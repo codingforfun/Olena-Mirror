@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Functor that computes the max of two values.
+/// Functor that computes the max of four values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/math/max.hh>
@@ -43,13 +43,12 @@ namespace mln
     namespace vvvv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the max of two values.
+      /// \brief A functor computing the max of four values.
       template <typename T, typename R=T>
       struct max : public Function_vvvv2v< max<T> >
       {
 	typedef R result;
+	typedef T argument;
 	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
       };
 

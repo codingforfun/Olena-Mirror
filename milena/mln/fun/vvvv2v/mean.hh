@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Functor that computes the mean of two values.
+/// Functor that computes the mean of four values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/trait/routine/mean.hh>
@@ -44,13 +44,12 @@ namespace mln
     namespace vvvv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the mean of two values.
+      /// \brief A functor computing the mean of four values.
       template <typename T, typename R = mln_trait_routine_mean(4,T) >
       struct mean : public Function_vvvv2v< mean<T> >
       {
 	typedef R result;
+	typedef T argument;
 	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
       };
 

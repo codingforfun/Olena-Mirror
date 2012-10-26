@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Functor that computes the min of two values.
+/// Functor that computes the min of four values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/math/min.hh>
@@ -43,13 +43,12 @@ namespace mln
     namespace vvvv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the min of two values.
+      /// \brief A functor computing the min of four values.
       template <typename T, typename R=T>
       struct min : public Function_vvvv2v< min<T> >
       {
 	typedef R result;
+	typedef T argument;
 	R operator()(const T& v1, const T& v2, const T& v3, const T& v4) const;
       };
 
