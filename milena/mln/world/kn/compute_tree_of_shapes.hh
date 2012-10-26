@@ -239,7 +239,7 @@ namespace mln
 
 	  for (; l_ < inter_.last(); value::inc(l_))
 	  {
-	    if (! q[l_].empty())
+	    if (q.is_not_empty(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -248,7 +248,7 @@ namespace mln
 
 	  // Avoid overflow on last element.
 	  if (l_ == inter_.last())
-	    if (! q[l_].empty())
+	    if (q.is_not_empty(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -265,7 +265,7 @@ namespace mln
 	  EV l_ = lcur;
 
 	  for (; l_ > inter_.first(); value::dec(l_))
-	    if (! q[l_].empty())
+	    if (q.is_not_empty(l_)))
 	    {
 	      found = true;
 	      return l_;
@@ -273,7 +273,7 @@ namespace mln
 
 	  // Avoid overflow on first element.
 	  if (l_ == inter_.first())
-	    if (! q[l_].empty())
+	    if (q.is_not_empty(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -326,10 +326,10 @@ namespace mln
 	compute_tree_of_shapes_t<I>::priority_pop(q_type& q)
 	// modify q, and sometimes l
 	{
-	  if (q[lcur].empty())
+	  if (q.is_empty(lcur))
 	  {
 	    EV lcur_ = level_next_to_lcur(q);  // such as q[lcur_] is not empty
-	    if (q[lcur_].empty())
+	    if (q.is_empty(lcur_))
 	      std::abort();
 	    lcur = lcur_;
 	  }
@@ -385,7 +385,7 @@ namespace mln
 	    i = i + 1;
 	    done(p) = true;
 
-	    if (q[lcur].empty())
+	    if (q.is_empty(lcur))
 	    {
 	      std::cout << "sort: done with level " << lcur << std::endl;
 	      dsp.show(done);

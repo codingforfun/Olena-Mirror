@@ -53,10 +53,10 @@ namespace mln
 
       unsigned size() const;
 
-      bool is_empty() const;
-      bool is_not_empty() const;
+      bool is_empty(const P& priority) const;
+      bool is_not_empty(const P& priority) const;
 
-      const std::queue<T>& operator[](const P& priority) const;
+//      const std::queue<T>& operator[](const P& priority) const;
 
       void push(const T& t, const P& priority);
       T pop(const P& priority);
@@ -103,25 +103,25 @@ namespace mln
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_empty() const
+    hqueue<T,P>::is_empty(const P& priority) const
     {
-      return this->size() == 0;
+      return v_[inter_.index_of(priority)].empty() == 0;
     }
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_not_empty() const
+    hqueue<T,P>::is_not_empty(const P& priority) const
     {
-      return ! this->is_empty();
+      return ! is_empty(priority);
     }
 
-    template <typename T, typename P>
-    const std::queue<T>&
-    hqueue<T,P>::operator[](const P& i) const
-    {
-      mln_precondition(i < this->size());
-      return v_[head_ + i];
-    }
+    // template <typename T, typename P>
+    // const std::queue<T>&
+    // hqueue<T,P>::operator[](const P& i) const
+    // {
+    //   mln_precondition(i < this->size());
+    //   return v_[head_ + i];
+    // }
 
     template <typename T, typename P>
     void

@@ -1,5 +1,14 @@
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve interface of hqueues.
+
+	* mln/util/hqueue.hh: Do not return queues directly.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Update the use of
+	hqueue.
+
+2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing typedef in functions.
 
 	* mln/fun/vvvv2v/max.hh,
