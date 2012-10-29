@@ -35,7 +35,6 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 
-
 namespace mln
 {
 
@@ -45,7 +44,7 @@ namespace mln
     namespace k1
     {
 
-      /*! \brief Fill 1 faces in a K1 2D image using its 2 faces.
+      /*! \brief Fill 0 faces in a K1 2D image using its 1 faces.
 
 	\param[in,out] inout A 2D image immersed in K1.
 	\param[in,out] f A functor computing a result from two values.
@@ -109,8 +108,7 @@ namespace mln
 
 	A accu(exact(accu_));
 
-	mln_box(I) b = inout.domain();
-	mln_piter(I) p(b);
+	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_0_face(p))
 	  {

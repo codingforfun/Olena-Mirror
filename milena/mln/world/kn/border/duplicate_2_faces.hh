@@ -69,7 +69,7 @@ namespace mln
 	trace::entering("mln::world::kn::duplicate_2_faces");
 
 	mln_precondition(exact(inout_).is_valid());
-	mln_precondition(exact(inout_).border() > 0);
+	mln_precondition(exact(inout_).border() >= 1);
 	I& inout = exact(inout_);
 
 	def::coord

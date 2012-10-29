@@ -33,7 +33,6 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_0_face.hh>
 
-
 namespace mln
 {
 
@@ -84,7 +83,8 @@ namespace mln
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_0_face(p))
-	    inout(p) = f(inout(p + up_left), inout(p + up_right), inout(p + down_left), inout(p + down_right));
+	    inout(p) = f(inout(p + up_left), inout(p + up_right),
+			 inout(p + down_left), inout(p + down_right));
 
 	trace::exiting("mln::world::kn::fill_0_from_2_faces");
       }
@@ -100,8 +100,7 @@ namespace mln
 	(void) accu_;
 
 	A accu = A();
-	mln_box(I) b = inout.domain();
-	mln_piter(I) p(b);
+	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_0_face(p))
 	  {
