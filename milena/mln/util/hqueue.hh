@@ -53,13 +53,13 @@ namespace mln
 
       unsigned size() const;
 
-      bool is_empty(const P& priority) const;
-      bool is_not_empty(const P& priority) const;
+      bool is_empty(const P& bucket) const;
+      bool is_not_empty(const P& bucket) const;
 
-//      const std::queue<T>& operator[](const P& priority) const;
+//      const std::queue<T>& operator[](const P& bucket) const;
 
-      void push(const T& t, const P& priority);
-      T pop(const P& priority);
+      void push(const T& t, const P& bucket);
+      T pop(const P& bucket);
 
     private:
       std::vector<std::queue<T> > v_;
@@ -103,16 +103,16 @@ namespace mln
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_empty(const P& priority) const
+    hqueue<T,P>::is_empty(const P& bucket) const
     {
-      return v_[inter_.index_of(priority)].empty() == 0;
+      return v_[inter_.index_of(bucket)].empty() == 0;
     }
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_not_empty(const P& priority) const
+    hqueue<T,P>::is_not_empty(const P& bucket) const
     {
-      return ! is_empty(priority);
+      return ! is_empty(bucket);
     }
 
     // template <typename T, typename P>
@@ -125,19 +125,19 @@ namespace mln
 
     template <typename T, typename P>
     void
-    hqueue<T,P>::push(const T& t, const P& priority)
+    hqueue<T,P>::push(const T& t, const P& bucket)
     {
-      v_[inter_.index_of(priority)].push(t);
+      v_[inter_.index_of(bucket)].push(t);
     }
 
     template <typename T, typename P>
     T
-    hqueue<T,P>::pop(const P& priority)
+    hqueue<T,P>::pop(const P& bucket)
     {
-      mln_precondition(!is_empty());
-      mln_precondition(priority < v_.size());
-      T front = v_[priority].front();
-      v_[priority].pop();
+      mln_precondition(!is_empty(bucket));
+      mln_precondition(bucket < v_.size());
+      T front = v_[bucket].front();
+      v_[bucket].pop();
       return front;
     }
 

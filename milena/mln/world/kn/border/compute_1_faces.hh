@@ -85,8 +85,6 @@ namespace mln
 
 	// Fill horizontal border
 	for (def::coord col = min_col_1; col <= max_col_1; ++col)
-	{
-	  std::cout << min_row_1 << "," <<  col << std::endl;
 	  if (is_1_face_vertical(min_row_1, col))
 	  {
 	    // First row
@@ -96,7 +94,6 @@ namespace mln
 	    inout.at_(max_row_1, col) = f(inout.at_(max_row_1, col - 1),
 					  inout.at_(max_row_1, col + 1));
 	  }
-	}
 
 	// Fill vertical border
 	for (def::coord row = min_row_1; row <= max_row_1; ++row)

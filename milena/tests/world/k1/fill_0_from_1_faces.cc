@@ -29,47 +29,34 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
+#include <mln/fun/vvvv2v/sum.hh>
 #include <mln/world/k1/fill_0_from_1_faces.hh>
 #include <mln/border/fill.hh>
-
-
-namespace mln
-{
-
-  struct sum_t : Function_vvvv2v<sum_t>
-  {
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2, const int& v3, const int& v4) const
-    {
-      return v1 + v2 + v3 + v4;
-    }
-
-  };
-
-}
-
 
 
 int main()
 {
   using namespace mln;
 
-  int refvals[5][5] = {
-    {2, 1, 3, 1, 2},
-    {1, 0, 1, 0, 1},
-    {3, 1, 4, 1, 3},
-    {1, 0, 1, 0, 1},
-    {2, 1, 3, 1, 2}
+  int refvals[7][7] = {
+    {2, 1, 3, 1, 3, 1, 2 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {3, 1, 4, 1, 4, 1, 3 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {3, 1, 4, 1, 4, 1, 3 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {2, 1, 3, 1, 3, 1, 2 },
   };
   image2d<int> ref = make::image(refvals, point2d(-1, -1));
 
-  int vals[5][5] = {
-    {0, 1, 0, 1, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 1, 0, 1, 0 },
-    {1, 0, 1, 0, 1 },
-    {0, 1, 0, 1, 0 }
+  int vals[7][7] = {
+    {0, 1, 0, 1, 0, 1, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 1, 0, 1, 0, 1, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 1, 0, 1, 0, 1, 0 },
+    {1, 0, 1, 0, 1, 0, 1 },
+    {0, 1, 0, 1, 0, 1, 0 },
   };
   image2d<int> imak1 = make::image(vals, point2d(-1, -1));
 
@@ -78,7 +65,7 @@ int main()
 
   // Overload with function
   {
-    sum_t f;
+    fun::vvvv2v::sum<int> f;
     world::k1::fill_0_from_1_faces(imak1, f);
     mln_assertion(ref == imak1);
   }

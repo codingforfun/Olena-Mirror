@@ -1,5 +1,20 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/util/hqueue.hh: Rename 'priority' arguments to 'bucket'.
+
+	* mln/world/k1/immerse_and_duplicate_2_to_1_faces.hh: Add comments.
+
+	* mln/world/kn/border/compute_1_faces.hh: Remove debug output.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Fix a typo.
+
+	* tests/world/k1/fill_0_from_1_faces.cc,
+	* tests/world/k1/immerse_with.cc: Fix tests.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/debug/println.hh: New.
 
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>

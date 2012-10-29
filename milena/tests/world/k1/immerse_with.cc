@@ -45,11 +45,11 @@ int main()
 			// computation will handle borders.
 
   int fvals[][5] = {
-    {0, 2, 0,  4, 0},
-    {2, 1, 3,  2, 4},
-    {0, 4, 20, 6, 0},
-    {6, 3, 7,  4, 8},
-    {0, 6, 0,  8, 0}
+    {8,  2, 12,  4, 16},
+    {2,  1, 3,   2, 4 },
+    {16, 4, 20,  6, 24},
+    {6,  3, 7,   4, 8 },
+    {24, 6, 28,  8, 32}
   };
   image2d<int> ref = make::image(fvals, point2d(-1,-1));
 
@@ -59,7 +59,6 @@ int main()
       immersed = world::k1::immerse_with(ima, long(), 0l,
 					 fun::vv2v::sum<long>(),
 					 fun::vvvv2v::sum<long>());
-
     mln_assertion(immersed == ref);
   }
 

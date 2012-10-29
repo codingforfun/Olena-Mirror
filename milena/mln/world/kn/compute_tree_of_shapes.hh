@@ -265,7 +265,7 @@ namespace mln
 	  EV l_ = lcur;
 
 	  for (; l_ > inter_.first(); value::dec(l_))
-	    if (q.is_not_empty(l_)))
+	    if (q.is_not_empty(l_))
 	    {
 	      found = true;
 	      return l_;

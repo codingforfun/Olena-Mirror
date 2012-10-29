@@ -53,12 +53,18 @@ namespace mln
        Data is copied into 1 faces located at the bottom right of each
        2 faces.
 
+       \verbatim
 	           -1 0 1 2 3
 	 0 1     -1 . a . d .
        0 a d      0 a a a d d
        1 b c  ->  1 . a . d .
 	          2 b b b c c
 	 	  3 . b . c .
+       \endverbatim
+
+       Warning: image borders are not initialized.  \sa
+       world::kn::border::duplicate_2_faces,
+       world::kn::border::compute_1_faces.
 
        */
       template <typename I>
