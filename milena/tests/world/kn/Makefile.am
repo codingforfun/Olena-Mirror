@@ -21,6 +21,7 @@ SUBDIRS = 					\
   border
 
 check_PROGRAMS =				\
+  display_enlarged				\
   fill_0_1_faces_internal_border		\
   fill_0_from_1_faces				\
   fill_0_from_2_faces				\
@@ -41,6 +42,7 @@ check_PROGRAMS =				\
   saturate					\
   un_immerse
 
+display_enlarged_SOURCES = display_enlarged.cc
 fill_0_1_faces_internal_border_SOURCES = fill_0_1_faces_internal_border.cc
 fill_0_from_1_faces_SOURCES = fill_0_from_1_faces.cc
 fill_0_from_2_faces_SOURCES = fill_0_from_2_faces.cc

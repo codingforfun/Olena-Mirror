@@ -28,8 +28,8 @@
 /// \brief Create a new image where 2 faces are enlarged for better
 /// visualization.
 
-#ifndef MLN_WORLD_K1_DISPLAY_ENLARGED_HH
-# define MLN_WORLD_K1_DISPLAY_ENLARGED_HH
+#ifndef MLN_WORLD_KN_DISPLAY_ENLARGED_HH
+# define MLN_WORLD_KN_DISPLAY_ENLARGED_HH
 
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_0_face.hh>
@@ -45,7 +45,7 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace kn
     {
 
       /*! \brief Create a new image where 2 faces are enlarged for better
@@ -64,7 +64,7 @@ namespace mln
 				 . - - - . - - - .
 	\endverbatim
 
-	\param[in] ima_k1 A 2D image immersed in K1.
+	\param[in] ima_kn A 2D image immersed in KN.
 	\param[in] zoom The number of times 2 faces must be duplicated
 	(must be odd).
 
@@ -75,7 +75,7 @@ namespace mln
       */
       template <typename I>
       mln_concrete(I)
-      display_enlarged(const Image<I>& ima_k1, unsigned zoom);
+      display_enlarged(const Image<I>& ima_kn, unsigned zoom);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -85,30 +85,30 @@ namespace mln
 
       template <typename I>
       mln_concrete(I)
-      display_enlarged(const Image<I>& ima_k1_, unsigned zoom_)
+      display_enlarged(const Image<I>& ima_kn_, unsigned zoom_)
       {
-	trace::entering("mln::world::k1::display_enlarged");
+	trace::entering("mln::world::kn::display_enlarged");
 
-	mln_precondition(exact(ima_k1_).is_valid());
+	mln_precondition(exact(ima_kn_).is_valid());
 	mln_assertion(zoom_ % 2);
 
-	const I& ima_k1 = exact(ima_k1_);
+	const I& ima_kn = exact(ima_kn_);
 	int shift = zoom_ - 1;
 
 	// No zoom: return original image.
 	if (zoom_ == 1)
-	  return ima_k1;
+	  return ima_kn;
 
-	mln_concrete(I) output(make::box2d(ima_k1.domain().pmin().row() * shift,
-					   ima_k1.domain().pmin().col() * shift,
-					   ima_k1.domain().pmax().row() * shift,
-					   ima_k1.domain().pmax().col() * shift));
+	mln_concrete(I) output(make::box2d(ima_kn.domain().pmin().row() * shift,
+					   ima_kn.domain().pmin().col() * shift,
+					   ima_kn.domain().pmax().row() * shift,
+					   ima_kn.domain().pmax().col() * shift));
 
 	const mln::def::coord
-	  min_row = geom::min_row(ima_k1),
-	  max_row = geom::max_row(ima_k1),
-	  min_col = geom::min_col(ima_k1),
-	  max_col = geom::max_col(ima_k1);
+	  min_row = geom::min_row(ima_kn),
+	  max_row = geom::max_row(ima_kn),
+	  min_col = geom::min_col(ima_kn),
+	  max_col = geom::max_col(ima_kn);
 
 	for (mln::def::coord row = min_row; row <= max_row; ++row)
 	{
@@ -116,39 +116,39 @@ namespace mln
 	  {
 	    if (kn::is_0_face(row, col))
 	    {
-	      output.at_(row * shift, col * shift) = ima_k1.at_(row, col);
+	      output.at_(row * shift, col * shift) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_1_face_vertical(row, col))
 	    {
 	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	output.at_(row * shift + j, col * shift) = ima_k1.at_(row, col);
+	    	output.at_(row * shift + j, col * shift) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_1_face_horizontal(row, col))
 	    {
 	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	output.at_(row * shift, col * shift  + j) = ima_k1.at_(row, col);
+	    	output.at_(row * shift, col * shift  + j) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_2_face(row, col))
 	    {
 	      for (mln::def::coord i = -(shift - 1); i <  (shift + 3); ++i)
 	    	for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	  output.at_(row * shift + i, col * shift  + j) = ima_k1.at_(row, col);
+	    	  output.at_(row * shift + i, col * shift  + j) = ima_kn.at_(row, col);
 	    }
 	  }
 	}
 
-	trace::exiting("mln::world::k1::display_enlarged");
+	trace::exiting("mln::world::kn::display_enlarged");
 	return output;
       }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+    } // end of namespace mln::world::kn
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_DISPLAY_ENLARGED_HH
+#endif // ! MLN_WORLD_KN_DISPLAY_ENLARGED_HH
 

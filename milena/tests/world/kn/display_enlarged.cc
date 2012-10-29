@@ -26,12 +26,8 @@
 /// \file
 
 #include <mln/core/image/image2d.hh>
-#include <mln/world/k1/display_enlarged.hh>
-#include <mln/world/k1/immerse.hh>
-#include <mln/make/box2d.hh>
+#include <mln/world/kn/display_enlarged.hh>
 #include <mln/data/compare.hh>
-
-#include <mln/debug/println.hh>
 
 int main()
 {
@@ -80,19 +76,19 @@ int main()
   image2d<int> ima = make::image(vals, point2d(-1, -1));
 
   {
-    image2d<int> enlarged = world::k1::display_enlarged(ima, 1);
+    image2d<int> enlarged = world::kn::display_enlarged(ima, 1);
     mln_assertion(ima == enlarged);
   }
 
   {
     image2d<int> ref3 = make::image(vals3, point2d(-2, -2));
-    image2d<int> enlarged = world::k1::display_enlarged(ima, 3);
+    image2d<int> enlarged = world::kn::display_enlarged(ima, 3);
     mln_assertion(ref3 == enlarged);
   }
 
   {
     image2d<int> ref5 = make::image(vals5, point2d(-4, -4));
-    image2d<int> enlarged = world::k1::display_enlarged(ima, 5);
+    image2d<int> enlarged = world::kn::display_enlarged(ima, 5);
     mln_assertion(ref5 == enlarged);
   }
 }

@@ -1,5 +1,18 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move display_enlarged to kn.
+
+	* mln/world/k1/display_enlarged.hh,
+	* tests/world/k1/display_enlarged.cc: Move...
+
+	* mln/world/kn/display_enlarged.hh,
+	* tests/world/kn/display_enlarged.cc: ... here.
+
+	* tests/world/k1/Makefile.am,
+	* tests/world/kn/Makefile.am: Update targets.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix level comparisons.
 
 	* mln/fun/v2b/compare.hh,
