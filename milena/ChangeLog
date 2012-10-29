@@ -1,5 +1,17 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve hqueue used in compute_tree_of_shapes.
+
+	* mln/util/hqueue.hh: Remove.
+
+	* mln/world/kn/internal/hqueue.hh,
+	* mln/world/kn/internal/queue.hh: New.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Update use of
+	hqueue. Set l_inf.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/compute_tree_of_shapes.hh: Make p_inf an argument
 	to this routine.
 

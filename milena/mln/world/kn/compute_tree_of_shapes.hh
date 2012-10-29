@@ -41,7 +41,7 @@
 # include <mln/value/interval.hh>
 # include <mln/value/is_degenerated.hh>
 
-# include <mln/util/hqueue.hh>
+# include <mln/world/kn/internal/hqueue.hh>
 # include <mln/util/tree_of_shapes.hh>
 # include <mln/world/kn/is_2_face.hh>
 
@@ -70,13 +70,13 @@ namespace mln
       template <typename I, typename IV>
       util::tree_of_shapes<I>
       compute_tree_of_shapes(const Image<I>& F, const value::interval<IV>& inter,
-			     const mln_site(I)& p_inf);
+			     const mln_site(I)& p_infty);
 
       /// \overload
       template <typename I, typename IV, typename U>
       util::tree_of_shapes<I>
       compute_tree_of_shapes(const Image<I>& F, const value::interval<IV>& inter,
-			     const mln_site(I)& p_inf, const U& value);
+			     const mln_site(I)& p_infty, const U& value);
 
 
 #  ifndef MLN_INCLUDE_ONLY
@@ -95,18 +95,18 @@ namespace mln
 	  typedef mln_ch_value(I,P) T;
 	  typedef mln_ch_value(I,unsigned) U;
 	  typedef std::vector<P> Array_P;
-	  typedef util::hqueue<P,EV> q_type;
+	  typedef world::kn::internal::hqueue<P,EV> q_type;
 
 	  compute_tree_of_shapes_t();
 
 	  util::tree_of_shapes<I> operator()(const I& F_,
 					     const value::interval<IV>& inter,
-					     const mln_site(I)& p_inf);
+					     const mln_site(I)& p_infty);
 
 	  template <typename L>
 	  util::tree_of_shapes<I> operator()(const I& F_,
 					     const value::interval<IV>& inter,
-					     const mln_site(I)& p_inf,
+					     const mln_site(I)& p_infty,
 					     const L& l_inf);
 
 	  void do_union(P p_, P r_, T& zpar, U& rank, U& last);
@@ -134,7 +134,7 @@ namespace mln
 	  mln_equiv(V) lcur;
 
 	  P undef;
-	  P p_inf_;
+	  P p_infty_;
 
 	  unsigned N;
 	  box2d D;
@@ -254,7 +254,7 @@ namespace mln
 
 	  for (; l_ < inter_.last(); value::inc(l_))
 	  {
-	    if (q.is_not_empty_at(l_))
+	    if (!q.is_empty_at(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -263,7 +263,7 @@ namespace mln
 
 	  // Avoid overflow on last element.
 	  if (l_ == inter_.last())
-	    if (q.is_not_empty_at(l_))
+	    if (!q.is_empty_at(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -280,7 +280,7 @@ namespace mln
 	  EV l_ = lcur;
 
 	  for (; l_ > inter_.first(); value::dec(l_))
-	    if (q.is_not_empty_at(l_))
+	    if (!q.is_empty_at(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -288,7 +288,7 @@ namespace mln
 
 	  // Avoid overflow on first element.
 	  if (l_ == inter_.first())
-	    if (q.is_not_empty_at(l_))
+	    if (!q.is_empty_at(l_))
 	    {
 	      found = true;
 	      return l_;
@@ -382,9 +382,8 @@ namespace mln
 	    // p is in queue if p is 'deja_vu' but not 'done'
 	  }
 	  unsigned i = 0;
-	  lcur = safe_cast_to<EV>(F(p_inf_));   // the start level is the one of root
-	  priority_push(q, p_inf_, F);  // realize push(q[lcur], p_inf_)
-	  deja_vu(p_inf_) = true;
+	  priority_push(q, p_infty_, F);  // realize push(q[lcur], p_infty_)
+	  deja_vu(p_infty_) = true;
 	  do
 	  {
 	    P p = priority_pop(q);
@@ -479,15 +478,16 @@ namespace mln
 	util::tree_of_shapes<I>
 	compute_tree_of_shapes_t<I,IV>::operator()(const I& F,
 						   const value::interval<IV>& inter,
-						   const mln_site(I)& p_inf)
+						   const mln_site(I)& p_infty)
 	{
 	  mln_precondition(F.is_valid());
-	  mln_precondition(value::is_degenerated(F(p_inf)));
+	  mln_precondition(value::is_degenerated(F(p_infty)));
 
 	  N = F.nsites();
 	  D = F.domain();
 	  inter_ = inter;
-	  p_inf_ = p_inf;
+	  p_infty_ = p_infty;
+	  lcur = safe_cast_to<EV>(F(p_infty_)); // the start level is the one of root
 
 	  util::tree_of_shapes<I> t;
 
@@ -506,16 +506,17 @@ namespace mln
 	util::tree_of_shapes<I>
 	compute_tree_of_shapes_t<I,IV>::operator()(const I& F,
 						   const value::interval<IV>& inter,
-						   const mln_site(I)& p_inf,
+						   const mln_site(I)& p_infty,
 						   const L& l_inf)
 	{
 	  mln_precondition(F.is_valid());
-	  mln_precondition(F(p_inf).has(l_inf));
+	  mln_precondition(F(p_infty).has(l_inf));
 
 	  N = F.nsites();
 	  D = F.domain();
 	  inter_ = inter;
-	  p_inf_ = p_inf;
+	  p_infty_ = p_infty;
+	  lcur = safe_cast_to<EV>(l_inf); // the start level is the one of root
 
 	  util::tree_of_shapes<I> t;
 
@@ -535,16 +536,16 @@ namespace mln
       template <typename I, typename IV>
       util::tree_of_shapes<I>
       compute_tree_of_shapes(const Image<I>& F, const value::interval<IV>& inter,
-			     const mln_site(I)& p_inf)
+			     const mln_site(I)& p_infty)
       {
 	trace::entering("mln::world::kn::compute_tree_of_shapes");
 	mln_precondition(exact(F).is_valid());
 	typedef mln_value(I) V;
 	mlc_is_a(V, value::interval)::check();
-	mln_precondition(value::is_degenerated(exact(F)(p_inf)));
+	mln_precondition(value::is_degenerated(exact(F)(p_infty)));
 
 	util::tree_of_shapes<I>
-	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_inf);
+	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_infty);
 
 	trace::exiting("mln::world::kn::compute_tree_of_shapes");
 	return t;
@@ -553,16 +554,16 @@ namespace mln
       template <typename I, typename IV, typename U>
       util::tree_of_shapes<I>
       compute_tree_of_shapes(const Image<I>& F, const value::interval<IV>& inter,
-			     const mln_site(I)& p_inf, const U& l_inf)
+			     const mln_site(I)& p_infty, const U& l_inf)
       {
 	trace::entering("mln::world::kn::compute_tree_of_shapes");
 	mln_precondition(exact(F).is_valid());
 	typedef mln_value(I) V;
 	mlc_is_a(V, value::interval)::check();
-	mln_precondition(F(p_inf).has(l_inf));
+	mln_precondition(F(p_infty).has(l_inf));
 
 	util::tree_of_shapes<I>
-	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_inf, l_inf);
+	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_infty, l_inf);
 
 	trace::exiting("mln::world::kn::compute_tree_of_shapes");
 	return t;
