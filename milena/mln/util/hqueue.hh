@@ -53,8 +53,8 @@ namespace mln
 
       unsigned size() const;
 
-      bool is_empty(const P& bucket) const;
-      bool is_not_empty(const P& bucket) const;
+      bool is_empty_at(const P& bucket) const;
+      bool is_not_empty_at(const P& bucket) const;
 
 //      const std::queue<T>& operator[](const P& bucket) const;
 
@@ -103,16 +103,16 @@ namespace mln
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_empty(const P& bucket) const
+    hqueue<T,P>::is_empty_at(const P& bucket) const
     {
       return v_[inter_.index_of(bucket)].empty() == 0;
     }
 
     template <typename T, typename P>
     bool
-    hqueue<T,P>::is_not_empty(const P& bucket) const
+    hqueue<T,P>::is_not_empty_at(const P& bucket) const
     {
-      return ! is_empty(bucket);
+      return ! is_empty_at(bucket);
     }
 
     // template <typename T, typename P>
@@ -134,7 +134,7 @@ namespace mln
     T
     hqueue<T,P>::pop(const P& bucket)
     {
-      mln_precondition(!is_empty(bucket));
+      mln_precondition(!is_empty_at(bucket));
       mln_precondition(bucket < v_.size());
       T front = v_[bucket].front();
       v_[bucket].pop();

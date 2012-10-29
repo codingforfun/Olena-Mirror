@@ -1,5 +1,14 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename methods in world::kn::hqueue.
+
+	* mln/world/kn/hqueue.hh: Rename is_empty and is_not_empty to
+	is_empty_at and is_not_empty_at.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Update usage of hqueue.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add value::is_degenerated.
 
 	* mln/value/is_degenerated.hh,
