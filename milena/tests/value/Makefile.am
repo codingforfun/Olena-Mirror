@@ -36,7 +36,8 @@ check_PROGRAMS =				\
   scalar					\
   set						\
   sign						\
-  intsub
+  intsub					\
+  is_degenerated
 #  float01
 #  float01_bis
 #  float01_f
@@ -62,6 +63,7 @@ scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 sign_SOURCES = sign.cc
 intsub_SOURCES = intsub.cc
+is_degenerated_SOURCES = is_degenerated.cc
 
 #<<lrde
 # FIXME: Not distributed (yet).

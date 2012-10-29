@@ -1,5 +1,14 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add value::is_degenerated.
+
+	* mln/value/is_degenerated.hh,
+	* tests/value/is_degenerated.cc: New.
+
+	* tests/value/Makefile.am: New target.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/util/hqueue.hh: Rename 'priority' arguments to 'bucket'.
