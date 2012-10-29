@@ -195,35 +195,40 @@ namespace mln
   mln_ch_value(I,bool)
     operator<(const Image<I>& ima, const world::kn::level_t<U>& v)
   {
-    return data::transform(ima, fun::v2b::threshold_lt<mln_value(I)>(v.value));
+    typedef world::kn::level_t<U> T;
+    return data::transform(ima, fun::v2b::threshold_lt<mln_value(I),T>(v));
   }
 
   template <typename I, typename U>
   mln_ch_value(I,bool)
     operator<=(const Image<I>& ima, const world::kn::level_t<U>& v)
   {
-    return data::transform(ima, fun::v2b::threshold_le<mln_value(I)>(v.value));
+    typedef world::kn::level_t<U> T;
+    return data::transform(ima, fun::v2b::threshold_le<mln_value(I),T>(v));
   }
 
   template <typename I, typename U>
   mln_ch_value(I,bool)
     operator>(const Image<I>& ima, const world::kn::level_t<U>& v)
   {
-    return data::transform(ima, fun::v2b::threshold_gt<mln_value(I)>(v.value));
+    typedef world::kn::level_t<U> T;
+    return data::transform(ima, fun::v2b::threshold_gt<mln_value(I),T>(v));
   }
 
   template <typename I, typename U>
   mln_ch_value(I,bool)
     operator>=(const Image<I>& ima, const world::kn::level_t<U>& v)
   {
-    return data::transform(ima, fun::v2b::threshold_ge<mln_value(I)>(v.value));
+    typedef world::kn::level_t<U> T;
+    return data::transform(ima, fun::v2b::threshold_ge<mln_value(I),T>(v));
   }
 
   template <typename I, typename U>
   mln_ch_value(I,bool)
     operator==(const Image<I>& ima, const world::kn::level_t<U>& v)
   {
-    return data::transform(ima, fun::v2b::compare<mln_value(I)>(v.value));
+    typedef world::kn::level_t<U> T;
+    return data::transform(ima, fun::v2b::compare<mln_value(I),T>(v));
   }
 
 # endif // ! MLN_INCLUDE_ONLY

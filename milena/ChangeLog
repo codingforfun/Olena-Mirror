@@ -1,5 +1,21 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix level comparisons.
+
+	* mln/fun/v2b/compare.hh,
+	* mln/fun/v2b/threshold_ge.hh,
+	* mln/fun/v2b/threshold_gt.hh,
+	* mln/fun/v2b/threshold_le.hh,
+	* mln/fun/v2b/threshold_lt.hh: Generalize these functors.
+
+	* mln/world/kn/level.hh: Do not pass the equivalent value to the
+	functor.
+
+	* tests/world/kn/level.cc: Fix test using intervals instead of
+	int.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	More safe cast overloads.
 
 	* mln/world/kn/safe_cast.hh: New overloads.

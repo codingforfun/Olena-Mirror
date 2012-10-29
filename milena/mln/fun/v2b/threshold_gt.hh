@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,30 +45,32 @@ namespace mln
 
       /// Threshold function.
       /// f(v) = (v > threshold).
-      template <typename V>
-      struct threshold_gt : public Function_v2b< threshold_gt<V> >
+      template <typename V, typename T = V>
+      struct threshold_gt : public Function_v2b< threshold_gt<V,T> >
       {
 	typedef bool result;
+
+	threshold_gt(const T& a);
+
 	bool operator()(const V& v) const;
 
-	threshold_gt(const V& a);
-	V a;
+	T a;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename V, typename T>
       inline
-      threshold_gt<V>::threshold_gt(const V& a)
+      threshold_gt<V,T>::threshold_gt(const T& a)
 	: a(a)
       {
       }
 
-      template <typename V>
+      template <typename V, typename T>
       inline
       bool
-      threshold_gt<V>::operator()(const V& v) const
+      threshold_gt<V,T>::operator()(const V& v) const
       {
 	// Here the test seems to be inversed compared to the usual
 	// use. Indeed, we want to preserve the following convention:

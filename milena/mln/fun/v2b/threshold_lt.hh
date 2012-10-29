@@ -44,30 +44,31 @@ namespace mln
 
       /// Threshold function.
       /// f(v) = (v < threshold).
-      template <typename V>
-      struct threshold_lt : public Function_v2b< threshold_lt<V> >
+      template <typename V, typename T = V>
+      struct threshold_lt : public Function_v2b< threshold_lt<V,T> >
       {
 	typedef bool result;
+	threshold_lt(const T& a);
+
 	bool operator()(const V& v) const;
 
-	threshold_lt(const V& a);
-	V a;
+	T a;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename V, typename T>
       inline
-      threshold_lt<V>::threshold_lt(const V& a)
+      threshold_lt<V,T>::threshold_lt(const T& a)
 	: a(a)
       {
       }
 
-      template <typename V>
+      template <typename V, typename T>
       inline
       bool
-      threshold_lt<V>::operator()(const V& v) const
+      threshold_lt<V,T>::operator()(const V& v) const
       {
 	// Here the test seems to be inversed compared to the usual
 	// use. Indeed, we want to preserve the following convention:

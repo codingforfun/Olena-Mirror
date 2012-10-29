@@ -44,30 +44,31 @@ namespace mln
 
       /// Comparison function.
       /// f(v) = (v == ref).
-      template <typename V>
-      struct compare : public Function_v2b< compare<V> >
+      template <typename V, typename T = V>
+      struct compare : public Function_v2b< compare<V,T> >
       {
 	typedef bool result;
+	compare(const T& a);
+
 	bool operator()(const V& v) const;
 
-	compare(const V& a);
-	V a;
+	T a;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename V, typename T>
       inline
-      compare<V>::compare(const V& a)
+      compare<V,T>::compare(const T& a)
 	: a(a)
       {
       }
 
-      template <typename V>
+      template <typename V, typename T>
       inline
       bool
-      compare<V>::operator()(const V& v) const
+      compare<V,T>::operator()(const V& v) const
       {
 	return v == a;
       }

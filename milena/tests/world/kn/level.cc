@@ -24,12 +24,12 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/debug/iota.hh>
 #include <mln/world/kn/level.hh>
 #include <mln/data/compare.hh>
 #include <mln/make/image2d.hh>
 #include <mln/value/interval.hh>
 #include <mln/value/intsub.hh>
+
 
 int main ()
 {
@@ -74,8 +74,11 @@ int main ()
   image2d<bool> ref_ge = make::image2d(vref_ge);
 
 
-  image2d<unsigned> ima(5,5);
-  debug::iota(ima);
+  int i = 0;
+  image2d<value::interval<int> > ima(5,5);
+  mln_piter_(image2d<value::interval<int> >) p(ima.domain());
+  for_all(p)
+    ima(p) = ++i;
 
   // Comparison with images
   {
