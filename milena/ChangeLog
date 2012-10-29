@@ -1,5 +1,9 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/debug/println.hh: New.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add test for world::kn::border::compute_1_faces.
 
 	* tests/world/kn/border/Makefile.am: New target.
