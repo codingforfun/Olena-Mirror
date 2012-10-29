@@ -31,7 +31,7 @@
 #ifndef MLN_WORLD_KN_SAFE_CAST_HH
 # define MLN_WORLD_KN_SAFE_CAST_HH
 
-# include <mln/value/int_u8.hh>
+# include <mln/value/int_u.hh>
 # include <mln/value/intsub.hh>
 # include <mln/value/interval.hh>
 
@@ -62,40 +62,45 @@ namespace mln
   namespace value
   {
 
-    template <unsigned n>
-    void safe_cast_(const int_u8& from, intsub<n>& to)
-    {
-      to = from.to_equiv();
-    }
-
-    template <unsigned n>
-    void safe_cast_(const int_u8& from, interval<intsub<n> >& to)
-    {
-      to = intsub<n>(from.to_interop());
-    }
-
-    inline
-    void safe_cast_(const int_u8& from, interval<int_u8>& to)
-    {
-      to = from;
-    }
-
-    inline
-    void safe_cast_(const int_u8& from, int& to)
+    template <unsigned m, unsigned n>
+    void safe_cast_(const int_u<m>& from, intsub<n>& to)
     {
       to = from.to_interop();
     }
 
-    template <unsigned n>
-    void safe_cast_(const interval<intsub<n> >& from, int_u8& to)
+    template <unsigned m, unsigned n>
+    void safe_cast_(const int_u<m>& from, interval<intsub<n> >& to)
+    {
+      to = intsub<n>(from.to_interop());
+    }
+
+    template <unsigned m>
+    void safe_cast_(const int_u<m>& from, interval<int_u<m> >& to)
+    {
+      to = from;
+    }
+
+    template <unsigned m>
+    void safe_cast_(const int_u<m>& from, interval<int>& to)
+    {
+      to = from;
+    }
+
+    template <unsigned m>
+    void safe_cast_(const int_u<m>& from, int& to)
+    {
+      to = from.to_interop();
+    }
+
+    void safe_cast_(const interval<int>& from, int& to)
     {
       if (!from.is_degenerated())
 	std::abort();
-      to = intsub<n>(from.first());
+      to = from.first();
     }
 
-    inline
-    void safe_cast_(const interval<int_u8>& from, int_u8& to)
+    template <unsigned m>
+    void safe_cast_(const interval<int>& from, int_u<m>& to)
     {
       if (!from.is_degenerated())
 	std::abort();
@@ -103,7 +108,39 @@ namespace mln
     }
 
     template <unsigned n>
-    void safe_cast_(const interval<int_u8>& from, intsub<n>& to)
+    void safe_cast_(const interval<int>& from, intsub<n>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first();
+    }
+
+    template <unsigned n, unsigned m>
+    void safe_cast_(const interval<intsub<n> >& from, int_u<m>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = intsub<n>(from.first());
+    }
+
+    template <unsigned m>
+    void safe_cast_(const interval<int_u<m> >& from, int_u<m>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first();
+    }
+
+    template <unsigned m, unsigned n>
+    void safe_cast_(const interval<int_u<m> >& from, intsub<n>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first().to_interop();
+    }
+
+    template <unsigned m>
+    void safe_cast_(const interval<int_u<m> >& from, int& to)
     {
       if (!from.is_degenerated())
 	std::abort();
@@ -132,11 +169,23 @@ namespace mln
       to = interval<intsub<n> >(from);
     }
 
-    inline
-    void safe_cast_(const int& from, int_u8& to)
+    void safe_cast_(const int& from, interval<int>& to)
+    {
+      to = interval<int>(from);
+    }
+
+    template <unsigned m>
+    void safe_cast_(const int& from, int_u<m>& to)
     {
       to = from;
     }
+
+    template <unsigned n>
+    void safe_cast_(const int& from, intsub<n>& to)
+    {
+      to = from;
+    }
+
 
     template <unsigned n>
     void safe_cast_(const intsub<n>& from, intsub<2*n>& to)
@@ -150,11 +199,36 @@ namespace mln
       to = static_cast<intsub<n/2> >(from.to_int());
     }
 
-    template <unsigned n>
-    void safe_cast_(const intsub<n>& from, int_u8& to)
+    template <unsigned n, unsigned m>
+    void safe_cast_(const intsub<n>& from, int_u<m>& to)
     {
       to = from.to_interop();
     }
+
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, int& to)
+    {
+      to = from;
+    }
+
+    template <unsigned n, unsigned m>
+    void safe_cast_(const intsub<n>& from, interval<int_u<m> >& to)
+    {
+      to = interval<int_u<m> >(from.to_interop());
+    }
+
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, interval<int>& to)
+    {
+      to = interval<int>(from.to_interop());
+    }
+
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, interval<intsub<n> >& to)
+    {
+      to = interval<intsub<n> >(from);
+    }
+
 
   } // end of namespace mln::value
 

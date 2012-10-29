@@ -1,5 +1,15 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	More safe cast overloads.
+
+	* mln/world/kn/safe_cast.hh: New overloads.
+
+	* tests/world/kn/Makefile.am: New target.
+
+	* tests/world/kn/safe_cast.cc: New.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/fill_0_from_1_faces.hh: Add an overload with
 	functions.
 

@@ -37,6 +37,7 @@ check_PROGRAMS =				\
   is_1_face_horizontal				\
   is_2_face					\
   level						\
+  safe_cast					\
   saturate					\
   un_immerse
 
@@ -56,6 +57,7 @@ is_1_face_vertical_SOURCES = is_1_face_vertical.cc
 is_1_face_horizontal_SOURCES = is_1_face_horizontal.cc
 is_2_face_SOURCES = is_2_face.cc
 level_SOURCES = level.cc
+safe_cast_SOURCES = safe_cast.cc
 saturate_SOURCES = saturate.cc
 un_immerse_SOURCES = un_immerse.cc
 
