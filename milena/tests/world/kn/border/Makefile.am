@@ -18,9 +18,11 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   adjust_duplicate_2_faces			\
+  compute_1_faces 				\
   duplicate_2_faces
 
 adjust_duplicate_2_faces_SOURCES = adjust_duplicate_2_faces.cc
+compute_1_faces_SOURCES = compute_1_faces.cc
 duplicate_2_faces_SOURCES = duplicate_2_faces.cc
 
 TESTS = $(check_PROGRAMS)

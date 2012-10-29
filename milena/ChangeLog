@@ -1,5 +1,13 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add test for world::kn::border::compute_1_faces.
+
+	* tests/world/kn/border/Makefile.am: New target.
+
+	* tests/world/kn/border/compute_1_faces.cc: New.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add kn::is_primary_2_face and kn::is_not_primary_2_face.
 
 	* mln/world/k2/is_non_primary_2_face.hh,
