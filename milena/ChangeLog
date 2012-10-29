@@ -1,5 +1,10 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/compute_tree_of_shapes.hh: Make p_inf an argument
+	to this routine.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename methods in world::kn::hqueue.
 
 	* mln/world/kn/hqueue.hh: Rename is_empty and is_not_empty to
