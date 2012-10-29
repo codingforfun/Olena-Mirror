@@ -1,3 +1,14 @@
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add kn::border::compute_1_faces.
+
+	* mln/world/kn/border/compute_1_faces.hh: New.
+
+	* mln/world/k1/fill_1_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh: Make use of
+	kn::border::compute_1_faces.
+
 2012-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various fixes.

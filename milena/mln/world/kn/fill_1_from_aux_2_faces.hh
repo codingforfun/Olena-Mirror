@@ -34,6 +34,7 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
+# include <mln/world/kn/border/compute_1_faces.hh>
 
 namespace mln
 {
@@ -101,6 +102,8 @@ namespace mln
 	I& inout = exact(inout_);
 	const J& aux = exact(aux_);
 	F& f = exact(f_);
+
+	kn::border::compute_1_faces(inout, f);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
