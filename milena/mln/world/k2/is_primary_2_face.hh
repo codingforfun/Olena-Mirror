@@ -31,6 +31,7 @@
 # define MLN_WORLD_K2_IS_PRIMARY_2_FACE_HH
 
 # include <mln/core/alias/point2d.hh>
+# include <mln/world/kn/is_primary_2_face.hh>
 
 
 namespace mln
@@ -48,7 +49,7 @@ namespace mln
 
       /// \overload
       bool is_primary_2_face(const mln::def::coord& row,
-			   const mln::def::coord& col);
+			     const mln::def::coord& col);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -64,9 +65,9 @@ namespace mln
 
       inline
       bool is_primary_2_face(const mln::def::coord& row,
-			   const mln::def::coord& col)
+			     const mln::def::coord& col)
       {
-	return row % 4 == 0 && col % 4 == 0;
+	return kn::is_primary_2_face<2>(row, col);
       }
 
 

@@ -27,8 +27,8 @@
 ///
 /// \brief Check if site is a non-primary face.
 
-#ifndef MLN_WORLD_K2_IS_NON_PRIMARY_2_FACE_HH
-# define MLN_WORLD_K2_IS_NON_PRIMARY_2_FACE_HH
+#ifndef MLN_WORLD_KN_IS_NON_PRIMARY_2_FACE_HH
+# define MLN_WORLD_KN_IS_NON_PRIMARY_2_FACE_HH
 
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_2_face.hh>
@@ -41,17 +41,24 @@ namespace mln
   namespace world
   {
 
-    namespace k2
+    namespace kn
     {
 
       /// \brief Check if site is a non-primary face
-      bool is_non_primary_2_face(const point2d& p);
+      bool is_non_primary_2_face(const point2d& p, unsigned n);
 
 
       /// \overload
       bool is_non_primary_2_face(const mln::def::coord& row,
-				 const mln::def::coord& col);
+				 const mln::def::coord& col,
+				 unsigned n);
 
+      /// \overload
+      /// Static version. \tparam n is a template parameter which
+      /// allows some computation to be performed at compile time.
+      template <unsigned n>
+      bool is_non_primary_2_face(const mln::def::coord& row,
+				 const mln::def::coord& col);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -59,25 +66,34 @@ namespace mln
       // Facade
 
       inline
-      bool is_non_primary_2_face(const point2d& p)
+      bool is_non_primary_2_face(const point2d& p, unsigned n)
       {
-	return is_non_primary_2_face(p.row(), p.col());
+	return is_non_primary_2_face(p.row(), p.col(), n);
       }
 
       inline
       bool is_non_primary_2_face(const mln::def::coord& row,
+				 const mln::def::coord& col,
+				 unsigned n)
+      {
+	return is_2_face(row, col) && !is_primary_2_face(row, col, n);
+      }
+
+
+      template <unsigned n>
+      bool is_non_primary_2_face(const mln::def::coord& row,
 				 const mln::def::coord& col)
       {
-	return kn::is_2_face(row, col) && !kn::is_primary_2_face<2>(row, col);
+	return is_2_face(row, col) && !is_primary_2_face<n>(row, col);
       }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k2
+    } // end of namespace mln::world::kn
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K2_IS_NON_PRIMARY_2_FACE_HH
+#endif // ! MLN_WORLD_KN_IS_NON_PRIMARY_2_FACE_HH
