@@ -31,7 +31,7 @@
 # define MLN_WORLD_KN_IS_0_FACE_HH
 
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/kn/internal/face_dim.hh>
+# include <mln/world/kn/face_dim.hh>
 
 
 namespace mln
@@ -66,7 +66,7 @@ namespace mln
       bool is_0_face(const mln::def::coord& row,
 		     const mln::def::coord& col)
       {
-	return internal::face_dim(row, col) == 0;
+	return face_dim(row, col) == 0;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

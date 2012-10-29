@@ -31,7 +31,7 @@
 # define MLN_WORLD_KN_INTERNAL_DISPLAY_HH
 
 # include <sstream>
-# include <mln/world/kn/internal/face_dim.hh>
+# include <mln/world/kn/face_dim.hh>
 # include <mln/world/k2/is_primary_2_face.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 # include <mln/world/kn/is_1_face_vertical.hh>
@@ -264,7 +264,7 @@ namespace mln
 	void
 	display_in_K1<Tree>::print_p(const point2d& p)
 	{
-	  switch (internal::face_dim(p))
+	  switch (face_dim(p))
 	  {
 	    case 0:
 	      ostr << " +";
@@ -292,7 +292,7 @@ namespace mln
 	void
 	display_in_K2<Tree>::print_p(const point2d& p)
 	{
-	  switch (internal::face_dim(p))
+	  switch (face_dim(p))
 	  {
 	    case 0:
 	      ostr << " +";

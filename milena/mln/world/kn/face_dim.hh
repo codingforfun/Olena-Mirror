@@ -41,37 +41,32 @@ namespace mln
     namespace kn
     {
 
-      namespace internal
-      {
+      /// \brief Returns the dimension of site in KN.
+      unsigned face_dim(const point2d& p);
 
-	/// \brief Returns the dimension of site in KN.
-	unsigned face_dim(const point2d& p);
-
-	/// \overload
-	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col);
+      /// \overload
+      unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-	// Facade
+      // Facade
 
-	inline
-	unsigned face_dim(const point2d& p)
-	{
-	  return face_dim(p.row(), p.col());
-	}
+      inline
+      unsigned face_dim(const point2d& p)
+      {
+	return face_dim(p.row(), p.col());
+      }
 
-	inline
-	unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col)
-	{
-	  return (row % 2 == 0) + (col % 2 == 0);
-	}
+      inline
+      unsigned face_dim(const mln::def::coord& row, const mln::def::coord& col)
+      {
+	return (row % 2 == 0) + (col % 2 == 0);
+      }
 
 
 # endif // ! MLN_INCLUDE_ONLY
-
-      } // end of namespace mln::work::kn::internal
 
     } // end of namespace mln::world::kn
 

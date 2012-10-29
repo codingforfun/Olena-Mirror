@@ -31,7 +31,7 @@
 # define MLN_WORLD_KN_IS_0_OR_1_FACE_HH
 
 # include <mln/core/alias/point2d.hh>
-# include <mln/world/kn/internal/face_dim.hh>
+# include <mln/world/kn/face_dim.hh>
 
 
 namespace mln
@@ -55,7 +55,7 @@ namespace mln
       inline
       bool is_0_or_1_face(const point2d& p)
       {
-	unsigned dim = internal::face_dim(p);
+	unsigned dim = face_dim(p);
 	return dim == 0 || dim == 1;
       }
 

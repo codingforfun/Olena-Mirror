@@ -1,5 +1,18 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move kn::internal::face_dim to kn.
+
+	* mln/world/kn/internal/face_dim.hh: Move...
+	* mln/world/kn/face_dim.hh: ... here.
+
+	* mln/world/kn/internal/display.hh,
+	* mln/world/kn/is_0_face.hh,
+	* mln/world/kn/is_0_or_1_face.hh,
+	* mln/world/kn/is_1_face.hh,
+	* mln/world/kn/is_2_face.hh: Update reference to face_dim.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move display_enlarged to kn.
 
 	* mln/world/k1/display_enlarged.hh,
