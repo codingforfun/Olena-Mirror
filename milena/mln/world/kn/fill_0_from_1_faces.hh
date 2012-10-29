@@ -33,7 +33,6 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_0_face.hh>
 
-
 namespace mln
 {
 
@@ -69,6 +68,10 @@ namespace mln
       void fill_0_from_1_faces(Image<I>& inout,
 			       const Accumulator<A>& accu);
 
+      template <typename I, typename F>
+      void fill_0_from_1_faces(Image<I>& inout,
+			       const Function_vvvv2v<F>& f);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -103,6 +106,26 @@ namespace mln
 	      accu.take(inout(p + down));
 	    inout(p) = accu.to_result();
 	  }
+
+	trace::exiting("mln::world::kn::fill_0_from_1_faces");
+      }
+
+
+      template <typename I, typename F>
+      void fill_0_from_1_faces(Image<I>& inout_,
+			       const Function_vvvv2v<F>& f_)
+      {
+	trace::entering("mln::world::kn::fill_0_from_1_faces");
+
+	mln_precondition(exact(inout_).is_valid());
+	I& inout = exact(inout_);
+	const F& f = exact(f_);
+
+	mln_piter(I) p(inout.domain());
+	for_all(p)
+	  if (is_0_face(p))
+	    inout(p) = f(inout(p + left), inout(p + right),
+			 inout(p + up), inout(p + down));
 
 	trace::exiting("mln::world::kn::fill_0_from_1_faces");
       }

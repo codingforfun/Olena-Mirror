@@ -1,5 +1,10 @@
 2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/fill_0_from_1_faces.hh: Add an overload with
+	functions.
+
+2012-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup code.
 
 	* mln/world/k1/fill_0_from_1_faces.hh,
