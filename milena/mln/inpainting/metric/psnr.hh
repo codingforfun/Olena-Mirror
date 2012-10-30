@@ -14,12 +14,12 @@ namespace mln
   {
     namespace metric
     {
-      template <typename I>
+      template <typename I, typename I2>
       double psnr(const Image<I>& original_,
-		  const Image<I>& altered_)
+		  const Image<I2>& altered_)
       {
 	const I& original = exact(original_);
-	const I& altered = exact(altered_);
+	const I2& altered = exact(altered_);
 
 	mln_piter(I) p( altered.domain() );
 
@@ -27,6 +27,8 @@ namespace mln
 
 	const unsigned dim = mln_dim(mln_value(I));
 	
+	unsigned nelements = 0;
+
 	for_all(p)
 	{
 	  const mln_sum(mln_value(I)) diff = original(p) - altered(p);
@@ -36,9 +38,11 @@ namespace mln
 	  else
 	    for (unsigned i = 0; i < dim; ++i)
 	      mse += diff[i] * diff[i];
+
+	  ++nelements;
 	}
 
-	mse /= ( altered.ncols() * altered.nrows() * dim);
+	mse /= ( nelements * dim);
 	
 	const unsigned max = pow(2, mln_nbits(mln_value(I)) / dim) - 1;
 

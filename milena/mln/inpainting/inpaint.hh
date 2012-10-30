@@ -15,6 +15,8 @@
 
 #include <mln/util/timer.hh>
 
+#include <mln/inpainting/metric/psnr.hh>
+
 namespace mln
 {
   namespace inpainting
@@ -73,13 +75,20 @@ namespace mln
       I<bool> new_mask(roi);
       data::paste(inpaint_mask | roi, new_mask);
 
+      data::fill((new_src | pw::value(new_mask)).rw(), literal::zero);
+
       mln::util::timer t;
       t.start();
 
       inpaint_method(new_src, new_mask);
 
       t.stop();
-      std::cout << "inpaint time = " << t << std::endl;
+
+      double psnr = metric::psnr(inpaint_src | pw::value(inpaint_mask),
+				 new_src | pw::value(new_mask));
+
+      std::cout << "inpaint time = " << t << "; "
+		<< "psnr = " << psnr << std::endl;
 
       I<T> output(inpaint_src);
       { // paste new_src to output

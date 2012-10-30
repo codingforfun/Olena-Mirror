@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <vector>
+#include <limits>
 
 #include <mln/core/image/dmorph/image_if.hh>
 
@@ -11,6 +12,8 @@
 #include <mln/linear/gaussian.hh>
 #include <mln/core/alias/w_window2d_float.hh>
 
+#include <mln/core/alias/neighb2d.hh>
+
 #include <mln/pw/value.hh>
 
 #include <mln/value/int_u.hh>
@@ -19,6 +22,17 @@
 #include <mln/data/paste.hh>
 
 #include <mln/core/alias/vec2d.hh>
+
+#include <mln/inpainting/derivative_kernels.hh>
+
+#include <mln/core/concept/accumulator.hh>
+
+#include <mln/trait/value_.hh>
+
+#include <mln/extension/adjust_duplicate.hh>
+
+#include <mln/norm/l2.hh>
+#include <mln/value/int_u8.hh>
 
 namespace mln
 {
@@ -49,92 +63,157 @@ namespace mln
       this->t_f = t_f;
     }
 
-    template <typename I>
-    void compute_diff_invariants(const I& u,
-				 std::vector<I>& invs,
-				 const std::vector<float>& w)
+    template <typename T>
+    inline
+    T components_product(trait::value::nature::scalar,
+			 T a,
+			 T b)
     {
-      const float sigma = 0.8;
+      return a * b;
+    }
 
-      invs[0] = linear::gaussian_1st_derivative(u, sigma, 1);
-      invs[1] = linear::gaussian_1st_derivative(u, sigma, 0);
-      invs[2] = linear::gaussian_2nd_derivative(u, sigma, 1);
-      invs[3] = linear::gaussian_2nd_derivative(u, sigma, 0);
-      invs[4] = linear::gaussian_2nd_derivative(u, sigma);
+    template <typename T>
+    T components_product(trait::value::nature::vectorial,
+			 T a,
+			 T b)
+    {
+      T c;
+      // static loop unrolling ?
+      for (unsigned i = 0; i < mln_dim(T); ++i)
+	c[i] = a[i] * b[i];
+
+      return c;
+    }
+
+    template <typename T>
+    inline
+    T components_product(T a,
+			 T b)
+    {
+      return components_product(mln_trait_value_nature(T)(), a, b);
+    }
+
+    template <typename I, typename M>
+    float diffuse(I& u,
+		  const I& f,
+		  const std::vector<float>& w,
+		  const M& mask)
+    {
+      typedef mln_value(I) T;
+
+      const float activation_threshold = 0.001;
+
+      const unsigned derivative_kernels_size = 5;
+      const float* derivative_kernel[derivative_kernels_size];
+
+      derivative_kernel[0] = make_dx_kernel();
+      derivative_kernel[1] = make_dy_kernel();
+      derivative_kernel[2] = make_dxx_kernel();
+      derivative_kernel[3] = make_dyy_kernel();
+      derivative_kernel[4] = make_dxy_kernel();
+
+      static window2d full3x3;
+      static const bool vals[] = { 1, 1, 1,
+				   1, 1, 1,
+				   1, 1, 1 };
       
-      { // TV regularization term div ( \nabla u / | \nabla u | )
+      convert::from_to(vals, full3x3);
 
-	I u_xnx( invs[5].domain() );
-	I u_yny( invs[5].domain() );
+      mln_pixter(I) p(u);
+      //mln_pixter(const I) p_f(f);
+      mln_pixter(const M) p_m(mask);
+      mln_qixter(const I, window2d) q(p, full3x3);
 
-	{
-	  mln_piter(I) p( invs[5].domain() );
+      float sse = 0;
 
-	  for_all(p)
+      unsigned car = 0;
+      for_all_2 (p, p_m)
+      {
+	//if (p_m.val())
 	  {
-	    for (unsigned i = 0; i < mln_dim(mln_value(I)); ++i)
-	      {
-		float norm;
+	    T old = p.val();
+
+	    if (fabs(w[1]) > activation_threshold)
+	      p.val() *= w[1];
+
+	    // if (fabs(w[0]) > activation_threshold)
+	    //   p.val() += w[0] * p_f.val();
+
+	    T p_derivative[derivative_kernels_size];
+
+	    for (unsigned i = 0; i < derivative_kernels_size; ++i)
+	      p_derivative[i] = literal::zero;
+
+	    unsigned k = 0;
+	    for_all (q)
+	    {
+	      for (unsigned i = 0; i < derivative_kernels_size; ++i)
 		{
-		  vec2d_f v;
-	      
-		  v[0] = invs[0](p)[i];
-		  v[1] = invs[1](p)[i];
-	      
-		  norm = norm::l2(v);
+		  p_derivative[i] += q.val() * derivative_kernel[i][k];
 		}
+	      ++k;
+	    }
 
-		u_xnx(p)[i] = invs[0](p)[i] / norm;
-		u_yny(p)[i] = invs[1](p)[i] / norm;
-	      }
+	    const T& p_x = p_derivative[0];
+	    const T& p_y = p_derivative[1];
+	    const T& p_xx = p_derivative[2];
+	    const T& p_yy = p_derivative[3];
+	    const T& p_xy = p_derivative[4];
+
+	    const T p_x2 = components_product(p_x, p_x);
+	    const T p_y2 = components_product(p_y, p_y);
+	    const T p_xx2 = components_product(p_xx, p_xx);
+	    const T p_yy2 = components_product(p_yy, p_yy);
+	    const T p_xy2 = components_product(p_xy, p_xy);
+
+	    //||∇u||^2
+	    if (fabs(w[2]) > activation_threshold)
+	      p.val() += w[2] * (p_x2 + p_y2);
+
+	    // laplacian
+	    if (fabs(w[3]) > activation_threshold)
+	      p.val() += w[3] * (p_xx + p_yy);
+	
+	    // tr(H^2(u))
+	    if (fabs(w[4]) > activation_threshold)
+	      p.val() += w[4] * (p_xx2 + 2 * p_xy2 + p_yy2);
+
+	    // (∇u)^T H_u (∇u)
+	    if (fabs(w[5]) > activation_threshold)
+	      p.val() += w[5] * (components_product(p_x2, p_xx)
+	    			 + 2 * components_product(components_product(p_x, p_y), p_xy)
+	    			 + components_product(p_y2, p_yy));
+
+	    sse += norm::l2(old - p.val());
 	  }
-	}
-
-	u_xnx = linear::gaussian_1st_derivative(u_xnx, sigma, 1);
-	u_yny = linear::gaussian_1st_derivative(u_yny, sigma, 0);	
-
-	mln_piter(I) p( invs[5].domain() );
-	for_all(p)
-	{
-	  invs[5](p) = u_xnx(p) + u_yny(p);
-	}
       }
+
+      return sse;
     }
 
     template <template <typename> class I, typename T>
     void lpde::operator()(I<T>& src,
 			  I<bool>& mask)
     {
+      extension::adjust_duplicate(src, 1);
 
-      data::fill((src | pw::value(mask)).rw(), literal::zero);
+      const I<T> f(src);
 
-      std::vector<I<T> > invs(w.size(), src.domain());
+      I<T>& u = src;
 
-      I<T>& u_t = src;
+      float sse = std::numeric_limits<float>::max();
 
-      float r = this->dt / (this->dx * this->dx);
-
-      for (float t = 0; t < this->t_f; t += dt)
+      float t = 0;
+      while (t < this->t_f && sse > 0.01 && !std::isnan(sse))
 	{
-	  compute_diff_invariants(u_t, invs, this->w);
+	  sse = diffuse(u, f, w, mask);
 
-	  mln_piter(I<T>) p(u_t.domain());
+	  std::cout << "sse = " << sse << std::endl;
 
-	  for_all(p)
-	  {
-	    if (mask(p))
-	      {
-		T contribution = literal::zero;
-
-		for (unsigned k = 0; k < w.size(); ++k)
-		  {
-		    contribution += this->w[k] * invs[k](p);
-		  }
-
-		u_t(p) += r * contribution;
-	      }
-	  }
+	  t += this->dt;
 	}
+
+      std::cout << "Number of iterations: " << t << std::endl;
     }
 
     void lpde::set(const std::vector<float>& w)
