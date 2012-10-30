@@ -1,5 +1,10 @@
 2012-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/k1/immerse.hh: Fix call to an overload in kn
+	namespace.
+
+2012-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more conversions in safe_cast.
 
 	* mln/world/kn/safe_cast.hh: Add conversions towards/from

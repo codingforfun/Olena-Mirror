@@ -99,8 +99,7 @@ namespace mln
       mln_concrete(I)
       immerse(const Image<I>& ima)
       {
-	typedef mln_value(I) V;
-	return immerse(ima, 1);
+	return kn::immerse(ima, 1);
       }
 
 
