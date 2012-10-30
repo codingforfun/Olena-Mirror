@@ -94,8 +94,9 @@ namespace mln
     }
 
     template <typename I, typename M>
-    float diffuse(I& u,
-		  const I& f,
+    float diffuse(const I& u,
+		  I& u_next,
+		  //const I& f,
 		  const std::vector<float>& w,
 		  const M& mask)
     {
@@ -105,7 +106,7 @@ namespace mln
 
       const unsigned derivative_kernels_size = 5;
       const float* derivative_kernel[derivative_kernels_size];
-
+      
       derivative_kernel[0] = make_dx_kernel();
       derivative_kernel[1] = make_dy_kernel();
       derivative_kernel[2] = make_dxx_kernel();
@@ -119,25 +120,26 @@ namespace mln
       
       convert::from_to(vals, full3x3);
 
-      mln_pixter(I) p(u);
+      mln_pixter(const I) p(u);
+      mln_pixter(I) p_next(u_next);
       //mln_pixter(const I) p_f(f);
       mln_pixter(const M) p_m(mask);
-      mln_qixter(const I, window2d) q(p, full3x3);
+      mln_qixter(const I, const window2d) q(p, full3x3);
 
       float sse = 0;
-
+      
       unsigned car = 0;
-      for_all_2 (p, p_m)
-      {
-	//if (p_m.val())
+      for_all_3 (p, p_next, p_m)
+	{
+	  //if (p_m.val())
 	  {
-	    T old = p.val();
+	    const T old = p.val();
 
 	    if (fabs(w[1]) > activation_threshold)
-	      p.val() *= w[1];
+	      p_next.val() = p.val() * w[1];
 
 	    // if (fabs(w[0]) > activation_threshold)
-	    //   p.val() += w[0] * p_f.val();
+	    //   p_next.val() += w[0] * p_f.val();
 
 	    T p_derivative[derivative_kernels_size];
 
@@ -168,25 +170,25 @@ namespace mln
 
 	    //||∇u||^2
 	    if (fabs(w[2]) > activation_threshold)
-	      p.val() += w[2] * (p_x2 + p_y2);
+	      p_next.val() += w[2] * (p_x2 + p_y2);
 
 	    // laplacian
 	    if (fabs(w[3]) > activation_threshold)
-	      p.val() += w[3] * (p_xx + p_yy);
+	      p_next.val() += w[3] * (p_xx + p_yy);
 	
 	    // tr(H^2(u))
 	    if (fabs(w[4]) > activation_threshold)
-	      p.val() += w[4] * (p_xx2 + 2 * p_xy2 + p_yy2);
+	      p_next.val() += w[4] * (p_xx2 + 2 * p_xy2 + p_yy2);
 
 	    // (∇u)^T H_u (∇u)
 	    if (fabs(w[5]) > activation_threshold)
-	      p.val() += w[5] * (components_product(p_x2, p_xx)
-	    			 + 2 * components_product(components_product(p_x, p_y), p_xy)
-	    			 + components_product(p_y2, p_yy));
+	      p_next.val() += w[5] * (components_product(p_x2, p_xx)
+				      + 2 * components_product(components_product(p_x, p_y), p_xy)
+				      + components_product(p_y2, p_yy));
 
-	    sse += norm::l2(old - p.val());
+	    sse += norm::l2(old - p_next.val());
 	  }
-      }
+	}
 
       return sse;
     }
@@ -195,18 +197,31 @@ namespace mln
     void lpde::operator()(I<T>& src,
 			  I<bool>& mask)
     {
-      extension::adjust_duplicate(src, 1);
+      //const I<T> f(src);
 
-      const I<T> f(src);
+      I<T>& u_ = src;
+      I<T> u_next_(src);
+      
+      extension::adjust_duplicate(u_, 1);
+      extension::adjust_duplicate(u_next_, 1);
 
-      I<T>& u = src;
+      I<T>* u = &u_;
+      I<T>* u_next = &u_next_;
 
-      float sse = std::numeric_limits<float>::max();
+      float sse = std::numeric_limits<float>::max() / 2.0;
+
+      float sse_old = std::numeric_limits<float>::max();
 
       float t = 0;
-      while (t < this->t_f && sse > 0.01 && !std::isnan(sse))
+      while (t < this->t_f && sse < sse_old && !std::isnan(sse))
 	{
-	  sse = diffuse(u, f, w, mask);
+	  sse_old = sse;
+
+	  sse = diffuse(*u, *u_next, /* f, */ w, mask);
+
+	  I<T>* swap = u;
+	  u = u_next;
+	  u_next = swap;
 
 	  std::cout << "sse = " << sse << std::endl;
 
