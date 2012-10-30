@@ -62,6 +62,8 @@ namespace mln
   namespace value
   {
 
+    // From int_u<n>
+
     template <unsigned m, unsigned n>
     void safe_cast_(const int_u<m>& from, intsub<n>& to)
     {
@@ -92,9 +94,24 @@ namespace mln
       to = from.to_interop();
     }
 
+    template <unsigned m>
+    void safe_cast_(const int_u<m>& from, unsigned& to)
+    {
+      to = from.to_interop();
+    }
+
+    // From interval<int>
+
     void safe_cast_(const interval<int>& from, int& to)
     {
       if (!from.is_degenerated())
+	std::abort();
+      to = from.first();
+    }
+
+    void safe_cast_(const interval<int>& from, unsigned& to)
+    {
+      if (!from.is_degenerated() || from.first() < 0)
 	std::abort();
       to = from.first();
     }
@@ -115,13 +132,7 @@ namespace mln
       to = from.first();
     }
 
-    template <unsigned n, unsigned m>
-    void safe_cast_(const interval<intsub<n> >& from, int_u<m>& to)
-    {
-      if (!from.is_degenerated())
-	std::abort();
-      to = intsub<n>(from.first());
-    }
+    // From interval< int_u<m> >
 
     template <unsigned m>
     void safe_cast_(const interval<int_u<m> >& from, int_u<m>& to)
@@ -147,10 +158,36 @@ namespace mln
       to = from.first().to_interop();
     }
 
+    template <unsigned m>
+    void safe_cast_(const interval<int_u<m> >& from, unsigned& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = from.first().to_interop();
+    }
+
+    // From interval<intsub<n> >
+
+    template <unsigned n, unsigned m>
+    void safe_cast_(const interval<intsub<n> >& from, int_u<m>& to)
+    {
+      if (!from.is_degenerated())
+	std::abort();
+      to = intsub<n>(from.first());
+    }
+
     template <unsigned n>
     void safe_cast_(const interval<intsub<n> >& from, int& to)
     {
       if (!from.is_degenerated())
+	std::abort();
+      to = from.first();
+    }
+
+    template <unsigned n>
+    void safe_cast_(const interval<intsub<n> >& from, unsigned& to)
+    {
+      if (!from.is_degenerated() || from.first() < 0)
 	std::abort();
       to = from.first();
     }
@@ -163,6 +200,8 @@ namespace mln
       to = from.first();
     }
 
+    // From int
+
     template <unsigned n>
     void safe_cast_(const int& from, interval<intsub<n> >& to)
     {
@@ -172,6 +211,13 @@ namespace mln
     void safe_cast_(const int& from, interval<int>& to)
     {
       to = interval<int>(from);
+    }
+
+    void safe_cast_(const int& from, unsigned& to)
+    {
+      if (from < 0)
+	std::abort();
+      to = from;
     }
 
     template <unsigned m>
@@ -186,6 +232,7 @@ namespace mln
       to = from;
     }
 
+    // From intsub<n>
 
     template <unsigned n>
     void safe_cast_(const intsub<n>& from, intsub<2*n>& to)
@@ -211,6 +258,14 @@ namespace mln
       to = from;
     }
 
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, unsigned& to)
+    {
+      if (from < 0)
+	std::abort();
+      to = from;
+    }
+
     template <unsigned n, unsigned m>
     void safe_cast_(const intsub<n>& from, interval<int_u<m> >& to)
     {
@@ -228,6 +283,45 @@ namespace mln
     {
       to = interval<intsub<n> >(from);
     }
+
+    // From unsigned
+
+    template <unsigned n>
+    void safe_cast_(const unsigned& from, interval<intsub<n> >& to)
+    {
+      // FIXME: check if unsigned value fits in intsub.
+      to = interval<intsub<n> >((int)from);
+    }
+
+    void safe_cast_(const unsigned& from, interval<int>& to)
+    {
+      if (from > static_cast<unsigned>(mln_max(int)))
+	std::abort();
+      to = interval<int>(from);
+    }
+
+    void safe_cast_(const unsigned& from, int& to)
+    {
+      if (from > static_cast<unsigned>(mln_max(int)))
+	std::abort();
+      to = from;
+    }
+
+    template <unsigned m>
+    void safe_cast_(const unsigned& from, int_u<m>& to)
+    {
+      if (from > mln_max(int_u<m>))
+	std::abort();
+      to = from;
+    }
+
+    template <unsigned n>
+    void safe_cast_(const unsigned& from, intsub<n>& to)
+    {
+      // FIXME: check if unsigned value fits in intsub.
+      to = (int)from;
+    }
+
 
 
   } // end of namespace mln::value

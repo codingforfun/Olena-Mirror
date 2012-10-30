@@ -36,6 +36,42 @@ int main()
   using namespace mln::value;
   using namespace mln::world;
 
+  // unsigned -> int_u<8>
+  {
+    unsigned i = 2;
+    int_u<8> j = kn::safe_cast_to<int_u<8> >(i);
+    mln_assertion(j == 2);
+  }
+
+  // unsigned -> intsub<2>
+  {
+    unsigned i = 2;
+    intsub<2> j = kn::safe_cast_to<intsub<2> >(i);
+    mln_assertion(j == 2);
+  }
+
+  // unsigned -> interval<int>
+  {
+    unsigned i = 2;
+    interval<int> j = kn::safe_cast_to<interval<int> >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // unsigned -> interval<int_u<8> >
+  {
+    unsigned i = 2;
+    interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // unsigned -> interval<intsub<2> >
+  {
+    unsigned i = 2;
+    interval<intsub<2> > j = kn::safe_cast_to<interval<intsub<2> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+
   // int -> int_u<8>
   {
     int i = 2;
@@ -50,6 +86,26 @@ int main()
     mln_assertion(j == 2);
   }
 
+  // int -> interval<int>
+  {
+    int i = 2;
+    interval<int> j = kn::safe_cast_to<interval<int> >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // int -> interval<int_u<8> >
+  {
+    int i = 2;
+    interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // int -> interval<intsub<2> >
+  {
+    int i = 2;
+    interval<intsub<2> > j = kn::safe_cast_to<interval<intsub<2> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
 
   // int_u<8> -> int
   {
@@ -63,6 +119,34 @@ int main()
     int_u<8> i = 2;
     intsub<2> j = kn::safe_cast_to<intsub<2> >(i);
     mln_assertion(j == 2);
+  }
+
+  // int_u<8> -> interval<int_u<8> >
+  {
+    int_u<8> i = 2;
+    interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // int_u<8> -> interval<int>
+  {
+    int_u<8> i = 2;
+    interval<int> j = kn::safe_cast_to<interval<int> >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // int_u<8> -> interval<int>
+  {
+    intsub<2> i = 2;
+    interval<int> j = kn::safe_cast_to<interval<int> >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
+  }
+
+  // int_u<8> -> interval<intsub<2> >
+  {
+    int_u<8> i = 2;
+    interval<intsub<2> > j = kn::safe_cast_to<interval<intsub<2> > >(i);
+    mln_assertion(j.is_degenerated() && j.first() == 2);
   }
 
   // intsub<2> -> int
@@ -79,60 +163,10 @@ int main()
     mln_assertion(j == 2);
   }
 
-  // int -> interval<int>
-  {
-    int i = 2;
-    interval<int> j = kn::safe_cast_to<interval<int> >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-  // int_u -> interval<int>
-  {
-    int_u<8> i = 2;
-    interval<int> j = kn::safe_cast_to<interval<int> >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-  // int_u -> interval<int>
-  {
-    intsub<2> i = 2;
-    interval<int> j = kn::safe_cast_to<interval<int> >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-  // int -> interval<int_u<8> >
-  {
-    int i = 2;
-    interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-  // int_u<8> -> interval<int_u<8> >
-  {
-    int_u<8> i = 2;
-    interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
   // intsub<2> -> interval<int_u<8> >
   {
     intsub<2> i = 2;
     interval<int_u<8> > j = kn::safe_cast_to<interval<int_u<8> > >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-
-  // int -> interval<intsub<2> >
-  {
-    int i = 2;
-    interval<intsub<2> > j = kn::safe_cast_to<interval<intsub<2> > >(i);
-    mln_assertion(j.is_degenerated() && j.first() == 2);
-  }
-
-  // int_u<8> -> interval<intsub<2> >
-  {
-    int_u<8> i = 2;
-    interval<intsub<2> > j = kn::safe_cast_to<interval<intsub<2> > >(i);
     mln_assertion(j.is_degenerated() && j.first() == 2);
   }
 
@@ -205,5 +239,7 @@ int main()
     intsub<2> j = kn::safe_cast_to<intsub<2> >(i);
     mln_assertion(j == 2);
   }
+
+
 
 }
