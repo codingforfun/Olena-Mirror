@@ -1,3 +1,7 @@
+2012-10-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/world/kn/display_enlarged.hh: Fix.
+
 2012-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/world/k1/immerse.hh: Fix call to an overload in kn

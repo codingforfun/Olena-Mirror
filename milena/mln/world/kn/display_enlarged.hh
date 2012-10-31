@@ -93,16 +93,18 @@ namespace mln
 	mln_assertion(zoom_ % 2);
 
 	const I& ima_kn = exact(ima_kn_);
-	int shift = zoom_ - 1;
+	int
+	  shift = zoom_ + 1,
+	  mult = shift / 2;
 
 	// No zoom: return original image.
 	if (zoom_ == 1)
-	  return ima_kn;
+	  return duplicate(ima_kn);
 
-	mln_concrete(I) output(make::box2d(ima_kn.domain().pmin().row() * shift,
-					   ima_kn.domain().pmin().col() * shift,
-					   ima_kn.domain().pmax().row() * shift,
-					   ima_kn.domain().pmax().col() * shift));
+	mln_concrete(I) output(make::box2d(ima_kn.domain().pmin().row() * mult,
+					   ima_kn.domain().pmin().col() * mult,
+					   ima_kn.domain().pmax().row() * mult,
+					   ima_kn.domain().pmax().col() * mult));
 
 	const mln::def::coord
 	  min_row = geom::min_row(ima_kn),
@@ -116,23 +118,23 @@ namespace mln
 	  {
 	    if (kn::is_0_face(row, col))
 	    {
-	      output.at_(row * shift, col * shift) = ima_kn.at_(row, col);
+	      output.at_(row * mult, col * mult) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_1_face_vertical(row, col))
 	    {
-	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	output.at_(row * shift + j, col * shift) = ima_kn.at_(row, col);
+	      for (mln::def::coord j = -(mult - 1); j <= (mult - 1); ++j)
+	    	output.at_(row * mult + j, col * mult) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_1_face_horizontal(row, col))
 	    {
-	      for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	output.at_(row * shift, col * shift  + j) = ima_kn.at_(row, col);
+	      for (mln::def::coord j = -(mult - 1); j <= (mult - 1); ++j)
+	    	output.at_(row * mult, col * mult  + j) = ima_kn.at_(row, col);
 	    }
 	    else if (kn::is_2_face(row, col))
 	    {
-	      for (mln::def::coord i = -(shift - 1); i <  (shift + 3); ++i)
-	    	for (mln::def::coord j = -(shift - 1); j <  (shift + 3); ++j)
-	    	  output.at_(row * shift + i, col * shift  + j) = ima_kn.at_(row, col);
+	      for (mln::def::coord i = -(mult - 1); i <= (mult - 1); ++i)
+	    	for (mln::def::coord j = -(mult - 1); j <= (mult - 1); ++j)
+	    	  output.at_(row * mult + i, col * mult  + j) = ima_kn.at_(row, col);
 	    }
 	  }
 	}
