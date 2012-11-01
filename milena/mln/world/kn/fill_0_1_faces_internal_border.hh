@@ -74,8 +74,8 @@ namespace mln
       {
 	trace::entering("mln::world::kn::fill_0_1_faces_internal_border");
 
-	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
+	mln_precondition(inout.is_valid());
 
 	inner_border::fill(inout, v);
 

@@ -89,10 +89,10 @@ namespace mln
       {
 	trace::entering("mln::world::kn::display_enlarged");
 
-	mln_precondition(exact(ima_kn_).is_valid());
+	const I& ima_kn = exact(ima_kn_);
+	mln_precondition(ima_kn.is_valid());
 	mln_assertion(zoom_ % 2);
 
-	const I& ima_kn = exact(ima_kn_);
 	int
 	  shift = zoom_ + 1,
 	  mult = shift / 2;
@@ -101,10 +101,11 @@ namespace mln
 	if (zoom_ == 1)
 	  return duplicate(ima_kn);
 
-	mln_concrete(I) output(make::box2d(ima_kn.domain().pmin().row() * mult,
-					   ima_kn.domain().pmin().col() * mult,
-					   ima_kn.domain().pmax().row() * mult,
-					   ima_kn.domain().pmax().col() * mult));
+	mln_concrete(I)
+	  output(make::box2d(ima_kn.domain().pmin().row() * mult,
+			     ima_kn.domain().pmin().col() * mult,
+			     ima_kn.domain().pmax().row() * mult,
+			     ima_kn.domain().pmax().col() * mult));
 
 	const mln::def::coord
 	  min_row = geom::min_row(ima_kn),

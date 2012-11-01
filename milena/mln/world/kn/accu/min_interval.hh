@@ -28,7 +28,8 @@
 
 /// \file
 ///
-/// Define an accumulator that computes a min on a specific interval.
+/// \brief An accumulator that computes a min within specific
+/// interval.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -76,8 +77,8 @@ namespace mln
       namespace accu
       {
 
-	/// \brief Minimum accumulator restricted to a specific
-	/// interval.
+        /// \brief An accumulator that computes a min within specific
+        /// interval.
 	/*!
 	 * The parameter \c T is the type of values.
 	 *

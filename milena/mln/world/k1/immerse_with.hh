@@ -125,7 +125,6 @@ namespace mln
 		   const Function_vvvv2v<F4>& f_0faces_)
       {
 	trace::entering("mln::world::k1::immerse_with");
-	mln_precondition(exact(ima_).is_valid());
 
 	// FIXME: we cannot write that test because we rely on
 	//        safe_convert. So, even though some types may not
@@ -137,6 +136,8 @@ namespace mln
 	const I& ima = exact(ima_);
 	const F2& f_1faces = exact(f_1faces_);
 	const F4& f_0faces = exact(f_0faces_);
+
+	mln_precondition(ima.is_valid());
 
 	mln_ch_value(I,V) output = k1::immerse(ima, new_value_type, default_value);
 	k1::fill_1_from_2_faces(output, f_1faces);

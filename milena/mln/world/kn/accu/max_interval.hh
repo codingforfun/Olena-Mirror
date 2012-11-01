@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// \brief Define an accumulator that computes a max on a specific
+/// \brief Maximum accumulator restricted to a specific
 /// interval.
 
 # include <mln/core/concept/meta_accumulator.hh>
@@ -78,8 +78,8 @@ namespace mln
       namespace accu
       {
 
-	/// \brief Minimum accumulator restricted to a specific
-	/// interval.
+        /// \brief Maximum accumulator restricted to a specific
+        /// interval.
 	///
 	/// The parameter \c T is the type of values.
 	///

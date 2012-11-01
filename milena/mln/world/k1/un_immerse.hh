@@ -76,8 +76,8 @@ namespace mln
       un_immerse(const Image<I>& ima_, const V& new_value_type)
       {
 	trace::entering("mln::world::k1::un_immerse");
-	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
+	mln_precondition(ima.is_valid());
 
 	mln_ch_value(I,V) output = kn::un_immerse(ima, 2, new_value_type);
 
@@ -91,8 +91,8 @@ namespace mln
       un_immerse(const Image<I>& ima_)
       {
 	trace::entering("mln::world::k1::un_immerse");
-	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
+	mln_precondition(ima.is_valid());
 
 	mln_concrete(I) output = kn::un_immerse(ima, 1);
 

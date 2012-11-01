@@ -1,5 +1,18 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp Code.
+
+	* mln/world/k1/immerse_with.hh,
+	* mln/world/k1/un_immerse.hh,
+	* mln/world/kn/display_enlarged.hh,
+	* mln/world/kn/fill_0_1_faces_internal_border.hh: Avoid the use of
+	exact() in preconditions.
+
+	* mln/world/kn/accu/max_interval.hh
+	* mln/world/kn/accu/min_interval.hh: Improve comments.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of safe_cast.
 
 	* mln/world/k1/fill_0_from_1_faces.hh,
