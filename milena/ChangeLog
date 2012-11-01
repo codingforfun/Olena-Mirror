@@ -1,5 +1,17 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add world::kn::fill_2_from_aux_1_faces.hh.
+
+	* mln/world/kn/fill_2_from_1_faces.hh: Rely on
+	fill_2_from_aux_1_faces.
+
+	* tests/world/kn/Makefile.am: New target.
+
+	* mln/world/kn/fill_2_from_aux_1_faces.hh,
+	* tests/world/kn/fill_2_from_aux_1_faces.cc: New.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Handle border value with auxiliary data images.
 
 	* mln/world/kn/border/fill_1_from_2_faces.hh,

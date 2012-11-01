@@ -30,9 +30,9 @@
 #ifndef MLN_WORLD_KN_FILL_2_FROM_1_FACES_HH
 # define MLN_WORLD_KN_FILL_2_FROM_1_FACES_HH
 
-# include <mln/core/alias/point2d.hh>
-# include <mln/world/kn/is_2_face.hh>
-# include <mln/world/kn/safe_cast.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/world/kn/fill_2_from_aux_1_faces.hh>
 
 namespace mln
 {
@@ -59,7 +59,7 @@ namespace mln
 
        */
       template <typename I, typename F>
-      void fill_2_from_1_faces(Image<I>& inout, Function_vvvv2v<F>& f);
+      void fill_2_from_1_faces(Image<I>& inout, const Function_vvvv2v<F>& f);
 
       /// \overload
       template <typename I, typename A>
@@ -73,51 +73,25 @@ namespace mln
 
 
       template <typename I, typename F>
-      void fill_2_from_1_faces(Image<I>& inout_, Function_vvvv2v<F>& f_)
+      void fill_2_from_1_faces(Image<I>& inout, const Function_vvvv2v<F>& f)
       {
 	trace::entering("mln::world::kn::fill_2_from_1_faces");
 
-	mln_precondition(exact(inout_).is_valid());
-	I& inout = exact(inout_);
-	F& f = exact(f_);
+	mln_precondition(exact(inout).is_valid());
 
-	mln_piter(I) p(inout.domain());
-	for_all(p)
-	  if (kn::is_2_face(p))
-	    inout(p) = safe_cast(f(safe_cast(inout(p + up)),
-				   safe_cast(inout(p + left)),
-				   safe_cast(inout(p + right)),
-				   safe_cast(inout(p + down))));
+	fill_2_from_aux_1_faces(inout, inout, f);
 
 	trace::exiting("mln::world::kn::fill_2_from_1_faces");
       }
 
 
       template <typename I, typename A>
-      void fill_2_from_1_faces(Image<I>& inout_, const Accumulator<A>& accu_)
+      void fill_2_from_1_faces(Image<I>& inout, const Accumulator<A>& accu)
       {
 	trace::entering("mln::world::kn::fill_2_from_1_faces");
+	mln_precondition(exact(inout).is_valid());
 
-	I& inout = exact(inout_);
-	mln_precondition(inout.is_valid());
-
-	A accu = exact(accu_);
-	typedef mln_argument(A) arg;
-	mln_piter(I) p(inout.domain());
-	for_all(p)
-	  if (kn::is_2_face(p))
-	  {
-	    accu.init();
-	    if (inout.domain().has(p + up))
-	      accu.take(safe_cast_to<arg>(inout(p + up)));
-	    if (inout.domain().has(p + left))
-	      accu.take(safe_cast_to<arg>(inout(p + left)));
-	    if (inout.domain().has(p + right))
-	      accu.take(safe_cast_to<arg>(inout(p + right)));
-	    if (inout.domain().has(p + down))
-	      accu.take(safe_cast_to<arg>(inout(p + down)));
-	    inout(p) = safe_cast(accu.to_result());
-	  }
+	fill_2_from_aux_1_faces(inout, inout, accu);
 
 	trace::exiting("mln::world::kn::fill_2_from_1_faces");
       }

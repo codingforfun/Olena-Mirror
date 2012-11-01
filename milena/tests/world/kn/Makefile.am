@@ -28,6 +28,7 @@ check_PROGRAMS =				\
   fill_1_from_2_faces				\
   fill_1_from_aux_2_faces			\
   fill_2_from_1_faces				\
+  fill_2_from_aux_1_faces			\
   holes						\
   immerse					\
   immerse_with_inner_border			\
@@ -49,6 +50,7 @@ fill_0_from_2_faces_SOURCES = fill_0_from_2_faces.cc
 fill_1_from_2_faces_SOURCES = fill_1_from_2_faces.cc
 fill_1_from_aux_2_faces_SOURCES = fill_1_from_aux_2_faces.cc
 fill_2_from_1_faces_SOURCES = fill_2_from_1_faces.cc
+fill_2_from_aux_1_faces_SOURCES = fill_2_from_aux_1_faces.cc
 holes_SOURCES = holes.cc
 immerse_SOURCES = immerse.cc
 immerse_with_inner_border_SOURCES = immerse_with_inner_border.cc
