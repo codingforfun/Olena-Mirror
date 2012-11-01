@@ -1,4 +1,9 @@
-2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+2012-11-01  Guilelaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/world/kn/fill_1_from_2_faces.hh: Rely on
+	fill_1_from_aux_2_faces.
+
+2012-11-01  Guilelaume Lazzara  <z@lrde.epita.fr>
 
 	Add world::kn::fill_2_from_aux_1_faces.hh.
 
