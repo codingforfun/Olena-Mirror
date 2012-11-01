@@ -29,26 +29,9 @@
 #include <mln/make/box2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/accu/math/sum.hh>
+#include <mln/fun/vvvv2v/sum.hh>
 #include <mln/world/kn/fill_2_from_1_faces.hh>
 #include <mln/border/fill.hh>
-
-
-namespace mln
-{
-
-  struct sum_t : Function_vvvv2v<sum_t>
-  {
-    typedef int result;
-
-    int operator()(const int& v1, const int& v2, const int& v3, const int& v4) const
-    {
-      return v1 + v2 + v3 + v4;
-    }
-
-  };
-
-}
-
 
 
 int main()
@@ -86,7 +69,7 @@ int main()
 
   // Overload with function
   {
-    sum_t f;
+    fun::vvvv2v::sum<int> f;
     world::kn::fill_2_from_1_faces(imakn, f);
     mln_assertion(ref == imakn);
   }

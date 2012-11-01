@@ -107,4 +107,14 @@ int main()
 
   // median(6,2) = 4
   mln_assertion(math::median(i, intsub<2>(2)) == 4);
+
+
+  // 2.5 * 3
+  mln_assertion((l * 3) == 7.5);
+
+  // 4 * 2.5
+  mln_assertion((4 * l) == 10);
+
+  // 2.5 * 10.25
+  mln_assertion((l * k) == 25.625);
 }

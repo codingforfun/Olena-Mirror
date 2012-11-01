@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,22 +47,24 @@ namespace mln
 
       // FIXME: Doc!
 
-      template <typename V>
-      struct abs : public Function_v2v< abs<V> >
+      template <typename V, typename R>
+      struct abs : public Function_v2v< abs<V,R> >,
+		   private mlc_converts_to(R,V)::check_t
       {
-	typedef V result;
-	V operator()(const V& v) const;
+	typedef R result;
+	typedef V argument;
+	R operator()(const V& v) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename V, typename R>
       inline
-      V
-      abs<V>::operator()(const V& v) const
+      R
+      abs<V,R>::operator()(const V& v) const
       {
-	return mln::math::abs(v);
+	return R(mln::math::abs(v));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

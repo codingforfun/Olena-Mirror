@@ -34,8 +34,9 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
-# include <mln/world/kn/border/compute_1_faces.hh>
 # include <mln/world/kn/safe_cast.hh>
+# include <mln/world/kn/border/fill_1_from_aux_2_faces.hh>
+# include <mln/world/kn/border/duplicate_2_faces.hh>
 
 namespace mln
 {
@@ -51,7 +52,7 @@ namespace mln
 
 	\param[in,out] inout A 2D image immersed in KN.
 	\param[in] aux A 2D image with the same domain as \p inout.
-	\param[in,out] f A functor computing a result from two values.
+	\param[in] f A functor computing a result from two values.
 
 	Warning: \p aux borders must have been initialized with
 	kn::border::duplicate_2_faces or have been immersed in Kn in
@@ -77,7 +78,7 @@ namespace mln
       */
       template <typename I, typename J, typename F>
       void fill_1_from_aux_2_faces(Image<I>& inout, const Image<J>& aux,
-				   Function_vv2v<F>& f);
+				   const Function_vv2v<F>& f);
 
       /// \overload
       template <typename I, typename J, typename A>
@@ -93,19 +94,20 @@ namespace mln
 
       template <typename I, typename J, typename F>
       void fill_1_from_aux_2_faces(Image<I>& inout_, const Image<J>& aux_,
-				   Function_vv2v<F>& f_)
+				   const Function_vv2v<F>& f_)
       {
 	trace::entering("mln::world::kn::fill_1_from_aux_2_faces");
 
 	I& inout = exact(inout_);
 	const J& aux = exact(aux_);
-	F& f = exact(f_);
+	const F& f = exact(f_);
 
 	mln_precondition(inout.is_valid());
 	mln_precondition(aux.is_valid());
 	mln_precondition(inout.domain() == aux.domain());
 
-	kn::border::compute_1_faces(inout, f);
+	kn::border::duplicate_2_faces(aux);
+	kn::border::fill_1_from_aux_2_faces(inout, aux, f);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)

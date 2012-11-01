@@ -41,7 +41,7 @@
 # include <mln/value/interval.hh>
 # include <mln/value/is_degenerated.hh>
 
-# include <mln/world/kn/internal/hqueue.hh>
+# include <mln/world/kn/hqueue.hh>
 # include <mln/util/tree_of_shapes.hh>
 # include <mln/world/kn/is_2_face.hh>
 
@@ -95,7 +95,7 @@ namespace mln
 	  typedef mln_ch_value(I,P) T;
 	  typedef mln_ch_value(I,unsigned) U;
 	  typedef std::vector<P> Array_P;
-	  typedef world::kn::internal::hqueue<P,EV> q_type;
+	  typedef world::kn::hqueue<P,EV> q_type;
 
 	  compute_tree_of_shapes_t();
 

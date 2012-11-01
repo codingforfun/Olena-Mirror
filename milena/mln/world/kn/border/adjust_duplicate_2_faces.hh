@@ -59,7 +59,8 @@ namespace mln
 
        */
       template <typename I>
-      void adjust_duplicate_2_faces(Image<I>& inout, unsigned min_thickness);
+      void adjust_duplicate_2_faces(const Image<I>& inout,
+				    unsigned min_thickness);
 
 
 
@@ -67,13 +68,13 @@ namespace mln
 
 
       template <typename I>
-      void adjust_duplicate_2_faces(Image<I>& inout_, unsigned min_thickness)
+      void adjust_duplicate_2_faces(const Image<I>& inout,
+				    unsigned min_thickness)
       {
 	trace::entering("mln::world::kn::adjust_duplicate_2_faces");
 
-	mln_precondition(exact(inout_).is_valid());
+	mln_precondition(exact(inout).is_valid());
 	mln_precondition(min_thickness > 0);
-	I& inout = exact(inout_);
 
 	mln::border::adjust(inout, min_thickness);
 	kn::border::duplicate_2_faces(inout);

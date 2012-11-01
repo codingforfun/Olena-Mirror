@@ -35,6 +35,7 @@
 # include <mln/world/k2/is_non_primary_2_face_horizontal.hh>
 # include <mln/world/k2/is_non_primary_2_face_center.hh>
 # include <mln/world/kn/safe_cast.hh>
+# include <mln/world/kn/border/adjust_duplicate_2_faces.hh>
 
 namespace mln
 {
@@ -139,6 +140,9 @@ namespace mln
 		       kn::safe_cast(ima(p + 2 * down_left)),
 		       kn::safe_cast(ima(p + 2 * down_right))));
 	  }
+
+	// Initialize border.
+	kn::border::adjust_duplicate_2_faces(ima, 1);
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_2_faces");
       }

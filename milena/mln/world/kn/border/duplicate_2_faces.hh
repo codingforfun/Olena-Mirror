@@ -56,7 +56,7 @@ namespace mln
 
        */
       template <typename I>
-      void duplicate_2_faces(Image<I>& inout);
+      void duplicate_2_faces(const Image<I>& inout);
 
 
 
@@ -64,13 +64,13 @@ namespace mln
 
 
       template <typename I>
-      void duplicate_2_faces(Image<I>& inout_)
+      void duplicate_2_faces(const Image<I>& inout_)
       {
 	trace::entering("mln::world::kn::duplicate_2_faces");
 
 	mln_precondition(exact(inout_).is_valid());
 	mln_precondition(exact(inout_).border() >= 1);
-	I& inout = exact(inout_);
+	I& inout = const_cast<I&>(exact(inout_));
 
 	def::coord
 	  min_row_1 = geom::min_row(inout) + 1,

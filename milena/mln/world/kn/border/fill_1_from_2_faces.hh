@@ -25,13 +25,15 @@
 
 /// \file
 ///
-/// \brief Fill 1 faces in a K1 2D image using its primary faces.
+/// \brief Duplicate 2 faces in KN 2D images borders.
 
-#ifndef MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
-# define MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
+#ifndef MLN_WORLD_KN_BORDER_FILL_1_FROM_2_FACES_HH
+# define MLN_WORLD_KN_BORDER_FILL_1_FROM_2_FACES_HH
 
-# include <mln/core/alias/point2d.hh>
-# include <mln/world/kn/fill_0_from_2_faces.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/world/kn/border/fill_1_from_aux_2_faces.hh>
+
 
 
 namespace mln
@@ -40,70 +42,51 @@ namespace mln
   namespace world
   {
 
-    namespace k1
+    namespace kn
     {
 
-      /*! \brief Fill 0 faces in a K1 2D image using its primary faces.
+      namespace border
+      {
 
-	\param[in,out] inout A 2D image immersed in K1.
-	\param[in,out] f A functor computing a result from four values.
+      /*! \brief Compute 1 faces in Kn 2D images borders.
 
-	This function use the following neighborhood:
-
-	\verbatim
-	      x   x
-	        .
-	      x   x
-	\endverbatim
-
+	\param[in,out] inout A 2D image immersed in KN.
+	\param[in,out] f A function computing 1-faces values from 2
+	2-faces values.
 
        */
       template <typename I, typename F>
-      void fill_0_from_primary_faces(Image<I>& inout, const Function_vvvv2v<F>& f);
+      void fill_1_from_2_faces(const Image<I>& inout,
+			       const Function_vv2v<F>& f);
 
-      /// \overload
-      template <typename I, typename A>
-      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-      // Facade
-
-
       template <typename I, typename F>
-      void fill_0_from_primary_faces(Image<I>& inout, const Function_vvvv2v<F>& f)
+      void fill_1_from_2_faces(const Image<I>& inout,
+			       const Function_vv2v<F>& f)
       {
-	trace::entering("mln::world::k1::fill_0_from_primary_faces");
+	trace::entering("mln::world::kn::fill_1_from_2_faces");
 
 	mln_precondition(exact(inout).is_valid());
+	mln_precondition(exact(inout).border() >= 1);
 
-	kn::fill_0_from_2_faces(inout, f);
+	border::fill_1_from_aux_2_faces(inout, inout, f);
 
-	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
-      }
-
-
-      template <typename I, typename A>
-      void fill_0_from_primary_faces(Image<I>& inout, const Accumulator<A>& accu)
-      {
-	trace::entering("mln::world::k1::fill_0_from_primary_faces");
-
-	mln_precondition(exact(inout).is_valid());
-
-	kn::fill_0_from_2_faces(inout, accu);
-
-	trace::exiting("mln::world::k1::fill_0_from_primary_faces");
+	trace::exiting("mln::world::kn::fill_1_from_2_faces");
       }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::world::k1
+      } // end of namespace mln::world::kn::border
+
+    } // end of namespace mln::world::kn
 
   } // end of namespace mln::world
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_K1_FILL_0_FROM_PRIMARY_FACES_HH
+#endif // ! MLN_WORLD_KN_BORDER_FILL_1_FROM_2_FACES_HH

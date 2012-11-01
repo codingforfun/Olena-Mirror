@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +40,7 @@
 # include <mln/accu/stat/max.hh>
 # include <mln/util/array.hh>
 # include <mln/util/set.hh>
-# include <mln/value/next.hh>
+# include <mln/value/succ.hh>
 
 
 namespace mln

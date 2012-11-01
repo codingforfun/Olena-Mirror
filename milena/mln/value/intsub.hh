@@ -192,6 +192,22 @@ namespace mln
     // Safety
     template <> struct intsub<0>;
 
+
+    // Ops
+
+    template <unsigned n1, unsigned n2>
+    intsub<n1*n2> operator*(const intsub<n1>& lhs, const intsub<n2>& rhs)
+    {
+      return intsub<n1*n2>::make_from_enc_(lhs.to_enc() * rhs.to_enc());
+    }
+
+    template <unsigned n, typename S>
+    intsub<n> operator*(const intsub<n>& lhs, const value::scalar_<S>& rhs)
+    {
+      return intsub<n>::make_from_enc_(lhs.to_enc() * rhs);
+    }
+
+
     //  rounding
 
     /// Re-implementation of the floor function. \sa math::floor

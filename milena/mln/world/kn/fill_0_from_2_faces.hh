@@ -59,7 +59,7 @@ namespace mln
 
        */
       template <typename I, typename F>
-      void fill_0_from_2_faces(Image<I>& inout, Function_vvvv2v<F>& f);
+      void fill_0_from_2_faces(Image<I>& inout, const Function_vvvv2v<F>& f);
 
       /// \overload
       template <typename I, typename A>
@@ -73,12 +73,12 @@ namespace mln
 
 
       template <typename I, typename F>
-      void fill_0_from_2_faces(Image<I>& inout_, Function_vvvv2v<F>& f_)
+      void fill_0_from_2_faces(Image<I>& inout_, const Function_vvvv2v<F>& f_)
       {
 	trace::entering("mln::world::kn::fill_0_from_2_faces");
 
 	I& inout = exact(inout_);
-	F& f = exact(f_);
+	const F& f = exact(f_);
 
 	mln_precondition(inout.is_valid());
 

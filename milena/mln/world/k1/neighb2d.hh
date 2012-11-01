@@ -44,6 +44,8 @@ namespace mln
     namespace k1
     {
 
+      typedef neighb< win::multiple<window2d, bool(*)(const point2d&)> > dbl_neighb2d;
+
       /*! \brief 2 faces to 1 faces neighborhood.
 
 	\verbatim
@@ -52,7 +54,7 @@ namespace mln
 	 -
 	 \endverbatim
        */
-      const neighb2d& 2to1_faces();
+      const neighb2d& faces_2to1();
 
 
       /*! \brief 1 faces to 2 faces neighborhood.
@@ -64,7 +66,7 @@ namespace mln
 	 \endverbatim
 
        */
-      const dbl_neighb2d& 1to2_faces();
+      const dbl_neighb2d& faces_1to2();
 
 
       /*! \brief 1 faces to 1 faces neighborhood.
@@ -77,7 +79,20 @@ namespace mln
 	  |
 	 \endverbatim
        */
-      const dbl_neighb2d& 1to1_faces()
+      const dbl_neighb2d& faces_1to1();
+
+
+      /*! \brief 2 faces to 2 faces neighborhood (4-connectivity).
+
+	\verbatim
+	  x
+	  -
+	x|o|x
+	  -
+	  x
+	 \endverbatim
+       */
+      const neighb2d& faces_2to2_c4();
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,28 +108,27 @@ namespace mln
 
       }
 
-      typedef neighb< win::multiple<window2d, bool(*)(const point2d&)> > dbl_neighb2d;
 
-
-      const neighb2d& 2to1_faces()
+      const neighb2d& faces_2to1()
       {
 	return c4();
       }
 
-      const dbl_neighb2d& 1to2_faces()
+      const dbl_neighb2d& faces_1to2()
       {
-	static bool 1face_h[] = { 0, 1, 0,
+	static bool face1_h[] = { 0, 1, 0,
 				  0, 0, 0,
 				  0, 1, 0 };
-	static bool 1face_v[] = { 0, 0, 0,
+	static bool face1_v[] = { 0, 0, 0,
 				  1, 0, 1,
 				  0, 0, 0 };
-	static dbl_neighb2d nbh = make::double_neighb2d(internal::is_row_odd, e2p_h, e2p_v);
+	static dbl_neighb2d
+	  nbh = make::double_neighb2d(internal::is_row_odd, face1_h, face1_v);
 	return nbh;
       }
 
 
-      const dbl_neighb2d& 1to1_faces()
+      const dbl_neighb2d& faces_1to1()
       {
 	static bool e2e_h[] = { 0, 0, 1, 0, 0,
 				0, 1, 0, 1, 0,
@@ -130,7 +144,20 @@ namespace mln
 	return nbh;
       }
 
-
+      const neighb2d& faces_2to2_c4()
+      {
+	static neighb2d it;
+	if (it.size() == 0)
+	{
+	  static bool vals[] = { 0, 0, 1, 0, 0,
+				0, 0, 0, 0, 0,
+				1, 0, 0, 0, 1,
+				0, 0, 0, 0, 0,
+				0, 0, 1, 0, 0 };
+	  convert::from_to(vals, it);
+	}
+	return it;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

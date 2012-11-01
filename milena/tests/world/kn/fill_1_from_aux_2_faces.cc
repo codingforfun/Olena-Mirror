@@ -30,7 +30,6 @@
 #include <mln/accu/math/sum.hh>
 #include <mln/fun/vv2v/sum.hh>
 #include <mln/world/kn/fill_1_from_aux_2_faces.hh>
-#include <mln/world/kn/border/duplicate_2_faces.hh>
 
 int main()
 {
@@ -44,7 +43,6 @@ int main()
     {0, 0, 0, 0, 0 }
   };
   image2d<int> aux = make::image(auxvals, point2d(-1, -1));
-  world::kn::border::duplicate_2_faces(aux);
 
   int vals[5][5] = {
     {1, 0, 1, 0, 1 },

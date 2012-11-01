@@ -1,5 +1,52 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle border value with auxiliary data images.
+
+	* mln/world/kn/border/fill_1_from_2_faces.hh,
+	* mln/world/kn/border/fill_1_from_aux_2_faces.hh: New.
+
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh: Initialize borders
+	properly.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+	* mln/canvas/labeling/video.hh: Remove a useless variable.
+
+	* mln/debug/filename.hh: Add an overload.
+
+	* mln/fun/v2v/abs.hh: Add the return type as template parameter.
+
+	* mln/labeling/colorize.hh: Fix an include.
+
+	* mln/value/intsub.hh: Add operator*().
+
+	* mln/world/k1/fill_0_from_primary_faces.hh,
+	* mln/world/kn/fill_0_from_2_faces.hh: Make the function argument
+	const.
+
+	* mln/world/k1/neighb2d.hh: Fix names.
+
+	* mln/world/kn/border/adjust_duplicate_2_faces.hh,
+	* mln/world/kn/border/duplicate_2_faces.hh: Revamp.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Update reference to
+	hqueue.
+
+	* tests/value/intsub.cc: Add more tests.
+
+	* tests/world/kn/display_enlarged.cc: Fix test.
+
+	* tests/world/kn/fill_1_from_aux_2_faces.cc: Do not initialize
+	borders.
+
+	* tests/world/kn/fill_2_from_1_faces.cc: Use pre-defined
+	functions.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/debug/println.hh: Handle images based on any site
 	sets.
 
