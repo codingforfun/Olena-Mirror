@@ -111,36 +111,33 @@ namespace mln
       {
 	trace::entering("mln::world::k2::fill_non_primary_from_primary_2_faces");
 
-	mln_precondition(exact(ima_).is_valid());
 	I& ima = exact(ima_);
 	const F2& f_intermediate = exact(f_intermediate_);
 	const F4& f_center = exact(f_center_);
 
-	typedef mln_value(I) VI;
-	typedef mln_argument(F2) V2;
-	typedef mln_argument(F4) V4;
-	mln_box(I) b = ima.domain();
-	mln_piter(I) p(b);
+	mln_precondition(ima.is_valid());
+
+	mln_piter(I) p(ima.domain());
 	for_all(p)
 	  if (is_non_primary_2_face_vertical(p))
 	  {
-	    ima(p) = kn::safe_cast_to<VI>(
-	      f_intermediate(kn::safe_cast_to<V2>(ima(p + 2 * left)),
-			     kn::safe_cast_to<V2>(ima(p + 2 * right))));
+	    ima(p) = kn::safe_cast(
+	      f_intermediate(kn::safe_cast(ima(p + 2 * left)),
+			     kn::safe_cast(ima(p + 2 * right))));
 	  }
 	  else if (is_non_primary_2_face_horizontal(p))
 	  {
-	    ima(p) = kn::safe_cast_to<VI>(
-	      f_intermediate(kn::safe_cast_to<V2>(ima(p + 2 * up)),
-			     kn::safe_cast_to<V2>(ima(p + 2 * down))));
+	    ima(p) = kn::safe_cast(
+	      f_intermediate(kn::safe_cast(ima(p + 2 * up)),
+			     kn::safe_cast(ima(p + 2 * down))));
 	  }
 	  else if (is_non_primary_2_face_center(p))
 	  {
-	    ima(p) = kn::safe_cast_to<VI>(
-	      f_center(kn::safe_cast_to<V4>(ima(p + 2 * up_left)),
-		       kn::safe_cast_to<V4>(ima(p + 2 * up_right)),
-		       kn::safe_cast_to<V4>(ima(p + 2 * down_left)),
-		       kn::safe_cast_to<V4>(ima(p + 2 * down_right))));
+	    ima(p) = kn::safe_cast(
+	      f_center(kn::safe_cast(ima(p + 2 * up_left)),
+		       kn::safe_cast(ima(p + 2 * up_right)),
+		       kn::safe_cast(ima(p + 2 * down_left)),
+		       kn::safe_cast(ima(p + 2 * down_right))));
 	  }
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_2_faces");
@@ -152,46 +149,44 @@ namespace mln
 						 const Accumulator<A>& accu_)
       {
 	trace::entering("mln::world::k2::fill_non_primary_from_primary_2_faces");
-
-	mln_precondition(exact(ima_).is_valid());
 	I& ima = exact(ima_);
 	A accu = exact(accu_);
 
-	typedef mln_value(I) VI;
-	typedef mln_argument(A) V;
-	mln_box(I) b = ima.domain();
-	mln_piter(I) p(b);
+	mln_precondition(ima.is_valid());
+
+	typedef mln_argument(A) arg;
+	mln_piter(I) p(ima.domain());
 	for_all(p)
 	  if (is_non_primary_2_face_vertical(p))
 	  {
 	    accu.init();
 	    if (ima.domain().has(p + 2 * left))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * left)));
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * left)));
 	    if (ima.domain().has(p + 2 * right))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * right)));
-	    ima(p) = kn::safe_cast_to<VI>(accu.to_result());
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * right)));
+	    ima(p) = kn::safe_cast(accu.to_result());
 	  }
 	  else if (is_non_primary_2_face_horizontal(p))
 	  {
 	    accu.init();
 	    if (ima.domain().has(p + 2 * up))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * up)));
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * up)));
 	    if (ima.domain().has(p + 2 * down))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * down)));
-	    ima(p) = kn::safe_cast_to<VI>(accu.to_result());
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * down)));
+	    ima(p) = kn::safe_cast(accu.to_result());
 	  }
 	  else if (is_non_primary_2_face_center(p))
 	  {
 	    accu.init();
 	    if (ima.domain().has(p + 2 * up_left))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * up_left)));
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * up_left)));
 	    if (ima.domain().has(p + 2 * up_right))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * up_right)));
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * up_right)));
 	    if (ima.domain().has(p + 2 * down_left))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * down_left)));
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * down_left)));
 	    if (ima.domain().has(p + 2 * down_right))
-	      accu.take(kn::safe_cast_to<V>(ima(p + 2 * down_right)));
-	    ima(p) = kn::safe_cast_to<VI>(accu.to_result());
+	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * down_right)));
+	    ima(p) = kn::safe_cast(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_2_faces");

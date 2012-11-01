@@ -75,21 +75,20 @@ namespace mln
 					const unsigned inner_border_thickness)
 	{
 	  trace::entering("mln::world::kn::internal::fill_primary_2_faces_from_input");
-	  mlc_equal(mln_site(I), mln_site(J))::check();
-	  mln_precondition(exact(ima_).is_valid());
-	  mln_precondition(exact(ima_kn_).is_valid());
-	  mln_precondition(exact(ima_).domain() <= exact(ima_kn_).domain());
-
 	  I& ima_kn = exact(ima_kn_);
 	  const J& ima = exact(ima_);
 
+	  mlc_equal(mln_site(I), mln_site(J))::check();
+	  mln_precondition(ima.is_valid());
+	  mln_precondition(ima_kn.is_valid());
+	  mln_precondition(ima.domain() <= ima_kn.domain());
+
 	  // Filling Primary 2-Faces
-	  typedef mln_value(I) V;
 	  mln_piter(J) p(ima.domain());
 	  for_all(p)
 	  {
 	    mln_site(I) pout = internal::immerse_point(p, n, inner_border_thickness);
-	    ima_kn(pout) = safe_cast_to<V>(ima(p));
+	    ima_kn(pout) = safe_cast(ima(p));
 	  }
 
 	  kn::border::adjust_duplicate_2_faces(ima_kn, 1);

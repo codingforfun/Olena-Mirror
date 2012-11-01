@@ -46,11 +46,35 @@ namespace mln
 
       using namespace mln::value;
 
-      /// \brief Safe convertion function for manipulating Kn-immersed
+      // Forward declaration.
+      namespace internal {
+	template <typename Tsrc> struct to_be_casted_t;
+      }
+
+      /*!
+	Use cases:
+
+	int i; 	float j;
+
+	1. safe_cast(i, j);
+	2. j = safe_cast(i);
+	3. j = safe_cast_to<float>(i);
+       */
+
+      /// \brief Safe conversion function for manipulating Kn-immersed
+      /// images.
+      template <typename Tsrc, typename Tdest>
+      void safe_cast(const Tsrc& src, Tdest& dest);
+
+      /// \brief Safe conversion function for manipulating Kn-immersed
+      /// images.
+      template <typename Tsrc>
+      internal::to_be_casted_t<Tsrc> safe_cast(const Tsrc& src);
+
+      /// \brief Safe conversion function for manipulating Kn-immersed
       /// images.
       template <typename Tdest, typename Tsrc>
       Tdest safe_cast_to(const Tsrc& src);
-
 
     } // end of namespace mln::world::kn
 
@@ -349,11 +373,45 @@ namespace mln
     namespace kn
     {
 
+      namespace internal
+      {
+
+	template <typename Tsrc>
+	struct to_be_casted_t
+	{
+	  to_be_casted_t(const Tsrc& src) : src(src) {}
+	  Tsrc src;
+
+	  template <typename Tdest>
+	  operator Tdest const()
+	  {
+	    Tdest dest;
+	    safe_cast_(src, dest);
+	    return dest;
+	  }
+	};
+
+      } // end of namespace mln::world::kn::internal
+
+
+      template <typename Tsrc>
+      internal::to_be_casted_t<Tsrc> safe_cast(const Tsrc& src)
+      {
+	internal::to_be_casted_t<Tsrc> tmp(src);
+	return tmp;
+      }
+
+      template <typename Tsrc, typename Tdest>
+      void safe_cast(const Tsrc& src, Tdest& dest)
+      {
+	safe_cast_(src, dest);
+      }
+
       template <typename Tdest, typename Tsrc>
       Tdest safe_cast_to(const Tsrc& src)
       {
 	Tdest dest;
-	safe_cast_(src, dest);
+	safe_cast(src, dest);
 	return dest;
       }
 

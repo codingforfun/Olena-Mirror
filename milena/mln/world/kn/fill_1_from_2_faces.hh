@@ -34,6 +34,7 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 # include <mln/world/kn/border/compute_1_faces.hh>
+# include <mln/world/kn/safe_cast.hh>
 
 namespace mln
 {
@@ -87,29 +88,30 @@ namespace mln
       {
 	trace::entering("mln::world::kn::fill_1_from_2_faces");
 
-	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
+	mln_precondition(inout.is_valid());
 
-	A accu(exact(accu_));
+	A accu = exact(accu_);
+	typedef mln_argument(A) arg;
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	  {
 	    accu.init();
 	    if (inout.domain().has(p + left))
-	      accu.take(inout(p + left));
+	      accu.take(safe_cast_to<arg>(inout(p + left)));
 	    if (inout.domain().has(p + right))
-	      accu.take(inout(p + right));
-	    inout(p) = accu.to_result();
+	      accu.take(safe_cast_to<arg>(inout(p + right)));
+	    inout(p) = safe_cast(accu.to_result());
 	  }
 	  else if (is_1_face_horizontal(p))
 	  {
 	    accu.init();
 	    if (inout.domain().has(p + up))
-	      accu.take(inout(p + up));
+	      accu.take(safe_cast_to<arg>(inout(p + up)));
 	    if (inout.domain().has(p + down))
-	      accu.take(inout(p + down));
-	    inout(p) = accu.to_result();
+	      accu.take(safe_cast_to<arg>(inout(p + down)));
+	    inout(p) = safe_cast(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::kn::fill_1_from_2_faces");
@@ -121,18 +123,20 @@ namespace mln
       {
 	trace::entering("mln::world::kn::fill_1_from_2_faces");
 
-	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
 	const F& f = exact(f_);
+	mln_precondition(inout.is_valid());
 
 	kn::border::compute_1_faces(inout, f);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
-	    inout(p) = f(inout(p + left), inout(p + right));
+	    inout(p) = safe_cast(f(safe_cast(inout(p + left)),
+				   safe_cast(inout(p + right))));
 	  else if (is_1_face_horizontal(p))
-	    inout(p) = f(inout(p + up), inout(p + down));
+	    inout(p) = safe_cast(f(safe_cast(inout(p + up)),
+				   safe_cast(inout(p + down))));
 
 	trace::exiting("mln::world::kn::fill_1_from_2_faces");
       }

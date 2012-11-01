@@ -92,8 +92,8 @@ namespace mln
 	B
 	domain_K0_from_Kn(const Box<B>& b_, const unsigned n)
 	{
-	  mln_precondition(exact(b_).is_valid());
 	  const B& b = exact(b_);
+	  mln_precondition(b.is_valid());
 	  return B(un_immerse_point(b.pmin(), n),
 		   un_immerse_point(b.pmax(), n));
 	}
@@ -109,15 +109,15 @@ namespace mln
 		 const V& new_value_type)
       {
 	trace::entering("mln::world::kn::un_immerse");
-	mln_precondition(exact(ima_).is_valid());
 	const I& ima = exact(ima_);
 	(void) new_value_type;
+	mln_precondition(ima.is_valid());
 
 	mln_ch_value(I,V) output(internal::domain_K0_from_Kn(ima.domain(), n));
 
 	mln_piter(I) p(output.domain());
 	for_all(p)
-	  output(p) = safe_cast_to<V>(ima(internal::immerse_point(p, n)));
+	  output(p) = safe_cast(ima(internal::immerse_point(p, n)));
 
 	trace::exiting("mln::world::kn::un_immerse");
 	return output;

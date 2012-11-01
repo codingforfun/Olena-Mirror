@@ -35,6 +35,7 @@
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 # include <mln/world/kn/border/compute_1_faces.hh>
+# include <mln/world/kn/safe_cast.hh>
 
 namespace mln
 {
@@ -96,21 +97,24 @@ namespace mln
       {
 	trace::entering("mln::world::kn::fill_1_from_aux_2_faces");
 
-	mln_precondition(exact(inout_).is_valid());
-	mln_precondition(exact(aux_).is_valid());
-	mln_precondition(exact(inout_).domain() == exact(aux_).domain());
 	I& inout = exact(inout_);
 	const J& aux = exact(aux_);
 	F& f = exact(f_);
+
+	mln_precondition(inout.is_valid());
+	mln_precondition(aux.is_valid());
+	mln_precondition(inout.domain() == aux.domain());
 
 	kn::border::compute_1_faces(inout, f);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
-	    inout(p) = f(aux(p + left), aux(p + right));
+	    inout(p) = safe_cast(f(safe_cast(aux(p + left)),
+				   safe_cast(aux(p + right))));
 	  else if (kn::is_1_face_horizontal(p))
-	    inout(p) = f(aux(p + up), aux(p + down));
+	    inout(p) = safe_cast(f(safe_cast(aux(p + up)),
+				   safe_cast(aux(p + down))));
 
 	trace::exiting("mln::world::kn::fill_1_from_aux_2_faces");
       }
@@ -122,33 +126,34 @@ namespace mln
       {
 	trace::entering("mln::world::kn::fill_1_from_aux_2_faces");
 
-	mln_precondition(exact(inout_).is_valid());
-	mln_precondition(exact(aux_).is_valid());
-	mln_precondition(exact(inout_).domain() == exact(aux_).domain());
 	I& inout = exact(inout_);
 	const J& aux = exact(aux_);
 
-	A accu(exact(accu_));
-	mln_box(I) b = inout.domain();
-	mln_piter(I) p(b);
+	mln_precondition(inout.is_valid());
+	mln_precondition(aux.is_valid());
+	mln_precondition(inout.domain() == aux.domain());
+
+	A accu = exact(accu_);
+	typedef mln_argument(A) arg;
+	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
 	  {
 	    accu.init();
 	    if (aux.domain().has(p + left))
-	      accu.take(aux(p + left));
+	      accu.take(safe_cast_to<arg>(aux(p + left)));
 	    if (aux.domain().has(p + right))
-	      accu.take(aux(p + right));
-	    inout(p) = accu.to_result();
+	      accu.take(safe_cast_to<arg>(aux(p + right)));
+	    inout(p) = safe_cast(accu.to_result());
 	  }
 	  else if (kn::is_1_face_horizontal(p))
 	  {
 	    accu.init();
 	    if (aux.domain().has(p + up))
-	      accu.take(aux(p + up));
+	      accu.take(safe_cast_to<arg>(aux(p + up)));
 	    if (aux.domain().has(p + down))
-	      accu.take(aux(p + down));
-	    inout(p) = accu.to_result();
+	      accu.take(safe_cast_to<arg>(aux(p + down)));
+	    inout(p) = safe_cast(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::kn::fill_1_from_aux_2_faces");

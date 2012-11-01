@@ -32,6 +32,7 @@
 
 # include <mln/core/alias/point2d.hh>
 # include <mln/world/kn/is_0_face.hh>
+# include <mln/world/kn/safe_cast.hh>
 # include <mln/world/kn/is_1_face_vertical.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
 
@@ -85,15 +86,18 @@ namespace mln
       {
 	trace::entering("mln::world::k1::fill_0_from_1_faces");
 
-	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
 	const F& f = exact(f_);
+
+	mln_precondition(inout.is_valid());
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_0_face(p))
-	    inout(p) = f(inout(p + up), inout(p + left),
-			 inout(p + right), inout(p + down));
+	    inout(p) = kn::safe_cast(f(kn::safe_cast(inout(p + up)),
+				       kn::safe_cast(inout(p + left)),
+				       kn::safe_cast(inout(p + right)),
+				       kn::safe_cast(inout(p + down))));
 
 	trace::exiting("mln::world::k1::fill_0_from_1_faces");
       }
@@ -103,24 +107,24 @@ namespace mln
       {
 	trace::entering("mln::world::k1::fill_0_from_1_faces");
 
-	mln_precondition(exact(inout_).is_valid());
 	I& inout = exact(inout_);
+ 	mln_precondition(inout.is_valid());
 
-	A accu(exact(accu_));
-
+	A accu = exact(accu_);
+	typedef mln_argument(A) arg;
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_0_face(p))
 	  {
 	    if (inout.domain().has(p + up))
-	      accu.take(inout(p + up));
+	      accu.take(kn::safe_cast_to<arg>(inout(p + up)));
 	    if (inout.domain().has(p + left))
-	      accu.take(inout(p + left));
+	      accu.take(kn::safe_cast_to<arg>(inout(p + left)));
 	    if (inout.domain().has(p + right))
-	      accu.take(inout(p + right));
+	      accu.take(kn::safe_cast_to<arg>(inout(p + right)));
 	    if (inout.domain().has(p + down))
-	      accu.take(inout(p + down));
-	    inout(p) = accu.to_result();
+	      accu.take(kn::safe_cast_to<arg>(inout(p + down)));
+	    inout(p) = safe_cast(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::k1::fill_0_from_1_faces");

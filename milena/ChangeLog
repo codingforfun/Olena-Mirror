@@ -1,3 +1,20 @@
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of safe_cast.
+
+	* mln/world/k1/fill_0_from_1_faces.hh,
+	* mln/world/k1/fill_1_from_2_faces.hh,
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/kn/fill_0_from_1_faces.hh,
+	* mln/world/kn/fill_0_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_2_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh,
+	* mln/world/kn/fill_2_from_1_faces.hh,
+	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh,
+	* mln/world/kn/un_immerse.hh: Here.
+
+	* mln/world/kn/safe_cast.hh: Add safe_cast overloads.
+
 2012-10-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/world/kn/display_enlarged.hh: Fix.
