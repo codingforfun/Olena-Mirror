@@ -147,6 +147,7 @@ namespace mln
 	{
 	  mlc_converts_to(U,T)::check();
 	  mlc_converts_to(V,T)::check();
+	  mln_precondition(first <= last);
 	  inter_ = value::interval<T>(first, last);
 	  init();
 	}
@@ -164,6 +165,7 @@ namespace mln
 	void
 	max_interval<T>::take_as_init_(const argument& t)
 	{
+	  mln_precondition(inter_.has(t));
 	  t_ = t;
 	}
 
@@ -172,6 +174,7 @@ namespace mln
 	void
 	max_interval<T>::take(const argument& t)
 	{
+	  mln_precondition(inter_.has(t));
 	  if (t > t_)
 	    t_ = t;
 	}
@@ -181,6 +184,8 @@ namespace mln
 	void
 	max_interval<T>::take(const max_interval<T>& other)
 	{
+	  mln_precondition(inter_.first() <= other.inter_.first());
+	  mln_precondition(inter_.last() >= other.inter_.last());
 	  if (other.t_ > t_)
 	    t_ = other.t_;
 	}
@@ -190,6 +195,7 @@ namespace mln
 	void
 	max_interval<T>::set_value(const T& t)
 	{
+	  mln_precondition(inter_.has(t));
 	  t_ = t;
 	}
 

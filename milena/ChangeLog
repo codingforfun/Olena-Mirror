@@ -1,5 +1,12 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add preconditions.
+
+	* mln/world/kn/accu/max_interval.hh,
+	* mln/world/kn/accu/min_interval.hh: Here.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move files to proper directories.
 
 	* mln/accu/stat/median_few.hh,
