@@ -1,5 +1,10 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/debug/println.hh: Handle images based on any site
+	sets.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add preconditions.
 
 	* mln/world/kn/accu/max_interval.hh,

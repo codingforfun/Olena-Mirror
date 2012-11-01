@@ -96,7 +96,7 @@ namespace mln
 	  {
 	    std::cout << bdr;
 	    for (col = min_col; col <= max_col; ++col)
-	      if (ima(p))
+	      if (ima.domain().has(p) && ima(p))
 		switch (face_dim(p))
 		{
 		  case 0:
