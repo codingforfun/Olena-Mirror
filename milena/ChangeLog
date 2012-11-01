@@ -1,5 +1,15 @@
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move files to proper directories.
+
+	* mln/accu/stat/median_few.hh,
+	* mln/world/kn/internal/hqueue.hh: Move...
+
+	* mln/world/kn/accu/median_few.hh,
+	* mln/world/kn/hqueue.hh: ... here.
+
+2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp Code.
 
 	* mln/world/k1/immerse_with.hh,
