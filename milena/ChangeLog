@@ -1,3 +1,13 @@
+2012-11-12  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
+
+	Add work-in-progress versions of ToS computation.
+
+	* mln/world/kn/internal/hqueue.hh: Move to...
+	* mln/world/kn/hqueue.hh: ...this new file.
+	* mln/world/kn/compute_tree_of_shapes.theo.hh,
+	* mln/world/kn/hqueue.theo.hh: New files.
+	They are the "work in progress" versions!
+
 2012-11-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/world/kn/dilate_0_from_1_faces.hh: New.

@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_WORLD_KN_HQUEUE_HH
-# define MLN_WORLD_KN_HQUEUE_HH
+#ifndef MLN_WORLD_KN_INTERNAL_HQUEUE_HH
+# define MLN_WORLD_KN_INTERNAL_HQUEUE_HH
 
 /// \file
 /// \brief Class for hierarchical queues.
@@ -43,113 +43,118 @@ namespace mln
     namespace kn
     {
 
-      /// \internal
-      /// \brief Class for hierarchical queues.
-      template <typename T, typename P>
-      class hqueue
+      namespace internal
       {
-      public:
-	hqueue();
-	hqueue(const value::interval<P>& inter);
-	hqueue(const P& first, const P& last);
 
-	unsigned nelements() const;
+	/// \internal
+	/// \brief Class for hierarchical queues.
+	template <typename T, typename P>
+	class hqueue
+	{
+	public:
+	  hqueue();
+	  hqueue(const value::interval<P>& inter);
+	  hqueue(const P& first, const P& last);
 
-	bool is_empty() const;
-	bool is_empty_at(const P& bucket) const;
+	  unsigned nelements() const;
 
-	void push(const T& t, const P& bucket);
-	T pop(const P& bucket);
+	  bool is_empty() const;
+	  bool is_empty_at(const P& bucket) const;
 
-	// FIXME: add some reserve strategies...
+	  void push(const T& t, const P& bucket);
+	  T pop(const P& bucket);
 
-      private:
-	std::vector< internal::queue_<T> > v_;
-	value::interval<P> inter_;
-	unsigned n_;
-      };
+	  // FIXME: add some reserve strategies...
+
+	private:
+	  std::vector< internal::queue_<T> > v_;
+	  value::interval<P> inter_;
+	  unsigned n_;
+	};
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename T, typename P>
-      hqueue<T,P>::hqueue()
-      {
-	n_ = 0;
-      }
+	template <typename T, typename P>
+	hqueue<T,P>::hqueue()
+	{
+	  n_ = 0;
+	}
 
-      template <typename T, typename P>
-      hqueue<T,P>::hqueue(const value::interval<P>& inter)
-      {
-	v_.resize(inter.nelements());
-	inter_ = inter;
-	n_ = 0;
-      }
+	template <typename T, typename P>
+	hqueue<T,P>::hqueue(const value::interval<P>& inter)
+	{
+	  v_.resize(inter.nelements());
+	  inter_ = inter;
+	  n_ = 0;
+	}
 
-      template <typename T, typename P>
-      hqueue<T,P>::hqueue(const P& first, const P& last)
-      {
-	v_.resize(inter_.nelements());
-	inter_ = value::interval<P>(first, last);
-	n_ = 0;
-      }
+	template <typename T, typename P>
+	hqueue<T,P>::hqueue(const P& first, const P& last)
+	{
+	  v_.resize(inter_.nelements());
+	  inter_ = value::interval<P>(first, last);
+	  n_ = 0;
+	}
 
-      template <typename T, typename P>
-      unsigned
-      hqueue<T,P>::nelements() const
-      {
-	return n_;
-      }
+	template <typename T, typename P>
+	unsigned
+	hqueue<T,P>::nelements() const
+	{
+	  return n_;
+	}
 
-      template <typename T, typename P>
-      bool
-      hqueue<T,P>::is_empty_at(const P& bucket) const
-      {
-	unsigned i = inter_.index_of(bucket);
-	mln_precondition(i < v_.size());
-	return v_[i].is_empty();
-      }
+	template <typename T, typename P>
+	bool
+	hqueue<T,P>::is_empty_at(const P& bucket) const
+	{
+	  unsigned i = inter_.index_of(bucket);
+	  mln_precondition(i < v_.size());
+	  return v_[i].is_empty();
+	}
 
-      template <typename T, typename P>
-      bool
-      hqueue<T,P>::is_empty() const
-      {
-	return n_ == 0;
-      }
+	template <typename T, typename P>
+	bool
+	hqueue<T,P>::is_empty() const
+	{
+	  return n_ == 0;
+	}
 
-      template <typename T, typename P>
-      void
-      hqueue<T,P>::push(const T& t, const P& bucket)
-      {
-	unsigned i = inter_.index_of(bucket);
-	mln_precondition(i < v_.size());
-	v_[i].push(t);
-      }
+	template <typename T, typename P>
+	void
+	hqueue<T,P>::push(const T& t, const P& bucket)
+	{
+	  unsigned i = inter_.index_of(bucket);
+	  mln_precondition(i < v_.size());
+	  v_[i].push(t);
+	}
 
-      template <typename T, typename P>
-      T
-      hqueue<T,P>::pop(const P& bucket)
-      {
-	mln_precondition(! is_empty_at(bucket));
-	unsigned i = inter_.index_of(bucket);
-	mln_precondition(i < v_.size());
-	return v_[i].pop();
-      }
+	template <typename T, typename P>
+	T
+	hqueue<T,P>::pop(const P& bucket)
+	{
+	  mln_precondition(! is_empty_at(bucket));
+	  unsigned i = inter_.index_of(bucket);
+	  mln_precondition(i < v_.size());
+	  return v_[i].pop();
+	}
 
-      // template <typename T, typename P>
-      // std::ostream&
-      // operator<<(std::ostream& ostr, const hqueue<T,P>& q)
-      // {
-      //   unsigned n = q.size();
-      //   ostr << '(';
-      //   for (unsigned i = 0; i < n; ++i)
-      // 	ostr << q.v_[i] << (i + 1 == n ? "" : ", ");
-      //   return ostr << ')';
-      // }
+	// template <typename T, typename P>
+	// std::ostream&
+	// operator<<(std::ostream& ostr, const hqueue<T,P>& q)
+	// {
+	//   unsigned n = q.size();
+	//   ostr << '(';
+	//   for (unsigned i = 0; i < n; ++i)
+	// 	ostr << q.v_[i] << (i + 1 == n ? "" : ", ");
+	//   return ostr << ')';
+	// }
 
 
 # endif // ! MLN_INCLUDE_ONLY
+
+      } // end of namespace mln::world::kn::internal
 
     } // end of namespace mln::world::kn
 
@@ -157,4 +162,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_KN_HQUEUE_HH
+#endif // ! MLN_WORLD_KN_INTERNAL_HQUEUE_HH
