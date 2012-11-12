@@ -175,13 +175,13 @@ namespace mln
     /// \brief Compute the span of \p r1 and \p r2.
     template <typename T>
     interval<T>
-    span(const interval<T>& r1, const interval<T>& r2);
+    span_(const interval<T>& r1, const interval<T>& r2);
 
     /// \brief Compute the span of \p r1, \p r2, \p r3 and \p r4.
     template <typename T>
     interval<T>
-    span(const interval<T>& r1, const interval<T>& r2,
-	 const interval<T>& r3, const interval<T>& r4);
+    span_(const interval<T>& r1, const interval<T>& r2,
+	  const interval<T>& r3, const interval<T>& r4);
 
     //  op<<
 
@@ -388,7 +388,7 @@ namespace mln
 
     template <typename T>
     interval<T>
-    span(const interval<T>& r1, const interval<T>& r2)
+    span_(const interval<T>& r1, const interval<T>& r2)
     {
       return interval<T>(std::min(r1.first(), r2.first()),
 			 std::max(r1.last(), r2.last()));
@@ -396,10 +396,10 @@ namespace mln
 
     template <typename T>
     interval<T>
-    span(const interval<T>& r1, const interval<T>& r2,
-	 const interval<T>& r3, const interval<T>& r4)
+    span_(const interval<T>& r1, const interval<T>& r2,
+	  const interval<T>& r3, const interval<T>& r4)
     {
-      return span(span(r1, r2), span(r3, r4));
+      return span_(span(r1, r2), span(r3, r4));
     }
 
 

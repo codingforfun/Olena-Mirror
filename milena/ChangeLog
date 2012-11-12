@@ -1,5 +1,15 @@
 2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add math::span and fix related code.
+
+	* mln/accu/math/span.hh,
+	* mln/fun/vv2v/span.hh,
+	* mln/value/interval.hh: Call span_() overload.
+
+	* mln/math/span.hh: New.
+
+2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new overloads of k*::debug::println.
 
 	* mln/world/kn/debug/println.hh: Add more overloads.

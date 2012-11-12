@@ -30,6 +30,7 @@
 ///
 /// Functor that computes the spanimum of two values.
 
+# include <mln/math/span.hh>
 # include <mln/core/concept/function.hh>
 
 
@@ -60,7 +61,7 @@ namespace mln
       R
       span<T,R>::operator()(const T& v1, const T& v2) const
       {
-	return R(value::span(v1, v2));
+	return R(math::span(v1, v2));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

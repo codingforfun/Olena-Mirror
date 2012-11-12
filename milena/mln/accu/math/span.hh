@@ -30,6 +30,7 @@
 ///
 /// Define an accumulator that computes a span.
 
+# include <mln/fun/vv2v/span.hh>
 # include <mln/accu/internal/base.hh>
 
 namespace mln
@@ -75,6 +76,7 @@ namespace mln
 
 	R t_;
 	bool is_valid_;
+	fun::vv2v::span<T,R> span_;
       };
 
     } // end of mln::accu::math
@@ -115,7 +117,7 @@ namespace mln
       void span<T,R>::take(const argument& t)
       {
 	if (is_valid_)
-	  this->t_ = value::span(this->t_, t);
+	  this->t_ = span_(this->t_, t);
 	else
 	{
 	  this->t_ = t;
@@ -132,7 +134,7 @@ namespace mln
 	mln_precondition(other.is_valid());
 
 	if (is_valid_)
-	  this->t_ = value::span(this->t_, other.t_);
+	  this->t_ = span_(this->t_, other.t_);
 	else
 	{
 	  this->t_ = other.t_;
