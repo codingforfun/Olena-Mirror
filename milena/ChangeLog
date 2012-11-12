@@ -1,3 +1,12 @@
+2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new overloads of k*::debug::println.
+
+	* mln/world/kn/debug/println.hh: Add more overloads.
+
+	* mln/world/k1/debug/println.hh,
+	* mln/world/k2/debug/println.hh: New.
+
 2012-11-12  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
 	Add work-in-progress versions of ToS computation.

@@ -25,18 +25,17 @@
 
 /// \file
 ///
-/// \brief Display a Kn 2D image.
+/// \brief Display a K1 2D image.
 
-#ifndef MLN_WORLD_KN_DEBUG_PRINTLN_HH
-# define MLN_WORLD_KN_DEBUG_PRINTLN_HH
+#ifndef MLN_WORLD_K1_DEBUG_PRINTLN_HH
+# define MLN_WORLD_K1_DEBUG_PRINTLN_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/geom/min_row.hh>
-# include <mln/geom/max_row.hh>
-# include <mln/geom/min_col.hh>
-# include <mln/geom/max_col.hh>
+# include <mln/core/concept/box.hh>
+# include <mln/world/kn/debug/println.hh>
 # include <mln/world/kn/face_dim.hh>
 # include <mln/world/kn/is_1_face_horizontal.hh>
+
 
 namespace mln
 {
@@ -44,13 +43,13 @@ namespace mln
   namespace world
   {
 
-    namespace kn
+    namespace k1
     {
 
       namespace debug
       {
 
-        /// \brief Display a Kn 2D image.
+        /// \brief Display a K1 2D image.
 	template <typename I, typename B>
 	void println(const std::string& msg, const Image<I>& ima,
 		     const Box<B>& bbox,
@@ -82,71 +81,21 @@ namespace mln
 	  template <typename P>
 	  void display_dim(std::ostream& ostr, const P& p)
 	  {
-	    switch (face_dim(p))
+	    switch (kn::face_dim(p))
 	    {
 	      case 0:
 		ostr << " +";
 		break;
 	      case 1:
-		ostr << (is_1_face_horizontal(p) ? " -" : " |");
+		ostr << (kn::is_1_face_horizontal(p) ? " -" : " |");
 		break;
 	      case 2:
-		ostr << " x";
+		ostr << " O";
 		break;
 	    }
 	  }
 
-
-	  template <typename I, typename B, typename F>
-	  void println(const std::string& msg,
-		       const Image<I>& ima_,
-		       const Box<B>& bbox_,
-		       std::ostream& ostr,
-		       const F& display_dim)
-	  {
-	    const I& ima = exact(ima_);
-	    const B& bbox = exact(bbox_);
-	    mln_precondition(ima.is_valid());
-	    mln_precondition(I::site::dim == 2);
-	    mln_precondition(bbox.is_valid());
-
-	    if (msg != "")
-	      std::cout << msg << std::endl;
-	    def::coord
-	      min_row = geom::min_row(bbox), max_row = geom::max_row(bbox),
-	      min_col = geom::min_col(bbox), max_col = geom::max_col(bbox);
-
-	    // FIXME: not generic.
-	    mln_site(I) p;
-	    def::coord& row = p.row();
-	    def::coord& col = p.col();
-
-	    char bdr = '#';
-
-	    for (col = min_col; col <= max_col + 2; ++col)
-	      std::cout << bdr << ' ';
-	    std::cout << std::endl;
-
-	    for (row = min_row; row <= max_row; ++row)
-	    {
-	      std::cout << bdr;
-	      for (col = min_col; col <= max_col; ++col)
-		if (ima.domain().has(p) && ima(p))
-		  display_dim(ostr, p);
-		else
-		  ostr << "  ";
-	      std::cout << ' ' << bdr << std::endl;
-	    }
-	    for (col = min_col; col <= max_col + 2; ++col)
-	      std::cout << bdr << ' ';
-	    std::cout << std::endl
-		      << std::endl;
-
-	  };
-
-
-	}// end of namespace mln::world::kn::debug::internal
-
+	} // end of namespace mln::world::k1::debug::internal
 
 	template <typename I, typename B>
 	void println(const std::string& msg,
@@ -154,7 +103,7 @@ namespace mln
 		     const Box<B>& bbox_,
 		     std::ostream& ostr = std::cout)
 	{
-	  trace::entering("mln::world::kn::debug::println");
+	  trace::entering("mln::world::k1::debug::println");
 
 	  const I& ima = exact(ima_);
 	  const B& bbox = exact(bbox_);
@@ -164,9 +113,9 @@ namespace mln
 
 	  typedef mln_site(I) P;
 	  kn::debug::internal::println(msg, ima, bbox, ostr,
-				       world::kn::debug::internal::display_dim<P>);
+				       k1::debug::internal::display_dim<P>);
 
-	  trace::exiting("mln::world::kn::debug::println");
+	  trace::exiting("mln::world::k1::debug::println");
 	};
 
 	template <typename I>
@@ -175,7 +124,7 @@ namespace mln
 		     std::ostream& ostr = std::cout)
 	{
 	  mln_box(I) bbox = geom::bbox(ima);
-	  println(msg, ima, bbox, ostr);
+	  k1::debug::println(msg, ima, bbox, ostr);
 	}
 
 	template <typename I>
@@ -183,7 +132,7 @@ namespace mln
 		     std::ostream& ostr = std::cout)
 	{
 	  mln_box(I) bbox = geom::bbox(ima);
-	  println("", ima, bbox, ostr);
+	  k1::debug::println("", ima, bbox, ostr);
 	}
 
 	template <typename I, typename B>
@@ -191,17 +140,17 @@ namespace mln
 		     const Box<B>& bbox,
 		     std::ostream& ostr = std::cout)
 	{
-	  println("", ima, bbox, ostr);
+	  k1::debug::println("", ima, bbox, ostr);
 	}
 
 # endif // ! MLN_INCLUDE_ONLY
 
-      } // mln::world::kn::debug
+      } // mln::world::k1::debug
 
-    } // mln::world::kn
+    } // mln::world::k1
 
   } // mln::world
 
 } // mln
 
-#endif // ! MLN_WORLD_KN_DEBUG_PRINTLN_HH
+#endif // ! MLN_WORLD_K1_DEBUG_PRINTLN_HH
