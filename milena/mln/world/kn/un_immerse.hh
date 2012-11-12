@@ -117,7 +117,7 @@ namespace mln
 
 	mln_piter(I) p(output.domain());
 	for_all(p)
-	  output(p) = safe_cast(ima(internal::immerse_point(p, n)));
+	  output(p) = safe_cast_to<V>(ima(internal::immerse_point(p, n)));
 
 	trace::exiting("mln::world::kn::un_immerse");
 	return output;

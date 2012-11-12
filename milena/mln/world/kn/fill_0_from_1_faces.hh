@@ -90,6 +90,7 @@ namespace mln
 	mln_precondition(inout.is_valid());
 
 	A accu = exact(accu_);
+	typedef mln_value(I) V;
 	typedef mln_argument(A) arg;
 	mln_piter(I) p(inout.domain());
 	for_all(p)
@@ -104,7 +105,7 @@ namespace mln
 	      accu.take(safe_cast_to<arg>(inout(p + up)));
 	    if (inout.domain().has(p + down))
 	      accu.take(safe_cast_to<arg>(inout(p + down)));
-	    inout(p) = safe_cast(accu.to_result());
+	    inout(p) = safe_cast_to<V>(accu.to_result());
 	  }
 
 	trace::exiting("mln::world::kn::fill_0_from_1_faces");

@@ -53,7 +53,7 @@ namespace mln
 	void
 	fill_primary_2_faces_from_input(Image<I>& ima_kn,
 					unsigned n,
-					const Image<J>& ima,
+					const Image<J>& input,
 					const unsigned inner_border_thickness);
 
 	/// \overload
@@ -62,7 +62,7 @@ namespace mln
 	void
 	fill_primary_2_faces_from_input(Image<I>& ima_kn,
 					unsigned n,
-					const Image<J>& ima);
+					const Image<J>& input);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -71,24 +71,27 @@ namespace mln
 	void
 	fill_primary_2_faces_from_input(Image<I>& ima_kn_,
 					unsigned n,
-					const Image<J>& ima_,
+					const Image<J>& input_,
 					const unsigned inner_border_thickness)
 	{
 	  trace::entering("mln::world::kn::internal::fill_primary_2_faces_from_input");
 	  I& ima_kn = exact(ima_kn_);
-	  const J& ima = exact(ima_);
+	  const J& input = exact(input_);
 
 	  mlc_equal(mln_site(I), mln_site(J))::check();
-	  mln_precondition(ima.is_valid());
+	  mln_precondition(input.is_valid());
 	  mln_precondition(ima_kn.is_valid());
-	  mln_precondition(ima.domain() <= ima_kn.domain());
+	  mln_precondition(input.domain() <= ima_kn.domain());
+	  mln_precondition(n > 0);
+
+	  typedef mln_value(I) V;
 
 	  // Filling Primary 2-Faces
-	  mln_piter(J) p(ima.domain());
+	  mln_piter(J) p(input.domain());
 	  for_all(p)
 	  {
 	    mln_site(I) pout = internal::immerse_point(p, n, inner_border_thickness);
-	    ima_kn(pout) = safe_cast(ima(p));
+	    ima_kn(pout) = safe_cast_to<V>(input(p));
 	  }
 
 	  kn::border::adjust_duplicate_2_faces(ima_kn, 1);
@@ -101,9 +104,9 @@ namespace mln
 	void
 	fill_primary_2_faces_from_input(Image<I>& ima_kn,
 					unsigned n,
-					const Image<J>& ima)
+					const Image<J>& input)
 	{
-	  return fill_primary_2_faces_from_input(ima_kn, n, ima, 0);
+	  return fill_primary_2_faces_from_input(ima_kn, n, input, 0);
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

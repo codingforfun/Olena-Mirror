@@ -106,17 +106,19 @@ namespace mln
 	mln_precondition(aux.is_valid());
 	mln_precondition(inout.domain() == aux.domain());
 
+	typedef mln_value(I) V;
+
 	kn::border::duplicate_2_faces(aux);
 	kn::border::fill_1_from_aux_2_faces(inout, aux, f);
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
 	  if (kn::is_1_face_vertical(p))
-	    inout(p) = safe_cast(f(safe_cast(aux(p + left)),
-				   safe_cast(aux(p + right))));
+	    inout(p) = safe_cast_to<V>(f(safe_cast(aux(p + left)),
+					 safe_cast(aux(p + right))));
 	  else if (kn::is_1_face_horizontal(p))
-	    inout(p) = safe_cast(f(safe_cast(aux(p + up)),
-				   safe_cast(aux(p + down))));
+	    inout(p) = safe_cast_to<V>(f(safe_cast(aux(p + up)),
+					 safe_cast(aux(p + down))));
 
 	trace::exiting("mln::world::kn::fill_1_from_aux_2_faces");
       }

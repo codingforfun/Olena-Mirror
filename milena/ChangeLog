@@ -1,5 +1,15 @@
 2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make safe_cast explicit.
+
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/kn/fill_0_from_1_faces.hh,
+	* mln/world/kn/fill_1_from_aux_2_faces.hh,
+	* mln/world/kn/internal/fill_primary_2_faces_from_input.hh,
+	* mln/world/kn/un_immerse.hh: Make use of safe_cast_to<>().
+
+2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add math::span and fix related code.
 
 	* mln/accu/math/span.hh,
