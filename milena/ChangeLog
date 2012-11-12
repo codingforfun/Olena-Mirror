@@ -1,5 +1,17 @@
 2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve initialization of 2-faces in borders.
+
+	* mln/world/k2/border/adjust_duplicate_2_faces.hh,
+	* mln/world/k2/border/fill_non_primary_from_primary_2_faces.hh,
+	* mln/world/kn/border/adjust_duplicate_primary_faces.hh,
+	* mln/world/kn/border/duplicate_primary_faces.hh: New.
+
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh:
+	Initialize 2-faces with these new routines.
+
+2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make safe_cast explicit.
 
 	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh,

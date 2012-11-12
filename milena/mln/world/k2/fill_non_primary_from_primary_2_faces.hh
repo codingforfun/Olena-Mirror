@@ -35,7 +35,7 @@
 # include <mln/world/k2/is_non_primary_2_face_horizontal.hh>
 # include <mln/world/k2/is_non_primary_2_face_center.hh>
 # include <mln/world/kn/safe_cast.hh>
-# include <mln/world/kn/border/adjust_duplicate_2_faces.hh>
+# include <mln/world/kn/border/adjust_duplicate_primary_faces.hh>
 
 namespace mln
 {
@@ -118,6 +118,8 @@ namespace mln
 
 	mln_precondition(ima.is_valid());
 
+	// Initialize primary faces in border.
+	kn::border::adjust_duplicate_primary_faces(ima, 2, 1);
 
 	typedef mln_value(I) V;
 	mln_piter(I) p(ima.domain());
@@ -195,6 +197,9 @@ namespace mln
 	      accu.take(kn::safe_cast_to<arg>(ima(p + 2 * down_right)));
 	    ima(p) = kn::safe_cast_to<V>(accu.to_result());
 	  }
+
+	// Initialize border.
+	kn::border::adjust_duplicate_2_faces(ima, 1);
 
 	trace::exiting("mln::world::k2::fill_non_primary_from_primary_2_faces");
       }
