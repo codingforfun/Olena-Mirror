@@ -63,13 +63,20 @@ namespace mln
 	roi.crop_wrt(inpaint_src.domain());
       }
 
-      I<mln_sum(T)> new_src(roi);
+      //typedef mln_sum(T) sum_type;
+      typedef algebra::vec<3u, typename F::float_type> sum_type;
+
+      I<sum_type> new_src(roi);
       { // paste inpaint_src to new_src
 	mln_piter(I<T>) p(roi);
-	mln_pixter(I<mln_sum(T)>) p_new(new_src);
+	mln_pixter(I<sum_type>) p_new(new_src);
 	
 	for_all_2(p, p_new)
-	  p_new.val() = inpaint_src(p);
+	  {
+	    p_new.val()[0] = inpaint_src(p).comp(0);
+	    p_new.val()[1] = inpaint_src(p).comp(1);
+	    p_new.val()[2] = inpaint_src(p).comp(2);
+	  }
       }
 
       I<bool> new_mask(roi);
@@ -93,10 +100,14 @@ namespace mln
       I<T> output(inpaint_src);
       { // paste new_src to output
 	mln_piter(I<T>) p(roi);
-	mln_pixter(const I<mln_sum(T)>) p_new(new_src);
+	mln_pixter(const I<sum_type>) p_new(new_src);
 	
 	for_all_2(p, p_new)
-	  output(p) = p_new.val();
+	  {
+	    output(p).comp(0) = p_new.val()[0];
+	    output(p).comp(1) = p_new.val()[1];
+	    output(p).comp(2) = p_new.val()[2];
+	  }
       }
 
       return output;

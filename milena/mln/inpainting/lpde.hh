@@ -41,16 +41,18 @@ namespace mln
     struct lpde
     {
     public:
+      typedef double float_type;
+      
       lpde(float dt = 1.0f, float dx = 1.0f, float t_f = 20.0);
 
       template <template <typename> class I, typename T>
       void operator()(I<T>& src,
 		      I<bool>& mask);
       
-      void set(const std::vector<float>& w);
+      void set(const std::vector<float_type>& w);
       
     private:
-      std::vector<float> w;
+      std::vector<float_type> w;
       float dt;
       float dx;
       float t_f;
@@ -94,24 +96,25 @@ namespace mln
     }
 
     template <typename I, typename M>
-    float diffuse(const I& u,
-		  I& u_next,
-		  //const I& f,
-		  const std::vector<float>& w,
-		  const M& mask)
+    lpde::float_type diffuse(const I& u,
+			     I& u_next,
+			     //const I& f,
+			     const std::vector<lpde::float_type>& w,
+			     const M& mask)
     {
+      typedef lpde::float_type float_type;
       typedef mln_value(I) T;
 
-      const float activation_threshold = 0.001;
+      const float_type activation_threshold = 0;
 
       const unsigned derivative_kernels_size = 5;
-      const float* derivative_kernel[derivative_kernels_size];
+      const float_type* derivative_kernel[derivative_kernels_size];
       
-      derivative_kernel[0] = make_dx_kernel();
-      derivative_kernel[1] = make_dy_kernel();
-      derivative_kernel[2] = make_dxx_kernel();
-      derivative_kernel[3] = make_dyy_kernel();
-      derivative_kernel[4] = make_dxy_kernel();
+      derivative_kernel[0] = make_dx_kernel<float_type>();
+      derivative_kernel[1] = make_dy_kernel<float_type>();
+      derivative_kernel[2] = make_dxx_kernel<float_type>();
+      derivative_kernel[3] = make_dyy_kernel<float_type>();
+      derivative_kernel[4] = make_dxy_kernel<float_type>();
 
       static window2d full3x3;
       static const bool vals[] = { 1, 1, 1,
@@ -126,12 +129,11 @@ namespace mln
       mln_pixter(const M) p_m(mask);
       mln_qixter(const I, const window2d) q(p, full3x3);
 
-      float sse = 0;
+      float_type sse = 0;
       
-      unsigned car = 0;
       for_all_3 (p, p_next, p_m)
 	{
-	  //if (p_m.val())
+	  if (p_m.val())
 	  {
 	    const T old = p.val();
 
@@ -208,9 +210,9 @@ namespace mln
       I<T>* u = &u_;
       I<T>* u_next = &u_next_;
 
-      float sse = std::numeric_limits<float>::max() / 2.0;
+      float_type sse = std::numeric_limits<float_type>::max() / 2.0;
 
-      float sse_old = std::numeric_limits<float>::max();
+      float_type sse_old = std::numeric_limits<float_type>::max();
 
       float t = 0;
       while (t < this->t_f && sse < sse_old && !std::isnan(sse))
@@ -223,7 +225,7 @@ namespace mln
 	  u = u_next;
 	  u_next = swap;
 
-	  std::cout << "sse = " << sse << std::endl;
+	  //std::cout << "sse = " << sse << std::endl;
 
 	  t += this->dt;
 	}
@@ -231,7 +233,7 @@ namespace mln
       std::cout << "Number of iterations: " << t << std::endl;
     }
 
-    void lpde::set(const std::vector<float>& w)
+    void lpde::set(const std::vector<float_type>& w)
     {
       this->w = w;
     }
