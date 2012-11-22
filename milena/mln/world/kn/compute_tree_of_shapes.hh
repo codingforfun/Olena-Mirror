@@ -44,6 +44,7 @@
 # include <mln/world/kn/hqueue.hh>
 # include <mln/util/tree_of_shapes.hh>
 # include <mln/world/kn/is_2_face.hh>
+# include <mln/world/k2/is_primary_2_face.hh>
 
 
 // FIXME: to be removed or disabled.

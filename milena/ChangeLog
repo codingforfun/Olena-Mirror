@@ -1,3 +1,14 @@
+2012-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Add a missing include.
+
+	* mln/world/kn/debug/println.hh: Check value type of the input
+	image.
+
+	* mln/world/kn/hqueue.hh: Remove from namespace internal.
+
 2012-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve initialization of 2-faces in borders.

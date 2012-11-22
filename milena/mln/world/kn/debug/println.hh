@@ -106,6 +106,8 @@ namespace mln
 	  {
 	    const I& ima = exact(ima_);
 	    const B& bbox = exact(bbox_);
+	    typedef mln_value(I) V;
+	    mlc_is(V,bool)::check();
 	    mln_precondition(ima.is_valid());
 	    mln_precondition(I::site::dim == 2);
 	    mln_precondition(bbox.is_valid());
