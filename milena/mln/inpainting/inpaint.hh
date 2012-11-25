@@ -94,8 +94,8 @@ namespace mln
       double psnr = metric::psnr(inpaint_src | pw::value(inpaint_mask),
 				 new_src | pw::value(new_mask));
 
-      std::cout << "inpaint time = " << t << "; "
-		<< "psnr = " << psnr << std::endl;
+      std::cout << t << "\t"
+		<< psnr << "\t";
 
       I<T> output(inpaint_src);
       { // paste new_src to output
