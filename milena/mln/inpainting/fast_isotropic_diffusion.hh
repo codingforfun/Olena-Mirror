@@ -3,8 +3,13 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/pw/value.hh>
 #include <mln/core/alias/neighb2d.hh>
+#include <mln/literal/zero.hh>
+#include <mln/norm/l2.hh>
 
-#define CONVERGENCE_THRESHOLD	1
+#include <algorithm>
+#include <limits>
+
+#define CONVERGENCE_THRESHOLD	0.05
 
 namespace mln
 {
@@ -17,57 +22,59 @@ namespace mln
 
       template <template <typename> class I, typename T>
       void operator()(I<T>& src,
-		      I<bool>& mask);
+		      const I<bool>& mask);
     };
 
     template <template <typename> class I, typename T>
     void fast_isotropic_diffusion::operator()(I<T>& src,
-					      I<bool>& mask)
+					      const I<bool>& mask)
     {
-      mln_piter(I<T>) p(src.domain());
-      mln_niter(neighb2d) n(c8(), p);
+      I<T> src_next(src);
 
-      int max_diff = 1;
-      int iterations = 0;
+      I<T>* u_ = &src;
+      I<T>* u_next_ = &src_next;
 
-      while (max_diff > 0)
+      float_type max_diff_norm = std::numeric_limits<float_type>::max();
+      unsigned iterations = 0;
+
+      while (max_diff_norm > CONVERGENCE_THRESHOLD)
 	{
 	  ++iterations;
+	  max_diff_norm = 0;
 
-	  max_diff = 0;
+	  const I<T>& u = *u_;
+	  I<T>& u_next = *u_next_;
 
-	  for_all(p)
+	  mln_pixter(const I<T>) p(u);
+	  mln_pixter(I<T>) p_next(u_next);
+	  mln_pixter(const I<bool>) p_m(mask);
+	  mln_nixter(const I<T>, const neighb2d) n(p, c8());
+
+	  for_all_3(p, p_next, p_m)
 	  {
-	    if (mask(p))
+	    if (p_m.val())
 	      {
-		int diff = src(p)[0];
+	    	T diff = p.val();
 
-		float_type r = 0;
-		float_type g = 0;
-		float_type b = 0;
+		T accu = literal::zero;
 
-		for_all(n)
-		{
-		  r += 0.125f * src(n)[0];
-		  g += 0.125f * src(n)[1];
-		  b += 0.125f * src(n)[2];
-		}
+	    	for_all(n)
+		  accu += ((float_type) 0.125) * n.val();
 
-		src(p)[0] = r;
-		src(p)[1] = g;
-		src(p)[2] = b;
+		p_next.val() = accu;
 
-		diff -= src(p)[0];
+	    	diff -= p_next.val();
 
-		if (diff < 0)
-		  diff = -diff;
-
-		if (diff > max_diff)
+		float_type diff_norm = norm::l2(diff);
+	    	if (diff_norm > max_diff_norm)
 		  {
-		    max_diff = diff;
-		  }
+	    	    max_diff_norm = diff_norm;
+	    	  }
 	      }
 	  }
+
+	  std::swap(u_, u_next_);
+	  
 	}
 
       std::cout << iterations << "\t";
