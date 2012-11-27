@@ -24,6 +24,7 @@
 #include <mln/core/alias/vec2d.hh>
 
 #include <mln/inpainting/derivative_kernels.hh>
+#include <mln/inpainting/fast_isotropic_diffusion.hh>
 
 #include <mln/core/concept/accumulator.hh>
 
@@ -47,7 +48,7 @@ namespace mln
 
       template <template <typename> class I, typename T>
       void operator()(I<T>& src,
-		      I<bool>& mask);
+		      const I<bool>& mask);
       
       void set(const std::vector<float_type>& w);
       
@@ -80,7 +81,7 @@ namespace mln
 			 T b)
     {
       T c;
-      // static loop unrolling ?
+
       for (unsigned i = 0; i < mln_dim(T); ++i)
 	c[i] = a[i] * b[i];
 
@@ -100,7 +101,8 @@ namespace mln
 			     I& u_next,
 			     //const I& f,
 			     const std::vector<lpde::float_type>& w,
-			     const M& mask)
+			     const M& mask,
+			     lpde::float_type& max_diff_norm)
     {
       typedef lpde::float_type float_type;
       typedef mln_value(I) T;
@@ -188,7 +190,13 @@ namespace mln
 				      + 2 * components_product(components_product(p_x, p_y), p_xy)
 				      + components_product(p_y2, p_yy));
 
-	    sse += norm::l2(old - p_next.val());
+	    float_type diff = norm::l2(old - p_next.val());
+	    sse += diff;
+
+	    if (diff > max_diff_norm)
+	      {
+		max_diff_norm = diff;
+	      }
 	  }
 	}
 
@@ -197,8 +205,11 @@ namespace mln
 
     template <template <typename> class I, typename T>
     void lpde::operator()(I<T>& src,
-			  I<bool>& mask)
+			  const I<bool>& mask)
     {
+      //fast_isotropic_diffusion fast_iso;
+      //fast_iso(src, mask);
+
       //const I<T> f(src);
 
       I<T>& u_ = src;
@@ -214,18 +225,26 @@ namespace mln
 
       float_type sse_old = std::numeric_limits<float_type>::max();
 
+      float_type max_diff_norm = std::numeric_limits<float_type>::max();
+
+      float_type min_max_diff_norm = std::numeric_limits<float_type>::max();
+
       float t = 0;
-      while (t < this->t_f && sse < sse_old && !std::isnan(sse))
+      while (t < this->t_f
+	     && max_diff_norm > CONVERGENCE_THRESHOLD
+	     //&& sse < sse_old
+	     && !std::isnan(sse))
 	{
+	  max_diff_norm = 0;
+
 	  sse_old = sse;
 
-	  sse = diffuse(*u, *u_next, /* f, */ w, mask);
+	  sse = diffuse(*u, *u_next, /* f, */ w, mask, max_diff_norm);
 
-	  I<T>* swap = u;
-	  u = u_next;
-	  u_next = swap;
+	  if (max_diff_norm < min_max_diff_norm)
+	    min_max_diff_norm = max_diff_norm;
 
-	  //std::cout << "sse = " << sse << std::endl;
+	  std::swap(u, u_next);
 
 	  t += this->dt;
 	}
