@@ -221,7 +221,7 @@ namespace mln
 	    if (dsp.level_changes_at(i))
 	    {
 	      std::cout << "union-find: done with level " << dsp.level(p) << std::endl;
-	      dsp.show(done);
+	      //dsp.show(done);
 	    }
 	  }
 	  return parent;
@@ -430,42 +430,42 @@ namespace mln
 	      parent(p) = parent(q);
 	  }
 
-	  mln_ch_value(I,bool) show(D);
-	  for (unsigned i = 0; i <= N - 1; ++i)
-	  {
-	    P p = R[i];
-	    show(p) = k2::is_primary_2_face(p) || t.is_representative(p);
-	  }
+	  // mln_ch_value(I,bool) show(D);
+	  // for (unsigned i = 0; i <= N - 1; ++i)
+	  // {
+	  //   P p = R[i];
+	  //   show(p) = k2::is_primary_2_face(p) || t.is_representative(p);
+	  // }
 
-	  for (unsigned i = 0; i <= N - 1; ++i)
-	  {
-	    P p = R[i];  // p goes from root to leaves
-	    if (! show(p))
-	      continue;
-	    P q = parent(p);
+	  // for (unsigned i = 0; i <= N - 1; ++i)
+	  // {
+	  //   P p = R[i];  // p goes from root to leaves
+	  //   if (! show(p))
+	  //     continue;
+	  //   P q = parent(p);
 
-	    if (show(q) == false) // skip node q
-	    {
-	      if (parent(q) == q) // q cannot be root
-		std::abort();
+	  //   if (show(q) == false) // skip node q
+	  //   {
+	  //     if (parent(q) == q) // q cannot be root
+	  // 	std::abort();
 
-	      P r = parent(q); // new representative
-	      if (p != r)  // if p is a repr node, do nothing
-		parent(p) = r;
-	    }
-	    else
-	      if (Fb(q) == Fb(p) && k2::is_primary_2_face(p) && ! k2::is_primary_2_face(q))
-	      {
-		show(q) = false;
+	  //     P r = parent(q); // new representative
+	  //     if (p != r)  // if p is a repr node, do nothing
+	  // 	parent(p) = r;
+	  //   }
+	  //   else
+	  //     if (Fb(q) == Fb(p) && k2::is_primary_2_face(p) && ! k2::is_primary_2_face(q))
+	  //     {
+	  // 	show(q) = false;
 
-		if (parent(q) == q) // q is root
-		  parent(p) = p;  // p is the new root
-		else
-		  parent(p) = parent(q); // new parent of the representative
-		parent(q) = p; // the new representative is p, stored as q's parent
-	      }
-	  }
-	  t.show = show;
+	  // 	if (parent(q) == q) // q is root
+	  // 	  parent(p) = p;  // p is the new root
+	  // 	else
+	  // 	  parent(p) = parent(q); // new parent of the representative
+	  // 	parent(q) = p; // the new representative is p, stored as q's parent
+	  //     }
+	  // }
+	  // t.show = show;
 	}
 
 
@@ -530,6 +530,27 @@ namespace mln
 	  return t;
 	}
 
+
+	template <typename I>
+	bool
+	is_tree_canonicalized(const util::tree_of_shapes<I>& tree)
+	{
+	  // Each face's parent is a representative.
+	  for (unsigned i = 0; i <= tree.R.size() - 1; ++i)
+	    if (!tree.is_representative(tree.parent(tree.R[i])))
+	      return false;
+
+	  // Checking that the parent of a representative face is a parent.
+	  mln_piter(I) p(tree.Fb.domain());
+	  for_all(p)
+	    if (tree.is_representative(p) && !tree.is_root(p))
+	      if (tree.level(p) == tree.level(tree.parent(p)))
+		return false;
+
+	  return true;
+	}
+
+
       } // end of namespace mln::world::kn::internal
 
 
@@ -548,6 +569,8 @@ namespace mln
 	util::tree_of_shapes<I>
 	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_infty);
 
+	mln_postcondition(internal::is_tree_canonicalized(t));
+
 	trace::exiting("mln::world::kn::compute_tree_of_shapes");
 	return t;
       }
@@ -565,6 +588,8 @@ namespace mln
 
 	util::tree_of_shapes<I>
 	  t = internal::compute_tree_of_shapes_t<I,IV>()(exact(F), inter, p_infty, l_inf);
+
+	mln_postcondition(internal::is_tree_canonicalized(t));
 
 	trace::exiting("mln::world::kn::compute_tree_of_shapes");
 	return t;

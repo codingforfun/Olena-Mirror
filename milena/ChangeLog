@@ -1,3 +1,8 @@
+2012-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Fix tree
+	canonicalization.
+
 2012-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
