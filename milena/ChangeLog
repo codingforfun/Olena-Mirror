@@ -1,5 +1,14 @@
 2012-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove kn::internal::display.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Use kn::debug::println
+	for printing debug.
+
+	* mln/world/kn/internal/display.hh: Remove.
+
+2012-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/world/kn/compute_tree_of_shapes.hh: Fix tree
 	canonicalization.
 

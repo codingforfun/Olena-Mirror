@@ -48,7 +48,7 @@
 
 
 // FIXME: to be removed or disabled.
-# include <mln/world/kn/internal/display.hh>
+# include <mln/world/kn/debug/println.hh>
 
 
 namespace mln
@@ -114,7 +114,7 @@ namespace mln
 
 	  P find_root(T& zpar, P x);
 
-	  T union_find(const Array_P& R, display& dsp);
+	  T union_find(const util::tree_of_shapes<I>& t);
 
 	  void priority_push(q_type& q, const P& p, const I& F);
 	  P priority_pop(q_type& q);
@@ -125,8 +125,7 @@ namespace mln
 
 	  EV level_next_to_lcur(q_type& q);
 
-	  void sort(const Image<I>& F_, util::tree_of_shapes<I>& t,
-		    display& dsp);
+	  void sort(const Image<I>& F_, util::tree_of_shapes<I>& t);
 	  void canonicalize_tree(util::tree_of_shapes<I>& t);
 
 
@@ -183,10 +182,10 @@ namespace mln
 
 	template <typename I, typename IV>
 	typename compute_tree_of_shapes_t<I,IV>::T
-	compute_tree_of_shapes_t<I,IV>::union_find(const Array_P& R,
-						display& dsp)
+	compute_tree_of_shapes_t<I,IV>::union_find(const util::tree_of_shapes<I>& t)
 	// with balancing
 	{
+	  const Array_P& R = t.R;
 	  T zpar(D), parent(D);
 	  U rank(D), last(D);
 	  mln_ch_value(I,bool) done(D);
@@ -218,12 +217,13 @@ namespace mln
 	    }
 	    done(p) = true;
 
-	    if (dsp.level_changes_at(i))
+	    if (t.level_changes_at(i))
 	    {
-	      std::cout << "union-find: done with level " << dsp.level(p) << std::endl;
-	      //dsp.show(done);
+	      std::cout << "union-find: done with level " << t.level(p) << std::endl;
+	      kn::debug::println(done);
 	    }
 	  }
+
 	  return parent;
 	}
 
@@ -358,7 +358,7 @@ namespace mln
 	template <typename I, typename IV>
 	void
 	compute_tree_of_shapes_t<I,IV>::sort(const Image<I>& F_,
-					  util::tree_of_shapes<I>& t, display& dsp)
+					  util::tree_of_shapes<I>& t)
 	{
 	  trace::entering("mln::world::kn::sort");
 	  mln_precondition(exact(F_).is_valid());
@@ -403,7 +403,7 @@ namespace mln
 	    if (q.is_empty_at(lcur))
 	    {
 	      std::cout << "sort: done with level " << lcur << std::endl;
-	      dsp.show(done);
+	      kn::debug::println(done);
 	    }
 	  }
 	  while (i != N);
@@ -429,43 +429,6 @@ namespace mln
 	    if (Fb(parent(q)) == Fb(q))
 	      parent(p) = parent(q);
 	  }
-
-	  // mln_ch_value(I,bool) show(D);
-	  // for (unsigned i = 0; i <= N - 1; ++i)
-	  // {
-	  //   P p = R[i];
-	  //   show(p) = k2::is_primary_2_face(p) || t.is_representative(p);
-	  // }
-
-	  // for (unsigned i = 0; i <= N - 1; ++i)
-	  // {
-	  //   P p = R[i];  // p goes from root to leaves
-	  //   if (! show(p))
-	  //     continue;
-	  //   P q = parent(p);
-
-	  //   if (show(q) == false) // skip node q
-	  //   {
-	  //     if (parent(q) == q) // q cannot be root
-	  // 	std::abort();
-
-	  //     P r = parent(q); // new representative
-	  //     if (p != r)  // if p is a repr node, do nothing
-	  // 	parent(p) = r;
-	  //   }
-	  //   else
-	  //     if (Fb(q) == Fb(p) && k2::is_primary_2_face(p) && ! k2::is_primary_2_face(q))
-	  //     {
-	  // 	show(q) = false;
-
-	  // 	if (parent(q) == q) // q is root
-	  // 	  parent(p) = p;  // p is the new root
-	  // 	else
-	  // 	  parent(p) = parent(q); // new parent of the representative
-	  // 	parent(q) = p; // the new representative is p, stored as q's parent
-	  //     }
-	  // }
-	  // t.show = show;
 	}
 
 
@@ -492,10 +455,9 @@ namespace mln
 
 	  util::tree_of_shapes<I> t;
 
-	  display_in_K2<util::tree_of_shapes<I> > dsp(t, std::cout);
-	  sort(F, t, dsp);
+	  sort(F, t);
 
-	  t.parent = union_find(t.R, dsp);
+	  t.parent = union_find(t);
 	  canonicalize_tree(t);
 
 	  return t;
@@ -521,10 +483,9 @@ namespace mln
 
 	  util::tree_of_shapes<I> t;
 
-	  display_in_K2<util::tree_of_shapes<I> > dsp(t, std::cout);
-	  sort(F, t, dsp);
+	  sort(F, t);
 
-	  t.parent = union_find(t.R, dsp);
+	  t.parent = union_find(t);
 	  canonicalize_tree(t);
 
 	  return t;
@@ -538,14 +499,20 @@ namespace mln
 	  // Each face's parent is a representative.
 	  for (unsigned i = 0; i <= tree.R.size() - 1; ++i)
 	    if (!tree.is_representative(tree.parent(tree.R[i])))
+	    {
+	      mln_assertion(false);
 	      return false;
+	    }
 
 	  // Checking that the parent of a representative face is a parent.
 	  mln_piter(I) p(tree.Fb.domain());
 	  for_all(p)
 	    if (tree.is_representative(p) && !tree.is_root(p))
 	      if (tree.level(p) == tree.level(tree.parent(p)))
+	      {
+		mln_assertion(false);
 		return false;
+	      }
 
 	  return true;
 	}
