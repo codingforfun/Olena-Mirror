@@ -24,7 +24,10 @@
 #include <mln/core/alias/vec2d.hh>
 
 #include <mln/inpainting/derivative_kernels.hh>
+
 #include <mln/inpainting/fast_isotropic_diffusion.hh>
+#include <mln/inpainting/mean_diffusion.hh>
+#include <mln/inpainting/tv.hh>
 
 #include <mln/core/concept/accumulator.hh>
 
@@ -42,7 +45,7 @@ namespace mln
     struct lpde
     {
     public:
-      typedef double float_type;
+      typedef float float_type;
       
       lpde(float dt = 1.0f, float dx = 1.0f, float t_f = 20.0);
 
@@ -96,19 +99,30 @@ namespace mln
       return components_product(mln_trait_value_nature(T)(), a, b);
     }
 
+    template <typename T>
+    T normalize(T v)
+    {
+      lpde::float_type magnitude = norm::l2(v);
+
+      magnitude = std::max((lpde::float_type)1.0, magnitude);
+
+      return v / magnitude;
+    }
+
     template <typename I, typename M>
     lpde::float_type diffuse(const I& u,
 			     I& u_next,
-			     //const I& f,
 			     const std::vector<lpde::float_type>& w,
 			     const M& mask,
-			     lpde::float_type& max_diff_norm)
+			     lpde::float_type& max_diff_norm,
+			     I& u_x,
+			     I& u_y)
     {
       typedef lpde::float_type float_type;
       typedef mln_value(I) T;
 
       const float_type activation_threshold = 0;
-
+      
       const unsigned derivative_kernels_size = 5;
       const float_type* derivative_kernel[derivative_kernels_size];
       
@@ -127,13 +141,20 @@ namespace mln
 
       mln_pixter(const I) p(u);
       mln_pixter(I) p_next(u_next);
-      //mln_pixter(const I) p_f(f);
       mln_pixter(const M) p_m(mask);
+
+      mln_pixter(I) pu_x(u_x);
+      mln_pixter(I) pu_y(u_y);
+
       mln_qixter(const I, const window2d) q(p, full3x3);
 
       float_type sse = 0;
-      
-      for_all_3 (p, p_next, p_m)
+
+      for (p.start(), p_next.start(), p_m.start(),
+	     pu_x.start(), pu_y.start();
+      	   p.is_valid();
+      	   p.next(), p_next.next(), p_m.next(),
+	     pu_x.next(), pu_y.next())
 	{
 	  if (p_m.val())
 	  {
@@ -141,9 +162,6 @@ namespace mln
 
 	    if (fabs(w[1]) > activation_threshold)
 	      p_next.val() = p.val() * w[1];
-
-	    // if (fabs(w[0]) > activation_threshold)
-	    //   p_next.val() += w[0] * p_f.val();
 
 	    T p_derivative[derivative_kernels_size];
 
@@ -171,6 +189,9 @@ namespace mln
 	    const T p_xx2 = components_product(p_xx, p_xx);
 	    const T p_yy2 = components_product(p_yy, p_yy);
 	    const T p_xy2 = components_product(p_xy, p_xy);
+
+	    pu_x.val() = normalize(p_x);
+	    pu_y.val() = normalize(p_y);
 
 	    //||∇u||^2
 	    if (fabs(w[2]) > activation_threshold)
@@ -200,6 +221,8 @@ namespace mln
 	  }
 	}
 
+      inpainting::tv(u_next, u_x, u_y, mask, max_diff_norm);
+
       return sse;
     }
 
@@ -207,10 +230,11 @@ namespace mln
     void lpde::operator()(I<T>& src,
 			  const I<bool>& mask)
     {
-      //fast_isotropic_diffusion fast_iso;
-      //fast_iso(src, mask);
-
-      //const I<T> f(src);
+      // mean_diffusion mean_diff;
+      // mean_diff(src, mask);
+      
+      // fast_isotropic_diffusion fast_iso;
+      // fast_iso(src, mask);
 
       I<T>& u_ = src;
       I<T> u_next_(src);
@@ -229,17 +253,21 @@ namespace mln
 
       float_type min_max_diff_norm = std::numeric_limits<float_type>::max();
 
+      I<T> u_x(u_.domain());
+      I<T> u_y(u_.domain());
+
       float t = 0;
       while (t < this->t_f
 	     && max_diff_norm > CONVERGENCE_THRESHOLD
-	     //&& sse < sse_old
-	     && !std::isnan(sse))
+	     && !std::isnan(max_diff_norm)
+	     )
 	{
+
 	  max_diff_norm = 0;
 
 	  sse_old = sse;
 
-	  sse = diffuse(*u, *u_next, /* f, */ w, mask, max_diff_norm);
+	  sse = diffuse(*u, *u_next, w, mask, max_diff_norm, u_x, u_y);
 
 	  if (max_diff_norm < min_max_diff_norm)
 	    min_max_diff_norm = max_diff_norm;
@@ -258,4 +286,4 @@ namespace mln
     }
   } /* mln::inpainting */
 
-} /* mln*/
+} /* mln */

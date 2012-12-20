@@ -2,23 +2,29 @@ namespace mln
 {
   namespace inpainting
   {
-    template <typename T>
-    const T* make_dx_kernel()
+    namespace
     {
-      static const T ws[] = { 0.1, 0.2, 0.1,
-				  0, 0, 0,
-				  -0.1, -0.2, -0.1 };
-      return ws;
-    }
+      const float a = 61;
+      const float b = 17;
 
-    template <typename T>
-    const T* make_dy_kernel()
-    {
-      static const T ws[] = { 0.1, 0, -0.1,
-				  0.2, 0, -0.2,
-				  0.1, 0, -0.1 };
+      template <typename T>
+      const T* make_dx_kernel()
+      {
+	static const T ws[] = { b, a, b,
+				0, 0, 0,
+				-b, -a, -b };
+	return ws;
+      }
+
+      template <typename T>
+      const T* make_dy_kernel()
+      {
+	static const T ws[] = { b, 0, -b,
+				a, 0, -a,
+				b, 0, -b };
       
-      return ws;
+	return ws;
+      }
     }
 
     template <typename T>

@@ -76,8 +76,6 @@ namespace mln
 	  std::swap(u_, u_next_);
 	  
 	}
-
-      std::cout << iterations << "\t";
     }
 
   } /* mln::inpainting */
