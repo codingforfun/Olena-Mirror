@@ -1,5 +1,41 @@
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/border/get.hh: Add a new implementation for handling morphed
+	images.
+
+	* mln/data/compute.hh: Initialize correctly the accumulator.
+
+	* mln/debug/println_with_border.hh,
+	* mln/debug/println_with_border.spe.hh: Add support for morphed
+	images.
+
+	* mln/value/intsub.hh,
+	* mln/world/k2/fill_non_primary_from_primary_2_faces.hh: Cleanup code.
+
+	* mln/world/k2/immerse.hh: Cast to image value type.
+
+	* mln/world/k2/is_non_primary_2_face_center.hh: Fix invalid test.
+
+	* mln/world/kn/border/adjust_duplicate_2_faces.hh: Fix doc.
+
+	* mln/world/kn/border/fill_1_from_aux_2_faces.hh: Add missing
+	safe_cast.
+
+	* mln/world/kn/compute_tree_of_shapes.hh: Disable debug.
+
+	* mln/world/kn/fill_0_from_1_faces.hh,
+	* mln/world/kn/is_0_or_1_face.hh: Fix ambiguous namespace.
+
+	* mln/world/kn/safe_cast.hh: Add a new specialization and fix
+	another one.
+
+	* tests/value/intsub.cc,
+	* tests/world/k2/un_immerse.cc: Add more tests.
+
+2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of data::transform in arith::revert.
 
 	* mln/arith/revert.hh: Here.

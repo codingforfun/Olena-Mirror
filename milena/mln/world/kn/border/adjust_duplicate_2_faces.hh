@@ -50,7 +50,7 @@ namespace mln
       /*! \brief Adjust border size and duplicate 2 faces in Kn 2D
        *  images borders.
 
-	\param[in,out] inout A 2D image immersed in KN.
+	\param[in,out] inout A 2D image immersed in Kn.
 	\param[in] min_thickness The minimum border thickness of \p
 	inout.
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -92,8 +92,7 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a_, const Image<I>& input)
     {
-      (void) a_;
-      A a;
+      A a(exact(a_));
       return compute(a, input);
     }
 

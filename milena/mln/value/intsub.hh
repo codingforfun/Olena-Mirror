@@ -311,6 +311,8 @@ namespace mln
     intsub<n>::intsub(const intsub<m>& rhs)
     {
       mln_precondition(m < n);
+      if (m < n)
+	abort();
       this->v_ = rhs.to_enc() * (n / m);
     }
 
@@ -516,7 +518,7 @@ namespace mln
     mln_trait_routine_mean(2,intsub<n>)
     mean_(const intsub<n>& v1, const intsub<n>& v2)
     {
-      return intsub<2*n>::make_from_enc_((v1.to_enc() + v2.to_enc()));
+      return intsub<2*n>::make_from_enc_(v1.to_enc() + v2.to_enc());
     }
 
     template <unsigned n>

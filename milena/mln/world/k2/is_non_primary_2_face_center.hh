@@ -31,6 +31,7 @@
 # define MLN_WORLD_K2_IS_NON_PRIMARY_2_FACE_CENTER_HH
 
 # include <mln/core/alias/point2d.hh>
+# include <mln/math/abs.hh>
 
 
 namespace mln
@@ -71,9 +72,9 @@ namespace mln
 
       inline
       bool is_non_primary_2_face_center(const mln::def::coord& row,
-				     const mln::def::coord& col)
+					const mln::def::coord& col)
       {
-	return (row % 4 == 2) && (col % 4 == 2);
+	return (math::abs(col) % 4 == 2) && (math::abs(row) % 4 == 2);
       }
 
 

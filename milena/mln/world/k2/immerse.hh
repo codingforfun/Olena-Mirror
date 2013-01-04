@@ -32,6 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/world/kn/immerse.hh>
+# include <mln/metal/converts_to.hh>
 
 namespace mln
 {
@@ -76,10 +77,10 @@ namespace mln
       /// \overload
       /// 0, 1 and non-primary 2-faces values are set to \p
       /// default_value.
-      template <typename I, typename V>
+      template <typename I, typename V, typename U>
       mln_ch_value(I, V)
       immerse(const Image<I>& ima, const V& new_value_type,
-	      const V& default_value);
+	      const U& default_value);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -114,16 +115,17 @@ namespace mln
       }
 
 
-      template <typename I, typename V>
+      template <typename I, typename V, typename U>
       mln_ch_value(I,V)
       immerse(const Image<I>& ima, const V& new_value_type,
-	      const V& default_value)
+	      const U& default_value)
       {
 	trace::entering("mln::world::k2::immerse");
 	mln_precondition(exact(ima).is_valid());
+	mlc_converts_to(U,V)::check();
 
 	mln_ch_value(I,V)
-	  output = kn::immerse(ima, 2, new_value_type, default_value);
+	  output = kn::immerse(ima, 2, new_value_type, V(default_value));
 
 	trace::exiting("mln::world::k2::immerse");
 	return output;

@@ -94,7 +94,7 @@ namespace mln
 	typedef mln_argument(A) arg;
 	mln_piter(I) p(inout.domain());
 	for_all(p)
-	  if (is_0_face(p))
+	  if (kn::is_0_face(p))
 	  {
 	    accu.init();
 	    if (inout.domain().has(p + left))
@@ -125,7 +125,7 @@ namespace mln
 
 	mln_piter(I) p(inout.domain());
 	for_all(p)
-	  if (is_0_face(p))
+	  if (kn::is_0_face(p))
 	    inout(p) = safe_cast(f(safe_cast(inout(p + left)),
 				   safe_cast(inout(p + right)),
 				   safe_cast(inout(p + up)),

@@ -117,4 +117,13 @@ int main()
 
   // 2.5 * 10.25
   mln_assertion((l * k) == 25.625);
+
+  // Mean with 2 intsub
+  mln_assertion(math::mean(intsub<2>(2), intsub<2>(4)) == 3);
+
+  // Mean with 4 intsub
+  mln_assertion(math::mean(intsub<2>(2), intsub<2>(4), intsub<2>(6), intsub<2>(8)) == 5);
+
+  // Add 2 intsub
+  mln_assertion((intsub<2>(2) + intsub<2>(3)) == 5);
 }

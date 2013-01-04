@@ -85,6 +85,7 @@ namespace mln
 	  I& inout = const_cast<I&>(exact(inout_));
 	  J& aux = const_cast<J&>(exact(aux_));
 	  const F& f = exact(f_);
+	  typedef mln_value(I) V;
 
 	  def::coord
 	    min_row_1 = geom::min_row(inout) - 1,
@@ -97,11 +98,11 @@ namespace mln
 	    if (is_1_face_vertical(min_row_1, col))
 	    {
 	      // First row
-	      inout.at_(min_row_1, col) = f(aux.at_(min_row_1, col - 1),
-					    aux.at_(min_row_1, col + 1));
+	      inout.at_(min_row_1, col) = safe_cast_to<V>(f(safe_cast(aux.at_(min_row_1, col - 1)),
+							    safe_cast(aux.at_(min_row_1, col + 1))));
 	      // Last row
-	      inout.at_(max_row_1, col) = f(aux.at_(max_row_1, col - 1),
-					    aux.at_(max_row_1, col + 1));
+	      inout.at_(max_row_1, col) = safe_cast_to<V>(f(safe_cast(aux.at_(max_row_1, col - 1)),
+							    safe_cast(aux.at_(max_row_1, col + 1))));
 	    }
 
 	  // Fill vertical border
@@ -109,11 +110,11 @@ namespace mln
 	    if (is_1_face_horizontal(row, min_col_1))
 	    {
 	      // First col
-	      inout.at_(row, min_col_1) = f(aux.at_(row - 1, min_col_1),
-					    aux.at_(row + 1, min_col_1));
+	      inout.at_(row, min_col_1) = safe_cast_to<V>(f(safe_cast(aux.at_(row - 1, min_col_1)),
+							    safe_cast(aux.at_(row + 1, min_col_1))));
 	      // Last col
-	      inout.at_(row, max_col_1) = f(aux.at_(row - 1, max_col_1),
-					    aux.at_(row + 1, max_col_1));
+	      inout.at_(row, max_col_1) = safe_cast_to<V>(f(safe_cast(aux.at_(row - 1, max_col_1)),
+							    safe_cast(aux.at_(row + 1, max_col_1))));
 	    }
 
 	  trace::exiting("mln::world::kn::fill_1_from_aux_2_faces");

@@ -48,7 +48,14 @@ namespace mln
   namespace debug
   {
 
-    /// Print the image \p input on the standard output.
+    /// Print the image \p input on the standard output and display
+    /// text \p msg.
+    template <typename I>
+    inline
+    void
+    println_with_border(const std::string& msg, const Image<I>& input);
+
+    /// \overload
     template <typename I>
     void println_with_border(const Image<I>& input);
 
@@ -73,15 +80,30 @@ namespace mln
 
 
     // Facade.
+
     template <typename I>
     inline
     void
-    println_with_border(const Image<I>& input)
+    println_with_border(const Image<I>& input_)
     {
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-
-      impl::println_with_border(geom::bbox(exact(input)), exact(input));
+      const I& input = exact(input_);
+      //mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
+      mln_precondition(input.is_valid());
+      impl::println_with_border(geom::bbox(input), input);
     }
+
+    template <typename I>
+    inline
+    void
+    println_with_border(const std::string& msg, const Image<I>& input)
+    {
+      if (!quiet)
+      {
+        std::cout << msg << std::endl;
+	println_with_border(input);
+      }
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

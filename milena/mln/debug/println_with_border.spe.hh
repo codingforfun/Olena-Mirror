@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,6 +39,7 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 # include <mln/opt/element.hh>
+# include <mln/border/get.hh>
 
 namespace mln
 {
@@ -59,13 +60,40 @@ namespace mln
       void
       println_with_border(const box2d& b, const I& input)
       {
-	const unsigned ncols = b.ncols() + 2 * input.border();
- 	for (size_t i = 0; i < opt::nelements(input); i++)
-	{
-	  std::cout << format(input.buffer()[i]) << ' ';
-	  if (((i + 1) % ncols) == 0)
+	accu::stat::max<unsigned> len_;
+	box2d b_ext = b;
+	b_ext.enlarge(border::get(input));
+
+	mln_piter(box2d) p(b_ext);
+	for_all(p)
+	  if (input.domain().has(p) || ! b.has(p))
+	  {
+	    std::ostringstream o;
+	    o << format(input(p));
+	    len_.take(o.str().length());
+	  }
+	unsigned len = len_ + 1;
+
+	image2d<char> output(b_ext.nrows(), b_ext.ncols() * len, 0);
+	data::fill(output, ' ');
+	for_all(p)
+	  if (input.domain().has(p) || ! b.has(p))
+	  {
+	    std::ostringstream oss;
+	    oss << format(input(p));
+	    def::coord
+	      row = static_cast<def::coord>(p.row() - b_ext.min_row()),
+	      col = static_cast<def::coord>((p.col() - b_ext.min_col()) * len);
+	    point2d w(row, col);
+	    put_word(output, w, oss.str());
+	  }
+
+	for (def::coord row = 0; row < def::coord(b_ext.nrows()); ++row)
+	  {
+	    for (def::coord col = 0; col < def::coord(b_ext.ncols() * len); ++col)
+	      std::cout << opt::at(output, row, col);
 	    std::cout << std::endl;
-	}
+	  }
 	std::cout << std::endl;
       }
 # endif // MLN_CORE_ALIAS_BOX2D_HH

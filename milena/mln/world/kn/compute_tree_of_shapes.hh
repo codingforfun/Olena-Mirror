@@ -44,6 +44,7 @@
 # include <mln/world/kn/hqueue.hh>
 # include <mln/util/tree_of_shapes.hh>
 # include <mln/world/kn/is_2_face.hh>
+# include <mln/world/kn/safe_cast.hh>
 # include <mln/world/k2/is_primary_2_face.hh>
 
 
@@ -219,8 +220,8 @@ namespace mln
 
 	    if (t.level_changes_at(i))
 	    {
-	      std::cout << "union-find: done with level " << t.level(p) << std::endl;
-	      kn::debug::println(done);
+	      //std::cout << "union-find: done with level " << t.level(p) << std::endl;
+	      //kn::debug::println(done);
 	    }
 	  }
 
@@ -402,8 +403,8 @@ namespace mln
 
 	    if (q.is_empty_at(lcur))
 	    {
-	      std::cout << "sort: done with level " << lcur << std::endl;
-	      kn::debug::println(done);
+	      //std::cout << "sort: done with level " << lcur << std::endl;
+	      //kn::debug::println(done);
 	    }
 	  }
 	  while (i != N);

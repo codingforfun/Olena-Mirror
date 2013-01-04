@@ -256,18 +256,21 @@ namespace mln
       to = from;
     }
 
+    // From float
+
+    template <unsigned n>
+    void safe_cast_(const float& from, intsub<n>& to)
+    {
+      to = from;
+    }
+
+
     // From intsub<n>
 
     template <unsigned n>
     void safe_cast_(const intsub<n>& from, intsub<2*n>& to)
     {
       to = static_cast<intsub<2*n> >(from.to_int());
-    }
-
-    template <unsigned n>
-    void safe_cast_(const intsub<n>& from, intsub<n/2>& to)
-    {
-      to = static_cast<intsub<n/2> >(from.to_int());
     }
 
     template <unsigned n, unsigned m>
@@ -287,6 +290,12 @@ namespace mln
     {
       if (from < 0)
 	std::abort();
+      to = from;
+    }
+
+    template <unsigned n>
+    void safe_cast_(const intsub<n>& from, float& to)
+    {
       to = from;
     }
 

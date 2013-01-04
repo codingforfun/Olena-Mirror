@@ -55,7 +55,7 @@ namespace mln
       inline
       bool is_0_or_1_face(const point2d& p)
       {
-	unsigned dim = face_dim(p);
+	unsigned dim = kn::face_dim(p);
 	return dim == 0 || dim == 1;
       }
 

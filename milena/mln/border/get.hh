@@ -71,6 +71,13 @@ namespace mln
 	return border::get(*ima.delegatee_());
       }
 
+      template <typename I>
+      inline
+      unsigned get_(trait::image::ext_domain::none, trait::image::category::morpher,
+		    const I& ima)
+      {
+	return border::get(*ima.delegatee_());
+      }
 
       template <typename I>
       inline

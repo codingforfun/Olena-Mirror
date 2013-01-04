@@ -137,13 +137,11 @@ namespace mln
 			     kn::safe_cast(ima(p + 2 * down))));
 	  }
 	  else if (is_non_primary_2_face_center(p))
-	  {
 	    ima(p) = kn::safe_cast_to<V>(
 	      f_center(kn::safe_cast(ima(p + 2 * up_left)),
 		       kn::safe_cast(ima(p + 2 * up_right)),
 		       kn::safe_cast(ima(p + 2 * down_left)),
 		       kn::safe_cast(ima(p + 2 * down_right))));
-	  }
 
 	// Initialize border.
 	kn::border::adjust_duplicate_2_faces(ima, 1);
