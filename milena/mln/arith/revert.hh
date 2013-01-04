@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,19 +30,11 @@
 /// \file
 ///
 /// Point-wise revert (min -> max and max -> min) of images.
-///
-/// \todo Add static assertion and save one iterator in in-place version.
 
 # include <mln/core/concept/image.hh>
-# include <mln/trait/value_.hh>
-
-// Specializations are in:
-# include <mln/arith/revert.spe.hh>
-
-
-// FIXME: Rely instead on mln/fun/v2v/revert.hh.
-// FIXME: Revert on int value 0 does not give 0 (since min != - max;
-//        idem for float etc.)
+# include <mln/fun/v2v/revert.hh>
+# include <mln/data/transform.hh>
+# include <mln/data/transform_inplace.hh>
 
 
 namespace mln
@@ -82,77 +74,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename I, typename O>
-	inline
-	void revert(const Image<I>& input_, Image<O>& output_)
-	{
-	  trace::entering("arith::impl::generic::revert_");
-
-	  const I& input = exact(input_);
-	  O& output = exact(output_);
-
-	  mln_precondition(input.is_valid());
-	  mln_precondition(output.is_valid());
-	  mln_precondition(input.domain() == output.domain());
-
-	  typedef mln_value(I) V;
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    output(p) = mln_min(V) + (mln_max(V) - input(p));
-
-	  trace::exiting("arith::impl::generic::revert_");
-	}
-
-      } // end of namespace mln::arith::impl::generic
-
-    } // end of namespace mln::arith::impl
-
-
-
-    // Dispatch.
-
-    namespace internal
-    {
-
-      template <typename I, typename O>
-      inline
-      void
-      revert_dispatch(trait::image::speed::any, const I& input, O& output)
-      {
-	impl::generic::revert(input, output);
-      }
-
-      template <typename I, typename O>
-      inline
-      void
-      revert_dispatch(trait::image::speed::fastest, const I& input, O& output)
-      {
-	impl::revert_fastest(input, output);
-      }
-
-      template <typename I, typename O>
-      inline
-      void
-      revert_dispatch(const Image<I>& input, Image<O>& output)
-      {
-	revert_dispatch(mln_trait_image_speed(I)(),
-			exact(input), exact(output));
-
-      }
-
-
-    } // end of namespace mln::arith::internal
-
-
-
-    // Facades.
-
     template <typename I>
     inline
     mln_concrete(I) revert(const Image<I>& input)
@@ -161,9 +82,8 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
-      mln_concrete(I) output;
-      initialize(output, input);
-      internal::revert_dispatch(exact(input), exact(output));
+      typedef mln_value(I) V;
+      mln_concrete(I) output = data::transform(input, fun::v2v::revert<V>());
 
       trace::exiting("arith::revert");
       return output;
@@ -177,7 +97,8 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
-      internal::revert_dispatch(exact(input), exact(input));
+      typedef mln_value(I) V;
+      data::transform_inplace(input, fun::v2v::revert<V>());
 
       trace::exiting("arith::revert_inplace");
     }

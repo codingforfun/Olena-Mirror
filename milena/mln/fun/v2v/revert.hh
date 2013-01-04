@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,61 +23,58 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_ARITH_REVERT_SPE_HH
-# define MLN_ARITH_REVERT_SPE_HH
+#ifndef MLN_FUN_V2V_REVERT_HH
+# define MLN_FUN_V2V_REVERT_HH
 
 /// \file
 ///
-/// Specializations for mln::arith::revert.
+/// Function reverting given values.
 
-# ifndef MLN_ARITH_REVERT_HH
-#  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_ARITH_REVERT_HH
-
-# include <mln/core/concept/image.hh>
-# include <mln/trait/value_.hh>
+// FIXME: Revert on int value 0 does not give 0 (since min != - max;
+//        idem for float etc.)
 
 
-# ifndef MLN_INCLUDE_ONLY
+# include <mln/fun/internal/selector.hh>
+
 
 namespace mln
 {
 
-  namespace arith
+  namespace fun
   {
 
-    namespace impl
+    namespace v2v
     {
 
-      // FIXME: This is a fast implementation not a fastest one!
-      template <typename I, typename O>
-      inline
-      void revert_fastest(const Image<I>& input_, Image<O>& output_)
+      // FIXME: Doc!
+
+      template <typename T, typename R = T>
+      struct revert
+	: fun::internal::selector_<R, T, revert<T,R> >::ret
       {
-	trace::entering("arith::impl::revert_fastest");
+	typedef R result;
+	typedef T argument;
 
-	const I& input = exact(input_);
-	O& output = exact(output_);
+	R operator()(const T& v) const;
+      };
 
-	mln_precondition(input.is_valid());
-	mln_precondition(output.is_valid());
-	mln_precondition(input.domain() == output.domain());
 
-	typedef mln_value(I) V;
-	mln_pixter(const I) ip(input);
-	mln_pixter(O)       op(output);
-	for_all_2(ip, op)
-	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
+# ifndef MLN_INCLUDE_ONLY
 
-	trace::entering("arith::impl::revert_fastest");
+      template <typename T, typename R>
+      R
+      revert<T,R>::operator()(const T& v) const
+      {
+	return static_cast<R>(mln_min(T) + (mln_max(T) - v));
       }
-
-    } // end of namespace mln::arith::impl
-
-  } // end of namespace mln::arith
-
-} // end of namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_ARITH_REVERT_SPE_HH
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_V2V_REVERT_HH

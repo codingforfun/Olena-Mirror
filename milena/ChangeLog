@@ -1,3 +1,13 @@
+2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of data::transform in arith::revert.
+
+	* mln/arith/revert.hh: Here.
+
+	* mln/arith/revert.spe.hh: Remove.
+
+	* mln/fun/v2v/revert.hh: New.
+
 2012-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove kn::internal::display.
