@@ -1,5 +1,10 @@
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/util/tree_of_shapes.hh: Extend structure for storing new
+	tree canonicalizationss.
+
+2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add util::map.
 
 	* mln/util/map.hh,

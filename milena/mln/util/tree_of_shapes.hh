@@ -37,6 +37,8 @@ namespace mln
   namespace util
   {
 
+    enum Tags { None, Spurious, Noise };
+
     template <typename I>
     struct tree_of_shapes
     {
@@ -45,14 +47,30 @@ namespace mln
       typedef mln_equiv(V) EV;
 
       I Fb;
+
+      // Default canonicalization.
       std::vector<P> R;
       mln_ch_value(I,P) parent;
-      mln_ch_value(I,bool) show;
+
+      // 0-canonicalization.
+      std::vector<P> R0;
+      mln_ch_value(I,P) parent0;
+      // Attributes/tags for 0-representants.
+      std::vector<Tags> tag;
+
+      // 01-canonicalization.
+      std::vector<P> R01;
+      mln_ch_value(I,P) parent01;
+
 
       V level(const P& p) const;
       bool level_changes_at(unsigned i) const;
       bool is_root(const P& p) const;
       bool is_representative(const P& p) const;
+
+      bool is_0_representative(const P& p) const;
+
+      bool is_01_representative(const P& p) const;
 
     };
 
@@ -89,6 +107,22 @@ namespace mln
     tree_of_shapes<I>::is_representative(const P& p) const
     {
       return is_root(p) || Fb(parent(p)) != Fb(p);
+    }
+
+    template <typename I>
+    bool
+    tree_of_shapes<I>::is_0_representative(const P& p) const
+    {
+      return is_representative(p) && (Fb(p) == V(0));
+    }
+
+    template <typename I>
+    bool
+    tree_of_shapes<I>::is_01_representative(const P& p) const
+    {
+      return is_root(p)
+	|| (Fb(p) == V(0) && Fb(parent(p)) != V(0))
+	|| (Fb(p) != V(0) && Fb(parent(p)) == V(0));
     }
 
 
