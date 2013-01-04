@@ -1,5 +1,12 @@
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new v2v functions.
+
+	* mln/fun/v2v/ceil.hh,
+	* mln/fun/v2v/floor.hh: New.
+
+2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/border/get.hh: Add a new implementation for handling morphed
