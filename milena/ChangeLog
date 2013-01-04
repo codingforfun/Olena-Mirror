@@ -1,5 +1,14 @@
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add util::map.
+
+	* mln/util/map.hh,
+	* tests/util/map.cc: New.
+
+	* tests/util/Makefile: Add new target.
+
+2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/inner_border/remove.hh: New.
 
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>

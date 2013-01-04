@@ -28,6 +28,7 @@ check_PROGRAMS =				\
   lazy_set					\
   lemmings					\
   line_graph 					\
+  map						\
   ord						\
   ord_pair					\
   set 						\
@@ -45,6 +46,7 @@ graph_SOURCES = graph.cc
 lazy_set_SOURCES = lazy_set.cc
 lemmings_SOURCES = lemmings.cc
 line_graph_SOURCES = line_graph.cc
+map_SOURCES = map.cc
 ord_SOURCES = ord.cc
 ord_pair_SOURCES = ord_pair.cc
 set_SOURCES = set.cc
