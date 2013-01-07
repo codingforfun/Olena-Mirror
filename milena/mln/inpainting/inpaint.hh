@@ -1,3 +1,6 @@
+#ifndef INPAINT_HH_
+# define INPAINT_HH_
+
 #include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/data/fill.hh>
@@ -16,6 +19,13 @@
 #include <mln/util/timer.hh>
 
 #include <mln/inpainting/metric/psnr.hh>
+
+#include <mln/border/resize.hh>
+
+#include <mln/inpainting/metric/mean_gradient_error.hh>
+#include <mln/inpainting/metric/mean_l1_error.hh>
+
+#include <mln/extension/adjust_duplicate.hh>
 
 namespace mln
 {
@@ -63,8 +73,9 @@ namespace mln
 	roi.crop_wrt(inpaint_src.domain());
       }
 
-      //typedef mln_sum(T) sum_type;
       typedef algebra::vec<3u, typename F::float_type> sum_type;
+
+      float range = 255.0;
 
       I<sum_type> new_src(roi);
       { // paste inpaint_src to new_src
@@ -73,16 +84,31 @@ namespace mln
 	
 	for_all_2(p, p_new)
 	  {
-	    p_new.val()[0] = inpaint_src(p).comp(0);
-	    p_new.val()[1] = inpaint_src(p).comp(1);
-	    p_new.val()[2] = inpaint_src(p).comp(2);
+	    p_new.val()[0] = inpaint_src(p).comp(0) / range;
+	    p_new.val()[1] = inpaint_src(p).comp(1) / range;
+	    p_new.val()[2] = inpaint_src(p).comp(2) / range;
 	  }
       }
+
+      I<sum_type> old_src = duplicate(new_src);
 
       I<bool> new_mask(roi);
       data::paste(inpaint_mask | roi, new_mask);
 
-      data::fill((new_src | pw::value(new_mask)).rw(), literal::zero);
+      sum_type v;
+      {
+	typedef typename trait::value_<T>::comp_0 inner_type;
+	inner_type middle = mln_max(inner_type) / 2;
+   
+	for (unsigned i = 0; i < mln_dim(sum_type); ++i)
+	  v[i] = middle;
+      }
+
+      data::fill((new_src | pw::value(new_mask)).rw(), v / range);
+
+      border::resize(new_src, 1);
+      extension::adjust_duplicate(new_src, 1);
+      border::resize(new_mask, 0);
 
       mln::util::timer t;
       t.start();
@@ -91,24 +117,32 @@ namespace mln
 
       t.stop();
 
-      double psnr = metric::psnr(inpaint_src | pw::value(inpaint_mask),
-				 new_src | pw::value(new_mask));
+      I<T> output = duplicate(inpaint_src);
 
-      std::cout << t << "\t"
-		<< psnr << "\t";
-
-      I<T> output(inpaint_src);
       { // paste new_src to output
 	mln_piter(I<T>) p(roi);
 	mln_pixter(const I<sum_type>) p_new(new_src);
 	
 	for_all_2(p, p_new)
 	  {
-	    output(p).comp(0) = p_new.val()[0];
-	    output(p).comp(1) = p_new.val()[1];
-	    output(p).comp(2) = p_new.val()[2];
+	    output(p).comp(0) = p_new.val()[0] * range;
+	    output(p).comp(1) = p_new.val()[1] * range;
+	    output(p).comp(2) = p_new.val()[2] * range;
 	  }
       }
+      
+      float gradient_error = metric::mean_gradient_error(old_src,
+      							 new_src,
+      							 new_mask);
+
+      float color_error = metric::mean_l1_error(old_src,
+      						new_src,
+      						new_mask);
+
+      std::cout << std::setprecision(6) << std::fixed
+		<< t << "\t\t"
+      		<< (1 - color_error) * 100 << "\t\t"
+      		<< (1 - gradient_error) * 100 << "\t";
 
       return output;
     }
@@ -116,3 +150,5 @@ namespace mln
   } /* mln::inpainting */
 
 } /* mln*/
+
+#endif
