@@ -1,30 +1,71 @@
+#ifndef DERIVATIVE_KERNELS_HH_
+# define DERIVATIVE_KERNELS_HH_
+
 namespace mln
 {
   namespace inpainting
   {
-    namespace
+    namespace internal
     {
-      const float a = 61;
-      const float b = 17;
+      const float a = 2;
+      const float b = 1;
+    }
 
-      template <typename T>
-      const T* make_dx_kernel()
-      {
-	static const T ws[] = { b, a, b,
-				0, 0, 0,
-				-b, -a, -b };
-	return ws;
-      }
+    template <typename T>
+    const T* make_dx_kernel()
+    {
+      static const T ws[] = { internal::b, internal::a, internal::b,
+			      0, 0, 0,
+			      -internal::b, -internal::a, -internal::b };
+      return ws;
+    }
 
-      template <typename T>
-      const T* make_dy_kernel()
-      {
-	static const T ws[] = { b, 0, -b,
-				a, 0, -a,
-				b, 0, -b };
+    template <typename T>
+    const T* make_dy_kernel()
+    {
+      static const T ws[] = { internal::b, 0, -internal::b,
+			      internal::a, 0, -internal::a,
+			      internal::b, 0, -internal::b };
       
-	return ws;
-      }
+      return ws;
+    }
+
+    template <typename T>
+    const T* make_forward_horizontal_kernel()
+    {
+      static const T ws[] = { 0, 0, 0,
+			      0, -1, 1,
+			      0, 0, 0 };
+      return ws;
+    }
+
+    template <typename T>
+    const T* make_forward_vertical_kernel()
+    {
+      static const T ws[] = { 0, 0, 0,
+			      0, -1, 0,
+			      0, 1, 0 };
+      
+      return ws;
+    }
+
+    template <typename T>
+    const T* make_backward_horizontal_kernel()
+    {
+      static const T ws[] = { 0, 0, 0,
+			      -1, 1, 0,
+			      0, 0, 0 };
+      return ws;
+    }
+
+    template <typename T>
+    const T* make_backward_vertical_kernel()
+    {
+      static const T ws[] = { 0, -1, 0,
+			      0, 1, 0,
+			      0, 0, 0 };
+      
+      return ws;
     }
 
     template <typename T>
@@ -51,10 +92,12 @@ namespace mln
     const T* make_dxy_kernel()
     {
       static const T ws[] = {0.1051, 0, -0.1051,
-				 0, 0, 0,
-				 -0.1051, 0, 0.1051};
+			     0, 0, 0,
+			     -0.1051, 0, 0.1051};
 
       return ws;
     }
   }
 }
+
+#endif
