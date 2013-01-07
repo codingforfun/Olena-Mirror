@@ -39,7 +39,8 @@ namespace mln
     I<T> inpaint(const Image<I<T> >& src_,
 		 const Image<I<bool> >& mask_,
 		 F inpaint_method,
-		 unsigned inpaint_radius);
+		 unsigned inpaint_radius,
+		 double* out_error = NULL);
 
     /*
      * Implem
@@ -49,7 +50,8 @@ namespace mln
     I<T> inpaint(const Image<I<T> >& inpaint_src_,
 		 const Image<I<bool> >& inpaint_mask_,
 		 F inpaint_method,
-		 unsigned inpaint_radius)
+		 unsigned inpaint_radius,
+		 double* out_error)
     {
       const I<T>& inpaint_src = exact(inpaint_src_);
       const I<bool>& inpaint_mask = exact(inpaint_mask_);
@@ -138,6 +140,9 @@ namespace mln
       float color_error = metric::mean_l1_error(old_src,
       						new_src,
       						new_mask);
+
+      if (out_error)
+	*out_error = color_error;
 
       std::cout << std::setprecision(6) << std::fixed
 		<< t << "\t\t"
