@@ -1,3 +1,6 @@
+#ifndef FAST_ISOTROPIC_DIFFUSION_HH_
+# define FAST_ISOTROPIC_DIFFUSION_HH_
+
 #include <mln/core/macros.hh>
 #include <mln/core/concept/image.hh>
 #include <mln/core/alias/point2d.hh>
@@ -9,7 +12,7 @@
 #include <algorithm>
 #include <limits>
 
-#define CONVERGENCE_THRESHOLD	0.05
+#define CONVERGENCE_THRESHOLD	0.00005
 
 namespace mln
 {
@@ -29,7 +32,8 @@ namespace mln
     void fast_isotropic_diffusion::operator()(I<T>& src,
 					      const I<bool>& mask)
     {
-      I<T> src_next(src);
+      I<T> src_next;
+      src_next = duplicate(src);
 
       I<T>* u_ = &src;
       I<T>* u_next_ = &src_next;
@@ -50,7 +54,7 @@ namespace mln
 	  mln_pixter(const I<bool>) p_m(mask);
 	  mln_nixter(const I<T>, const neighb2d) n(p, c8());
 
-	  for_all_3(p, p_next, p_m)
+	  for_all_3 (p, p_next, p_m)
 	  {
 	    if (p_m.val())
 	      {
@@ -74,10 +78,14 @@ namespace mln
 	  }
 
 	  std::swap(u_, u_next_);
-	  
 	}
+
+      std::cout << iterations << "\t";
+
     }
 
   } /* mln::inpainting */
 
 } /* mln */
+
+#endif
