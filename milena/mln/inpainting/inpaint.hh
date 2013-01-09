@@ -127,9 +127,13 @@ namespace mln
 	
 	for_all_2(p, p_new)
 	  {
-	    output(p).comp(0) = p_new.val()[0] * range;
-	    output(p).comp(1) = p_new.val()[1] * range;
-	    output(p).comp(2) = p_new.val()[2] * range;
+	    algebra::vec<3u, int> v = p_new.val() * range;
+
+	    internal::interval(v, 0, 255);
+	    
+	    output(p).comp(0) = v[0];
+	    output(p).comp(1) = v[1];
+	    output(p).comp(2) = v[2];
 	  }
       }
       
@@ -142,12 +146,12 @@ namespace mln
       						new_mask);
 
       if (out_error)
-	*out_error = color_error;
-
-      std::cout << std::setprecision(6) << std::fixed
-		<< t << "\t\t"
-      		<< (1 - color_error) * 100 << "\t\t"
-      		<< (1 - gradient_error) * 100 << "\t";
+	*out_error = (1 - color_error) * 100;
+      else
+	std::cout << std::setprecision(6) << std::fixed
+		  << t << "\t\t"
+		  << (1 - color_error) * 100 << "\t\t"
+		  << (1 - gradient_error) * 100 << "\t";
 
       return output;
     }

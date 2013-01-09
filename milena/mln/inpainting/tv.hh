@@ -36,14 +36,14 @@ namespace mln
 
     namespace internal
     {
-      template <typename T>
+      template <typename T, typename V>
       inline
       void interval(T& v,
-		    tv::float_type min,
-		    tv::float_type max)
+		    const V& min,
+		    const V& max)
       {
 	for (unsigned i = 0; i < mln_dim(T); ++i)
-	  v[i] = std::max(std::min(v[i], max), min);
+	  v[i] = std::max(std::min((V) v[i], max), min);
       }
 
       template <typename T>
@@ -235,8 +235,6 @@ namespace mln
 
       	  ++iterations;
       	}
-
-      std::cout << iterations << "\t";
 
       data::paste(u, src);
     }

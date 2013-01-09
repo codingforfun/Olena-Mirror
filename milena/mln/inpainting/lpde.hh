@@ -253,8 +253,6 @@ namespace mln
 
 	  ++t;
 	}
-
-      std::cout << t << "\t";
     }
 
     void lpde::set(const std::vector<float_type>& w)
