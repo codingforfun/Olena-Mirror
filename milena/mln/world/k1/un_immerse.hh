@@ -79,7 +79,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.is_valid());
 
-	mln_ch_value(I,V) output = kn::un_immerse(ima, 2, new_value_type);
+	mln_ch_value(I,V) output = kn::un_immerse(ima, 1, new_value_type);
 
 	trace::exiting("mln::world::k1::un_immerse");
 	return output;
