@@ -1,3 +1,9 @@
+2013-01-29  Sylvain Lobry  <lobry@lrde.epita.fr>
+
+	Added Lucas-Kanade algorithm
+
+	* mln/optical_flow/lk.hh: Here.
+
 2012-05-03  Sylvain Lobry  <lobry@lrde.epita.fr>
 
 	Updated all.hh.
