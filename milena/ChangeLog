@@ -1,5 +1,11 @@
 2013-01-29  Sylvain Lobry  <lobry@lrde.epita.fr>
 
+	Added functions used in the trust map computation.
+
+	* mln/optical_flow/trustmap.hh: Here.
+
+2013-01-29  Sylvain Lobry  <lobry@lrde.epita.fr>
+
 	Added Horn-Schunck algorithm
 
 	* mln/optical_flow/hs.hh: Here.
