@@ -1,5 +1,11 @@
 2013-01-29  Sylvain Lobry  <lobry@lrde.epita.fr>
 
+	Added Horn-Schunck algorithm
+
+	* mln/optical_flow/hs.hh: Here.
+
+2013-01-29  Sylvain Lobry  <lobry@lrde.epita.fr>
+
 	Added Lucas-Kanade algorithm
 
 	* mln/optical_flow/lk.hh: Here.
