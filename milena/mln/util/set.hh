@@ -41,6 +41,7 @@
 # include <algorithm>
 # include <iostream>
 
+# include <mln/core/concept/object.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/ord.hh>
 

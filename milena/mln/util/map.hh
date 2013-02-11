@@ -205,7 +205,7 @@ namespace mln
       void invalidate();
 
       /// Give the element the iterator designates.
-      const std::pair<K,V>& element() const;
+      subj_t element() const;
 
       // As a Proxy.
       subj_t subj_();
@@ -256,7 +256,7 @@ namespace mln
       void invalidate();
 
       /// Give the element the iterator designates.
-      const std::pair<K,V>& element() const;
+      subj_t element() const;
 
       // As a Proxy.
       subj_t subj_();
@@ -496,7 +496,7 @@ namespace mln
 
     template <typename K, typename V>
     inline
-    const std::pair<K,V>&
+    typename map_fwd_iter<K,V>::subj_t
     map_fwd_iter<K,V>::element() const
     {
       mln_precondition(is_valid());
@@ -579,7 +579,7 @@ namespace mln
 
     template <typename K, typename V>
     inline
-    const std::pair<K,V>&
+    typename map_bkd_iter<K,V>::subj_t
     map_bkd_iter<K,V>::element() const
     {
       mln_precondition(is_valid());

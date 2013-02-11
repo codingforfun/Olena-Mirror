@@ -1,3 +1,11 @@
+2013-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/util/map.hh: Fix prototype of element().
+
+	* mln/util/set.hh: Add a missing include.
+
 2013-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/util/tree_of_shapes.hh: Extend structure for storing new
