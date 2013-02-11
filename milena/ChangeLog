@@ -1,5 +1,10 @@
 2013-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/kn/compute_tree_of_shapes.hh: Do not use random
+	anymore.
+
+2013-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new structure for compressed tree.
 
 	* mln/util/tree_of_shapes.hh: Remove methods related to compressed

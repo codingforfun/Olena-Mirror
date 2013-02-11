@@ -308,6 +308,38 @@ namespace mln
 	  EV l_;
 	  bool found;
 
+	  static bool up = true;
+	  if (up)
+	  {
+	    l_ = upper_level_next_to_lcur(q, found);
+	    if (found)
+	      return l_;
+	    else
+	    {
+	      up = false;
+	      l_ = lower_level_next_to_lcur(q, found);
+	      if (! found)
+		std::abort();
+	      return l_;
+	    }
+	  }
+	  else // going down
+	  {
+	    l_ = lower_level_next_to_lcur(q, found);
+	    if (found)
+	      return l_;
+	    else
+	    {
+	      up = true;
+	      l_ = upper_level_next_to_lcur(q, found);
+	      if (! found)
+		std::abort();
+	      return l_;
+	    }
+	  }
+
+/*
+
 	  bool up = int(2. * std::rand() / (RAND_MAX + 1.));
 	  if (up)
 	  {
@@ -335,6 +367,7 @@ namespace mln
 	      return l_;
 	    }
 	  }
+*/
 	}
 
 
