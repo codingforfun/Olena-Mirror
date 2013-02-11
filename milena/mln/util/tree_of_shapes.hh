@@ -30,6 +30,10 @@
 #ifndef MLN_UTIL_TREE_OF_SHAPES_HH
 # define MLN_UTIL_TREE_OF_SHAPES_HH
 
+# include <vector>
+# include <mln/value/rgb8.hh>
+# include <mln/util/map.hh>
+# include <mln/core/alias/box2d.hh>
 
 namespace mln
 {
@@ -37,41 +41,30 @@ namespace mln
   namespace util
   {
 
-    enum Tags { None, Spurious, Noise };
-
     template <typename I>
     struct tree_of_shapes
     {
       typedef mln_site(I) P;
       typedef mln_value(I) V;
       typedef mln_equiv(V) EV;
+      typedef mln_ch_value(I,P) parent_t;
 
       I Fb;
 
       // Default canonicalization.
       std::vector<P> R;
-      mln_ch_value(I,P) parent;
-
-      // 0-canonicalization.
-      std::vector<P> R0;
-      mln_ch_value(I,P) parent0;
-      // Attributes/tags for 0-representants.
-      std::vector<Tags> tag;
-
-      // 01-canonicalization.
-      std::vector<P> R01;
-      mln_ch_value(I,P) parent01;
-
+      parent_t parent;
 
       V level(const P& p) const;
       bool level_changes_at(unsigned i) const;
+
       bool is_root(const P& p) const;
+      bool is_not_root(const P& p) const;
+
       bool is_representative(const P& p) const;
+      bool is_not_representative(const P& p) const;
 
       bool is_0_representative(const P& p) const;
-
-      bool is_01_representative(const P& p) const;
-
     };
 
 
@@ -104,6 +97,13 @@ namespace mln
 
     template <typename I>
     bool
+    tree_of_shapes<I>::is_not_root(const P& p) const
+    {
+      return ! is_root(p);
+    }
+
+    template <typename I>
+    bool
     tree_of_shapes<I>::is_representative(const P& p) const
     {
       return is_root(p) || Fb(parent(p)) != Fb(p);
@@ -111,18 +111,16 @@ namespace mln
 
     template <typename I>
     bool
-    tree_of_shapes<I>::is_0_representative(const P& p) const
+    tree_of_shapes<I>::is_not_representative(const P& p) const
     {
-      return is_representative(p) && (Fb(p) == V(0));
+      return ! is_not_representative(p);
     }
 
     template <typename I>
     bool
-    tree_of_shapes<I>::is_01_representative(const P& p) const
+    tree_of_shapes<I>::is_0_representative(const P& p) const
     {
-      return is_root(p)
-	|| (Fb(p) == V(0) && Fb(parent(p)) != V(0))
-	|| (Fb(p) != V(0) && Fb(parent(p)) == V(0));
+      return (is_root(p) || Fb(parent(p)) != Fb(p)) && (Fb(p) == V(0));
     }
 
 

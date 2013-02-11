@@ -1,5 +1,14 @@
 2013-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new structure for compressed tree.
+
+	* mln/util/tree_of_shapes.hh: Remove methods related to compressed
+	tree.
+
+	* mln/util/ztree_of_shapes.hh: New.
+
+2013-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/util/map.hh: Fix prototype of element().
