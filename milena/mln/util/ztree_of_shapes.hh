@@ -400,7 +400,7 @@ namespace mln
       // debug::println(parent_);
 # endif // ! RELEASE
 
-      for (int i = 0; i < tree.R.size(); ++i)
+      for (unsigned i = 0; i < tree.R.size(); ++i)
 	R.push_back(offset_of(tree.R[i]));
 
       // Initialize R0, 0-representative faces and R01 representative
