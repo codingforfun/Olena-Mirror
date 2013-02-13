@@ -159,7 +159,8 @@ The latter may also be interested by the Developer HTML documentation
 There are two ways of getting Milena on the web:
 \begin{itemize}
   \item Download a tarball/package from the website,
-  \item Checkout the SVN repository.
+  \item Checkout the SVN repository,
+  \item Clone the Git repository.
 \end{itemize}
 
 Downloading a package or a tarball is the best choice for a new user. Except
@@ -188,6 +189,49 @@ We strongly advise you to not use it for production use.
 %download page.
 
 %--------------------------
+\doxysubsection{tuto1dowloadinggit}{Downloading from Git}
+
+First, be sure that Git is already installed on your system.
+Open a terminal and type:
+
+\begin{verbatim}
+$ git --version
+git version 1.7.10.4
+\end{verbatim}
+
+You should see your version of Git installed. If you read 'Command not found'
+then you need to install Git.
+
+To install Git on Debin or Ubuntu, run:
+\begin{verbatim}
+$ sudo apt-get install git
+\end{verbatim}
+
+For other distributions, please refer to the user documentation of your system.
+
+Once you have Git installed, go to the directoy where you would like to download
+Olena and then, clone the repository with the following command:
+
+\begin{verbatim}
+$ git clone git@git.lrde.epita.fr:olena
+\end{verbatim}
+
+Enter the 'olena' directory.
+
+\begin{verbatim}
+$ cd olena
+\end{verbatim}
+
+You are now ready to configure the directory and install Milena as described in 
+section \doxyref{tuto2}.
+We invite you to take a look at the description of the directory structure
+(section \doxyref{tuto1dirstruct}).
+If you encounter any issues in the installation process or if you have any
+question, do not forget to join the mailing lists (section 
+\doxyref{tuto1mailinglists}) and/or use the other documentations resources 
+(section ref{tuto1documentation}).
+%--------------------------
+
 \doxysubsection{tuto1downloadingsvn}{Downloading from SVN}
 
 First, be sure that SVN is already installed on your system.
@@ -601,12 +645,12 @@ your system, generating the doc and compiling the test suite and the examples.
 
 
 %**************************
-\doxysection{tuto2bootstrap}{Bootstrap (SVN Sources)}
+\doxysection{tuto2bootstrap}{Bootstrap (Git Sources)}
 
 If you got the sources from a package/tarball, you can skip this section. Go
 to section \doxyref{tuto2configure}.
 
-If you downloaded the sources from the SVN repository, you must launch a
+If you downloaded the sources from the Git repository, you must launch a
 script before configuring the build directory.
 
 Run the following:
@@ -1070,10 +1114,10 @@ This trace allows to follow the stack trace at runtime. It also provides the
 time passed in each function call if the call last at least 10ms.
 
 In order to enable traces in a program, set the related global variable to
-true:
+false:
 \begin{verbatim}
 ...
-trace::quiet = true;
+trace::quiet = false;
 ...
 \end{verbatim}
 
@@ -1102,7 +1146,7 @@ labeling::blobs {
 } labeling::blobs - 0.08s
 \end{verbatim}
 
-As you can see, \code{labeling::blobs} is located just after having set
+As you can see, \code{labeling::blobs} is located just before having set
 \var{trace::quiet} to \val{true} so its trace is part of the output.
 \code{geom::bbox}'s trace is not part of the output though since traces have
 been disabled just before it is called.
@@ -1116,7 +1160,7 @@ Milena also provides a lot of debug tools. Here is a small list of the tools:
   \doxymoutput[1]{tuto3_println}
 
   \item mln::debug::println\_with\_border, print an image in the console withs
-  its border.
+    its border (3 by default).
   \doxycode[2]{tuto3_println}
   \doxymoutput[2]{tuto3_println}
 
@@ -1214,16 +1258,16 @@ This box is defined from \val{(0,0)} to \val{(4,4)} :
 
 A box can also starts from a site different from \val{(0,0)}.
 
-\doxycode[4]{tuto4_site_set_create}
+\doxycode[5]{tuto4_site_set_create}
 
-This box is defined from \val{(0,0)} to \val{(4,4)} :
+This box is defined from \val{(-2,-2)} to \val{(2,2)} :
 
 \doxymoutput[3]{tuto4_site_set_create}
 
 
 Another common site set is \type{p\_array}. It contains only sites which have been added to it.
 
-\doxycode[2]{tuto4_site_set_create}
+\doxycode[3]{tuto4_site_set_create}
 
 This site only contains :
 
@@ -1471,7 +1515,7 @@ is a workaround to make it read-write.
 \begin{center}
   \begin{tabular}{c c c}
     \doxyimg{small-enlarged}{3cm} & ~\huge{$\rightarrow$}~ & \doxyfigure[1]{tuto4_genericity_and_algorithms}{3cm} \\
-    \multicolumn{3}{c}{Fill with blue a region of interest defined by a
+    \multicolumn{3}{c}{Fill with green a region of interest defined by a
       \type{box2d}.} \\
   \end{tabular}
 \end{center}

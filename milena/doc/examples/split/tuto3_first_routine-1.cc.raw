@@ -6,7 +6,6 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
-#include <mln/labeling/blobs.hh>
 
 #include <mln/data/compare.hh>
 
