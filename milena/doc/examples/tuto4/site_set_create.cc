@@ -9,7 +9,7 @@ int main()
   using namespace mln;
 
   // \{
-  box2d b(4,4);
+  box2d b(3,3);
   // \}
 
   doc::begin_output();
@@ -41,7 +41,7 @@ int main()
 
   {
     // \{
-    box2d b = make::box2d(-2,-2, 2, 2);
+    box2d b = make::box2d(-1,-1, 1, 1);
     // \}
 
     doc::begin_output();
