@@ -66,6 +66,7 @@ namespace mln
 	tag = None;
 	own_area = 0;
 	area = 0;
+	area_2face = 0;
 	nchild = 0;
 	color = literal::black;
 	is_leaf = true;
@@ -90,10 +91,15 @@ namespace mln
       // It is stored on any representatives.
       unsigned own_area;
 
-      // Corresponds to the number of pixels of all the sub-shapes and
+      // Corresponds to the number of faces of all the sub-shapes and
       // at the same level.
       // It is stored on any representatives.
       unsigned area;
+
+      // Corresponds to the number of 2-faces of all the sub-shapes and
+      // at the same level.
+      // It is stored on any representatives.
+      unsigned area_2face;
 
       // The bounding box.
       // It is stored on 0-representatives ONLY.
@@ -194,6 +200,7 @@ namespace mln
       return l.tag == r.tag
 	&& l.own_area == r.own_area
 	&& l.area == r.area
+	&& l.area_2face == r.area_2face
 	&& l.bbox == r.bbox
 	&& l.color == r.color
 	&& l.nchild == r.nchild

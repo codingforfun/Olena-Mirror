@@ -1,3 +1,7 @@
+2013-02-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/util/ztree_of_shapes.hh: Add area_2face attribute.
+
 2013-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/util/ztree_of_shapes.hh: Fix warnings.
