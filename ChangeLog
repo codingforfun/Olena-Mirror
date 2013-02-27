@@ -1,5 +1,9 @@
 2013-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* AUTHORS: Add Antoine Froger.
+
+2013-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move new viewer to scribo/demo.
 
 	* GScribo/BUGS,
