@@ -14,28 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#undef MLN_WO_GLOBAL_VARS
+#ifndef VARIANTPOINTER_HH
+# define VARIANTPOINTER_HH
 
-#include <QtGui/QApplication>
+#include <QVariant>
 
-#include <scribo/make/debug_filename.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/io/magick/load.hh>
-#include <mln/debug/filename.hh>
-#include <mln/literal/colors.hh>
-#include <scribo/binarization/sauvola_ms.hh>
-#include <mln/math/pi.hh>
-
-#include "mainwindow.hh"
-
-int main(int argc, char *argv[])
+template<typename T>
+class VariantPointer
 {
-    Magick::InitializeMagick(*argv);
-    // On Linux, we NEED to use the raster graphics system.
-    // Linux don't really support openGL graphics system (the default one on Linux).
-    QApplication::setGraphicsSystem("raster");
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+public:
+  static QVariant toQVariant(T *pointer);
+  static T *fromQVariant(const QVariant& variant);
+
+private:
+  VariantPointer();
+};
+
+#endif // VARIANTPOINTER_HH

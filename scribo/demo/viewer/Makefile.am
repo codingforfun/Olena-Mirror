@@ -19,102 +19,139 @@ include $(top_srcdir)/build-aux/autotroll.mk
 
 
 bin_PROGRAMS = scribo-viewer
-scribo_viewer_SOURCES = viewer.cc		\
+scribo_viewer_SOURCES = mainwindow.cc		\
+			aboutdialog.cc		\
+			configs.cc		\
 			main.cc			\
-			image_widget.cc		\
-			xml_widget.cc		\
-			key_widget.cc		\
-			browser_widget.cc	\
-			image_scene.cc		\
-			image_view.cc		\
-			image_region.cc		\
-			help_dialog.cc		\
-			step_widget.cc 		\
-			preprocessing_options.cc\
-			segmentation_options.cc \
-			ocr_options.cc 		\
-			runner.cc		\
-			preprocess.cc		\
-			process.cc		\
-			general_options.cc 	\
-			preferences_dialog.cc 	\
-			option_widget.cc 	\
-			config.cc
+			regionwidget.cc		\
+			xml.cc			\
+			dockwidget.cc		\
+			PagesWidget/pagesdelegate.cc		\
+			PagesWidget/pagesmodel.cc		\
+			PagesWidget/pageswidget.cc		\
+			Preferences/generaloptions.cc		\
+			Preferences/ocroptions.cc		\
+			Preferences/preferencesdialog.cc	\
+			Preferences/preprocessingoptions.cc	\
+			Preferences/segmentationoptions.cc	\
+			Processing/preprocess.cc		\
+			Processing/process.cc			\
+			Processing/progressdialog.cc		\
+			Processing/runner.cc			\
+			Rendering/graphicsview.cc		\
+			Rendering/regionitem.cc			\
+			Rendering/scene.cc			\
+			Rendering/selection.cc			\
+			Rendering/rootgraphicsitem.cc		\
+			XmlWidget/attributesmodel.cc	\
+			XmlWidget/xmlattributes.cc	\
+			XmlWidget/xmlitem.cc		\
+			XmlWidget/xmlmodel.cc		\
+			XmlWidget/xmlview.cc		\
+			XmlWidget/xmlwidget.cc
+
+
 
 nodist_scribo_viewer_SOURCES = $(BUILT_SOURCES)
 
+
+
 scribo_viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir) 	\
+			 -I$(builddir)					\
 			 -I$(top_srcdir)/milena				\
 			 -I$(top_srcdir)/scribo 			\
 			 $(MAGICKXX_CPPFLAGS) 				\
 			 $(TESSERACT_CPPFLAGS) 				\
 		         $(TIFF_CPPFLAGS) 				\
 			 -DNDEBUG -DMLN_WO_GLOBAL_VARS
+
+
+
 scribo_viewer_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) 			\
 			 $(STRICT_ALIASING_CXXFLAGS) -O3
+
+
+
 scribo_viewer_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) 			\
 			 $(MAGICKXX_LDFLAGS)				\
 			 $(TESSERACT_LDFLAGS)				\
 		         $(TIFF_LDFLAGS)
+
+
+
 scribo_viewer_LDADD    = $(QT_LIBS) $(LDADD)
 
-BUILT_SOURCES = viewer.moc.cc			\
-		image_widget.moc.cc		\
-		xml_widget.moc.cc		\
-		key_widget.moc.cc		\
-		browser_widget.moc.cc		\
-		image_scene.moc.cc		\
-		image_view.moc.cc		\
-		image_region.moc.cc		\
-		help_dialog.ui.h		\
-		step_widget.moc.cc 		\
-		preprocessing_options.moc.cc	\
-		preprocessing_options.ui.h	\
-		segmentation_options.moc.cc	\
-		segmentation_options.ui.h	\
-		ocr_options.moc.cc		\
-		ocr_options.ui.h		\
-		runner.moc.cc 			\
-		preprocess.moc.cc		\
-		process.moc.cc			\
-		preferences_dialog.moc.cc	\
-		preferences_dialog.ui.h		\
-		general_options.moc.cc		\
-		general_options.ui.h		\
-		demodir.hh 			\
-		viewer.qrc.cc
 
 
-noinst_HEADERS = viewer.hh		\
-	 	 viewer.hxx		\
-	 	 image_widget.hh	\
-	 	 xml_widget.hh		\
-	 	 key_widget.hh		\
-	 	 browser_widget.hh	\
-	 	 image_scene.hh		\
-	 	 image_view.hh		\
-	 	 image_region.hh	\
-	 	 image_region.hxx	\
-	 	 common.hh		\
-	 	 help_dialog.hh		\
-	 	 step_widget.hh		\
-		 preprocessing_options.hh\
-		 segmentation_options.hh\
-		 ocr_options.hh		\
-		 runner.hh 		\
-		 preprocess.hh		\
-		 process.hh 		\
-		 general_options.hh 	\
-		 preferences_dialog.hh 	\
-		 option_widget.hh 	\
-		 config.hh	 	\
-		 defs.hh
+BUILT_SOURCES = demodir.hh			\
+		dockwidget.moc.cc		\
+		Rendering/graphicsview.moc.cc	\
+		mainwindow.moc.cc		\
+		Preferences/ocroptions.moc.cc	\
+		PagesWidget/pagesmodel.moc.cc	\
+		PagesWidget/pageswidget.moc.cc	\
+		Preferences/preferencesdialog.moc.cc	\
+		Processing/preprocess.moc.cc		\
+		Preferences/preprocessingoptions.moc.cc	\
+		Processing/process.moc.cc		\
+		Processing/progressdialog.moc.cc	\
+		regionwidget.moc.cc		\
+		Processing/runner.moc.cc		\
+		Rendering/scene.moc.cc			\
+		Preferences/segmentationoptions.moc.cc	\
+		XmlWidget/xmlview.moc.cc		\
+		XmlWidget/xmlwidget.moc.cc		\
+		aboutdialog.ui.h		\
+		Preferences/generaloptions.ui.h	\
+		mainwindow.ui.h			\
+		Preferences/generaloptions.moc.cc	\
+		Preferences/ocroptions.ui.h	\
+	 	Preferences/preferencesdialog.ui.h	\
+		Preferences/preprocessingoptions.ui.h	\
+		Preferences/segmentationoptions.ui.h	\
+		XmlWidget/attributesmodel.moc.cc
+
+
+noinst_HEADERS = mainwindow.hh			\
+		 aboutdialog.hh			\
+		 regionwidget.hh		\
+		 xml.hh				\
+		 PagesWidget/pagesdelegate.hh	\
+		 PagesWidget/pagesmodel.hh	\
+		 PagesWidget/pageswidget.hh	\
+		 Preferences/generaloptions.hh	\
+		 Preferences/ocroptions.hh	\
+		 Preferences/optionwidget.hh		\
+		 Preferences/preferencesdialog.hh	\
+		 Preferences/preprocessingoptions.hh	\
+		 Preferences/segmentationoptions.hh	\
+		 Processing/preprocess.hh		\
+		 Processing/process.hh			\
+		 Processing/progressdialog.hh		\
+		 Processing/runner.hh			\
+		 Rendering/graphicsview.hh		\
+		 Rendering/regionitem.hh		\
+		 Rendering/rootgraphicsitem.hh		\
+		 Rendering/scene.hh			\
+		 Rendering/selection.hh			\
+		 XmlWidget/attributesmodel.hh		\
+		 XmlWidget/selectionproxy.hh		\
+		 XmlWidget/xmlattributes.hh		\
+		 XmlWidget/xmldelegate.hh		\
+		 XmlWidget/xmlitem.hh			\
+		 XmlWidget/xmlmodel.hh			\
+		 XmlWidget/xmlview.hh			\
+		 XmlWidget/xmlwidget.hh
+
+
 
 
 # Generated files
 do_subst = sed  					\
 	   -e 's|@libexecdir[@]|$(libexecdir)|g'		\
 	   -e 's|@abs_demodir[@]|$(abs_top_builddir)/scribo/demo|g'
+
+
 
 demodir.hh: $(srcdir)/demodir.hh.in Makefile
 	rm -f $@ $@.tmp
@@ -124,17 +161,20 @@ demodir.hh: $(srcdir)/demodir.hh.in Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
+
+
 CLEANFILES = $(BUILT_SOURCES)
 
-EXTRA_DIST =			\
-	general_options.ui	\
-	preferences_dialog.ui 	\
-	README			\
-	preprocessing_options.ui\
-	segmentation_options.ui	\
-	ocr_options.ui		\
-	help_dialog.ui 		\
-	demodir.hh.in		\
-	viewer.qrc		\
-	icons/olena_smaller.jpg
+
+
+EXTRA_DIST = BUGS			\
+	     README			\
+	     aboutdialog.ui		\
+	     mainwindow.ui		\
+	     Preferences/generaloptions.ui	\
+	     Preferences/ocroptions.ui		\
+	     Preferences/preferencesdialog.ui	\
+	     Preferences/preprocessingoptions.ui	\
+	     Preferences/segmentationoptions.ui	\
+	     demodir.hh.in
 

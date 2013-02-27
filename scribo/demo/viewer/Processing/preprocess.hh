@@ -14,28 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#undef MLN_WO_GLOBAL_VARS
+#ifndef PREPROCESS_H
+# define PREPROCESS_H
 
-#include <QtGui/QApplication>
+#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/rgb8.hh>
+#include <QObject>
 
-#include <scribo/make/debug_filename.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/io/magick/load.hh>
-#include <mln/debug/filename.hh>
-#include <mln/literal/colors.hh>
-#include <scribo/binarization/sauvola_ms.hh>
-#include <mln/math/pi.hh>
+using namespace scribo::toolchain::internal;
 
-#include "mainwindow.hh"
-
-int main(int argc, char *argv[])
+class Preprocess :
+        public QObject,
+        public text_in_doc_preprocess_functor<mln::image2d<mln::value::rgb8> >
 {
-    Magick::InitializeMagick(*argv);
-    // On Linux, we NEED to use the raster graphics system.
-    // Linux don't really support openGL graphics system (the default one on Linux).
-    QApplication::setGraphicsSystem("raster");
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+        Q_OBJECT
+
+    public:
+        virtual void on_progress();
+        virtual void on_new_progress_label(const char *label);
+
+    signals:
+        void newProgressLabel(const QString& label);
+        void progress();
+};
+
+#endif // PREPROCESS_H
