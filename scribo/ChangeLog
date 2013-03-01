@@ -1,3 +1,7 @@
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/contest/bsec2013/process_toc_page.cc: New.
+
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Update.
