@@ -67,6 +67,7 @@ public:
   QString filename() const;
   bool recognized() const;
 
+  static QString makeXmlFilename(const QString& filename);
   static QString getPath(const QString& filename);
 
   void load(const QString& filename);

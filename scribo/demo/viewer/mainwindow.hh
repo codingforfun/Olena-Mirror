@@ -89,7 +89,6 @@ private:
 
   AboutDialog *aboutDialog_;
   ProgressDialog *progressDialog_;
-  PreferencesDialog *preferencesDialog_;
 
   XmlWidget xmlWidget_;
   Xml xml_;

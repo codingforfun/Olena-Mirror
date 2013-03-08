@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/core/object_links.hh: Always initialize links in
@@ -683,7 +682,23 @@
 
 	* scribo/make/text_components_image.hh,
 	* scribo/primitive/extract/non_text.hh: Here.
-=======
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Several small fixes in viewer.
+
+	* demo/viewer/PagesWidget/pageswidget.cc: Rely on signal
+	activated().
+
+	* demo/viewer/mainwindow.cc: Fix a segmentation fault with
+	preferences dialog. Do not disable segmentation action if xml file
+	exists.
+
+	* demo/viewer/mainwindow.hh: Remove preferencesDialog attribute.
+
+	* demo/viewer/xml.cc,
+	* demo/viewer/xml.hh: Fix getPath() and add makeXmlFilename.
+
 2013-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Move new viewer to scribo/demo.
@@ -823,7 +838,6 @@
 	* scribo/demo/viewer/viewer.qrc	,
 	* scribo/demo/viewer/xml_widget.cc,
 	* scribo/demo/viewer/xml_widget.hh: Remove.
->>>>>>> Move new viewer to scribo/demo.
 
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 

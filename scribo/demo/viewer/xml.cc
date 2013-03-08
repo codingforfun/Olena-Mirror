@@ -21,19 +21,39 @@ Xml::Xml(const QString& filename)
     load(filename);
 }
 
+QString Xml::makeXmlFilename(const QString& filename)
+{
+    QString xml_file = filename;
+
+    // Get xml filename from image path.
+    xml_file.remove(0, xml_file.lastIndexOf('/')+1);
+    int pos = xml_file.lastIndexOf('.');
+    xml_file.remove(pos, xml_file.length()-pos);
+    xml_file += "_gui.xml";
+
+    return xml_file;
+}
+
 QString Xml::getPath(const QString& filename)
 {
     Configs *const configs = Configs::getInstance();
 
-    QString xmlPath = filename;
+    // Get directory where XML files are stored.
+    QFileInfo file(filename);
+    QString output_dir = QDir::tempPath();
+    if (configs->generalSaveXmlEnabled())
+    {
+        if (configs->generalSaveXmlSameDir())
+            output_dir = file.absolutePath();
+        else if (configs->generalSaveXmlCustomDir())
+            output_dir = configs->generalSaveXmlCustomDirPath();
 
-    // Get xml filename from image path.
-    xmlPath.remove(0, xmlPath.lastIndexOf('/')+1);
-    int pos = xmlPath.lastIndexOf('.');
-    xmlPath.remove(pos, xmlPath.length()-pos);
-    xmlPath += "_gui.xml";
+        QDir dir(output_dir);
+        if (!dir.exists() && !dir.mkpath(output_dir))
+            output_dir = QDir::tempPath();
+    }
 
-    return configs->generalSaveXmlCustomDirPath() + "/" + xmlPath;
+    return output_dir;
 }
 
 void Xml::isRecognized(const QDomElement& textElement)

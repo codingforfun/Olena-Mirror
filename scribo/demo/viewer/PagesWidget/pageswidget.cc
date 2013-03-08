@@ -33,7 +33,7 @@ PagesWidget::PagesWidget(QWidget *parent):
 
     QShortcut *remove = new QShortcut(Qt::Key_Delete, this);
     connect(remove, SIGNAL(activated()), this, SLOT(removeSelection()));
-    connect(this, SIGNAL(doubleClicked(QModelIndex)),
+    connect(this, SIGNAL(activated(QModelIndex)),
 	    this, SLOT(getPicture(QModelIndex)));
 }
 
