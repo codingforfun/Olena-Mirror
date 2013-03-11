@@ -1,0 +1,12 @@
+#------------------------------------------------------------------------------#
+                  TODO LIST - ICDAR 2013 - Table competition
+#------------------------------------------------------------------------------#
+
+Table location sub-competition : 
+ * Load PDF files (instead of PNM)
+ * Find links betwwen pages for mutlipages tables
+ * Get text from reversed-video zones
+ * Expand the process to borderless tables
+
+Table structure recognition sub-competition :
+ * All

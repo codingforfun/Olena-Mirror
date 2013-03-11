@@ -1,7 +1,9 @@
 #include <mln/binarization/all.hh>
 
 #include <mln/core/image/image2d.hh>
+
 #include <mln/data/all.hh>
+#include <mln/draw/line.hh>
 
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
@@ -9,6 +11,7 @@
 #include <mln/io/ppm/all.hh>
 
 #include <mln/labeling/all.hh>
+#include <mln/literal/all.hh>
 #include <mln/logical/and.hh>
 
 #include <mln/value/all.hh>
@@ -45,7 +48,8 @@ void  write_table(std::ofstream& xml, const point2d& start, const point2d& end)
       << "\t\t<region id='" << region << "' page='" << page << "'>" << std::endl
       << "\t\t<bounding-box x1='" << start[1] << "' y1='" << start[0] << "' "
       << "x2='" << end[1] << "' y2='" << end[0] << "'/>" << std::endl
-      << "\t\t</region>" << std::endl;
+      << "\t\t</region>" << std::endl
+      << "\t</table>" << std::endl;
 
   ++table;
 }
@@ -181,7 +185,7 @@ int main(int argc, char** argv)
   typedef value::label_16 V;
   typedef image2d<V> L;
 
-  image2d<value::rgb8> original;
+  image2d<value::rgb8> original, final;
   image2d<value::int_u8> filtered;
   image2d<bool> bin, ima_hlines, ima_vlines, ima_tables, ima_texts,
                 bin_without_lines, bin_without_lines_denoised,
@@ -207,6 +211,7 @@ int main(int argc, char** argv)
   filtered = data::transform(original, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
   bin = scribo::binarization::sauvola(filtered, 81, 0.44);
+  final = data::convert(value::rgb8(), bin);
 
   initialize(mask, bin);
   initialize(ima_texts, bin);
@@ -266,9 +271,22 @@ int main(int argc, char** argv)
 
       std::cout << "(" << left << "," << top << ") ->"
                 << "(" << right << "," << bottom << ")" << std::endl;
+
+      point2d p1, p2, p3, p4;
+
+      p1 = point2d(top, left);
+      p2 = point2d(top, right);
+      p3 = point2d(bottom, right);
+      p4 = point2d(bottom, left);
+
+      draw::line(final, p1, p2, literal::red);
+      draw::line(final, p2, p3, literal::red);
+      draw::line(final, p3, p4, literal::red);
+      draw::line(final, p4, p1, literal::red);
+
+      write_table(xml, p1, p3);
     }
   }
-  
 
   // Get lines images
   hlines_ima = hlines.labeled_image();
@@ -286,6 +304,7 @@ int main(int argc, char** argv)
   io::pbm::save(mask, "output/6_mask.pbm");
   io::pbm::save(ima_texts, "output/7_texts.pbm");
   /* Save 8_i_isolated */
+  io::ppm::save(final, "output/9_final.ppm");
 
   end_xml(xml);
 
