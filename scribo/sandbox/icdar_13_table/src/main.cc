@@ -88,6 +88,94 @@ void  get_vertical_lines(scribo::component_set<L>&  vlines,
   }
 }
 
+unsigned find_left(image2d<bool>& ima)
+{
+  bool found = false;
+
+  def::coord col = geom::min_col(ima);
+  while (col < geom::max_col(ima) && !found)
+  {
+    def::coord row = geom::min_row(ima);
+    while (row < geom::max_row(ima) && !found)
+    {
+      found = opt::at(ima, row, col);
+      ++row;
+    }
+    ++col;
+  }
+
+  return (col - 1);
+}
+
+unsigned  find_right(image2d<bool>& ima)
+{
+  bool found = false;
+
+  def::coord col = geom::max_col(ima) - 1;
+  while (col >= geom::min_col(ima) && !found)
+  {
+    def::coord row = geom::min_row(ima);
+    while (row < geom::max_row(ima) && !found)
+    {
+      found = opt::at(ima, row, col);
+      ++row;
+    }
+    --col;
+  }
+
+  return (col + 1);
+
+}
+
+unsigned  find_top(image2d<bool>& ima)
+{
+  bool found = false;
+
+  def::coord row = geom::min_row(ima);
+  while (row < geom::max_row(ima) && !found)
+  {
+    def::coord col = geom::min_col(ima);
+    while (col < geom::max_col(ima) && !found)
+    {
+      found = opt::at(ima, row, col);
+      ++col;
+    }
+    ++row;
+  }
+
+  return (row - 1);
+
+}
+
+unsigned  find_bottom(image2d<bool>& ima)
+{
+  bool found = false;
+
+  def::coord row = geom::max_row(ima) - 1;
+  while (row >= geom::min_row(ima) && !found)
+  {
+    def::coord col = geom::min_col(ima);
+    while (col < geom::max_col(ima) && !found)
+    {
+      found = opt::at(ima, row, col);
+      ++col;
+    }
+    --row;
+  }
+
+  return (row + 1);
+}
+
+void  find_borders(image2d<bool>& ima,
+                   unsigned& left, unsigned& right,
+                   unsigned& top, unsigned& bottom)
+{
+  left = find_left(ima);
+  right = find_right(ima);
+  top = find_top(ima);
+  bottom = find_bottom(ima);
+}
+
 int main(int argc, char** argv)
 {
   typedef value::label_16 V;
@@ -149,6 +237,39 @@ int main(int argc, char** argv)
   // Compose table zones with bin_without_lines_lines
   ima_texts = logical::and_(bin_without_lines_denoised, mask);
 
+  // Isolate texts between tables
+  for (unsigned i = 1; i <= masks.nelements(); ++i)
+  {
+    image2d<bool> table_mask, isolated_text;
+    std::ostringstream path;
+    bool empty = true;
+
+    initialize(table_mask, bin);
+    data::fill(table_mask, false);
+    data::fill((table_mask | masks(i).bbox()).rw(), true);
+
+    isolated_text = logical::and_(bin_without_lines_denoised, table_mask);
+
+    mln_piter_(image2d<bool>) p(isolated_text.domain());
+
+    for_all(p)
+      empty = empty && !(isolated_text(p));
+
+    if (!empty)
+    {
+      path << "output/8_" << i << "_isolated.pbm";
+      io::pbm::save(isolated_text, path.str());
+
+      // Find coordinated
+      unsigned left, right, top, bottom;
+      find_borders(isolated_text, left, right, top, bottom);
+
+      std::cout << "(" << left << "," << top << ") ->"
+                << "(" << right << "," << bottom << ")" << std::endl;
+    }
+  }
+  
+
   // Get lines images
   hlines_ima = hlines.labeled_image();
   vlines_ima = vlines.labeled_image();
@@ -164,6 +285,7 @@ int main(int argc, char** argv)
   io::pbm::save(ima_tables, "output/5_tables.pbm");
   io::pbm::save(mask, "output/6_mask.pbm");
   io::pbm::save(ima_texts, "output/7_texts.pbm");
+  /* Save 8_i_isolated */
 
   end_xml(xml);
 
