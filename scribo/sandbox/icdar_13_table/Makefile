@@ -1,8 +1,8 @@
 CCACHE=
 CC=g++
-CFLAGS=-Wall -Werror -O3
-CLIBS=-I../../../milena/ -I../../
-CLEAN=*.o $(OUTPUT) output/* log final.xml
+CFLAGS=-Wall -Werror -O3 -DHAVE_TESSERACT_3 -DNDEBUG
+CLIBS=-I../../../milena/ -I../../ -I/usr/include/poppler
+CLEAN=*.o output/* log final.xml
 
 SRC=src/main.cc
 OUTPUT=table
@@ -10,9 +10,12 @@ OUTPUT=table
 all: table
 
 table:
-	$(CCACHE) $(CC) $(CFLAGS) -DHAVE_TESSERACT_3 $(CLIBS) $(SRC) -ltesseract -o $(OUTPUT)
+	$(CCACHE) $(CC) $(CFLAGS) $(CLIBS) $(SRC) -ltesseract -lpoppler-cpp -o $(OUTPUT)
 
 clean:
 	rm -rf $(CLEAN)
 
-.PHONY: table
+mrproper: clean
+	rm -f $(OUTPUT)
+
+.PHONY: table clean mrproper
