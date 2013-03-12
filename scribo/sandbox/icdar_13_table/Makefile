@@ -4,7 +4,7 @@ CFLAGS=-Wall -Werror -O3 -DHAVE_TESSERACT_3 -DNDEBUG
 CLIBS=-I../../../milena/ -I../../ -I/usr/include/poppler
 CLEAN=*.o output/* log final.xml
 
-SRC=src/main.cc
+SRC=src/new.cc
 OUTPUT=table
 
 all: table
