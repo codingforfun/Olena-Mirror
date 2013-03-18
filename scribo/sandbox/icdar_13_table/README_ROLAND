@@ -1,0 +1,18 @@
+#------------------------------------------------------------------------------#
+                  README - ICDAR 2013 - Table competition
+#------------------------------------------------------------------------------#
+
+FIRST OF ALL :
+ * mkdir output
+
+Compilation and cleaning :
+ * make (generates the main program)
+ * make old (generates the old program (without scribo toolchain))
+ * make clean (remove all files expect the binary)
+ * make mrproper (remove all files)
+
+Usage :
+ * ./table [your-pdf-file]
+   Generate debug images in the output/ directory and the final.xml
+ * ./old [your-pdf-file]
+   Same thing but old processing (without scribo toolchain)
