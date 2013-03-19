@@ -5,6 +5,8 @@
 Table location sub-competition : 
  * Find links betwwen pages for mutlipages tables
  * Get text from reversed-video zones
+ * *** glibc detected *** ./table: corrupted double-linked list
+   with the file us-005.pdf from the test set
 
 Table structure recognition sub-competition :
  * All

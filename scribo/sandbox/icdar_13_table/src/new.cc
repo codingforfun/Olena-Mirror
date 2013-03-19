@@ -98,8 +98,8 @@ int main(int argc, char** argv)
   std::ostringstream path;
   image2d<value::rgb8> original, ima_links, ima_groups, ima_valid;
   image2d<value::int_u8> filtered;
-  image2d<bool> bin, separators, bin_without_separators, whitespaces, comp, denoised;
-  scribo::component_set< image2d<unsigned> > components;
+  image2d<bool> bin, reverse, reverse_selection, bin_merged, separators, bin_without_separators, whitespaces, comp, denoised;
+  scribo::component_set< image2d<unsigned> > components, rcomponents;
 
   unsigned dpi = 72;
 
@@ -113,6 +113,25 @@ int main(int argc, char** argv)
     original = pdf[page];
     filtered = data::transform(original, fun::v2v::rgb_to_luma<value::int_u8>());
     bin = scribo::binarization::sauvola(filtered, 81, 0.44);
+
+    // Reverse selection
+    reverse = logical::not_(bin);
+    initialize(reverse_selection, reverse);
+    data::fill(reverse_selection, false);
+
+    unsigned nrcomponents;
+    rcomponents = scribo::primitive::extract::components(reverse, c8(), nrcomponents);
+
+    for (unsigned i = 1; i < rcomponents.nelements(); ++i)
+    {
+      const box2d& b = rcomponents(i).bbox();
+
+      if (b.height() < 20 && b.width() < 20)
+        data::fill((reverse_selection | b).rw(), true);
+    }
+
+    reverse_selection = logical::and_(reverse, reverse_selection);
+    reverse_selection = scribo::preprocessing::denoise_fg(reverse_selection, c8(), 4);
 
     // Find separators
     bin_without_separators = duplicate(bin);
@@ -131,11 +150,14 @@ int main(int argc, char** argv)
     // Denoise
     denoised = scribo::preprocessing::denoise_fg(bin_without_separators, c8(), 4);
 
+    // Bin merged
+    bin_merged = logical::or_(denoised, reverse_selection);
+
     // Extract components
     unsigned ncomponents;
-    components = scribo::primitive::extract::components(denoised, c8(), ncomponents);
+    components = scribo::primitive::extract::components(bin_merged, c8(), ncomponents);
 
-    initialize(comp, denoised);
+    initialize(comp, bin_merged);
     data::fill(comp, false);
     for (unsigned i = 1; i <= components.nelements(); ++i)
     {
@@ -158,9 +180,9 @@ int main(int argc, char** argv)
     // Filter links
     scribo::object_links< image2d<unsigned> > hratio_filtered_links = scribo::filter::object_links_bbox_h_ratio(merged_links, 2.5f);
 
-    ima_links = data::convert(value::rgb8(), denoised);
-    ima_groups = data::convert(value::rgb8(), denoised);
-    ima_valid = data::convert(value::rgb8(), denoised);
+    ima_links = data::convert(value::rgb8(), bin_merged);
+    ima_groups = data::convert(value::rgb8(), bin_merged);
+    ima_valid = data::convert(value::rgb8(), bin_merged);
 
     // Write links
     for (unsigned l = 1; l < merged_links.nelements(); ++l)
@@ -213,7 +235,7 @@ int main(int argc, char** argv)
           unsigned min_height = std::min(b1.height(), b2.height());
 
           if (p1[0] < p2[0] // Avoid redundancy
-              && max_height * 2 < denoised.ncols()
+              && max_height * 2 < bin_merged.ncols()
               && min_height + 3 >= max_height // Same heights
               && b1.width() < 2 * average_width && b2.width() < 2 * average_width // Regular width
               && (b1.pmin()[1] == b2.pmin()[1]
@@ -258,10 +280,9 @@ int main(int argc, char** argv)
       }
     }
 
-    // Draw weighted boxes (red < orange < cyan < green)
+    // Draw weighted boxes (red < orange < cyan < green) (useless ?)
     for (unsigned i = 0; i < balance.size(); ++i)
     {
-      std::cout << balance[i] << " ";
       if (balance[i] == 1)
         draw::box(ima_valid, groups(i).bbox(), literal::red);
 
@@ -274,10 +295,9 @@ int main(int argc, char** argv)
       if (balance[i] > 3)
         draw::box(ima_valid, groups(i).bbox(), literal::green);
     }
-    std::cout << std::endl << std::endl;
-
 
     // Write images and close XML
+    // FIXME To externalize
     path.str(""); path << "output/p" << page << "_0_bin.pbm";
     io::pbm::save(bin, path.str());
 
@@ -287,16 +307,25 @@ int main(int argc, char** argv)
     path.str(""); path << "output/p" << page << "_2_denoised.pbm";
     io::pbm::save(denoised, path.str());
 
-    path.str(""); path << "output/p" << page << "_3_components.pbm";
+    path.str(""); path << "output/p" << page << "_3_reverse.pbm";
+    io::pbm::save(reverse, path.str());
+
+    path.str(""); path << "output/p" << page << "_4_reverse_selection.pbm";
+    io::pbm::save(reverse_selection, path.str());
+
+    path.str(""); path << "output/p" << page << "_5_bin_merged.pbm";
+    io::pbm::save(bin_merged, path.str());
+
+    path.str(""); path << "output/p" << page << "_6_components.pbm";
     io::pbm::save(comp, path.str());
 
-    path.str(""); path << "output/p" << page << "_4_links.ppm";
+    path.str(""); path << "output/p" << page << "_7_links.ppm";
     io::ppm::save(ima_links, path.str());
 
-    path.str(""); path << "output/p" << page << "_5_groups.ppm";
+    path.str(""); path << "output/p" << page << "_8_groups.ppm";
     io::ppm::save(ima_groups, path.str());
 
-    path.str(""); path << "output/p" << page << "_6_valid.ppm";
+    path.str(""); path << "output/p" << page << "_9_valid.ppm";
     io::ppm::save(ima_valid, path.str());
   }
 
