@@ -4,9 +4,10 @@
 
 Table location sub-competition : 
  * Find links betwwen pages for mutlipages tables
- * Get text from reversed-video zones
  * *** glibc detected *** ./table: corrupted double-linked list
    with the file us-005.pdf from the test set
+ * 'Floating point exeption' using sauvola_ms(a, b, c) with a floating point
+   c instead of an unsigned (Z is working on it)
 
 Table structure recognition sub-competition :
  * All

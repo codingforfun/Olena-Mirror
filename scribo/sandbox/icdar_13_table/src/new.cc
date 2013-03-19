@@ -53,6 +53,36 @@
 
 using namespace mln;
 
+// Write image2d<bool> images
+void  write_image(const image2d<bool>& ima,
+                  const char*          name,
+                  const unsigned       page,
+                  unsigned&            number,
+                  std::ostringstream&  path)
+{
+  path.str("");
+  path << "output/p" << page
+       << "_" << number
+       << "_" << name << ".pbm";
+  io::pbm::save(ima, path.str());
+  ++number;
+}
+
+// Write image2d<value::rbg8> images
+void  write_image(const image2d<value::rgb8>& ima,
+                  const char*                 name,
+                  const unsigned              page,
+                  unsigned&                   number,
+                  std::ostringstream&         path)
+{
+  path.str("");
+  path << "output/p" << page
+       << "_" << number
+       << "_" << name << ".ppm";
+  io::ppm::save(ima, path.str());
+  ++number;
+}
+
 // Open and initialize XML
 void  start_xml(std::ofstream& xml, const char* name, const char* pdf)
 {
@@ -85,10 +115,147 @@ void  write_table(std::ofstream& xml, const point2d& start, const point2d& end)
   ++table;
 }
 
-                                /********/
-                                /* MAIN */
-                                /********/
+// Draw vertical links from top to bottom (red)
+void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
+                    image2d<value::rgb8>&                             ima_groups,
+                    std::vector<short>&                               balance,
+                    unsigned                                          average_width)
+{
+  for (unsigned i = 1; i <= groups.nelements(); ++i)
+  {
+    for (unsigned j = 1; j <= groups.nelements(); ++j)
+    {
+      if (i != j)
+      {
+        const box2d& b1 = groups(i).bbox();
+        const box2d& b2 = groups(j).bbox();
+        const point2d& p1 = b1.pcenter();
+        const point2d& p2 = b2.pcenter();
 
+        unsigned max_height = std::max(b1.height(), b2.height());
+        unsigned min_height = std::min(b1.height(), b2.height());
+
+        if (p1[0] < p2[0] // Avoid redundancy
+            && max_height * 2 < ima_groups.ncols()
+            && min_height + 3 >= max_height // Same heights
+            && b1.width() < 2 * average_width && b2.width() < 2 * average_width // Regular width
+            && (b1.pmin()[1] == b2.pmin()[1]
+              || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
+              || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
+            && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
+            && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+        {
+          draw::line(ima_groups, p1, p2, literal::red);
+          balance[i] += 1;
+          break;
+        }
+      }
+    }
+  }
+}
+
+// Draw vertical links from bottom to top (red)
+void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
+                    image2d<value::rgb8>&                             ima_groups,
+                    std::vector<short>&                               balance,
+                    unsigned                                          average_width)
+{
+  for (unsigned i = groups.nelements(); i > 0; --i)
+  {
+    for (unsigned j = groups.nelements(); j > 0; --j)
+    {
+      if (i != j)
+      {
+        const box2d& b1 = groups(i).bbox();
+        const box2d& b2 = groups(j).bbox();
+        const point2d& p1 = b1.pcenter();
+        const point2d& p2 = b2.pcenter();
+
+        unsigned max_height = std::max(b1.height(), b2.height());
+        unsigned min_height = std::min(b1.height(), b2.height());
+
+        if (p1[0] > p2[0] // Avoid redundancy
+            && max_height * 2 < ima_groups.ncols()
+            && min_height + 3 >= max_height // Same heights
+            && b1.width() < 2 * average_width && b2.width() < 2 * average_width // Regular width
+            && (b1.pmin()[1] == b2.pmin()[1]
+              || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
+              || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
+            && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
+            && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+        {
+          draw::line(ima_groups, p1, p2, literal::red);
+          balance[i] += 1;
+          break;
+        }
+      }
+    }
+  }
+}
+
+// Draw horizontal links from left to right (green)
+void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
+                    image2d<value::rgb8>&                             ima_groups,
+                    std::vector<short>&                               balance)
+{
+  for (unsigned i = 1; i <= groups.nelements(); ++i)
+  {
+    for (unsigned j = 1; j <= groups.nelements(); ++j)
+    {
+      if (i != j)
+      {
+        const box2d& b1 = groups(i).bbox();
+        const box2d& b2 = groups(j).bbox();
+        const point2d& p1 = b1.pcenter();
+        const point2d& p2 = b2.pcenter();
+
+        if (p1[1] < p2[1] // Avoid redundancy
+            && (b1.pmin()[0] == b2.pmin()[0]
+              || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
+              || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
+            && abs(p1[0] - p2[0]) < 10) // Reduced gap
+        {
+          draw::line(ima_groups, p1, p2, literal::green);
+          balance[i] += 1;
+          break;
+        }
+      }
+    }
+  }
+}
+
+// Draw horizontal links from right to left (green)
+void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
+                    image2d<value::rgb8>&                             ima_groups,
+                    std::vector<short>&                               balance)
+{
+  for (unsigned i = groups.nelements(); i > 0; --i)
+  {
+    for (unsigned j = groups.nelements(); j > 0; --j)
+    {
+      if (i != j)
+      {
+        const box2d& b1 = groups(i).bbox();
+        const box2d& b2 = groups(j).bbox();
+        const point2d& p1 = b1.pcenter();
+        const point2d& p2 = b2.pcenter();
+
+        if (p1[1] > p2[1] // Avoid redundancy
+            && (b1.pmin()[0] == b2.pmin()[0]
+              || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
+              || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
+            && abs(p1[0] - p2[0]) < 10) // Reduced gap
+        {
+          draw::line(ima_groups, p1, p2, literal::green);
+          balance[i] += 1;
+          break;
+        }
+      }
+    }
+  }
+}
+
+/******************************** MAIN ****************************************/
 int main(int argc, char** argv)
 {
   typedef value::label_16 V;
@@ -108,6 +275,7 @@ int main(int argc, char** argv)
 
   util::array< image2d<value::rgb8> > pdf;
   io::pdf::load(pdf, argv[1], dpi);
+
   for (unsigned page = 0; page < pdf.nelements(); ++page)
   {
     original = pdf[page];
@@ -219,66 +387,11 @@ int main(int argc, char** argv)
 
     std::vector<short> balance(groups.nelements(), 0);
 
-    // Draw vertical links (red)
-    for (unsigned i = 1; i < groups.nelements(); ++i)
-    {
-      for (unsigned j = 1; j < groups.nelements(); ++j)
-      {
-        if (i != j)
-        {
-          const box2d& b1 = groups(i).bbox();
-          const box2d& b2 = groups(j).bbox();
-          const point2d& p1 = b1.pcenter();
-          const point2d& p2 = b2.pcenter();
-
-          unsigned max_height = std::max(b1.height(), b2.height());
-          unsigned min_height = std::min(b1.height(), b2.height());
-
-          if (p1[0] < p2[0] // Avoid redundancy
-              && max_height * 2 < bin_merged.ncols()
-              && min_height + 3 >= max_height // Same heights
-              && b1.width() < 2 * average_width && b2.width() < 2 * average_width // Regular width
-              && (b1.pmin()[1] == b2.pmin()[1]
-                || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
-                || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
-             && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-             && abs(p1[1] - p2[1]) < 20) // Vertical proximity
-          {
-            draw::line(ima_groups, p1, p2, literal::red);
-            balance[i] += 1;
-            balance[j] += 1;
-            break;
-          }
-        }
-      }
-    }
-
-    // Draw horizontal links (green)
-    for (unsigned i = 1; i < groups.nelements(); ++i)
-    {
-      for (unsigned j = 1; j < groups.nelements(); ++j)
-      {
-        if (i != j)
-        {
-          const box2d& b1 = groups(i).bbox();
-          const box2d& b2 = groups(j).bbox();
-          const point2d& p1 = b1.pcenter();
-          const point2d& p2 = b2.pcenter();
-
-          if (p1[1] < p2[1] // Avoid redundancy
-              && (b1.pmin()[0] == b2.pmin()[0]
-                || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
-                || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-              && abs(p1[0] - p2[0]) < 10) // Reduced gap
-          {
-            draw::line(ima_groups, p1, p2, literal::green);
-            balance[i] += 1;
-            balance[j] += 1;
-            break;
-          }
-        }
-      }
-    }
+    // Draw and count links
+    draw_links_tb(groups, ima_groups, balance, average_width);
+    draw_links_bt(groups, ima_groups, balance, average_width);
+    draw_links_lr(groups, ima_groups, balance);
+    draw_links_rl(groups, ima_groups, balance);
 
     // Draw weighted boxes (red < orange < cyan < green) (useless ?)
     for (unsigned i = 0; i < balance.size(); ++i)
@@ -297,36 +410,18 @@ int main(int argc, char** argv)
     }
 
     // Write images and close XML
-    // FIXME To externalize
-    path.str(""); path << "output/p" << page << "_0_bin.pbm";
-    io::pbm::save(bin, path.str());
+    unsigned number = 0;
 
-    path.str(""); path << "output/p" << page << "_1_bin_without_separators.pbm";
-    io::pbm::save(bin_without_separators, path.str());
-
-    path.str(""); path << "output/p" << page << "_2_denoised.pbm";
-    io::pbm::save(denoised, path.str());
-
-    path.str(""); path << "output/p" << page << "_3_reverse.pbm";
-    io::pbm::save(reverse, path.str());
-
-    path.str(""); path << "output/p" << page << "_4_reverse_selection.pbm";
-    io::pbm::save(reverse_selection, path.str());
-
-    path.str(""); path << "output/p" << page << "_5_bin_merged.pbm";
-    io::pbm::save(bin_merged, path.str());
-
-    path.str(""); path << "output/p" << page << "_6_components.pbm";
-    io::pbm::save(comp, path.str());
-
-    path.str(""); path << "output/p" << page << "_7_links.ppm";
-    io::ppm::save(ima_links, path.str());
-
-    path.str(""); path << "output/p" << page << "_8_groups.ppm";
-    io::ppm::save(ima_groups, path.str());
-
-    path.str(""); path << "output/p" << page << "_9_valid.ppm";
-    io::ppm::save(ima_valid, path.str());
+    write_image(bin, "bin", page, number, path);
+    write_image(bin_without_separators, "bin_without_separators", page, number, path);
+    write_image(denoised, "denoised", page, number, path);
+    write_image(reverse, "reverse", page, number, path);
+    write_image(reverse_selection, "", page, number, path);
+    write_image(bin_merged, "reverse_selection", page, number, path);
+    write_image(comp, "bin_merged", page, number, path);
+    write_image(ima_links, "components", page, number, path);
+    write_image(ima_groups, "groups", page, number, path);
+    write_image(ima_valid, "valid", page, number, path);
   }
 
   end_xml(xml);
