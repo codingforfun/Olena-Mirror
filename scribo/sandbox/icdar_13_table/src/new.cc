@@ -1,3 +1,4 @@
+#undef MLN_WO_GLOBAL_VARS
 #include "xml.hh"
 
 // INCLUDES OLENA
@@ -231,7 +232,6 @@ int main(int argc, char** argv)
   typedef value::label_16 V;
   typedef image2d<V> L;
 
-  //std::ofstream xml;
   std::ostringstream path;
   image2d<value::rgb8> original, ima_links, ima_groups, ima_valid;
   image2d<value::int_u8> filtered;
@@ -241,7 +241,6 @@ int main(int argc, char** argv)
   unsigned dpi = 72;
 
   // Loading and binarization
-  //start_xml(xml, "final.xml", argv[1]);
   XML* xml = new XML("final.xml", argv[1]);
 
   util::array< image2d<value::rgb8> > pdf;
@@ -395,8 +394,6 @@ int main(int argc, char** argv)
     write_image(ima_valid, "valid", page, number, path);
   }
 
-
-  //end_xml(xml);
   delete xml;
 
   return 0;

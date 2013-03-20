@@ -1,6 +1,6 @@
 CCACHE=ccache
 CC=g++
-CFLAGS=-Wall -Werror -O3 -DHAVE_TESSERACT_3 -DNDEBUG
+CFLAGS=-Wall -Werror -O3 -DHAVE_TESSERACT_3 -DNDEBUG -DMLN_WO_GLOBAL_VARS
 CLIBS=-I../../../milena/ -I../../ -I/usr/include/poppler
 CLEAN=*.o output/* log final.xml
 
