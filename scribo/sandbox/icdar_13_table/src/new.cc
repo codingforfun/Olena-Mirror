@@ -1,3 +1,5 @@
+#include "xml.hh"
+
 // INCLUDES OLENA
 #include <mln/binarization/all.hh>
 
@@ -83,38 +85,6 @@ void  write_image(const image2d<value::rgb8>& ima,
   ++number;
 }
 
-// Open and initialize XML
-void  start_xml(std::ofstream& xml, const char* name, const char* pdf)
-{
-  xml.open(name);
-  xml << "<?xml version\"1.0\" encoding=\"UTF-8\"?>" << std::endl
-      << "<document filename='" << pdf << "'>" << std::endl;
-}
-
-// Finalize an close XML
-void  end_xml(std::ofstream& xml)
-{
-  xml << "</document>" << std::endl;
-  xml.close();
-}
-
-// Write a new (simple) table in XML file
-void  write_table(std::ofstream& xml, const point2d& start, const point2d& end)
-{
-  static unsigned table = 0;
-  static unsigned region = 0;
-  static unsigned page = 1;
-
-  xml << "\t<table id='" << table << "'>" << std::endl
-      << "\t\t<region id='" << region << "' page='" << page << "'>" << std::endl
-      << "\t\t<bounding-box x1='" << start[1] << "' y1='" << start[0] << "' "
-      << "x2='" << end[1] << "' y2='" << end[0] << "'/>" << std::endl
-      << "\t\t</region>" << std::endl
-      << "\t</table>" << std::endl;
-
-  ++table;
-}
-
 // Draw vertical links from top to bottom (red)
 void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
@@ -142,8 +112,8 @@ void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[1] == b2.pmin()[1]
               || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
               || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-            && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+            && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
+            && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
         {
           draw::line(ima_groups, p1, p2, literal::red);
           balance[i] += 1;
@@ -181,8 +151,8 @@ void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[1] == b2.pmin()[1]
               || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
               || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-            && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+            && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
+            && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
         {
           draw::line(ima_groups, p1, p2, literal::red);
           balance[i] += 1;
@@ -261,7 +231,7 @@ int main(int argc, char** argv)
   typedef value::label_16 V;
   typedef image2d<V> L;
 
-  std::ofstream xml;
+  //std::ofstream xml;
   std::ostringstream path;
   image2d<value::rgb8> original, ima_links, ima_groups, ima_valid;
   image2d<value::int_u8> filtered;
@@ -271,7 +241,8 @@ int main(int argc, char** argv)
   unsigned dpi = 72;
 
   // Loading and binarization
-  start_xml(xml, "final.xml", argv[1]);
+  //start_xml(xml, "final.xml", argv[1]);
+  XML* xml = new XML("final.xml", argv[1]);
 
   util::array< image2d<value::rgb8> > pdf;
   io::pdf::load(pdf, argv[1], dpi);
@@ -424,7 +395,9 @@ int main(int argc, char** argv)
     write_image(ima_valid, "valid", page, number, path);
   }
 
-  end_xml(xml);
+
+  //end_xml(xml);
+  delete xml;
 
   return 0;
 }
