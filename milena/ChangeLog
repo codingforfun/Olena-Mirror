@@ -1,3 +1,15 @@
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce mln_is_from_to_convertible.
+
+	* mln/metal/is_a.hh: Move yes_/no_ structures...
+	* mln/metal/bool.hh: ... here.
+
+	* tests/metal/Makefile.am: Add new target.
+
+	* mln/metal/is_from_to_convertible.hh,
+	* tests/metal/is_from_to_convertible.cc: New.
+
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Regen.

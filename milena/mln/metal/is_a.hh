@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,9 +61,6 @@ namespace mln
 
     namespace internal
     {
-
-      typedef char yes_;
-      struct no_ { char dummy[2]; };
 
       template <typename T>
       struct make_
