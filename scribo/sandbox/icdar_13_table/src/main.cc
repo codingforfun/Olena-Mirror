@@ -26,9 +26,12 @@
 
 using namespace mln;
 
-void  start_xml(std::ofstream& xml, const char* name, const char* pdf)
+void  start_xml(std::ofstream& xml, const char* pdf)
 {
-  xml.open(name);
+  //std::ostringstream name;
+  //name << pdf << "-reg-result.xml";
+  //xml.open((name.str()).c_str());
+  xml.open("us-005-reg-result.xml");
   xml << "<?xml version\"1.0\" encoding=\"UTF-8\"?>" << std::endl
       << "<document filename='" << pdf << "'>" << std::endl;
 }
@@ -212,7 +215,7 @@ int main(int argc, char** argv)
 
   // Loading and binarization
   std::ofstream xml;
-  start_xml(xml, "final.xml", argv[1]);
+  start_xml(xml, argv[1]);
 
   //io::ppm::load(original, argv[1]);
   util::array< image2d<value::rgb8> > pdf;
