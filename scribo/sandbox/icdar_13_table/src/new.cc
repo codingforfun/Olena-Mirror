@@ -87,10 +87,12 @@ void  write_image(const image2d<value::rgb8>& ima,
 }
 
 // Draw vertical links from top to bottom (red)
+template<typename L>
 void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
-                    unsigned                                          average_width)
+                    unsigned                                          average_width,
+                    const scribo::component_set<L>&                   hlines)
 {
   for (unsigned i = 1; i <= groups.nelements(); ++i)
   {
@@ -116,9 +118,27 @@ void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
             && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
             && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
         {
-          draw::line(ima_groups, p1, p2, literal::red);
-          balance[i] += 1;
-          break;
+          unsigned k = 1;
+          short separators = 0;
+
+          while (k <= hlines.nelements() && separators < 2)
+          {
+            const box2d& s = hlines(k).bbox();
+
+            if (s.pmin()[1] <= b1.pmin()[1] && s.pmax()[1] >= b1.pmax()[1]
+                && s.pmin()[0] > b1.pmax()[0]
+                && s.pmax()[0] < b2.pmin()[0])
+              ++separators;
+
+            ++k;
+          }
+
+          if (separators < 2)
+          {
+            draw::line(ima_groups, p1, p2, literal::red);
+            balance[i] += 1;
+            break;
+          }
         }
       }
     }
@@ -126,10 +146,12 @@ void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
 }
 
 // Draw vertical links from bottom to top (red)
+template<typename L>
 void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
-                    unsigned                                          average_width)
+                    unsigned                                          average_width,
+                    const scribo::component_set<L>&                   hlines)
 {
   for (unsigned i = groups.nelements(); i > 0; --i)
   {
@@ -155,9 +177,27 @@ void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
             && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
             && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
         {
-          draw::line(ima_groups, p1, p2, literal::red);
-          balance[i] += 1;
-          break;
+          unsigned k = 1;
+          short separators = 0;
+
+          while (k <= hlines.nelements() && separators < 2)
+          {
+            const box2d& s = hlines(k).bbox();
+
+            if (s.pmin()[1] <= b1.pmin()[1] && s.pmax()[1] >= b1.pmax()[1]
+                && s.pmax()[0] < b1.pmin()[0]
+                && s.pmin()[0] > b2.pmax()[0])
+              ++separators;
+
+            ++k;
+          }
+
+          if (separators < 2)
+          {
+            draw::line(ima_groups, p1, p2, literal::red);
+            balance[i] += 1;
+            break;
+          }
         }
       }
     }
@@ -165,9 +205,11 @@ void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
 }
 
 // Draw horizontal links from left to right (green)
+template<typename L>
 void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
-                    std::vector<short>&                               balance)
+                    std::vector<short>&                               balance,
+                    const scribo::component_set<L>&                   vlines)
 {
   for (unsigned i = 1; i <= groups.nelements(); ++i)
   {
@@ -186,9 +228,27 @@ void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
             && abs(p1[0] - p2[0]) < 10) // Reduced gap
         {
-          draw::line(ima_groups, p1, p2, literal::green);
-          balance[i] += 1;
-          break;
+          unsigned k = 1;
+          short separators = 0;
+
+          while (k <= vlines.nelements() && separators < 2)
+          {
+            const box2d& s = vlines(k).bbox();
+
+            if (s.pmin()[0] <= b1.pmin()[0] && s.pmax()[0] >= b1.pmax()[0]
+                && s.pmin()[1] > b1.pmax()[1]
+                && s.pmax()[1] < b2.pmin()[1])
+              ++separators;
+
+            ++k;
+          }
+
+          if (separators < 2)
+          {
+            draw::line(ima_groups, p1, p2, literal::green);
+            balance[i] += 1;
+            break;
+          }
         }
       }
     }
@@ -196,9 +256,11 @@ void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
 }
 
 // Draw horizontal links from right to left (green)
+template<typename L>
 void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
-                    std::vector<short>&                               balance)
+                    std::vector<short>&                               balance,
+                    const scribo::component_set<L>&                   vlines)
 {
   for (unsigned i = groups.nelements(); i > 0; --i)
   {
@@ -217,9 +279,27 @@ void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
             && abs(p1[0] - p2[0]) < 10) // Reduced gap
         {
-          draw::line(ima_groups, p1, p2, literal::green);
-          balance[i] += 1;
-          break;
+          unsigned k = 1;
+          short separators = 0;
+
+          while (k <= vlines.nelements() && separators < 2)
+          {
+            const box2d& s = vlines(k).bbox();
+
+            if (s.pmin()[0] <= b1.pmin()[0] && s.pmax()[0] >= b1.pmax()[0]
+                && s.pmax()[1] < b1.pmin()[1]
+                && s.pmin()[1] > b2.pmax()[1])
+              ++separators;
+
+            ++k;
+          }
+
+          if (separators < 2)
+          {
+            draw::line(ima_groups, p1, p2, literal::green);
+            balance[i] += 1;
+            break;
+          }
         }
       }
     }
@@ -358,12 +438,13 @@ int main(int argc, char** argv)
     std::vector<short> balance(groups.nelements(), 0);
 
     // Draw and count links
-    draw_links_tb(groups, ima_groups, balance, average_width);
-    draw_links_bt(groups, ima_groups, balance, average_width);
-    draw_links_lr(groups, ima_groups, balance);
-    draw_links_rl(groups, ima_groups, balance);
+    draw_links_tb(groups, ima_groups, balance, average_width, hlines);
+    draw_links_bt(groups, ima_groups, balance, average_width, hlines);
+    draw_links_lr(groups, ima_groups, balance, vlines);
+    draw_links_rl(groups, ima_groups, balance, vlines);
 
-    // Draw weighted boxes (red < orange < cyan < green) (useless ?)
+    // Draw weighted boxes (red < orange < cyan < green)
+    //                      1 link < 2 links < 3 links < 3+ links
     for (unsigned i = 0; i < balance.size(); ++i)
     {
       if (balance[i] == 1)
