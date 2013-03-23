@@ -27,6 +27,7 @@
 
 // INCLUDES SCRIBO
 #include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/sauvola_ms.hh>
 
 #include <scribo/core/component_set.hh>
 #include <scribo/core/line_set.hh>
@@ -55,6 +56,29 @@
 #include <scribo/text/merging.hh>
 
 using namespace mln;
+
+// Draw weighted boxes (red < orange < cyan < green)
+//                      1 link < 2 links < 3 links < 3+ links
+template<typename T, typename L>
+void  draw_adjacency_boxes(const std::vector<short>&                  balance,
+                           image2d<T>&                                ima,
+                           const scribo::object_groups< image2d<L> >& groups)
+{
+  for (unsigned i = 0; i < balance.size(); ++i)
+  {
+    if (balance[i] == 1)
+      draw::box(ima, groups(i).bbox(), literal::red);
+
+    if (balance[i] == 2)
+      draw::box(ima, groups(i).bbox(), literal::orange);
+
+    if (balance[i] == 3)
+      draw::box(ima, groups(i).bbox(), literal::cyan);
+
+    if (balance[i] > 3)
+      draw::box(ima, groups(i).bbox(), literal::green);
+  }
+}
 
 // Write image2d<bool> images
 void  write_image(const image2d<bool>& ima,
@@ -226,7 +250,8 @@ void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[0] == b2.pmin()[0]
               || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 10) // Reduced gap
+            && abs(p1[0] - p2[0]) < 10 // Reduced gap
+            && abs(p1[1] - p2[1]) > (b1.width() + b2.width()) / 4) // Consistent gap
         {
           unsigned k = 1;
           short separators = 0;
@@ -277,7 +302,8 @@ void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[0] == b2.pmin()[0]
               || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 10) // Reduced gap
+            && abs(p1[0] - p2[0]) < 10 // Reduced gap
+            && abs(p1[1] - p2[1]) > (b1.width() + b2.width()) / 4) // Consistent gap
         {
           unsigned k = 1;
           short separators = 0;
@@ -311,34 +337,33 @@ int main(int argc, char** argv)
 {
   typedef value::label_16 V;
   typedef image2d<V> L;
-
-  std::ostringstream path;
-  image2d<value::rgb8> original, ima_links, ima_groups, ima_valid;
-  image2d<value::int_u8> filtered;
-  image2d<bool> bin, reverse, reverse_selection, bin_merged, separators, bin_without_separators, whitespaces, comp, denoised;
-  scribo::component_set< image2d<unsigned> > components, rcomponents;
-
-  unsigned dpi = 72;
+  typedef image2d<value::rgb8> I8;
+  typedef image2d<bool> IB;
+  typedef scribo::component_set< image2d<unsigned> > CS;
 
   // Loading and binarization
   XML* xml = new XML("final.xml", argv[1]);
 
   util::array< image2d<value::rgb8> > pdf;
+  unsigned dpi = 72;
   io::pdf::load(pdf, argv[1], dpi);
 
+  // Iterate over all pages
   for (unsigned page = 0; page < pdf.nelements(); ++page)
   {
-    original = pdf[page];
-    filtered = data::transform(original, fun::v2v::rgb_to_luma<value::int_u8>());
-    bin = scribo::binarization::sauvola(filtered, 81, 0.44);
+    I8 original = pdf[page];
+    image2d<value::int_u8> filtered = data::transform(original, fun::v2v::rgb_to_luma<value::int_u8>());
+    IB bin = scribo::binarization::sauvola(filtered, 81, 0.44);
+    //IB bin = scribo::binarization::sauvola_ms(filtered, 81, 2);
 
     // Reverse selection
-    reverse = logical::not_(bin);
+    IB reverse = logical::not_(bin);
+    IB reverse_selection;
     initialize(reverse_selection, reverse);
     data::fill(reverse_selection, false);
 
     unsigned nrcomponents;
-    rcomponents = scribo::primitive::extract::components(reverse, c8(), nrcomponents);
+    CS rcomponents = scribo::primitive::extract::components(reverse, c8(), nrcomponents);
 
     for (unsigned i = 1; i < rcomponents.nelements(); ++i)
     {
@@ -352,8 +377,8 @@ int main(int argc, char** argv)
     reverse_selection = scribo::preprocessing::denoise_fg(reverse_selection, c8(), 4);
 
     // Find separators
-    bin_without_separators = duplicate(bin);
-    separators = separators;
+    IB bin_without_separators = duplicate(bin);
+    IB separators = separators;
     V nhlines, nvlines;
     unsigned min_width = 31;
     unsigned min_height = 71;
@@ -366,14 +391,15 @@ int main(int argc, char** argv)
       data::fill((bin_without_separators | vlines(i).bbox()).rw(), false);
 
     // Denoise
-    denoised = scribo::preprocessing::denoise_fg(bin_without_separators, c8(), 4);
+    IB denoised = scribo::preprocessing::denoise_fg(bin_without_separators, c8(), 4);
 
     // Bin merged
-    bin_merged = logical::or_(denoised, reverse_selection);
+    IB bin_merged = logical::or_(denoised, reverse_selection);
 
     // Extract components
     unsigned ncomponents;
-    components = scribo::primitive::extract::components(bin_merged, c8(), ncomponents);
+    CS components = scribo::primitive::extract::components(bin_merged, c8(), ncomponents);
+    IB comp;
 
     initialize(comp, bin_merged);
     data::fill(comp, false);
@@ -398,9 +424,11 @@ int main(int argc, char** argv)
     // Filter links
     scribo::object_links< image2d<unsigned> > hratio_filtered_links = scribo::filter::object_links_bbox_h_ratio(merged_links, 2.5f);
 
-    ima_links = data::convert(value::rgb8(), bin_merged);
-    ima_groups = data::convert(value::rgb8(), bin_merged);
-    ima_valid = data::convert(value::rgb8(), bin_merged);
+    IB tmp = logical::and_(bin_merged, comp);
+
+    I8 ima_links = data::convert(value::rgb8(), tmp);
+    I8 ima_groups = data::convert(value::rgb8(), tmp);
+    I8 ima_valid = data::convert(value::rgb8(), tmp);
 
     // Write links
     for (unsigned l = 1; l < merged_links.nelements(); ++l)
@@ -442,25 +470,10 @@ int main(int argc, char** argv)
     draw_links_bt(groups, ima_groups, balance, average_width, hlines);
     draw_links_lr(groups, ima_groups, balance, vlines);
     draw_links_rl(groups, ima_groups, balance, vlines);
-
-    // Draw weighted boxes (red < orange < cyan < green)
-    //                      1 link < 2 links < 3 links < 3+ links
-    for (unsigned i = 0; i < balance.size(); ++i)
-    {
-      if (balance[i] == 1)
-        draw::box(ima_valid, groups(i).bbox(), literal::red);
-
-      if (balance[i] == 2)
-        draw::box(ima_valid, groups(i).bbox(), literal::orange);
-
-      if (balance[i] == 3)
-        draw::box(ima_valid, groups(i).bbox(), literal::cyan);
-
-      if (balance[i] > 3)
-        draw::box(ima_valid, groups(i).bbox(), literal::green);
-    }
+    draw_adjacency_boxes(balance, ima_valid, groups);
 
     // Write images and close XML
+    std::ostringstream path;
     unsigned number = 0;
 
     write_image(bin, "bin", page, number, path);
