@@ -469,6 +469,95 @@ int main(int argc, char** argv)
     draw_links_rl(groups, ima_groups, balance, vlines);
     draw_adjacency_boxes(balance, ima_valid, groups);
 
+    /* FIXME: The code below duplicates some of the code in the
+       draw_links_* routines.  Factor.  */
+    // Adjacencies between nodes.  Of course, an actual digraph data
+    // structure would be better.
+    typedef unsigned node_id;
+    typedef std::set<node_id> group_set;
+    typedef std::vector<group_set> adjacencies;
+    adjacencies nodes_below(groups.nelements());
+    adjacencies nodes_above(groups.nelements());
+    adjacencies nodes_right(groups.nelements());
+    adjacencies nodes_left(groups.nelements());
+
+    // Draw vertical links (red)
+    for (unsigned i = 1; i < groups.nelements(); ++i)
+    {
+      for (unsigned j = i + 1; j < groups.nelements(); ++j)
+      {
+	const box2d& b1 = groups(i).bbox();
+	const box2d& b2 = groups(j).bbox();
+	const point2d& p1 = b1.pcenter();
+	const point2d& p2 = b2.pcenter();
+
+	unsigned max_height = std::max(b1.height(), b2.height());
+	unsigned min_height = std::min(b1.height(), b2.height());
+
+	if (/* p1[0] < p2[0] // Avoid redundancy
+	    && */
+	    max_height * 2 < bin_merged.ncols()
+	    && min_height + 3 >= max_height // Same heights
+	    && b1.width() < 2 * average_width && b2.width() < 2 * average_width // Regular width
+	    && (b1.pmin()[1] == b2.pmin()[1]
+                || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
+                || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
+	    && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
+	    && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+          {
+	    // Build the above/below adjacencies.
+	    node_id top_node, bottom_node;
+	    if (p1.row() < p2.col())
+	      {
+		top_node = i;
+		bottom_node = j;
+	      }
+	    else
+	      {
+		top_node = j;
+		bottom_node = i;
+	      }
+	    nodes_below[top_node].insert(bottom_node);
+	    nodes_above[bottom_node].insert(top_node);
+          }
+      }
+    }
+
+    // Draw horizontal links (green)
+    for (unsigned i = 1; i < groups.nelements(); ++i)
+    {
+      for (unsigned j = i + 1; j < groups.nelements(); ++j)
+      {
+	const box2d& b1 = groups(i).bbox();
+	const box2d& b2 = groups(j).bbox();
+	const point2d& p1 = b1.pcenter();
+	const point2d& p2 = b2.pcenter();
+
+	if (/* p1[1] < p2[1] // Avoid redundancy
+	       && */
+	    (b1.pmin()[0] == b2.pmin()[0]
+                || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0])
+                || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
+	    && abs(p1[0] - p2[0]) < 10) // Reduced gap
+          {
+	    // Build the right/left adjacencies.
+	    node_id left_node, right_node;
+	    if (p1.col() < p2.col())
+	      {
+		left_node = i;
+		right_node = j;
+	      }
+	    else
+	      {
+		left_node = j;
+		right_node = i;
+	      }
+	    nodes_right[left_node].insert(right_node);
+	    nodes_left[right_node].insert(left_node);
+          }
+      }
+    }
+
     // Write images and close XML
     std::ostringstream path;
     unsigned number = 0;
