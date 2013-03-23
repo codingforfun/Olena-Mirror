@@ -26,7 +26,6 @@
 #include <tesseract/baseapi.h>
 
 // INCLUDES SCRIBO
-#include <scribo/binarization/sauvola.hh>
 #include <scribo/binarization/sauvola_ms.hh>
 
 #include <scribo/core/component_set.hh>
@@ -353,8 +352,7 @@ int main(int argc, char** argv)
   {
     I8 original = pdf[page];
     image2d<value::int_u8> filtered = data::transform(original, fun::v2v::rgb_to_luma<value::int_u8>());
-    IB bin = scribo::binarization::sauvola(filtered, 81, 0.44);
-    //IB bin = scribo::binarization::sauvola_ms(filtered, 81, 2);
+    IB bin = scribo::binarization::sauvola_ms(filtered, 81, 2);
 
     // Reverse selection
     IB reverse = logical::not_(bin);
@@ -378,7 +376,6 @@ int main(int argc, char** argv)
 
     // Find separators
     IB bin_without_separators = duplicate(bin);
-    IB separators = separators;
     V nhlines, nvlines;
     unsigned min_width = 31;
     unsigned min_height = 71;
@@ -489,6 +486,4 @@ int main(int argc, char** argv)
   }
 
   delete xml;
-
-  return 0;
 }
