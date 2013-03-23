@@ -54,6 +54,8 @@
 #include <scribo/text/extract_paragraphs.hh>
 #include <scribo/text/merging.hh>
 
+#include "disjoint_set.hh"
+
 using namespace mln;
 
 // Draw weighted boxes (red < orange < cyan < green)
@@ -558,6 +560,39 @@ int main(int argc, char** argv)
       }
     }
 
+    // Build the columns.
+    // First pass.
+    disjoint_set<node_id> columns_set(groups.nelements());
+    for (unsigned i = 0; i < groups.nelements(); ++i)
+      {
+	const group_set& successors = nodes_below[i];
+	for (group_set::const_iterator j = successors.begin();
+	     j != successors.end(); ++j)
+	    columns_set.make_union(i, *j);
+      }
+    // Second pass: assign labels.  Label 0 is unused and means
+    // ``default''.
+    std::vector<group_set> descendants(groups.nelements());
+    for (unsigned i = 0; i < groups.nelements(); ++i)
+      {
+	// Process groups in reverse order.
+	unsigned j = groups.nelements() - 1 - i;
+	if (!columns_set.is_root(j))
+	  descendants[columns_set.find(j)].insert(j);
+      }
+
+    // Visualization: columns.
+    image2d<value::rgb8> ima_columns = data::convert(value::rgb8(), bin_merged);
+    for (unsigned i = 0; i < groups.nelements(); ++i)
+      if (!descendants[i].empty())
+	{
+	  box2d column_box = groups(i).bbox();
+	  for (group_set::const_iterator j = descendants[i].begin();
+	       j != descendants[i].end(); ++j)
+	    column_box.merge(groups(*j).bbox());
+	  draw::box(ima_columns, column_box, literal::red);
+	}
+
     // Write images and close XML
     std::ostringstream path;
     unsigned number = 0;
@@ -572,6 +607,7 @@ int main(int argc, char** argv)
     write_image(ima_links, "components", page, number, path);
     write_image(ima_groups, "groups", page, number, path);
     write_image(ima_valid, "valid", page, number, path);
+    write_image(ima_columns, "columns", page, number, path);
   }
 
   delete xml;
