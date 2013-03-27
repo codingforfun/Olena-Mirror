@@ -580,38 +580,59 @@ int main(int argc, char** argv)
       }
     }
 
-    // Build the columns.
+    // FIXME: We could probably factor a bit more here.
+
+    // Build the columns and rows.
     // First pass.
     disjoint_set<node_id> columns_set(groups.nelements());
+    disjoint_set<node_id> rows_set(groups.nelements());
     for (unsigned i = 0; i < groups.nelements(); ++i)
       {
-	const group_set& successors = nodes_below[i];
-	for (group_set::const_iterator j = successors.begin();
-	     j != successors.end(); ++j)
+	// Look for groups below to build columns.
+	for (group_set::const_iterator j = nodes_below[i].begin();
+	     j != nodes_below[i].end(); ++j)
 	    columns_set.make_union(i, *j);
+	// Look for groups on the right to build rows.
+	for (group_set::const_iterator j = nodes_right[i].begin();
+	     j != nodes_right[i].end(); ++j)
+	    rows_set.make_union(i, *j);
       }
     // Second pass: assign labels.  Label 0 is unused and means
     // ``default''.
-    std::vector<group_set> descendants(groups.nelements());
+    std::vector<group_set> columns_descendants(groups.nelements());
+    std::vector<group_set> rows_descendants(groups.nelements());
     for (unsigned i = 0; i < groups.nelements(); ++i)
       {
 	// Process groups in reverse order.
 	unsigned j = groups.nelements() - 1 - i;
 	if (!columns_set.is_root(j))
-	  descendants[columns_set.find(j)].insert(j);
+	  columns_descendants[columns_set.find(j)].insert(j);
+	if (!rows_set.is_root(j))
+	  rows_descendants[rows_set.find(j)].insert(j);
       }
 
-    // Visualization: columns.
-    image2d<value::rgb8> ima_columns = data::convert(value::rgb8(), bin_merged);
+    // Visualization: columns and rows
+    image2d<value::rgb8> ima_cols_rows =
+      data::convert(value::rgb8(), bin_merged);
     for (unsigned i = 0; i < groups.nelements(); ++i)
-      if (!descendants[i].empty())
-	{
-	  box2d column_box = groups(i).bbox();
-	  for (group_set::const_iterator j = descendants[i].begin();
-	       j != descendants[i].end(); ++j)
-	    column_box.merge(groups(*j).bbox());
-	  draw::box(ima_columns, column_box, literal::red);
-	}
+      {
+	if (!columns_descendants[i].empty())
+	  {
+	    box2d column_box = groups(i).bbox();
+	    for (group_set::const_iterator j = columns_descendants[i].begin();
+		 j != columns_descendants[i].end(); ++j)
+	      column_box.merge(groups(*j).bbox());
+	    draw::box(ima_cols_rows, column_box, literal::red);
+	  }
+	if (!rows_descendants[i].empty())
+	  {
+	    box2d column_box = groups(i).bbox();
+	    for (group_set::const_iterator j = rows_descendants[i].begin();
+		 j != rows_descendants[i].end(); ++j)
+	      column_box.merge(groups(*j).bbox());
+	    draw::box(ima_cols_rows, column_box, literal::green);
+	  }
+      }
 
     // Write images and close XML
     std::ostringstream path;
@@ -627,6 +648,6 @@ int main(int argc, char** argv)
     write_image(ima_links, "components", page, number, path);
     write_image(ima_groups, "groups", page, number, path);
     write_image(ima_valid, "valid", page, number, path);
-    write_image(ima_columns, "columns", page, number, path);
+    write_image(ima_cols_rows, "cols_rows", page, number, path);
   }
 }
