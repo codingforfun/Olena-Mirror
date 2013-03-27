@@ -343,7 +343,7 @@ int main(int argc, char** argv)
   typedef scribo::component_set< image2d<unsigned> > CS;
 
   // Loading and binarization
-  XML* xml = new XML("final.xml", argv[1]);
+  XML xml("final.xml", argv[1]);
 
   util::array< image2d<value::rgb8> > pdf;
   unsigned dpi = 72;
@@ -609,6 +609,4 @@ int main(int argc, char** argv)
     write_image(ima_valid, "valid", page, number, path);
     write_image(ima_columns, "columns", page, number, path);
   }
-
-  delete xml;
 }
