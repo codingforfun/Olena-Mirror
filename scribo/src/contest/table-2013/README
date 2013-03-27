@@ -1,0 +1,54 @@
+* Conference
+ICDAR 2013
+
+* Contest
+Table Competition (location and structure recognition)
+
+* Description
+The problems of table detection and table structure recognition in
+documents have attracted much interest not only from the document
+analysis community, but also from the database and information
+extraction (IE) communities.  Whereas traditional methods have worked
+on scanned images of pages, a number of approaches from related fields
+have used natively-digital document formats.  The choice of
+born-digital PDF as the format for this competition is designed to
+unify both types of approaches, and the objective of this competition
+is to measure the state of the art and compare the relative advantages
+of both types of approach.
+
+This competition is split up into two sub-competitions, table
+detection or location and table structure recognition.  Entrants may
+choose to enter either one, or both, sub-competitions.  In a previous
+publication, we proposed document-generic models for both of these
+procedures and generated a publicly available, ground-truthed dataset.
+The format for the ground truth, as well as methods for numerically
+comparing an algorithm's result to the ground truth, are also
+described in this paper.
+
+This dataset serves as the example dataset, against which all entries
+can be tested before submission.  Entries will be evaluated using the
+methods described in the paper.  Our paper also describes the
+functional analysis of tables; this does not form part of the present
+competition.
+
+* URL
+http://www.tamirhassan.com/competition.html
+
+* Source code
+
+Compilation and cleaning :
+ * make (generates the main program)
+ * make old (generates the old program (without scribo toolchain))
+ * make clean (remove all files expect the binary)
+
+Usage :
+ * ./table [your-pdf-file]
+   Generate debug images in the output/ directory and the final.xml
+ * ./old [your-pdf-file]
+   Same thing but old processing (without scribo toolchain)
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:

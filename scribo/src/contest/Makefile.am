@@ -20,4 +20,5 @@ include $(top_srcdir)/scribo/scribo.mk
 SUBDIRS = 		\
   DAE-2011		\
   hdibco-2010		\
-  hdlac-2011
+  hdlac-2011		\
+  table-2013
