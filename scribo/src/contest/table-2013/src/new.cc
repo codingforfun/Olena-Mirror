@@ -117,7 +117,8 @@ void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
                     unsigned                                          average_width,
-                    const scribo::component_set<L>&                   hlines)
+                    const scribo::component_set<L>&                   hlines,
+                    float                                             scale_factor)
 {
   for (unsigned i = 1; i <= groups.nelements(); ++i)
   {
@@ -141,7 +142,7 @@ void  draw_links_tb(const scribo::object_groups< image2d<unsigned> >& groups,
               || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
               || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
             && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-            && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
+            && (unsigned) abs(p1[1] - p2[1]) < 20 * scale_factor) // Vertical proximity
         {
           unsigned k = 1;
           short separators = 0;
@@ -176,7 +177,8 @@ void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
                     unsigned                                          average_width,
-                    const scribo::component_set<L>&                   hlines)
+                    const scribo::component_set<L>&                   hlines,
+                    float                                             scale_factor)
 {
   for (unsigned i = groups.nelements(); i > 0; --i)
   {
@@ -200,7 +202,7 @@ void  draw_links_bt(const scribo::object_groups< image2d<unsigned> >& groups,
               || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
               || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
             && (unsigned) abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-            && (unsigned) abs(p1[1] - p2[1]) < 20) // Vertical proximity
+            && (unsigned) abs(p1[1] - p2[1]) < 20 * scale_factor) // Vertical proximity
         {
           unsigned k = 1;
           short separators = 0;
@@ -234,7 +236,8 @@ template<typename L>
 void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
-                    const scribo::component_set<L>&                   vlines)
+                    const scribo::component_set<L>&                   vlines,
+                    float                                             scale_factor)
 {
   for (unsigned i = 1; i <= groups.nelements(); ++i)
   {
@@ -251,7 +254,7 @@ void  draw_links_lr(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[0] == b2.pmin()[0]
               || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 10 // Reduced gap
+            && abs(p1[0] - p2[0]) < 10 * scale_factor// Reduced gap
             && abs(p1[1] - p2[1]) > (b1.width() + b2.width()) / 4) // Consistent gap
         {
           unsigned k = 1;
@@ -286,7 +289,8 @@ template<typename L>
 void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
                     image2d<value::rgb8>&                             ima_groups,
                     std::vector<short>&                               balance,
-                    const scribo::component_set<L>&                   vlines)
+                    const scribo::component_set<L>&                   vlines,
+                    float                                             scale_factor)
 {
   for (unsigned i = groups.nelements(); i > 0; --i)
   {
@@ -303,7 +307,7 @@ void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
             && (b1.pmin()[0] == b2.pmin()[0]
               || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0]) 
               || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-            && abs(p1[0] - p2[0]) < 10 // Reduced gap
+            && abs(p1[0] - p2[0]) < 10 * scale_factor // Reduced gap
             && abs(p1[1] - p2[1]) > (b1.width() + b2.width()) / 4) // Consistent gap
         {
           unsigned k = 1;
@@ -342,11 +346,25 @@ int main(int argc, char** argv)
   typedef image2d<bool> IB;
   typedef scribo::component_set< image2d<unsigned> > CS;
 
+  if (argc != 2 && argc != 3)
+    {
+      std::cerr << "usage: " << argv[0] << "input.pdf [scale]";
+      exit(1);
+    }
+
+  // Default resolution in DPI.
+  const unsigned default_res = 72;
+  // Default rasterization scale.
+  const float default_scale = 1.0;
+
+  // Magnification factor.
+  const float scale_factor = argc == 3 ? strtof(argv[2], 0) : default_scale;
+
   // Loading and binarization
   XML xml("final.xml", argv[1]);
 
   util::array< image2d<value::rgb8> > pdf;
-  unsigned dpi = 72;
+  unsigned dpi = default_res * scale_factor;
   io::pdf::load(pdf, argv[1], dpi);
 
   // Iterate over all pages
@@ -379,8 +397,8 @@ int main(int argc, char** argv)
     // Find separators
     IB bin_without_separators = duplicate(bin);
     V nhlines, nvlines;
-    unsigned min_width = 31;
-    unsigned min_height = 71;
+    unsigned min_width = 31 * scale_factor;
+    unsigned min_height = 71 * scale_factor;
     scribo::component_set<L> hlines =  scribo::primitive::extract::lines_h_discontinued(bin_without_separators, c4(), nhlines, min_width, 2);
     scribo::component_set<L> vlines =  scribo::primitive::extract::lines_v_discontinued(bin_without_separators, c4(), nvlines, min_height, 2);
     for (unsigned i = 1; i <= hlines.nelements(); ++i)
@@ -465,10 +483,12 @@ int main(int argc, char** argv)
     std::vector<short> balance(groups.nelements(), 0);
 
     // Draw and count links
-    draw_links_tb(groups, ima_groups, balance, average_width, hlines);
-    draw_links_bt(groups, ima_groups, balance, average_width, hlines);
-    draw_links_lr(groups, ima_groups, balance, vlines);
-    draw_links_rl(groups, ima_groups, balance, vlines);
+    draw_links_tb(groups, ima_groups, balance, average_width, hlines,
+		  scale_factor);
+    draw_links_bt(groups, ima_groups, balance, average_width, hlines,
+		  scale_factor);
+    draw_links_lr(groups, ima_groups, balance, vlines, scale_factor);
+    draw_links_rl(groups, ima_groups, balance, vlines, scale_factor);
     draw_adjacency_boxes(balance, ima_valid, groups);
 
     /* FIXME: The code below duplicates some of the code in the
@@ -505,7 +525,7 @@ int main(int argc, char** argv)
                 || (b1.pmin()[1] < b2.pmin()[1] && b1.pmax()[1] > b2.pmin()[1])
                 || (b1.pmin()[1] > b2.pmin()[1] && b2.pmax()[1] > b1.pmin()[1])) // Boxes are aligned
 	    && abs(p1[0] - p2[0]) < 3 * max_height // Reduced gap
-	    && abs(p1[1] - p2[1]) < 20) // Vertical proximity
+	    && abs(p1[1] - p2[1]) < 20 * scale_factor) // Vertical proximity
           {
 	    // Build the above/below adjacencies.
 	    node_id top_node, bottom_node;
@@ -540,7 +560,7 @@ int main(int argc, char** argv)
 	    (b1.pmin()[0] == b2.pmin()[0]
                 || (b1.pmin()[0] < b2.pmin()[0] && b1.pmax()[0] > b2.pmin()[0])
                 || (b1.pmin()[0] > b2.pmin()[0] && b2.pmax()[0] > b1.pmin()[0])) // Boxes are aligned
-	    && abs(p1[0] - p2[0]) < 10) // Reduced gap
+	    && abs(p1[0] - p2[0]) < 10 * scale_factor) // Reduced gap
           {
 	    // Build the right/left adjacencies.
 	    node_id left_node, right_node;
