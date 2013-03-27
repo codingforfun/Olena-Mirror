@@ -1,4 +1,4 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+# Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -18,6 +18,6 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS = 		\
-  hdibco-2010 		\
-  hdlac-2011 		\
-  DAE-2011
+  DAE-2011		\
+  hdibco-2010		\
+  hdlac-2011
