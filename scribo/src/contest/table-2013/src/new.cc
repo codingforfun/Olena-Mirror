@@ -1,5 +1,4 @@
 #undef MLN_WO_GLOBAL_VARS
-#include "xml.hh"
 
 // INCLUDES OLENA
 #include <mln/binarization/all.hh>
@@ -55,6 +54,7 @@
 #include <scribo/text/merging.hh>
 
 #include "disjoint_set.hh"
+#include "xml.hh"
 
 using namespace mln;
 
@@ -451,7 +451,7 @@ int main(int argc, char** argv)
     I8 ima_groups = data::convert(value::rgb8(), tmp);
     I8 ima_valid = data::convert(value::rgb8(), tmp);
 
-    // Write links
+    // Draw links
     for (unsigned l = 1; l < merged_links.nelements(); ++l)
     {
       point2d p1 = scribo::primitive::link::internal::compute_anchor(merged_links.components(), l, scribo::anchor::MassCenter);
@@ -640,7 +640,6 @@ int main(int argc, char** argv)
 
     // Write images and close XML
     unsigned number = 0;
-
     write_image(bin, prefix, "bin", page, number);
     write_image(bin_without_separators, prefix, "bin_without_separators", page, number);
     write_image(denoised, prefix, "denoised", page, number);
