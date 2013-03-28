@@ -58,6 +58,13 @@
 
 using namespace mln;
 
+// Check if two boxes intersected
+bool intersect(const box2d& b1, const box2d& b2)
+{
+  return ((unsigned) abs(b1.pcenter().col() - b2.pcenter().col()) * 2 < b1.width() + b2.width()
+      && (unsigned) abs(b1.pcenter().row() - b2.pcenter().row()) * 2 < b1.height() + b2.height());
+}
+
 // Draw weighted boxes (red < orange < cyan < green)
 //                      1 link < 2 links < 3 links < 3+ links
 template<typename T, typename L>
@@ -581,6 +588,9 @@ int main(int argc, char** argv)
 	  descendants[columns_set.find(j)].insert(j);
       }
 
+    std::vector<box2d> columns;
+    std::set<unsigned> not_valid;
+
     // Visualization: columns.
     image2d<value::rgb8> ima_columns = data::convert(value::rgb8(), bin_merged);
     for (unsigned i = 0; i < groups.nelements(); ++i)
@@ -590,8 +600,31 @@ int main(int argc, char** argv)
 	  for (group_set::const_iterator j = descendants[i].begin();
 	       j != descendants[i].end(); ++j)
 	    column_box.merge(groups(*j).bbox());
-	  draw::box(ima_columns, column_box, literal::red);
+	  draw::box(ima_columns, column_box, literal::green);
+      columns.push_back(column_box);
 	}
+
+    for (unsigned i = 0; i < columns.size(); ++i)
+    {
+      for (unsigned j = 0; j < columns.size(); ++j)
+      {
+        if (i != j)
+        {
+          const box2d& c1 = columns[i];
+          const box2d& c2 = columns[j];
+
+          if (intersect(c1, c2) || intersect(c2, c1))
+          {
+            not_valid.insert(i);
+            not_valid.insert(j);
+          }
+        }
+      }
+    }
+
+    for (unsigned i = 0; i < columns.size(); ++i)
+      if (not_valid.find(i) != not_valid.end())
+        draw::box(ima_columns, columns[i], literal::red);
 
     // Write images and close XML
     std::ostringstream path;
