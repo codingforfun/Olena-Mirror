@@ -83,13 +83,13 @@ void  draw_adjacency_boxes(const std::vector<short>&                  balance,
 
 // Write image2d<bool> images
 void  write_image(const image2d<bool>& ima,
+                  const std::string    prefix,
                   const char*          name,
                   const unsigned       page,
-                  unsigned&            number,
-                  std::ostringstream&  path)
+                  unsigned&            number)
 {
-  path.str("");
-  path << "output/p" << page
+  std::ostringstream path;
+  path << "output/" << prefix << "_p" << page
        << "_" << number
        << "_" << name << ".pbm";
   io::pbm::save(ima, path.str());
@@ -98,13 +98,13 @@ void  write_image(const image2d<bool>& ima,
 
 // Write image2d<value::rbg8> images
 void  write_image(const image2d<value::rgb8>& ima,
+                  const std::string           prefix,
                   const char*                 name,
                   const unsigned              page,
-                  unsigned&                   number,
-                  std::ostringstream&         path)
+                  unsigned&                   number)
 {
-  path.str("");
-  path << "output/p" << page
+  std::ostringstream path;
+  path << "output/" << prefix << "_p" << page
        << "_" << number
        << "_" << name << ".ppm";
   io::ppm::save(ima, path.str());
@@ -346,9 +346,10 @@ int main(int argc, char** argv)
   typedef image2d<bool> IB;
   typedef scribo::component_set< image2d<unsigned> > CS;
 
-  if (argc != 2 && argc != 3)
+  if (argc != 3 && argc != 4)
     {
-      std::cerr << "usage: " << argv[0] << "input.pdf [scale]";
+      std::cerr << "usage: " << argv[0] << " input.pdf output-prefix [scale]"
+                << std::endl;
       exit(1);
     }
 
@@ -358,7 +359,7 @@ int main(int argc, char** argv)
   const float default_scale = 1.0;
 
   // Magnification factor.
-  const float scale_factor = argc == 3 ? strtof(argv[2], 0) : default_scale;
+  const float scale_factor = argc == 4 ? strtof(argv[3], 0) : default_scale;
 
   // Loading and binarization
   XML xml("final.xml", argv[1]);
@@ -366,6 +367,9 @@ int main(int argc, char** argv)
   util::array< image2d<value::rgb8> > pdf;
   unsigned dpi = default_res * scale_factor;
   io::pdf::load(pdf, argv[1], dpi);
+
+  // Filename prefix.
+  std::string prefix(argv[2]);
 
   // Iterate over all pages
   for (unsigned page = 0; page < pdf.nelements(); ++page)
@@ -635,19 +639,18 @@ int main(int argc, char** argv)
       }
 
     // Write images and close XML
-    std::ostringstream path;
     unsigned number = 0;
 
-    write_image(bin, "bin", page, number, path);
-    write_image(bin_without_separators, "bin_without_separators", page, number, path);
-    write_image(denoised, "denoised", page, number, path);
-    write_image(reverse, "reverse", page, number, path);
-    write_image(reverse_selection, "", page, number, path);
-    write_image(bin_merged, "reverse_selection", page, number, path);
-    write_image(comp, "bin_merged", page, number, path);
-    write_image(ima_links, "components", page, number, path);
-    write_image(ima_groups, "groups", page, number, path);
-    write_image(ima_valid, "valid", page, number, path);
-    write_image(ima_cols_rows, "cols_rows", page, number, path);
+    write_image(bin, prefix, "bin", page, number);
+    write_image(bin_without_separators, prefix, "bin_without_separators", page, number);
+    write_image(denoised, prefix, "denoised", page, number);
+    write_image(reverse, prefix, "reverse", page, number);
+    write_image(reverse_selection, prefix, "", page, number);
+    write_image(bin_merged, prefix, "reverse_selection", page, number);
+    write_image(comp, prefix, "bin_merged", page, number);
+    write_image(ima_links, prefix, "components", page, number);
+    write_image(ima_groups, prefix, "groups", page, number);
+    write_image(ima_valid, prefix, "valid", page, number);
+    write_image(ima_cols_rows, prefix, "cols_rows", page, number);
   }
 }
