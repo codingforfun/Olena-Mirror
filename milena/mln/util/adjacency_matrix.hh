@@ -227,9 +227,9 @@ namespace mln
 	mln_precondition(e1 < adj_.nrows());
 	mln_precondition(e2 < adj_.nrows());
 
-	if (e1 > e2)
-	  return opt::at(adj_, e2, e1);
-	return opt::at(adj_, e1, e2);
+	return e1 > e2
+	  ? opt::at(adj_, e2, e1)
+	  : opt::at(adj_, e1, e2);
       }
 
       template <typename V, typename Q>
