@@ -21,6 +21,8 @@
 
 #include <mln/value/all.hh>
 
+#include <mln/util/adjacency_matrix.hh>
+
 // INCLUDE TESSERACT
 #include <tesseract/baseapi.h>
 
@@ -337,6 +339,68 @@ void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
   }
 }
 
+
+// Alignment predicates.
+
+// Maximum alignment threshold at normal resoution (72 dpi)
+const float align_eps = 1.5;
+
+inline
+bool
+left_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pmin().col() - b2.pmin().col())
+    < align_eps * scale_factor;
+}
+
+inline
+bool
+vcenter_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pcenter().col() - b2.pcenter().col())
+    < align_eps * scale_factor;
+}
+
+inline
+bool
+right_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pmax().col() - b2.pmax().col())
+    < align_eps * scale_factor;
+}
+
+
+inline
+bool
+top_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pmin().row() - b2.pmin().row())
+    < align_eps * scale_factor;
+}
+
+inline
+bool
+hcenter_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pcenter().row() - b2.pcenter().row())
+    < align_eps * scale_factor;
+}
+
+inline
+bool
+bottom_aligned(const box2d& b1, const box2d& b2, float scale_factor)
+{
+  return
+    math::abs(b1.pmax().row() - b2.pmax().row())
+    < align_eps * scale_factor;
+}
+
+
 /******************************** MAIN ****************************************/
 int main(int argc, char** argv)
 {
@@ -638,6 +702,106 @@ int main(int argc, char** argv)
 	  }
       }
 
+    /* FIXME: We could factor a lot by grouping these matrices and
+       arrays into a structure and giving them a number.  */
+    // Compute alignments.
+    typedef util::adjacency_matrix<unsigned> align_matrix;
+    align_matrix left_aligned_groups(groups.nelements());
+    align_matrix vcenter_aligned_groups(groups.nelements());
+    align_matrix right_aligned_groups(groups.nelements());
+    align_matrix top_aligned_groups(groups.nelements());
+    align_matrix hcenter_aligned_groups(groups.nelements());
+    align_matrix bottom_aligned_groups(groups.nelements());
+    // We rely on the fact that group (text boxes) are numbered in the
+    // raster order to determine whether an alignment has been set
+    // between two groups.
+    std::vector<bool> group_has_left_alignment(groups.nelements(), false);
+    std::vector<bool> group_has_vcenter_alignment(groups.nelements(), false);
+    std::vector<bool> group_has_right_alignment(groups.nelements(), false);
+    std::vector<bool> group_has_top_alignment(groups.nelements(), false);
+    std::vector<bool> group_has_hcenter_alignment(groups.nelements(), false);
+    std::vector<bool> group_has_bottom_alignment(groups.nelements(), false);
+    for (unsigned i = 1; i < groups.nelements(); ++i)
+      for (unsigned j = i + 1; j < groups.nelements(); ++j)
+	{
+	  const box2d& b1 = groups(i).bbox();
+	  const box2d& b2 = groups(j).bbox();
+
+	  if (!group_has_left_alignment[i]
+	      && left_aligned(b1, b2, scale_factor))
+	    {
+	      left_aligned_groups.add(i, j);
+	      group_has_left_alignment[i] = true;
+	    }
+	  if (!group_has_vcenter_alignment[i]
+	      && vcenter_aligned(b1, b2, scale_factor))
+	    {
+	      vcenter_aligned_groups.add(i, j);
+	      group_has_vcenter_alignment[i] = true;
+	    }
+	  if (!group_has_right_alignment[i]
+	      && right_aligned(b1, b2, scale_factor))
+	    {
+	      right_aligned_groups.add(i, j);
+	      group_has_right_alignment[i] = true;
+	    }
+	  if (!group_has_top_alignment[i] &&
+	      top_aligned(b1, b2, scale_factor))
+	    {
+	      top_aligned_groups.add(i, j);
+	      group_has_top_alignment[i] = true;
+	    }
+	  if (!group_has_hcenter_alignment[i] &&
+	      hcenter_aligned(b1, b2, scale_factor))
+	    {
+	      hcenter_aligned_groups.add(i, j);
+	      group_has_hcenter_alignment[i] = true;
+	    }
+	  if (!group_has_bottom_alignment[i] &&
+	      bottom_aligned(b1, b2, scale_factor))
+	    {
+	      bottom_aligned_groups.add(i, j);
+	      group_has_bottom_alignment[i] = true;
+	    }
+	}
+    // Visualization: alignments.
+    image2d<value::rgb8> alignments =
+      data::convert(value::rgb8(), bin_merged);
+    for (unsigned i = 1; i < groups.nelements(); ++i)
+      draw::box(alignments, groups(i).bbox(), literal::medium_gray);
+    for (unsigned i = 1; i < groups.nelements(); ++i)
+      for (unsigned j = i + 1; j < groups.nelements(); ++j)
+	{
+	  const box2d& b1 = groups(i).bbox();
+	  const box2d& b2 = groups(j).bbox();
+
+	  if (left_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments,
+		       point2d(b1.pcenter().row(), b1.pmin().col()),
+		       point2d(b2.pcenter().row(), b2.pmin().col()),
+		       literal::red);
+	  if (vcenter_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments, b1.pcenter(), b2.pcenter(), literal::orange);
+	  if (right_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments,
+		       point2d(b1.pcenter().row(), b1.pmax().col()),
+		       point2d(b2.pcenter().row(), b2.pmax().col()),
+		       literal::green);
+
+	  if (top_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments,
+		       point2d(b1.pmin().row(), b1.pcenter().col()),
+		       point2d(b2.pmin().row(), b2.pcenter().col()),
+		       literal::cyan);
+	  if (hcenter_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments, b1.pcenter(), b2.pcenter(), literal::yellow);
+	  if (top_aligned_groups.are_adjacent(i, j))
+	    draw::line(alignments,
+		       point2d(b1.pmax().row(), b1.pcenter().col()),
+		       point2d(b2.pmax().row(), b2.pcenter().col()),
+		       literal::magenta);
+	}
+
     // Write images and close XML
     unsigned number = 0;
     write_image(bin, prefix, "bin", page, number);
@@ -651,5 +815,6 @@ int main(int argc, char** argv)
     write_image(ima_groups, prefix, "groups", page, number);
     write_image(ima_valid, prefix, "valid", page, number);
     write_image(ima_cols_rows, prefix, "cols_rows", page, number);
+    write_image(alignments, prefix, "alignments", page, number);
   }
 }
