@@ -340,36 +340,41 @@ void  draw_links_rl(const scribo::object_groups< image2d<unsigned> >& groups,
 }
 
 
-// Alignment predicates.
+/*-----------------------.
+| Alignment predicates.  |
+`-----------------------*/
 
 // Maximum alignment threshold at normal resoution (72 dpi)
-const float align_eps = 1.5;
+const float align_eps = 0.5;
+
+inline
+bool
+aligned(def::coord c1, def::coord c2, float scale_factor)
+{
+  // FIXME: std::ceil probably deserve a counterpart in Milena's
+  // mln::math.
+  return math::abs(c1 - c2) < std::ceil(align_eps * scale_factor);
+}
 
 inline
 bool
 left_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pmin().col() - b2.pmin().col())
-    < align_eps * scale_factor;
+  return aligned(b1.pmin().col(), b2.pmin().col(), scale_factor);
 }
 
 inline
 bool
 vcenter_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pcenter().col() - b2.pcenter().col())
-    < align_eps * scale_factor;
+  return aligned(b1.pcenter().col(), b2.pcenter().col(), scale_factor);
 }
 
 inline
 bool
 right_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pmax().col() - b2.pmax().col())
-    < align_eps * scale_factor;
+  return aligned(b1.pmax().col(), b2.pmax().col(), scale_factor);
 }
 
 
@@ -377,31 +382,28 @@ inline
 bool
 top_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pmin().row() - b2.pmin().row())
-    < align_eps * scale_factor;
+  return aligned(b1.pmin().row(), b2.pmin().row(), scale_factor);
 }
 
 inline
 bool
 hcenter_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pcenter().row() - b2.pcenter().row())
-    < align_eps * scale_factor;
+  return aligned(b1.pcenter().row(), b2.pcenter().row(), scale_factor);
 }
 
 inline
 bool
 bottom_aligned(const box2d& b1, const box2d& b2, float scale_factor)
 {
-  return
-    math::abs(b1.pmax().row() - b2.pmax().row())
-    < align_eps * scale_factor;
+  return aligned(b1.pmax().row(), b2.pmax().row(), scale_factor);
 }
 
 
-/******************************** MAIN ****************************************/
+/*-------.
+| Main.  |
+`-------*/
+
 int main(int argc, char** argv)
 {
   typedef value::label_16 V;
