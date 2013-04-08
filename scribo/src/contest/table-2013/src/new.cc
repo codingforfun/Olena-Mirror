@@ -795,7 +795,7 @@ int main(int argc, char** argv)
 		       literal::cyan);
 	  if (hcenter_aligned_groups.are_adjacent(i, j))
 	    draw::line(alignments, b1.pcenter(), b2.pcenter(), literal::yellow);
-	  if (top_aligned_groups.are_adjacent(i, j))
+	  if (bottom_aligned_groups.are_adjacent(i, j))
 	    draw::line(alignments,
 		       point2d(b1.pmax().row(), b1.pcenter().col()),
 		       point2d(b2.pmax().row(), b2.pcenter().col()),
