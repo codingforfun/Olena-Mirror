@@ -1,3 +1,7 @@
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* distrib/rpm/olena.spec: New.
+
 2014-07-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update texi2dvi from upstream.
