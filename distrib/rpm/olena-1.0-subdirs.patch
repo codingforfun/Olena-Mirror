@@ -1,0 +1,35 @@
+--- milena/Makefile.am.new	2009-09-14 15:10:30.000000000 -0300
++++ milena/Makefile.am	2009-09-14 15:10:55.000000000 -0300
+@@ -19,7 +19,6 @@
+ ## Process this file through Automake to create Makefile.in.
+
+ SUBDIRS = 	\
+-  doc 		\
+   mesh 	 	\
+   tests
+
+@@ -31,14 +30,7 @@
+   SUBDIRS += tools
+ endif ENABLE_TOOLS
+
+-.PHONY: doc tutorial pretty-check tests
+-
+-doc:
+-	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
+-
+-# FIXME: This target has no trigger in the top-level.
+-tutorial:
+-	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
++.PHONY: tutorial pretty-check tests
+
+ pretty-check:
+ 	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
+@@ -48,7 +40,7 @@
+
+ # Regen files recursively.
+ include $(top_srcdir)/build-aux/regen-recursive.mk
+-REGEN_SUBDIRS += doc tests
++REGEN_SUBDIRS += tests
+
+ # Force the regeneration of `headers.mk'.
+ #

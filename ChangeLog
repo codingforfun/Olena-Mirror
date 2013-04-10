@@ -1,5 +1,15 @@
 2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update spec file for Olena 2.0.
+
+	* distrib/rpm/olena-1.0-linkage.patch,
+	* distrib/rpm/olena-1.0-subdirs.patch,
+	* distrib/rpm/olena-2.0-tesseract-3.01.patch: New.
+
+	* distrib/rpm/olena.spec: Update to support Olena 2.0.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* distrib/rpm/olena.spec: New.
 
 2014-07-01  Roland Levillain  <roland@lrde.epita.fr>

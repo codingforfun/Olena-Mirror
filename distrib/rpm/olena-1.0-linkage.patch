@@ -1,0 +1,14 @@
+--- external/trimesh/gluit/Makefile.am.link	2010-05-08 17:08:54.000000000 +0200
++++ external/trimesh/gluit/Makefile.am	2010-05-08 17:10:33.000000000 +0200
+@@ -20,10 +20,10 @@
+ # Find config.h.
+ AM_CPPFLAGS = -I$(top_builddir)
+ AM_CPPFLAGS += -I$(top_srcdir)/include -I$(top_srcdir)/include/GL
+-AM_LDFLAGS = -lGL -lGLU -lX11
+
+ lib_LTLIBRARIES = libgluit.la
+
++libgluit_la_LIBADD = -lGL -lGLU -lX11 -lxcb
+ libgluit_la_SOURCES =				\
+   glui_algebra3.h				\
+   glui_arcball.h				\

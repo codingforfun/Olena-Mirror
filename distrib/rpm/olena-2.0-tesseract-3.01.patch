@@ -1,0 +1,66 @@
+Index: scribo/scribo/text/recognition.hh
+===================================================================
+--- scribo/scribo/text/recognition.hh	(revision dd1061b049328e5e45cb02150ec01aa9c9d3dd66)
++++ scribo/scribo/text/recognition.hh	(revision 3b03179e7f4d5bd9354bdfbcc897dfd47968fe05)
+@@ -113,5 +113,5 @@
+ #  else // HAVE_TESSERACT_3
+       tesseract::TessBaseAPI tess;
+-      if (tess.Init(NULL, language, NULL, 0, false) == -1)
++      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
+       {
+ 	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+@@ -221,5 +221,5 @@
+ #  else // HAVE_TESSERACT_3
+       tesseract::TessBaseAPI tess;
+-      if (tess.Init(NULL, language, NULL, 0, false) == -1)
++      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
+       {
+ 	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+
+Index: m4/oln-with-lib.m4
+===================================================================
+--- m4/oln-with-lib.m4	(revision 40966ccf914d0289ee0e84c049b06f3606af738e)
++++ m4/oln-with-lib.m4	(revision b340c526ae583ce7be9ea28b63bf98f25aae1add)
+@@ -1,6 +1,6 @@
+ #                                                       -*- Autoconf -*-
+
+-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+-# (LRDE)
++# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
++# Laboratory (LRDE)
+ #
+ # This file is part of Olena.
+@@ -84,17 +84,25 @@
+
+  if test "x$with_tesseract" != xno; then
+-   # Checking for Tesseract 3.x
+-   _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_api],
++   # Checking for Tesseract 3.x (single lib)
++   _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract],
+ 	       		     [tesseract], [TESSERACT_3], [])
+
+    if test x$oln_have_tesseract != xyes; then
+-      # Tesseract 2.x not found, checking for Tesseract 2.x
+-      _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
++      # Checking for Tesseract 3.x (multiple lib)
++      _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_api],
++     	       		        [tesseract], [TESSERACT_3], [])
++      if test x$oln_have_tesseract != xyes; then
++      	 # Tesseract 3.x not found, checking for Tesseract 2.x
++     	  _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
+ 	       		        [tesseract], [TESSERACT_2], [])
+-      TESSERACT_CPPFLAGS="$TESSERACT_2_CPPFLAGS -DHAVE_TESSERACT_2"
+-      TESSERACT_LDFLAGS=$TESSERACT_2_LDFLAGS
++      	  TESSERACT_CPPFLAGS="$TESSERACT_2_CPPFLAGS -DHAVE_TESSERACT_2"
++      	  TESSERACT_LDFLAGS=$TESSERACT_2_LDFLAGS
++      else
++          TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
++     	  TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
++      fi
+    else
+-     TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
+-     TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
++      TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
++      TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
+    fi
+  fi

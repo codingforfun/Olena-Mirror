@@ -1,9 +1,10 @@
 %bcond_with apps
-%bcond_with doc
+%bcond_without doc
+%bcond_without scribo
 
 Name: olena
-Version: 1.0
-Release: %mkrel 4
+Version: 2.0
+Release: 3
 Epoch: 2
 License: GPLv2
 Summary: Olena is a platform dedicated to image processing
@@ -12,6 +13,8 @@ URL: http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/WebHome
 # Get from https://svn.lrde.epita.fr/svn/oln/tags/olena-1.0 to have scribo
 Source0:  %name-%version.tar.bz2
 Patch0: olena-1.0-subdirs.patch
+Patch1: olena-1.0-linkage.patch
+Patch2: olena-2.0-tesseract-3.01.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: cfitsio-devel
 BuildRequires: tiff-devel
@@ -19,8 +22,13 @@ BuildRequires: imagemagick-devel
 BuildRequires: mesaglut-devel
 BuildRequires: mesagl-devel
 BuildRequires: vtk-devel
-BuildRequires: gdcm-devel
+%if %with scribo
 BuildRequires: tesseract-devel >= 2.04-3
+%endif
+BuildRequires: imagemagick
+BuildRequires: texlive-latex texlive-dvips
+BuildRequires: latex2html
+BuildRequires: doxygen
 
 %description
 Olena is a platform dedicated to image processing. At the
@@ -46,7 +54,6 @@ its genericity: it allows to write an algorithm once and run it over many kinds
 of images (grey scale, color, 1D, 2D, 3D, ...).
 
 %files doc
-%defattr(-,root,root,-)
 %_docdir/olena
 
 %endif
@@ -65,9 +72,11 @@ its genericity: it allows to write an algorithm once and run it over many kinds
 of images (grey scale, color, 1D, 2D, 3D, ...).
 
 %files tools
-%defattr(-,root,root,-)
 %_bindir/*
-%_datadir/olena/images
+%_datadir/olena
+%if %with scribo
+%_libdir/scribo/*
+%endif
 
 #------------------------------------------------------------------------------
 
@@ -97,7 +106,6 @@ Group: Development/C++
 trimesh C++ main Olena library.
 
 %files -n %{libtrimesh}
-%defattr(-,root,root,-)
 %{_libdir}/libtrimesh.so.%{tri_major}*
 
 #------------------------------------------------------------------------------
@@ -118,44 +126,81 @@ its genericity: it allows to write an algorithm once and run it over many kinds
 of images (grey scale, color, 1D, 2D, 3D, ...).
 
 %files devel
-%defattr(-,root,root,-)
 %{_libdir}/*.so
 %{_libdir}/*.la
 %{_includedir}/*
-%exclude %_libdir/*.a
+%_libdir/*.a
 
 #------------------------------------------------------------------------------
 
 %prep
 %setup -q
+%patch1 -p0
+%patch2
 %if ! %with doc
 %patch0 -p0 -b .orig
+autoreconf -fi
 %endif
+pushd external/trimesh
+autoreconf -fi
+popd
 
 %build
-CXXFLAGS="$CXXFLAGS -I%{_includedir}/ImageMagick"
-export CPPFLAGS CXXFLAGS
-
 %configure2_5x \
+%if %with scribo
 	--enable-scribo \
+%endif
 	--enable-trimesh \
 %if %with apps
 	--enable-apps \
 %endif
 	--enable-tools
 
+pushd external/trimesh
+%configure2_5x
+popd
+
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
-
-%clean
-rm -rf %buildroot
 
 
 
 %changelog
+* Thu Dec 01 2011 Dmitry Mikhirev <dmikhirev@mandriva.org> 2:2.0-3
++ Revision: 735945
+- Fixed compatibility to tesseract 3.01
+
+* Wed Nov 09 2011 Andrey Smirnov <asmirnov@mandriva.org> 2:2.0-2
++ Revision: 729310
+- Disable scribo until compatibility with current tesseract fixed
+
+* Wed Oct 05 2011 Nicolas LÃ©cureuil <nlecureuil@mandriva.com> 2:2.0-1
++ Revision: 703157
+- Fix file list
+- Install .a files
+- Clean spec file
+- New version 2.0
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - rebuild
+
+  + Pascal Terjan <pterjan@mandriva.org>
+    - Drop require on gdcm-devel for now :
+      - It is in contribs
+      - It is unused now (configure does not find it)
+
+* Sat May 08 2010 Funda Wang <fwang@mandriva.org> 2:1.0-6mdv2010.1
++ Revision: 543630
+- fix link
+- more BRs
+- add BR
+- add convert BR
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - rebuilt for 2010.1
+
 * Wed Sep 23 2009 Helio Chissini de Castro <helio@mandriva.com> 2:1.0-4mdv2010.0
 + Revision: 448013
 - Respect description, as requested in Mandriva bug #53959
@@ -177,5 +222,5 @@ rm -rf %buildroot
 + Revision: 421273
 - imported package olena
 
-  + Nicolas LÃ©cureuil <neoclust@mandriva.org>
+  + Nicolas LÃ©cureuil <nlecureuil@mandriva.com>
     - import olena
