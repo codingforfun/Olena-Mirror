@@ -258,8 +258,9 @@ namespace mln
         template<typename I, typename W>
         mln_concrete(I)
         tmms_hysteresis_dispatch(const I& ima, const W& struct_element,
-             const I& c_min_low, const I& c_min_high, 
-             const I& min_level, const I& med_level, const I& max_level,
+             const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
+             const mln_value(I)& min_level, const mln_value(I)& med_level, 
+             const mln_value(I)& max_level,
              const int pourcent, mln::trait::image::speed::any)
         {
           return mln::binarization::impl::generic::tmms_hysteresis(ima, 
@@ -270,8 +271,9 @@ namespace mln
         template<typename I, typename W>
         mln_concrete(I)
         tmms_hysteresis_dispatch(const I& ima, const W& struct_element,
-             const I& c_min_low, const I& c_min_high, 
-             const I& min_level, const I& med_level, const I& max_level,
+             const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
+             const mln_value(I)& min_level, const mln_value(I)& med_level, 
+             const mln_value(I)& max_level,
              const int pourcent, mln::trait::image::speed::fastest)
         {
           return mln::binarization::impl::tmms_hysteresis_fastest(ima, 
