@@ -292,7 +292,8 @@ namespace mln
           return tmms_hysteresis_dispatch(ima, 
                   struct_element, c_min_low, c_min_high, 
                   min_level, med_level, max_level, pourcent,
-                  mln_trait_image_speed(I));
+                  mln_trait_image_speed(I)()
+                  );
         }
         
     } //end of namespace namespace mln::binarization::internal
