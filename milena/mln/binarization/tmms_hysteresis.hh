@@ -196,32 +196,32 @@ namespace mln
           unsigned ncols = geom::ncols(in_image);
         	for (unsigned row = 0; row < nrows; row += 1)
           {
-            V *p_in_image=&(in_image.at_(row, 0));
-            V *p_dilation=&(dilation.at_(row, 0)));
-            V *p_erosion=&(erosion.at_(row, 0));
+            const V *p_in_image=&(in_image.at_(row, 0));
+            const V *p_dilation=&(dilation.at_(row, 0));
+            const V *p_erosion=&(erosion.at_(row, 0));
             V *p_low_image=&(low_image.at_(row, 0));
             V *p_high_image=&(high_image.at_(row, 0));
             
           	for (unsigned col = 0; col < ncols; col += 1)
-          
-          {
-            V dil = *p_dilation; // by def : dil>=ima>=ero
-            V ero = *p_erosion;
-            V ima = *p_in_image;
+            {
+              V dil = *p_dilation; // by def : dil>=ima>=ero
+              V ero = *p_erosion;
+              V ima = *p_in_image;
 
-           if ((V)(dil - ero)<c_min_low) (*p_low_image) = (*p_high_image) = med_level;
-           else if ((V)(dil - ero)<c_min_high) {
-                  (*p_low_image) = med_level;
-                  if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
-                   (*p_high_image) = max_level;
-                  else
-                   (*p_high_image) = min_level;
-                } else {
-                  if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
-                    (*p_low_image) = (*p_high_image) = max_level;
-                  else 
-                    (*p_low_image) = (*p_high_image) = min_level;
-                }
+             if ((V)(dil - ero)<c_min_low) (*p_low_image) = (*p_high_image) = med_level;
+             else if ((V)(dil - ero)<c_min_high) {
+                    (*p_low_image) = med_level;
+                    if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
+                     (*p_high_image) = max_level;
+                    else
+                     (*p_high_image) = min_level;
+                  } else {
+                    if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
+                      (*p_low_image) = (*p_high_image) = max_level;
+                    else 
+                      (*p_low_image) = (*p_high_image) = min_level;
+                  }
+            }
           }
 
           mln_ch_value(I, unsigned int) labels_high_images;
