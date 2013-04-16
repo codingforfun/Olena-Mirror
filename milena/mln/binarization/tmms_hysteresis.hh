@@ -65,7 +65,7 @@ namespace mln
 
      \author J. Fabrizio
      */
-  
+    template<typename I, typename W>
     mln_concrete(I)
     tmms_hysteresis(const Image<I>& in_image_, const Window<W>& struct_element,
 	       const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
