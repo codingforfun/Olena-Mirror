@@ -194,7 +194,7 @@ namespace mln
           
           unsigned nrows = geom::nrows(in_image);
           unsigned ncols = geom::ncols(in_image);
-        	for (row = 0; row < nrows; row += 1)
+        	for (unsigned row = 0; row < nrows; row += 1)
           {
             V *p_in_image=&(in_image.at_(row, 0));
             V *p_dilation=&(dilation.at_(row, 0)));
