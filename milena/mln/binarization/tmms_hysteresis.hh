@@ -221,6 +221,11 @@ namespace mln
                     else 
                       (*p_low_image) = (*p_high_image) = min_level;
                   }
+              p_in_image++;
+              p_dilation++;
+              p_erosion++;
+              p_low_image++;
+              p_high_image++;
             }
           }
 
