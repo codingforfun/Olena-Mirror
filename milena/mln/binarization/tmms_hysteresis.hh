@@ -65,7 +65,7 @@ namespace mln
 
      \author J. Fabrizio
      */
-  
+    template<typename I, typename W>
     mln_concrete(I)
     tmms_hysteresis(const Image<I>& in_image_, const Window<W>& struct_element,
 	       const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
@@ -91,7 +91,7 @@ namespace mln
              const mln_value(I)& max_level,
              const int pourcent)
         {
-          mln_trace("binarization::tmms");
+          mln_trace("binarization::tmms_hysteresis");
 
           const I& in_image = exact(in_image_);
 
@@ -160,14 +160,14 @@ namespace mln
     
         template<typename I, typename W>
         mln_concrete(I)
-        tmms_hysteresis(const Image<I>& in_image_, const Window<W>& struct_element,
+        tmms_hysteresis_fastest(const Image<I>& in_image_, const Window<W>& struct_element,
              const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
              const mln_value(I)& min_level, 
              const mln_value(I)& med_level,
              const mln_value(I)& max_level,
              const int pourcent)
         {
-          mln_trace("binarization::tmms");
+          mln_trace("binarization::tmms_hysteresis");
 
           const I& in_image = exact(in_image_);
 
@@ -194,34 +194,34 @@ namespace mln
           
           unsigned nrows = geom::nrows(in_image);
           unsigned ncols = geom::ncols(in_image);
-        	for (row = 0; row < nrows; row += 1)
+        	for (unsigned row = 0; row < nrows; row += 1)
           {
-            V *p_in_image=&(in_image.at_(row, 0));
-            V *p_dilation=&(dilation.at_(row, 0)));
-            V *p_erosion=&(erosion.at_(row, 0));
+            const V *p_in_image=&(in_image.at_(row, 0));
+            const V *p_dilation=&(dilation.at_(row, 0));
+            const V *p_erosion=&(erosion.at_(row, 0));
             V *p_low_image=&(low_image.at_(row, 0));
             V *p_high_image=&(high_image.at_(row, 0));
             
           	for (unsigned col = 0; col < ncols; col += 1)
-          
-          {
-            V dil = *p_dilation; // by def : dil>=ima>=ero
-            V ero = *p_erosion;
-            V ima = *p_in_image;
+            {
+              V dil = *p_dilation; // by def : dil>=ima>=ero
+              V ero = *p_erosion;
+              V ima = *p_in_image;
 
-           if ((V)(dil - ero)<c_min_low) (*p_low_image) = (*p_high_image) = med_level;
-           else if ((V)(dil - ero)<c_min_high) {
-                  (*p_low_image) = med_level;
-                  if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
-                   (*p_high_image) = max_level;
-                  else
-                   (*p_high_image) = min_level;
-                } else {
-                  if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
-                    (*p_low_image) = (*p_high_image) = max_level;
-                  else 
-                    (*p_low_image) = (*p_high_image) = min_level;
-                }
+             if ((V)(dil - ero)<c_min_low) (*p_low_image) = (*p_high_image) = med_level;
+             else if ((V)(dil - ero)<c_min_high) {
+                    (*p_low_image) = med_level;
+                    if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
+                     (*p_high_image) = max_level;
+                    else
+                     (*p_high_image) = min_level;
+                  } else {
+                    if ( (V)(dil - ima) < pourcent*((V)(dil - ero))/100 )
+                      (*p_low_image) = (*p_high_image) = max_level;
+                    else 
+                      (*p_low_image) = (*p_high_image) = min_level;
+                  }
+            }
           }
 
           mln_ch_value(I, unsigned int) labels_high_images;
@@ -258,11 +258,12 @@ namespace mln
         template<typename I, typename W>
         mln_concrete(I)
         tmms_hysteresis_dispatch(const I& ima, const W& struct_element,
-             const I& c_min_low, const I& c_min_high, 
-             const I& min_level, const I& med_level, const I& max_level,
+             const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
+             const mln_value(I)& min_level, const mln_value(I)& med_level, 
+             const mln_value(I)& max_level,
              const int pourcent, mln::trait::image::speed::any)
         {
-          return mnl::binarization::impl::generic::tmms_hysteresis(ima, 
+          return mln::binarization::impl::generic::tmms_hysteresis(ima, 
                   struct_element, c_min_low, c_min_high, 
                   min_level, med_level, max_level, pourcent);
         }
@@ -270,8 +271,9 @@ namespace mln
         template<typename I, typename W>
         mln_concrete(I)
         tmms_hysteresis_dispatch(const I& ima, const W& struct_element,
-             const I& c_min_low, const I& c_min_high, 
-             const I& min_level, const I& med_level, const I& max_level,
+             const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
+             const mln_value(I)& min_level, const mln_value(I)& med_level, 
+             const mln_value(I)& max_level,
              const int pourcent, mln::trait::image::speed::fastest)
         {
           return mln::binarization::impl::tmms_hysteresis_fastest(ima, 
@@ -281,22 +283,24 @@ namespace mln
         
         template<typename I, typename W>
         mln_concrete(I)
-        tmms_dispatch(const I& ima, const W& struct_element,
-                      const I& c_min_low, const I& c_min_high, 
-                      const I& min_level, const I& med_level, const I& max_level,
-                      const int pourcent)
+        tmms_hysteresis_dispatch(const I& ima, const W& struct_element,
+                const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
+                const mln_value(I)& min_level, const mln_value(I)& med_level,
+                const mln_value(I)& max_level,
+                const int pourcent)
         {
           return tmms_hysteresis_dispatch(ima, 
                   struct_element, c_min_low, c_min_high, 
                   min_level, med_level, max_level, pourcent,
-                  mln_trait_image_speed(I));
+                  mln_trait_image_speed(I)()
+                  );
         }
         
-    } //end of namespace internal
+    } //end of namespace namespace mln::binarization::internal
     
     template<typename I, typename W>
     mln_concrete(I)
-    tmms(const Image<I>& in_image_, const Window<W>& struct_element,
+    tmms_hysteresis(const Image<I>& in_image_, const Window<W>& struct_element,
 	       const mln_value(I)& c_min_low, const mln_value(I)& c_min_high, 
          const mln_value(I)& min_level, 
          const mln_value(I)& med_level,
@@ -305,8 +309,9 @@ namespace mln
     {
       const I& ima = exact(in_image_);
       const W& win = exact(struct_element);
-      return mln::binarization::internal::tmms_hysteresis_displatch(ima, 
-              win, min_level, med_level, max_level, pourcent);
+      return mln::binarization::internal::tmms_hysteresis_dispatch(ima, 
+              win, c_min_low, c_min_high, 
+              min_level, med_level, max_level, pourcent);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
