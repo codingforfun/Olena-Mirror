@@ -22,6 +22,7 @@ EXTRA_DIST = 				\
 
 
 check_PROGRAMS =				\
+  all_blobs					\
   background					\
   blobs						\
   blobs_and_compute				\
