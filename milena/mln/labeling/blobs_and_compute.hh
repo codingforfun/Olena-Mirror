@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -46,7 +46,7 @@ namespace mln
   namespace labeling
   {
 
-    /*! Label an image and compute given accumulators.
+    /*! \brief Label an image and compute given accumulators.
 
       \param[in]     input   A binary image.
       \param[in]     nbh     A neighborhood used for labeling.
@@ -56,6 +56,8 @@ namespace mln
       \return The labeled image, computed attributes for each regions
               and an array of the accumulators used to compute the
               attributes.
+
+      \ingroup labeling
      */
     template <typename I, typename N, typename L, typename A>
     util::couple<mln_ch_value(I,L),
@@ -77,7 +79,7 @@ namespace mln
 	\brief Functor not computing anything.
 	To be passed to the labeling  blobs canvas.
       */
-      template <typename L, typename A>
+      template <typename I, typename L, typename A>
       struct compute_functor
       {
 	typedef mln_result(A) accu_result;
@@ -95,6 +97,12 @@ namespace mln
 	{
 	  accus_.reserve(1000);
 	  accus_.append(A());
+	}
+
+	inline
+	bool handles(const mln_value(I)& v)
+	{
+	  return v;
 	}
 
 	inline
@@ -172,7 +180,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       typedef mln_ch_value(I,L) out_t;
-      typedef internal::compute_functor<out_t,A> func_t;
+      typedef internal::compute_functor<I,out_t,A> func_t;
       func_t functor(nlabels);
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
