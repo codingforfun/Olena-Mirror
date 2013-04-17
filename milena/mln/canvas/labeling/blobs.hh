@@ -108,14 +108,14 @@ namespace mln
 	    initialize(output, input);
 	    data::fill(output, zero);
 
-	    extension::fill(input, false);
+	    //extension::fill(input, false);
 
 	    functor.init(); // <-- functor.init()
 
 	    // Loop.
 	    mln_piter(I) p(input.domain());
 	    for_all(p)
-	      if (input(p) && output(p) == zero) // Object point, not labeled yet.
+	      if (functor.handles(input(p)) && output(p) == zero) // Object point, not labeled yet.
 	      {
 		// Label this point component.
 		if (nlabels == mln_max(L))
@@ -136,8 +136,8 @@ for this label type: nlabels > max(label_type).");
 		{
 		  cur = qu.front();
 		  qu.pop();
-		  for_all(n) if (input.has(n))
-		    if (input(n) && output(n) == zero)
+		  for_all(n) if (input.domain().has(n))
+		    if (input(p) == input(n) && output(n) == zero)
 		    {
 		      mln_invariant(! qu.compute_has(n));
 		      qu.push(n);
@@ -170,8 +170,8 @@ for this label type: nlabels > max(label_type).");
 	    L& nlabels, F& functor)
       {
 	mln_trace("labeling::blobs");
-	mlc_equal(mln_trait_image_kind(I),
-		  mln::trait::image::kind::binary)::check();
+	// mlc_equal(mln_trait_image_kind(I),
+	// 	  mln::trait::image::kind::binary)::check();
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 	mln_precondition(input.is_valid());

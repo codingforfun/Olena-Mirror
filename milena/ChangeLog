@@ -1,3 +1,17 @@
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a labeling routine working on grayscale images.
+
+	* mln/canvas/labeling/blobs.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/blobs_and_compute.hh: Introduce a new functor
+	method handles().
+
+	* tests/labeling/Makefile.am: Add target.
+
+	* mln/labeling/all_blobs.hh,
+	* tests/labeling/all_blobs.cc: New.
+
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Remove duplicate '/' in path.
