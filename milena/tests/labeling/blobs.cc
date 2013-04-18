@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,8 +26,10 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/labeling/blobs.hh>
+#include <mln/value/int_u8.hh>
 
 #include "tests/data.hh"
 
@@ -35,8 +38,21 @@ int main()
 {
   using namespace mln;
 
-  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  unsigned n;
-  labeling::blobs(pic, c4(), n);
-  mln_assertion(n == 33);
+  // Binary image
+  {
+    image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+    unsigned n;
+    labeling::blobs(pic, c4(), n);
+    mln_assertion(n == 33);
+  }
+
+  // Gray-level image
+  {
+    image2d<value::int_u8> pic;
+    io::pgm::load(pic, MLN_IMG_DIR "/fly.pgm");
+    unsigned n;
+    labeling::blobs(pic, c4(), n);
+
+    mln_assertion(n == 24);
+  }
 }

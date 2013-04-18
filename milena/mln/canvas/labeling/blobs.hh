@@ -90,9 +90,15 @@ namespace mln
 
 	  template <typename I, typename N, typename L, typename F>
 	  mln_ch_value(I, L)
-	  blobs(const Image<I>& input_, const N& nbh, L& nlabels, F& functor)
+	  blobs(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels, F& functor)
 	  {
+	    mln_trace("mln::canvas::labeling::impl::generic::blobs");
+
 	    const I& input = exact(input_);
+	    const N& nbh = exact(nbh_);
+
+	    mln_precondition(input.is_valid());
+	    mln_precondition(nbh.is_valid());
 
 	    typedef mln_psite(I) P;
 
@@ -108,20 +114,24 @@ namespace mln
 	    initialize(output, input);
 	    data::fill(output, zero);
 
-	    //extension::fill(input, false);
+	    // No initialization needed in border since we look into
+	    // the image domain for the neighborhood.
+	    //
+	    // extension::fill(input, functor.neutral_value()); // <-- functor.neutral_value()
 
 	    functor.init(); // <-- functor.init()
 
 	    // Loop.
 	    mln_piter(I) p(input.domain());
 	    for_all(p)
-	      if (functor.handles(input(p)) && output(p) == zero) // Object point, not labeled yet.
+	      if (functor.handles(input(p))   // <-- functor.handles()
+		  && output(p) == zero) // Object point, not labeled yet.
 	      {
 		// Label this point component.
 		if (nlabels == mln_max(L))
 		{
-		  mln_trace_warning("labeling aborted! Too many labels \
-for this label type: nlabels > max(label_type).");
+		  mln_trace_warning("labeling aborted! Too many labels "
+				    "for this label type: nlabels > max(label_type).");
 
 		  return output;
 		}
@@ -157,8 +167,117 @@ for this label type: nlabels > max(label_type).");
 	} // end of namespace mln::labeling::impl::generic
 
 
+	template <typename I, typename N, typename L, typename F>
+	mln_ch_value(I, L)
+	blobs_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		      L& nlabels, F& functor)
+	{
+	  mln_trace("mln::canvas::labeling::impl::blobs_fastest");
+
+	  const I& input = exact(input_);
+	  const N& nbh = exact(nbh_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(nbh.is_valid());
+
+	  typedef mln_psite(I) P;
+
+	  mln_pixter(const I) cur(input);
+	  mln_nixter(const I,N) n(cur, nbh);
+	  p_queue_fast<unsigned> qu;
+	  const L zero = literal::zero;
+
+	  // Initialization.
+	  nlabels = literal::zero;
+	  typedef mln_ch_value(I, L) out_t;
+	  out_t output;
+	  initialize(output, input);
+	  data::fill(output, zero);
+
+	  extension::fill(input, functor.neutral_value()); // <-- functor.neutral_value()
+
+	  functor.init(); // <-- functor.init()
+
+	  // Loop.
+	  mln_pixter(const I) p(input);
+	  for_all(p)
+	    if (functor.handles(p.val())  // <-- functor.handles()
+		&& output.element(p.offset()) == zero) // Object point, not labeled yet.
+	    {
+	      // Label this point component.
+	      if (nlabels == mln_max(L))
+	      {
+		mln_trace_warning("labeling aborted! Too many labels "
+				  "for this label type: nlabels > max(label_type).");
+
+		return output;
+	      }
+	      ++nlabels;
+	      functor.new_label(nlabels); // <-- functor.new_label()
+	      mln_invariant(qu.is_empty());
+	      qu.push(p.offset());
+	      output.element(p.offset()) = nlabels;
+	      functor.process_p_(p.offset()); // <-- functor.process_p_()
+	      do
+	      {
+		cur.change_offset(qu.front());
+		qu.pop();
+		for_all(n)
+		  if (p.val() == n.val() && output.element(n.offset()) == zero)
+		  {
+		    mln_invariant(! qu.compute_has(n.offset()));
+		    qu.push(n.offset());
+		    output.element(n) = nlabels;
+		    functor.process_n_(n.offset()); // <-- functor.process_n_()
+		  }
+	      }
+	      while (! qu.is_empty());
+	    }
+
+	  functor.finalize(); // <-- functor.finalize()
+
+	  return output;
+	}
+
 
       } // end of namespace mln::canvas::labeling::impl
+
+
+      // Dispatch
+
+      namespace internal
+      {
+
+	template <typename I, typename N, typename L, typename F>
+	inline
+	mln_ch_value(I, L)
+	blobs_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+		       L& nlabels, F& functor, mln::trait::image::speed::any)
+	{
+	  return impl::generic::blobs(input, nbh, nlabels, functor);
+	}
+
+	template <typename I, typename N, typename L, typename F>
+	inline
+	mln_ch_value(I, L)
+	blobs_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+		       L& nlabels, F& functor, mln::trait::image::speed::fastest)
+	{
+	  return impl::blobs_fastest(input, nbh, nlabels, functor);
+	}
+
+	template <typename I, typename N, typename L, typename F>
+	inline
+	mln_ch_value(I, L)
+	blobs_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+		       L& nlabels, F& functor)
+	{
+	  typedef mln_trait_image_speed(I) speed;
+	  return blobs_dispatch(input, nbh, nlabels, functor, speed());
+	}
+
+      } // end of namespace mln::canvas::labeling::internal
+
 
 
       // Facade.
@@ -169,16 +288,15 @@ for this label type: nlabels > max(label_type).");
       blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	    L& nlabels, F& functor)
       {
-	mln_trace("labeling::blobs");
-	// mlc_equal(mln_trait_image_kind(I),
-	// 	  mln::trait::image::kind::binary)::check();
+	mln_trace("mln::canvas::labeling::blobs");
+
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 	mln_precondition(input.is_valid());
 
 	// The only implementation is the generic one.
 	mln_ch_value(I, L)
-	  output = impl::generic::blobs(input, nbh, nlabels, functor);
+	  output = internal::blobs_dispatch(input, nbh, nlabels, functor);
 
 	return output;
       }

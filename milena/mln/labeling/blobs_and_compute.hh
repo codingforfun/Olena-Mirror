@@ -35,7 +35,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/labeling/blobs.hh>
+# include <mln/canvas/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 
 # include <mln/util/couple.hh>
@@ -52,6 +52,8 @@ namespace mln
       \param[in]     nbh     A neighborhood used for labeling.
       \param[in,out] nlabels The number of labels found.
       \param[in]     accu    An accumulator to be computed while labeling.
+      \param[in] background_value The value to be considered as
+                                  background and not to be labeled.
 
       \return The labeled image, computed attributes for each regions
               and an array of the accumulators used to compute the
@@ -64,8 +66,21 @@ namespace mln
 		 util::couple<util::array<mln_result(A)>,
 			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
-		      L& nlabels, const Accumulator<A>& accu);
+		      L& nlabels, const Accumulator<A>& accu,
+		      const mln_value(I)& background_value);
 
+    /*! \brief Label an image and compute given accumulators.
+
+      background_value is set to literal::zero.
+
+      \ingroup labeling
+     */
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
+    blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      L& nlabels, const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -87,8 +102,10 @@ namespace mln
 	typedef util::couple<util::array<accu_result>,
 			     util::array<A> > result;
 
-	compute_functor(const mln_value(L)& nlabels)
-	  : nlabels_(nlabels)
+	compute_functor(const mln_value(L)& nlabels, const I& input,
+			const mln_value(I)& background_value)
+	  : nlabels_(nlabels), input_(input),
+	    background_value_(background_value)
 	{
 	}
 
@@ -100,9 +117,15 @@ namespace mln
 	}
 
 	inline
+	mln_value(I) neutral_value() const
+	{
+	  return background_value_;
+	}
+
+	inline
 	bool handles(const mln_value(I)& v)
 	{
-	  return v;
+	  return v != background_value_;
 	}
 
 	inline
@@ -131,6 +154,21 @@ namespace mln
 	}
 
 
+	// Fastest interface
+
+	inline
+	void process_p_(const unsigned p)
+	{
+	  process__(accu_argument(), p);
+	}
+
+	inline
+	void process_n_(const unsigned n)
+	{
+	  process__(accu_argument(), n);
+	}
+
+
       private:
 	inline
 	void process__(const mln_psite(L)&, const mln_site(L)& p)
@@ -144,6 +182,19 @@ namespace mln
 	  accus_[current_lbl_].take(current_lbl_);
 	}
 
+	inline
+	void process__(const mln_psite(L)&, const unsigned p)
+	{
+	  accus_[current_lbl_].take(input_.point_at_offset(p));
+	}
+
+	inline
+	void process__(const mln_value(L)&, const unsigned)
+	{
+	  accus_[current_lbl_].take(current_lbl_);
+	}
+
+
 	template <typename V>
 	inline
 	void process__(const V&, const mln_site(L)&)
@@ -156,6 +207,8 @@ namespace mln
 	util::array<A> accus_;
 	mln_value(L) current_lbl_;
 	mln_value(L) nlabels_;
+	const I input_;
+	mln_value(I) background_value_;
       };
 
     } // end of namespace mln::labeling::internal
@@ -170,18 +223,18 @@ namespace mln
 		 util::couple<util::array<mln_result(A)>,
 			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
-		      L& nlabels, const Accumulator<A>& accu)
+		      L& nlabels, const Accumulator<A>& accu,
+		      const mln_value(I)& background_value)
     {
       mln_trace("labeling::blobs_and_compute");
 
       (void) accu;
-      mlc_equal(mln_trait_image_kind(I),
-		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).is_valid());
+      mln_precondition(exact(nbh).is_valid());
 
       typedef mln_ch_value(I,L) out_t;
       typedef internal::compute_functor<I,out_t,A> func_t;
-      func_t functor(nlabels);
+      func_t functor(nlabels, exact(input), background_value);
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
@@ -190,6 +243,18 @@ namespace mln
 			      make::couple(functor.result_, functor.accus_));
 
       return result;
+    }
+
+
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
+    blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      L& nlabels, const Accumulator<A>& accu)
+    {
+      return blobs_and_compute(input, nbh, nlabels, accu,
+			       static_cast<mln_value(I)>(literal::zero));
     }
 
 
