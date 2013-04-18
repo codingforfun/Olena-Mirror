@@ -1,5 +1,9 @@
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/image/image2d_ffmpeg.hh: New image type for ffmpeg frames.
+
+2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add support for graylevel images in labeling::blobs.
 
 	* mln/canvas/labeling/blobs.hh: Add a fastest version and make it
