@@ -33,8 +33,6 @@
 /// stretching way.
 ///
 /// \todo Make it work with other types than scalars (e.g., vectors).
-///
-/// \todo Think about adding a stretch_inplace(?)
 
 # include <mln/estim/min_max.hh>
 # include <mln/value/int_u.hh>
@@ -93,7 +91,7 @@ namespace mln
 
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
-	if (max_ != min_)
+	if (max_ != min_ && (mln_max(V)>max_ || mln_min(V)>min_))
 	{
 	  //FIXME: we would like to use float instead of double but we
 	  //can't for precision reasons. See ticket #179.
