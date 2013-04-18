@@ -33,8 +33,6 @@
 /// image using a queue-based algorithm.
 ///
 /// \todo Handle abort in a nice way...
-///
-/// \todo Add a 2nd version precising the 'value' to label.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -48,27 +46,41 @@ namespace mln
   namespace labeling
   {
 
-    /*! \brief Connected component labeling of the binary objects of a
-      binary image.
+    /*! \brief Connected component labeling of the objects of an
+     *  image.
 
       \param[in] input    The input image.
       \param[in] nbh      The connexity of the objects.
       \param[out] nlabels  The Number of labels. Its value is set in the
                            algorithms.
-      \return              The label image.
-
-      \pre The input image has to be binary (checked at compile-time).
+      \param[in] background_value The value to be considered as
+                                  background and not to be labeled.
+      \return              A labeled image.
 
       A fast queue is used so that the algorithm is not recursive and
-        can handle large binary objects (blobs).
+        can handle large objects (blobs).
 
       \ingroup labeling
     */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     blobs(const Image<I>& input, const Neighborhood<N>& nbh,
-	  L& nlabels);
+	  L& nlabels, const mln_value(I)& background_value);
 
+    /*! \overload
+
+      \brief Connected component labeling of the objects of an
+      image.
+
+      background_value is set to literal::zero.
+
+      \ingroup labeling
+    */
+    template <typename I, typename N, typename L>
+    inline
+    mln_ch_value(I, L)
+    blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	  L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -83,11 +95,14 @@ namespace mln
       template <typename I, typename L>
       struct label_value_functor
       {
-	label_value_functor(const mln_value(I)& value) : value_(value) {}
+	label_value_functor(const mln_value(I)& background_value)
+	  : background_value_(background_value) {}
 
 	void init() {}
 
-	bool handles(const mln_value(I)& v) { return v == value_; }
+	mln_value(I) neutral_value() const { return this->background_value_; }
+
+	bool handles(const mln_value(I)& v) const { return v != this->background_value_; }
 
 	void new_label(const mln_value(L)&) {}
 
@@ -97,7 +112,15 @@ namespace mln
 
 	void finalize() {}
 
-	mln_value(I) value_;
+
+	// Fastest interface
+
+ 	void process_p_(unsigned) {}
+
+	void process_n_(unsigned) {}
+
+
+	mln_value(I) background_value_;
       };
 
     } // end of namespace mln::labeling::internal
@@ -110,22 +133,32 @@ namespace mln
     inline
     mln_ch_value(I, L)
     blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
-	  L& nlabels)
+	  L& nlabels, const mln_value(I)& background_value)
     {
       mln_trace("labeling::blobs");
-      mlc_equal(mln_trait_image_kind(I),
-		mln::trait::image::kind::binary)::check();
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
       typedef mln_ch_value(I,L) out_t;
-      internal::label_value_functor<I, out_t> functor(true);
+      internal::label_value_functor<I, out_t> functor(background_value);
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
       return output;
     }
+
+    template <typename I, typename N, typename L>
+    inline
+    mln_ch_value(I, L)
+    blobs(const Image<I>& input, const Neighborhood<N>& nbh,
+	  L& nlabels)
+    {
+      return blobs(input, nbh, nlabels,
+		   static_cast<mln_value(I)>(literal::zero));
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

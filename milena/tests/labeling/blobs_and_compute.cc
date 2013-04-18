@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -26,6 +26,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/accu/center.hh>
 #include <mln/labeling/blobs_and_compute.hh>
@@ -40,22 +41,46 @@ int main()
 {
   using namespace mln;
 
-  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  value::label_8 n;
+  {
+    image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+    value::label_8 n;
 
 
-  typedef image2d<value::label_8> L;
-  typedef util::array<point2d> arr_t;
-  typedef accu::center<point2d,point2d> accu_t;
-  typedef util::array<accu_t> accu_arr_t;
-  typedef util::couple<L,util::couple<arr_t, accu_arr_t> > res_t;
-  res_t result = labeling::blobs_and_compute(pic, c4(), n,
-					     accu_t());
+    typedef image2d<value::label_8> L;
+    typedef util::array<point2d> arr_t;
+    typedef accu::center<point2d,point2d> accu_t;
+    typedef util::array<accu_t> accu_arr_t;
+    typedef util::couple<L,util::couple<arr_t, accu_arr_t> > res_t;
+    res_t result = labeling::blobs_and_compute(pic, c4(), n,
+					       accu_t());
 
 
-  mln_assertion(result.second().first().size() == 34);
-  mln_assertion(result.second().second().size() == 34);
-  mln_assertion(result.second().first()[1] == point2d(10,30));
-  mln_assertion(result.second().second()[33] == point2d(311,67));
-  mln_assertion(n == 33);
+    mln_assertion(result.second().first().size() == 34);
+    mln_assertion(result.second().second().size() == 34);
+    mln_assertion(result.second().first()[1] == point2d(10,30));
+    mln_assertion(result.second().second()[33] == point2d(311,67));
+    mln_assertion(n == 33);
+  }
+
+  {
+    image2d<value::label_8> pic;
+    io::pgm::load(pic, MLN_IMG_DIR "/fly.pgm");
+    value::label_8 n;
+
+
+    typedef image2d<value::label_8> L;
+    typedef util::array<point2d> arr_t;
+    typedef accu::center<point2d,point2d> accu_t;
+    typedef util::array<accu_t> accu_arr_t;
+    typedef util::couple<L,util::couple<arr_t, accu_arr_t> > res_t;
+    res_t result = labeling::blobs_and_compute(pic, c4(), n,
+					       accu_t());
+
+    mln_assertion(result.second().first().size() == 25);
+    mln_assertion(result.second().second().size() == 25);
+    mln_assertion(result.second().first()[1] == point2d(0,0));
+    mln_assertion(result.second().second()[24] == point2d(4,4));
+    mln_assertion(n == 24);
+  }
+
 }
