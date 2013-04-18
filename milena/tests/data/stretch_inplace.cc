@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,14 +24,11 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/data/stretch.hh>
-#include <mln/value/int_u8.hh>
-
+#include <mln/data/stretch_inplace.hh>
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
   int vs[3][3] = {
     { 1000, 2000, 3000 },
@@ -40,16 +36,16 @@ int main()
     { 1000, 2000, 3000 }
   };
   image2d<int> ima = make::image(vs);
-  image2d<int_u8> out = data::stretch(int_u8(), ima);
+  data::stretch_inplace(ima);
 
-  int_u8 ws[3][3] = {
-    { 0, 127, 255 },
-    { 0, 127, 255 },
-    { 0, 127, 255 }
+  int ws[3][3] = {
+    { 0, 1073741824, 2147483647 },
+    { 0, 1073741824, 2147483647 },
+    { 0, 1073741824, 2147483647 }
   };
-  image2d<int_u8> ref = make::image(ws);
+  image2d<int> ref = make::image(ws);
 
-  box_fwd_piter_<point2d> p(out.domain());
+  box_fwd_piter_<point2d> p(ima.domain());
   for_all(p)
-    mln_assertion(out(p) == ref(p));
+    mln_assertion(ima(p) == ref(p));
 }

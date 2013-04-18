@@ -1,3 +1,16 @@
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add data::stretch_inplace.
+
+	* mln/data/stretch.hh: Remove fixme.
+
+	* mln/data/stretch_inplace.hh,
+	* tests/data/stretch_inplace.cc: New.
+
+	* tests/data/stretch.cc: Remove a useless include.
+
+	* tests/data/Makefile.am: New target.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.

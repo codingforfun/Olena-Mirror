@@ -33,8 +33,6 @@
 /// stretching way.
 ///
 /// \todo Make it work with other types than scalars (e.g., vectors).
-///
-/// \todo Think about adding a stretch_inplace(?)
 
 # include <mln/estim/min_max.hh>
 # include <mln/value/int_u.hh>
@@ -82,7 +80,7 @@ namespace mln
       template <typename V, typename I>
       inline
       mln_ch_value(I, V)
-	stretch(const V& v, const Image<I>& input)
+      stretch(const V& v, const Image<I>& input)
       {
 	mln_trace("data::impl::stretch");
 
@@ -95,6 +93,12 @@ namespace mln
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)
 	{
+	  // We always want to perform this algorithm even if (min_ ==
+	  // mln_min(V) and max_ == mln_max(V)) since we need to
+	  // convert the input image towards the given type and a
+	  // default conversion function may not exist between V and
+	  // mln_value(I).
+
 	  //FIXME: we would like to use float instead of double but we
 	  //can't for precision reasons. See ticket #179.
 	  double
