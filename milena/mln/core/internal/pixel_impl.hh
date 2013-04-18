@@ -93,6 +93,12 @@ namespace mln
 	return value_ptr_ - image_.buffer();
       }
 
+      void change_offset(unsigned offset)
+      {
+	mln_assertion(offset < image_.nelements());
+	value_ptr_ = image_.buffer() + offset;
+      }
+
       operator util::pix<unconst_image_t>() const
       {
 	util::pix<unconst_image_t> tmp(image_, image_.point_at_offset(offset()));

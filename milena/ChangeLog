@@ -1,3 +1,7 @@
+2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/pixel_impl.hh: Add change_offset().
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a labeling routine working on grayscale images.
