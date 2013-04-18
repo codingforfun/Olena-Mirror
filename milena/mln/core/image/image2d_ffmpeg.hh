@@ -67,6 +67,9 @@ namespace mln
       T** array_;
 
       box2d b_;  // theoretical box
+
+      // FIXME: we would like to get border information from ffmpeg.
+      //box2d vb_;
     };
 
   } // end of namespace mln::internal
@@ -79,7 +82,7 @@ namespace mln
     {
       // misc
       typedef trait::image::category::primary category;
-      typedef trait::image::speed::slow    speed;
+      typedef trait::image::speed::fastest    speed;
       typedef trait::image::size::regular     size;
 
       // value
@@ -96,6 +99,9 @@ namespace mln
       typedef trait::image::localization::basic_grid localization;
       typedef trait::image::dimension::two_d         dimension;
 
+      // FIXME: wrt to the image format, it may have a border... We
+      // should check how to handle that.
+      //
       // extended domain
       typedef trait::image::ext_domain::none ext_domain;
       typedef trait::image::ext_value::irrelevant    ext_value;
@@ -103,21 +109,6 @@ namespace mln
     };
 
   } // end of namespace mln::trait
-
-
-  namespace internal
-  {
-
-    avformat_helper
-
-    template <typename V>
-    avformat_helper
-    {
-      typedef undefined res;
-    };
-
-  } // end of namespace mln::internal
-
 
 
   /// Basic 2D image class.
@@ -142,9 +133,6 @@ namespace mln
 
     /// Return type of read-write access.
     typedef T&       lvalue;
-
-    typedef avformat_helper<T>::res format;
-
 
     /// Skeleton.
     typedef image2d_ffmpeg< tag::value_<T> > skeleton;
@@ -267,7 +255,7 @@ namespace mln
     data< image2d_ffmpeg<T> >::data(AVFrame *frame)
       : frame_(frame)
     {
-      b_ = make::box2d(frame->height, frame->width);
+      b_ = make::box2d(frame->height, frame->linesize); // frame->width ?
 
       unsigned
 	nr = frame->height,
@@ -471,29 +459,29 @@ namespace mln
     return this->data_->buffer_;
   }
 
-  // template <typename T>
-  // inline
-  // int
-  // image2d_ffmpeg<T>::delta_offset(const dpoint2d& dp) const
-  // {
-  //   mln_precondition(this->is_valid());
-  //   int o = dp[0] * this->data_->frame->linesize + dp[1];
-  //   return o;
-  // }
+  template <typename T>
+  inline
+  int
+  image2d_ffmpeg<T>::delta_offset(const dpoint2d& dp) const
+  {
+    mln_precondition(this->is_valid());
+    int o = dp[0] * this->data_->frame->linesize + dp[1];
+    return o;
+  }
 
-  // template <typename T>
-  // inline
-  // point2d
-  // image2d_ffmpeg<T>::point_at_offset(unsigned i) const
-  // {
-  //   mln_precondition(i < nelements());
-  //   def::coord
-  //     row = static_cast<def::coord>(i / this->data_->vb_.len(1) + this->data_->vb_.min_row()),
-  //     col = static_cast<def::coord>(i % this->data_->vb_.len(1) + this->data_->vb_.min_col());
-  //   point2d p = point2d(row, col);
-  //   mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
-  //   return p;
-  // }
+  template <typename T>
+  inline
+  point2d
+  image2d_ffmpeg<T>::point_at_offset(unsigned i) const
+  {
+    mln_precondition(i < nelements());
+    def::coord
+      row = static_cast<def::coord>(i / this->data_->b_.len(1) + this->data_->b_.min_row()),
+      col = static_cast<def::coord>(i % this->data_->b_.len(1) + this->data_->b_.min_col());
+    point2d p = point2d(row, col);
+    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
+    return p;
+  }
 
 
 # endif // ! MLN_INCLUDE_ONLY
