@@ -1,3 +1,7 @@
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/image/image2d_ffmpeg.hh: Fix compilation issues.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/image/image2d_ffmpeg.hh: Enable fastest access.
