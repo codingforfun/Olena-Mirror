@@ -46,25 +46,25 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename T> class image2d_ffmpeg;
+  template <typename V> class image2d_ffmpeg;
 
 
   namespace internal
   {
 
     /*!
-      \brief Data structure for \c mln::image2d_ffmpeg<T>.
+      \brief Data structure for \c mln::image2d_ffmpeg<V>.
     */
-    template <typename T>
-    struct data< image2d_ffmpeg<T> >
+    template <typename V>
+    struct data< image2d_ffmpeg<V> >
     {
       data(AVFrame *frame);
       ~data();
 
-      AVFrame *frame;
+      AVFrame *frame_;
 
-      T*  buffer_;
-      T** array_;
+      V*  buffer_;
+      V** array_;
 
       box2d b_;  // theoretical box
 
@@ -77,8 +77,8 @@ namespace mln
   namespace trait
   {
 
-    template <typename T>
-    struct image_< image2d_ffmpeg<T> > : default_image_< T, image2d_ffmpeg<T> >
+    template <typename V>
+    struct image_< image2d_ffmpeg<V> > : default_image_< V, image2d_ffmpeg<V> >
     {
       // misc
       typedef trait::image::category::primary category;
@@ -113,29 +113,29 @@ namespace mln
 
   /// Basic 2D image class.
   ///
-  /// The parameter \c T is the type of pixel values.  This image class
+  /// The parameter \c V is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness around data.
   ///
   /// \ingroup modimageconcrete
   //
-  template <typename T>
-  class image2d_ffmpeg : public internal::image_primary< T, mln::box2d, image2d_ffmpeg<T> >
+  template <typename V>
+  class image2d_ffmpeg : public internal::image_primary< V, mln::box2d, image2d_ffmpeg<V> >
   {
-    typedef internal::image_primary< T, mln::box2d, image2d_ffmpeg<T> > super_;
+    typedef internal::image_primary< V, mln::box2d, image2d_ffmpeg<V> > super_;
   public:
 
     /// Value associated type.
-    typedef T         value;
+    typedef V         value;
 
     /// Return type of read-only access.
-    typedef const T& rvalue;
+    typedef const V& rvalue;
 
     /// Return type of read-write access.
-    typedef T&       lvalue;
+    typedef V&       lvalue;
 
     /// Skeleton.
-    typedef image2d_ffmpeg< tag::value_<T> > skeleton;
+    typedef image2d_ffmpeg< tag::value_<V> > skeleton;
 
 
     /// Constructor without argument.
@@ -165,19 +165,19 @@ namespace mln
     const box2d& vbbox() const;
 
     /// Read-only access to the image value located at point \p p.
-    const T& operator()(const point2d& p) const;
+    const V& operator()(const point2d& p) const;
 
     /// Read-write access to the image value located at point \p p.
-    T& operator()(const point2d& p);
+    V& operator()(const point2d& p);
 
     // Specific methods:
     // -----------------
 
     /// \cond INTERNAL_API
     /// Read-only access to the image value located at (\p row, \p col).
-    const T& at_(mln::def::coord row, mln::def::coord col) const;
+    const V& at_(mln::def::coord row, mln::def::coord col) const;
     /// Read-write access to the image value located at (\p row, \p col).
-    T& at_(mln::def::coord row, mln::def::coord col);
+    V& at_(mln::def::coord row, mln::def::coord col);
     /// \endcond
 
 
@@ -201,10 +201,10 @@ namespace mln
     unsigned nelements() const;
 
     /// Read-only access to the image value located at offset \p i.
-    const T& element(unsigned i) const;
+    const V& element(unsigned i) const;
 
     /// Read-write access to the image value located at offset \p i.
-    T& element(unsigned i);
+    V& element(unsigned i);
 
     /// Give the delta-offset corresponding to the delta-point \p dp.
     int delta_offset(const dpoint2d& dp) const;
@@ -213,10 +213,10 @@ namespace mln
     point2d point_at_offset(unsigned i) const;
 
     /// Give a hook to the value buffer.
-    const T* buffer() const;
+    const V* buffer() const;
 
     /// Give a hook to the value buffer.
-    T* buffer();
+    V* buffer();
 
   };
 
@@ -226,8 +226,8 @@ namespace mln
 
   /// \cond INTERNAL_API
 
-  template <typename T, typename J>
-  void init_(tag::image_t, mln::image2d_ffmpeg<T>& target, const J& model);
+  template <typename V, typename J>
+  void init_(tag::image_t, mln::image2d_ffmpeg<V>& target, const J& model);
 
   /// \endcond
 
@@ -236,9 +236,9 @@ namespace mln
 
   // init_
 
-  template <typename T, typename J>
+  template <typename V, typename J>
   inline
-  void init_(tag::image_t, image2d_ffmpeg<T>& target, const J& model)
+  void init_(tag::image_t, image2d_ffmpeg<V>& target, const J& model)
   {
     box2d b;
     init_(tag::bbox, b, model);
@@ -246,13 +246,13 @@ namespace mln
   }
 
 
-  // internal::data< image2d_ffmpeg<T> >
+  // internal::data< image2d_ffmpeg<V> >
 
   namespace internal
   {
-    template <typename T>
+    template <typename V>
     inline
-    data< image2d_ffmpeg<T> >::data(AVFrame *frame)
+    data< image2d_ffmpeg<V> >::data(AVFrame *frame)
       : frame_(frame)
     {
       b_ = make::box2d(frame->height, frame->linesize); // frame->width ?
@@ -260,9 +260,9 @@ namespace mln
       unsigned
 	nr = frame->height,
 	nc = frame->width;
-      array_ = new T*[nr];
-      buf_ = frame->data[0];
-      T* buf = frame->data[0];
+      array_ = new V*[nr];
+      buffer_ = static_cast<V*>((void *)frame->data[0]);
+      V* buf = static_cast<V*>((void *)frame->data[0]);
       for (unsigned i = 0; i < nr; ++i)
 	{
 	  array_[i] = buf;
@@ -270,18 +270,18 @@ namespace mln
 	}
     }
 
-    template <typename T>
+    template <typename V>
     inline
-    data< image2d_ffmpeg<T> >::~data()
+    data< image2d_ffmpeg<V> >::~data()
     {
       deallocate_();
       // AVFrame must be deleted by the user!
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d_ffmpeg<T> >::deallocate_()
+    data< image2d_ffmpeg<V> >::deallocate_()
     {
       if (array_)
 	{
@@ -294,70 +294,70 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  // image2d_ffmpeg<T>
+  // image2d_ffmpeg<V>
 
-  template <typename T>
+  template <typename V>
   inline
-  image2d_ffmpeg<T>::image2d_ffmpeg()
+  image2d_ffmpeg<V>::image2d_ffmpeg()
   {
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  image2d_ffmpeg<T>::image2d_ffmpeg(AVFrame *frame)
+  image2d_ffmpeg<V>::image2d_ffmpeg(AVFrame *frame)
   {
-    this->data_ = new internal::data< image2d_ffmpeg<T> >(frame);
+    this->data_ = new internal::data< image2d_ffmpeg<V> >(frame);
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d_ffmpeg<T>::domain() const
+  image2d_ffmpeg<V>::domain() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d_ffmpeg<T>::bbox() const
+  image2d_ffmpeg<V>::bbox() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d_ffmpeg<T>::vbbox() const
+  image2d_ffmpeg<V>::vbbox() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   bool
-  image2d_ffmpeg<T>::has(const point2d& p) const
+  image2d_ffmpeg<V>::has(const point2d& p) const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.has(p);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d_ffmpeg<T>::operator()(const point2d& p) const
+  const V&
+  image2d_ffmpeg<V>::operator()(const point2d& p) const
   {
     mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d_ffmpeg<T>::operator()(const point2d& p)
+  V&
+  image2d_ffmpeg<V>::operator()(const point2d& p)
   {
     mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
@@ -366,37 +366,37 @@ namespace mln
 
   // Specific methods:
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d_ffmpeg<T>::at_(mln::def::coord row, mln::def::coord col) const
+  const V&
+  image2d_ffmpeg<V>::at_(mln::def::coord row, mln::def::coord col) const
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d_ffmpeg<T>::at_(mln::def::coord row, mln::def::coord col)
+  V&
+  image2d_ffmpeg<V>::at_(mln::def::coord row, mln::def::coord col)
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d_ffmpeg<T>::nrows() const
+  image2d_ffmpeg<V>::nrows() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(0);
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d_ffmpeg<T>::ncols() const
+  image2d_ffmpeg<V>::ncols() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(1);
@@ -405,74 +405,74 @@ namespace mln
 
   // As a fastest image:
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d_ffmpeg<T>::border() const
+  image2d_ffmpeg<V>::border() const
   {
     mln_precondition(this->is_valid());
     return 0;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d_ffmpeg<T>::nelements() const
+  image2d_ffmpeg<V>::nelements() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.nsites();
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d_ffmpeg<T>::element(unsigned i) const
+  const V&
+  image2d_ffmpeg<V>::element(unsigned i) const
   {
     mln_precondition(i < nelements());
     return *(this->data_->buffer_ + i);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d_ffmpeg<T>::element(unsigned i)
+  V&
+  image2d_ffmpeg<V>::element(unsigned i)
   {
     mln_precondition(i < nelements());
     return *(this->data_->buffer_ + i);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T*
-  image2d_ffmpeg<T>::buffer() const
+  const V*
+  image2d_ffmpeg<V>::buffer() const
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T*
-  image2d_ffmpeg<T>::buffer()
+  V*
+  image2d_ffmpeg<V>::buffer()
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   int
-  image2d_ffmpeg<T>::delta_offset(const dpoint2d& dp) const
+  image2d_ffmpeg<V>::delta_offset(const dpoint2d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = dp[0] * this->data_->frame->linesize + dp[1];
     return o;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   point2d
-  image2d_ffmpeg<T>::point_at_offset(unsigned i) const
+  image2d_ffmpeg<V>::point_at_offset(unsigned i) const
   {
     mln_precondition(i < nelements());
     def::coord
@@ -482,6 +482,7 @@ namespace mln
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -504,80 +505,80 @@ namespace mln
 
     // pixter
 
-    template <typename T>
-    struct fwd_pixter< image2d_ffmpeg<T> >
+    template <typename V>
+    struct fwd_pixter< image2d_ffmpeg<V> >
     {
-      typedef fwd_pixter2d< image2d_ffmpeg<T> > ret;
+      typedef fwd_pixter2d< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T>
-    struct fwd_pixter< const image2d_ffmpeg<T> >
+    template <typename V>
+    struct fwd_pixter< const image2d_ffmpeg<V> >
     {
-      typedef fwd_pixter2d< const image2d_ffmpeg<T> > ret;
+      typedef fwd_pixter2d< const image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T>
-    struct bkd_pixter< image2d_ffmpeg<T> >
+    template <typename V>
+    struct bkd_pixter< image2d_ffmpeg<V> >
     {
-      typedef bkd_pixter2d< image2d_ffmpeg<T> > ret;
+      typedef bkd_pixter2d< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T>
-    struct bkd_pixter< const image2d_ffmpeg<T> >
+    template <typename V>
+    struct bkd_pixter< const image2d_ffmpeg<V> >
     {
-      typedef bkd_pixter2d< const image2d_ffmpeg<T> > ret;
+      typedef bkd_pixter2d< const image2d_ffmpeg<V> > ret;
     };
 
     // qixter
 
-    template <typename T, typename W>
-    struct fwd_qixter< image2d_ffmpeg<T>, W >
+    template <typename V, typename W>
+    struct fwd_qixter< image2d_ffmpeg<V>, W >
     {
-      typedef dpoints_fwd_pixter< image2d_ffmpeg<T> > ret;
+      typedef dpoints_fwd_pixter< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct fwd_qixter< const image2d_ffmpeg<T>, W >
+    template <typename V, typename W>
+    struct fwd_qixter< const image2d_ffmpeg<V>, W >
     {
-      typedef dpoints_fwd_pixter< const image2d_ffmpeg<T> > ret;
+      typedef dpoints_fwd_pixter< const image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct bkd_qixter< image2d_ffmpeg<T>, W >
+    template <typename V, typename W>
+    struct bkd_qixter< image2d_ffmpeg<V>, W >
     {
-      typedef dpoints_bkd_pixter< image2d_ffmpeg<T> > ret;
+      typedef dpoints_bkd_pixter< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct bkd_qixter< const image2d_ffmpeg<T>, W >
+    template <typename V, typename W>
+    struct bkd_qixter< const image2d_ffmpeg<V>, W >
     {
-      typedef dpoints_bkd_pixter< const image2d_ffmpeg<T> > ret;
+      typedef dpoints_bkd_pixter< const image2d_ffmpeg<V> > ret;
     };
 
     // nixter
 
-    template <typename T, typename N>
-    struct fwd_nixter< image2d_ffmpeg<T>, N >
+    template <typename V, typename N>
+    struct fwd_nixter< image2d_ffmpeg<V>, N >
     {
-      typedef dpoints_fwd_pixter< image2d_ffmpeg<T> > ret;
+      typedef dpoints_fwd_pixter< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct fwd_nixter< const image2d_ffmpeg<T>, N >
+    template <typename V, typename N>
+    struct fwd_nixter< const image2d_ffmpeg<V>, N >
     {
-      typedef dpoints_fwd_pixter< const image2d_ffmpeg<T> > ret;
+      typedef dpoints_fwd_pixter< const image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct bkd_nixter< image2d_ffmpeg<T>, N >
+    template <typename V, typename N>
+    struct bkd_nixter< image2d_ffmpeg<V>, N >
     {
-      typedef dpoints_bkd_pixter< image2d_ffmpeg<T> > ret;
+      typedef dpoints_bkd_pixter< image2d_ffmpeg<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct bkd_nixter< const image2d_ffmpeg<T>, N >
+    template <typename V, typename N>
+    struct bkd_nixter< const image2d_ffmpeg<V>, N >
     {
-      typedef dpoints_bkd_pixter< const image2d_ffmpeg<T> > ret;
+      typedef dpoints_bkd_pixter< const image2d_ffmpeg<V> > ret;
     };
 
   } // end of namespace mln::trait
