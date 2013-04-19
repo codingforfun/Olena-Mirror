@@ -143,7 +143,10 @@ namespace mln
   const window3d& win_c8p_3d();
 
 
-  /// \internal Conversion: bool[] -> window3d
+  /*!
+    \brief Conversion: bool[] -> window3d
+    \ingroup fromto
+  */
   template <unsigned M>
   void from_to_(bool const (&values)[M], window3d& win);
 

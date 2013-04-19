@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2006, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -272,33 +272,51 @@ namespace mln
     };
 
 
-    /// \internal Conversion: vec -> rgb.
+    /*!
+      \brief Conversion: vec -> rgb.
+      \ingroup fromto
+    */
     template <typename T, unsigned m>
     void from_to_(const vec<3,T>& from, value::rgb<m>& to_);
 
-    /// \internal Conversion: vec<1,C1> -> point<G,C2>
+    /*!
+      \brief Conversion: vec<1,C1> -> point<G,C2>
+      \ingroup fromto
+    */
     template <typename C1, typename G, typename C2>
     inline
     void
     from_to_(const vec<1,C1>& from, point<G,C2>& to);
 
-    /// \internal Conversion: vec<n,C1> -> point<G,C2>
+    /*!
+      \brief Conversion: vec<n,C1> -> point<G,C2>
+      \ingroup fromto
+    */
     template <unsigned n, typename C1, typename G, typename C2>
     void
     from_to_(const vec<n,C1>& from, point<G,C2>& to);
 
-    /// \internal Conversion: vec<1,C1> -> point<G,C1>
+    /*!
+      \brief Conversion: vec<1,C1> -> point<G,C1>
+      \ingroup fromto
+    */
     template <typename C1, typename G>
     inline
     void
     from_to_(const vec<1,C1>& from, point<G,C1>& to);
 
-    /// \internal Conversion: vec<n,C1> -> point<G,C1>
+    /*!
+      \brief Conversion: vec<n,C1> -> point<G,C1>
+      \ingroup fromto
+    */
     template <unsigned n, typename C1, typename G>
     void
     from_to_(const vec<n,C1>& from, point<G,C1>& to);
 
-    /// \internal Conversion: vec -> gpoint
+    /*!
+      \brief Conversion: vec -> gpoint
+      \ingroup fromto
+    */
     template <unsigned n, typename T, typename P>
     void
     from_to_(const vec<n,T>& from, Gpoint<P>& to);

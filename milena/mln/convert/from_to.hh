@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,6 +58,42 @@ namespace mln
   namespace convert
   {
 
+    /*! \brief Value conversion routine.
+
+      This is a generic function to convert an object towards another
+      one.
+
+      It relies on predefined conversion functions. Many are defined
+      by default and listed in \ref from_to_ module.
+
+      This conversion system is extensible. If more conversions are
+      needed, new ones can be added by implementing an overload of
+      from_to_(). This overload must be defined in the same namespace
+      as the first argument.
+
+      Here is an example of a new conversion from value::rgb8 to
+      value::int_u8.
+
+      \code
+      namespace value
+      {
+        template <unsigned m>
+        void from_to_(const value::rgb8& from, value::int_u8& to)
+	{
+	  to = from.red() + from.green() + from.blue();
+	}
+      }
+      \endcode
+
+      Once this overload declared, one can safely write:
+      \code
+      value::rgb8 color(128,155,255);
+      value::int_8 gl;
+      convert::from_to(color, gl);
+      \endcode
+
+      \ingroup convert
+     */
     template <typename F, typename T>
     void
     from_to(const F& from, T& to);

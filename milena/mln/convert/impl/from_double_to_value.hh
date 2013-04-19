@@ -45,14 +45,23 @@
 namespace mln
 {
 
-  /// \internal Conversion: double-> Value
+  /*!
+    \brief Conversion: double-> Value
+    \ingroup fromto
+  */
   template <typename V>
   void from_to_(const double& from, Value<V>& to);
 
-  /// \internal Conversion: double-> unsigned
+  /*!
+    \brief Conversion: double-> unsigned
+    \ingroup fromto
+  */
   void from_to_(const double& from, unsigned& to);
 
-  /// \internal Conversion:  double-> int
+  /*!
+    \brief Conversion:  double-> int
+    \ingroup fromto
+  */
   void from_to_(const double& from, int& to);
 
 

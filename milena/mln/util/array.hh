@@ -208,28 +208,39 @@ namespace mln
 		    const array<T>& rhs);
 
 
-    /// \cond INTERNAL_API
-    /// Conversion: array -> array
+    /*!
+      \brief Conversion: array -> array
+      \ingroup fromto
+    */
     template <typename T1, typename T2>
     void
     from_to_(const array<T1>& from, array<T2>& to);
 
-    /// Conversion: array<T> -> fun::i2v::array<T>
+    /*!
+      \brief Conversion: array<T> -> fun::i2v::array<T>
+      \ingroup fromto
+    */
     template <typename T>
     inline
     void
     from_to_(const array<T>& from, fun::i2v::array<T>& to);
 
-    /// Conversion: array<T> -> fun::i2v::array<U>
+    /*!
+      \brief Conversion: array<T> -> fun::i2v::array<U>
+      \ingroup fromto
+    */
     template <typename T, typename U>
     inline
     void
     from_to_(const array<T>& from, fun::i2v::array<U>& to);
 
-    ///Conversion: util::array -> image1d.
+    /*!
+      \brief Conversion: util::array -> image1d.
+      \ingroup fromto
+    */
     template <typename V, typename T>
     void from_to_(const util::array<V>& from, image1d<T>& to);
-    /// \endcond
+
 
     // array_fwd_iter<T>
 

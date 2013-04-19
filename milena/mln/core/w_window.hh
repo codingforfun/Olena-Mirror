@@ -141,15 +141,19 @@ namespace mln
   template <typename D, typename Wl, typename Wr>
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs);
 
-  /// \cond INTERNAL_API
-  /// Conversions: w_window -> image
+  /*!
+    \brief Conversions: w_window -> image
+    \ingroup fromto
+  */
   template <typename D, typename W, typename I>
   void from_to_(const w_window<D,W>& from, Image<I>& to);
 
-  /// Conversions: weight[] -> w_window
+  /*!
+    \brief Conversions: weight[] -> w_window
+    \ingroup fromto
+  */
   template <typename V, unsigned S, typename D, typename W>
   void from_to_(const V (&weight)[S], w_window<D,W>& to);
-  /// \endcond
 
 
 

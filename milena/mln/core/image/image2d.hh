@@ -124,7 +124,7 @@ namespace mln
 
   /// Basic 2D image class.
   ///
-  /// The parameter \c T is the type of pixel values.  This image class
+  /// The parameter \c V is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness around data.
   ///

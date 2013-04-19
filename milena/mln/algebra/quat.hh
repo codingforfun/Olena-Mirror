@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -266,7 +266,10 @@ namespace mln
     quat slerp_5(const quat& p, const quat& q, float h);
 
 
-    /// \internal Conversion: quaternion -> (angle_degrees, axis).
+    /*!
+      \brief Conversion: quaternion -> (angle_degrees, axis).
+      \ingroup fromto
+    */
     template <typename C>
     void from_to_(const quat& from, mln::util::couple<C, algebra::vec<3,C> >& to);
 
@@ -276,6 +279,10 @@ namespace mln
   namespace make
   {
 
+    /*!
+      \brief Construct a quaternion.
+      \relates mln::algebra::quat
+    */
     template <typename C>
     mln::algebra::quat
     quat(double angle, const mln::algebra::vec<3,C>& axis);

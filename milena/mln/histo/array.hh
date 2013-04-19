@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +45,7 @@ namespace mln
 {
 
   // Forward declaration
-  template <typename T> struct image1d;
+  template <typename V> struct image1d;
 
   namespace histo
   {
@@ -84,7 +84,10 @@ namespace mln
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr, const array<T>& h);
 
-    /// \internal Conversion: histo::array -> image1d.
+    /*!
+      \brief Conversion: histo::array -> image1d.
+      \ingroup fromto
+    */
     template <typename V, typename T>
     void from_to_(const array<V>& from, image1d<T>& to);
 

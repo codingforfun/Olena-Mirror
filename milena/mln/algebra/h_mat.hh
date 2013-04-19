@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +73,10 @@ namespace mln
     };
 
 
-    /// \internal Conversion: h_mat -> quat
+    /*!
+      \brief Conversion: h_mat -> quat
+      \ingroup fromto
+    */
     template <typename C>
     void from_to_(const algebra::h_mat<3,C>& from, algebra::quat& to);
 

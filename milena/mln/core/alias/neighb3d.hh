@@ -276,7 +276,10 @@ namespace mln
   const neighb3d& c26();
 
 
-  /// \internal Conversion: bool[] -> neighb3d
+  /*!
+    \brief Conversion: bool[] -> neighb3d
+    \ingroup fromto
+  */
   template <unsigned S>
   void from_to_(const bool (&values)[S], neighb3d& nbh);
 

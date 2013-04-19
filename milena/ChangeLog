@@ -1,5 +1,39 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add references to from_to_ overloads in documentation.
+
+	* mln/algebra/h_mat.hh,
+	* mln/algebra/quat.hh,
+	* mln/algebra/vec.hh,
+	* mln/convert/from_to.hh,
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_unsigned_to_value.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/image/#image2d#,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/mixed_neighb.hh,
+	* mln/core/neighb.hh,
+	* mln/core/w_window.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/histo/array.hh,
+	* mln/util/array.hh,
+	* mln/util/object_id.hh,
+	* mln/value/hsl.hh,
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh: Add to from_to_ group.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Explain how to iterate over an image in tutorial.
 
 	* doc/examples/split/tuto3_rw_image-3.cc.raw,

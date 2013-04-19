@@ -83,17 +83,21 @@ namespace mln
   };
 
 
-  /// \cond INTERNAL_API
-  /// Conversion: mixed_neighb<W> -> W
+  /*!
+    \brief Conversion: mixed_neighb<W> -> W
+    \ingroup fromto
+  */
   template <typename W>
   void
   from_to_(const mln::mixed_neighb<W>& from, W& to);
 
-  /// Conversion: mixed_neighb<W> -> W
+  /*!
+    \brief Conversion: mixed_neighb<W> -> W
+    \ingroup fromto
+  */
   template <typename W>
   void
   from_to_(const W& from, mln::mixed_neighb<W>& to);
-  /// \endcond
 
 
   // mixed_neighb_fwd_niter<W>

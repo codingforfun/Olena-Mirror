@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,11 +46,17 @@ namespace mln
 {
 
 
-  /// \internal Conversion: unsigned-> Value
+  /*!
+    \brief Conversion: unsigned-> Value
+    \ingroup fromto
+  */
   template <typename V>
   void from_to_(const unsigned& from, Value<V>& to);
 
-  /// \internal Conversion: unsigned -> bool
+  /*!
+    \brief Conversion: unsigned -> bool
+    \ingroup fromto
+  */
   void from_to_(const unsigned& from, bool& to);
 
 

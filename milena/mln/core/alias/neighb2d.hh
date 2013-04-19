@@ -207,11 +207,17 @@ namespace mln
   neighb< win::multiple<window2d, mln::fun::p2b::chess> > c6_2d();
 
 
-  /// \internal Conversion: bool[] -> neighb2d
+  /*!
+    \brief Conversion: bool[] -> neighb2d
+    \ingroup fromto
+  */
   template <unsigned S>
   void from_to_(const bool (&values)[S], neighb2d& nbh);
 
-  /// \internal Conversion: bool[][] -> neighb2d
+  /*!
+    \brief Conversion: bool[][] -> neighb2d
+    \ingroup fromto
+  */
   template <unsigned R, unsigned C>
   void from_to_(bool const (&values)[R][C], neighb2d& nbh);
 
