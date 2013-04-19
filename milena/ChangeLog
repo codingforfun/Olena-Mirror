@@ -1,5 +1,9 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/mln/convert.dox: Fix typos.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add documentation about image conversions.
 
 	* doc/mln/convert.dox: Add examples and explanations.

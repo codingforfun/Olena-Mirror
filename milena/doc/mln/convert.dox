@@ -5,7 +5,7 @@
   Type conversions in Olena mainly relies on convert::from_to(). This
   routine works on a single value only.
 
-  Type conversion of image value types relies on data::convert.  This
+  Type conversion of image value types relies on data::convert().  This
   routine relies on convert::from_to(). For each pixel value,
   convert::from_to() is called.
 
@@ -47,7 +47,7 @@
   \code
   $ g++ -I$OLN/milena main.cc
   ...
-  /my/path/to/oln/milena/mln/convert/from_to.hh:152:5: error: ‘check’ is not a member of ‘mln::metal::abort_<mln::value::rgb<8u> >’
+  /my/path/to/oln/milena/mln/convert/from_to.hh:152:5: error: 'check' is not a member of 'mln::metal::abort_<mln::value::rgb<8u> >'
   \endcode
 
   Missing conversion is sometimes due to non-trivial
@@ -114,7 +114,7 @@
   \endcode
 
 
-  If a program requires conversions that are not provided by default
+  If a program requires conversions that are not provided by default,
   they can be defined manually by declaring a from_to_()
   overload. Default overloads are listed in module \ref fromto.
 
