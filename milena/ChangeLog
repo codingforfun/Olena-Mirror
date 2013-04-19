@@ -1,5 +1,10 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/concept/function.hh: Document function interface for
+	each concept.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Kill Doxygen warnings.
 
 	* mln/data/convert.hh: Add a missing \overload.
