@@ -1,5 +1,13 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Specify conversion formulas for rgb to integer conversion
+	functions.
+
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh: Here.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Create sub-modules in image geometry module.
 
 	* doc/mln/geom/geom.dox: Add cropping sub-module.

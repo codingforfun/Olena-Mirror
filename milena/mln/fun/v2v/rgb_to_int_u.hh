@@ -50,6 +50,11 @@ namespace mln
 	\tparam n Defines the number of bits of the integer
 	destination type.
 
+	This function computes the mean of the three RGB components:
+	\verbatim
+	luma = (red + green + blue) / 3;
+	\endverbatim
+
 	\ingroup modfunv2v convert
        */
       template <unsigned n>
