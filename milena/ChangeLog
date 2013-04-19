@@ -1,5 +1,20 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Explain how to iterate over an image in tutorial.
+
+	* doc/examples/split/tuto3_rw_image-3.cc.raw,
+	* doc/examples/split/tuto3_rw_image-4.cc.raw,
+	* doc/examples/split/tuto3_rw_image-5.cc.raw,
+	* doc/examples/split/tuto3_rw_image-6.cc.raw,
+	* doc/examples/split/tuto3_rw_image-7.cc.raw,
+	* doc/examples/split/tuto3_rw_image-8.cc.raw: Regen.
+
+	* doc/examples/tuto3_rw_image.cc: Add an example with iterators.
+
+	* doc/tutorial.tex: Add more explanations on iterators.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce image transformation module in documentation.
 
 	* doc/mln/main.dox: Create new group.

@@ -1474,13 +1474,20 @@ After this step you should know how to:
 First create an empty color image with a \var{box2d} of 40x40 as domain.
 \doxycode[1]{tuto3_rw_image}
 
-If you want to initialize the image with the color red, simply call data::fill as follows:
+If you want to initialize the image with the color red, you can
+iterate over all the image pixels using iterators:
+\doxycode[3]{tuto3_rw_image}
+
+Or simply call data::fill as follows:
 \doxycode[2]{tuto3_rw_image}
 
-Updating a site value is also possible using \code{operator()} or the
-\code{opt::at()} routine. Here we create a blue square of 10x10 pixels from site
-(20, 20) to (30, 30).
-\doxycode[3]{tuto3_rw_image}
+Updating a site value is also possible using the \code{opt::at()}
+routine. Here we create a blue square of 10x10 pixels from site (20,
+20) to (30, 30).
+\doxycode[5]{tuto3_rw_image}
+
+The following code with image2d::operator() is also possible but may
+be slower because of the creation of a point2d.
 \doxycode[4]{tuto3_rw_image}
 
 The corresponding image: \\
@@ -1489,27 +1496,27 @@ The corresponding image: \\
 
 An image can also be initialized/modified thanks to another image.
 Let's load a new image.
-\doxycode[5]{tuto3_rw_image}
+\doxycode[6]{tuto3_rw_image}
 \var{lena} looks like: \\
 
 \doxyimg{small-enlarged}{3cm}
 
 If we want to initialize \var{ima} with \var{lena}, we can use \code{data::fill}:
-\doxycode[6]{tuto3_rw_image}
+\doxycode[7]{tuto3_rw_image}
 Output: \\
 
 \doxyfigure[2]{tuto3_rw_image}{3cm} \\
-Note that to fill an image with some data, the image domain \must be smaller
-or equal to the data.
+Note that to fill an image with some data, the image domain \must be
+smaller or equal to the data.
 
 Likewise, it is possible to paste data from an image to another:
-\doxycode[7]{tuto3_rw_image}
+\doxycode[8]{tuto3_rw_image}
 Output: \\
 
 \doxyfigure[3]{tuto3_rw_image}{3cm}
 
-More details can be found in sections \doxyref{imaaccessmodval}, \doxyref{fillop} and \doxyref{pasteop} in
-the reference guide.
+More details can be found in sections \doxyref{imaaccessmodval},
+\doxyref{fillop} and \doxyref{pasteop} in the reference guide.
 
 \vspace{2cm}
 \begin{center}
