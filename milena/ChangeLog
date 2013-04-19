@@ -1,5 +1,22 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce image transformation module in documentation.
+
+	* doc/mln/main.dox: Create new group.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/registration/icp.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh: move to this new group.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make template parameter name more consistant with naming
 	conventions.
 

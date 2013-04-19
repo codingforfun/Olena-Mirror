@@ -79,7 +79,7 @@ namespace mln
 
       \return An image with the same domain as \p input.
 
-      \ingroup mlngeom
+      \ingroup mlntransformation
     */
     template <typename I, typename Ext, typename S>
     mln_concrete(I)
@@ -89,7 +89,7 @@ namespace mln
 
     /*! \overload
 
-      \ingroup mlngeom
+      \ingroup mlntransformation
      */
     template <typename I, typename Ext>
     mln_concrete(I)
@@ -99,7 +99,7 @@ namespace mln
     /*! \overload
       Use literal::zero as default value for the extension.
 
-      \ingroup mlngeom
+      \ingroup mlntransformation
     */
     template <typename I>
     mln_concrete(I)
@@ -111,7 +111,7 @@ namespace mln
       FIXME: the return type may be too generic and may lead to
       invalid covariance.
 
-      \ingroup mlngeom
+      \ingroup mlntransformation
     */
     template <typename B>
     B
@@ -121,7 +121,7 @@ namespace mln
 
       The rotation center \p ref is set to box.pcenter().
 
-      \ingroup mlngeom
+      \ingroup mlntransformation
     */
     template <typename B>
     B

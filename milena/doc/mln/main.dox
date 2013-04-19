@@ -95,3 +95,10 @@
  *
  * \ingroup modroutines
  */
+
+/*! \defgroup mlntransformation Image Transformation
+ *
+ * \brief All transformation algorithms.
+ *
+ * \ingroup modroutines
+ */

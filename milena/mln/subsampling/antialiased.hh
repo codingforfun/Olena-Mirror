@@ -51,7 +51,11 @@ namespace mln
       \param[in] output_domain Force output domain.
       \param[in] border_thickness Force output border thickness.
 
-      \ingroup mlngeom
+      \p output_domain should be large enough to store all the image
+      values. It can be larger than the minimum size required to store
+      all the image values.
+
+      \ingroup mlntransformation
      */
     template <typename I>
     inline
@@ -63,7 +67,11 @@ namespace mln
 
 
     /*! \overload
-      \ingroup mlngeom
+
+      The output_domain is set to the minimum domain size required to
+      store all the image values. This is the common use case.
+
+      \ingroup mlntransformation
      */
     template <typename I>
     mln_concrete(I)
