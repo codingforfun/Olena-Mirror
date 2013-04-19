@@ -105,7 +105,7 @@ namespace mln
           a = (M - m) / (max - min),
           b = (m * max - M * min) / (max - min);
           fun::v2v::linear_sat<V, double, V> f(a, b);
-          data::transform_inplace(input, f);
+          data::transform_inplace(ima, f);
           stretched = true;
         }
         else
