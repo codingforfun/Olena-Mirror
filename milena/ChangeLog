@@ -1,5 +1,13 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Kill Doxygen warnings.
+
+	* mln/data/convert.hh: Add a missing \overload.
+
+	* mln/value/qt/rgb32.hh: Do not force autolink.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Specify conversion formulas for rgb to integer conversion
 	functions.
 

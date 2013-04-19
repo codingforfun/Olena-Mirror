@@ -59,7 +59,7 @@ namespace mln
     mln_ch_value(I, V)
     convert(const V& v, const Image<I>& input);
 
-    /*!
+    /*! \overload
       \brief Convert the image \p input by changing the value type.
       \overload
 
