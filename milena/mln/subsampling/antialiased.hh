@@ -55,7 +55,7 @@ namespace mln
       values. It can be larger than the minimum size required to store
       all the image values.
 
-      \ingroup mlntransformation
+      \ingroup transformationsubsampling
      */
     template <typename I>
     inline
@@ -71,7 +71,7 @@ namespace mln
       The output_domain is set to the minimum domain size required to
       store all the image values. This is the common use case.
 
-      \ingroup mlntransformation
+      \ingroup transformationsubsampling
      */
     template <typename I>
     mln_concrete(I)

@@ -51,7 +51,7 @@ namespace mln
       If input(p) is greater or equal than the threshold, the
       value in the output image in the same point will be TRUE, else FALSE.
 
-      \ingroup mlngeom
+      \ingroup convert
     */
     template <typename I>
     mln_ch_value(I, bool)

@@ -1,0 +1,41 @@
+/*! \defgroup transformationrotate Rotation
+ *
+ * \brief All Rotation algorithms.
+ *
+ * \ingroup mlntransformation
+ */
+
+/*! \defgroup transformationtranslate Translation
+ *
+ * \brief All translation algorithms.
+ *
+ * \ingroup mlntransformation
+ */
+
+/*! \defgroup transformationupscaling Upscaling
+ *
+ * \brief All upscaling algorithms.
+ *
+ * \ingroup mlntransformation
+ */
+
+/*! \defgroup transformationsubsampling Subsampling
+ *
+ * \brief All subsampling algorithms.
+ *
+ * \ingroup mlntransformation
+ */
+
+/*! \defgroup transformationregistration Registration
+ *
+ * \brief All registration algorithms.
+ *
+ * \ingroup mlntransformation
+ */
+
+/*! \defgroup transformationsymmetry Symmetry
+ *
+ * \brief All symmetry algorithms.
+ *
+ * \ingroup mlntransformation
+ */

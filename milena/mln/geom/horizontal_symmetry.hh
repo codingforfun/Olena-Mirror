@@ -43,7 +43,7 @@ namespace mln
 
     /*! \brief Perfoms a horizontal symmetry.
 
-      \ingroup mlntransformation
+      \ingroup transformationsymmetry
     */
     template <typename I>
     mln_concrete(I)

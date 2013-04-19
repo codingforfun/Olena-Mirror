@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +68,7 @@ namespace mln
 
       \return An image with the same domain as \p input.
 
-      \ingroup mlntransformation
+      \ingroup transformationtranslate
      */
     template <typename I, typename V, typename Ext, typename S>
     mln_concrete(I)
@@ -79,7 +79,7 @@ namespace mln
 
     /*! \overload
 
-      \ingroup mlntransformation
+      \ingroup transformationtranslate
     */
     template <typename I, typename V, typename Ext>
     mln_concrete(I)
@@ -91,7 +91,7 @@ namespace mln
     /*! \overload
       Use literal::zero as default value for the extension.
 
-      \ingroup mlntransformation
+      \ingroup transformationtranslate
     */
     template <typename I, typename V>
     mln_concrete(I)

@@ -1,5 +1,26 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Create sub-modules in image geometry module.
+
+	* doc/mln/geom/geom.dox: Add cropping sub-module.
+
+	* doc/mln/transformation.dox: Add new sub-modules.
+
+	* mln/binarization/threshold.hh: Move to conversion module.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/registration/icp.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh: Move to newly created sub-modules.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/convert.dox: Fix typos.
 
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>

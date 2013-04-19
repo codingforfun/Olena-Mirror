@@ -43,7 +43,7 @@ namespace mln
 
     /*! \brief Crop an image
 
-      \ingroup mlntransformation
+      \ingroup transformationcrop
      */
     template <typename I, typename B>
     mln_concrete(I) crop(const Image<I>& input, const Box<B>& b);

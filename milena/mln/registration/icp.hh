@@ -109,7 +109,7 @@ namespace mln
      *
      * This implementation is based on \cite besl1992pami.
      *
-     * \ingroup mlntransformation
+     * \ingroup transformationregistration
      */
     template <typename P, typename F>
     std::pair<algebra::quat,mln_vec(P)>
@@ -130,7 +130,7 @@ namespace mln
      * \return the rigid transformation which may be use later to create
      * a registered image.
      *
-     * \ingroup mlntransformation
+     * \ingroup transformationregistration
      */
     template <typename P, typename F>
     composed< translation<P::dim,float>,rotation<P::dim,float> >

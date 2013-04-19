@@ -45,7 +45,7 @@ namespace mln
     /*! \brief Crop an image. Localization between input and output
      *  may not be preserved.
 
-      \ingroup mlntransformation
+      \ingroup transformationcrop
      */
     template <typename I, typename B>
     mln_concrete(I) crop_without_localization(const Image<I>& input,

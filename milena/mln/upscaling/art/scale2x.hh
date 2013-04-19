@@ -59,7 +59,7 @@ namespace mln
 	Source:
 	http://en.wikipedia.org/wiki/Pixel_art_scaling_algorithms
 
-	\ingroup mlntransformation
+	\ingroup transformationupscaling
       */
       template <typename I>
       mln_concrete(I)
