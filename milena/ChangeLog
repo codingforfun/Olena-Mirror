@@ -1,3 +1,12 @@
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make template parameter name more consistant with naming
+	conventions.
+
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh: Here.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.
