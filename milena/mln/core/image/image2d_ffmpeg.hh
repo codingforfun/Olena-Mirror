@@ -67,7 +67,9 @@ namespace mln
       V** array_;
 
       box2d b_;  // theoretical box
-
+ 
+       void deallocate_();
+ 
       // FIXME: we would like to get border information from ffmpeg.
       //box2d vb_;
     };
@@ -255,8 +257,7 @@ namespace mln
     data< image2d_ffmpeg<V> >::data(AVFrame *frame)
       : frame_(frame)
     {
-      b_ = make::box2d(frame->height, frame->linesize); // frame->width ?
-
+       b_ = make::box2d(frame->height, frame->linesize[0]); // frame->width ?
       unsigned
 	nr = frame->height,
 	nc = frame->width;
@@ -266,7 +267,7 @@ namespace mln
       for (unsigned i = 0; i < nr; ++i)
 	{
 	  array_[i] = buf;
-	  buf += frame->linesize;
+	  buf += frame->linesize[0];
 	}
     }
 
@@ -285,7 +286,7 @@ namespace mln
     {
       if (array_)
 	{
-	  array_ += vb_.pmin().row();
+	  array_ = b_.pmin().row();
 	  delete[] array_;
 	  array_ = 0;
 	}
@@ -429,7 +430,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i) const
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_ + i);
+    return *(this->data_->buffer_[i]);
   }
 
   template <typename V>
@@ -438,7 +439,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i)
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_ + i);
+    return *(this->data_->buffer_[i]);
   }
 
   template <typename V>
@@ -458,6 +459,16 @@ namespace mln
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
+ 
+  template <typename V>
+  inline
+  int
+  image2d_ffmpeg<V>::delta_offset(const dpoint2d& dp) const
+  {
+    mln_precondition(this->is_valid());
+    int o = dp[0] * this->data_->frame->linesize[0] + dp[1];
+    return o;
+  }
 
   template <typename V>
   inline
@@ -465,7 +476,7 @@ namespace mln
   image2d_ffmpeg<V>::delta_offset(const dpoint2d& dp) const
   {
     mln_precondition(this->is_valid());
-    int o = dp[0] * this->data_->frame->linesize + dp[1];
+    int o = dp[0] * this->data_->frame->linesize[0] + dp[1];
     return o;
   }
 
@@ -483,7 +494,7 @@ namespace mln
     return p;
   }
 
-
+ 
 
 # endif // ! MLN_INCLUDE_ONLY
 
