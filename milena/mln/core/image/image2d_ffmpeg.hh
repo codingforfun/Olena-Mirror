@@ -68,6 +68,7 @@ namespace mln
 
       box2d b_;  // theoretical box
 
+       void deallocate_();
       // FIXME: we would like to get border information from ffmpeg.
       //box2d vb_;
     };
@@ -255,18 +256,20 @@ namespace mln
     data< image2d_ffmpeg<V> >::data(AVFrame *frame)
       : frame_(frame)
     {
-      b_ = make::box2d(frame->height, frame->linesize); // frame->width ?
+      b_ = make::box2d(frame->height, frame->linesize[0]); // frame->width ?
 
       unsigned
 	nr = frame->height,
 	nc = frame->width;
+ 
       array_ = new V*[nr];
       buffer_ = static_cast<V*>((void *)frame->data[0]);
       V* buf = static_cast<V*>((void *)frame->data[0]);
       for (unsigned i = 0; i < nr; ++i)
+ 
 	{
 	  array_[i] = buf;
-	  buf += frame->linesize;
+	  buf = frame->linesize;
 	}
     }
 
@@ -285,7 +288,7 @@ namespace mln
     {
       if (array_)
 	{
-	  array_ += vb_.pmin().row();
+	  array_ = b_.pmin().row();
 	  delete[] array_;
 	  array_ = 0;
 	}
@@ -429,7 +432,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i) const
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_ + i);
+    return *(this->data_->buffer_[i]);
   }
 
   template <typename V>
@@ -438,7 +441,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i)
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_ + i);
+    return *(this->data_->buffer_[i]);
   }
 
   template <typename V>
@@ -458,7 +461,7 @@ namespace mln
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
-
+ 
   template <typename V>
   inline
   int
@@ -483,7 +486,7 @@ namespace mln
     return p;
   }
 
-
+ 
 
 # endif // ! MLN_INCLUDE_ONLY
 
