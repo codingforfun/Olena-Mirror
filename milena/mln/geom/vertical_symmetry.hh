@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +43,7 @@ namespace mln
 
     /*! \brief Perfoms a vertical symmetry.
 
-      \ingroup mlngeom
+      \ingroup transformationsymmetry
     */
     template <typename I>
     mln_concrete(I)

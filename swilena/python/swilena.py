@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -20,9 +20,9 @@
 # \file swilena.py
 # \brief The whole Swilena suite.
 
-import ltihooks
-
 import config
+
+from complex2 import *
 
 from box2d import *
 from point2d import *
@@ -32,6 +32,10 @@ from window2d import *
 
 from int_u8 import *
 from int_u24 import *
+from rgb8 import *
 
 import image2d_int
 import image2d_int_u8
+import image2d_rgb8
+
+import image2d_point2d

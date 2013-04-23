@@ -330,10 +330,16 @@ namespace mln
       /// \}
 
 
-      /// \internal Conversion: Conversion: #value::qt::rgb32 -> bool.
+      /*!
+	\brief Conversion: Conversion: value::qt::rgb32 -> bool.
+	\ingroup fromto
+      */
       void from_to_(const rgb32& from, bool& to);
 
-      /// \internal Conversion: bool -> #value::qt::rgb32.
+      /*!
+	\brief Conversion: bool -> value::qt::rgb32.
+	\ingroup fromto
+      */
       void from_to_(const bool& from, value::qt::rgb32& to);
 
     } // end of namespace mln::value::qt

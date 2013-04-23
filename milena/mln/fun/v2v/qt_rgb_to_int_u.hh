@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,11 @@ namespace mln
     namespace v2v
     {
 
+      /*!
+	\brief Convert value::qt::rgb32 values to value::int_u8.
+
+	\ingroup modfunv2v convert
+      */
       template <unsigned n>
       struct qt_rgb_to_int_u : Function_v2v< qt_rgb_to_int_u<n> >
       {

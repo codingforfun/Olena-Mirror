@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -125,11 +125,17 @@ namespace mln
   const window2d& win_c8p();
 
 
-  /// \internal Conversion: bool[] -> window2d
+  /*!
+    \brief Conversion: bool[] -> window2d
+    \ingroup fromto
+  */
   template <unsigned S>
   void from_to_(const bool (&values)[S], window2d& win);
 
-  /// \internal Conversion: bool[][] -> window2d
+  /*!
+    \brief Conversion: bool[][] -> window2d
+    \ingroup fromto
+  */
   template <unsigned R, unsigned C>
   void from_to_(const bool (&values)[R][C], window2d& win);
 

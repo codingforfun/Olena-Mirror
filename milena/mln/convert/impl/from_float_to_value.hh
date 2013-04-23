@@ -45,17 +45,29 @@
 namespace mln
 {
 
-  /// \internal Conversion: float-> Value
+  /*!
+    \brief Conversion: float-> Value
+    \ingroup fromto
+  */
   template <typename V>
   void from_to_(const float& from, Value<V>& to);
 
-  /// \internal Conversion: float-> unsigned
+  /*!
+    \brief Conversion: float-> unsigned
+    \ingroup fromto
+  */
   void from_to_(const float& from, unsigned& to);
 
-  /// \internal Conversion: float-> int
+  /*!
+    \brief Conversion: float-> int
+    \ingroup fromto
+  */
   void from_to_(const float& from, int& to);
 
-  /// \internal Conversion: float-> short
+  /*!
+    \brief Conversion: float-> short
+    \ingroup fromto
+  */
   void from_to_(const float& from, short& to);
 
 

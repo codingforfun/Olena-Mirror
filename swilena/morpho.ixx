@@ -49,7 +49,7 @@
      %include "mln/morpho/dilation.hh"
      %include "mln/morpho/erosion.hh"
 
-   would require a lot of efforts.  Use an explicit prototypes
+   would require a lot of efforts.  Use explicit prototypes
    instead.  */
 namespace mln
 {
@@ -65,6 +65,9 @@ namespace mln
   }
 }
 
+
+/* FIXME: We should try to factor the multiple instantiations of
+   `mln::trait::concrete< I >'.  */
 
 %define instantiate_dilation(Name, I, W)
   // Explicit instantiation of this trait for the return type.
@@ -166,6 +169,22 @@ namespace mln
   %template(Name) mln::morpho::watershed::flooding< L, I, N >;
 %enddef
 
+/*-----------.
+| Max-tree.  |
+`-----------*/
+
+%{
+#include "mln/morpho/tree/max.hh"
+%}
+
+%include "mln/morpho/tree/max.hh"
+
+%define instantiate_max_tree(Name, I, N)
+  // Explicit instantiation of this trait for the return type.
+  %template() mln::trait::ch_value< I, mln_psite(I) >;
+  %template(Name) mln::morpho::tree::max< I, N >;
+%enddef
+
 /*-------------------------.
 | Instantiate everything.  |
 `-------------------------*/
@@ -185,4 +204,6 @@ namespace mln
   instantiate_opening_area(opening_area, I, N)
 
   instantiate_watershed_flooding(watershed_flooding, mln_value(I), I, N)
+
+  instantiate_max_tree(max_tree, I, N)
 %enddef

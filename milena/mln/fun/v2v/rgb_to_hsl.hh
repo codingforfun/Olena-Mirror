@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,6 +27,10 @@
 #ifndef MLN_FUN_V2V_RGB_TO_HSL_HH
 # define MLN_FUN_V2V_RGB_TO_HSL_HH
 
+/// \file
+///
+/// \brief Conversion function from value::rgb to value::hsl_.
+
 # include <cmath>
 
 # include <mln/math/round.hh>
@@ -51,6 +55,13 @@ namespace mln
     namespace v2v
     {
 
+      /*!
+	\brief conversion function from value:rgb to value::hsl_.
+
+	\tparam T_hsl The desired output hsl type.
+
+	\ingroup modfunv2v convert
+      */
       template <typename T_hsl>
       struct f_rgb_to_hsl_ : public Function_v2v< f_rgb_to_hsl_<T_hsl> >
       {
@@ -63,8 +74,20 @@ namespace mln
 
       };
 
+      /*!
+	\brief Type of a default conversion function from value::rgb
+	to value::hsl_f.
+
+	\ingroup modfunv2v convert
+       */
       typedef f_rgb_to_hsl_<value::hsl_f> f_rgb_to_hsl_f_t;
 
+      /*!
+	\brief Predefined conversion functor converting from value::rgb
+	to value::hsl_f.
+
+	\ingroup modfunv2v convert
+       */
       extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
 
 

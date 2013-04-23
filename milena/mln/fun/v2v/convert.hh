@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// FIXME.
+/// \brief Function which relies on from_to() to convert values.
 ///
 /// \todo The function is intrisically meta; how to handle that
 /// particular case?
@@ -47,13 +48,22 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*! \brief Function which relies on from_to() to convert values.
 
+	\tparam V The destination type.
+
+	This function relies on convert::from_to().
+
+	\sa data::convert.
+	\ingroup modfunv2v convert
+       */
       template <typename V>
       struct convert : public Function_v2v< convert<V> >
       {
 	typedef V result;
 
+	/// Convert a value of type \c W towards type \c V thanks to
+	/// convert::from_to().
 	template <typename W>
 	V operator()(const W& w) const;
       };

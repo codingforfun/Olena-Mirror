@@ -55,28 +55,44 @@ namespace mln
   {
 
 
-    /// Convert a point set \p pset into a binary image. Width of the
-    /// converted image will be pset.bbox + 2 * \p border.
+    /*!
+      \brief Convert a point set \p pset into a binary image.
+
+      Width of the converted image will be pset.bbox + 2 * \p border.
+      \ingroup convert
+    */
     template <typename S>
     mln_image_from_grid(mln_site(S)::grid, bool)
     to_image(const Site_Set<S>& pset, unsigned border = 1);
 
-    /// Convert a window \p win into a binary image.
+    /*!
+      \brief Convert a window \p win into a binary image.
+      \ingroup convert
+    */
     template <typename W>
     mln_image_from_grid(mln_site(W)::grid, bool)
     to_image(const Window<W>& win);
 
-    /// Convert a weighted window \p w_win into an image.
+    /*!
+      \brief Convert a weighted window \p w_win into an image.
+      \ingroup convert
+    */
     template <typename W>
     mln_image_from_grid(mln_site(W)::grid, mln_weight(W))
     to_image(const Weighted_Window<W>& w_win);
 
-    /// Convert a neighborhood \p nbh into a binary image.
+    /*!
+      \brief Convert a neighborhood \p nbh into a binary image.
+      \ingroup convert
+    */
     template <typename N>
     mln_image_from_grid(mln_site(N)::grid, bool)
     to_image(const Neighborhood<N>& nbh);
 
-    /// Convert an histo \p h into an image1d<unsigned>.
+    /*!
+      \brief Convert an histo \p h into an image1d<unsigned>.
+      \ingroup convert
+    */
     template <typename T>
     image1d<unsigned>
     to_image(const histo::array<T>& h);

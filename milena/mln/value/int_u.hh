@@ -188,31 +188,49 @@ namespace mln
 
     // Conversions
 
-    /// \internal Conversion: int_u -> unsigned.
+    /*!
+      \brief Conversion: int_u -> unsigned.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const int_u<n>& from, unsigned& to_);
 
 
-    /// \internal Conversion: int_u -> bool.
+    /*!
+      \brief Conversion: int_u -> bool.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const int_u<n>& from, bool& to_);
 
 
-    /// \internal Conversion: int_u -> float.
+    /*!
+      \brief Conversion: int_u -> float.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const int_u<n>& from, float& to_);
 
 
-    /// \internal Conversion: int_u -> double.
+    /*!
+      \brief Conversion: int_u -> double.
+      \ingroup fromto
+    */
     template <unsigned n>
     void
     from_to_(const int_u<n>& from, double& to_);
 
-    /// \internal Conversion: Conversion: int_u -> rgb.
+    /*!
+      \brief Conversion: Conversion: int_u -> rgb.
+      \ingroup fromto
+    */
     template <unsigned m>
     void from_to_(const int_u<m>& from, qt::rgb32& to);
 
-    /// \internal Conversion: int_u -> rgb.
+    /*!
+      \brief Conversion: int_u -> rgb.
+      \ingroup fromto
+    */
     template <unsigned m>
     void from_to_(const int_u<m>& from, rgb<m>& to);
 

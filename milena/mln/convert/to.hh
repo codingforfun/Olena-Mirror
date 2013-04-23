@@ -46,7 +46,24 @@ namespace mln
   {
 
 
-    /// Conversion of the object \p from towards an object with type \c T.
+    /*!
+      \brief Conversion of the object \p from towards an object with
+      type \c T.
+
+      This routine relies on from_to().
+
+      It is provided for conveniance.
+
+      \warning The destination type must be specified as template
+      parameter while calling this function.
+
+      \code
+      value::int_u8 gl = 3;
+      value::rgb8 color = convert::to<value::rgb8>(gl);
+      \endcode
+
+      \ingroup convert
+    */
     template <typename T, typename O>
     T
     to(const O& from);

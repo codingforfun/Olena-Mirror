@@ -271,12 +271,18 @@ namespace mln
   // FIXME : add operators and traits?
 
 
-  /// \internal Conversion: gpoint -> mln_delta
+  /*!
+    \brief Conversion: gpoint -> mln_delta
+    \ingroup fromto
+  */
   template <typename P>
   void
   from_to_(const Gpoint<P>& from, mln_delta(P)& to);
 
-  /// \internal Conversion: gpoint -> algebra::vec
+  /*!
+    \brief Conversion: gpoint -> algebra::vec
+    \ingroup fromto
+  */
   template <typename P, unsigned n, typename T>
   void
   from_to_(const Gpoint<P>& from, algebra::vec<n,T>& to);

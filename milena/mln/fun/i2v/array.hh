@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -130,7 +130,10 @@ namespace mln
 			       const array<T>& a);
 
 
-      /// \internal Conversion: fun::i2v::array -> util::array
+      /*!
+	\brief Conversion: fun::i2v::array -> util::array
+	\ingroup fromto
+      */
       template <typename T1, typename T2>
       void
       from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
@@ -145,13 +148,19 @@ namespace mln
 namespace std
 {
 
-  /// \internal Conversion: std::vectorfun::i2v::array<T> -> fun::i2v::array<T>
+  /*!
+    \brief Conversion: std::vectorfun::i2v::array<T> -> fun::i2v::array<T>
+    \ingroup fromto
+  */
   template <typename T>
   inline
   void
   from_to_(const vector<T>& from, mln::fun::i2v::array<T>& to);
 
-  /// \internal Conversion: std::vector<T> -> mln::fun::i2v::array<U>
+  /*!
+    \brief Conversion: std::vector<T> -> mln::fun::i2v::array<U>
+    \ingroup fromto
+  */
   template <typename T, typename U>
   inline
   void

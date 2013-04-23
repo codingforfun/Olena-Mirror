@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,7 +22,6 @@
 
 ## FIXME: Factor as much as possible.  See how we handled this in TC.
 
-CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
 TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
@@ -33,21 +32,47 @@ AM_LDFLAGS = -avoid-version -module -shared
 # Run Swig to create the C++ wrapper files, the Python interface
 # files, and the dependency Makefile snippets.
 %-wrap.cc %.py: $(top_srcdir)/swilena/%.i
-@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
+@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $*-wrap.cc $<; then \
 @AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
 @AMDEP_TRUE@	else \
 @AMDEP_TRUE@	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
 @AMDEP_TRUE@	fi
-@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
+@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $*-wrap.cc $<
 
 
-# ltihooks.py: Python import hooks that understand Libtool libraries.
-python_PYTHON = ltihooks.py
+# Use Make to generate `data.py' and shell scripts (such as `sps' and
+# `sps-local') instead of `configure', as advised by Autoconf's manual
+# (see section ``Installation Directory Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
+         -e 's|@libdir[@]|$(libdir)|g'				\
+         -e 's|@pythondir[@]|$(pythondir)|g'			\
+         -e 's|@PYTHON[@]|$(PYTHON)|g'				\
+         -e 's|@LIBTOOL[@]|$(LIBTOOL)|g'
+
+
 # swilena.py: The whole Swilena suite.
-python_PYTHON += swilena.py
+python_PYTHON = swilena.py
 
-# data.py: Access to the data of the distribution (images, meshes, etc.)
-EXTRA_DIST = data.py
+# data.py: Access to the data of the distribution (images, meshes,
+# etc.).
+#
+# Use the all-local hook instead of the nodist_noinst_PYTHON variable,
+# since ``[...] byte-compilation occurs at install time, any files
+# listed in `noinst_PYTHON' will not be compiled'' (and therefore
+# generated, in our case), according to Automake's manual,
+all-local: data.py
+EXTRA_DIST = data.py.in
+data.py: data.py.in Makefile
+	rm -f $@ $@.tmp
+	$(edit) $< >$@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+CLEANFILES = data.py data.py[co]
 
 
 ## ----------------- ##
@@ -74,6 +99,16 @@ CLEANFILES += $(nodist__config_la_SOURCES) config.py config.py[co]
 ## case for C++.
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_config-wrap.Pcc@am__quote@
 nodist_python_PYTHON += config.py
+
+## complex2.
+pyexec_LTLIBRARIES += _complex2.la
+nodist__complex2_la_SOURCES = complex2-wrap.cc
+_complex2_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__complex2_la_SOURCES) complex2.py complex2.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_complex2-wrap.Pcc@am__quote@
+nodist_python_PYTHON += complex2.py
 
 ## point2d.
 pyexec_LTLIBRARIES += _point2d.la
@@ -145,6 +180,16 @@ CLEANFILES += $(nodist__neighb2d_la_SOURCES) neighb2d.py neighb2d.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_neighb2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += neighb2d.py
 
+## rgb8.
+pyexec_LTLIBRARIES += _rgb8.la
+nodist__rgb8_la_SOURCES = rgb8-wrap.cc
+_rgb8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__rgb8_la_SOURCES) rgb8.py rgb8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_rgb8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += rgb8.py
+
 ## window2d.
 pyexec_LTLIBRARIES += _window2d.la
 nodist__window2d_la_SOURCES = window2d-wrap.cc
@@ -175,6 +220,26 @@ CLEANFILES += $(nodist__image2d_int_u8_la_SOURCES) image2d_int_u8.py image2d_int
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int_u8-wrap.Pcc@am__quote@
 nodist_python_PYTHON += image2d_int_u8.py
 
+## image2d_rgb8.
+pyexec_LTLIBRARIES += _image2d_rgb8.la
+nodist__image2d_rgb8_la_SOURCES = image2d_rgb8-wrap.cc
+_image2d_rgb8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__image2d_rgb8_la_SOURCES) image2d_rgb8.py image2d_rgb8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_rgb8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += image2d_rgb8.py
+
+## image2d_point2d.
+pyexec_LTLIBRARIES += _image2d_point2d.la
+nodist__image2d_point2d_la_SOURCES = image2d_point2d-wrap.cc
+_image2d_point2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__image2d_point2d_la_SOURCES) image2d_point2d.py image2d_point2d.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_point2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += image2d_point2d.py
+
 ## dynamic_image2d.
 pyexec_LTLIBRARIES += _dynamic_image2d.la
 # Swig also generates a header for this module, since it makes use of
@@ -190,17 +255,89 @@ CLEANFILES += $(nodist__dynamic_image2d_la_SOURCES) dynamic_image2d.py dynamic_i
 nodist_python_PYTHON += dynamic_image2d.py
 
 
+## -------------------- ##
+## Extra dependencies.  ##
+## -------------------- ##
+
+# FIXME: It would be cool to have them generated automatically.
+
+# Dependencies pulled by the meta wrapper (.ixx) files.
+int_u_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+rgb_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+
+box_ixx_deps = $(top_srcdir)/swilena/coord.ixx
+
+complex_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+
+morpho_ixx_deps =				\
+  $(top_srcdir)/swilena/concrete.ixx		\
+  $(top_srcdir)/swilena/ch_value.ixx
+
+# Dependencies of wrappers not automatically computed (yet).
+int_u8-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
+int_u32-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
+rgb8-wrap.cc: $(top_srcdir)/swilena/rgb.ixx $(rgb_ixx_deps)
+
+box2d-wrap.cc: $(top_srcdir)/swilena/box.ixx $(box_ixx_deps)
+box2d_piter-wrap.cc: $(top_srcdir)/swilena/box_piter.ixx
+
+complex2-wrap.cc: $(top_srcdir)/swilena/complex.ixx $(complex_ixx_deps)
+
+point2d-wrap.cc: $(top_srcdir)/swilena/concat.ixx
+point2d-wrap.cc: $(top_srcdir)/swilena/python-utils.ixx
+
+dynamic_image2d-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+dynamic_image2d-wrap.cc: $(top_srcdir)/swilena/println.ixx
+
+image2d_int-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/println.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/morpho.ixx $(morpho_ixx_deps)
+
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/pgm.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/println.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/morpho.ixx $(morpho_ixx_deps)
+
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/ppm.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/println.ixx
+
+image2d_point2d-wrap.cc: $(top_srcdir)/swilena/concat.ixx
+image2d_point2d-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_point2d-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_point2d-wrap.cc: $(top_srcdir)/swilena/println.ixx
+
+
 ## ---------------------------- ##
 ## Swilena Python Shell (sps).  ##
 ## ---------------------------- ##
 
-# FIXME: We might want to rename this shell as something else.
 python_PYTHON += sps.py
 
 # The script to be used in installed distributions.
 bin_SCRIPTS = sps
 # The script to be used in non-installed build trees.
-noinst_SCRIPTS = sps-local
+noinst_SCRIPTS = sps-local sps-gdb-local
+
+EXTRA_DIST += sps-common.in sps.in sps-local.in sps-gdb-local.in
+
+$(bin_SCRIPTS) $(noinst_SCRIPTS): Makefile $(srcdir)/sps-common.in
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$@.in || srcdir=$(srcdir)/;	\
+	  cp $${srcdir}sps-common.in $@.tmp;	\
+	  chmod u+w $@.tmp;			\
+	  $(edit) $${srcdir}$@.in >>$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+sps: $(srcdir)/sps.in
+sps-local: $(srcdir)/sps-local.in
+sps-gdb-local: $(srcdir)/sps-gdb-local.in
 
 CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
@@ -211,9 +348,7 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
 include $(top_srcdir)/swilena/run.mk
 
-## FIXME: Do we really need to pass top_srcdir and top_builddir to run?
-TESTS_ENVIRONMENT = \
-  top_srcdir="$(top_srcdir)" top_builddir="$(top_builddir)" $(RUN)
+LOG_COMPILER = $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
 $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is
@@ -233,8 +368,9 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # extension as argument.  We could improve this by adding options such
 # as `--python' to `run'.
 TESTS =									\
-  box2d-misc.py								\
-  image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
+  box2d-misc.py complex2-misc.py					\
+  image2d-misc.py morpho-fun.py morpho-segm.py max-tree.py		\
+  dynamic-image2d-misc.py
 
 EXTRA_DIST += $(TESTS)
 
@@ -251,3 +387,27 @@ MOSTLYCLEANFILES =				\
   morpho-fun-opening_area.pgm			\
   morpho-segm-gradient.pgm			\
   morpho-segm-ws.pgm
+
+
+## --------------- ##
+## Install tests.  ##
+## --------------- ##
+
+# Inspired by Automake's silent rules (see node ``Options'' in
+# Automake's manual).  Run `make installcheck' with `VERBOSE=1' to
+# enable the output of install tests.
+#
+# This feature uses recursive variable expansion, a fairly portable,
+# non-POSIX construct, hence Automake's warning.
+run_install_test_verbose = $(run_install_test_verbose_$(VERBOSE))
+run_install_test_verbose_ = $(run_install_test_verbose_0)
+# We have to silence the standard error too, because it is used by
+# libextatica to emit messages during JIT-compiling.  We should make
+# these messages optional, and turn on the standard error back.
+run_install_test_verbose_0 = >/dev/null 2>/dev/null
+
+include $(srcdir)/installcheck.mk
+# Like `run', but with PYTHONPATH pointing to an installed directory.
+INSTALL_TESTS_ENVIRONMENT = \
+  PYTHONPATH="$(pythondir):$$PYTHONPATH" $(run_install_test_verbose) $(PYTHON)
+INSTALL_TESTS = $(TESTS)

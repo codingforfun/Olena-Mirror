@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +59,7 @@ namespace mln
 	Source:
 	http://en.wikipedia.org/wiki/Pixel_art_scaling_algorithms
 
-	\ingroup mlngeom
+	\ingroup transformationupscaling
       */
       template <typename I>
       mln_concrete(I)

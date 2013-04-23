@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,6 +52,26 @@ namespace mln
 
   namespace convert
   {
+
+    /*!
+      \brief Convert a Milena image to a Qimage without copy.
+
+      This function requires the library <a
+      href="http://www.qt-project.org">Qt</a> 4.x or 5.x.
+
+      It does not copy any data. The underlying data remains held by
+      \p ima.
+
+      \warning \p ima must remain valid until QImage is destroyed.
+
+      \ingroup convert
+    */
+    template <typename I>
+    inline
+    QImage to_qimage_nocopy(const Image<I>& ima);
+
+
+# ifndef MLN_INCLUDE_ONLY
 
     // Implementation
 
@@ -171,6 +192,7 @@ namespace mln
       return output;
     }
 
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::convert
 

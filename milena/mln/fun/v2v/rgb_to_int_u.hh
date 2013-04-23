@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,6 +24,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// \brief Conversion function from value::rgb to value::int_u.
 
 #ifndef MLN_FUN_V2V_RGB_TO_INT_U_HH
 # define MLN_FUN_V2V_RGB_TO_INT_U_HH
@@ -41,6 +44,19 @@ namespace mln
     namespace v2v
     {
 
+      /*!
+	\brief Conversion function from value::rgb to value::int_u.
+
+	\tparam n Defines the number of bits of the integer
+	destination type.
+
+	This function computes the mean of the three RGB components:
+	\verbatim
+	luma = (red + green + blue) / 3;
+	\endverbatim
+
+	\ingroup modfunv2v convert
+       */
       template <unsigned n>
       struct rgb_to_int_u : Function_v2v< rgb_to_int_u<n> >
       {

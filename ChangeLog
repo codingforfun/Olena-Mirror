@@ -1,3 +1,110 @@
+2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove unstable viewer.
+
+	* GScribo/BUGS,
+	* GScribo/GScribo.pro,
+	* GScribo/GScribo.pro.user,
+	* GScribo/GScribo.pro.user.1.3,
+	* GScribo/PagesWidget/pagesdelegate.cpp,
+	* GScribo/PagesWidget/pagesdelegate.h,
+	* GScribo/PagesWidget/pagesmodel.cpp,
+	* GScribo/PagesWidget/pagesmodel.h,
+	* GScribo/PagesWidget/pageswidget.cpp,
+	* GScribo/PagesWidget/pageswidget.h,
+	* GScribo/Preferences/generaloptions.cpp,
+	* GScribo/Preferences/generaloptions.h,
+	* GScribo/Preferences/generaloptions.ui,
+	* GScribo/Preferences/ocroptions.cpp,
+	* GScribo/Preferences/ocroptions.h,
+	* GScribo/Preferences/ocroptions.ui,
+	* GScribo/Preferences/optionwidget.h,
+	* GScribo/Preferences/preferencesdialog.cpp,
+	* GScribo/Preferences/preferencesdialog.h,
+	* GScribo/Preferences/preferencesdialog.ui,
+	* GScribo/Preferences/preprocessingoptions.cpp,
+	* GScribo/Preferences/preprocessingoptions.h,
+	* GScribo/Preferences/preprocessingoptions.ui,
+	* GScribo/Preferences/segmentationoptions.cpp,
+	* GScribo/Preferences/segmentationoptions.h,
+	* GScribo/Preferences/segmentationoptions.ui,
+	* GScribo/Processing/preprocess.cpp,
+	* GScribo/Processing/preprocess.h,
+	* GScribo/Processing/process.cpp,
+	* GScribo/Processing/process.h,
+	* GScribo/Processing/progressdialog.cpp,
+	* GScribo/Processing/progressdialog.h,
+	* GScribo/Processing/runner.cpp,
+	* GScribo/Processing/runner.h,
+	* GScribo/Rendering/abstractregionitem.h,
+	* GScribo/Rendering/backgroundtexture.h,
+	* GScribo/Rendering/graphicsview.cpp,
+	* GScribo/Rendering/graphicsview.h,
+	* GScribo/Rendering/regionitem.cpp,
+	* GScribo/Rendering/regionitem.h,
+	* GScribo/Rendering/rootgraphicsitem.h,
+	* GScribo/Rendering/scene.cpp,
+	* GScribo/Rendering/scene.h,
+	* GScribo/Rendering/selection.cpp,
+	* GScribo/Rendering/selection.h,
+	* GScribo/TODO,
+	* GScribo/XmlWidget/attributesmodel.cpp,
+	* GScribo/XmlWidget/attributesmodel.h,
+	* GScribo/XmlWidget/selectionproxy.h,
+	* GScribo/XmlWidget/xmlattributes.cpp,
+	* GScribo/XmlWidget/xmlattributes.h,
+	* GScribo/XmlWidget/xmldelegate.h,
+	* GScribo/XmlWidget/xmlitem.cpp,
+	* GScribo/XmlWidget/xmlitem.h,
+	* GScribo/XmlWidget/xmlmodel.cpp,
+	* GScribo/XmlWidget/xmlmodel.h,
+	* GScribo/XmlWidget/xmlview.cpp,
+	* GScribo/XmlWidget/xmlview.h,
+	* GScribo/XmlWidget/xmlwidget.cpp,
+	* GScribo/XmlWidget/xmlwidget.h,
+	* GScribo/aboutdialog.h,
+	* GScribo/aboutdialog.ui,
+	* GScribo/configs.h,
+	* GScribo/dir.h,
+	* GScribo/dockwidget.h,
+	* GScribo/main.cpp,
+	* GScribo/mainwindow.cpp,
+	* GScribo/mainwindow.h,
+	* GScribo/mainwindow.ui,
+	* GScribo/region.h,
+	* GScribo/regionwidget.cpp,
+	* GScribo/regionwidget.h,
+	* GScribo/variantpointer.h,
+	* GScribo/xml.cpp,
+	* GScribo/xml.h: Remove.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix a link in documentations generated with
+	teamcity.
+
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* distrib/macports/Portfile.in: Cosmetic changes.
+
+2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac (AC_INIT): Add URL to Olena's Web site.
+
+2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* Makefile.am: Cosmetic changes.
+
+2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use Autoconf's MKDIR_P instead of Automake's obsolete mkdir_p.
+
+	* Makefile.am,
+	* doc/Makefile.am,
+	* milena/doc/Makefile.am,
+	* scribo/doc/Makefile.am:
+	Here.
+
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Remove duplicate '/' in path.
@@ -345,6 +452,18 @@
 
 	* NEWS: Start populating the changes list.
 
+2013-04-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop warning about Python 2.6+ likely incompatible with Swilena.
+
+	* configure.ac: Here.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop configuring swilena/python/sps and swilena/python/sps-local.
+
+	* configure.ac: Here.
+
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Automake's silent-rules.
@@ -607,7 +726,6 @@
 
 	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries
 	while checking Tesseract availability.
->>>>>>> next
 
 2011-11-25  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -636,11 +754,6 @@
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	* README (Bibliography): Mention the GRETSI 2011 paper.
-
-2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries
-	while checking Tesseract availability.
 
 2011-09-16  Roland Levillain  <roland@lrde.epita.fr>
 

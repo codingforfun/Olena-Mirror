@@ -360,19 +360,31 @@ namespace mln
   namespace value
   {
 
-    /// \internal Conversion: rgb -> bool.
+    /*!
+      \brief Conversion: rgb -> bool.
+      \ingroup fromto
+    */
     template <unsigned m>
     void from_to_(const value::rgb<m>& from, bool& to);
 
-    /// \internal Conversion: rgb to hsl_
+    /*!
+      \brief Conversion: rgb to hsl_
+      \ingroup fromto
+    */
     void
     from_to_(const rgb<16>& from, hsl_<float,float,float>& to);
 
-    /// \internal Conversion: rgb to hsl_
+    /*!
+      \brief Conversion: rgb to hsl_
+      \ingroup fromto
+    */
     void
     from_to_(const rgb<8>& from, hsl_<float,float,float>& to);
 
-    /// \internal Conversion: bool -> rgb.
+    /*!
+      \brief Conversion: bool -> rgb.
+      \ingroup fromto
+    */
     template <unsigned m>
     void from_to_(bool from, value::rgb<m>& to);
 

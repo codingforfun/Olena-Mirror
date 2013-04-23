@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,25 +47,26 @@ namespace mln
     {
 
 
-      /// \brief Convert a rgb8 value to a rgn, n < 8.
-      ///
-      /// \param n defines the output quantification used for the transformation.
-      ///
-      /// \ingroup modfunv2v
-      //
+      /*! \brief Convert a rgb8 value to a rgn, n < 8.
+
+	\tparam n defines the output quantification used for the transformation.
+
+	\ingroup modfunv2v convert
+      */
       template <unsigned n>
       struct rgb8_to_rgbn : Function_v2v< rgb8_to_rgbn<n> >
       {
 	typedef value::rgb8   argument;
 	typedef value::rgb<n> result;
 
-	/// \brief Convert a rgb8 value to a rgn, n < 8.
-	///
-	/// \param[in] c the rgb8 value to convert.
-	///
-	/// Conversion is done by computing the size by which we
-	/// divide each rgb component.
-	//
+	/*!
+	  \brief Convert a rgb8 value to a rgn, n < 8.
+
+	  \param[in] c the rgb8 value to convert.
+
+	  Conversion is done by computing the size by which we
+	  divide each rgb component.
+	*/
 	result operator()(const argument& c) const;
 
       };

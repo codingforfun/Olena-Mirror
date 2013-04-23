@@ -1,3 +1,283 @@
+2013-04-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust Swilena to Automake parallel tests.
+
+	* python/Makefile.am: s/TESTS_ENVIRONMENT/LOG_COMPILER/.
+
+2013-04-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enable verbose messages in Swilena Python tests.
+
+	* run.in: Here.
+	Convert to UTF-8.
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify Swilena's python/Makefile.am.
+
+	* python/Makefile.am (data.py): Here.
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify some Swilena Python test cases.
+
+	* python/data.py.in (lena): Use small.pgm instead of lena.pgm.
+	* python/max-tree.py: Disable a no longer working statement (needs
+	further investigation).
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Makefile pattern rules generating several tests outputs.
+
+	* python/Makefile.am (%-wrap.cc %.py): Do not use `$@' in the
+	action block to represent the first output, as `$@' may stand for
+	any target of the rule; instead, rely on an explicit pattern based
+	on `$*'.
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help SWIG 2.0.9 wrap a ctor added as an extension.
+
+	* box2d.i: Here.
+	Drop the namespace qualifier before the class name (see
+	http://sourceforge.net/p/swig/bugs/1291/).
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes in Swilena.
+
+	* swilena/box.ixx,
+	* swilena/box2d.i,
+	* swilena/image2d.ixx,
+	* swilena/image2d_point2d.i,
+	* swilena/morpho.ixx:
+	Here.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add sps-gdb-local, a script to run the Swilena Python Shell in GDB.
+
+	* python/sps-gdb-local.in: New.
+	* python/Makefile.am (edit): Also substitute @LIBTOOL@.
+	(noinst_SCRIPTS): Add sps-gdb-local.
+	(EXTRA_DIST): Add sps-gdb-local.in.
+	(sps-gdb-local): Add a dependency on $(srcdir)/sps-gdb-local.in.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix build dependencies in Swilena.
+
+	* python/Makefile.am (image2d_point2d-wrap.cc): Depend on
+	$(top_srcdir)/swilena/concat.ixx.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Comment on an issue of Swilena highlighted by max-tree.py.
+
+	* python/max-tree.py: Here.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the local (build-time) Swilena Python Shell.
+
+	* python/sps-local.in (PYTHONPATH): Add `@abs_builddir@/.libs'.
+
+2012-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get rid of `ltihooks' in Swilena.
+
+	* python/ltihooks.py: Remove.
+	* python/Makefile.am (python_PYTHON): Remove ltihooks.py.
+	* python/swilena.py: No longer import `ltihooks'.
+	* run.in: Help Python find actual dynamic modules in directory
+	`.libs', as suggested by Alexandre Duret-Lutz in
+	http://stackoverflow.com/a/5125879/1551751.
+
+2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Perform install tests in Swilena.
+
+	* python/installcheck.mk: New.
+	Include it...
+	* python/Makefile.am: ...here.
+	(run_install_test_verbose, run_install_test_verbose_)
+	(run_install_test_verbose_0)
+	(INSTALL_TESTS_ENVIRONMENT, INSTALL_TESTS):
+	New variables.
+
+2010-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix cleaning rules.
+
+	* python/Makefile.am (CLEANFILES): Add data.py[co].
+
+2010-01-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the generation of the sps scripts.
+
+	* python/Makefile.am (sps, sps-local): Remove a stray slash.
+	Fix permissions.
+
+2010-05-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Generate python/data.py.
+
+	* python/data.py: Rename as...
+	* python/data.py.in: ...this.
+	Adjust.
+	Turn top_srcdir into a variable substituted by configure.
+	* python/Makefile.am (EXTRA_DIST): s/data.py/data.py.in/.
+	* python/Makefile.am (all-local): New rule.
+	Depend on data.py.
+	(edit): Substitute top_srcdir.
+	(data.py): New rule.
+	(CLEANFILES): Add data.py.
+	(TESTS_ENVIRONMENT): No longer set top_srcdir and top_builddir.
+	* python/complex2-misc.py, python/max-tree.py:
+	Do not import `data', as it is not used.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify python/max-tree.py using Python's itertools.
+
+	* python/max-tree.py (values): Use itertools.izip to shorten the
+	parallel iterations on sites and values.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Swilena a bit.
+
+	* python-utils.ixx (generate__str__):
+	Do not include C++ header `string'.
+	* image2d_int.i,
+	* image2d_int_u8.i,
+	* image2d_rgb8.i:
+	Fix the Swilena documentation headers.
+	* int_u.ixx,
+	* rgb.ixx,
+	* image2d.ixx:
+	More Doxygen documentation.
+	* concat.ixx: Typo in comment.
+	* box_piter.ixx: Remove a blank line.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap a subset of complexes' features.
+
+	* complex.ixx, complex2.i: New.
+	* Makefile.am (meta_wrappers): Add complex.ixx.
+	(wrappers): Add complex2.i.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _complex2.la.
+	(nodist__complex2_la_SOURCES, _complex2_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__complex2_la_SOURCES) complex2.py
+	complex2.py[co].
+	(nodist_python_PYTHON): Add complex2.py.
+	(complex_ixx_deps): New.
+	(complex2-wrap.cc): Add dependencies on
+	$(top_srcdir)/swilena/complex.ixx $(complex_ixx_deps).
+	(TESTS): Add complex2-misc.py.
+	* python/complex2-misc.py: New.
+	* python/swilena.py: Import the contents of module complex2.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap function mln::morpho::tree::max<I, N>.
+
+	* morpho.ixx (instantiate_max_tree): New macro.
+	Call it...
+	(instantiate_morpho): ...here.
+	* python/max-tree.py: New test.
+	* python/Makefile.am (TESTS): Add max-tree.py.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a Swilena wrapper for mln::image2d<mln::point2d>.
+
+	* image2d_point2d.i: New.
+	* Makefile.am (wrappers): Add image2d_point2d.i.
+	* python/Makefile.am (pyexec_LTLIBRARIES):
+	Add _image2d_point2d.la.
+	(nodist__image2d_point2d_la_SOURCES, _image2d_point2d_la_LIBADD):
+	New.
+	(CLEANFILES): Add $(nodist__image2d_point2d_la_SOURCES)
+	image2d_point2d.py image2d_point2d.py[co].
+	(nodist_python_PYTHON): Add image2d_point2d.py.
+	(image2d_point2d-wrap.cc): Add dependencies.
+	* python/swilena.py: Import image2d_point2d.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Make generate the Swilena Python Shell (sps).
+
+	* python/Makefile.am (EXTRA_DIST): Add sps-common.in, sps.in and
+	sps-local.in.
+	(edit): New.
+	(sps, sps-local): New rules.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a Swilena wrapper for mln::image2d<mln::value::rgb8>.
+
+	* image2d_rgb8.i: New file.
+	* Makefile.am (wrappers): Add image2d_rgb8.i.
+	* python/swilena.py: Import the contents of module image2d_rgb8.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _image2d_rgb8.la.
+	(nodist__image2d_rgb8_la_SOURCES, _image2d_rgb8_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__image2d_rgb8_la_SOURCES)
+	image2d_rgb8.py image2d_rgb8.py[co].
+	(nodist_python_PYTHON): Add image2d_rgb8.py.
+	(image2d_rgb8-wrap.cc): Add dependencies.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a Swilena meta-wrapper for PPM I/O.
+
+	* ppm.ixx: New file.
+	* Makefile.am (meta_wrappers): Add ppm.ixx.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a setter in the mln::image2d<T> meta-wrapper.
+
+	* image2d.ixx (mln::image2d<T>::set): New method (extension).
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a Swilena wrapper for mln::value::rgb8.
+
+	* rgb8.i: New file.
+	* Makefile.am (wrappers): Add rgb8.i.
+	* python/swilena.py: Import the contents of module rgb8.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _rgb8.la.
+	(nodist__rgb8_la_SOURCES, _rgb8_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__rgb8_la_SOURCES) rgb8.py rgb8.py[co].
+	(nodist_python_PYTHON): Add rgb8.py.
+	(rgb8-wrap.cc): Add dependencies.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a Swilena meta-wrapper for mln::value::rgb<n>.
+
+	* rgb.ixx: New file.
+	* Makefile.am (meta_wrappers): Add rgb.ixx.
+	* python/Makefile.am (rgb_ixx_deps): New variable.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve dependency management in Swilena/Python.
+
+	* python/Makefile.am (int_u_ixx_deps, box_ixx_deps)
+	(morpho_ixx_deps):
+	New variables.
+	(int_u8-wrap.cc, int_u32-wrap.cc, box2d-wrap.cc)
+	(box2d_piter-wrap.cc, point2d-wrap.cc, dynamic_image2d-wrap.cc)
+	(image2d_int-wrap.cc, image2d_int_u8-wrap.cc):
+	Add dependencies.
+
+2009-11-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	* python/morpho-segm.py: Remove a superfluous semi-colon.
+
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Replace remaining uses of mln::morpho::meyer_wst in Swilena.

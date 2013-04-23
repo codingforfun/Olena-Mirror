@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,11 +43,18 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a window \p nbh into an upper window.
+    /*!
+      \brief Convert a window \p nbh into an upper window.
+
+      \ingroup convert
+    */
     template <typename W>
     window<mln_dpsite(W)> to_upper_window(const Window<W>& win);
 
-    /// Convert a neighborhood \p nbh into an upper window.
+    /*!
+      \brief Convert a neighborhood \p nbh into an upper window.
+      \ingroup convert
+    */
     template <typename N>
     window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh);
 

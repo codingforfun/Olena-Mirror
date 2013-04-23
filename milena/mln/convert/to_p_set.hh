@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,28 +49,48 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a neighborhood \p nbh into a site set.
+    /*!
+      \brief Convert a neighborhood \p nbh into a site set.
+      \ingroup convert
+    */
     template <typename N>
     p_set<mln_psite(N)>
     to_p_set(const Neighborhood<N>& nbh);
 
-    /// Convert a binary image \p ima into a site set.
+    /*!
+      \brief Convert a binary image \p ima into a site set.
+      \ingroup convert
+    */
     template <typename I>
     p_set<mln_psite(I)>
     to_p_set(const Image<I>& ima);
 
-    /// Convert a Window \p win into a site set.
+    /*!
+      \brief Convert a Window \p win into a site set.
+      \ingroup convert
+    */
     template <typename W>
     p_set<mln_psite(W)>
     to_p_set(const Window<W>& win);
 
-    /// Convert an std::set \p s of sites into a site set.
-    /// C is the comparison functor.
+    /*!
+      \brief Convert an std::set \p s of sites into a site set.
+
+      \tparam P is the site type.
+      \tparam C is the comparison functor.
+
+      \ingroup convert
+    */
     template <typename P, typename C>
     p_set<P>
     to_p_set(const std::set<P, C>& s);
 
-    /// Convert any site set \p ps into a 'mln::p_set<>' site set.
+    /*!
+      \brief Convert any site set \p ps into a 'mln::p_set<>' site
+      set.
+
+      \ingroup convert
+    */
     template <typename S>
     p_set<mln_psite(S)>
     to_p_set(const Site_Set<S>& ps);

@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -23,6 +23,7 @@ meta_wrappers =					\
   box.ixx					\
   box_piter.ixx					\
   ch_value.ixx					\
+  complex.ixx					\
   concat.ixx					\
   concrete.ixx					\
   coord.ixx					\
@@ -32,21 +33,27 @@ meta_wrappers =					\
   intp.ixx					\
   morpho.ixx					\
   pgm.ixx					\
+  ppm.ixx					\
   println.ixx					\
-  python-utils.ixx
+  python-utils.ixx				\
+  rgb.ixx
 
 # Wrappers (generating actual modules).
 wrappers =					\
   box2d.i					\
   box2d_piter.i					\
+  complex2.i					\
   config.i					\
   dpoint2d.i					\
   image2d_int.i					\
   image2d_int_u8.i				\
+  image2d_point2d.i				\
+  image2d_rgb8.i				\
   int_u24.i					\
   int_u8.i					\
   neighb2d.i					\
   point2d.i					\
+  rgb8.i					\
   window2d.i					\
 						\
   dynamic_image2d.i

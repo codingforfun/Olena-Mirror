@@ -91,7 +91,10 @@ namespace mln
     bool
     operator<(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs);
 
-    /// \internal Conversion: object_id<Tag,V> -> V.
+    /*!
+      \brief Conversion: object_id<Tag,V> -> V.
+      \ingroup fromto
+    */
     template <typename Tag, typename V>
     void from_to_(const util::object_id<Tag,V>& from, V& to_);
 

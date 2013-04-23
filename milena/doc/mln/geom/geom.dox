@@ -1,0 +1,7 @@
+/*! \defgroup geomcrop Cropping
+ *
+ * \brief All crop algorithms.
+ *
+ * \ingroup mlngeom
+*/
+

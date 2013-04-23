@@ -213,54 +213,62 @@ namespace mln
     /// \param[in] c An rgb.
     ///
     /// \return The modified output stream \p ostr.
+    /// \relates hsl_
     template <typename H, typename S, typename L>
     std::ostream& operator<<(std::ostream& ostr, const hsl_<H,S,L>& c);
 
 
-    /// Addition.
-    /// {
+    /*! \brief Addition with HSL.
+      \relates hsl_
+    */
     template <typename H, typename S, typename L>
     hsl_<H,S,L>
     operator+(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
-    /// \}
 
-    /// Subtraction.
-    /// \{
+    /*! \brief Substraction with HSL.
+      \relates hsl_
+    */
     template <typename H, typename S, typename L>
     hsl_<H,S,L>
     operator-(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
-    /// \}
 
-    /// Product.
-    /// \{
+    /*! \brief Product with HSL.
+      \relates hsl_
+    */
     template <typename H, typename S, typename L, typename S2>
     hsl_<H,S,L>
     operator*(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s);
-    /// \}
 
-    /// Division.
-    /// \{
+    /*! \brief Division with HSL.
+      \relates hsl_
+    */
     template <typename H, typename S, typename L, typename S2>
     hsl_<H,S,L>
     operator/(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s);
     /// \}
 
-    /// Comparison.
-    /// \{
+    /*! \brief Comparison with HSL.
+      \relates hsl_
+    */
     template <typename H, typename S, typename L>
     bool
     operator==(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
-    /// \}
 
 
     /// \cond INTERNAL_API
     // Conversions
 
-    /// \internal Conversion: hsl -> qt::rgb32.
+    /*!
+      \brief Conversion: hsl -> qt::rgb32.
+      \ingroup fromto
+    */
     template <typename H, typename S, typename L>
     void from_to_(const hsl_<H,S,L>& from, qt::rgb32& to);
 
-    /// \internal Conversion: hsl -> rgb8.
+    /*!
+      \brief Conversion: hsl -> rgb8.
+      \ingroup fromto
+    */
     template <typename H, typename S, typename L>
     void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
     /// \endcond

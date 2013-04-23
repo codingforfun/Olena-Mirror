@@ -1,1 +1,1 @@
-  data::paste(ima, lena);
+  data::fill(ima, lena);

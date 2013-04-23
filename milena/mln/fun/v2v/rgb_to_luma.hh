@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +24,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// \brief Conversion function from value::rgb to integer value type.
+
 #ifndef MLN_FUN_V2V_RGB_TO_LUMA_HH
 # define MLN_FUN_V2V_RGB_TO_LUMA_HH
 
@@ -37,6 +42,17 @@ namespace mln
     namespace v2v
     {
 
+      /*!
+	\brief Conversion function from a RGB value to an integer
+	value type.
+
+	This function use the following formula:
+	\verbatim
+	luma = 0.299 * red + 0.587 * green + 0.114 * blue;
+	\endverbatim
+
+	\ingroup modfunv2v convert
+      */
       template <typename T_luma>
       struct rgb_to_luma : public Function_v2v< rgb_to_luma<T_luma> >
       {

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,18 +44,28 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a point set \p pset into a p_array (point set vector).
+    /*!
+      \brief Convert a point set \p pset into a p_array (point set vector).
+      \ingroup convert
+    */
     template <typename S>
     p_array<mln_psite(S)> to_p_array(const Site_Set<S>& pset);
 
 
-    /// Convert a window \p win centered at point \p p into a p_array
-    /// (point set vector).
+    /*!
+      \brief Convert a window \p win centered at point \p p into a p_array
+      (point set vector).
+
+      \ingroup convert
+    */
     template <typename W>
     p_array<mln_psite(W)> to_p_array(const Window<W>& win,
 				     const mln_psite(W)& p);
 
-    /// Convert an image \p img into a p_array.
+    /*!
+      \brief Convert an image \p img into a p_array.
+      \ingroup convert
+    */
     template <typename I>
     p_array<mln_psite(I)>
     to_p_array(const Image<I>& img);

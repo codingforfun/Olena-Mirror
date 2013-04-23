@@ -89,6 +89,13 @@ PNG_FIGURES =					\
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
 
+# Prevent make from trying to regenerate img/small.png from
+# img/small.pbm through suffix rule `.pbm.png', as they are not
+# related, by providing the following dummy rule.  A better way would
+# be to rename one these files to break this spurious dependency.
+$(srcdir)/img/small.png:
+	@:
+
 # --------------- #
 # Other figures.  #
 # --------------- #
@@ -762,7 +769,7 @@ DATA_html_dirs_inst = $(WHITE_PAPER)
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/
+	$(MKDIR_P) $(DESTDIR)$(htmldir)/milena/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html

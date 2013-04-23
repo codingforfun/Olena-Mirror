@@ -94,13 +94,31 @@ namespace mln
   /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects from
-  /// Nil to value.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects from
+    Nil to value.
+
+    The parameter \a E is the exact type.
+
+    Functions which inherit from this concept must be declared as
+    follows:
+
+    \code
+    struct my_function
+      : Function_n2v<my_function>
+    {
+      typedef my_result_type result;
+      typedef void argument;
+
+      result operator()() const
+      {
+        return ...;
+      }
+    };
+    \endcode
+
+    \ingroup modfun
+  */
   template <typename E>
   struct Function_n2v : public Function<E>
   {
@@ -121,13 +139,31 @@ namespace mln
   /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects from
-  /// value to value.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects from
+    value to value.
+
+    The parameter \a E is the exact type.
+
+    Functions which inherit from this concept must be declared as
+    follows:
+
+    \code
+    struct my_function
+      : Function_v2v<my_function>
+    {
+      typedef my_result_type result;
+      typedef my_argument_type argument;
+
+      result operator()(const argument& v) const
+      {
+        return ...;
+      }
+    };
+    \endcode
+
+    \ingroup modfun
+  */
   template <typename E>
   struct Function_v2v : public Function<E>
   {
@@ -149,13 +185,31 @@ namespace mln
   /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects from a
-  /// value to a Boolean.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects from a
+    value to a Boolean.
+
+    The parameter \a E is the exact type.
+
+    Functions which inherit from this concept must be declared as
+    follows:
+
+    \code
+    struct my_function
+      : Function_v2b<my_function>
+    {
+      typedef bool result;
+      typedef my_argument_type argument;
+
+      result operator()(const argument& v) const
+      {
+        return ...;
+      }
+    };
+    \endcode
+
+    \ingroup modfun
+  */
   template <typename E>
   struct Function_v2b : public virtual Function_v2v<E>
   {
@@ -178,13 +232,31 @@ namespace mln
   /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects from a
-  /// couple of values to a value.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects from a
+    couple of values to a value.
+
+    The parameter \a E is the exact type.
+
+    Functions which inherit from this concept must be declared as
+    follows:
+
+    \code
+    struct my_function
+      : Function_vv2v<my_function>
+    {
+      typedef my_result_type result;
+      typedef my_argument_type argument;
+
+      result operator()(const argument& v1, const argument& v2) const
+      {
+        return ...;
+      }
+    };
+    \endcode
+
+    \ingroup modfun
+  */
   template <typename E>
   struct Function_vv2v : public Function<E>
   {
@@ -205,13 +277,31 @@ namespace mln
   /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects from a
-  /// couple of values to a Boolean.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects from a
+    couple of values to a Boolean.
+
+    The parameter \a E is the exact type.
+
+    Functions which inherit from this concept must be declared as
+    follows:
+
+    \code
+    struct my_function
+      : Function_vv2b<my_function>
+    {
+      typedef bool result;
+      typedef my_argument_type argument;
+
+      result operator()(const argument& v1, const argument& v2) const
+      {
+        return ...;
+      }
+    };
+    \endcode
+
+    \ingroup modfun
+  */
   template <typename E>
   struct Function_vv2b : public Function<E>
   {

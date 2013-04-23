@@ -1,5 +1,10 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/concept/function.hh: Document function interface for
+	each concept.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/image/image2d_ffmpeg.hh: Fix compilation issues.
 
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -45,6 +50,230 @@
 
 	* mln/labeling/all_blobs.hh,
 	* tests/labeling/all_blobs.cc: New.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Kill Doxygen warnings.
+
+	* mln/data/convert.hh: Add a missing \overload.
+
+	* mln/value/qt/rgb32.hh: Do not force autolink.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Specify conversion formulas for rgb to integer conversion
+	functions.
+
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh: Here.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Create sub-modules in image geometry module.
+
+	* doc/mln/geom/geom.dox: Add cropping sub-module.
+
+	* doc/mln/transformation.dox: Add new sub-modules.
+
+	* mln/binarization/threshold.hh: Move to conversion module.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/registration/icp.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh: Move to newly created sub-modules.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/convert.dox: Fix typos.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add documentation about image conversions.
+
+	* doc/mln/convert.dox: Add examples and explanations.
+
+	* mln/convert/from_to.hh,
+	* mln/convert/to.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/convert/to_qimage_nocopy.hh,
+	* mln/convert/to_upper_window.hh,
+	* mln/convert/to_window.hh,
+	* mln/data/convert.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh: Add to conversion module.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/data/convert.hh: Introduce a new overload taking a
+	conversion function as parameter.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add references to from_to_ overloads in documentation.
+
+	* mln/algebra/h_mat.hh,
+	* mln/algebra/quat.hh,
+	* mln/algebra/vec.hh,
+	* mln/convert/from_to.hh,
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_unsigned_to_value.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/image/#image2d#,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/mixed_neighb.hh,
+	* mln/core/neighb.hh,
+	* mln/core/w_window.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/histo/array.hh,
+	* mln/util/array.hh,
+	* mln/util/object_id.hh,
+	* mln/value/hsl.hh,
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh: Add to from_to_ group.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Explain how to iterate over an image in tutorial.
+
+	* doc/examples/split/tuto3_rw_image-3.cc.raw,
+	* doc/examples/split/tuto3_rw_image-4.cc.raw,
+	* doc/examples/split/tuto3_rw_image-5.cc.raw,
+	* doc/examples/split/tuto3_rw_image-6.cc.raw,
+	* doc/examples/split/tuto3_rw_image-7.cc.raw,
+	* doc/examples/split/tuto3_rw_image-8.cc.raw: Regen.
+
+	* doc/examples/tuto3_rw_image.cc: Add an example with iterators.
+
+	* doc/tutorial.tex: Add more explanations on iterators.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce image transformation module in documentation.
+
+	* doc/mln/main.dox: Create new group.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/registration/icp.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh: move to this new group.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make template parameter name more consistant with naming
+	conventions.
+
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh: Here.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/convert.dox: Fix from_to_ module name.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move internal code to namespace internal.
+
+	* mln/labeling/n_max.hh: Move internal function to namespace
+	internal.
+
+	* tests/labeling/n_max.cc: Update function namespaces.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/win/rectangle2d.hh: Hide internal API.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add labeling module in documentation.
+
+	* doc/mln/labeling/labeling.dox: New. Introduce labeling module.
+
+	* mln/labeling/background.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/compute_image.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/mean_values.hh,
+	* mln/labeling/pack.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/relabel.hh,
+	* mln/labeling/superpose.hh,
+	* mln/labeling/value.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/labeling/wrap.hh: Set documentation as part of the labeling
+	group.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add documentation for mln_concrete and mln_ch_value.
+
+	* mln/trait/ch_value.hh,
+	* mln/trait/concrete.hh: Here.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add explanations on compilation with multiple files.
+
+	* doc/examples/multi_files_f1.cc.raw,
+	* doc/examples/multi_files_f2.cc.raw,
+	* doc/examples/multi_files_main.cc.raw,
+	* doc/examples/multiple_def.cc.raw,
+	* doc/examples/typenametemplate.cc.raw,
+	* doc/examples/undef_global_vars.cc.raw,
+	* doc/examples/wrongvaluetype.cc.raw: New.
+
+	* doc/ref-guide.tex: Add a new section.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Expand more macros.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Exclude internal symbols.
+
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix build issues in Milena's documentation.
+
+	* doc/Makefile.am ($(srcdir)/img/small.png): New rule.
 
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -401,6 +630,19 @@
 
 	* mln/fun/v2b/always_false.hh,
 	* mln/fun/v2b/always_true.hh: New.
+
+2013-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the set of files to clean in apps/mesh-segm-skel.
+
+	* apps/mesh-segm-skel/Makefile.am (MOSTLYCLEANFILES): Here.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help Swilena wrap mln::complex<D>.
+
+	* mln/topo/complex.hh: Use `0' instead of `0u' as template
+	parameter.
 
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -2951,6 +3193,16 @@
 	warning for an unused variable.
 
 	* mln/data/was.median.hh: Fix type of the reference.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Handle the case of filling an empty border.
+
+	* mln/border/fill.hh (mln::border::impl::fill_size_1): Here.
+	Aesthetic changes.
+	* tests/border/fill_0.cc: New test.
+	* tests/border/Makefile.am (check_PROGRAMS): Add fill_0.
+	(fill_0_SOURCES): New.
 
 2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
 

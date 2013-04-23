@@ -56,23 +56,23 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename T> class image2d;
+  template <typename V> class image2d;
 
 
   namespace internal
   {
 
     /*!
-      \brief Data structure for \c mln::image2d<T>.
+      \brief Data structure for \c mln::image2d<V>.
     */
-    template <typename T>
-    struct data< image2d<T> >
+    template <typename V>
+    struct data< image2d<V> >
     {
       data(const box2d& b, unsigned bdr);
       ~data();
 
-      T*  buffer_;
-      T** array_;
+      V*  buffer_;
+      V** array_;
 
       box2d b_;  // theoretical box
       unsigned bdr_;
@@ -81,7 +81,7 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
-      void swap_(data< image2d<T> >& other_);
+      void swap_(data< image2d<V> >& other_);
       void reallocate_(unsigned new_border);
     };
 
@@ -90,8 +90,8 @@ namespace mln
   namespace trait
   {
 
-    template <typename T>
-    struct image_< image2d<T> > : default_image_< T, image2d<T> >
+    template <typename V>
+    struct image_< image2d<V> > : default_image_< V, image2d<V> >
     {
       // misc
       typedef trait::image::category::primary category;
@@ -124,30 +124,30 @@ namespace mln
 
   /// Basic 2D image class.
   ///
-  /// The parameter \c T is the type of pixel values.  This image class
+  /// The parameter \c V is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness around data.
   ///
   /// \ingroup modimageconcrete
   //
-  template <typename T>
-  class image2d : public internal::image_primary< T, mln::box2d, image2d<T> >
+  template <typename V>
+  class image2d : public internal::image_primary< V, mln::box2d, image2d<V> >
   {
-    typedef internal::image_primary< T, mln::box2d, image2d<T> > super_;
+    typedef internal::image_primary< V, mln::box2d, image2d<V> > super_;
   public:
 
     /// Value associated type.
-    typedef T         value;
+    typedef V         value;
 
     /// Return type of read-only access.
-    typedef const T& rvalue;
+    typedef const V& rvalue;
 
     /// Return type of read-write access.
-    typedef T&       lvalue;
+    typedef V&       lvalue;
 
 
     /// Skeleton.
-    typedef image2d< tag::value_<T> > skeleton;
+    typedef image2d< tag::value_<V> > skeleton;
 
 
     /// Constructor without argument.
@@ -181,14 +181,14 @@ namespace mln
     const box2d& vbbox() const;
 
     /// Read-only access to the image value located at point \p p.
-    const T& operator()(const point2d& p) const;
+    const V& operator()(const point2d& p) const;
 
     /// Read-write access to the image value located at point \p p.
-    T& operator()(const point2d& p);
+    V& operator()(const point2d& p);
 
 
     template <typename P>
-    T& alt(const P& p)
+    V& alt(const P& p)
     {
       typedef def::coord coord_t;
       mln_precondition(this->has(p));
@@ -212,9 +212,9 @@ namespace mln
 
     /// \cond INTERNAL_API
     /// Read-only access to the image value located at (\p row, \p col).
-    const T& at_(mln::def::coord row, mln::def::coord col) const;
+    const V& at_(mln::def::coord row, mln::def::coord col) const;
     /// Read-write access to the image value located at (\p row, \p col).
-    T& at_(mln::def::coord row, mln::def::coord col);
+    V& at_(mln::def::coord row, mln::def::coord col);
     /// \endcond
 
 
@@ -238,10 +238,10 @@ namespace mln
     unsigned nelements() const;
 
     /// Read-only access to the image value located at offset \p i.
-    const T& element(unsigned i) const;
+    const V& element(unsigned i) const;
 
     /// Read-write access to the image value located at offset \p i.
-    T& element(unsigned i);
+    V& element(unsigned i);
 
     /// Give the delta-offset corresponding to the delta-point \p dp.
     int delta_offset(const dpoint2d& dp) const;
@@ -250,10 +250,10 @@ namespace mln
     point2d point_at_offset(unsigned i) const;
 
     /// Give a hook to the value buffer.
-    const T* buffer() const;
+    const V* buffer() const;
 
     /// Give a hook to the value buffer.
-    T* buffer();
+    V* buffer();
 
 
     /// \cond INTERNAL_API
@@ -268,11 +268,11 @@ namespace mln
 
   /// \cond INTERNAL_API
 
-  template <typename T>
-  void init_(tag::border_t, unsigned& bdr, const image2d<T>& model);
+  template <typename V>
+  void init_(tag::border_t, unsigned& bdr, const image2d<V>& model);
 
-  template <typename T, typename J>
-  void init_(tag::image_t, mln::image2d<T>& target, const J& model);
+  template <typename V, typename J>
+  void init_(tag::image_t, mln::image2d<V>& target, const J& model);
 
   /// \endcond
 
@@ -281,16 +281,16 @@ namespace mln
 
   // init_
 
-  template <typename T>
+  template <typename V>
   inline
-  void init_(tag::border_t, unsigned& bdr, const image2d<T>& model)
+  void init_(tag::border_t, unsigned& bdr, const image2d<V>& model)
   {
     bdr = model.border();
   }
 
-  template <typename T, typename J>
+  template <typename V, typename J>
   inline
-  void init_(tag::image_t, image2d<T>& target, const J& model)
+  void init_(tag::image_t, image2d<V>& target, const J& model)
   {
     box2d b;
     init_(tag::bbox, b, model);
@@ -300,13 +300,13 @@ namespace mln
   }
 
 
-  // internal::data< image2d<T> >
+  // internal::data< image2d<V> >
 
   namespace internal
   {
-    template <typename T>
+    template <typename V>
     inline
-    data< image2d<T> >::data(const box2d& b, unsigned bdr)
+    data< image2d<V> >::data(const box2d& b, unsigned bdr)
       : buffer_(0),
 	array_ (0),
 	b_     (b),
@@ -315,34 +315,34 @@ namespace mln
       allocate_();
     }
 
-    template <typename T>
+    template <typename V>
     inline
-    data< image2d<T> >::~data()
+    data< image2d<V> >::~data()
     {
       deallocate_();
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d<T> >::update_vb_()
+    data< image2d<V> >::update_vb_()
     {
       vb_.pmin() = b_.pmin() - dpoint2d(all_to(bdr_));
       vb_.pmax() = b_.pmax() + dpoint2d(all_to(bdr_));
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d<T> >::allocate_()
+    data< image2d<V> >::allocate_()
     {
       update_vb_();
       unsigned
 	nr = vb_.len(0),
 	nc = vb_.len(1);
-      buffer_ = new T[nr * nc];
-      array_ = new T*[nr];
-      T* buf = buffer_ - vb_.pmin().col();
+      buffer_ = new V[nr * nc];
+      array_ = new V*[nr];
+      V* buf = buffer_ - vb_.pmin().col();
       for (unsigned i = 0; i < nr; ++i)
 	{
 	  array_[i] = buf;
@@ -353,10 +353,10 @@ namespace mln
       mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d<T> >::deallocate_()
+    data< image2d<V> >::deallocate_()
     {
       if (buffer_)
 	{
@@ -371,22 +371,22 @@ namespace mln
 	}
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d<T> >::swap_(data< image2d<T> >& other_)
+    data< image2d<V> >::swap_(data< image2d<V> >& other_)
     {
-      data< image2d<T> > self_ = *this;
+      data< image2d<V> > self_ = *this;
       *this = other_;
       other_ = self_;
     }
 
-    template <typename T>
+    template <typename V>
     inline
     void
-    data< image2d<T> >::reallocate_(unsigned new_border)
+    data< image2d<V> >::reallocate_(unsigned new_border)
     {
-      data< image2d<T> >& tmp = *(new data< image2d<T> >(this->b_, new_border));
+      data< image2d<V> >& tmp = *(new data< image2d<V> >(this->b_, new_border));
       this->swap_(tmp);
     }
 
@@ -394,86 +394,86 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  // image2d<T>
+  // image2d<V>
 
-  template <typename T>
+  template <typename V>
   inline
-  image2d<T>::image2d()
+  image2d<V>::image2d()
   {
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  image2d<T>::image2d(int nrows, int ncols, unsigned bdr)
+  image2d<V>::image2d(int nrows, int ncols, unsigned bdr)
   {
     init_(make::box2d(nrows, ncols), bdr);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  image2d<T>::image2d(const box2d& b, unsigned bdr)
+  image2d<V>::image2d(const box2d& b, unsigned bdr)
   {
     init_(b, bdr);
   }
 
-  template <typename T>
+  template <typename V>
   inline
   void
-  image2d<T>::init_(const box2d& b, unsigned bdr)
+  image2d<V>::init_(const box2d& b, unsigned bdr)
   {
     mln_precondition(! this->is_valid());
-    this->data_ = new internal::data< image2d<T> >(b, bdr);
+    this->data_ = new internal::data< image2d<V> >(b, bdr);
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d<T>::domain() const
+  image2d<V>::domain() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d<T>::bbox() const
+  image2d<V>::bbox() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   const box2d&
-  image2d<T>::vbbox() const
+  image2d<V>::vbbox() const
   {
     mln_precondition(this->is_valid());
     return this->data_->vb_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   bool
-  image2d<T>::has(const point2d& p) const
+  image2d<V>::has(const point2d& p) const
   {
     mln_precondition(this->is_valid());
     return this->data_->vb_.has(p);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d<T>::operator()(const point2d& p) const
+  const V&
+  image2d<V>::operator()(const point2d& p) const
   {
     mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d<T>::operator()(const point2d& p)
+  V&
+  image2d<V>::operator()(const point2d& p)
   {
     mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
@@ -482,37 +482,37 @@ namespace mln
 
   // Specific methods:
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d<T>::at_(mln::def::coord row, mln::def::coord col) const
+  const V&
+  image2d<V>::at_(mln::def::coord row, mln::def::coord col) const
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d<T>::at_(mln::def::coord row, mln::def::coord col)
+  V&
+  image2d<V>::at_(mln::def::coord row, mln::def::coord col)
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d<T>::nrows() const
+  image2d<V>::nrows() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(0);
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d<T>::ncols() const
+  image2d<V>::ncols() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(1);
@@ -521,74 +521,74 @@ namespace mln
 
   // As a fastest image:
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d<T>::border() const
+  image2d<V>::border() const
   {
     mln_precondition(this->is_valid());
     return this->data_->bdr_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   unsigned
-  image2d<T>::nelements() const
+  image2d<V>::nelements() const
   {
     mln_precondition(this->is_valid());
     return this->data_->vb_.nsites();
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T&
-  image2d<T>::element(unsigned i) const
+  const V&
+  image2d<V>::element(unsigned i) const
   {
     mln_precondition(i < nelements());
     return *(this->data_->buffer_ + i);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T&
-  image2d<T>::element(unsigned i)
+  V&
+  image2d<V>::element(unsigned i)
   {
     mln_precondition(i < nelements());
     return *(this->data_->buffer_ + i);
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  const T*
-  image2d<T>::buffer() const
+  const V*
+  image2d<V>::buffer() const
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
-  T*
-  image2d<T>::buffer()
+  V*
+  image2d<V>::buffer()
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   int
-  image2d<T>::delta_offset(const dpoint2d& dp) const
+  image2d<V>::delta_offset(const dpoint2d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = dp[0] * this->data_->vb_.len(1) + dp[1];
     return o;
   }
 
-  template <typename T>
+  template <typename V>
   inline
   point2d
-  image2d<T>::point_at_offset(unsigned i) const
+  image2d<V>::point_at_offset(unsigned i) const
   {
     mln_precondition(i < nelements());
     def::coord
@@ -601,10 +601,10 @@ namespace mln
 
   // Extra.
 
-  template <typename T>
+  template <typename V>
   inline
   void
-  image2d<T>::resize_(unsigned new_border)
+  image2d<V>::resize_(unsigned new_border)
   {
     mln_precondition(this->is_valid());
     this->data_->reallocate_(new_border);
@@ -630,80 +630,80 @@ namespace mln
 
     // pixter
 
-    template <typename T>
-    struct fwd_pixter< image2d<T> >
+    template <typename V>
+    struct fwd_pixter< image2d<V> >
     {
-      typedef fwd_pixter2d< image2d<T> > ret;
+      typedef fwd_pixter2d< image2d<V> > ret;
     };
 
-    template <typename T>
-    struct fwd_pixter< const image2d<T> >
+    template <typename V>
+    struct fwd_pixter< const image2d<V> >
     {
-      typedef fwd_pixter2d< const image2d<T> > ret;
+      typedef fwd_pixter2d< const image2d<V> > ret;
     };
 
-    template <typename T>
-    struct bkd_pixter< image2d<T> >
+    template <typename V>
+    struct bkd_pixter< image2d<V> >
     {
-      typedef bkd_pixter2d< image2d<T> > ret;
+      typedef bkd_pixter2d< image2d<V> > ret;
     };
 
-    template <typename T>
-    struct bkd_pixter< const image2d<T> >
+    template <typename V>
+    struct bkd_pixter< const image2d<V> >
     {
-      typedef bkd_pixter2d< const image2d<T> > ret;
+      typedef bkd_pixter2d< const image2d<V> > ret;
     };
 
     // qixter
 
-    template <typename T, typename W>
-    struct fwd_qixter< image2d<T>, W >
+    template <typename V, typename W>
+    struct fwd_qixter< image2d<V>, W >
     {
-      typedef dpoints_fwd_pixter< image2d<T> > ret;
+      typedef dpoints_fwd_pixter< image2d<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct fwd_qixter< const image2d<T>, W >
+    template <typename V, typename W>
+    struct fwd_qixter< const image2d<V>, W >
     {
-      typedef dpoints_fwd_pixter< const image2d<T> > ret;
+      typedef dpoints_fwd_pixter< const image2d<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct bkd_qixter< image2d<T>, W >
+    template <typename V, typename W>
+    struct bkd_qixter< image2d<V>, W >
     {
-      typedef dpoints_bkd_pixter< image2d<T> > ret;
+      typedef dpoints_bkd_pixter< image2d<V> > ret;
     };
 
-    template <typename T, typename W>
-    struct bkd_qixter< const image2d<T>, W >
+    template <typename V, typename W>
+    struct bkd_qixter< const image2d<V>, W >
     {
-      typedef dpoints_bkd_pixter< const image2d<T> > ret;
+      typedef dpoints_bkd_pixter< const image2d<V> > ret;
     };
 
     // nixter
 
-    template <typename T, typename N>
-    struct fwd_nixter< image2d<T>, N >
+    template <typename V, typename N>
+    struct fwd_nixter< image2d<V>, N >
     {
-      typedef dpoints_fwd_pixter< image2d<T> > ret;
+      typedef dpoints_fwd_pixter< image2d<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct fwd_nixter< const image2d<T>, N >
+    template <typename V, typename N>
+    struct fwd_nixter< const image2d<V>, N >
     {
-      typedef dpoints_fwd_pixter< const image2d<T> > ret;
+      typedef dpoints_fwd_pixter< const image2d<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct bkd_nixter< image2d<T>, N >
+    template <typename V, typename N>
+    struct bkd_nixter< image2d<V>, N >
     {
-      typedef dpoints_bkd_pixter< image2d<T> > ret;
+      typedef dpoints_bkd_pixter< image2d<V> > ret;
     };
 
-    template <typename T, typename N>
-    struct bkd_nixter< const image2d<T>, N >
+    template <typename V, typename N>
+    struct bkd_nixter< const image2d<V>, N >
     {
-      typedef dpoints_bkd_pixter< const image2d<T> > ret;
+      typedef dpoints_bkd_pixter< const image2d<V> > ret;
     };
 
   } // end of namespace mln::trait

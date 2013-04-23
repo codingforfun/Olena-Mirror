@@ -163,24 +163,39 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const label<n>& l);
 
 
-    /// \internal Conversion: int_u -> label.
+    /*!
+      \brief Conversion: int_u -> label.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const value::int_u<n>& from, value::label<n>& to_);
 
-    /// \internal Conversion: label -> int_u.
+    /*!
+      \brief Conversion: label -> int_u.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const value::label<n>& from, value::int_u<n>& to_);
 
 
-    /// \internal Conversion: int_u -> label.
+    /*!
+      \brief Conversion: int_u -> label.
+      \ingroup fromto
+    */
     template <unsigned n, unsigned m>
     void from_to_(const value::int_u<n>& from, value::label<m>& to_);
 
-    /// \internal Conversion: label -> bool.
+    /*!
+      \brief Conversion: label -> bool.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const value::label<n>& from, bool& to_);
 
-    /// \internal Conversion: label -> unsigned.
+    /*!
+      \brief Conversion: label -> unsigned.
+      \ingroup fromto
+    */
     template <unsigned n>
     void from_to_(const value::label<n>& from, unsigned& to_);
 

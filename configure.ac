@@ -24,7 +24,8 @@ AC_PREREQ([2.61])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Olena], [2.0a], [olena@lrde.epita.fr], [olena])
+AC_INIT([Olena], [2.0a], [olena@lrde.epita.fr], [olena],
+        [http://olena.lrde.epita.fr])
 
 # M4 macros.
 AC_CONFIG_MACRO_DIR([m4])
@@ -304,8 +305,6 @@ disabled.  Try to invoke configure with `--enable-shared'.])
        # Check for Python.
        AM_PATH_PYTHON([2.4], [],
                       [AC_MSG_ERROR([Python 2.4 is required for Swilena.])])
-       AS_VERSION_COMPARE([2.5], [$am_cv_python_version],
-         [AC_MSG_WARN([Python 2.6 and greater may not work with Swilena.])])
        adl_CHECK_PYTHON
        # Check for Python headers.
        save_CPPFLAGS=$CPPFLAGS
@@ -320,15 +319,6 @@ AC_CONFIG_FILES([swilena/Makefile
                  swilena/python/Makefile])
 
 AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
-
-AC_CONFIG_FILES(m4_do([swilena/python/sps],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps.in]),
-                [chmod +x swilena/python/sps])
-AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps-local.in]),
-                [chmod +x swilena/python/sps-local])
 
 ## -------- ##
 ## Scribo.  ##

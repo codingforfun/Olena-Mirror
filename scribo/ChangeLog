@@ -1,3 +1,62 @@
+2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/primitive/extract/lines_pattern.cc: Fix description.
+
+2013-02-27  Anthony Seure  <anthony.seure@lrde.epita.fr>
+
+	Fix different forward declarations (class/struct) in scribo/core.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/line_set.hh:
+	Here.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/object_links.hh: Always initialize links in
+	non-default constructors.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/component_set.hh: Adjust memory pre-allocation size.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Enhance documentation in scribo.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/object_links.hh: Add missing member documentation.
+
+	* scribo/debug/logger.hh: Fix an invalid object reference.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/component_set.hh: Hide internal API.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move documentation of component_set in its corresponding header.
+
+	* doc/scribo/core/component_set.dox: Remove and move documentation...
+
+	* scribo/core/component_set.hh: ... here.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Expand more macros.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Exclude internal symbols from documentation.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyflile.in: Fix include paths in documentation.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/component_precise_outline.hh: Check if sites are
+	part of the image.
+
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Remove duplicate '/' in path.
@@ -1683,6 +1742,14 @@
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/io/img/save.hh: Add an optional reduction factor.
+
+2013-02-27 Anthony Seure  <anthony.seure@lrde.epita.fr>
+
+	Fix compilation issue for nonexistant explicit conversion.
+
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_v_single.hh:
+	Here.
 
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
