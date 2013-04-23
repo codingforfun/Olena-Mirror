@@ -58,29 +58,71 @@ namespace mln
     namespace magick
     {
 
-      /*! \brief Save a Milena image into a file using Magick++.
-	  \overload
+      /*!
+	\brief Store specific save options to use with Magick++.
+	\ingroup iomagick
+      */
+      struct save_options
+      {
+	save_options();
 
-	  \param[in] ima       The image to save.
-	  \param[in] filename  The name of the output file.
+	/*! \brief Define the compression algorithm.
 
-	  \ingroup iomagick
+	  By default it is set to Magick::NoCompression.
+	*/
+	Magick::CompressionType compression_type;
+
+	/*! \brief Define the image type in output (RGB, Bilevel,...).
+
+	  By default it is set to Magick::OptimizeType which will
+	  decide automatically the best type according to image
+	  characteristics.
+	*/
+	Magick::ImageType image_type;
+      };
+
+
+      /*!
+	\brief Save a Milena image into a file using Magick++.
+	\overload
+
+	\param[in] ima       The image to save.
+	\param[in] filename  The name of the output file.
+
+	\ingroup iomagick
       */
       template <typename I>
       void
       save(const Image<I>& ima, const std::string& filename);
 
-      /*! \brief Save a Milena image into a file using Magick++.
 
-	  \param[in] ima       The image to save.
+      /*!
+	\brief Save a Milena image into a file using Magick++.
+	\overload
 
-	  \param[in] opacity_mask Mask used to set pixel opacity_mask in output
-	  image. Output format must support this feature to be taken
-	  into account.
+	\param[in] ima       The image to save.
+	\param[in] options   Save options.
+	\param[in] filename  The name of the output file.
 
-	  \param[in] filename  The name of the output file.
+	\ingroup iomagick
+      */
+      template <typename I>
+      void
+      save(const Image<I>& ima, const save_options& options,
+	   const std::string& filename);
 
-	  \ingroup iomagick
+      /*!
+	\brief Save a Milena image into a file using Magick++.
+	\overload
+
+	\param[in] ima       The image to save.
+	\param[in] opacity_mask Mask used to set pixel opacity_mask in output
+	image. Output format must support this feature to be taken
+	into account.
+
+	\param[in] filename  The name of the output file.
+
+	\ingroup iomagick
       */
       template <typename I, typename J>
       void
@@ -88,19 +130,38 @@ namespace mln
 	   const std::string& filename);
 
 
-      // FIXME: Unfinished?
-#if 0
-      /** Save a Milena tiled image into a file using Magick++.
+      /*!
+	\brief Save a Milena image into a file using Magick++.
 
-	  \param[out] ima       The image to save.
-	  \param[in]  filename  The name of the output file.  */
-      template <typename T>
+	\param[in] ima       The image to save.
+	\param[in] opacity_mask Mask used to set pixel opacity_mask in output
+	image. Output format must support this feature to be taken
+	into account.
+	\param[in] options   Save options.
+	\param[in] filename  The name of the output file.
+
+	\ingroup iomagick
+      */
+      template <typename I, typename J>
       void
-      save(const Image< tiled2d<T> >& ima, const std::string& filename);
-#endif
+      save(const Image<I>& ima, const Image<J>& opacity_mask,
+	   const save_options& options, const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+      namespace internal
+      {
+
+	inline
+	void set_options(Magick::Image& magick_ima,
+			 const save_options& options)
+	{
+	  magick_ima.compressType(options.compression_type);
+	  magick_ima.type(options.image_type);
+	}
+
+      } // end of mln::io::magick::internal
 
       namespace impl
       {
@@ -468,10 +529,22 @@ namespace mln
       } // end of namespace mln::io::magick::internal
 
 
+      // save_options
+      inline
+      save_options::save_options()
+	: compression_type(Magick::NoCompression),
+	  image_type(Magick::OptimizeType)
+      {
+      }
+
+
+
+      // Facades
+
       template <typename I, typename J>
       void
       save(const Image<I>& ima_, const Image<J>& opacity_mask_,
-	   const std::string& filename)
+	   const save_options& options, const std::string& filename)
       {
 	mln_trace("mln::io::magick::save");
 
@@ -524,11 +597,12 @@ namespace mln
 	  internal::paste_data_dispatch(ima, magick_ima);
 	}
 
+	// Take options into account.
+	internal::set_options(magick_ima, options);
+
 	magick_ima.write(filename);
 
       }
-
-
 
       template <typename I>
       inline
@@ -536,9 +610,28 @@ namespace mln
       save(const Image<I>& ima, const std::string& filename)
       {
 	mln_ch_value(I,bool) opacity_mask;
-	save(ima, opacity_mask, filename);
+	save_options options;
+	save(ima, opacity_mask, options, filename);
       }
 
+      template <typename I>
+      inline
+      void
+      save(const Image<I>& ima, const save_options& options,
+	   const std::string& filename)
+      {
+	mln_ch_value(I,bool) opacity_mask;
+	save(ima, opacity_mask, options, filename);
+      }
+
+      template <typename I, typename J>
+      void
+      save(const Image<I>& ima, const Image<J>& opacity_mask,
+	   const std::string& filename)
+      {
+	save_options options;
+	save(ima, opacity_mask, options, filename);
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
