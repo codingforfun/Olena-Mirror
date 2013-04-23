@@ -1,5 +1,9 @@
 2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/io/magick/save.cc: Kill compilation warnings.
+
+2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add save options to magick::save.
 
 	* mln/io/magick/save.hh: Add save_options structure.
