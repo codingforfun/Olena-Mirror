@@ -20,6 +20,7 @@ AM_CPPFLAGS += $(MAGICKXX_CPPFLAGS)
 AM_LDFLAGS = $(MAGICKXX_LDFLAGS)
 
 check_PROGRAMS =				\
+   get_header					\
    load 					\
    save
 

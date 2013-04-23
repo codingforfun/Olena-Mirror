@@ -1,3 +1,12 @@
+2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new routine to get image headers thanks to GraphicsMagick.
+
+	* mln/io/magick/get_header.hh,
+	* mln/tests/io/magick/get_header.cc: New
+
+	* mln/tests/io/magick/Makefile.am: New target.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.
