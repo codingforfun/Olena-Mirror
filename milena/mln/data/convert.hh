@@ -55,6 +55,18 @@ namespace mln
     mln_ch_value(I, V)
     convert(const V& v, const Image<I>& input);
 
+    /*!
+      \brief Convert the image \p input by changing the value type.
+      \overload
+
+      This overload allows to specify a specific conversion function
+      thanks to parameter \p convert_function.
+
+      \ingroup mlndata convert
+    */
+    template <typename F, typename I>
+    mln_ch_value(I, mln_result(F))
+    convert(const Function_v2v<F>& convert_function, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -163,6 +175,18 @@ namespace mln
       return output;
     }
 
+    template <typename F, typename I>
+    mln_ch_value(I, mln_result(F))
+    convert(const Function_v2v<F>& convert_function, const Image<I>& input)
+    {
+      mln_trace("data::convert");
+      typedef mln_result(F) V;
+      internal::convert_tests(V(), input);
+
+      mln_ch_value(I, V) output = data::transform(input, convert_function);
+
+      return output;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

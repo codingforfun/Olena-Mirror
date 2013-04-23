@@ -1,5 +1,10 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/data/convert.hh: Introduce a new overload taking a
+	conversion function as parameter.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add references to from_to_ overloads in documentation.
 
 	* mln/algebra/h_mat.hh,
