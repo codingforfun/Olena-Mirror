@@ -58,7 +58,7 @@ namespace mln
   namespace convert
   {
 
-    /*! \brief Value conversion routine.
+    /*! \brief Conversion routine.
 
       This is a generic function to convert an object towards another
       one.

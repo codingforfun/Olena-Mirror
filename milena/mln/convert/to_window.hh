@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,19 +47,31 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a neighborhood \p nbh into a window.
+    /*!
+      Convert a neighborhood \p nbh into a window.
+      \ingroup convert
+    */
     template <typename N>
     mln_window(N) to_window(const Neighborhood<N>& nbh);
 
-    /// Convert a binary image \p ima into a window.
+    /*!
+      \brief Convert a binary image \p ima into a window.
+      \ingroup convert
+    */
     template <typename I>
     window<mln_site(I)::dpsite> to_window(const Image<I>& ima);
 
-    /// Convert a site set \p pset into a window.
+    /*!
+      \brief Convert a site set \p pset into a window.
+      \ingroup convert
+    */
     template <typename S>
     window<mln_site(S)::dpsite> to_window(const Site_Set<S>& pset);
 
-    /// Convert an std::set \p s of delta-sites into a window.
+    /*!
+      \brief Convert an std::set \p s of delta-sites into a window.
+      \ingroup convert
+    */
     template <typename D, typename C>
     window<D> to_window(const std::set<D, C>& s);
 

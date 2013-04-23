@@ -1,5 +1,29 @@
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add documentation about image conversions.
+
+	* doc/mln/convert.dox: Add examples and explanations.
+
+	* mln/convert/from_to.hh,
+	* mln/convert/to.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/convert/to_qimage_nocopy.hh,
+	* mln/convert/to_upper_window.hh,
+	* mln/convert/to_window.hh,
+	* mln/data/convert.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh: Add to conversion module.
+
+2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/data/convert.hh: Introduce a new overload taking a
 	conversion function as parameter.
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,10 +54,11 @@ namespace mln
     namespace v2v
     {
 
-      /// \brief Convert hsl values to rgb.
-      ///
-      /// \ingroup modfunv2v
-      //
+      /*!
+	\brief Convert hsl values to rgb.
+
+	\ingroup modfunv2v convert
+      */
       template <typename T_rgb>
       struct f_hsl_to_rgb_ : public Function_v2v< f_hsl_to_rgb_<T_rgb> >
       {

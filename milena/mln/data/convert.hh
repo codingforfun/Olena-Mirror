@@ -45,11 +45,15 @@ namespace mln
   {
 
     /*! \brief Convert the image \p input by changing the value type.
-     *
-     * \param[in] v A value of the destination type.
-     * \param[in] input The input image.
-     *
-     * \ingroup mlndata
+
+      \param[in] v A value of the destination type. Its type is used
+                  to specify the target value type. The value itself
+                  is unused.
+      \param[in] input The input image.
+
+      \return An image of value type V.
+
+      \ingroup mlndata convert
      */
     template <typename V, typename I>
     mln_ch_value(I, V)

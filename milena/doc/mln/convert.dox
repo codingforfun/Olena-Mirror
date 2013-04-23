@@ -1,9 +1,164 @@
 /*! \defgroup convert Convertion Routines
- *
- * \brief All conversion routines provided in Milena.
- *
- * \ingroup modroutines
- */
+
+  \brief All conversion routines provided in Milena.
+
+  Type conversions in Olena mainly relies on convert::from_to(). This
+  routine works on a single value only.
+
+  Type conversion of image value types relies on data::convert.  This
+  routine relies on convert::from_to(). For each pixel value,
+  convert::from_to() is called.
+
+  Examples of use:
+  \code
+  image2d<value::int_u8> ima_gl;
+  // Initialization of ima_gl.
+  // ...
+  image2d<value::rgb8> ima_color = mln::data::convert(value::rgb8(), ima_gl);
+  \endcode
+
+  \code
+  image2d<value::int_u8> ima_gl;
+  // Initialization of ima_gl.
+  // ...
+  image2d<bool> ima_b = mln::data::convert(bool(), ima_gl);
+  \endcode
+
+
+  Sometimes, no default conversion is available from type \c
+  mln_value(I) to \c V. It fails with a compilation error such as:
+
+  \code
+  #include <mln/core/image/image2d.hh>
+  #include <mln/data/convert.hh>
+  #include <mln/value/int_u8.hh>
+  #include <mln/value/rgb8.hh>
+
+  int main()
+  {
+    using namespace mln;
+
+    image2d<value::rgb8> ima_color;
+    // Initialization of ima_color
+    // ...
+    image2d<value::int_u8> ima_gl = data::convert(value::int_u8(), ima_color);
+  }
+  \endcode
+  \code
+  $ g++ -I$OLN/milena main.cc
+  ...
+  /my/path/to/oln/milena/mln/convert/from_to.hh:152:5: error: ‘check’ is not a member of ‘mln::metal::abort_<mln::value::rgb<8u> >’
+  \endcode
+
+  Missing conversion is sometimes due to non-trivial
+  conversions. Here, converting a value::rgb8 towards a value::int_u8
+  implies to compute the luminance, but several formulae exist.
+
+  For a single use of a specific conversion, the shortest way is to
+  use the data::convert() overload which takes a conversion function.
+  It must be used with one of conversion function listed on this page.
+
+  \code
+  #include <mln/core/image/image2d.hh>
+  #include <mln/data/convert.hh>
+  #include <mln/value/int_u8.hh>
+  #include <mln/value/rgb8.hh>
+  #include <mln/fun/v2v/rgb_to_luma.hh>
+
+  int main()
+  {
+    using namespace mln;
+
+    image2d<value::rgb8> ima_color;
+    // Initialization of ima_color
+    // ...
+    image2d<value::int_u8> ima_gl = data::convert(fun::v2v::rgb_to_luma<value::int_u8>(), ima_color);
+  }
+  \endcode
+
+  It is also possible to declare a user-defined function. Just declare
+  a class that inherits from the mln::Function_v2v class and respects
+  the required interface.
+
+  \code
+  #include <mln/core/image/image2d.hh>
+  #include <mln/data/convert.hh>
+  #include <mln/value/int_u8.hh>
+  #include <mln/value/rgb8.hh>
+  #include <mln/fun/v2v/rgb_to_luma.hh>
+
+  namespace mln
+  {
+     struct only_red_component : public Function_v2v<only_red_component>
+     {
+       typedef value::int_u8 result;
+       typedef mln::value::rgb8 argument;
+
+       result operator()(const argument& v) const
+       {
+         return v.red();
+       }
+     };
+
+  } // end of namespace mln
+
+  int main()
+  {
+    using namespace mln;
+
+    image2d<value::rgb8> ima_color;
+    // Initialization of ima_color
+    // ...
+    image2d<value::int_u8> ima_red_gl = data::convert(only_red_component(), ima_color);
+  }
+  \endcode
+
+
+  If a program requires conversions that are not provided by default
+  they can be defined manually by declaring a from_to_()
+  overload. Default overloads are listed in module \ref fromto.
+
+  \code
+  #include <mln/core/image/image2d.hh>
+  #include <mln/data/convert.hh>
+  #include <mln/value/int_u8.hh>
+  #include <mln/value/rgb8.hh>
+
+  namespace mln
+  {
+    namespace value
+    {
+
+      void from_to_(const value::rgb8& from, value::int_u8& to)
+      {
+        to = (from.red() + from.green() + from.blue()) / 3;
+      }
+
+    } // end of namespace mln::value
+  } // end of namespace mln
+
+  int main()
+  {
+    using namespace mln;
+
+    image2d<value::rgb8> ima_color;
+    // Initialization of ima_color
+    // ...
+    image2d<value::int_u8> ima_red_gl = data::convert(value::int_u8(), ima_color);
+  }
+  \endcode
+
+  Such declarations extend the capabilities of from_to() and all
+  conversion routines relying on it.
+
+  \warning In order to work properly, the from_to_ overload must be
+  declared in the exact same namespace as its first argument. In case
+  the first argument is a builtin type (e.g. int), rely on the second
+  argument namespace. from_to_ overload resolution relies on the
+  Argument-Dependent Lookup (ADL) provided by C++.
+
+  \ingroup modroutines
+*/
 
 /*! \defgroup fromto from_to_ Routines
  *

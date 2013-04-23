@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,9 +56,17 @@ namespace mln
   namespace convert
   {
 
-    /// \brief Convert a Milena image to a Qimage.
-    ///
-    //
+    /*!
+      \brief Convert a Milena image to a Qimage by copying data.
+
+      This function requires the library <a
+      href="http://www.qt-project.org">Qt</a> 4.x or 5.x.
+
+      This function copies the content of \p ima into the QImage
+      output.
+
+      \ingroup convert
+    */
     template <typename I>
     inline
     QImage
