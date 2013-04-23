@@ -1,5 +1,11 @@
 2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add save options to magick::save.
+
+	* mln/io/magick/save.hh: Add save_options structure.
+
+2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new routine to get image headers thanks to GraphicsMagick.
 
 	* mln/io/magick/get_header.hh,
