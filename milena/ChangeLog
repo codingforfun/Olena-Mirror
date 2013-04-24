@@ -1,5 +1,13 @@
 2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle 16 bits value types with io::magick.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Enable portions of code supporting 16bits
+	images if GraphicsMagick supports it.
+
+2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Relax conversion dispatch.
 
 	* mln/convert/impl/from_value_to_value.hh: Disable dispatch and
