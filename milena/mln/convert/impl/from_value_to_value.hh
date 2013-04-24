@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -65,25 +65,29 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      // Case 1:
+      // We want to disable this code since it prevents types of
+      // different quantification to rely on from_to_ overload and
+      // handle specific conversions. (ex: rgb16 towards rgb8)
 
-      template <typename V, typename W>
-      void
-      from_value_to_value_(const mln::value::Vectorial<V>& from,
-			         mln::value::Vectorial<W>&  to)
-      {
-	exact(to) = exact(from).to_equiv();
-      }
+      // // Case 1:
 
-      // Case 2:
+      // template <typename V, typename W>
+      // void
+      // from_value_to_value_(const mln::value::Vectorial<V>& from,
+      // 			         mln::value::Vectorial<W>&  to)
+      // {
+      // 	exact(to) = exact(from).to_equiv();
+      // }
 
-      template <typename V, typename W>
-      void
-      from_value_to_value_(const mln::value::Scalar<V>& from,
-			         mln::value::Scalar<W>&  to)
-      {
-	exact(to) = exact(from).to_equiv();
-      }
+      // // Case 2:
+
+      // template <typename V, typename W>
+      // void
+      // from_value_to_value_(const mln::value::Scalar<V>& from,
+      // 			         mln::value::Scalar<W>&  to)
+      // {
+      // 	exact(to) = exact(from).to_equiv();
+      // }
 
       template <typename V, typename W>
       inline
