@@ -1,3 +1,21 @@
+2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle 16 bits value types with io::magick.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Enable portions of code supporting 16bits
+	images if GraphicsMagick supports it.
+
+2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Relax conversion dispatch.
+
+	* mln/convert/impl/from_value_to_value.hh: Disable dispatch and
+	rely on from_to().
+
+	* mln/value/rgb.hh: Add a from_to_() overload to handle conversion
+	from rgb<n> to rgb<m>.
+
 2013-04-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/io/magick/save.cc: Kill compilation warnings.

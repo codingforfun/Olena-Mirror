@@ -365,7 +365,7 @@ namespace mln
       \ingroup fromto
     */
     template <unsigned m>
-    void from_to_(const value::rgb<m>& from, bool& to);
+    void from_to_(const rgb<m>& from, bool& to);
 
     /*!
       \brief Conversion: rgb to hsl_
@@ -386,7 +386,16 @@ namespace mln
       \ingroup fromto
     */
     template <unsigned m>
-    void from_to_(bool from, value::rgb<m>& to);
+    void from_to_(bool from, rgb<m>& to);
+
+    /*!
+      \brief Conversion: rgb -> rgb.
+      \pre n <= m
+      \ingroup fromto
+    */
+    template <unsigned n, unsigned m>
+    void
+    from_to_(const rgb<n>& from, rgb<m>& to);
 
   } // end of namespace mln::value
 
@@ -774,7 +783,7 @@ namespace mln
 
     template <unsigned m>
     void
-    from_to_(bool from, mln::value::rgb<m>& to)
+    from_to_(bool from, rgb<m>& to)
     {
       static mln::literal::white_t* white_ = 0;
       static mln::literal::black_t* black_ = 0;
@@ -786,6 +795,17 @@ namespace mln
       else
 	to = *black_;
     }
+
+    template <unsigned n, unsigned m>
+    void
+    from_to_(const rgb<n>& from, rgb<m>& to)
+    {
+      mln_assertion(n <= m);
+      to.red() = from.red();
+      to.green() = from.green();
+      to.blue() = from.blue();
+    }
+
 
   } // end of namespace mln::value
 
