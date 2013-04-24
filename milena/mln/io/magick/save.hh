@@ -186,8 +186,9 @@ namespace mln
 	     value << 8 * (sizeof(Magick::Quantum) - sizeof(value::int_u8)));
 	}
 
+	template <unsigned n>
 	inline
-	Magick::Color get_color(const value::rgb8& value)
+	Magick::Color get_color(const value::rgb<n>& value)
 	{
 	  /* Each channel of a Magick++ image is coded on a
 	     Magick::Quantum value, which can be an 8-, 16- or 32-bit
@@ -197,11 +198,11 @@ namespace mln
 	     channels.  */
 	  return Magick::Color
 	    (value.red()   << 8 * (sizeof(Magick::Quantum)
-				   - sizeof(value::rgb8::red_t)),
+				   - sizeof(typename value::rgb<n>::red_t)),
 	     value.green() << 8 * (sizeof(Magick::Quantum)
-				   - sizeof(value::rgb8::green_t)),
+				   - sizeof(typename value::rgb<n>::green_t)),
 	     value.blue()  << 8 * (sizeof(Magick::Quantum)
-				   - sizeof(value::rgb8::blue_t)));
+				   - sizeof(typename value::rgb<n>::blue_t)));
 	}
 
 
