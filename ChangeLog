@@ -1,5 +1,12 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cite papers in documentation.
+
+	* mln/linear/log.hh,
+	* mln/topo/skeleton/crest.hh: Here.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/doc.bib: Add more references.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>

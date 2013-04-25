@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,54 +48,57 @@ namespace mln
     {
 
 
-      /// Compute skeletization constraints.
-      ///
-      /// \param[in] input	   A binary image.
-      /// \param[in] dist_map      A distance map of \p input. Contains the
-      ///                          inner object distance map.
-      /// \param[in] nbh	   A neighborhood.
-      /// \param[in] psi_threshold Keep sites having a Point
-      ///                          Superiority Index greated or equal
-      ///                          to \p psi_threshold.
-      ///
-      /// \result A binary image.
-      //
-      /*!
-       *
-       *  This implementation is based on the following article:
-       *    K. W. Kang, J. W. Suh, and J. H. Kim. Skeletonization of grayscale
-       *    character images using pixel superiority index. In Proc. 3rd IAPR
-       *    Workshop on Document Analysis Systems, pages 326-335, Nagano,
-       *    Japan, 1998.
-       *
-       *  Abstract:
-       *    "In this paper, we present pixel superiority index as a tool for
-       *    designing a skeletonization algorithm which utilizes topographic
-       *    features efficiently. We clarify a relationship between pixel
-       *    superiority index and topographic features. Then, using the
-       *    relationship, we transform a problem of skeletonization into a
-       *    problem of skeleton growing. [...]"
-       *
-       *
-       *  In Milena, the Pixel Superiority index is defined as follow:
-       *  Let v = p.val(), the Pixel superiority index of p is the number of
-       *  neighbor pixels having their value/level inferior or equal to
-       *  p.val().
-       *
-       *  This algorithm keeps sites having their pixel superiority index
-       *  greater than \p psi_threshold (6 by default).
-       *
-       *  For good results with 2D images, we advice you to use c8() as
-       *  neighborhood.
-       *
-       */
+      /*! \brief  Compute skeletization constraints.
+
+	\param[in] input	 A binary image.
+	\param[in] dist_map      A distance map of \p input. Contains the
+	                         inner object distance map.
+	\param[in] nbh	         A neighborhood.
+	\param[in] psi_threshold Keep sites having a Point
+                                 Superiority Index greated or equal
+                                 to \p psi_threshold.
+
+	\result A binary image.
+
+
+	This implementation is based on the following paper:
+	K. W. Kang, J. W. Suh, and J. H. Kim. Skeletonization of grayscale
+	character images using pixel superiority index. In Proc. 3rd IAPR
+	Workshop on Document Analysis Systems, pages 326-335, Nagano,
+	Japan, 1998. (\cite kang1998iapr)
+
+	Abstract:
+	"In this paper, we present pixel superiority index as a tool for
+	designing a skeletonization algorithm which utilizes topographic
+	features efficiently. We clarify a relationship between pixel
+	superiority index and topographic features. Then, using the
+	relationship, we transform a problem of skeletonization into a
+	problem of skeleton growing. [...]"
+
+
+	In Milena, the Pixel Superiority index is defined as follow:
+	Let v = p.val(), the Pixel superiority index of p is the number of
+	neighbor pixels having their value/level inferior or equal to
+	p.val().
+
+	This algorithm keeps sites having their pixel superiority index
+	greater than \p psi_threshold (6 by default).
+
+	For good results with 2D images, we advice you to use c8() as
+	neighborhood.
+
+	\ingroup modtopo
+      */
       template <typename I, typename D, typename N>
       mln_concrete(I)
       crest(const Image<I>& input, const Image<D>& dist_map,
 	    const Neighborhood<N>& nbh, unsigned psi_threshold);
 
-      /// \overload
-      /// psi_threshold is set to 6.
+      /*! \overload
+	psi_threshold is set to 6.
+
+	\ingroup modtopo
+      */
       template <typename I, typename D, typename N>
       mln_concrete(I)
       crest(const Image<I>& input, const Image<D>& dist_map,

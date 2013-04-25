@@ -46,7 +46,7 @@ namespace mln
 
     /*! \brief Laplacian of Gaussian.
 
-      LoG_5x5  (Cf. Sonka et al., pages 85-86).
+      LoG_5x5 (Cf. Sonka et al., pages 85-86, \cite sonka1999image).
       This is also a "mexican hat".
 
       \ingroup mlnlinear
@@ -77,7 +77,7 @@ namespace mln
 
     /*! \brief Laplacian of Gaussian.
 
-      LoG 17x17  (Cf. Sonka et al., pages 85-86).
+      LoG 17x17 (Cf. Sonka et al., pages 85-86, \cite sonka1999image).
 
       \ingroup mlnlinear
     */
