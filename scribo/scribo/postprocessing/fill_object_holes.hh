@@ -52,7 +52,7 @@
 
 # include <mln/accu/math/count.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/value/int_u16.hh>
 
@@ -178,7 +178,7 @@ namespace scribo
 	  mln::util::array<bool> bg_comps_done(
 	    value::next(components.nelements()), false);
 
-	  mln::fun::i2v::array<bool>
+	  mln::fun::v2v::array<bool>
 	    to_keep(value::next(components.nelements()), false);
 
 	  const L& lbl = components.labeled_image();

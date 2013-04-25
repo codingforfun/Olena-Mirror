@@ -41,7 +41,7 @@
 # include <mln/core/alias/neighb2d.hh>
 
 # include <mln/util/array.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/labeling/compute.hh>
 # include <mln/labeling/background.hh>
@@ -91,7 +91,7 @@ namespace mln
   {
     typedef bool result;
 
-    label_to_bool(const fun::i2v::array<bool>& f)
+    label_to_bool(const fun::v2v::array<bool>& f)
       : f_(f)
     {}
 
@@ -100,7 +100,7 @@ namespace mln
       return f_(v);
     }
 
-    fun::i2v::array<bool> f_;
+    fun::v2v::array<bool> f_;
   };
 
 
@@ -135,7 +135,7 @@ namespace scribo
       mln::util::array<unsigned>
 	result = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
-      mln::fun::i2v::array<bool> f(nlabels + 1, false);
+      mln::fun::v2v::array<bool> f(nlabels + 1, false);
       f(0) = true;
       for (unsigned i = 1; i <= nlabels; ++i)
 	if (result(i) < min_card)

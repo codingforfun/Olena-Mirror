@@ -47,7 +47,7 @@
 
 # include <mln/accu/math/count.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/io/pbm/save.hh>
 # include <mln/io/pgm/save.hh>
@@ -197,7 +197,7 @@ namespace scribo
       util::array<util::set<unsigned> > bg_comps(
 	value::next(components.nelements()));
 
-      fun::i2v::array<bool>
+      fun::v2v::array<bool>
 	to_keep(value::next(components.nelements()),
 		false);
 
@@ -361,7 +361,7 @@ namespace scribo
       util::array<bool> bg_comps_done(
 	value::next(components.nelements()), false);
 
-      fun::i2v::array<bool>
+      fun::v2v::array<bool>
 	to_keep(value::next(components.nelements()), false);
 
       const L& lbl = components.labeled_image();

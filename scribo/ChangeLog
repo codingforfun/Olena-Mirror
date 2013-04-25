@@ -1,3 +1,22 @@
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename fun::i2v, fun::stat and fun::v2i to fun::v2v.
+
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/denoise_bg.hh,
+	* scribo/preprocessing/denoise_fg.hh,
+	* scribo/primitive/extract/non_text_kmean.hh,
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/group/from_graph.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/regroup/from_single_left_link.hh,
+	* scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/paragraph_set.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/fun/v2b/label_to_bool.hh: Here.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/primitive/extract/lines_pattern.cc: Fix description.

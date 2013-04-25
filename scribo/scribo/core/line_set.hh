@@ -40,7 +40,7 @@
 # include <mln/labeling/compute.hh>
 # include <mln/make/relabelfun.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/convert/from_to.hh>
 

@@ -28,7 +28,7 @@
 
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 namespace scribo
 {
@@ -44,7 +44,7 @@ namespace scribo
       {
 	typedef bool result;
 
-	label_to_bool(const mln::fun::i2v::array<bool>& f)
+	label_to_bool(const mln::fun::v2v::array<bool>& f)
 	  : f_(f)
 	{}
 
@@ -53,7 +53,7 @@ namespace scribo
 	  return f_(v);
 	}
 
-	mln::fun::i2v::array<bool> f_;
+	mln::fun::v2v::array<bool> f_;
       };
 
     } // end of namespace scribo::fun::v2b

@@ -42,7 +42,7 @@
 
 # include <mln/pw/all.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/util/array.hh>
 # include <mln/util/graph_ids.hh>

@@ -335,7 +335,7 @@ namespace scribo
       }
 
       unsigned npars;
-      mln::fun::i2v::array<unsigned>
+      mln::fun::v2v::array<unsigned>
 	par_ids = mln::make::relabelfun(links.line_to_link(),
 					links.nelements() - 1, npars);
       paragraph_set<L> parset(links, npars);
@@ -395,7 +395,7 @@ namespace scribo
 	links(l) = internal::find_root(links, l);
 
       unsigned npars;
-      mln::fun::i2v::array<unsigned>
+      mln::fun::v2v::array<unsigned>
 	par_ids = mln::make::relabelfun(links.line_to_link(),
 					links.nelements() - 1, npars);
       paragraph_set<L> parset(links, npars);
@@ -423,7 +423,7 @@ namespace scribo
       links.init();
 
       unsigned npars;
-      mln::fun::i2v::array<unsigned>
+      mln::fun::v2v::array<unsigned>
 	par_ids = mln::make::relabelfun(links.line_to_link(),
 					links.nelements() - 1, npars);
       paragraph_set<L> parset(links, npars);
