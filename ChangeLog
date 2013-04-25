@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/doc.bib: Add more references.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Do not configure milena/tests/fun/i2v and
 	milena/tests/fun/stat.
 
