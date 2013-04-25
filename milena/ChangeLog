@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/mln/convert.dox: Fix a typo.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Makefile.am: Do not regenerate non-generated images.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
