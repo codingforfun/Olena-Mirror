@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/make/relabelfun.hh: Fix bad variable replacement.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Enable BRIEF_MEMBER_DESC.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -116,7 +116,7 @@ namespace mln
       new_labels(0) = literal::zero;
       V tmp_nlabels = literal::zero;
       fun::v2v::array<V> output(nlabels_i, mln_max(V));
-      fv2v(0) = literal::zero;
+      output(0) = literal::zero;
 
       for (V i = 1; i < nlabels_i; ++i)
       {
