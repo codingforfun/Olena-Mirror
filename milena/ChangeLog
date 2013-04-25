@@ -1,5 +1,12 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new figure in Milena documentation.
+
+	* doc/img/function_hierarchy.png,
+	* doc/img/src/function_hierarchy.dia: New.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move fun::i2v, fun::stat and fun::v2i in fun::v2v.
 
 	* mln/fun/i2v/all_to.hh,
