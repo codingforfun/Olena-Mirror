@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/split-examples.mk: Regen.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/concept/function.hh: Make Function_vv2b inherit from
 	Function_vv2v.
 
