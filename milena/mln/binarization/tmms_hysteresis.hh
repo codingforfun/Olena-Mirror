@@ -27,7 +27,8 @@
 # define MLN_BINARIZATION_TMMS_HH
 
 # include <mln/morpho/all.hh>
-# include <mln/labeling/values.hh>
+//# include <mln/labeling/values.hh>
+#include <mln/labeling/all_blobs.hh>
 
 
 /// \file
@@ -132,8 +133,8 @@ namespace mln
           }
 
           mln_ch_value(I, unsigned int) labels_high_images;
-          labels_high_images = mln::labeling::values(high_image,
-            mln::c4(), nlabels);
+          //labels_high_images = mln::labeling::values(high_image, mln::c4(), nlabels);
+          labels_high_images = mln::labeling::all_blobs(high_image, mln::c4(), nlabels);
           V *values = new V[nlabels];
 
           for(unsigned int i=0;i<nlabels;i++) {
@@ -230,8 +231,8 @@ namespace mln
           }
 
           mln_ch_value(I, unsigned int) labels_high_images;
-          labels_high_images = mln::labeling::values(high_image,
-            mln::c4(), nlabels);
+          //labels_high_images = mln::labeling::values(high_image, mln::c4(), nlabels);
+            labels_high_images = mln::labeling::all_blobs(high_image, mln::c4(), nlabels);
           V *values = new V[nlabels];
 
           for(unsigned int i=0;i<nlabels;i++) {
