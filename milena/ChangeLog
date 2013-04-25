@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in: Enable BRIEF_MEMBER_DESC.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/split-examples.mk: Regen.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
