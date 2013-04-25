@@ -23,45 +23,29 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <cstdlib>
-#include <mln/accu/stat/var.hh>
-#include <mln/fun/stat/mahalanobis.hh>
-
-
-float my_rand(int c)
-{
-  return (1 + c) * float(std::rand()) / RAND_MAX;
-}
+#include <mln/fun/v2v/value_at_index.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_s8.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef algebra::vec<3,float> vec3f;
+  {
+    fun::v2v::value_at_index<bool> f;
+    mln_assertion(f(0) == false);
+    mln_assertion(f(1) == true);
+  }
+  {
+    fun::v2v::value_at_index< value::int_u8 > f;
+    mln_assertion(f(  0) ==   0);
+    mln_assertion(f(255) == 255);
+  }
+  {
+    fun::v2v::value_at_index< value::int_s8 > f;
+    mln_assertion(f(  0) == -127);
+    mln_assertion(f(254) == +127);
+  }
 
-  enum { n = 1000 };
-  vec3f v[n];
-
-  for (int i = 0; i < n; ++i)
-    {
-      v[i][0] = my_rand(0);
-      v[i][1] = my_rand(1);
-      v[i][2] = my_rand(2);
-    }
-  
-  accu::stat::var<vec3f> a;
-  for (int i = 0; i < n; ++i)
-    a.take(v[i]);
-
-  fun::stat::mahalanobis<vec3f> f(a.variance(), a.mean());
-  mln_assertion(f(a.mean()) == 0.f);
-
-  float sum = 0.f;
-  for (int i = 0; i < n; ++i)
-    {
-      float f_ = f(v[i]);
-      sum += f_ * f_;
-    }
-  mln_assertion(std::abs(sum / n - 3.f) < 0.00002f);
 }

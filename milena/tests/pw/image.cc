@@ -24,7 +24,7 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/fun/p2b/chess.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/pw/image.hh>
@@ -56,8 +56,8 @@ int main()
   {
     p_array<int> arr; // Sites are ints (why not?)
     arr.insert(51); // Site 51.
-    typedef pw::image<fun::i2v::array<int>, p_array<int> > ima_t;
-    ima_t ima = fun::i2v::array<int>(1) | arr; // An array psite converts to int so that works :-)
+    typedef pw::image<fun::v2v::array<int>, p_array<int> > ima_t;
+    ima_t ima = fun::v2v::array<int>(1) | arr; // An array psite converts to int so that works :-)
     // trait::image::print(ima);
 
     p_array<int>::psite p(ima.domain(), 0); // index 0 means the 1st element of arr

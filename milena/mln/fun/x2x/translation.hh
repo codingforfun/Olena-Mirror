@@ -34,7 +34,7 @@
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/h_mat.hh>
-# include <mln/fun/i2v/all.hh>
+# include <mln/fun/v2v/all.hh>
 
 
 namespace mln

@@ -3,7 +3,7 @@
 #include <mln/core/concept/function.hh>
 #include <mln/core/var.hh>
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/graph.hh>
 #include <mln/pw/all.hh>
 
@@ -54,7 +54,7 @@ int main()
   // \}
 
   // \{
-  typedef fun::i2v::array<point2d> F;
+  typedef fun::v2v::array<point2d> F;
   F f(5); // We need to map 5 vertices.
   f(0) = point2d(0, 0);
   f(1) = point2d(2, 2);

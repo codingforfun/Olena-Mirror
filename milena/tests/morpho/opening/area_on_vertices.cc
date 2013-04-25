@@ -26,7 +26,7 @@
 #include <mln/core/image/edge_image.hh>
 #include <mln/morpho/opening/area_on_vertices.hh>
 #include <mln/util/graph.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 
 #include "tests/data.hh"
 
@@ -43,7 +43,7 @@ int main()
   gr.add_edge(1, 2);
   gr.add_edge(2 ,4);
 
-  fun::i2v::array<unsigned> f(5);
+  fun::v2v::array<unsigned> f(5);
   for (unsigned i = 0; i < 5; ++i)
     f(i) = 100 + i;
   typedef edge_image<void,unsigned> e_ima_t;

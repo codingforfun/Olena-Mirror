@@ -51,7 +51,7 @@ namespace mln
 
   // Forward declarations.
   namespace fun {
-    namespace i2v {
+    namespace v2v {
       template <typename T> class array;
     }
   }
@@ -144,7 +144,7 @@ namespace mln
       unsigned nelements() const;
 
       /// Return the number of elements of the array.
-      /// Added for compatibility with fun::i2v::array.
+      /// Added for compatibility with fun::v2v::array.
       /// \sa nelements
       unsigned size() const;
 
@@ -217,22 +217,22 @@ namespace mln
     from_to_(const array<T1>& from, array<T2>& to);
 
     /*!
-      \brief Conversion: array<T> -> fun::i2v::array<T>
+      \brief Conversion: array<T> -> fun::v2v::array<T>
       \ingroup fromto
     */
     template <typename T>
     inline
     void
-    from_to_(const array<T>& from, fun::i2v::array<T>& to);
+    from_to_(const array<T>& from, fun::v2v::array<T>& to);
 
     /*!
-      \brief Conversion: array<T> -> fun::i2v::array<U>
+      \brief Conversion: array<T> -> fun::v2v::array<U>
       \ingroup fromto
     */
     template <typename T, typename U>
     inline
     void
-    from_to_(const array<T>& from, fun::i2v::array<U>& to);
+    from_to_(const array<T>& from, fun::v2v::array<U>& to);
 
     /*!
       \brief Conversion: util::array -> image1d.
@@ -602,14 +602,14 @@ namespace mln
 
     template <typename T>
     void
-    from_to_(const array<T>& from, fun::i2v::array<T>& to)
+    from_to_(const array<T>& from, fun::v2v::array<T>& to)
     {
-      to = fun::i2v::array<T>(from);
+      to = fun::v2v::array<T>(from);
     }
 
     template <typename T, typename U>
     void
-    from_to_(const array<T>& from, fun::i2v::array<U>& to)
+    from_to_(const array<T>& from, fun::v2v::array<U>& to)
     {
       to.resize(from.nelements());
       for (unsigned i = 0; i < from.nelements(); ++i)

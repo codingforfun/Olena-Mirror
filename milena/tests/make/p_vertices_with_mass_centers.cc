@@ -57,7 +57,7 @@ int main()
   g.add_edge(4,3);
   g.add_edge(4,2);
 
-  typedef p_vertices<G,fun::i2v::array<point2d> > pv_t;
+  typedef p_vertices<G,fun::v2v::array<point2d> > pv_t;
   pv_t pv = make::p_vertices_with_mass_centers(wst, g);
 
   typedef p_array<point2d> arr_t;

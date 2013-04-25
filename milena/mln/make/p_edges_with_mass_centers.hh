@@ -43,7 +43,7 @@
 
 # include <mln/accu/center.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/util/site_pair.hh>
 
@@ -67,7 +67,7 @@ namespace mln
     //
     template <typename W, typename G>
     inline
-    p_edges<G, fun::i2v::array<util::site_pair<mln_site(W)> > >
+    p_edges<G, fun::v2v::array<util::site_pair<mln_site(W)> > >
     p_edges_with_mass_centers(const Image<W>& wst_,
 			      const Graph<G>& g_);
 
@@ -77,7 +77,7 @@ namespace mln
 
     template <typename W, typename G>
     inline
-    p_edges<G, fun::i2v::array<util::site_pair<mln_site(W)> > >
+    p_edges<G, fun::v2v::array<util::site_pair<mln_site(W)> > >
     p_edges_with_mass_centers(const Image<W>& wst_,
 			      const Graph<G>& g_)
     {
@@ -95,7 +95,7 @@ namespace mln
       util::array<mln_vec(P)>
 	mass_centers = labeling::compute(accu::center<P>(), wst, nbasins);
 
-      typedef fun::i2v::array< util::site_pair<P> > edge_sites_t;
+      typedef fun::v2v::array< util::site_pair<P> > edge_sites_t;
       edge_sites_t edge_sites(g.e_nmax());
 
       mln_edge_iter(G) e(g);

@@ -28,7 +28,7 @@
 #include <mln/core/image/graph_elt_mixed_window.hh>
 #include <mln/core/image/vertex_image.hh>
 #include <mln/core/image/edge_image.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/graph.hh>
 
 
@@ -72,7 +72,7 @@ int main()
   `--------*/
 
   // Points associated to vertices.
-  typedef fun::i2v::array<point2d> fsite_t;
+  typedef fun::v2v::array<point2d> fsite_t;
   fsite_t sites(5);
   sites(0) = point2d(0,0); // Point associated to vertex 0.
   sites(1) = point2d(2,2); // Point associated to vertex 1.
@@ -100,14 +100,14 @@ int main()
   `-------------*/
 
   // Vertex values.
-  typedef fun::i2v::array<unsigned> viota_t;
+  typedef fun::v2v::array<unsigned> viota_t;
   viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
 
   // Edge values.
-  typedef fun::i2v::array<unsigned> eiota_t;
+  typedef fun::v2v::array<unsigned> eiota_t;
   eiota_t eiota(g.e_nmax());
   for (unsigned i = 0; i < eiota.size(); ++i)
     eiota(i) = 20 + i;

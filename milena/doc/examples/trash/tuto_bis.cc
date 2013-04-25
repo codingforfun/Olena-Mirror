@@ -15,7 +15,7 @@
 # include <mln/accu/stat/min_max.hh>
 # include <mln/accu/stat/mean.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
 # include <mln/data/paste.hh>
@@ -257,7 +257,7 @@ int main()
   // NOW WE WANT TO MODIFY THE INPUT IMAGE TO FLATTEN REGIONS...
 
 
-  fun::i2v::array<int> m(nbasins + 1);
+  fun::v2v::array<int> m(nbasins + 1);
   accu::compute<accu::meta::stat::mean>(cell, label, m);
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 

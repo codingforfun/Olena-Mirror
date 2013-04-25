@@ -33,7 +33,7 @@
 ///
 /// \todo The implementation (and thus the dispatch) involving a lut
 /// has been de-activated; the patch of Z does not work anymore since
-/// we do not make the difference between i2v and v2v functions.
+/// we do not make the difference between v2v and v2v functions.
 /// Actually the patch was no acceptable solution to the lut problem
 /// (for some values, we cannot compute f(v) to put into the lut...)
 
@@ -129,7 +129,7 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_lowq_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
+	transform_lowq_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
 	mln_trace("data::impl::transform_lowq");
 
@@ -180,9 +180,9 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_taken_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
+	transform_taken_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        mln_trace("data::impl::transform_taken_i2v");
+        mln_trace("data::impl::transform_taken_v2v");
 
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
@@ -345,7 +345,7 @@ namespace mln
 			   trait::image::quant::low,
 			   const Image<I>& input, const Function_v2v<F>& f)
       {
-	return data::impl::transform_taken_i2v(input, f);
+	return data::impl::transform_taken_v2v(input, f);
       }
 
 //       template <typename I, typename F>
@@ -365,7 +365,7 @@ namespace mln
 			   trait::image::quant::low,
 			   const Image<I>& input, const Function_v2v<F>& f)
       {
-	return data::impl::transform_lowq_i2v(input, f);
+	return data::impl::transform_lowq_v2v(input, f);
       }
 
       template <typename I, typename F>

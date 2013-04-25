@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_I2V_VALUE_AT_INDEX_HH
-# define MLN_FUN_I2V_VALUE_AT_INDEX_HH
+#ifndef MLN_FUN_V2V_INDEX_OF_VALUE_HH
+# define MLN_FUN_V2V_INDEX_OF_VALUE_HH
 
 /// \file
 ///
@@ -40,49 +41,64 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
+      /*! File that define a function that gives an index per value.
+
+	\ingroup funv2v
+       */
       template <typename T>
-      struct value_at_index : Function_v2v< value_at_index<T> >,
+      struct index_of_value : Function_v2v< index_of_value<T> >,
 			      private metal::bool_<(mln_dim(T) == 1)>::check_t
       {
-	typedef T result;
-	T operator()(unsigned i) const;
+	typedef unsigned result;
+	unsigned operator()(const T& v) const;
       };
 
       template <>
-      struct value_at_index<bool> : Function_v2v< value_at_index<bool> >
+      struct index_of_value<bool> : Function_v2v< index_of_value<bool> >
       {
-	typedef bool result;
-	bool operator()(unsigned i) const;
+	typedef unsigned result;
+	unsigned operator()(bool b) const;
       };
+
+      template <typename T>
+      unsigned
+      meta_index_of_value(const T& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename T>
       inline
-      T
-      value_at_index<T>::operator()(unsigned i) const
+      unsigned
+      index_of_value<T>::operator()(const T& v) const
       {
-	return T( int(mln_min(T)) + int(i) );
+	return unsigned( int(v) - int(mln_min(T)) );
       }
 
       inline
-      bool
-      value_at_index<bool>::operator()(unsigned i) const
+      unsigned index_of_value<bool>::operator()(bool b) const
       {
-	mln_precondition(i < 2);
-	return i == 1u ? true : false;
+	return b ? 1u : 0u;
+      }
+
+      template <typename T>
+      inline
+      unsigned
+      meta_index_of_value(const T& v)
+      {
+	index_of_value<T> f;
+	return f(v);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
-#endif // ! MLN_FUN_I2V_VALUE_AT_INDEX_HH
+#endif // ! MLN_FUN_V2V_INDEX_OF_VALUE_HH

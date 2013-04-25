@@ -44,7 +44,7 @@ namespace mln
 
   // Forward declarations.
   namespace trait { template <typename F, typename V> struct ch_function_value; }
-  namespace fun { namespace i2v { template <typename T> class array; } }
+  namespace fun { namespace v2v { template <typename T> class array; } }
 
 
   namespace trait
@@ -61,9 +61,9 @@ namespace mln
       };
 
       template <typename VF, typename V>
-      struct ch_function_value<fun::i2v::array<VF>, VF, V>
+      struct ch_function_value<fun::v2v::array<VF>, VF, V>
       {
-	typedef fun::i2v::array<V> ret;
+	typedef fun::v2v::array<V> ret;
       };
 
     } // end of namespace mln::trait::impl

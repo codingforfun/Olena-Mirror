@@ -26,7 +26,7 @@
 #include <mln/util/graph.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 
 
 int main()
@@ -50,7 +50,7 @@ int main()
   g.add_edge(2, 1);
 
   // Map vertices to sites.
-  typedef fun::i2v::array<point2d> F;
+  typedef fun::v2v::array<point2d> F;
   F f(6);
   for (unsigned i = 0; i < 6; ++i)
     f(i) = point2d(i, 0);

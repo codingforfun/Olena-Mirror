@@ -156,7 +156,7 @@ namespace mln
 	m[0] = literal::yellow; //FIXME: handle label 0 correctly.
 
 	mln_concrete(I) output = data::transform(lbl,
-	    convert::to< fun::i2v::array<mln_value(I)> >(m));
+	    convert::to< fun::v2v::array<mln_value(I)> >(m));
 
 
 	return output;

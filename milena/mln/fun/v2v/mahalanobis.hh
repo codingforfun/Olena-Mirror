@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,15 +24,17 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2I_INDEX_OF_VALUE_HH
-# define MLN_FUN_V2I_INDEX_OF_VALUE_HH
+#ifndef MLN_FUN_V2V_MAHALANOBIS_HH
+# define MLN_FUN_V2V_MAHALANOBIS_HH
 
 /// \file
 ///
-/// \brief File that define a function that gives an index per value.
+/// \brief Define the FIXME
 
+# include <cmath>
 # include <mln/core/concept/function.hh>
-# include <mln/trait/value_.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/algebra/mat.hh>
 
 
 namespace mln
@@ -40,60 +43,67 @@ namespace mln
   namespace fun
   {
 
-    namespace v2i
+    namespace v2v
     {
 
-      template <typename T>
-      struct index_of_value : Function_v2v< index_of_value<T> >,
-			      private metal::bool_<(mln_dim(T) == 1)>::check_t
+      template <typename V, typename R = float>
+      struct mahalanobis
+	: public Function_v2v< mahalanobis<V,R> >,
+	  private metal::equal< V, algebra::vec<V::dim,R> >::check_t
       {
-	typedef unsigned result;
-	unsigned operator()(const T& v) const;
-      };
+	enum { n = V::dim };
+	typedef R result;
 
-      template <>
-      struct index_of_value<bool> : Function_v2v< index_of_value<bool> >
-      {
-	typedef unsigned result;
-	unsigned operator()(bool b) const;
-      };
+	mahalanobis(const algebra::mat<n,n,R>& var,
+		    const algebra::vec<n,R>&   mean);
+	// Tech. note: using n (instead of V::dim) above helps g++-2.95.
 
-      template <typename T>
-      unsigned
-      meta_index_of_value(const T& v);
+	R operator()(const V& v) const;
+
+	typedef algebra::vec<n,R> mean_t;
+
+	mean_t mean() const;
+
+      protected:
+	algebra::mat<n,n,R> var_1_;
+	algebra::vec<n,R>   mean_;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename T>
+      template <typename V, typename R>
       inline
-      unsigned
-      index_of_value<T>::operator()(const T& v) const
+      mahalanobis<V,R>::mahalanobis(const algebra::mat<n,n,R>& var,
+				    const algebra::vec<n,R>&   mean)
       {
-	return unsigned( int(v) - int(mln_min(T)) );
+	var_1_ = var._1();
+	mean_  = mean;
       }
 
+      template <typename V, typename R>
       inline
-      unsigned index_of_value<bool>::operator()(bool b) const
+      R
+      mahalanobis<V,R>::operator()(const V& v) const
       {
-	return b ? 1u : 0u;
+	return std::sqrt((v - mean_).t() * var_1_ * (v - mean_));
       }
 
-      template <typename T>
+      template <typename V, typename R>
       inline
-      unsigned
-      meta_index_of_value(const T& v)
+      typename mahalanobis<V,R>::mean_t
+      mahalanobis<V,R>::mean() const
       {
-	index_of_value<T> f;
-	return f(v);
+	return mean_;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::v2i
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
-#endif // ! MLN_FUN_V2I_INDEX_OF_VALUE_HH
+
+#endif // ! MLN_FUN_V2V_MAHALANOBIS_HH

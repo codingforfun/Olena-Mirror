@@ -216,7 +216,7 @@ namespace mln
 
       internal::relabel_tests(label, nlabels, new_nlabels, fv2b);
 
-      typedef fun::i2v::array<mln_value(I)> fv2v_t;
+      typedef fun::v2v::array<mln_value(I)> fv2v_t;
       fv2v_t fv2v = make::relabelfun(fv2b, nlabels, new_nlabels);
       mln_concrete(I) output = labeling::relabel(label, new_nlabels, fv2v);
 
@@ -253,7 +253,7 @@ namespace mln
 
       internal::relabel_inplace_tests(label, nlabels, fv2b);
 
-      typedef fun::i2v::array<mln_value(I)> fv2v_t;
+      typedef fun::v2v::array<mln_value(I)> fv2v_t;
       mln_value(I) tmp;
       fv2v_t fv2v = make::relabelfun(fv2b, nlabels, tmp);
       labeling::relabel_inplace(label, tmp, fv2v);

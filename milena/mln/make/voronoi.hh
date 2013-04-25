@@ -55,7 +55,7 @@ namespace mln
      * \return The computed graph.
      */
     template <typename I, typename N>
-    p_vertices<util::graph, fun::i2v::array<mln_site(I)> >
+    p_vertices<util::graph, fun::v2v::array<mln_site(I)> >
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh);
@@ -64,7 +64,7 @@ namespace mln
 
     template <typename I, typename N>
     inline
-    p_vertices<util::graph, fun::i2v::array<mln_site(I)> >
+    p_vertices<util::graph, fun::v2v::array<mln_site(I)> >
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh)
@@ -79,7 +79,7 @@ namespace mln
       V min, max;
       estim::min_max (ima, min, max);
       unsigned nb = max - min + 1;
-      fun::i2v::array<P> v(nb);
+      fun::v2v::array<P> v(nb);
       std::vector< accu::stat::mean< X > > tab_mean (nb);
       std::map<std::pair<V, V>, bool> m;
 
@@ -124,7 +124,7 @@ namespace mln
       for (; it != m.end (); ++it)
 	gr.add_edge((*it).first.first, (*it).first.second);
 
-      p_vertices<util::graph, fun::i2v::array<P> > res(gr, v);
+      p_vertices<util::graph, fun::v2v::array<P> > res(gr, v);
       return res;
     }
 

@@ -27,7 +27,7 @@
 #include <vector>
 #include <utility>
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
@@ -60,7 +60,7 @@ void do_test(points_type& points, const edges_type& edges,
     g.add_edge(i->first, i->second);
 
   // Associate vertices to sites.
-  typedef fun::i2v::array<mln::point2d> F;
+  typedef fun::v2v::array<mln::point2d> F;
   F fpoints(points);
 
   mln::p_vertices<G, F> pg(g, fpoints);

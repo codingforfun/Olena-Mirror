@@ -23,33 +23,20 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2I_ALL_HH
-# define MLN_FUN_V2I_ALL_HH
-
-/// \file
-///
-/// \brief File that includes all value-to-integer functions.
+#include <mln/fun/v2v/array.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of functions.
-  namespace fun
-  {
+  fun::v2v::array<int> f;
+  mln_assertion(f.size() == 0u);
 
-    /// \brief Namespace of value-to-integer functions.
-    ///
-    /// \ingroup modfun
-    //
-    namespace v2i
-    {}
+  f.append(0);
+  mln_assertion(f(0) == 0);
 
-  }
+  f.append(1);
+  mln_assertion(f(1) == 1);
+  mln_assertion(f.size() == 2u);
 }
-
-
-# include <mln/fun/v2i/index_of_value.hh>
-
-
-#endif // ! MLN_FUN_V2I_ALL_HH

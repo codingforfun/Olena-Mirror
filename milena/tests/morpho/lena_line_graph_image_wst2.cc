@@ -54,7 +54,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/site_pair.hh>
 #include <mln/core/image/edge_image.hh>
 

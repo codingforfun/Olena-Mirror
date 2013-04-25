@@ -71,13 +71,13 @@ int main(int argc, char *argv[])
   util::graph g = make::graph(iz, nlabels);
 
   // Use the center of each bbox component as vertex in the graph.
-  typedef fun::i2v::array<point2d> i2v_t;
+  typedef fun::v2v::array<point2d> v2v_t;
   util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
-  i2v_t f = convert::to<i2v_t>(centers);
-  p_vertices<util::graph, i2v_t> pv(g, f);
+  v2v_t f = convert::to<v2v_t>(centers);
+  p_vertices<util::graph, v2v_t> pv(g, f);
 
   // Find lines (sites) associated to edges.
-  typedef fun::i2v::array<p_line2d> i2e_t;
+  typedef fun::v2v::array<p_line2d> i2e_t;
   util::array<p_line2d> lines;
   mln_edge_iter_(util::graph) e(g);
   for_all(e)

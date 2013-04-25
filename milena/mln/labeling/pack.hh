@@ -63,7 +63,7 @@ namespace mln
     template <typename I>
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels,
-	 fun::i2v::array<mln_value(I)>& repack_fun);
+	 fun::v2v::array<mln_value(I)>& repack_fun);
 
 
     /*! \overload
@@ -93,7 +93,7 @@ namespace mln
     template <typename I>
     void
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels,
-		 fun::i2v::array<mln_value(I)>& repack_fun);
+		 fun::v2v::array<mln_value(I)>& repack_fun);
 
 
     /// \overload
@@ -128,7 +128,7 @@ namespace mln
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels)
     {
-      fun::i2v::array<mln_value(I)> repack_fun;
+      fun::v2v::array<mln_value(I)> repack_fun;
       return pack(label, new_nlabels, repack_fun);
     }
 
@@ -136,13 +136,13 @@ namespace mln
     template <typename I>
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels,
-	 fun::i2v::array<mln_value(I)>& repack_fun)
+	 fun::v2v::array<mln_value(I)>& repack_fun)
     {
       mln_trace("labeling::pack");
 
       internal::pack_tests(label, new_nlabels);
 
-      fun::i2v::array<bool>
+      fun::v2v::array<bool>
 	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;
@@ -160,7 +160,7 @@ namespace mln
     void
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels)
     {
-      fun::i2v::array<mln_value(I)> repack_fun;
+      fun::v2v::array<mln_value(I)> repack_fun;
       pack_inplace(label, new_nlabels, repack_fun);
     }
 
@@ -168,13 +168,13 @@ namespace mln
     template <typename I>
     void
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels,
-		 fun::i2v::array<mln_value(I)>& repack_fun)
+		 fun::v2v::array<mln_value(I)>& repack_fun)
     {
       mln_trace("labeling::pack_inplace");
 
       internal::pack_tests(label, new_nlabels);
 
-      fun::i2v::array<bool>
+      fun::v2v::array<bool>
 	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;

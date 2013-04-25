@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,12 +24,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_I2V_ALL_TO_HH
-# define MLN_FUN_I2V_ALL_TO_HH
+#ifndef MLN_FUN_V2V_ALL_TO_HH
+# define MLN_FUN_V2V_ALL_TO_HH
 
 /// \file
 ///
-/// FIXME.
+/// Function always returning the same value.
 
 # include <mln/core/concept/function.hh>
 
@@ -39,9 +40,13 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
+      /*! \brief Function always returning the same value.
+
+	\ingroup funv2v
+       */
       template <typename T>
       struct all_to : public Function_v2v< all_to<T> >
       {
@@ -53,12 +58,12 @@ namespace mln
 	T t_;
       };
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
   template <typename T>
-  fun::i2v::all_to<T> all_to(T t);
+  fun::v2v::all_to<T> all_to(T t);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,7 +71,7 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
       template <typename T>
@@ -85,15 +90,15 @@ namespace mln
 	return t_;
       }
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
   template <typename T>
   inline
-  fun::i2v::all_to<T> all_to(T t)
+  fun::v2v::all_to<T> all_to(T t)
   {
-    fun::i2v::all_to<T> tmp(t);
+    fun::v2v::all_to<T> tmp(t);
     return tmp;
   }
 
@@ -102,4 +107,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_I2V_ALL_TO_HH
+#endif // ! MLN_FUN_V2V_ALL_TO_HH

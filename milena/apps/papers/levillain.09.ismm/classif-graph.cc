@@ -138,7 +138,7 @@ make_graph_image(const mln::image2d<bool>& seeds)
 
   // Sites associated to edges.
   typedef util::site_pair<point2d> site_t;
-  typedef fun::i2v::array<site_t> fsite_t;
+  typedef fun::v2v::array<site_t> fsite_t;
   fsite_t sites;
 
   {
@@ -175,7 +175,7 @@ make_graph_image(const mln::image2d<bool>& seeds)
      Currently this is not possible.  Hence the ``adhead of time''
      creation of these values .  */
   // Values.
-  typedef fun::i2v::array<int_u8> dist_values_t;
+  typedef fun::v2v::array<int_u8> dist_values_t;
   dist_values_t dist_values(sites.size());
   for (unsigned i = 0; i < dist_values.size(); ++i)
     dist_values(i) = 0;

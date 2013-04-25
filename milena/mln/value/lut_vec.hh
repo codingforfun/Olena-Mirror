@@ -45,9 +45,9 @@ namespace mln
 
   /// Forward declarations.
   namespace fun {
-    namespace i2v {
+    namespace v2v {
       template <typename T> class array;
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
   } // end of namespace mln::fun
   namespace util{
     template <typename T> class array;
@@ -100,9 +100,9 @@ namespace mln
       template <typename F>
       lut_vec(const S& vset, const Function_v2v<F>& f);
 
-      /// Constructor from a value set and any fun::i2v::array.
+      /// Constructor from a value set and any fun::v2v::array.
       template <typename V>
-      lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f);
+      lut_vec(const S& vset, const Function_v2v< fun::v2v::array<V> >& f);
 
       /// Constructor from a value set and any util::array.
       template <typename V>
@@ -159,10 +159,10 @@ namespace mln
     template <typename S, typename T>
     template <typename V>
     inline
-    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f)
+    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< fun::v2v::array<V> >& f)
       : vset_(vset)
     {
-      const fun::i2v::array<V>& f_ = exact(f);
+      const fun::v2v::array<V>& f_ = exact(f);
       n_ = f_.size();
       vec_ = f_.std_vector();
     }

@@ -24,7 +24,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/fun/i2v/all_to.hh>
+#include <mln/fun/v2v/all_to.hh>
 #include <mln/algebra/mat.hh>
 
 

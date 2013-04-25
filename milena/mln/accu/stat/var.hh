@@ -35,7 +35,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/v2v/all_to.hh>
 # include <mln/util/pix.hh>
 
 

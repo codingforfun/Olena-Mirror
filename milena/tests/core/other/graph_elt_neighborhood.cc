@@ -31,7 +31,7 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_vertices.hh>
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/image/graph_elt_neighborhood.hh>
 
@@ -63,7 +63,7 @@ int main()
   */
 
   // Points associated to vertices.
-  typedef fun::i2v::array<p_t> F;
+  typedef fun::v2v::array<p_t> F;
   F points(5);
   points(0) = point2d(0,0); // Point associated to vertex 0.
   points(1) = point2d(2,2); // Point associated to vertex 1.

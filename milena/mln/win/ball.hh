@@ -33,7 +33,7 @@
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/site_set/box.hh>
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/v2v/all_to.hh>
 
 
 namespace mln

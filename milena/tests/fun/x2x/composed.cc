@@ -28,7 +28,7 @@
 #include <mln/fun/x2x/translation.hh>
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/fun/x2x/composed.hh>
-#include <mln/fun/i2v/all_to.hh>
+#include <mln/fun/v2v/all_to.hh>
 
 
 int main()

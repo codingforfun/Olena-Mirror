@@ -23,20 +23,28 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/index_of_value.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_s8.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  fun::i2v::array<int> f;
-  mln_assertion(f.size() == 0u);
-
-  f.append(0);
-  mln_assertion(f(0) == 0);
-
-  f.append(1);
-  mln_assertion(f(1) == 1);
-  mln_assertion(f.size() == 2u);
+  {
+    fun::v2v::index_of_value<bool> f;
+    mln_assertion(f(false) == 0);
+    mln_assertion(f(true)  == 1);
+  }
+  {
+    fun::v2v::index_of_value< value::int_u8 > f;
+    mln_assertion(f(  0) ==   0);
+    mln_assertion(f(255) == 255);
+  }
+  {
+    fun::v2v::index_of_value< value::int_s8 > f;
+    mln_assertion(f(-127) ==   0);
+    mln_assertion(f(+127) == 254);
+  }
 }

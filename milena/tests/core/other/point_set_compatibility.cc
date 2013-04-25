@@ -26,7 +26,7 @@
 
 #include <mln/core/alias/point2d.hh>
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/core/site_set/p_vertices.hh>
@@ -45,7 +45,7 @@ int main()
   // Graph
 
   //Vertices
-  typedef fun::i2v::array<point2d> fpoint_t;
+  typedef fun::v2v::array<point2d> fpoint_t;
   fpoint_t points(5);
   points(0) = point2d(0,0); // Point associated to vertex 0.
   points(1) = point2d(2,2); // Point associated to vertex 1.

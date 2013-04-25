@@ -36,7 +36,7 @@ namespace mln
 {
 
   // Forward declarations.
-  namespace fun { namespace i2v { template <typename T> class array; } }
+  namespace fun { namespace v2v { template <typename T> class array; } }
   namespace pw { namespace internal { template <typename F, typename S, typename E> class image_base; } }
   namespace pw { template <typename F, typename S> class image; }
   template <typename I, typename F> struct image_if;
@@ -75,12 +75,12 @@ namespace mln
   void init_(tag::function_t, F& f, const image_if<I,F>& model);
 
   /// Kind: function_t
-  /// Type: fun::i2v::array<T1>
-  /// From: fun::i2v::array<T2>
+  /// Type: fun::v2v::array<T1>
+  /// From: fun::v2v::array<T2>
   template <typename T1, typename T2>
   void init_(tag::function_t,
-	     fun::i2v::array<T1>&	  f,
-	     const fun::i2v::array<T2>&	  model);
+	     fun::v2v::array<T1>&	  f,
+	     const fun::v2v::array<T2>&	  model);
 
 } // end of namespace mln
 

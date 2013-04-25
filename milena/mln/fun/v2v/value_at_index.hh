@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,17 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_STAT_MAHALANOBIS_HH
-# define MLN_FUN_STAT_MAHALANOBIS_HH
+#ifndef MLN_FUN_V2V_VALUE_AT_INDEX_HH
+# define MLN_FUN_V2V_VALUE_AT_INDEX_HH
 
 /// \file
 ///
-/// \brief Define the FIXME
+/// \brief File that define a function that gives an index per value.
 
-# include <cmath>
 # include <mln/core/concept/function.hh>
-# include <mln/algebra/vec.hh>
-# include <mln/algebra/mat.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
@@ -42,67 +41,54 @@ namespace mln
   namespace fun
   {
 
-    namespace stat
+    namespace v2v
     {
 
-      template <typename V>
-      struct mahalanobis
-	: public Function_v2v< mahalanobis<V> >,
-	  private metal::equal< V, algebra::vec<V::dim,float> >::check_t
+      /*! \brief File that define a function that gives an index per
+	value.
+
+	\ingroup funv2v
+      */
+      template <typename T>
+      struct value_at_index : Function_v2v< value_at_index<T> >,
+			      private metal::bool_<(mln_dim(T) == 1)>::check_t
       {
-	enum { n = V::dim };
-	typedef float result;
+	typedef T result;
+	T operator()(unsigned i) const;
+      };
 
-	mahalanobis(const algebra::mat<n,n,float>& var,
-		    const algebra::vec<n,float>&   mean);
-	// Tech. note: using n (instead of V::dim) above helps g++-2.95.
-
-	float operator()(const V& v) const;
-
-	typedef algebra::vec<n,float> mean_t;
-
-	mean_t mean() const;
-
-      protected:
-	algebra::mat<n,n,float> var_1_;
-	algebra::vec<n,float>   mean_;
+      template <>
+      struct value_at_index<bool> : Function_v2v< value_at_index<bool> >
+      {
+	typedef bool result;
+	bool operator()(unsigned i) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename T>
       inline
-      mahalanobis<V>::mahalanobis(const algebra::mat<n,n,float>& var,
-				  const algebra::vec<n,float>&   mean)
+      T
+      value_at_index<T>::operator()(unsigned i) const
       {
-	var_1_ = var._1();
-	mean_  = mean;
+	return T( int(mln_min(T)) + int(i) );
       }
 
-      template <typename V>
       inline
-      float
-      mahalanobis<V>::operator()(const V& v) const
+      bool
+      value_at_index<bool>::operator()(unsigned i) const
       {
-	return std::sqrt((v - mean_).t() * var_1_ * (v - mean_));
-      }
-
-      template <typename V>
-      inline
-      typename mahalanobis<V>::mean_t
-      mahalanobis<V>::mean() const
-      {
-	return mean_;
+	mln_precondition(i < 2);
+	return i == 1u ? true : false;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::stat
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
-
-#endif // ! MLN_FUN_STAT_MAHALANOBIS_HH
+#endif // ! MLN_FUN_V2V_VALUE_AT_INDEX_HH

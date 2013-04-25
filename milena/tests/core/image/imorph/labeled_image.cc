@@ -97,7 +97,7 @@ int main()
   mln_assertion(lbl_i.nlabels() == 9);
   test_image(lbl_i, bboxes_1);
 
-  fun::i2v::array<label_8> f(10, 0);
+  fun::v2v::array<label_8> f(10, 0);
   f(0) = 0;
   f(1) = 1;
   f(5) = 2;

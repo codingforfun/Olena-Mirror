@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
   // Compute the component centers and use them as vertex.
   //FIXME: Add fun::vertex2p
-  typedef fun::i2v::array<point2d> fv2p_t;
+  typedef fun::v2v::array<point2d> fv2p_t;
   util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
   fv2p_t fv2p = convert::to<fv2p_t>(centers);
 
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
   LG lg(g);
 
   // Find lines (sites) associated to edges in g.
-  typedef fun::i2v::array<p_line2d> i2e_t;
+  typedef fun::v2v::array<p_line2d> i2e_t;
   util::array<p_line2d> lines;
   mln_edge_iter_(G) e(g);
   for_all(e)
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
   //
   // literal::olive: cos(angle) < max_cos and cos(angle) > - max_cos
   // literal::red: cos(angle) > max_cos or cos(angle) < - max_cos
-  typedef fun::i2v::array<value::rgb8> lgcolor_t;
+  typedef fun::v2v::array<value::rgb8> lgcolor_t;
   lgcolor_t ecolor(pvlg.nsites());
   mln_piter_(lg_ima_t) p(lg_ima.domain());
   for_all (p)

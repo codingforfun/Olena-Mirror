@@ -31,7 +31,7 @@
 #include <mln/core/alias/point2d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/site_pair.hh>
 #include <mln/core/image/edge_image.hh>
 
@@ -82,7 +82,7 @@ int main()
 
   // Sites associated to edges.
   typedef util::site_pair<point2d> P;
-  typedef fun::i2v::array<P> fsite_t;
+  typedef fun::v2v::array<P> fsite_t;
   fsite_t sites(10);
   sites(0) = P(point2d(0,0), point2d(0,1)); // Site associated to edge 0.
   sites(1) = P(point2d(0,1), point2d(0,2)); // Site associated to edge 1.
@@ -96,7 +96,7 @@ int main()
   sites(9) = P(point2d(1,2), point2d(1,3)); // Site associated to edge 6.
 
   // Edge values.
-  typedef fun::i2v::array<unsigned> edge_values_t;
+  typedef fun::v2v::array<unsigned> edge_values_t;
   edge_values_t edge_values(10);
 
   static const unsigned values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };

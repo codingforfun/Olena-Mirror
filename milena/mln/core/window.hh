@@ -46,7 +46,7 @@
 
 # include <mln/metal/is_a.hh>
 # include <mln/util/set.hh>
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/v2v/all_to.hh>
 # include <mln/norm/linfty.hh>
 # include <mln/literal/zero.hh>
 
