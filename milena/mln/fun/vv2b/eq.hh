@@ -46,6 +46,8 @@ namespace mln
 
       /*!
 	\brief Functor computing equal between two values.
+
+	\sa data::transform
 	\ingroup funvv2b
       */
       template <typename L, typename R = L>

@@ -53,7 +53,7 @@ namespace mln
 
 	\c V is the type of input values; \c R is the result type.
 
-	\see mln::norm::l1.
+	\see mln::norm::l1 data::transform
 	\ingroup funv2v
       */
       template <typename V, typename R>
@@ -67,7 +67,7 @@ namespace mln
 
 	\c V is the type of input values; \c R is the result type.
 
-	\see mln::norm::l2.
+	\see mln::norm::l2 data::transform
 	\ingroup funv2v
       */
       template <typename V, typename R>
@@ -81,7 +81,7 @@ namespace mln
 
 	\c V is the type of input values; \c R is the result type.
 
-	\see mln::norm::linfty.
+	\see mln::norm::linfty data::transform
 	\ingroup funv2v
       */
       template <typename V, typename R>

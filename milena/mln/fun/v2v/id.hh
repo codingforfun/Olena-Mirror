@@ -46,6 +46,7 @@ namespace mln
 
       /*! \brief Identity function.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename T>

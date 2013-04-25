@@ -55,6 +55,9 @@ namespace mln
 	luma = (red + green + blue) / 3;
 	\endverbatim
 
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
 	\ingroup funv2v convert
        */
       template <unsigned n>

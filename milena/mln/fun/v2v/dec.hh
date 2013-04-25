@@ -45,6 +45,8 @@ namespace mln
 
       /*!
 	\brief Incrementation function.
+
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename T>

@@ -55,6 +55,7 @@ namespace mln
 
 	The type cast is performed only if needed.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename V>

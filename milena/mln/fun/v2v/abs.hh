@@ -48,6 +48,7 @@ namespace mln
       /*!
 	\brief Function returning absolute value.
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename V>

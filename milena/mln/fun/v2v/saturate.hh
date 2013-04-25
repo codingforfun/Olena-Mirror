@@ -58,6 +58,7 @@ namespace mln
 	  return max_V;
 	\endcode
 
+ 	\sa data::convert data::transform
 	\ingroup funv2v
       */
       template <typename V>

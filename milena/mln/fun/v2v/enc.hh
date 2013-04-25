@@ -49,6 +49,7 @@ namespace mln
 	\warning This function works only on types providing enc()
 	member.
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename V>

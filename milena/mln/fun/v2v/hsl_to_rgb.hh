@@ -55,6 +55,9 @@ namespace mln
       /*!
 	\brief Convert hsl values to rgb.
 
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
 	\ingroup funv2v convert
       */
       template <typename T_rgb>
@@ -65,6 +68,12 @@ namespace mln
 
 	f_hsl_to_rgb_();
 
+
+	/*!
+	  This method implements the conversion from HSL to RGB as described by
+	  Max K. Agoston in `Computer Graphics and Geometric Modeling:
+	  Implementation and Algorithms (2005)'. (\cite agoston2005cggmm)
+	*/
 	template <typename T_hsl>
         T_rgb operator()(const T_hsl& hsl) const;
 
@@ -93,9 +102,6 @@ namespace mln
       {
       }
 
-      /// This method implements the conversion from HSL to RGB as described by
-      /// Max K. Agoston in `Computer Graphics and Geometric Modeling:
-      /// Implementation and Algorithms (2005)'.
       template <typename T_rgb>
       template <typename T_hsl>
       inline

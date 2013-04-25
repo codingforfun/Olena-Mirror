@@ -47,6 +47,9 @@ namespace mln
       /*!
 	\brief Convert value::qt::rgb32 values to value::int_u8.
 
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
 	\ingroup funv2v convert
       */
       template <unsigned n>

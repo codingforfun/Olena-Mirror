@@ -54,7 +54,9 @@ namespace mln
 
 	This function relies on convert::from_to().
 
-	\sa data::convert.
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
 	\ingroup funv2v convert
        */
       template <typename V>

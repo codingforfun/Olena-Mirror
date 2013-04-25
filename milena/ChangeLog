@@ -1,5 +1,56 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add more "See also" statement in function documentation.
+
+	* mln/fun/v2b/always_false.hh,
+	* mln/fun/v2b/always_true.hh,
+	* mln/fun/v2b/lnot.hh,
+	* mln/fun/v2b/threshold_ge.hh,
+	* mln/fun/v2b/threshold_le.hh,
+	* mln/fun/v2v/abs.hh,
+	* mln/fun/v2v/all_to.hh,
+	* mln/fun/v2v/array.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/fun/v2v/component.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/dec.hh,
+	* mln/fun/v2v/enc.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/id.hh,
+	* mln/fun/v2v/inc.hh,
+	* mln/fun/v2v/index_of_value.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/mahalanobis.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/fun/v2v/projection.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh,
+	* mln/fun/v2v/round.hh,
+	* mln/fun/v2v/round_sat.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/fun/v2v/value_at_index.hh,
+	* mln/fun/v2v/wrap.hh,
+	* mln/fun/vv2b/eq.hh,
+	* mln/fun/vv2b/ge.hh,
+	* mln/fun/vv2b/gt.hh,
+	* mln/fun/vv2b/implies.hh,
+	* mln/fun/vv2b/le.hh,
+	* mln/fun/vv2b/lt.hh,
+	* mln/fun/vv2v/diff_abs.hh,
+	* mln/fun/vv2v/land.hh,
+	* mln/fun/vv2v/land_not.hh,
+	* mln/fun/vv2v/lor.hh,
+	* mln/fun/vv2v/lxor.hh,
+	* mln/fun/vv2v/max.hh,
+	* mln/fun/vv2v/min.hh,
+	* mln/fun/vv2v/vec.hh: Here.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/make/relabelfun.hh: Fix bad variable replacement.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>

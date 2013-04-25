@@ -64,6 +64,7 @@ namespace mln
 
       /*! \brief Function mapping an id to a value.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename T>

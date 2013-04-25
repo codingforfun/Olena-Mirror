@@ -51,6 +51,7 @@ namespace mln
 	This function takes points as input and return a point of a
 	lower dimension.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename P, unsigned dir>

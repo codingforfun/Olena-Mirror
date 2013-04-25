@@ -45,6 +45,7 @@ namespace mln
 
       /*! \brief Function always returning the same value.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename T>

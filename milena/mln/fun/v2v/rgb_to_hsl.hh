@@ -60,6 +60,9 @@ namespace mln
 
 	\tparam T_hsl The desired output hsl type.
 
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
 	\ingroup funv2v convert
       */
       template <typename T_hsl>

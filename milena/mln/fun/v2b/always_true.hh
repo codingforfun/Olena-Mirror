@@ -42,7 +42,12 @@ namespace mln
     namespace v2b
     {
 
-      /// Functor computing logical-not on a value.
+      /*!
+	\brief Functor computing logical-not on a value.
+
+	\sa data::transform
+	\ingroup funv2b
+      */
       template <typename V>
       struct always_true : public Function_v2b< always_true<V> >
       {

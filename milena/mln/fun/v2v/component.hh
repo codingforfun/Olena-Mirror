@@ -49,6 +49,7 @@ namespace mln
       /*!
 	\brief Functor that accesses the i-th component of a value.
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename T, unsigned i>

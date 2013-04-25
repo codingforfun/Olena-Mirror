@@ -47,6 +47,7 @@ namespace mln
       /*! \brief Round the given value considering its type as
 	circular.
 
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename R>

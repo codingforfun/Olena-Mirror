@@ -44,6 +44,8 @@ namespace mln
     {
 
       /*! \brief Round the given value.
+
+ 	\sa data::transform
 	\ingroup funv2v
        */
       template <typename R>

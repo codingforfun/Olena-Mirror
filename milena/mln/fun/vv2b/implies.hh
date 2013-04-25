@@ -46,6 +46,8 @@ namespace mln
 
       /*!
 	\brief Functor computing logical-implies between two values.
+
+	\sa data::transform
 	\ingroup vv2b
       */
       template <typename L, typename R = L>

@@ -51,6 +51,7 @@ namespace mln
       /*! \brief Function to wrap values such as 0 -> 0 and [1, L_max]
 	maps to [1, Lmax] (using modulus).
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename L>

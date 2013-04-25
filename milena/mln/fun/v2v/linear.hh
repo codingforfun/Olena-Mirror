@@ -56,6 +56,7 @@ namespace mln
 
        By defaut, \c T is \c V and \c R is \c T.
 
+ 	\sa data::transform
        \ingroup funv2v
       */
       template <typename V, typename T = V, typename R = T>

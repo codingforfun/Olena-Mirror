@@ -47,6 +47,7 @@ namespace mln
       /*!
 	\brief Functor computing "lower than" between two values.
 
+	\sa data::transform
 	\ingroup funvv2b
       */
       template <typename L, typename R = L>

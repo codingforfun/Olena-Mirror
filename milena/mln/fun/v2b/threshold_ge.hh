@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -43,8 +43,16 @@ namespace mln
     namespace v2b
     {
 
-      /// Threshold function.
-      /// f(v) = (v >= threshold).
+      /*!
+	\brief Threshold function.
+
+	\code
+	f(v) = (v >= threshold).
+	\endcode
+
+ 	\sa data::transform
+	\ingroup funv2b
+      */
       template <typename V>
       struct threshold_ge : public Function_v2b< threshold_ge<V> >
       {

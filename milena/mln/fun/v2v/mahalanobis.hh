@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// \brief Define the FIXME
+/// \brief Define a function computing the Mahalanobis distance.
 
 # include <cmath>
 # include <mln/core/concept/function.hh>
@@ -46,6 +46,11 @@ namespace mln
     namespace v2v
     {
 
+      /* \brief Compute the Mahalanobis distance.
+
+ 	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename V, typename R = float>
       struct mahalanobis
 	: public Function_v2v< mahalanobis<V,R> >,

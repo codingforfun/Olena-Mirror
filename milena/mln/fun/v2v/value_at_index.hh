@@ -47,6 +47,7 @@ namespace mln
       /*! \brief File that define a function that gives an index per
 	value.
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename T>

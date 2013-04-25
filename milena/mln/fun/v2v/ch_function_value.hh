@@ -52,6 +52,7 @@ namespace mln
 	\brief Wrap a function v2v and convert its result to another
 	type.
 
+ 	\sa data::transform
 	\ingroup funv2v
       */
       template <typename F, typename V>
