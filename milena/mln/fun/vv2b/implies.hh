@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace vv2b
     {
 
-      /// Functor computing logical-implies between two values.
+      /*!
+	\brief Functor computing logical-implies between two values.
+	\ingroup vv2b
+      */
       template <typename L, typename R = L>
       struct implies : public Function_vv2b< implies<L,R> >
       {

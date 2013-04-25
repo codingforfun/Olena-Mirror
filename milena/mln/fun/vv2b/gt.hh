@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace vv2b
     {
 
-      /// Functor computing "greater than" between two values.
+      /*!
+	\brief Functor computing "greater than" between two values.
+	\ingroup funvv2b
+      */
       template <typename L, typename R = L>
       struct gt : public Function_vv2b< gt<L,R> >
       {

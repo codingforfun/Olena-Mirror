@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// FIXME.
+/// \brief Project points to one direction.
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/point.hh>
@@ -44,6 +45,14 @@ namespace mln
     namespace v2v
     {
 
+      /*!
+	\brief Project points to one direction.
+
+	This function takes points as input and return a point of a
+	lower dimension.
+
+	\ingroup funv2v
+       */
       template <typename P, unsigned dir>
       struct projection : public Function_v2v< projection<P,dir> >
       {
@@ -51,7 +60,7 @@ namespace mln
 	typedef mln_grid(P)  G_;
 	typedef mln_coord(P) C_;
 	enum { n_ = G_::dim };
-	
+
       public:
 
 	typedef point<mln_regular_grid_from_dim(n_ - 1), C_> result;

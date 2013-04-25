@@ -46,7 +46,8 @@ namespace mln
 
       /*! \brief Round the given value considering its type as
 	circular.
-	\ingroup modfun
+
+	\ingroup funv2v
        */
       template <typename R>
       struct round_sat : public Function_v2v< round_sat<R> >

@@ -55,7 +55,7 @@ namespace mln
 	luma = (red + green + blue) / 3;
 	\endverbatim
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
        */
       template <unsigned n>
       struct rgb_to_int_u : Function_v2v< rgb_to_int_u<n> >

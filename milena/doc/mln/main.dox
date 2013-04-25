@@ -10,14 +10,12 @@
  *
  */
 
-
 /*! \defgroup modfun Functions
- *
- * \brief All predefined functions.
- *
- */
 
+    \brief All predefined functions.
 
+    \image html function_hierarchy.png "Function inheritance diagram in Milena."
+*/
 
 /*! \defgroup imagemanip Image Manipulation
  *

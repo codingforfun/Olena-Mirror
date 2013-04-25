@@ -1,5 +1,48 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add function module in Milena documentation.
+
+	* doc/mln/fun/fun.dox: Add new documentation groups.
+
+	* doc/mln/main.dox: Include a figure of the function hierarchy.
+
+	* mln/fun/n2v/white_gaussian.hh,
+	* mln/fun/v2v/abs.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/fun/v2v/component.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/dec.hh,
+	* mln/fun/v2v/enc.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/id.hh,
+	* mln/fun/v2v/inc.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/fun/v2v/projection.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh,
+	* mln/fun/v2v/round.hh,
+	* mln/fun/v2v/round_sat.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/fun/v2v/wrap.hh,
+	* mln/fun/v2w2v/all.hh,
+	* mln/fun/v2w2v/cos.hh,
+	* mln/fun/v2w_w2v/all.hh,
+	* mln/fun/v2w_w2v/norm.hh,
+	* mln/fun/vv2b/all.hh,
+	* mln/fun/vv2b/eq.hh,
+	* mln/fun/vv2b/ge.hh,
+	* mln/fun/vv2b/gt.hh,
+	* mln/fun/vv2b/implies.hh,
+	* mln/fun/vv2b/le.hh,
+	* mln/fun/vv2b/lt.hh: Move to their respective function group.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/convert.dox: Fix a typo.
 
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,14 +33,11 @@ namespace mln
   namespace fun
   {
 
-    /*! \defgroup modfunv2w2v v2w2v functions
-     *
+    /*!
      * \brief All bijective functions.
      *
      * \ingroup modfun
      */
-
-    /// Namespace of bijective functions.
     namespace v2w2v
     {
 

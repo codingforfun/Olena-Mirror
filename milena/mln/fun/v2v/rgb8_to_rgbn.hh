@@ -51,7 +51,7 @@ namespace mln
 
 	\tparam n defines the output quantification used for the transformation.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
       */
       template <unsigned n>
       struct rgb8_to_rgbn : Function_v2v< rgb8_to_rgbn<n> >

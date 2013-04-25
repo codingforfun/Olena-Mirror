@@ -30,8 +30,6 @@
 /// \file
 ///
 /// \brief Convert HSL values to RGB.
-///
-/// \todo Etienne: Remove the global variables!
 
 # include <cmath>
 
@@ -57,7 +55,7 @@ namespace mln
       /*!
 	\brief Convert hsl values to rgb.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
       */
       template <typename T_rgb>
       struct f_hsl_to_rgb_ : public Function_v2v< f_hsl_to_rgb_<T_rgb> >

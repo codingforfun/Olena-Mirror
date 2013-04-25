@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2007, 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -29,7 +29,7 @@
 
 /*! \file
  *
- * \brief FIXME.
+ * \brief
  */
 
 # include <mln/core/concept/function.hh>
@@ -48,8 +48,18 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*! \brief Performs a conversion between two value types by
+	saturating upper and lower values.
 
+	\code
+	if (w < min_V)
+	  return min_V;
+	if (w > max_V)
+	  return max_V;
+	\endcode
+
+	\ingroup funv2v
+      */
       template <typename V>
       struct saturate : public Function_v2v< saturate<V> >
       {
@@ -58,6 +68,12 @@ namespace mln
 
 	typedef V result;
 
+	/*!\brief Performs a conversion from type W to V by saturating
+	upper and lower values.
+
+	\tparam W Input value type.
+	\tparam V Value type of destination.
+	 */
 	template <typename W>
 	V operator()(const W& w) const;
 

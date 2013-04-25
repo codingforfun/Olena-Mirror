@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,14 +37,11 @@ namespace mln
   namespace fun
   {
 
-    /*! \defgroup modfunvv2b vv2b functions
-     *
+    /*!
      * \brief All functions mapping two values to a logical value.
      *
      * \ingroup modfun
      */
-
-    /// Namespace of functions from value to value.
     namespace vv2b {}
 
   }

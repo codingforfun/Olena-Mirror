@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// FIXME.
+/// Cast function arguments towards a given type.
 ///
 /// \todo The function is intrisically meta; how to handle that
 /// particular case?
@@ -46,13 +47,25 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*! \brief Cast function arguments towards type V.
 
+	\tparam V The value type of destination.
+
+	This function relies on c++ static_cast keyword.
+
+	The type cast is performed only if needed.
+
+	\ingroup funv2v
+       */
       template <typename V>
       struct cast : public Function_v2v< cast<V> >
       {
 	typedef V result;
 
+	/*! \brief Cast function arguments towards type V.
+	  \tparam W Value type of the function argument.
+	  \tparam V The value type of destination.
+	 */
 	template <typename W>
 	V operator()(const W& w) const;
       };

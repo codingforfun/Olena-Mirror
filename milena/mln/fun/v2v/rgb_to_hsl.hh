@@ -60,7 +60,7 @@ namespace mln
 
 	\tparam T_hsl The desired output hsl type.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
       */
       template <typename T_hsl>
       struct f_rgb_to_hsl_ : public Function_v2v< f_rgb_to_hsl_<T_hsl> >
@@ -78,7 +78,7 @@ namespace mln
 	\brief Type of a default conversion function from value::rgb
 	to value::hsl_f.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
        */
       typedef f_rgb_to_hsl_<value::hsl_f> f_rgb_to_hsl_f_t;
 
@@ -86,7 +86,7 @@ namespace mln
 	\brief Predefined conversion functor converting from value::rgb
 	to value::hsl_f.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
        */
       extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
 

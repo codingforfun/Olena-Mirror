@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,12 +46,18 @@ namespace mln
 
       /*!
        *\brief Linear function.
-       * f(v) = a * v + b.
-       * \c V is the type of input values; \c T is the type used to
-       * compute the result; \c R is the result type.
-       *
-       * By defaut, \c T is \c V and \c R is \c T.
-       */
+
+       \verbatim
+       f(v) = a * v + b.
+       \endverbatim
+
+       \c V is the type of input values; \c T is the type used to
+       compute the result; \c R is the result type.
+
+       By defaut, \c T is \c V and \c R is \c T.
+
+       \ingroup funv2v
+      */
       template <typename V, typename T = V, typename R = T>
       struct linear : public Function_v2v< linear<V,T,R> >
       {
@@ -58,7 +65,7 @@ namespace mln
 
 	R operator()(const V& v) const;
 
-	template <typename U> 
+	template <typename U>
 	R operator()(const U& u) const;
 
 	linear(T a, T b);
@@ -73,7 +80,7 @@ namespace mln
 
 	R operator()(const V& v) const;
 
-	template <typename U> 
+	template <typename U>
 	R operator()(const U& u) const;
 
 	linear_sat(T a, T b);

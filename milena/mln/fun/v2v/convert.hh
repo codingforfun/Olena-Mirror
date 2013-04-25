@@ -55,7 +55,7 @@ namespace mln
 	This function relies on convert::from_to().
 
 	\sa data::convert.
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
        */
       template <typename V>
       struct convert : public Function_v2v< convert<V> >

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,11 +49,13 @@ namespace mln
     namespace v2v
     {
 
-      /// L1-norm.
-      ///
-      /// \c V is the type of input values; \c R is the result type.
-      ///
-      /// \see mln::norm::l1.
+      /*! \brief L1-norm.
+
+	\c V is the type of input values; \c R is the result type.
+
+	\see mln::norm::l1.
+	\ingroup funv2v
+      */
       template <typename V, typename R>
       struct l1_norm : public Function_v2v< l1_norm<V, R> >
       {
@@ -60,11 +63,13 @@ namespace mln
 	R operator()(const V& v) const;
       };
 
-      /// L2-norm.
-      ///
-      /// \c V is the type of input values; \c R is the result type.
-      ///
-      /// \see mln::norm::l2.
+      /*! \brief L2-norm.
+
+	\c V is the type of input values; \c R is the result type.
+
+	\see mln::norm::l2.
+	\ingroup funv2v
+      */
       template <typename V, typename R>
       struct l2_norm : public Function_v2v< l2_norm<V, R> >
       {
@@ -72,11 +77,13 @@ namespace mln
 	R operator()(const V& v) const;
       };
 
-      /// L-infty norm.
-      ///
-      /// \c V is the type of input values; \c R is the result type.
-      ///
-      /// \see mln::norm::linfty.
+      /*! \brief L-infty norm.
+
+	\c V is the type of input values; \c R is the result type.
+
+	\see mln::norm::linfty.
+	\ingroup funv2v
+      */
       template <typename V, typename R>
       struct linfty_norm : public Function_v2v< linfty_norm<V, R> >
       {

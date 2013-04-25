@@ -47,7 +47,7 @@ namespace mln
       /*!
 	\brief Convert value::qt::rgb32 values to value::int_u8.
 
-	\ingroup modfunv2v convert
+	\ingroup funv2v convert
       */
       template <unsigned n>
       struct qt_rgb_to_int_u : Function_v2v< qt_rgb_to_int_u<n> >

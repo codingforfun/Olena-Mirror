@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,8 +46,11 @@ namespace mln
     namespace v2v
     {
 
-      /// \brief Functor that accesses the i-th component of a value.
-      //
+      /*!
+	\brief Functor that accesses the i-th component of a value.
+
+	\ingroup funv2v
+      */
       template <typename T, unsigned i>
       struct component : public Function_v2v< component<T,i> >,
  			 private metal::bool_<(i <= trait::value_<T>::dim)>::check_t

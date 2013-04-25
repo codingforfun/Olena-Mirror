@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,9 +49,10 @@ namespace mln
 
       /*! \brief Generate a White Gaussian Noise.
 
-
 	Reference:
 	http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
+
+	\ingroup funn2v
        */
       template <typename V>
       struct white_gaussian : Function_n2v< white_gaussian<V> >
