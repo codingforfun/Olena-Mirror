@@ -303,7 +303,7 @@ namespace mln
     \ingroup modfun
   */
   template <typename E>
-  struct Function_vv2b : public Function<E>
+  struct Function_vv2b : public Function_vv2v<E>
   {
     typedef bool result;
     typedef Function_vv2b<void> category;
