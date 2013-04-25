@@ -1,5 +1,9 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/text_in_picture.cc: Add more descriptions in usage.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename fun::i2v, fun::stat and fun::v2i to fun::v2v.
 
 	* scribo/postprocessing/fill_object_holes.hh,

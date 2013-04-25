@@ -58,7 +58,7 @@ static const scribo::debug::opt_data opt_desc[] =
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "max-dim-size", "Set the maximum size of the largest image dimension.", "<size>", 0, 1, "1024" },
-  { "lambda", "Set the maximum area of the background objects. It is only useful if fg-extraction is enabled.", "<size>",
+  { "lambda", "Set the maximum area of the background objects. It is only useful if fg-extraction is enabled. By default it is automatically adjusted.", "<size>",
     0, 1, "0" },
   { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
   {0, 0, 0, 0, 0, 0}
