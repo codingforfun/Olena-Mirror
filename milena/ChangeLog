@@ -1,3 +1,8 @@
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/image_base.hh: Add more documentation for
+	destroy() method.
+
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/topo/topo.dox: New. Introduce mathematical topology

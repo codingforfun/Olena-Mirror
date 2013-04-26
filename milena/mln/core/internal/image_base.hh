@@ -163,7 +163,14 @@ namespace mln
       /// \endcond
 
 
-      /// Detach data from an image (free it if nobody else hold it).
+      /*!
+
+	\brief Detach data from an image (free it if nobody else hold
+	it).
+
+	This method can be safely called several times.
+	After calling destroy(), is_valid() always returns False.
+      */
       void destroy();
 
     protected:
