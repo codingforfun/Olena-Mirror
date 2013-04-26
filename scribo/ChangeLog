@@ -1,3 +1,7 @@
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Disable QHP generation.
+
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/text_in_picture.cc: Add more descriptions in usage.

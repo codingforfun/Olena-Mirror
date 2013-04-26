@@ -373,7 +373,7 @@ DOT_CLEANUP            = YES
 #---------------------------------------------------------------------------
 SEARCHENGINE           = YES
 
-GENERATE_QHP       = yes
+GENERATE_QHP       = no
 QHP_NAMESPACE      = "fr.epita.lrde.olena.scribo"
 QHP_VIRTUAL_FOLDER = "scribo-2.0"
 QCH_FILE 	   = "@builddir@/scribo.qch"
