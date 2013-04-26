@@ -518,6 +518,7 @@ mln_data_sort_offsets \
 mln_data_sort_psites \
 mln_data_split \
 mln_data_stretch \
+mln_data_stretch_inplace \
 mln_data_to_enc \
 mln_data_transform \
 mln_data_transform_inplace \

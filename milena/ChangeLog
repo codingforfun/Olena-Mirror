@@ -1,3 +1,10 @@
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen generated files in Milena.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add data::stretch_inplace.

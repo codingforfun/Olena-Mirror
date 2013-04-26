@@ -456,6 +456,7 @@ mln/data/sort_offsets.hh \
 mln/data/sort_psites.hh \
 mln/data/split.hh \
 mln/data/stretch.hh \
+mln/data/stretch_inplace.hh \
 mln/data/to_enc.hh \
 mln/data/transform.hh \
 mln/data/transform.spe.hh \
