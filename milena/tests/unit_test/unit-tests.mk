@@ -742,6 +742,7 @@ mln_io_fld_load_header \
 mln_io_fld_max_components \
 mln_io_fld_save \
 mln_io_fld_write_header \
+mln_io_magick_get_header \
 mln_io_off_all \
 mln_io_off_load \
 mln_io_off_save \

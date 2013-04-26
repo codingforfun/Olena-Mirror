@@ -691,6 +691,7 @@ mln/io/fld/max_components.hh \
 mln/io/fld/save.hh \
 mln/io/fld/write_header.hh \
 mln/io/magick/all.hh \
+mln/io/magick/get_header.hh \
 mln/io/magick/internal/init_magick.hh \
 mln/io/magick/load.hh \
 mln/io/magick/save.hh \
