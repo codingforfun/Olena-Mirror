@@ -65,38 +65,48 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      // We want to disable this code since it prevents types of
-      // different quantification to rely on from_to_ overload and
-      // handle specific conversions. (ex: rgb16 towards rgb8)
+      // Case 1: Same equiv type.
 
-      // // Case 1:
+      template <typename V, typename W, typename EV>
+      void
+      from_value_to_value_(const mln::value::Vectorial<V>& from,
+			   mln::value::Vectorial<W>&  to,
+			   const EV&, const EV&)
+      {
+      	exact(to) = exact(from).to_equiv();
+      }
 
-      // template <typename V, typename W>
-      // void
-      // from_value_to_value_(const mln::value::Vectorial<V>& from,
-      // 			         mln::value::Vectorial<W>&  to)
-      // {
-      // 	exact(to) = exact(from).to_equiv();
-      // }
+      template <typename V, typename W, typename EV>
+      void
+      from_value_to_value_(const mln::value::Scalar<V>& from,
+			   mln::value::Scalar<W>&  to,
+			   const EV&, const EV&)
+      {
+      	exact(to) = exact(from).to_equiv();
+      }
 
-      // // Case 2:
+      // Case 2: Different equiv type.  No concept based
+      // conversions. Trying to find more specific conversions with
+      // other from_to_ overloads.
+      template <typename V, typename W, typename EV1, typename EV2>
+      inline
+      void
+      from_value_to_value_(const Value<V>& from, Value<W>& to,
+			   const EV1&, const EV2&)
+      {
+	from_to_(exact(from), exact(to));
+      }
 
-      // template <typename V, typename W>
-      // void
-      // from_value_to_value_(const mln::value::Scalar<V>& from,
-      // 			         mln::value::Scalar<W>&  to)
-      // {
-      // 	exact(to) = exact(from).to_equiv();
-      // }
 
       template <typename V, typename W>
       inline
       void
       from_value_to_value_(const Value<V>& from, Value<W>& to)
       {
-	// No concept based conversion. Trying to find more specific
-	// conversion with other from_to overloads.
-	from_to_(exact(from), exact(to));
+	/// Checking if V and W have the same equivalent type.
+	typedef mln_equiv(V) V_equiv;
+	typedef mln_equiv(W) W_equiv;
+	from_value_to_value_(exact(from), exact(to), V_equiv(), W_equiv());
       }
 
 

@@ -1,3 +1,8 @@
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/convert/impl/from_value_to_value.hh: Improve
+	from_value_to_value dispatch for types with identical equiv type.
+
 2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle 16 bits value types with io::magick.
