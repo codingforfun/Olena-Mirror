@@ -28,7 +28,7 @@
 
 # include <mln/morpho/all.hh>
 //# include <mln/labeling/values.hh>
-#include <mln/labeling/all_blobs.hh>
+#include <mln/labeling/blobs.hh>
 
 
 /// \file
