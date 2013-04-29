@@ -83,11 +83,15 @@ SUFFIXES += .pbm .pgm .ppm .png
 PNG_FIGURES =					\
   $(PBM_FIGURES:.pbm=.png)			\
   $(PGM_FIGURES:.pgm=.png)			\
-  $(PPM_FIGURES:.ppm=.png)			\
-  $(srcdir)/img/genericity.png 			\
-  $(srcdir)/img/2dgrid.png
+  $(PPM_FIGURES:.ppm=.png)
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
+
+# These images cannot be regenerated.
+MORE_PNG_FIGURES =				\
+  $(srcdir)/img/genericity.png 			\
+  $(srcdir)/img/2dgrid.png
+EXTRA_DIST += $(MORE_PNG_FIGURES)
 
 # Prevent make from trying to regenerate img/small.png from
 # img/small.pbm through suffix rule `.pbm.png', as they are not

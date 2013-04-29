@@ -31,7 +31,7 @@
 ///
 /// Apply grouping in an object image.
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 # include <mln/make/relabelfun.hh>
 # include <mln/labeling/relabel.hh>
 
@@ -75,7 +75,7 @@ namespace scribo
       template <typename L>
       component_set<L>
       apply(const object_groups<L>& groups,
-	    mln::fun::i2v::array<mln_value(L)>& relabel_fun)
+	    mln::fun::v2v::array<mln_value(L)>& relabel_fun)
 
       {
 	mln_trace("scribo::primitive::group::apply");
@@ -112,7 +112,7 @@ namespace scribo
       component_set<L>
       apply(const object_groups<L>& groups)
       {
-	mln::fun::i2v::array<mln_value(L)> relabel_fun;
+	mln::fun::v2v::array<mln_value(L)> relabel_fun;
 	return apply(groups, relabel_fun);
       }
 

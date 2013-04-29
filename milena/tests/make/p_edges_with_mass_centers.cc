@@ -59,7 +59,7 @@ int main()
   g.add_edge(4,3);
   g.add_edge(4,2);
 
-  typedef p_edges<G,fun::i2v::array<util::site_pair<point2d> > > pe_t;
+  typedef p_edges<G,fun::v2v::array<util::site_pair<point2d> > > pe_t;
   pe_t pe = make::p_edges_with_mass_centers(wst, g);
 
   typedef util::site_pair<point2d> P;

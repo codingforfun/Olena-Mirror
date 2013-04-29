@@ -255,7 +255,7 @@ namespace scribo
 	      bbox_ima_(bbox_ima), delta_ws_lookup_(delta_ws_lookup)
 	  {
 # ifndef SCRIBO_NDEBUG
-	    debug_ = data::convert(value::rgb8(), data::convert(bool(), bbox_ima));
+	    debug_ = data::convert(data::convert(bbox_ima, bool()), value::rgb8());
 # endif // ! SCRIBO_NDEBUG
 	  }
 
@@ -357,7 +357,7 @@ namespace scribo
 	      bbox_ima_(bbox_ima), delta_ws_lookup_(delta_ws_lookup)
 	  {
 # ifndef SCRIBO_NDEBUG
-	    debug_ = data::convert(value::rgb8(), data::convert(bool(), bbox_ima));
+	    debug_ = data::convert(data::convert(bbox_ima, bool()), value::rgb8());
 # endif // ! SCRIBO_NDEBUG
 	  }
 

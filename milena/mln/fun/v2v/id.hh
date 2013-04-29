@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,8 +44,11 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*! \brief Identity function.
 
+ 	\sa data::transform
+	\ingroup funv2v
+       */
       template <typename T>
       struct id
 	: fun::internal::selector_<T, T, id<T> >::ret

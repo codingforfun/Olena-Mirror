@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -32,7 +32,7 @@
 /// Routines to construct a function in order to relabel a labeled image.
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 # include <mln/value/next.hh>
 
 namespace mln
@@ -41,23 +41,23 @@ namespace mln
   namespace make
   {
 
-    /// Create a i2v function from a v2b function.
+    /// Create a v2v function from a v2b function.
     /// This function can be used to relabel a labeled image.
     ///
     /// \param[in] fv2b		A v2b function.
     /// \param[in] nlabels	The number of labels.
     /// \param[in] new_nlabels	The number of labels after relabeling.
     ///
-    /// \return a i2v function.
+    /// \return a v2v function.
     ///
     /// \sa mln::labeling::relabel
     template <typename V, typename F>
-    fun::i2v::array<V>
+    fun::v2v::array<V>
     relabelfun(const Function_v2b<F>& fv2b,
 	       const V&		      nlabels,
 	       V&		      new_nlabels);
 
-    /// Create a i2v function from a v2v function.
+    /// Create a v2v function from a v2v function.
     /// This function can be used to relabel a labeled image.
     ///
     /// \param[in] fv2v		A v2v function. This function maps an id to
@@ -65,11 +65,11 @@ namespace mln
     /// \param[in] nlabels	The number of labels.
     /// \param[in] new_nlabels	The number of labels after relabeling.
     ///
-    /// \return a i2v function.
+    /// \return a v2v function.
     ///
     /// \sa mln::labeling::relabel
     template <typename V, typename F>
-    fun::i2v::array<V>
+    fun::v2v::array<V>
     relabelfun(const Function_v2v<F>& fv2v,
 	       const V&		      nlabels,
 	       V&		      new_nlabels);
@@ -79,7 +79,7 @@ namespace mln
 
     template <typename V, typename F>
     inline
-    fun::i2v::array<V>
+    fun::v2v::array<V>
     relabelfun(const Function_v2b<F>& fv2b_,
 	       const V&		      nlabels,
 	       V&		      new_nlabels)
@@ -90,18 +90,18 @@ namespace mln
 
       unsigned nlabels_i = value::next(nlabels);
       V tmp_nlabels = literal::zero;
-      fun::i2v::array<V> fi2v(nlabels_i, literal::zero);
+      fun::v2v::array<V> output(nlabels_i, literal::zero);
       for (V i = 1; i < nlabels_i; ++i)
 	if (fv2b(i))
-	  fi2v(i) = ++tmp_nlabels;
+	  output(i) = ++tmp_nlabels;
       new_nlabels = tmp_nlabels;
-      return fi2v;
+      return output;
     }
 
 
     template <typename V, typename F>
     inline
-    fun::i2v::array<V>
+    fun::v2v::array<V>
     relabelfun(const Function_v2v<F>& fv2v_,
 	       const V&		      nlabels,
 	       V&		      new_nlabels)
@@ -115,8 +115,8 @@ namespace mln
       util::array<V> new_labels(nlabels_i, mln_max(V));
       new_labels(0) = literal::zero;
       V tmp_nlabels = literal::zero;
-      fun::i2v::array<V> fi2v(nlabels_i, mln_max(V));
-      fi2v(0) = literal::zero;
+      fun::v2v::array<V> output(nlabels_i, mln_max(V));
+      output(0) = literal::zero;
 
       for (V i = 1; i < nlabels_i; ++i)
       {
@@ -124,13 +124,13 @@ namespace mln
 	if (new_labels(fv2v(i)) == mln_max(V))
 	{
 	  new_labels(fv2v(i)) = ++tmp_nlabels;
-	  fi2v(i) = tmp_nlabels;
+	  output(i) = tmp_nlabels;
 	}
 	else
-	  fi2v(i) = new_labels(fv2v(i));
+	  output(i) = new_labels(fv2v(i));
       }
       new_nlabels = tmp_nlabels;
-      return fi2v;
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

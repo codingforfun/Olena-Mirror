@@ -1,3 +1,87 @@
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Swap arguments of data::convert in Scribo.
+
+	* scribo/debug/alignment_decision_image.hh,
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/bboxes_image.hh,
+	* scribo/debug/char_space_image.hh,
+	* scribo/debug/decision_image.hh,
+	* scribo/debug/line_info_image.hh,
+	* scribo/debug/linked_bboxes_image.hh,
+	* scribo/debug/links_decision_image.hh,
+	* scribo/debug/links_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh,
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/toolchain/internal/text_in_picture_functor.hh,
+	* src/debug/show_lines_boldness.cc,
+	* src/debug/show_links_left_right_links_validation.cc,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_objects_large.cc,
+	* src/debug/show_objects_small.cc,
+	* src/debug/show_objects_thick.cc,
+	* src/debug/show_objects_thin.cc,
+	* src/debug/show_text_lines.cc,
+	* src/debug/show_text_lines_wo_seps.cc,
+	* src/filter/objects_large.cc,
+	* src/filter/objects_small.cc,
+	* src/filter/objects_thick.cc,
+	* src/filter/objects_thin.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/non_text_components.cc,
+	* src/preprocessing/preprocess.cc,
+	* src/primitive/extract/alignments.cc,
+	* src/primitive/extract/discontinued_hlines.cc,
+	* src/primitive/extract/discontinued_lines.cc,
+	* src/primitive/extract/discontinued_vlines.cc,
+	* src/primitive/extract/thick_hlines.cc,
+	* src/primitive/extract/thick_vlines.cc,
+	* src/primitive/group/group_from_rag.cc,
+	* src/table/rebuild_opening.cc,
+	* src/table/rebuild_rank.cc,
+	* src/util/component_precise_outline.cc,
+	* tests/primitive/extract/alignments.cc: Here.
+
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Disable QHP generation.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/text_in_picture.cc: Add more descriptions in usage.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename fun::i2v, fun::stat and fun::v2i to fun::v2v.
+
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/denoise_bg.hh,
+	* scribo/preprocessing/denoise_fg.hh,
+	* scribo/primitive/extract/non_text_kmean.hh,
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/group/from_graph.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/regroup/from_single_left_link.hh,
+	* scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/paragraph_set.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/fun/v2b/label_to_bool.hh: Here.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/primitive/extract/lines_pattern.cc: Fix description.

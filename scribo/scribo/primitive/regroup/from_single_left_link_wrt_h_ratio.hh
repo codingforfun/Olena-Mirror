@@ -110,7 +110,7 @@ namespace scribo
 
 	object_groups<L> output = groups.duplicate();
 
-	fun::i2v::array<mln_value(L)> relabel_fun;
+	fun::v2v::array<mln_value(L)> relabel_fun;
 	component_set<L>
 	  components = primitive::group::apply(groups, relabel_fun);
 

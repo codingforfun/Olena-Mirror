@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
   doc.open();
 
   // Vertical and horizontal separators
-  image2d<bool> input = data::convert(bool(), doc.image());
+  image2d<bool> input = data::convert(doc.image(), bool());
   image2d<bool> separators = primitive::extract::separators(input, 81);
   input = primitive::remove::separators(input, separators);
   input = preprocessing::denoise_fg(input, c8(), 3);

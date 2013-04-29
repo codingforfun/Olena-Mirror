@@ -49,9 +49,13 @@ namespace mln
 
       /*! \brief Convert a rgb8 value to a rgn, n < 8.
 
-	\tparam n defines the output quantification used for the transformation.
+	\tparam n defines the output quantification used for the
+	transformation.
 
-	\ingroup modfunv2v convert
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
+	\ingroup funv2v convert
       */
       template <unsigned n>
       struct rgb8_to_rgbn : Function_v2v< rgb8_to_rgbn<n> >

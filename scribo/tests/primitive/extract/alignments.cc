@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,7 @@ int main()
 
     document<L> doc(os.str().c_str());
     doc.open();
-    doc.set_binary_image(data::convert(bool(), doc.image()));
+    doc.set_binary_image(data::convert(doc.image(), bool()));
 
     // Extract lines
     line_set<L>

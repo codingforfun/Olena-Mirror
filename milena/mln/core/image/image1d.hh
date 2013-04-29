@@ -39,7 +39,7 @@
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/v2v/all_to.hh>
 
 
 // FIXME:

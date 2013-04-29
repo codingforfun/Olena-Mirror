@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -74,7 +74,7 @@ namespace scribo
       this->anchors_.append(anchor::Bottom);
       this->anchors_.append(anchor::Center);
 
-      output_ = data::convert(value::rgb8(), input);
+      output_ = data::convert(input, value::rgb8());
       scribo::draw::bounding_boxes(output_, comps, literal::blue);
       mln_postcondition(output_.is_valid());
     }

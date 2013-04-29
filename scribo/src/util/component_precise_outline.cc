@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
      `mln::unproxy_rec' here.  */
   std::cout << t.read() << std::endl;
 
-  image2d<value::rgb8> input_rgb = data::convert(value::rgb8(), input);
+  image2d<value::rgb8> input_rgb = data::convert(input, value::rgb8());
 
   point2d last_point = par[0];
   mln_piter_(par_t) p(par);

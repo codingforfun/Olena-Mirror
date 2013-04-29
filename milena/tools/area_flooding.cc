@@ -100,10 +100,10 @@ int main(int argc, char* argv[])
 
   // Type of the function mapping graph edges and image sites.
   typedef util::site_pair<point2d> P;
-  typedef fun::i2v::array<P> fedge_site_t;
+  typedef fun::v2v::array<P> fedge_site_t;
 
   // Line graph image.
-  typedef fun::i2v::array<val_t> fval_t;
+  typedef fun::v2v::array<val_t> fval_t;
   fval_t values;
   typedef edge_image<P,val_t> lg_ima_t;
   lg_ima_t lg_ima = morpho::line_gradient(input);

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,12 @@ namespace mln
     namespace vv2b
     {
 
-      /// Functor computing equal between two values.
+      /*!
+	\brief Functor computing equal between two values.
+
+	\sa data::transform
+	\ingroup funvv2b
+      */
       template <typename L, typename R = L>
       struct eq : public Function_vv2b< eq<L,R> >
       {

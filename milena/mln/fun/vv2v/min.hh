@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,9 +44,12 @@ namespace mln
     namespace vv2v
     {
 
-      // FIXME: Doc.
+      /*!
+	\brief A functor computing the minimum of two values.
 
-      /// \brief A functor computing the minimum of two values.
+	\sa data::transform
+	\ingroup funvv2v
+      */
       template <typename L, typename R = L>
       struct min : public Function_vv2v< min<L,R> >,
 		   private mlc_converts_to(R,L)::check_t

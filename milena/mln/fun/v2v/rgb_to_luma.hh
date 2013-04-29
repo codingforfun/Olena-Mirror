@@ -51,7 +51,10 @@ namespace mln
 	luma = 0.299 * red + 0.587 * green + 0.114 * blue;
 	\endverbatim
 
-	\ingroup modfunv2v convert
+	How to use this function is detailed in section \ref convert.
+
+	\sa data::convert data::transform
+	\ingroup funv2v convert
       */
       template <typename T_luma>
       struct rgb_to_luma : public Function_v2v< rgb_to_luma<T_luma> >

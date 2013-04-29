@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -91,7 +92,7 @@ int main(int argc, char* argv[])
 
   value::label_8 bg = data::compute(accu::maj_h<value::label_8>(), tables);
 
-  image2d<value::rgb8> sup = data::convert(value::rgb8(), input);
+  image2d<value::rgb8> sup = data::convert(input, value::rgb8());
   data::paste((table_color | (pw::value(tables) != pw::cst(bg)))
 	  | (pw::value(sup) == pw::cst(literal::black)), sup);
   io::ppm::save(sup, scribo::make::debug_filename("table_color_sup.ppm"));
@@ -100,7 +101,7 @@ int main(int argc, char* argv[])
 		scribo::make::debug_filename("table_cells.ppm"));
   io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
-  image2d<value::rgb8> input_rgb = data::convert(value::rgb8(), input);
+  image2d<value::rgb8> input_rgb = data::convert(input, value::rgb8());
   data::fill((input_rgb | (pw::value(tables) == pw::cst(0u))).rw(), literal::red);
   io::ppm::save(input_rgb, scribo::make::debug_filename("table_superposed.ppm"));
 

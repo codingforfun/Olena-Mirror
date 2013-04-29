@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
 
   // Compute the component centers and use them as vertex.
   //FIXME: Add fun::vertex2p
-  typedef fun::i2v::array<point2d> fv2p_t;
+  typedef fun::v2v::array<point2d> fv2p_t;
   util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
   fv2p_t fv2p = convert::to<fv2p_t>(centers);
 
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
   p_vertices<G, fv2p_t> pv(g, fv2p);
 
 #ifndef NOUT
-  image2d<rgb8> gima = data::convert(rgb8(), ima);
+  image2d<rgb8> gima = data::convert(ima, rgb8());
   debug::draw_graph(gima,
 		    pv,
 		    pw::cst(literal::cyan),
@@ -110,7 +111,7 @@ int main(int argc, char *argv[])
   LG lg(g);
 
   // Find lines (sites) associated to edges in g.
-  typedef fun::i2v::array<p_line2d> i2e_t;
+  typedef fun::v2v::array<p_line2d> i2e_t;
   util::array<p_line2d> lines;
   mln_edge_iter_(G) e(g);
   for_all(e)
@@ -121,7 +122,7 @@ int main(int argc, char *argv[])
   pvlg_t pvlg(lg, convert::to<i2e_t>(lines));
 
 #ifndef NOUT
-  image2d<rgb8> lgima = data::convert(rgb8(), ima);
+  image2d<rgb8> lgima = data::convert(ima, rgb8());
   debug::draw_graph(lgima,
 		    pvlg,
 		    pw::cst(literal::cyan),
@@ -141,7 +142,7 @@ int main(int argc, char *argv[])
   //
   // literal::olive: cos(angle) < max_cos and cos(angle) > - max_cos
   // literal::red: cos(angle) > max_cos or cos(angle) < - max_cos
-  typedef fun::i2v::array<value::rgb8> lgcolor_t;
+  typedef fun::v2v::array<value::rgb8> lgcolor_t;
   lgcolor_t ecolor(pvlg.nsites());
   mln_piter_(lg_ima_t) p(lg_ima.domain());
   for_all (p)
@@ -152,7 +153,7 @@ int main(int argc, char *argv[])
 
 
 #ifndef NOUT
-  image2d<rgb8> lgima2 = data::convert(rgb8(), ima);
+  image2d<rgb8> lgima2 = data::convert(ima, rgb8());
   debug::draw_graph(lgima2, pvlg, pw::cst(literal::cyan), ecolor);
   io::ppm::save(lgima2, "05-line-graph-cleanup.ppm");
 #endif

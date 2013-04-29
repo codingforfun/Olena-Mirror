@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,34 +23,45 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_I2V_ALL_HH
-# define MLN_FUN_I2V_ALL_HH
-
-/// \file
-///
-/// \brief File that includes all integer-to-value functions.
+#include <cstdlib>
+#include <mln/accu/stat/var.hh>
+#include <mln/fun/v2v/mahalanobis.hh>
 
 
-namespace mln
+float my_rand(int c)
 {
-
-  namespace fun
-  {
-
-    /// \brief Namespace of integer-to-value functions.
-    ///
-    /// \ingroup modfun
-    //
-    namespace i2v {}
-
-  }
+  return (1 + c) * float(std::rand()) / RAND_MAX;
 }
 
 
-# include <mln/fun/i2v/all_to.hh>
-# include <mln/fun/i2v/array.hh>
-# include <mln/fun/i2v/value_at_index.hh>
+int main()
+{
+  using namespace mln;
 
+  typedef algebra::vec<3,float> vec3f;
 
+  enum { n = 1000 };
+  vec3f v[n];
 
-#endif // ! MLN_FUN_I2V_ALL_HH
+  for (int i = 0; i < n; ++i)
+    {
+      v[i][0] = my_rand(0);
+      v[i][1] = my_rand(1);
+      v[i][2] = my_rand(2);
+    }
+
+  accu::stat::var<vec3f> a;
+  for (int i = 0; i < n; ++i)
+    a.take(v[i]);
+
+  fun::v2v::mahalanobis<vec3f> f(a.variance(), a.mean());
+  mln_assertion(f(a.mean()) == 0.f);
+
+  float sum = 0.f;
+  for (int i = 0; i < n; ++i)
+    {
+      float f_ = f(v[i]);
+      sum += f_ * f_;
+    }
+  mln_assertion(std::abs(sum / n - 3.f) < 0.00002f);
+}

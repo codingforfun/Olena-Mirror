@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,9 +73,9 @@ int main(int argc, char *argv[])
 					     nlabels, 1);
 
   image2d<value::int_u8>
-    input_gl = data::convert(value::int_u8(), input_bw);
+    input_gl = data::convert(input_bw, value::int_u8());
   input_gl = scribo::preprocessing::deskew(input_gl);
-  input_bw = data::convert(bool(), input_gl);
+  input_bw = data::convert(input_gl, bool());
 
   io::pbm::save(input_bw, argv[2]);
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
   component_set<L>
     filtered = scribo::filter::components_thin(comps, atoi(argv[2]));
-  io::pbm::save(data::convert(bool(), filtered.labeled_image()), argv[3]);
+  io::pbm::save(data::convert(filtered.labeled_image(), bool()), argv[3]);
 
 
 }

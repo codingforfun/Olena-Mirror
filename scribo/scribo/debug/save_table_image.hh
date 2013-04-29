@@ -97,7 +97,7 @@ namespace scribo
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
-      mln_ch_value(I, value::rgb8) out2 = data::convert(value::rgb8(), input);
+      mln_ch_value(I, value::rgb8) out2 = data::convert(input, value::rgb8());
       draw::bounding_boxes(out2, tableboxes.first(), bbox_color);
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);

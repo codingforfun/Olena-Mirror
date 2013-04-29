@@ -26,7 +26,7 @@
 #include <cmath>
 #include <iostream>
 #include <mln/fun/x2x/translation.hh>
-#include <mln/fun/i2v/all_to.hh>
+#include <mln/fun/v2v/all_to.hh>
 
 
 

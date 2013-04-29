@@ -41,7 +41,7 @@
 # include <mln/norm/l2.hh>
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/v2v/all_to.hh>
 # include <mln/debug/format.hh>
 
 # include <mln/value/ops.hh>

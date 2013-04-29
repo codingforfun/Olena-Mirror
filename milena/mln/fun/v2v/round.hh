@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,9 @@ namespace mln
     {
 
       /*! \brief Round the given value.
-	\ingroup modfun
+
+ 	\sa data::transform
+	\ingroup funv2v
        */
       template <typename R>
       struct round : public Function_v2v< round<R> >

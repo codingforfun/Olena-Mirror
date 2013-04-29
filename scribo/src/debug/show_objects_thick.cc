@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     = scribo::primitive::extract::components(input, c8(), nbboxes);
 
 
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+  image2d<value::rgb8> output = data::convert(input, value::rgb8());
   scribo::draw::bounding_boxes(output, comps, literal::red);
 
   component_set<L> filtered_comps

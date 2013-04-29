@@ -81,8 +81,8 @@ namespace mln
 
       // Vertices.
       image2d<unsigned> vpsite(ima.domain());
-      fun::i2v::array<point2d> fv2p(ima.domain().nsites());
-      fun::i2v::array<V> vertex_values(ima.domain().nsites());
+      fun::v2v::array<point2d> fv2p(ima.domain().nsites());
+      fun::v2v::array<V> vertex_values(ima.domain().nsites());
 
       mln_fwd_piter(image2d<V>) p(ima.domain());
       for_all (p)
@@ -97,8 +97,8 @@ namespace mln
       // FIXME: The creation of this window should be generic.
       window2d next_c4_win;
       next_c4_win.insert(0, 1).insert(1, 0);
-      typedef fun::i2v::array<V> edge_values_t;
-      typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
+      typedef fun::v2v::array<V> edge_values_t;
+      typedef fun::v2v::array< util::site_pair<point2d> > edge_sites_t;
       edge_values_t edge_values;
       edge_sites_t edge_sites;
       mln_fwd_qiter_(window2d) q(next_c4_win, p);

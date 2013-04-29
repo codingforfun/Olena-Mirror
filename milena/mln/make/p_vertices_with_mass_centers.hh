@@ -41,7 +41,7 @@
 
 # include <mln/accu/center.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 
 namespace mln
@@ -63,7 +63,7 @@ namespace mln
     //
     template <typename W, typename G>
     inline
-    p_vertices<G, fun::i2v::array<mln_site(W)> >
+    p_vertices<G, fun::v2v::array<mln_site(W)> >
     p_vertices_with_mass_centers(const Image<W>& wst_,
 				 const Graph<G>& g_);
 
@@ -73,7 +73,7 @@ namespace mln
 
     template <typename W, typename G>
     inline
-    p_vertices<G, fun::i2v::array<mln_site(W)> >
+    p_vertices<G, fun::v2v::array<mln_site(W)> >
     p_vertices_with_mass_centers(const Image<W>& wst_,
 				 const Graph<G>& g_)
     {
@@ -85,7 +85,7 @@ namespace mln
       mln_precondition(g.is_valid());
 
       typedef mln_site(W) P;
-      typedef fun::i2v::array<P> vertex_sites_t;
+      typedef fun::v2v::array<P> vertex_sites_t;
 
       // nbasins does not include the background label.
       mln_value(W) nbasins = g.v_nmax() - 1;

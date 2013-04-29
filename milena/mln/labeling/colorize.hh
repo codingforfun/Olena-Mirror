@@ -32,7 +32,7 @@
 /// Fill an image with successive values.
 
 # include <mln/core/concept/image.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/black.hh>
 # include <mln/data/transform.hh>
@@ -211,7 +211,7 @@ namespace mln
       (void) value;
 
       unsigned label_count = value::next(nlabels);
-      static fun::i2v::array<V> f(0);
+      static fun::v2v::array<V> f(0);
       int diff_size = f.size() - label_count;
       if (diff_size < 0)
       {

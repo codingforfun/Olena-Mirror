@@ -18,8 +18,13 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  all_to					\
+  array						\
+  index_of_value				\
+  mahalanobis					\
   norm						\
   projection					\
+  value_at_index				\
   wrap
 
 

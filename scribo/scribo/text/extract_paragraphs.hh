@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -191,7 +191,7 @@ namespace scribo
 
 	// const unsigned nlines = lines.nelements();
 
-	// image2d<value::rgb8> links = data::convert(value::rgb8(), input);
+	// image2d<value::rgb8> links = data::convert(input, value::rgb8());
 	// for (unsigned l = 0; l < nlines; ++l)
 	// {
 	// 	  mln::draw::line(links, lines(l).bbox().pcenter(), lines(left(l)).bbox().pcenter(), literal::red);
@@ -646,7 +646,7 @@ namespace scribo
 	// Only debug
 
 	// {
-	// 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
+	// 	image2d<value::rgb8> debug = data::convert(input, value::rgb8());
 
 	// 	for (unsigned i = 0; i < output.nelements(); ++i)
 	// 	  output(i) = scribo::make::internal::find_root(output, i);

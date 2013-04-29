@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Incrementation function.
+/// \brief Incrementation function.
 
 # include <mln/fun/internal/selector.hh>
 
@@ -42,8 +43,12 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*!
+	\brief Incrementation function.
 
+ 	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename T>
       struct inc
 	: fun::internal::selector_<T, T, inc<T> >::ret

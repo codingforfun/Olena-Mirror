@@ -35,6 +35,277 @@
 
 	* mln/tests/io/magick/Makefile.am: New target.
 
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/fun/Makefile.am: Remove duplicate subdir entry for v2v.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Swap arguments in data::convert.
+
+	* mln/data/convert.hh: Here.
+
+	* apps/morphers/iz.cc,
+	* demos/inter_pixel/inter_pixel.cc,
+	* doc/examples/trash/graph.cc,
+	* doc/mln/convert.dox,
+	* mln/debug/superpose.hh,
+	* mln/morpho/watershed/superpose.hh,
+	* mln/world/binary_2d/subsample.hh,
+	* tests/data/compute_in_window.cc,
+	* tests/data/convert.cc: Update calls to data::convert.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/io/io.dox: List the required dependencies for each I/O
+	type.
+
+2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/image_base.hh: Add more documentation for
+	destroy() method.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/topo/topo.dox: New. Introduce mathematical topology
+	module.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more "See also" statement in function documentation.
+
+	* mln/fun/v2b/always_false.hh,
+	* mln/fun/v2b/always_true.hh,
+	* mln/fun/v2b/lnot.hh,
+	* mln/fun/v2b/threshold_ge.hh,
+	* mln/fun/v2b/threshold_le.hh,
+	* mln/fun/v2v/abs.hh,
+	* mln/fun/v2v/all_to.hh,
+	* mln/fun/v2v/array.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/fun/v2v/component.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/dec.hh,
+	* mln/fun/v2v/enc.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/id.hh,
+	* mln/fun/v2v/inc.hh,
+	* mln/fun/v2v/index_of_value.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/mahalanobis.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/fun/v2v/projection.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh,
+	* mln/fun/v2v/round.hh,
+	* mln/fun/v2v/round_sat.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/fun/v2v/value_at_index.hh,
+	* mln/fun/v2v/wrap.hh,
+	* mln/fun/vv2b/eq.hh,
+	* mln/fun/vv2b/ge.hh,
+	* mln/fun/vv2b/gt.hh,
+	* mln/fun/vv2b/implies.hh,
+	* mln/fun/vv2b/le.hh,
+	* mln/fun/vv2b/lt.hh,
+	* mln/fun/vv2v/diff_abs.hh,
+	* mln/fun/vv2v/land.hh,
+	* mln/fun/vv2v/land_not.hh,
+	* mln/fun/vv2v/lor.hh,
+	* mln/fun/vv2v/lxor.hh,
+	* mln/fun/vv2v/max.hh,
+	* mln/fun/vv2v/min.hh,
+	* mln/fun/vv2v/vec.hh: Here.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/make/relabelfun.hh: Fix bad variable replacement.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Enable BRIEF_MEMBER_DESC.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/split-examples.mk: Regen.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/concept/function.hh: Make Function_vv2b inherit from
+	Function_vv2v.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add function module in Milena documentation.
+
+	* doc/mln/fun/fun.dox: Add new documentation groups.
+
+	* doc/mln/main.dox: Include a figure of the function hierarchy.
+
+	* mln/fun/n2v/white_gaussian.hh,
+	* mln/fun/v2v/abs.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/fun/v2v/component.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/fun/v2v/dec.hh,
+	* mln/fun/v2v/enc.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/id.hh,
+	* mln/fun/v2v/inc.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/fun/v2v/projection.hh,
+	* mln/fun/v2v/qt_rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/fun/v2v/rgb_to_luma.hh,
+	* mln/fun/v2v/round.hh,
+	* mln/fun/v2v/round_sat.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/fun/v2v/wrap.hh,
+	* mln/fun/v2w2v/all.hh,
+	* mln/fun/v2w2v/cos.hh,
+	* mln/fun/v2w_w2v/all.hh,
+	* mln/fun/v2w_w2v/norm.hh,
+	* mln/fun/vv2b/all.hh,
+	* mln/fun/vv2b/eq.hh,
+	* mln/fun/vv2b/ge.hh,
+	* mln/fun/vv2b/gt.hh,
+	* mln/fun/vv2b/implies.hh,
+	* mln/fun/vv2b/le.hh,
+	* mln/fun/vv2b/lt.hh: Move to their respective function group.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/convert.dox: Fix a typo.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Do not regenerate non-generated images.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new figure in Milena documentation.
+
+	* doc/img/function_hierarchy.png,
+	* doc/img/src/function_hierarchy.dia: New.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move fun::i2v, fun::stat and fun::v2i in fun::v2v.
+
+	* mln/fun/i2v/all_to.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/fun/i2v/value_at_index.hh,
+	* mln/fun/stat/mahalanobis.hh,
+	* mln/fun/v2i/index_of_value.hh,
+	* tests/fun/i2v/all_to.cc,
+	* tests/fun/i2v/array.cc,
+	* tests/fun/i2v/value_at_index.cc,
+	* tests/fun/stat/mahalanobis.cc,
+	* tests/fun/v2i/index_of_value.cc: Move...
+
+	* mln/fun/v2v/all_to.hh,
+	* mln/fun/v2v/array.hh,
+	* mln/fun/v2v/index_of_value.hh,
+	* mln/fun/v2v/mahalanobis.hh,
+	* mln/fun/v2v/value_at_index.hh,
+	* tests/fun/v2v/all_to.cc,
+	* tests/fun/v2v/array.cc,
+	* tests/fun/v2v/index_of_value.cc,
+	* tests/fun/v2v/mahalanobis.cc,
+	* tests/fun/v2v/value_at_index.cc,
+	* tests/fun/x2x/composed.cc,
+	* tests/fun/x2x/translation.cc: ... here.
+
+	* mln/fun/stat/all.hh,
+	* mln/fun/i2v/essential.hh,
+	* mln/fun/i2v/all.hh,
+	* mln/fun/v2i/all.hh,
+	* tests/fun/i2v/Makefile.am,
+	* tests/fun/stat/Makefile.am,
+	* tests/fun/v2i/Makefile.am: Remove.
+
+	* tests/fun/Makefile.am: Remove deprecated subdirs.
+
+	* tests/fun/v2v/Makefile.am: Add new targets.
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc,
+	* doc/examples/graph-data.cc,
+	* doc/examples/split/graph-data-4.cc.raw,
+	* doc/examples/trash/graph.cc,
+	* doc/examples/trash/mk_graph.cc,
+	* doc/examples/trash/tuto_bis.cc,
+	* headers.mk,
+	* mln/accu/label_used.hh,
+	* mln/accu/stat/var.hh,
+	* mln/algebra/vec.hh,
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/vertex_image.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/core/routine/init.hxx,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/window.hh,
+	* mln/data/transform.spe.hh,
+	* mln/fun/all.hh,
+	* mln/fun/essential.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/histo/point_from_value.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/mean_values.hh,
+	* mln/labeling/pack.hh,
+	* mln/labeling/relabel.hh,
+	* mln/make/edge_image.hh,
+	* mln/make/p_edges_with_mass_centers.hh,
+	* mln/make/p_vertices_with_mass_centers.hh,
+	* mln/make/relabelfun.hh,
+	* mln/make/voronoi.hh,
+	* mln/metal/vec.hh,
+	* mln/morpho/line_gradient.hh,
+	* mln/trait/ch_function_value.hh,
+	* mln/util/array.hh,
+	* mln/value/lut_vec.hh,
+	* mln/win/ball.hh,
+	* tests/algebra/h_mat.cc,
+	* tests/algebra/mat.cc,
+	* tests/algebra/vec2.cc,
+	* tests/core/image/edge_image.cc,
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/imorph/labeled_image.cc,
+	* tests/core/image/line_graph_image.cc,
+	* tests/core/image/vertex_and_edge_image.cc,
+	* tests/core/image/vertex_image.cc,
+	* tests/core/other/graph_elt_neighborhood.cc,
+	* tests/core/other/graph_elt_window.cc,
+	* tests/core/other/point_set_compatibility.cc,
+	* tests/core/site_set/p_vertices.cc,
+	* tests/draw/graph.cc,
+	* tests/graph/labeling.cc,
+	* tests/make/p_edges_with_mass_centers.cc,
+	* tests/make/p_vertices_with_mass_centers.cc,
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/closing/area_on_vertices.cc,
+	* tests/morpho/graph_image_morpho.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc,
+	* tests/morpho/line_graph_image_morpho.cc,
+	* tests/morpho/line_graph_image_wst.cc,
+	* tests/morpho/opening/area_on_vertices.cc,
+	* tests/pw/image.cc,
+	* tests/unit_test/unit-tests.mk,
+	* tools/area_flooding.cc: Rename fun::i2v, fun::stat and fun::v2i
+	namespaces to v2v.
+
 2013-04-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/concept/function.hh: Document function interface for

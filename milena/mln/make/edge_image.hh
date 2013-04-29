@@ -53,7 +53,7 @@ namespace mln
     //
     template <typename V, typename G>
     mln::edge_image<void,V,G>
-    edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv);
+    edge_image(const Graph<G>& g, const fun::v2v::array<V>& fv);
 
     /// Construct an edge image.
     ///
@@ -138,7 +138,7 @@ namespace mln
     template <typename V, typename G>
     inline
     mln::edge_image<void,V,G>
-    edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv)
+    edge_image(const Graph<G>& g, const fun::v2v::array<V>& fv)
     {
       mln_trace("make::edge_image");
       mln_precondition(exact(g).is_valid());

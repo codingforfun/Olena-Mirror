@@ -1,3 +1,23 @@
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Notify changes in data::convert prototype.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cite papers in documentation.
+
+	* mln/linear/log.hh,
+	* mln/topo/skeleton/crest.hh: Here.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/doc.bib: Add more references.
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Do not configure milena/tests/fun/i2v and
+	milena/tests/fun/stat.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove unstable viewer.

@@ -164,7 +164,7 @@ namespace mln
 
   protected:
     /// Update bounding boxes information.
-    void update_data(const fun::i2v::array<mln_value(I)>& relabel_fun);
+    void update_data(const fun::v2v::array<mln_value(I)>& relabel_fun);
 
     template <typename F>
     void relabel_(const Function_v2v<F>& f);
@@ -177,7 +177,7 @@ namespace mln
     void init_update_data_();
     void prepare_update_data_(const mln_value(I)& lbl,
 			      const mln_value(I)& new_lbl);
-    void update_data_(const fun::i2v::array<mln_value(I)>& relabel_fun);
+    void update_data_(const fun::v2v::array<mln_value(I)>& relabel_fun);
     /// @}
   };
 
@@ -230,7 +230,7 @@ namespace mln
     const F& f = exact(f_);
     mln_value(I) new_nlabels;
 
-    fun::i2v::array<mln_value(I)>
+    fun::v2v::array<mln_value(I)>
       packed_relabel_fun = make::relabelfun(f,
 					    this->data_->nlabels_,
 					    new_nlabels);
@@ -256,7 +256,7 @@ namespace mln
     const F& f = exact(f_);
 
     // Relabel the underlying image.
-    typedef fun::i2v::array<mln_value(I)> fv2v_t;
+    typedef fun::v2v::array<mln_value(I)> fv2v_t;
     fv2v_t fv2v = make::relabelfun(f,
 				   this->data_->nlabels_,
 				   this->data_->nlabels_);
@@ -280,7 +280,7 @@ namespace mln
 
   template <typename I, typename E>
   void
-  labeled_image_base<I,E>::update_data(const fun::i2v::array<mln_value(I)>& relabel_fun)
+  labeled_image_base<I,E>::update_data(const fun::v2v::array<mln_value(I)>& relabel_fun)
   {
     util::array<accu::shape::bbox<mln_psite(I)> >
       new_bboxes(mln::value::next(this->data_->nlabels_));
@@ -350,7 +350,7 @@ namespace mln
   template <typename I, typename E>
   void
   labeled_image_base<I,E>::update_data_(
-    const fun::i2v::array<mln_value(I)>& relabel_fun)
+    const fun::v2v::array<mln_value(I)>& relabel_fun)
   {
     (void) relabel_fun;
     // No-Op.

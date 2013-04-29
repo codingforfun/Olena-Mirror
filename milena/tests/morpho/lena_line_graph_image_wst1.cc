@@ -58,7 +58,7 @@
 #include <mln/convert/to_window.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/site_pair.hh>
 #include <mln/core/image/edge_image.hh>
 
@@ -122,8 +122,8 @@ int main()
   // Edges.
   window2d next_c4_win;
   next_c4_win.insert(0, 1).insert(1, 0);
-  typedef fun::i2v::array<int> edge_values_t;
-  typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
+  typedef fun::v2v::array<int> edge_values_t;
+  typedef fun::v2v::array< util::site_pair<point2d> > edge_sites_t;
   edge_values_t edge_values;
   edge_sites_t edge_sites;
   mln_fwd_qiter_(window2d) q(next_c4_win, p);

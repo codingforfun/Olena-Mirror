@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,7 @@ int main()
 
     accu::stat::mean<int> m;
     image2d<float> res = data::impl::generic::compute_in_window(m, ima, win_c8p());
-    image2d<int> res_i = data::convert(int(), res);
+    image2d<int> res_i = data::convert(res, int());
 
     image2d<int> ref = make::image2d(data);
 
@@ -69,7 +70,7 @@ int main()
 
     accu::stat::mean<int> m;
     image2d<float> res = data::compute_in_window(m, ima, win_c8p());
-    image2d<int> res_i = data::convert(int(), res);
+    image2d<int> res_i = data::convert(res, int());
 
     image2d<int> ref = make::image2d(data);
 

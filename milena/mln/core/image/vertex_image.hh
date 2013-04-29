@@ -37,7 +37,7 @@
 # include <mln/core/image/graph_elt_mixed_neighborhood.hh>
 # include <mln/core/site_set/p_vertices.hh>
 # include <mln/pw/internal/image_base.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/util/internal/id2element.hh>
 
@@ -57,8 +57,8 @@ namespace mln
 
     template <typename P, typename V, typename G>
     struct image_< vertex_image<P,V,G> >
-      : pw_image_<fun::i2v::array<V>,
-		  p_vertices<util::graph, fun::i2v::array<P> >,
+      : pw_image_<fun::v2v::array<V>,
+		  p_vertices<util::graph, fun::v2v::array<P> >,
 		  vertex_image<P,V,G> >
     {
     };
@@ -80,10 +80,10 @@ namespace mln
       typedef typename vertex_image<P,V,G>::site_function_t site_function_t;
 
       template <typename F>
-      data(const fun::i2v::array<V>& vertex_values,
+      data(const fun::v2v::array<V>& vertex_values,
 	   const p_vertices<G,F>& pv);
 
-      fun::i2v::array<V> f_;
+      fun::v2v::array<V> f_;
       p_vertices<G,site_function_t> domain_;
     };
 
@@ -91,12 +91,12 @@ namespace mln
 
 
 
-  /// Construct a vertex image from a fun::i2v::array and a p_vertices.
-  /// image = fun::i2v::array | p_vertices.
+  /// Construct a vertex image from a fun::v2v::array and a p_vertices.
+  /// image = fun::v2v::array | p_vertices.
   template <typename V, typename G, typename P>
   vertex_image<P,V,G>
-  operator | (const fun::i2v::array<V>& vertex_values,
-	      const p_vertices<G,fun::i2v::array<P> >& pv);
+  operator | (const fun::v2v::array<V>& vertex_values,
+	      const p_vertices<G,fun::v2v::array<P> >& pv);
 
 
   // Vertex_image_fsite_selector
@@ -107,7 +107,7 @@ namespace mln
     template <typename P, typename G>
     struct vfsite_selector
     {
-      typedef fun::i2v::array<P> site_function_t;
+      typedef fun::v2v::array<P> site_function_t;
     };
 
 
@@ -128,11 +128,11 @@ namespace mln
   //
   template <typename P, typename V, typename G = util::graph>
   class vertex_image
-    : public pw::internal::image_base<fun::i2v::array<V>,
+    : public pw::internal::image_base<fun::v2v::array<V>,
 				      p_vertices<G, typename internal::vfsite_selector<P,G>::site_function_t >,
 				      vertex_image<P,V,G> >
   {
-    typedef pw::internal::image_base<fun::i2v::array<V>,
+    typedef pw::internal::image_base<fun::v2v::array<V>,
 				     p_vertices<G, typename internal::vfsite_selector<P,G>::site_function_t >,
 				     vertex_image<P,V,G> > super_;
 
@@ -175,7 +175,7 @@ namespace mln
     vertex_image();
     vertex_image(const p_vertices<G, site_function_t>& pv);
     vertex_image(const p_vertices<G, site_function_t>& pv,
-		 const Function_v2v< fun::i2v::array<V> >& vertex_values);
+		 const Function_v2v< fun::v2v::array<V> >& vertex_values);
     template <typename FV>
     vertex_image(const p_vertices<G, site_function_t>& pv,
 		 const Function_v2v<FV>& vertex_values);
@@ -207,7 +207,7 @@ namespace mln
   template <typename P, typename V, typename G, typename J>
   void init_(tag::image_t, vertex_image<P,V,G>& target, const Image<J>& model)
   {
-    fun::i2v::array<V> f;
+    fun::v2v::array<V> f;
     init_(tag::function, f, exact(model));
     p_vertices<G,typename vertex_image<P,V,G>::site_function_t> s;
     init_(tag::domain, s, exact(model));
@@ -219,8 +219,8 @@ namespace mln
   template <typename V, typename G, typename P>
   inline
   vertex_image<P,V,G>
-  operator | (const fun::i2v::array<V>& vertex_values,
-	      const p_vertices<G, fun::i2v::array<P> >& pv)
+  operator | (const fun::v2v::array<V>& vertex_values,
+	      const p_vertices<G, fun::v2v::array<P> >& pv)
   {
     vertex_image<P,V,G> tmp(pv, vertex_values);
     return tmp;
@@ -236,7 +236,7 @@ namespace mln
     template <typename P, typename V, typename G>
     template <typename F>
     inline
-    data< mln::vertex_image<P,V,G> >::data(const fun::i2v::array<V>& f,
+    data< mln::vertex_image<P,V,G> >::data(const fun::v2v::array<V>& f,
 					   const p_vertices<G,F>& ps)
       : f_(f),
 	domain_(ps)
@@ -258,14 +258,14 @@ namespace mln
   template <typename P, typename V, typename G>
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv)
-    : super_(fun::i2v::array<V>(pv.nsites()), pv)
+    : super_(fun::v2v::array<V>(pv.nsites()), pv)
   {
   }
 
   template <typename P, typename V, typename G>
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv,
-				    const Function_v2v< fun::i2v::array<V> >& vertex_values)
+				    const Function_v2v< fun::v2v::array<V> >& vertex_values)
     : super_(exact(vertex_values), pv)
   {
   }
@@ -275,7 +275,7 @@ namespace mln
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv,
 				    const Function_v2v<FV>& vertex_values)
-    : super_(convert::to<fun::i2v::array<V> >(exact(vertex_values)), pv)
+    : super_(convert::to<fun::v2v::array<V> >(exact(vertex_values)), pv)
   {
     mlc_equal(mln_result(FV),V)::check();
   }

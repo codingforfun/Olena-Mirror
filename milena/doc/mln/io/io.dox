@@ -12,10 +12,15 @@
  */
 
 /*! \defgroup iodicom DICOM
- *
- * \brief DICOM I/O routines.
- *
- * \ingroup iogroup
+
+  \brief DICOM I/O routines.
+
+  These routines require the following packages:
+
+  \li libgdcm2.0
+  \li libgdcm2-dev
+
+  \ingroup iogroup
  */
 
 /*! \defgroup iodump Dump
@@ -26,10 +31,15 @@
  */
 
 /*! \defgroup iofits FITS
- *
- * \brief FITS I/O routines.
- *
- * \ingroup iogroup
+
+  \brief FITS I/O routines.
+
+  These routines require the following packages:
+
+  \li libcfitsio3
+  \li libcfitsio3-dev
+
+  \ingroup iogroup
  */
 
 /*! \defgroup iofld FLD
@@ -40,10 +50,29 @@
  */
 
 /*! \defgroup iomagick ImageMagick
- *
- * \brief ImageMagick I/O routines.
- *
- * \ingroup iogroup
+
+  \brief ImageMagick I/O routines.
+
+  These routines require ImageMagick or GraphicsMagick to be installed.
+
+  GraphicsMagick requires the following packages:
+
+  \li libgraphismagick++-3
+  \li graphicsmagick
+  \li graphicsmagick-imagemagick-compat
+  \li libgraphicsmagick++3
+  \li libgraphicsmagick3
+  \li libgraphicsmagick++1-dev
+  \li libgraphicsmagick1-dev
+  \li graphicsmagick-libmagick-dev-compat
+
+  ImageMagick requires the following packages:
+
+  \li libmagick++5
+  \li libmagick++-dev
+  \li imagemagick
+
+  \ingroup iogroup
  */
 
 /*! \defgroup iooff OFF
@@ -96,10 +125,15 @@
  */
 
 /*! \defgroup iotiff TIFF
- *
- * \brief TIFF I/O routines.
- *
- * \ingroup iogroup
+
+  \brief TIFF I/O routines.
+
+  These routines require the following packages:
+
+  \li libtiff5
+  \li libtiff5-dev
+
+  \ingroup iogroup
  */
 
 /*! \defgroup iotxt TXT
@@ -110,8 +144,15 @@
  */
 
 /*! \defgroup iopdf PDF
- *
- * \brief PDF I/O routines.
- *
- * \ingroup iogroup
+
+  \brief PDF I/O routines.
+
+  These routines require the following packages:
+
+  \li libpoppler5
+  \li libpoppler-dev
+  \li libpoppler-cpp-dev
+  \li libpoppler-qt-dev
+
+  \ingroup iogroup
  */

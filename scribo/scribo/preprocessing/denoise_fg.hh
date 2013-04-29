@@ -40,7 +40,7 @@
 # include <mln/core/alias/neighb2d.hh>
 
 # include <mln/util/array.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 # include <mln/data/transform.hh>
 
@@ -96,7 +96,7 @@ namespace scribo
       mln::util::array<unsigned>
 	result = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
-      mln::fun::i2v::array<bool> f(nlabels + 1, true);
+      mln::fun::v2v::array<bool> f(nlabels + 1, true);
       f(0) = false;
       for (unsigned i = 1; i <= nlabels; ++i)
 	if (result(i) < min_card)

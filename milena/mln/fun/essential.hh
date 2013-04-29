@@ -33,7 +33,7 @@
 
 # include <mln/fun/c.hh>
 # include <mln/fun/ops.hh>
-# include <mln/fun/i2v/essential.hh>
+# include <mln/fun/v2v/essential.hh>
 
 # include <mln/fun/p2b/essential.hh>
 # include <mln/fun/p2v/essential.hh>

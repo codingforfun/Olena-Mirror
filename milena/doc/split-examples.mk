@@ -94,6 +94,7 @@ SPLIT_EXAMPLES = \
   $(srcdir)/examples/split/tuto3_rw_image-5.cc.raw \
   $(srcdir)/examples/split/tuto3_rw_image-6.cc.raw \
   $(srcdir)/examples/split/tuto3_rw_image-7.cc.raw \
+  $(srcdir)/examples/split/tuto3_rw_image-8.cc.raw \
   $(srcdir)/examples/split/tuto4_point2d-1.cc.raw \
   $(srcdir)/examples/split/tuto4_site_set_create-1.cc.raw \
   $(srcdir)/examples/split/tuto4_site_set_create-2.cc.raw \
@@ -828,7 +829,7 @@ $(srcdir)/examples/split/tuto3_rw_image.cc.stamp: $(srcdir)/examples/tuto3_rw_im
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 
-$(srcdir)/examples/split/tuto3_rw_image-1.cc.raw $(srcdir)/examples/split/tuto3_rw_image-2.cc.raw $(srcdir)/examples/split/tuto3_rw_image-3.cc.raw $(srcdir)/examples/split/tuto3_rw_image-4.cc.raw $(srcdir)/examples/split/tuto3_rw_image-5.cc.raw $(srcdir)/examples/split/tuto3_rw_image-6.cc.raw $(srcdir)/examples/split/tuto3_rw_image-7.cc.raw: $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
+$(srcdir)/examples/split/tuto3_rw_image-1.cc.raw $(srcdir)/examples/split/tuto3_rw_image-2.cc.raw $(srcdir)/examples/split/tuto3_rw_image-3.cc.raw $(srcdir)/examples/split/tuto3_rw_image-4.cc.raw $(srcdir)/examples/split/tuto3_rw_image-5.cc.raw $(srcdir)/examples/split/tuto3_rw_image-6.cc.raw $(srcdir)/examples/split/tuto3_rw_image-7.cc.raw $(srcdir)/examples/split/tuto3_rw_image-8.cc.raw: $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \

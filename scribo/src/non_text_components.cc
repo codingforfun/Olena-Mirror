@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
   t.stop();
   std::cout << t << std::endl;
 
-  mln::io::pbm::save(data::convert(bool(), doc.elements().labeled_image()), argv[2]);
+  mln::io::pbm::save(data::convert(doc.elements().labeled_image(), bool()), argv[2]);
 
   scribo::io::img::save(doc, out_img + "_debug_wo_image.png", scribo::io::img::DebugWoImage);
   scribo::io::img::save(doc, out_img + "_debug_with_image.png", scribo::io::img::DebugWithImage);

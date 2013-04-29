@@ -35,7 +35,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/math/max.hh>
 # include <mln/value/next.hh>
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 
 namespace mln
@@ -50,7 +50,7 @@ namespace mln
     /// \ingroup modaccuvalues
     //
     template <typename L>
-    struct label_used : public mln::accu::internal::base< const fun::i2v::array<bool>& , label_used<L> >
+    struct label_used : public mln::accu::internal::base< const fun::v2v::array<bool>& , label_used<L> >
     {
       typedef L argument;
 
@@ -66,7 +66,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      const fun::i2v::array<bool>& to_result() const;
+      const fun::v2v::array<bool>& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -74,7 +74,7 @@ namespace mln
 
     protected:
       /// True if a label is used.
-      fun::i2v::array<bool> label_used_;
+      fun::v2v::array<bool> label_used_;
     };
 
 
@@ -138,7 +138,7 @@ namespace mln
 
     template <typename L>
     inline
-    const fun::i2v::array<bool>&
+    const fun::v2v::array<bool>&
     label_used<L>::to_result() const
     {
       return label_used_;

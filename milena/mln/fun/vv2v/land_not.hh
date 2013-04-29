@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,12 @@ namespace mln
     namespace vv2v
     {
 
-      /// Functor computing logical and-not between two values.
+      /*!
+	\brief Functor computing logical and-not between two values.
+
+	\sa data::transform
+	\ingroup funvv2v
+      */
       template <typename L, typename R = L>
       struct land_not : public Function_vv2v< land_not<L,R> >
       {

@@ -106,7 +106,7 @@ namespace scribo
       mln_trace("scribo::debug::bboxes_enlarged_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) output = data::convert(input, value::rgb8());
 
       for_all_lines(l, lines)
 	if (! lines(l).is_hidden())

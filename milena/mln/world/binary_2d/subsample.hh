@@ -75,7 +75,7 @@ namespace mln
 	if (n == 0)
 	{
 	  image2d<value::int_u8>
-	    output = data::convert(int_u8(), input);
+	    output = data::convert(input, int_u8());
 
 	  return output;
 	}

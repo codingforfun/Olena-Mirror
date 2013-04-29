@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -427,7 +428,7 @@ namespace scribo
 	    raw_group_image = group::apply(groups);
 
 	  mln_ch_value(I,value::rgb8)
-	    decision_image = data::convert(value::rgb8(), input);
+	    decision_image = data::convert(input, value::rgb8());
 
 	  scribo::draw::bounding_boxes(decision_image,
 				       filtered_components, literal::green);
@@ -438,7 +439,7 @@ namespace scribo
 					    decision_image,
 					    "group_and_object_image.ppm");
 
-	  decision_image = data::convert(value::rgb8(), input);
+	  decision_image = data::convert(input, value::rgb8());
 	  scribo::draw::bounding_boxes(decision_image,
 				       raw_group_image, literal::blue);
 
@@ -459,7 +460,7 @@ namespace scribo
 	mln_ch_value(I,value::rgb8) decision_image;
 	if (scribo::debug::logger().is_enabled())
 	{
-	  decision_image = data::convert(value::rgb8(), input);
+	  decision_image = data::convert(input, value::rgb8());
 
 	  scribo::draw::groups_bboxes(decision_image, groups, literal::red);
 	  scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
@@ -484,7 +485,7 @@ namespace scribo
 #  ifndef SCRIBO_NDEBUG
 	if (scribo::debug::logger().is_enabled())
 	{
-	  decision_image = data::convert(value::rgb8(), input);
+	  decision_image = data::convert(input, value::rgb8());
 
 	  scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
 				      literal::red);
@@ -521,7 +522,7 @@ namespace scribo
 #  ifndef SCRIBO_NDEBUG
 	if (scribo::debug::logger().is_enabled())
 	{
-	  decision_image = data::convert(value::rgb8(), input);
+	  decision_image = data::convert(input, value::rgb8());
 
 	  scribo::draw::groups_bboxes(decision_image, filtered_thin_groups,
 				      literal::red);

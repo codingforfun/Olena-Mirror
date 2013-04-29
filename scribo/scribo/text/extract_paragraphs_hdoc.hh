@@ -192,7 +192,7 @@ namespace scribo
 
 	// const unsigned nlines = lines.nelements();
 
-	// image2d<value::rgb8> links = data::convert(value::rgb8(), input);
+	// image2d<value::rgb8> links = data::convert(input, value::rgb8());
 	// for (unsigned l = 0; l < nlines; ++l)
 	// {
 	// 	  mln::draw::line(links, lines(l).bbox().pcenter(), lines(left(l)).bbox().pcenter(), literal::red);
@@ -784,7 +784,7 @@ namespace scribo
 
 	// Only debug
 	// {
-	// 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
+	// 	image2d<value::rgb8> debug = data::convert(input, value::rgb8());
 
 	// 	mln::util::array<accu::shape::bbox<point2d> > nbbox(output.nelements());
 	// 	for_all_lines(l, lines)

@@ -224,7 +224,7 @@ namespace mln
     bool is_valid() const;
 
     operator util::index() const;
-    operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int.
+    operator int() const;      // To interoperate, e.g., with fun::v2v expecting an int.
     operator unsigned() const; // To avoid ambiguity when an unsigned is expected.
 
     /// \cond INTERNAL_API

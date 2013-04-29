@@ -34,7 +34,7 @@
 
 #include <mln/value/label_8.hh>
 
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 
 #include <mln/graph/labeling.hh>
 #include <mln/graph/to_neighb.hh>
@@ -76,7 +76,7 @@ int main()
   gr.add_edge(4,5);
 
 
-  typedef fun::i2v::array<point2d> fsite_t;
+  typedef fun::v2v::array<point2d> fsite_t;
   fsite_t fsite(6);
   fsite(0) = point2d(0,0);
   fsite(1) = point2d(2,2);

@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 				   c4(), make::w_window2d(ww),
 				   mln_max(int_u8));
   dmap = morpho::closing::area(dmap, c4(), 500);
-  
+
   io::pgm::save(dmap, "tmp_dmap.pgm");
 
 
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
   io::ppm::save(labeling::colorize(value::rgb8(), ws), "tmp_ws.ppm");
 
   {
-    image2d<value::rgb8> ws_ = data::convert(value::rgb8(), input);
+    image2d<value::rgb8> ws_ = data::convert(input, value::rgb8());
     data::fill((ws_ | (pw::value(ws) == pw::cst(0))).rw(), literal::red);
     io::ppm::save(ws_, "tmp_ws_superpose.ppm");
 

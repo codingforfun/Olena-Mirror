@@ -81,7 +81,7 @@ namespace scribo
       /// FIXME: Check that objects has been computed from input.
 
       mln_ch_value(I,value::rgb8)
-	links_decision_image = data::convert(value::rgb8(), input);
+	links_decision_image = data::convert(input, value::rgb8());
 
       for_all_comps(i, comps)
 	mln::draw::box(links_decision_image, comps(i).bbox(), literal::blue);

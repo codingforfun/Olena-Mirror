@@ -1,0 +1,6 @@
+/*! \defgroup mlntopo Mathematical Topology
+ *
+ * \brief Algorithms dedicated to Mathematical Topology.
+ *
+ * \ingroup modroutines
+ */

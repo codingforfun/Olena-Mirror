@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 						       atoi(argv[3]));
 
   L& hlines_ima = hlines.labeled_image_();
-  image2d<bool> output = data::convert(bool(), hlines_ima);
+  image2d<bool> output = data::convert(hlines_ima, bool());
   data::fill((output | (pw::value(vlines.labeled_image()) != 0u)).rw(), true);
   io::pbm::save(output, argv[4]);
 

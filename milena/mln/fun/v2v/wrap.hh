@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,6 +48,12 @@ namespace mln
     namespace v2v
     {
 
+      /*! \brief Function to wrap values such as 0 -> 0 and [1, L_max]
+	maps to [1, Lmax] (using modulus).
+
+ 	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename L>
       struct wrap : public Function_v2v< wrap<L> >
       {

@@ -152,7 +152,7 @@ namespace scribo
 	      bg_id = c;
 	    }
 
-	  mln::fun::i2v::array<bool> f(4, true);
+	  mln::fun::v2v::array<bool> f(4, true);
 	  f(0) = false;
 	  f(bg_id) = false;
 	  labeling::relabel_inplace(img_lbl8, 4, f);

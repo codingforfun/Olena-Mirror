@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,14 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_I2V_ALL_TO_HH
-# define MLN_FUN_I2V_ALL_TO_HH
+#ifndef MLN_FUN_V2V_INDEX_OF_VALUE_HH
+# define MLN_FUN_V2V_INDEX_OF_VALUE_HH
 
 /// \file
 ///
-/// FIXME.
+/// \brief File that define a function that gives an index per value.
 
 # include <mln/core/concept/function.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
@@ -39,67 +41,65 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
+      /*! File that define a function that gives an index per value.
+
+ 	\sa data::transform
+	\ingroup funv2v
+       */
       template <typename T>
-      struct all_to : public Function_v2v< all_to<T> >
+      struct index_of_value : Function_v2v< index_of_value<T> >,
+			      private metal::bool_<(mln_dim(T) == 1)>::check_t
       {
-	typedef T result;
-	all_to(T t);
-	template <typename U>
-	T operator()(const U&) const;
-      private:
-	T t_;
+	typedef unsigned result;
+	unsigned operator()(const T& v) const;
       };
 
-    } // end of namespace mln::fun::i2v
+      template <>
+      struct index_of_value<bool> : Function_v2v< index_of_value<bool> >
+      {
+	typedef unsigned result;
+	unsigned operator()(bool b) const;
+      };
 
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::i2v::all_to<T> all_to(T t);
+      template <typename T>
+      unsigned
+      meta_index_of_value(const T& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace fun
-  {
-
-    namespace i2v
-    {
-
       template <typename T>
       inline
-      all_to<T>::all_to(T t)
-	: t_(t)
+      unsigned
+      index_of_value<T>::operator()(const T& v) const
       {
+	return unsigned( int(v) - int(mln_min(T)) );
+      }
+
+      inline
+      unsigned index_of_value<bool>::operator()(bool b) const
+      {
+	return b ? 1u : 0u;
       }
 
       template <typename T>
-      template <typename U>
       inline
-      T
-      all_to<T>::operator()(const U&) const
+      unsigned
+      meta_index_of_value(const T& v)
       {
-	return t_;
+	index_of_value<T> f;
+	return f(v);
       }
-
-    } // end of namespace mln::fun::i2v
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  inline
-  fun::i2v::all_to<T> all_to(T t)
-  {
-    fun::i2v::all_to<T> tmp(t);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
 } // end of namespace mln
 
-
-#endif // ! MLN_FUN_I2V_ALL_TO_HH
+#endif // ! MLN_FUN_V2V_INDEX_OF_VALUE_HH

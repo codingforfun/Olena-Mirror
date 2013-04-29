@@ -82,7 +82,7 @@ namespace scribo
       const component_set<L>& comps = links.components();
 
       mln_ch_value(I,value::rgb8)
-	links_image = data::convert(value::rgb8(), input);
+	links_image = data::convert(input, value::rgb8());
 
       if (draw_bboxes)
 	scribo::draw::bounding_boxes(links_image, comps, literal::blue);

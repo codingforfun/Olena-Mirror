@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -36,6 +36,12 @@
 # include <mln/core/routine/duplicate.hh>
 # include <mln/fun/v2v/convert.hh>
 # include <mln/data/transform.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/concept/value.hh>
+
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 
 namespace mln
@@ -43,6 +49,11 @@ namespace mln
 
   namespace data
   {
+
+    // template <typename V, typename I>
+    // mln_ch_value(I, V)
+    // convert(const V& v, const I& input);
+
 
     /*! \brief Convert the image \p input by changing the value type.
 
@@ -55,9 +66,9 @@ namespace mln
 
       \ingroup mlndata convert
      */
-    template <typename V, typename I>
+    template <typename I, typename V>
     mln_ch_value(I, V)
-    convert(const V& v, const Image<I>& input);
+    convert(const Image<I>& input, const V& v);
 
     /*! \overload
       \brief Convert the image \p input by changing the value type.
@@ -68,9 +79,11 @@ namespace mln
 
       \ingroup mlndata convert
     */
-    template <typename F, typename I>
+    template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
-    convert(const Function_v2v<F>& convert_function, const Image<I>& input);
+    convert(const Image<I>& input, const mln_result(F)& v,
+	    const Function_v2v<F>& convert_function);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -165,10 +178,10 @@ namespace mln
 
     // Facade.
 
-    template <typename V, typename I>
+    template <typename I, typename V>
     inline
     mln_ch_value(I, V)
-    convert(const V& v, const Image<I>& input)
+    convert(const Image<I>& input, const V& v)
     {
       mln_trace("data::convert");
 
@@ -179,13 +192,15 @@ namespace mln
       return output;
     }
 
-    template <typename F, typename I>
+    template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
-    convert(const Function_v2v<F>& convert_function, const Image<I>& input)
+    convert(const Image<I>& input, const mln_result(F)& v,
+	      const Function_v2v<F>& convert_function)
     {
       mln_trace("data::convert");
       typedef mln_result(F) V;
       internal::convert_tests(V(), input);
+      (void) v;
 
       mln_ch_value(I, V) output = data::transform(input, convert_function);
 

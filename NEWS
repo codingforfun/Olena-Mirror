@@ -17,6 +17,9 @@
 
 	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
+	* Make prototype of data::convert() more consistent with the
+          rest of the library.
+
   * Scribo
 
 	* New logger class.

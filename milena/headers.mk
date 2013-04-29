@@ -516,11 +516,6 @@ mln/fun/component/green.hh \
 mln/fun/component/red.hh \
 mln/fun/component/rgb.hh \
 mln/fun/essential.hh \
-mln/fun/i2v/all.hh \
-mln/fun/i2v/all_to.hh \
-mln/fun/i2v/array.hh \
-mln/fun/i2v/essential.hh \
-mln/fun/i2v/value_at_index.hh \
 mln/fun/internal/ch_function_value_impl.hh \
 mln/fun/internal/resolve.hh \
 mln/fun/internal/selector.hh \
@@ -547,8 +542,6 @@ mln/fun/p2v/iota.hh \
 mln/fun/p2v/ternary.hh \
 mln/fun/param.hh \
 mln/fun/spe/unary.hh \
-mln/fun/stat/all.hh \
-mln/fun/stat/mahalanobis.hh \
 mln/fun/unary.hh \
 mln/fun/v2b/all.hh \
 mln/fun/v2b/always_false.hh \
@@ -557,10 +550,10 @@ mln/fun/v2b/essential.hh \
 mln/fun/v2b/lnot.hh \
 mln/fun/v2b/threshold_ge.hh \
 mln/fun/v2b/threshold_le.hh \
-mln/fun/v2i/all.hh \
-mln/fun/v2i/index_of_value.hh \
 mln/fun/v2v/abs.hh \
 mln/fun/v2v/all.hh \
+mln/fun/v2v/all_to.hh \
+mln/fun/v2v/array.hh \
 mln/fun/v2v/cast.hh \
 mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/component.hh \
@@ -571,7 +564,9 @@ mln/fun/v2v/essential.hh \
 mln/fun/v2v/hsl_to_rgb.hh \
 mln/fun/v2v/id.hh \
 mln/fun/v2v/inc.hh \
+mln/fun/v2v/index_of_value.hh \
 mln/fun/v2v/linear.hh \
+mln/fun/v2v/mahalanobis.hh \
 mln/fun/v2v/norm.hh \
 mln/fun/v2v/projection.hh \
 mln/fun/v2v/qt_rgb_to_int_u.hh \
@@ -582,6 +577,7 @@ mln/fun/v2v/rgb_to_luma.hh \
 mln/fun/v2v/round.hh \
 mln/fun/v2v/round_sat.hh \
 mln/fun/v2v/saturate.hh \
+mln/fun/v2v/value_at_index.hh \
 mln/fun/v2v/wrap.hh \
 mln/fun/v2w2v/all.hh \
 mln/fun/v2w2v/cos.hh \

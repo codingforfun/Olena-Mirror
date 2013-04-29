@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,12 @@ namespace mln
     namespace v2b
     {
 
-      /// Functor computing logical-not on a value.
+      /*!
+	\brief Functor computing logical-not on a value.
+
+ 	\sa data::transform
+	\ingroup funv2b
+      */
       template <typename V>
       struct lnot : public Function_v2b< lnot<V> >
       {

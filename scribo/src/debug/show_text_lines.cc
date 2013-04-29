@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,7 +84,7 @@ int main(int argc, char* argv[])
 
   // Color image with line bboxes.
   {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+    image2d<value::rgb8> output = data::convert(input, value::rgb8());
     for_all_lines(l, lines)
       if (lines(l).is_textline())
 	mln::draw::box(output, lines(l).bbox(), literal::red);

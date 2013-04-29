@@ -51,7 +51,7 @@
 
 # include <mln/accu/math/count.hh>
 
-# include <mln/fun/i2v/array.hh>
+# include <mln/fun/v2v/array.hh>
 
 
 # include <scribo/core/macros.hh>
@@ -169,7 +169,7 @@ namespace scribo
 	  // order to map properly the groups and their new component
 	  // id.
 	  //
-	  mln::fun::i2v::array<mln_value(L)> group_2_comp;
+	  mln::fun::v2v::array<mln_value(L)> group_2_comp;
 	  component_set<L>
 	    components = primitive::group::apply(groups, group_2_comp);
 
@@ -185,7 +185,7 @@ namespace scribo
 
 	  // Will 'True' if a group has at least two background
 	  // components.
-	  fun::i2v::array<bool>
+	  fun::v2v::array<bool>
 	    to_keep(value::next(components.nelements()), false);
 
 	  const L& lbl = components.labeled_image();

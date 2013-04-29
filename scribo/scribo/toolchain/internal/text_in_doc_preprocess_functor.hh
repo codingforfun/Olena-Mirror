@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -278,7 +278,7 @@ namespace scribo
 	else // binarization_algo == Convert
 	{
 	  on_new_progress_label("Binarization (Binary conversion)");
-	  output = mln::data::convert(bool(), intensity_ima);
+	  output = mln::data::convert(intensity_ima, bool());
 	}
 
 	on_progress();

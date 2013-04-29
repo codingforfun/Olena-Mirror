@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/fun/i2v/array.hh>
+#include <mln/fun/v2v/array.hh>
 #include <mln/util/site_pair.hh>
 #include <mln/core/image/edge_image.hh>
 
@@ -81,7 +81,7 @@ int main()
      attached to a vertex graph (image) rather than building them
      manually.  */
   typedef util::site_pair<point2d> site_t;
-  typedef fun::i2v::array<site_t> fsite_t;
+  typedef fun::v2v::array<site_t> fsite_t;
   fsite_t sites(5);
   sites(0) = site_t(point2d(0,0), point2d(2,2)); // Site associated to edge 0.
   sites(1) = site_t(point2d(2,2), point2d(0,4)); // Site associated to edge 1.
@@ -94,7 +94,7 @@ int main()
   `-------------*/
 
   // Graph values.
-  typedef fun::i2v::array<unsigned> viota_t;
+  typedef fun::v2v::array<unsigned> viota_t;
   viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;

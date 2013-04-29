@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_I2V_ARRAY_HH
-# define MLN_FUN_I2V_ARRAY_HH
+#ifndef MLN_FUN_V2V_ARRAY_HH
+# define MLN_FUN_V2V_ARRAY_HH
 
 /// \file
 ///
@@ -37,6 +37,7 @@
 # include <mln/util/array.hh>
 # include <mln/metal/equal.hh>
 # include <mln/tag/init.hh>
+# include <mln/convert/to.hh>
 
 # include <mln/fun/internal/selector.hh>
 
@@ -45,9 +46,9 @@ namespace mln
 
   /// Forward declaration.
   namespace fun {
-    namespace i2v {
+    namespace v2v {
       template <typename T> class array;
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
   } // end of namespace mln::fun
 
   namespace util {
@@ -58,9 +59,14 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
+      /*! \brief Function mapping an id to a value.
+
+ 	\sa data::transform
+	\ingroup funv2v
+       */
       template <typename T>
       class array
 	: public fun::internal::selector_from_result_<T, array<T> >::ret
@@ -124,21 +130,24 @@ namespace mln
       };
 
 
-      /// Operator<<.
+      /*!
+	\brief Operator<<.
+	\relates fun::v2v::array
+      */
       template <typename T>
       std::ostream& operator<<(std::ostream& ostr,
 			       const array<T>& a);
 
 
       /*!
-	\brief Conversion: fun::i2v::array -> util::array
+	\brief Conversion: fun::v2v::array -> util::array
 	\ingroup fromto
       */
       template <typename T1, typename T2>
       void
-      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
+      from_to_(const fun::v2v::array<T1>& from, util::array<T2>& to);
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
@@ -149,22 +158,22 @@ namespace std
 {
 
   /*!
-    \brief Conversion: std::vectorfun::i2v::array<T> -> fun::i2v::array<T>
+    \brief Conversion: std::vectorfun::v2v::array<T> -> fun::v2v::array<T>
     \ingroup fromto
   */
   template <typename T>
   inline
   void
-  from_to_(const vector<T>& from, mln::fun::i2v::array<T>& to);
+  from_to_(const vector<T>& from, mln::fun::v2v::array<T>& to);
 
   /*!
-    \brief Conversion: std::vector<T> -> mln::fun::i2v::array<U>
+    \brief Conversion: std::vector<T> -> mln::fun::v2v::array<U>
     \ingroup fromto
   */
   template <typename T, typename U>
   inline
   void
-  from_to_(const vector<T>& from, mln::fun::i2v::array<U>& to);
+  from_to_(const vector<T>& from, mln::fun::v2v::array<U>& to);
 
 } // end of namespace std
 
@@ -178,19 +187,19 @@ namespace mln
 
   template <typename T1, typename T2>
   void init_(tag::function_t,
-	     fun::i2v::array<T1>&	  f,
-	     const fun::i2v::array<T2>&	  model)
+	     fun::v2v::array<T1>&	  f,
+	     const fun::v2v::array<T2>&	  model)
   {
     f.init_(model.size());
   }
 
 
-  /// fun::i2v::array
+  /// fun::v2v::array
 
   namespace fun
   {
 
-    namespace i2v
+    namespace v2v
     {
 
       template <typename T>
@@ -332,19 +341,19 @@ namespace mln
         to.resize(from.size());
 
         for (unsigned i = 0; i < from.size(); ++i)
-	  to[i] = convert::to<T2>(from(i));
+	  to[i] = mln::convert::to<T2>(from(i));
       }
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::v2v
 
   } // end of namespace mln::fun
 
 
   template <typename T>
   inline
-  fun::i2v::array<T> array(unsigned n, const T& t)
+  fun::v2v::array<T> array(unsigned n, const T& t)
   {
-    fun::i2v::array<T> tmp(n, t);
+    fun::v2v::array<T> tmp(n, t);
     return tmp;
   }
 
@@ -356,15 +365,15 @@ namespace std
   template <typename T>
   inline
   void
-  from_to_(const vector<T>& from, mln::fun::i2v::array<T>& to)
+  from_to_(const vector<T>& from, mln::fun::v2v::array<T>& to)
   {
-    to = mln::fun::i2v::array<T>(from);
+    to = mln::fun::v2v::array<T>(from);
   }
 
   template <typename T, typename U>
   inline
   void
-  from_to_(const vector<T>& from, mln::fun::i2v::array<U>& to)
+  from_to_(const vector<T>& from, mln::fun::v2v::array<U>& to)
   {
     to.resize(from.nelements());
     for (unsigned i = 0; i < from.size(); ++i)
@@ -375,4 +384,4 @@ namespace std
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_FUN_I2V_ARRAY_HH
+#endif // ! MLN_FUN_V2V_ARRAY_HH

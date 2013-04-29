@@ -574,11 +574,6 @@ mln_fun_component_green \
 mln_fun_component_red \
 mln_fun_component_rgb \
 mln_fun_essential \
-mln_fun_i2v_all \
-mln_fun_i2v_all_to \
-mln_fun_i2v_array \
-mln_fun_i2v_essential \
-mln_fun_i2v_value_at_index \
 mln_fun_internal_ch_function_value_impl \
 mln_fun_internal_resolve \
 mln_fun_internal_selector \
@@ -605,8 +600,6 @@ mln_fun_p2v_iota \
 mln_fun_p2v_ternary \
 mln_fun_param \
 mln_fun_spe_unary \
-mln_fun_stat_all \
-mln_fun_stat_mahalanobis \
 mln_fun_unary \
 mln_fun_v2b_all \
 mln_fun_v2b_always_false \
@@ -615,10 +608,10 @@ mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
 mln_fun_v2b_threshold_ge \
 mln_fun_v2b_threshold_le \
-mln_fun_v2i_all \
-mln_fun_v2i_index_of_value \
 mln_fun_v2v_abs \
 mln_fun_v2v_all \
+mln_fun_v2v_all_to \
+mln_fun_v2v_array \
 mln_fun_v2v_cast \
 mln_fun_v2v_ch_function_value \
 mln_fun_v2v_component \
@@ -629,7 +622,9 @@ mln_fun_v2v_essential \
 mln_fun_v2v_hsl_to_rgb \
 mln_fun_v2v_id \
 mln_fun_v2v_inc \
+mln_fun_v2v_index_of_value \
 mln_fun_v2v_linear \
+mln_fun_v2v_mahalanobis \
 mln_fun_v2v_norm \
 mln_fun_v2v_projection \
 mln_fun_v2v_qt_rgb_to_int_u \
@@ -640,6 +635,7 @@ mln_fun_v2v_rgb_to_luma \
 mln_fun_v2v_round \
 mln_fun_v2v_round_sat \
 mln_fun_v2v_saturate \
+mln_fun_v2v_value_at_index \
 mln_fun_v2v_wrap \
 mln_fun_v2w2v_all \
 mln_fun_v2w2v_cos \

@@ -1,0 +1,41 @@
+/*! \defgroup funv2v v2v Functions
+ *
+ * \brief All functions from index to value.
+ *
+ * \ingroup modfun
+ */
+
+/*! \defgroup funn2v n2v Functions
+ *
+ * \brief All functions from nil to value.
+ *
+ * \ingroup modfun
+ */
+
+/*! \defgroup funv2v v2v Functions
+ *
+ * \brief All functions from value to value.
+ *
+ * \ingroup modfun
+ */
+
+/*! \defgroup funv2w2v v2w2v Functions
+ *
+ * \brief All bijective functions.
+ *
+ * \ingroup modfun
+ */
+
+/*! \defgroup funv2w_w2v v2w_w2v Functions
+ *
+ * \brief All bijective functions.
+ *
+ * \ingroup modfun
+ */
+
+/*! \defgroup funvv2b vv2b Functions
+ *
+ * \brief All functions from two values to a logical value.
+ *
+ * \ingroup modfun
+ */

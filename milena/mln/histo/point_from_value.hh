@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/grids.hh>
 # include <mln/core/point.hh>
-# include <mln/fun/v2i/index_of_value.hh>
+# include <mln/fun/v2v/index_of_value.hh>
 # include <mln/fun/v2v/component.hh>
 # include <mln/trait/value/comp.hh>
 
@@ -85,7 +86,7 @@ namespace mln
 	template <typename T, typename P>
 	static void run(const T& v, P& p)
 	{
-	  p[0] = fun::v2i::meta_index_of_value(v);
+	  p[0] = fun::v2v::meta_index_of_value(v);
 	}
       };
 
@@ -95,8 +96,8 @@ namespace mln
 	template <typename T, typename P>
 	static void run(const T& v, P& p)
 	{
-	  p[0] = fun::v2i::meta_index_of_value( fun::v2v::component<T,0>()(v) );
-	  p[1] = fun::v2i::meta_index_of_value( fun::v2v::component<T,1>()(v) );
+	  p[0] = fun::v2v::meta_index_of_value( fun::v2v::component<T,0>()(v) );
+	  p[1] = fun::v2v::meta_index_of_value( fun::v2v::component<T,1>()(v) );
 	}
       };
 
@@ -106,9 +107,9 @@ namespace mln
 	template <typename T, typename P>
 	static void run(const T& v, P& p)
 	{
-	  p[0] = fun::v2i::meta_index_of_value( fun::v2v::component<T,0>()(v) );
-	  p[1] = fun::v2i::meta_index_of_value( fun::v2v::component<T,1>()(v) );
-	  p[2] = fun::v2i::meta_index_of_value( fun::v2v::component<T,2>()(v) );
+	  p[0] = fun::v2v::meta_index_of_value( fun::v2v::component<T,0>()(v) );
+	  p[1] = fun::v2v::meta_index_of_value( fun::v2v::component<T,1>()(v) );
+	  p[2] = fun::v2v::meta_index_of_value( fun::v2v::component<T,2>()(v) );
 	}
       };
 

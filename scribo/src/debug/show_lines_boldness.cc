@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
   // Extract lines
   line_set<L>
     lines = text::extract_lines_with_features(
-      data::convert(value::rgb8(), input), input, c8());
+      data::convert(input, value::rgb8()), input, c8());
   const component_set<L>& comp_set = lines.components();
 
   // Min boldness / line

@@ -24,7 +24,7 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <iostream>
-#include <mln/fun/i2v/all_to.hh>
+#include <mln/fun/v2v/all_to.hh>
 #include <mln/algebra/vec.hh>
 #include <mln/algebra/h_vec.hh>
 

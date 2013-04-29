@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,6 +66,6 @@ int main(int argc, char *argv[])
 						      c8(),
 						      nlines,
 						      atoi(argv[2]));
-  io::pbm::save(data::convert(bool(), lines.labeled_image()), argv[3]);
+  io::pbm::save(data::convert(lines.labeled_image(), bool()), argv[3]);
 
 }

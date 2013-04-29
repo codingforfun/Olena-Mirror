@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /*! \file
  *
- * \brief FIXME.
+ * \brief Function returning the encoding value.
  */
 
 # include <mln/core/concept/function.hh>
@@ -43,8 +44,14 @@ namespace mln
     namespace v2v
     {
 
-      // FIXME: Doc!
+      /*! \brief Function returning the encoding value.
 
+	\warning This function works only on types providing enc()
+	member.
+
+ 	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename V>
       struct enc : public Function_v2v< enc<V> >
       {

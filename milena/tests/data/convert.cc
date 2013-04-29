@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ int main()
     image2d<bool> ima(1, 2);
     opt::at(ima, 0, 0) = false;
     opt::at(ima, 0, 1) = true;
-    image2d<rgb8> out = data::convert(rgb8(), ima);
+    image2d<rgb8> out = data::convert(ima, rgb8());
     mln_assertion(opt::at(out, 0, 0) == literal::black);
     mln_assertion(opt::at(out, 0, 1) == literal::white);
   }
@@ -51,9 +52,31 @@ int main()
     image2d<bool> ima(1, 2);
     data::fill(ima, true);
     opt::at(ima, 0, 0) = false;
-    image2d<bool> out = data::convert(bool(), ima);
+    image2d<bool> out = data::convert(ima, bool());
     mln_assertion(out == ima);
     mln_assertion(out.buffer() != ima.buffer());
   }
+
+  // bool -> rgb8
+  {
+    image2d<bool> ima(1, 2);
+    opt::at(ima, 0, 0) = false;
+    opt::at(ima, 0, 1) = true;
+    fun::v2v::convert<value::rgb8> f;
+    image2d<rgb8> out = data::convert(ima, rgb8(), f);
+    mln_assertion(opt::at(out, 0, 0) == literal::black);
+    mln_assertion(opt::at(out, 0, 1) == literal::white);
+  }
+  // bool -> bool
+  {
+    image2d<bool> ima(1, 2);
+    data::fill(ima, true);
+    opt::at(ima, 0, 0) = false;
+    fun::v2v::convert<bool> f;
+    image2d<bool> out = data::convert(ima, bool(), f);
+    mln_assertion(out == ima);
+    mln_assertion(out.buffer() != ima.buffer());
+  }
+
 
 }
