@@ -1,5 +1,15 @@
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce a new module for useful macros.
+
+	* doc/mln/core/macros.dox: New.
+
+	* doc/mln/main.dox: New module.
+
+	* mln/core/macros.hh: Add comments.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation in fun::p2b, fun::p2p, fun::p2v and
 	fun::x2v.
 

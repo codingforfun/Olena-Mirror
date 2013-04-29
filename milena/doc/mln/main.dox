@@ -100,3 +100,10 @@
  *
  * \ingroup modroutines
  */
+
+/*! \defgroup mlnmacros Useful Macro Functions
+ *
+ * \brief All useful macro functions.
+ *
+ * \ingroup modroutines
+ */
