@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
   component_set<L>
     filtered = scribo::filter::objects_with_holes(comps, atoi(argv[2]), 0);
 
-  io::pbm::save(data::convert(bool(), filtered.valid_comps_image_()), argv[3]);
+  io::pbm::save(data::convert(filtered.valid_comps_image_(), bool()), argv[3]);
 
 
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -165,8 +165,8 @@ namespace scribo
 
 	// Debug
 	logger().log_image(AuxiliaryResults,
-			   data::convert(value::int_u8(),
-					 components.labeled_image()),
+			   data::convert(components.labeled_image(),
+					 value::int_u8()),
 			   "lbl");
 	unsigned dmax = 5;
 
@@ -330,7 +330,7 @@ namespace scribo
 	  mln_concrete(I) input = scribo::preprocessing::rotate_90(in, false);
 
 	  mln_ch_value(I, value::rgb8)
-	    wo_filtering = data::convert(value::rgb8(), input);
+	    wo_filtering = data::convert(input, value::rgb8());
 
 	  for_all_groups(d, top_groups)
 	    if (top_groups(d).is_valid())
@@ -461,7 +461,7 @@ namespace scribo
 	  // t_ = t;
 	  // std::cout << "* relabel_inplace - " << t_ << std::endl;
 
-	  mln_concrete(I) output = data::convert(bool(), sep_lbl);
+	  mln_concrete(I) output = data::convert(sep_lbl, bool());
 
 	  if (_debug_)
 	  {

@@ -71,7 +71,7 @@ namespace scribo
     {
       mln_trace("scribo::debug::line_info_image");
 
-      mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) output = data::convert(input, value::rgb8());
 
       for_all_lines(l, line)
       {

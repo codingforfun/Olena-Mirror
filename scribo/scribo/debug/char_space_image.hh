@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +73,7 @@ namespace scribo
     {
       mln_trace("scribo::debug::char_space_image");
 
-      mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) output = data::convert(input, value::rgb8());
 
       const component_set<L>& comps = line.components();
       for_all_lines(l, line)

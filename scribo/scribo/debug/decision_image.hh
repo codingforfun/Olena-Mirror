@@ -118,7 +118,7 @@ namespace scribo
       /// FIXME: Check that components has been computed from input.
 
       mln_ch_value(I,value::rgb8)
-	decision_image = data::convert(value::rgb8(), input);
+	decision_image = data::convert(input, value::rgb8());
 
       for (unsigned i = 1; i < groups.size(); ++i)
 	if (groups(i) != filtered_groups(i))
@@ -150,7 +150,7 @@ namespace scribo
       /// FIXME: Check that components has been computed from input.
 
       mln_ch_value(I,value::rgb8)
-	decision_image = data::convert(value::rgb8(), input);
+	decision_image = data::convert(input, value::rgb8());
 
       for_all_comps(i, comps)
 	mln::draw::box(decision_image, comps(i).bbox(), literal::blue);

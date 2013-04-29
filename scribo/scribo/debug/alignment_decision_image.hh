@@ -95,7 +95,7 @@ namespace scribo
       /// FIXME: Check that components has been computed from input.
 
       mln_ch_value(I,value::rgb8)
-	decision_image = data::convert(value::rgb8(), input);
+	decision_image = data::convert(input, value::rgb8());
 
       for_all_comps(i, components)
 	mln::draw::box(decision_image, components(i).bbox(), literal::blue);

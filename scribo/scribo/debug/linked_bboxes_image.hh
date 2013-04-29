@@ -167,7 +167,7 @@ namespace scribo
       mln_trace("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(input, value::rgb8());
 
       draw::bounding_boxes(tmp, links.components(), box_value);
       draw::bounding_box_links(tmp, links, link_value, anchor);
@@ -225,7 +225,7 @@ namespace scribo
       mln_trace("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(input, value::rgb8());
 
       draw::bounding_boxes(tmp, left_link.components(), box_value);
       draw::bounding_box_links(tmp,
@@ -252,7 +252,7 @@ namespace scribo
       mln_precondition(exact(g).is_valid());
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(input, value::rgb8());
 
       draw::bounding_boxes(tmp, exact(g).components(), box_value);
       draw::bounding_box_links(tmp, exact(g).components(), g, link_value,

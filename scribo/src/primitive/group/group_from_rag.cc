@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -199,7 +200,7 @@ int main(int argc, char* argv[])
   //FOR DEBUGGING PURPOSE
   {
     image2d<value::rgb8>
-      before_grouping = data::convert(value::rgb8(), input);
+      before_grouping = data::convert(input, value::rgb8());
 
     scribo::draw::bounding_boxes(before_grouping,
 				 filtered_objects.bboxes(),
@@ -223,7 +224,7 @@ int main(int argc, char* argv[])
   //FOR DEBUGGING PURPOSE
 //   {
 //     image2d<value::rgb8>
-//       after_grouping = data::convert(value::rgb8(), input);
+//       after_grouping = data::convert(input, value::rgb8());
 
 
 //     scribo::draw::bounding_boxes(after_grouping,

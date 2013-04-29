@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
 
   // Saving result.
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+  image2d<value::rgb8> output = data::convert(input, value::rgb8());
 
   scribo::draw::bounding_box_links(output,
 				   links,

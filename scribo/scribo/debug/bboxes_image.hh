@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -105,7 +105,7 @@ namespace scribo
       mln_trace("scribo::debug::bboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(input, value::rgb8());
       draw::bounding_boxes(tmp, bboxes, value);
 
       return tmp;
@@ -123,7 +123,7 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
-	output = data::convert(value::rgb8(), input);
+	output = data::convert(input, value::rgb8());
 
       for_all_lines(l, lines)
 	if (! lines(l).is_hidden())
@@ -154,7 +154,7 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
-	output = data::convert(value::rgb8(), input);
+	output = data::convert(input, value::rgb8());
 
       for_all_comps(c, comps)
 	if (comps(c).is_valid())
