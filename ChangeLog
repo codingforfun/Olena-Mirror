@@ -1,3 +1,7 @@
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Notify changes in data::convert prototype.
+
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cite papers in documentation.
