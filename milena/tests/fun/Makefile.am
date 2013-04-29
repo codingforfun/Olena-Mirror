@@ -18,7 +18,6 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
-  v2v						\
   p2b						\
   p2p						\
   p2v						\

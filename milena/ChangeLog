@@ -1,5 +1,9 @@
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/fun/Makefile.am: Remove duplicate subdir entry for v2v.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Swap arguments in data::convert.
 
 	* mln/data/convert.hh: Here.
