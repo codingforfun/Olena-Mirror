@@ -1,5 +1,21 @@
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Swap arguments in data::convert.
+
+	* mln/data/convert.hh: Here.
+
+	* apps/morphers/iz.cc,
+	* demos/inter_pixel/inter_pixel.cc,
+	* doc/examples/trash/graph.cc,
+	* doc/mln/convert.dox,
+	* mln/debug/superpose.hh,
+	* mln/morpho/watershed/superpose.hh,
+	* mln/world/binary_2d/subsample.hh,
+	* tests/data/compute_in_window.cc,
+	* tests/data/convert.cc: Update calls to data::convert.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/io/io.dox: List the required dependencies for each I/O
 	type.
 

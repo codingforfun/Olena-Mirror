@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
   io::pgm::save(world::inter_pixel::display_edge(edges.unmorph_(), 0, 3), "edge_dist.pgm");
 
   // Color on edge image.
-  image2d<rgb8> edge_color = data::convert(rgb8(), edges.unmorph_());
+  image2d<rgb8> edge_color = data::convert(edges.unmorph_(), rgb8());
   mln_piter_(image2d<int_u8>) p(input.domain());
   for_all(p)
     convert::from_to(input(p), opt::at(edge_color, p.row() * 2, p.col() * 2));

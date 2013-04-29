@@ -14,14 +14,14 @@
   image2d<value::int_u8> ima_gl;
   // Initialization of ima_gl.
   // ...
-  image2d<value::rgb8> ima_color = mln::data::convert(value::rgb8(), ima_gl);
+  image2d<value::rgb8> ima_color = mln::data::convert(ima_gl, value::rgb8());
   \endcode
 
   \code
   image2d<value::int_u8> ima_gl;
   // Initialization of ima_gl.
   // ...
-  image2d<bool> ima_b = mln::data::convert(bool(), ima_gl);
+  image2d<bool> ima_b = mln::data::convert(ima_gl, bool());
   \endcode
 
 
@@ -41,7 +41,7 @@
     image2d<value::rgb8> ima_color;
     // Initialization of ima_color
     // ...
-    image2d<value::int_u8> ima_gl = data::convert(value::int_u8(), ima_color);
+    image2d<value::int_u8> ima_gl = data::convert(ima_color, value::int_u8());
   }
   \endcode
   \code
@@ -72,7 +72,7 @@
     image2d<value::rgb8> ima_color;
     // Initialization of ima_color
     // ...
-    image2d<value::int_u8> ima_gl = data::convert(fun::v2v::rgb_to_luma<value::int_u8>(), ima_color);
+    image2d<value::int_u8> ima_gl = data::convert(ima_color, value::int_u8(), fun::v2v::rgb_to_luma<value::int_u8>());
   }
   \endcode
 
@@ -109,7 +109,7 @@
     image2d<value::rgb8> ima_color;
     // Initialization of ima_color
     // ...
-    image2d<value::int_u8> ima_red_gl = data::convert(only_red_component(), ima_color);
+    image2d<value::int_u8> ima_red_gl = data::convert(ima_color, value::int_u8(), only_red_component());
   }
   \endcode
 
@@ -144,7 +144,7 @@
     image2d<value::rgb8> ima_color;
     // Initialization of ima_color
     // ...
-    image2d<value::int_u8> ima_red_gl = data::convert(value::int_u8(), ima_color);
+    image2d<value::int_u8> ima_red_gl = data::convert(ima_color, value::int_u8());
   }
   \endcode
 

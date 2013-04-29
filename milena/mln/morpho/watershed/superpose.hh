@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -93,7 +94,7 @@ namespace mln
 	mln_precondition(input.is_valid());
 	mln_precondition(ws_ima.is_valid());
 
-	mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
+	mln_ch_value(I,value::rgb8) output = data::convert(input, value::rgb8());
 
 	data::fill((output | (pw::value(ws_ima) == pw::cst(literal::zero))).rw(),
 		   wsl_color);
