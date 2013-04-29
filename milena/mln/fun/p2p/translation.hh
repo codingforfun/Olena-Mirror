@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,8 @@
 
 /// \file
 ///
-/// FIXME: doc
+/// \brief Computes the translation of a given point w.r.t a
+/// translation vector.
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/gdpoint.hh>
@@ -43,6 +45,13 @@ namespace mln
     namespace p2p
     {
 
+      /*!
+	\brief Computes the translation of a given point w.r.t a
+	translation vector.
+
+	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename P>
       struct translation_t : public Function_v2v< translation_t<P> >
       {

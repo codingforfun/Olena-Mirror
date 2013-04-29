@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,8 +46,12 @@ namespace mln
     namespace x2v
     {
 
-      /// Represent a bilinear interolation of values from an underlying image
-      ///
+      /*! \brief Represent a bilinear interolation of values from an
+	underlying image
+
+	\sa data::transform
+	\ingroup funv2v
+      */
       template < typename I >
       struct bilinear
         : public fun::internal::selector_<const algebra::vec<3,float>,

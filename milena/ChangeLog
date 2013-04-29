@@ -1,5 +1,26 @@
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve documentation in fun::p2b, fun::p2p, fun::p2v and
+	fun::x2v.
+
+	* mln/fun/p2b/antilogy.hh,
+	* mln/fun/p2b/big_chess.hh,
+	* mln/fun/p2b/chess.hh,
+	* mln/fun/p2b/has.hh,
+	* mln/fun/p2b/tautology.hh,
+	* mln/fun/p2p/fold.hh,
+	* mln/fun/p2p/mirror.hh,
+	* mln/fun/p2p/translation.hh,
+	* mln/fun/p2v/elifs.hh,
+	* mln/fun/p2v/iota.hh,
+	* mln/fun/p2v/ternary.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/l1_norm.hh,
+	* mln/fun/x2v/nneighbor.hh,
+	* mln/fun/x2v/trilinear.hh: Here.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/fun/Makefile.am: Remove duplicate subdir entry for v2v.
 
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>

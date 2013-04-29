@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,7 +34,8 @@
 
 /*! \file
  *
- * \brief Define a nneighbor interpolation of values from an underlying image
+ * \brief Define a nneighbor interpolation of values from an
+ * underlying image
  */
 
 namespace mln
@@ -42,47 +44,54 @@ namespace mln
   namespace fun
   {
 
-    namespace x2x
+    namespace x2v
     {
 
-        template < typename I >
-        struct nneighbor
-          : public fun::internal::selector_<const algebra::vec<3,float>,
-                                            // 3,float is a dummy parameter (real is n,T)
-                                            mln_value(I), nneighbor<I> >::ret
-        {
-          typedef mln_value(I) result;
+      /*!
+	 \brief Define a nneighbor interpolation of values from an
+	 underlying image
 
-          nneighbor(const I& ima);
+	 \sa data::transform
+	 \ingroup funv2v
+      */
+      template < typename I >
+      struct nneighbor
+	: public fun::internal::selector_<const algebra::vec<3,float>,
+					  // 3,float is a dummy parameter (real is n,T)
+					  mln_value(I), nneighbor<I> >::ret
+      {
+	typedef mln_value(I) result;
 
-          template < unsigned n, typename T >
-          mln_value(I)
-          operator()(const algebra::vec<n,T>& x) const;
+	nneighbor(const I& ima);
 
-          const I& ima;
-        };
+	template < unsigned n, typename T >
+	mln_value(I)
+	operator()(const algebra::vec<n,T>& x) const;
+
+	const I& ima;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-        template < typename I >
-        nneighbor<I>::nneighbor(const I& ima) : ima(ima)
-        {
-        }
+    template < typename I >
+    nneighbor<I>::nneighbor(const I& ima) : ima(ima)
+    {
+    }
 
-        template < typename I >
-        template < unsigned n, typename T >
-        mln_value(I)
-        nneighbor<I>::operator()(const algebra::vec<n,T>& x) const
-        {
-          mln_psite(I) p =  convert::to<mln_psite(I)>(x);
-          return ima(p);
-        }
+    template < typename I >
+    template < unsigned n, typename T >
+    mln_value(I)
+    nneighbor<I>::operator()(const algebra::vec<n,T>& x) const
+    {
+      mln_psite(I) p =  convert::to<mln_psite(I)>(x);
+      return ima(p);
+    }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::x2x
+    } // end of namespace mln::fun::x2v
 
   } // end of namespace mln::fun
 

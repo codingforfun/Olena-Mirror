@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Function "psite-> bool" that maps the call "ima.has(p)".
+/// \brief Function "psite-> bool" that maps the call "ima.has(p)".
 
 
 # include <mln/core/concept/image.hh>
@@ -46,8 +47,13 @@ namespace mln
     namespace p2b
     {
 
-      // FIXME: Doc!
 
+      /* \brief Function "psite-> bool" that maps the call
+	 "ima.has(p)".
+
+	 \sa data::transform
+	 \ingroup funv2v
+       */
       template <typename I>
       struct has
 

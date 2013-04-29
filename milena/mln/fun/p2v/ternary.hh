@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,10 +27,10 @@
 #ifndef MLN_FUN_P2V_TERNARY_HH
 # define MLN_FUN_P2V_TERNARY_HH
 
-/*! \file
- *
- * \brief FIXME.
- */
+/// \file
+///
+/// \brief Function representing a if-then-else canvas from
+/// functions.
 
 # include <mln/fun/internal/selector.hh>
 
@@ -43,6 +44,12 @@ namespace mln
     namespace p2v
     {
 
+      /*! \brief Function representing a if-then-else canvas from
+	functions.
+
+	\sa data::transform
+	\ingroup funv2v
+       */
       template <typename P, typename T, typename F>
       struct ternary_
 	: fun::internal::selector_from_result_<mln_result(T), ternary_<P,T,F> >::ret
@@ -61,14 +68,14 @@ namespace mln
 	const T f_true_;
 	const F f_false_;
       };
-    
-    
+
+
       template <typename P, typename T, typename F>
       ternary_<P, T, F>
       ternary(const Function_v2b<P>& f_pred,
 	      const Function_v2v<T>& f_true,
 	      const Function_v2v<F>& f_false);
-    
+
 
 # ifndef MLN_INCLUDE_ONLY
 
