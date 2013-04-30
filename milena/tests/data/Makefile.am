@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -29,6 +29,7 @@ check_PROGRAMS =				\
   fill						\
   fill_with_image				\
   fill_with_value				\
+  fill_without_localization			\
   median					\
   median_fast					\
   memcpy_					\
