@@ -1,8 +1,272 @@
 /*! \defgroup modimage Images
- *
- * \brief All the generic image types provided in Olena.
- *
- * \ingroup modtypes
+
+  \brief All the generic image types provided in Olena.
+
+  In the following sections, the common interface of Milena image
+  types is detailed. Methods and routines detailed hereinafter are
+  considered as generic and work for any dimension, value type and
+  image type.
+
+
+  \section docaccval Access Values
+
+  Every image has a member operator() taking a site as argument and
+  returning its corresponding value.
+
+  \code
+  image2d<int> ima(2,2);
+  std::cout << ima(point2d(1,1)) << std::endl; // Displays value at (1,1)
+  \endcode
+
+  Here, a 2D image is used and its equivalent site is a
+  mln::point2d. This example displays the value at site (1,1).
+
+  operator() exists both in const and non-const version which means
+  that it is also possible to change the value at a given site:
+
+  \code
+  image2d<int> ima(2,2);
+  ima(point2d(1,1)) = 6; // Assigns value at (1,1)
+  std::cout << ima(point2d(1,1)) << std::endl; // Displays '6'
+  \endcode
+
+
+  \section dociterdomval Iterate over the domain and values
+
+  \subsection docaccvalpiter Site-Based Iterators
+
+  A generic way of iterating over the values of an image is to use
+  mln_piter() macro to declare an iterator.
+
+  \code
+  typedef image2d<bool> I;
+  I ima(2, 2);
+
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+	ima(p) = true;
+  \endcode
+
+  Note that iterator \c p must be first declared over the domain of
+  the target image \c ima. Then iterator \c p is moved over the image
+  thanks to the for_all() macro.  An iterator declared with
+  mln_piter() can be considered as having the same interface as a site
+  of the target image. Here, \c p can be considered as a mln::point2d
+  and thus can be passed to image2d::operator() to access the value of
+  the current point.
+
+  The for_all() is in charge of initializing the iterator and move it
+  forward. It is safe to have two for_all() loops successively with
+  the same iterator:
+
+  \code
+  typedef image2d<bool> I;
+  I ima(2, 2);
+
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+	ima(p) = true;
+
+  for_all(p) // It is safe: p is initialized again.
+	ima(p) = false;
+  \endcode
+
+  mln_piter() iterates with respect to the default browsing direction
+  defined by the image it is defined on. In most cases, forward
+  direction is used: from the top left to the bottom right of the
+  image, line by line.  It is possible to force browsing direction
+  using mln_bkd_piter() (backward iteration) and mln_fwd_piter()
+  (forward iteration).
+
+  It is possible to browse several images at the same time using
+  specific for_all() macro.
+
+  \code
+  typedef image2d<bool> I;
+  I ima1(2, 2);
+  I ima2(2, 2);
+
+  mln_piter(I) p1(ima1.domain());
+  mln_piter(I) p2(ima2.domain());
+  for_all_2(p1, p2) // Browse two images at the same time
+  {
+	ima1(p1) = true;
+	ima2(p2) = true;
+  }
+
+  I ima3(2, 2);
+  mln_piter(I) p3(ima3.domain());
+  for_all_3(p1, p2, p3)  // Browse three images at the same time
+  {
+	ima1(p1) = true;
+	ima2(p2) = true;
+	ima3(p3) = true;
+  }
+  \endcode
+
+  Site-based iterators are generic enough to be passed to another
+  image than the one it is defined on. Images must be defined with the
+  same topology (grid, cube, etc.) and, therefore, with the same
+  dimension.
+
+  \code
+  typedef image2d<bool> I;
+  I ima1(2, 2);
+  I ima2(2, 2);
+
+  mln_piter(I) p(ima1.domain());
+  for_all(p) // Browse image ima1
+  {
+	ima1(p) = true;
+	ima2(p) = true; // Valid, ima2.domain().has(p) == true
+  }
+  \endcode
+
+  Note that \c p can be used to access \c ima2 values since \c p is
+  part of the domain of \c ima2 and a corresponding value exists. If
+  it is not the case, it is possible to check if a site belongs to an
+  image domain thanks to the \c has() method of the domain. This
+  method always exists.
+
+
+  \subsection docaccvalpixter Pointer-Based Iterators
+
+  Site-based iterators are handy because they can be exchanged between
+  images and they are generic enough to be supported by all
+  images. However, they imply a cost at computation time which can
+  sometimes be avoided.
+
+  Most of the concrete image types define pointer-based iterator: \c
+  pixter.  These iterators relies on memory pointers and access data
+  in a more efficient way.  They cannot be used directly with another
+  image than the one they are defined on, and their interface slightly
+  differs from site-based iterators.
+
+  \code
+  typedef image2d<bool> I;
+  I ima(2, 2);
+
+  mln_pixter(I) p(ima);
+  for_all(p)
+	p.val() = true;
+
+  typedef image2d<bool> I;
+  I ima2(2, 2);
+
+  mln_pixter(I) p2(ima2);
+  for_all_2(p, p2)
+  {
+	p.val() = true;
+	p2.val() = true;
+  }
+  \endcode
+
+
+
+  \section docimaext Extend Image Domain
+
+  Sometimes, it is useful have values outside of the image
+  domain. This concept is useful in many algorithms and can avoid
+  costly tests while working with sites located on image edges.
+
+  Milena provides infinite extensions of which values are set using a
+  value, a function or, an image. It can be performed using
+  mln::extend().
+
+  mln::extended_to() is also a useful routine while debugging image
+  extensions. It allows to extend the image domain. It is used in the
+  following examples to make debug images more explicit regarding
+  extension values.
+
+  In the following explanations, we will consider image \c ima_roi as
+  input image. It is a mln::sub_image from \c lena image. Its domain
+  is defined only on the square parts with values different from
+  black.
+
+  <table border=0>
+    <tr>
+      <td> \image html small-enlarged.png "Lena"</td>
+      <td> \f$\rightarrow\f$ </td>
+      <td> \image html extend-1.png "ima_roi (black color means the sites are not included in the domain)" </td>
+    </tr>
+  </table>
+
+  \subsection docimaextval Extension of Value
+
+  Let's use the following code:
+
+  \include extend-3.cc.raw
+  \image html extend-2.png "ima_roi with its extension set to literal::blue."
+
+  Note the use of the extended_to() routine which uses a larger bbox
+  to extend the image domain. That is the reason why the image is
+  surrounded by the extension value, blue.
+
+
+  \subsection docimaextfun Extension with a Function
+
+  Let's use the following function:
+
+  \include extend-1.cc.raw
+  \include extend-4.cc.raw
+
+  \image html extend-3.png "ima_roi with its extension set by my_ext() functor."
+
+
+  \subsection docimaextima Extension with an Image
+
+  Let's extend with the original image, \c Lena.
+  \include extend-5.cc.raw
+
+  <table border=0>
+    <tr>
+      <td> \image html extend-4.png "ext_with_ima, the extended image."</td>
+      <td> \image html extend-5.png "The actual data in the domain (light) with its extension (dark)" </td>
+    </tr>
+  </table>
+
+
+  \section docimainit Image Initialization
+
+  In Milena, no memory management is needed. Image data is shared
+  between different image instances. In the following example, no copy
+  is made: \c ima1 and \c ima2 point to the same data.
+
+  \code
+  image2d<bool> ima1(3,3);
+  image2d<bool> ima2 = ima1;
+  // ima2 and ima1 point to the same data.
+  \endcode
+
+  For making a deep copy of an image use mln::duplicate().
+
+  \code
+  image2d<bool> ima1(3,3);
+  image2d<bool> ima2 = duplicate(ima1);
+  // ima2 is a deep copy of ima1, they do not point to the same data.
+  \endcode
+
+  Sometimes, one wants to duplicate image geometry but not its data. mln::initialize()
+
+  \code
+  image2d<bool> ima1(3,3);
+  initialize(ima2, ima1);
+  // ima2 has the same border and domain as ima1. Its data is not initialized.
+  \endcode
+
+  Image data is destroyed automatically when no image instance points
+  to that data.
+
+  On concrete images, it is possible to explicitly release the data
+  thanks to destroy().
+
+  \code
+  image2d<bool> ima1(3,3);
+  ima1.destroy(); // Free underlying data if no other image holds it.
+  \endcode
+
+
+  \ingroup modtypes
  */
 
 
