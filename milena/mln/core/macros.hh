@@ -553,7 +553,7 @@
 // g
 
 /*!
-  \def mln_fwd_geom(T)
+  \def mln_geom(T)
   \brief Shortcuts to access the geometry type associated to T.
 
   To be used in templated functions only.
@@ -561,7 +561,7 @@
   \relates mln::Image
 */
 /*!
-  \def mln_fwd_geom_(T)
+  \def mln_geom_(T)
   \brief Shortcuts to access the geometry type associated to T.
 
   To be used in non-templated functions only.
@@ -575,7 +575,7 @@
 /// \}
 
 /*!
-  \def mln_fwd_grid(T)
+  \def mln_grid(T)
   \brief Shortcuts to access the grid type associated to T.
 
   To be used in templated functions only.
@@ -583,7 +583,7 @@
   \relates mln::Image
 */
 /*!
-  \def mln_fwd_grid_(T)
+  \def mln_grid_(T)
   \brief Shortcuts to access the grid type associated to T.
 
   To be used in non-templated functions only.
@@ -867,7 +867,7 @@
 // q
 
 /*!
-  \def mln_qlt_value(T)
+  \def mln_qlf_value(T)
   \brief Shortcuts to access the qualified (const or mutable) value
   type associated to T.
 
@@ -876,7 +876,7 @@
   \relates mln::Image
 */
 /*!
-  \def mln_qlt_value_(T)
+  \def mln_qlf_value_(T)
   \brief Shortcuts to access the qualified (const or mutable) value
   type associated to T.
 
@@ -1050,7 +1050,7 @@
 /// \}
 
 /*!
-  \def mln_value(T)
+  \def mln_rvalue(T)
   \brief Shortcuts to access the value type associated to T.
 
   To be used in templated functions only.
@@ -1058,7 +1058,7 @@
   \relates mln::Function
 */
 /*!
-  \def mln_value_(T)
+  \def mln_rvalue_(T)
   \brief Shortcuts to access the value type associated to T.
 
   To be used in non-templated functions only.

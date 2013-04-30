@@ -1,5 +1,15 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in existing documentation.
+
+	* mln/data/convert.hh: Remove a duplicate \overload.
+
+	* mln/core/macros.hh: Fix definitions.
+
+	* mln/value/qt/rgb32.hh: Fix invalid cross reference.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/concept/iterator.hh: Document iterator macros.
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
