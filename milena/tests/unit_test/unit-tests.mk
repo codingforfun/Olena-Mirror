@@ -504,6 +504,7 @@ mln_data_fast_median \
 mln_data_fill \
 mln_data_fill_with_image \
 mln_data_fill_with_value \
+mln_data_fill_without_localization \
 mln_data_median \
 mln_data_memcpy_ \
 mln_data_memset_ \

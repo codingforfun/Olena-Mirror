@@ -1,3 +1,10 @@
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen auto-generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add data::fill_without_localization.

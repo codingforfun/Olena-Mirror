@@ -441,6 +441,7 @@ mln/data/fill_with_image.hh \
 mln/data/fill_with_image.spe.hh \
 mln/data/fill_with_value.hh \
 mln/data/fill_with_value.spe.hh \
+mln/data/fill_without_localization.hh \
 mln/data/median.hh \
 mln/data/memcpy_.hh \
 mln/data/memset_.hh \
