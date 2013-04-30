@@ -1,5 +1,21 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a module related to literals.
+
+	* doc/mln/literal/literal.dox: New.
+
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/identity.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* mln/literal/zero.hh: Move to literal module.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in existing documentation.
 
 	* mln/data/convert.hh: Remove a duplicate \overload.

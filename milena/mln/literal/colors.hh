@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -151,46 +151,103 @@ namespace mln
       olive_t();
     };
 
-    /// Literal red.
+
+    /*!
+      \brief Literal red.
+      \relates mln::literal::red_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const red_t red;
 
-    /// Literal green.
+    /*!
+      \brief Literal green.
+      \relates mln::literal::green_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const green_t green;
 
-    /// Literal blue.
+    /*!
+      \brief Literal blue.
+      \relates mln::literal::blue_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const blue_t blue;
 
-    /// Literal brown.
+    /*!
+      \brief Literal brown.
+      \relates mln::literal::brown_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const brown_t brown;
 
-    /// Literal lime.
+    /*!
+      \brief Literal lime.
+      \relates mln::literal::lime_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const lime_t lime;
 
-    /// Literal orange.
+    /*!
+      \brief Literal orange.
+      \relates mln::literal::orange_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const orange_t orange;
 
-    /// Literal pink.
+    /*!
+      \brief Literal pink.
+      \relates mln::literal::pink_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const pink_t pink;
 
-    /// Literal purple.
+    /*!
+      \brief Literal purple.
+      \relates mln::literal::purple_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const purple_t purple;
 
-    /// Literal teal.
+    /*!
+      \brief Literal teal.
+      \relates mln::literal::teal_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const teal_t teal;
 
-    /// Literal violet.
+    /*!
+      \brief Literal violet.
+      \relates mln::literal::violet_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const violet_t violet;
 
-    /// Literal cyan.
+    /*!
+      \brief Literal cyan.
+      \relates mln::literal::cyan_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const cyan_t cyan;
 
-    /// Literal magenta.
+    /*!
+      \brief Literal magenta.
+      \relates mln::literal::magenta_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const magenta_t magenta;
 
-    /// Literal yellow.
+    /*!
+      \brief Literal yellow.
+      \relates mln::literal::yellow_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const yellow_t yellow;
 
-    /// Literal olive.
+    /*!
+      \brief Literal olive.
+      \relates mln::literal::olive_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const olive_t olive;
 
 # ifndef MLN_INCLUDE_ONLY

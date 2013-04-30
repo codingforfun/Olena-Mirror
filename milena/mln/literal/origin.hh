@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,11 @@ namespace mln
       origin_t();
     };
 
-    /// Literal origin.
+    /*!
+      \brief Literal origin.
+      \ingroup modliteral
+      \relates mln::literal::origin_t mln::algebra::vec mln::point
+    */
     extern const origin_t origin;
 
 # ifndef MLN_INCLUDE_ONLY

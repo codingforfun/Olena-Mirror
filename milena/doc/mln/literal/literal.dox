@@ -1,0 +1,14 @@
+/*! \defgroup modliteral Literals
+ *
+ * \brief All the literal (generic) values.
+ *
+ * \ingroup modtypes
+ */
+
+
+/*! \defgroup literalcolors Predefined Colors
+ *
+ * \brief All the predefined literal (generic) colors.
+ *
+ * \ingroup modliteral
+ */
