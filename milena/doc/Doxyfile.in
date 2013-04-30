@@ -763,7 +763,8 @@ EXCLUDE_SYMBOLS        = mln::*_check*				\
 			 mln::internal::exact_*					\
 			 mln::internal::fixme					\
 			 mln::internal::helper*category*			\
-			 mln::tag::*
+			 mln::tag::*						\
+			 It
 
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or

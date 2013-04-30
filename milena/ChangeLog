@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in: Hide 'It' symbol.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/core/image/images.dox: Document generic image interface.
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
