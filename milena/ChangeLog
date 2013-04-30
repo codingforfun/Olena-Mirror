@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/concept/iterator.hh: Document iterator macros.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move concepts in their related type module.
 
 	* mln/core/concept/image.hh,
