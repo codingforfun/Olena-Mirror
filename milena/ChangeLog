@@ -1,3 +1,8 @@
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/value/value/dox: Specify that built-in types can be
+	used.
+
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Introduce a new module for useful macros.
