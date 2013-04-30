@@ -268,7 +268,7 @@ namespace scribo
 
 #  ifndef SCRIBO_NDEBUG
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults, fg,
-					    "foreground.ppm");
+					    "foreground");
 #  endif // ! SCRIBO_NDEBUG
 	}
 	else
@@ -354,7 +354,7 @@ namespace scribo
 					       literal::yellow,
 					       literal::green,
 					       anchor::MassCenter),
-	    "links.ppm");
+	    "links");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -385,7 +385,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    hratio_decision_image,
-					    "hratio_links_decision_image.ppm");
+					    "hratio_links_decision_image");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -406,7 +406,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    overlap_decision_image,
-					    "overlap_links_decision_image.ppm");
+					    "overlap_links_decision_image");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -437,7 +437,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    decision_image,
-					    "group_and_object_image.ppm");
+					    "group_and_object_image");
 
 	  decision_image = data::convert(input, value::rgb8());
 	  scribo::draw::bounding_boxes(decision_image,
@@ -445,7 +445,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    decision_image,
-					    "group_image.ppm");
+					    "group_image");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -468,7 +468,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    decision_image,
-					    "small_groups_filter.ppm");
+					    "small_groups_filter");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -494,7 +494,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    decision_image,
-					    "thin_groups_filter.ppm");
+					    "thin_groups_filter");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -530,7 +530,7 @@ namespace scribo
 
 	  scribo::debug::logger().log_image(scribo::debug::AuxiliaryResults,
 					    decision_image,
-					    "group_with_holes_filter.ppm");
+					    "group_with_holes_filter");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
@@ -551,11 +551,11 @@ namespace scribo
 	  scribo::debug::logger().log_image(scribo::debug::Results,
 					    scribo::debug::highlight_text_area(input_rgb,
 									       output),
-					    "input_with_bboxes.ppm");
+					    "input_with_bboxes");
 	  scribo::debug::logger().log_image(scribo::debug::Results,
 					    scribo::debug::text_areas_image(input_rgb,
 									    output),
-					    "out_text.ppm");
+					    "out_text");
 	}
 #  endif // ! SCRIBO_NDEBUG
 

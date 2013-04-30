@@ -506,6 +506,15 @@
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add data::fill_without_localization.
+
+	* mln/data/fill_without_localization.hh,
+	* tests/data/fill_without_localization.cc: New.
+
+	* tests/data/Makefile.am: Add a new target.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/convert.dox: Fix from_to_ module name.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
