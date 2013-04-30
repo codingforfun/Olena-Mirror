@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/concept/image.hh: Document Image concept.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/value/value/dox: Specify that built-in types can be
 	used.
 
