@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/mln/main.dox: Set macro module as top level entry.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/concept/image.hh: Document Image concept.
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
