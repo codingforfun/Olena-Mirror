@@ -132,7 +132,7 @@ namespace mln
     A list of features provided in image classes is detailed in module
     \ref modimage.
 
-    \ingroup modconcepts
+    \ingroup modconcepts modimage
    */
   template <typename E>
   struct Image : public Object<E>

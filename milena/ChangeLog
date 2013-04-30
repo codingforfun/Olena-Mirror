@@ -1,5 +1,15 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move concepts in their related type module.
+
+	* mln/core/concept/image.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/window.hh: Here.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Hide 'It' symbol.
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>

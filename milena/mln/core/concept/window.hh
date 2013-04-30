@@ -87,7 +87,7 @@ namespace mln
     A window is the definition of a set of points located around a
     central point.
 
-    \ingroup modconcepts
+    \ingroup modconcepts modwin
   */
   template <typename E>
   struct Window : public Object<E>

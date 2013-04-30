@@ -54,7 +54,7 @@ namespace mln
   /*!
     \brief Base class for implementation classes of values.
 
-    \ingroup modconcepts
+    \ingroup modconcepts valuegroup
   */
   template <typename E>
   struct Value : public Object<E>
