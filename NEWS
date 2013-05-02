@@ -17,6 +17,8 @@
 
 	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
+	* Add support for graylevel images in labeling::blobs.
+
   * Scribo
 
 	* New logger class.
