@@ -1,3 +1,16 @@
+2013-05-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add binarization::tmms and binarization::tmms_hysteresis.
+
+	* mln/binarization/tmms.hh,
+	* mln/binarization/tmms_hysteresis.hh,
+	* tests/binarization/tmms-hysteresis-out.pgm,
+	* tests/binarization/tmms-out.pgm,
+	* tests/binarization/tmms.cc,
+	* tests/binarization/tmms_hysteresis.cc: New.
+
+	* tests/binarization/Makefile.am: New target.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for graylevel images in labeling::blobs.

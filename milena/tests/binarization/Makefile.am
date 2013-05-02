@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -18,11 +18,17 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  threshold
+  threshold					\
+  tmms						\
+  tmms_hysteresis
 
 
 TESTS = $(check_PROGRAMS)
 
-MOSTLYCLEANFILES =				\
-  threshold-out1.pgm				\
+MOSTLYCLEANFILES =			\
+  threshold-out1.pgm			\
   threshold-out2.pgm
+
+EXTRA_DIST =				\
+  tmms-out.pgm				\
+  tmms-hysteresis-out.pgm
