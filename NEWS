@@ -19,6 +19,8 @@
 
 	* Add support for graylevel images in labeling::blobs.
 
+	* Add new binarizatino algorithms: tmms and tmms_histeresis.
+
   * Scribo
 
 	* New logger class.
