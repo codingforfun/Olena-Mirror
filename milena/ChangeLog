@@ -1,3 +1,14 @@
+2013-05-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Write binarization::threshold test.
+
+	* tests/binarization/Makefile.am: Change MOSTLYCLEANFILES to
+	EXTRA_DISt.
+
+	* tests/binarization/threshold-out.pbm: New. Reference output.
+
+	* tests/binarization/threshold.cc: Write a test.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.

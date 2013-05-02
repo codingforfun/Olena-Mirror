@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,35 +26,24 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/binarization/threshold.hh>
-#include <mln/data/all.hh>
-
+#include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/io/ppm/load.hh>
-#include <mln/io/pbm/save.hh>
+#include <mln/data/compare.hh>
+#include <mln/value/int_u8.hh>
 
 #include "tests/data.hh"
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
- 
-  { 
-    image2d<int_u8> lena;
-    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-    
-    io::pbm::save(binarization::threshold(lena, 50), "threshold-out1.pgm");
-  }
-  
-  {
-    image2d<int_u8> l;
-    io::pgm::load(l, MLN_IMG_DIR "/lena.pgm");
 
-    image2d<int> lena(l.domain(), 0);
-    
-    data::paste(l, lena);
-    
-    io::pbm::save(binarization::threshold(lena, 50), "threshold-out2.pgm");
-  }
-  
+  image2d<value::int_u8> lena;
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+
+  image2d<bool> bin = binarization::threshold(lena, 50);
+
+  image2d<bool> ref;
+  io::pbm::load(ref, MLN_TESTS_DIR "/binarization/threshold-out.pbm");
+
+  mln_assertion(ref == bin);
 }

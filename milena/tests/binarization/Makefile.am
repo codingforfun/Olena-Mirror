@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -23,6 +23,5 @@ check_PROGRAMS =				\
 
 TESTS = $(check_PROGRAMS)
 
-MOSTLYCLEANFILES =				\
-  threshold-out1.pgm				\
-  threshold-out2.pgm
+EXTRA_DIST =				\
+  threshold-out.pbm
