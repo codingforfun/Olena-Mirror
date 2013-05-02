@@ -17,6 +17,8 @@
 
 	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
+	* New data::fill_without_localization function.
+
   * Scribo
 
 	* New logger class.
