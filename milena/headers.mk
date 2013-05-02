@@ -100,6 +100,8 @@ mln/binarization/binarization.hh \
 mln/binarization/essential.hh \
 mln/binarization/includes.hh \
 mln/binarization/threshold.hh \
+mln/binarization/tmms.hh \
+mln/binarization/tmms_hysteresis.hh \
 mln/border/adjust.hh \
 mln/border/all.hh \
 mln/border/duplicate.hh \

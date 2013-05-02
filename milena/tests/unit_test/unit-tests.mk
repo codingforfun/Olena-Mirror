@@ -188,6 +188,8 @@ mln_binarization_binarization \
 mln_binarization_essential \
 mln_binarization_includes \
 mln_binarization_threshold \
+mln_binarization_tmms \
+mln_binarization_tmms_hysteresis \
 mln_border_adjust \
 mln_border_all \
 mln_border_duplicate \
