@@ -17,6 +17,8 @@
 
 	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
+	* Add data::stretch_inplace function.
+
   * Scribo
 
 	* New logger class.
