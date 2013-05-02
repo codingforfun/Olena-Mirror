@@ -1,3 +1,7 @@
+2013-05-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Add details about GraphicsMagick I/O improvements.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove unstable viewer.

@@ -15,7 +15,9 @@
 
 	* Improve extensibility of convert::from_to.
 
-	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
+	* Improvements of ImageMagick/GraphicsMagick I/O: loading
+          speed-up, support for 16 bits images and a new function to
+          read image information without loading it.
 
   * Scribo
 
