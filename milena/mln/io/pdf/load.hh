@@ -45,7 +45,7 @@ namespace mln
     namespace pdf
     {
 
-      /**! \brief Load a multiple page PDF document using libpoppler.
+      /*! \brief Load a multiple page PDF document using libpoppler.
 
 	 \param[out] arr       An array of images.
 	 \param[in]  filename  The name of the input file.
@@ -59,7 +59,7 @@ namespace mln
       void load(util::array<I>& arr, const std::string& filename,
 		float dpi);
 
-      /**! \overload
+      /*! \overload
 
 	 \brief Load a range of pages from a PDF document using
 	 libpoppler.
@@ -79,7 +79,7 @@ namespace mln
 		int first_page, int last_page, float dpi);
 
 
-      /**! \overload
+      /*! \overload
 
 	 \brief Load specific pages from a PDF document using
 	 libpoppler.
@@ -97,7 +97,7 @@ namespace mln
       void load(util::array<I>& arr, const std::string& filename,
 		util::array<int> pages, float dpi);
 
-      /**! \overload
+      /*! \overload
 
 	 \brief Load a specific page from a PDF document using
 	 libpoppler.
@@ -116,7 +116,7 @@ namespace mln
 		int page, float dpi);
 
 
-      /**! \overload
+      /*! \overload
 
 	 \brief Load a multiple page PDF document using libpoppler.
 
@@ -131,7 +131,7 @@ namespace mln
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename);
 
-      /**! \overload
+      /*! \overload
 
 	 \brief Load specific pages from a PDF document using
          libpoppler.

@@ -1,5 +1,17 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in documentation.
+
+	* doc/mln/core/image/morphers.dox: Add a reference to duplicate().
+
+	* mln/core/pixter1d.hh: Remove \internal commands.
+
+	* mln/data/transform.hh: Improve layout of pseudo-code.
+
+	* mln/io/pdf/load.hh: Remove duplicate '*' in comments.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation of several macros.
 
 	* mln/core/concept/iterator.hh: Document arguments.
