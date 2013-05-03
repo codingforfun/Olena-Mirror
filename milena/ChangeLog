@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/routine/duplicate.hh: Document this routine.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in documentation.
 
 	* doc/mln/core/image/morphers.dox: Add a reference to duplicate().
