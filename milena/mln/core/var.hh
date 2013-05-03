@@ -41,7 +41,7 @@
   \brief Deduce the type of Expr, create a variable of that type and
   assign the result to it.
 
-  \warning Theses macro rely on an extension of g++ (\c typeof) so it
+  \warning This macro rely on an extension of g++ (\c typeof) so it
   is NOT standard C++.
 
   \ingroup mlnmacros
@@ -52,11 +52,11 @@
   typedef typeof(Expr) Var##_t
 
 /*!
-  \def mln_const VAR(Var, Expr)
+  \def mln_const_VAR(Var, Expr)
   \brief Deduce the type of Expr, create a const variable of that type
   and assign the result to it.
 
-  \warning Theses macro rely on an extension of g++ (\c typeof) so it
+  \warning This macro rely on an extension of g++ (\c typeof) so it
   is NOT standard C++.
 
   \ingroup mlnmacros

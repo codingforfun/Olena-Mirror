@@ -37,15 +37,23 @@
   \def for_all(x)
   \brief Loop to browse all the elements targetted by the iterator
   \p x.
+
+  \param x An iterator.
+
   \ingroup mlnmacros
  */
-# define for_all(x) for(x.start(); x.is_valid(); x.next())
+# define for_all(x) \
+  for(x.start(); x.is_valid(); x.next())
 
 
 /*!
   \def for_all_2(x1, x2)
   \brief Loop to browse all the elements targetted by the couples of
   iterators \p x1 and \p x2.
+
+  \param x1 An iterator.
+  \param x2 An iterator.
+
   \ingroup mlnmacros
  */
 # define for_all_2(x1, x2)			\
@@ -58,6 +66,11 @@
   \def for_all_3(x1, x2, x3)
   \brief Loop to browse all the elements targetted by the triplet of
   iterators \p x1, \p x2, and \p x3.
+
+  \param x1 An iterator.
+  \param x2 An iterator.
+  \param x3 An iterator.
+
   \ingroup mlnmacros
  */
 # define for_all_3(x1, x2, x3)			\
@@ -71,6 +84,8 @@
 
   \brief Loop to browse all the remaining elements targetted by the
   iterator \p x.
+
+  \param x An iterator.
 
   \ingroup mlnmacros
  */

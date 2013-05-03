@@ -1,5 +1,21 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve documentation of several macros.
+
+	* mln/core/concept/iterator.hh: Document arguments.
+
+	* mln/core/macros.hh: Add more documentation details for iterator
+	related macros.
+
+	* mln/core/var.hh: Fix typos.
+
+	* mln/debug/trace.hh: Add documentation to mln_trace and
+	mln_trace_warning.
+
+	* mln/trait/value_.hh: Add documentation to several common macros.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix missing parts of mln::box interface in documentation.
 
 	* doc/mln/core/alias/box1d.dox,

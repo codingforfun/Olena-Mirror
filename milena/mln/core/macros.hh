@@ -34,14 +34,14 @@
 
 /*!
   \def mln_deduce(T, A1, A2)
-  \brief Shortcuts to access the type T::A1::A2.
+  \brief Shortcut to access the type T::A1::A2.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_deduce_(T, A1, A2)
-  \brief Shortcuts to access the type T::A1::A2.
+  \brief Shortcut to access the type T::A1::A2.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -56,7 +56,7 @@
 
 /*!
   \def mln_argument(T)
-  \brief Shortcuts to access the argument type associated to T.
+  \brief Shortcut to access the argument type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosfun
@@ -64,7 +64,7 @@
 */
 /*!
   \def mln_argument_(T)
-  \brief Shortcuts to access the argument type associated to T.
+  \brief Shortcut to access the argument type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosfun
@@ -81,7 +81,7 @@
 
 /*!
   \def mln_bkd_eiter(T)
-  \brief Shortcuts to access the element-backward-iterator type associated
+  \brief Shortcut to access the element-backward-iterator type associated
   to T.
 
   To be used in templated functions only.
@@ -89,7 +89,7 @@
 */
 /*!
   \def mln_bkd_eiter_(T)
-  \brief Shortcuts to access the element-backward-iterator type associated
+  \brief Shortcut to access the element-backward-iterator type associated
   to T.
 
   To be used in non-templated functions only.
@@ -104,7 +104,11 @@
 
 /*!
   \def mln_bkd_niter(T)
-  \brief Shortcuts to access the bkd_niter type associated to T.
+
+  \brief Shortcut to access the backward neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in templated functions only.
   \ingroup macrositernbh
@@ -112,13 +116,18 @@
 */
 /*!
   \def mln_bkd_niter_(T)
-  \brief Shortcuts to access the bkd_niter type associated to T.
+
+  \brief Shortcut to access the backward neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in non-templated functions only.
   \ingroup macrositernbh
   \relates mln::Neighborhood
 */
-/// Shortcuts to access the bkd_niter type associated to T.
+/// Shortcuts to access the backward neighbor iterator type associated
+/// to a neighborhood of type T.
 /// \{
 # define mln_bkd_niter(T)  typename T::bkd_niter
 # define mln_bkd_niter_(T)          T::bkd_niter
@@ -126,7 +135,11 @@
 
 /*!
   \def mln_bkd_piter(T)
-  \brief Shortcuts to access the bkd_piter type associated to T.
+  \brief Shortcut to access the backward site iterator type
+  associated to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in templated functions only.
   \ingroup macrositerima
@@ -134,13 +147,18 @@
 */
 /*!
   \def mln_bkd_piter_(T)
-  \brief Shortcuts to access the bkd_piter type associated to T.
+  \brief Shortcut to access the backward site iterator type
+  associated to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in non-templated functions only.
   \ingroup macrositerima
   \relates mln::Image
 */
-/// Shortcuts to access the bkd_piter type associated to T.
+/// Shortcuts to access the backward site iterator type associated to
+/// T.
 /// \{
 # define mln_bkd_piter(T)  typename T::bkd_piter
 # define mln_bkd_piter_(T)          T::bkd_piter
@@ -148,7 +166,11 @@
 
 /*!
   \def mln_bkd_qiter(T)
-  \brief Shortcuts to access the bkd_qiter type associated to T.
+
+  \brief Shortcut to access the backward neighbor iterator type
+  associated to a window of type T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in templated functions only.
   \ingroup macrositerwin
@@ -156,13 +178,18 @@
 */
 /*!
   \def mln_bkd_qiter_(T)
-  \brief Shortcuts to access the bkd_qiter type associated to T.
+
+  \brief Shortcut to access the backward neighbor iterator type
+  associated to a window of type T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
   \relates mln::Window mln::Weighted_Window
 */
-/// Shortcuts to access the bkd_qiter type associated to T.
+/// Shortcuts to access the backward neighbor iterator type associated
+/// to a window of type T.
 /// \{
 # define mln_bkd_qiter(T)  typename T::bkd_qiter
 # define mln_bkd_qiter_(T)          T::bkd_qiter
@@ -170,7 +197,7 @@
 
 /*!
   \def mln_bkd_viter(T)
-  \brief Shortcuts to access the bkd_viter type associated to T.
+  \brief Shortcut to access the bkd_viter type associated to T.
 
   To be used in templated functions only.
   \ingroup macrositerval
@@ -178,7 +205,7 @@
 */
 /*!
   \def mln_bkd_viter_(T)
-  \brief Shortcuts to access the bkd_viter type associated to T.
+  \brief Shortcut to access the bkd_viter type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrositerval
@@ -192,7 +219,7 @@
 
 /*!
   \def mln_box(T)
-  \brief Shortcuts to access the box type associated to T.
+  \brief Shortcut to access the box type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -200,7 +227,7 @@
 */
 /*!
   \def mln_box_(T)
-  \brief Shortcuts to access the box type associated to T.
+  \brief Shortcut to access the box type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -217,7 +244,7 @@
 
 /*!
   \def mln_coord(T)
-  \brief Shortcuts to access the coord type associated to T.
+  \brief Shortcut to access the coord type associated to T.
 
   To be used in templated functions only.
   \ingroup macrossite
@@ -225,7 +252,7 @@
 */
 /*!
   \def mln_coord_(T)
-  \brief Shortcuts to access the coord type associated to T.
+  \brief Shortcut to access the coord type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrossite
@@ -242,7 +269,7 @@
 
 /*!
   \def mln_delta(T)
-  \brief Shortcuts to access the delta type associated to T.
+  \brief Shortcut to access the delta type associated to T.
 
   To be used in templated functions only.
   \ingroup macrossite
@@ -250,7 +277,7 @@
 */
 /*!
   \def mln_delta_(T)
-  \brief Shortcuts to access the delta type associated to T.
+  \brief Shortcut to access the delta type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrossite
@@ -264,7 +291,7 @@
 
 /*!
   \def mln_dpoint(T)
-  \brief Shortcuts to access the dpoint type associated to T.
+  \brief Shortcut to access the dpoint type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -272,7 +299,7 @@
 */
 /*!
   \def mln_dpoint_(T)
-  \brief Shortcuts to access the dpoint type associated to T.
+  \brief Shortcut to access the dpoint type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -286,7 +313,7 @@
 
 /*!
   \def mln_dpsite(T)
-  \brief Shortcuts to access the dpsite type associated to T.
+  \brief Shortcut to access the dpsite type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -294,7 +321,7 @@
 */
 /*!
   \def mln_dpsite_(T)
-  \brief Shortcuts to access the dpsite type associated to T.
+  \brief Shortcut to access the dpsite type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -311,14 +338,14 @@
 
 /*!
   \def mln_eiter(T)
-  \brief Shortcuts to access the element-iterator type associated to T.
+  \brief Shortcut to access the element-iterator type associated to T.
 
   To be used in templated functions only.
   \ingroup macrositerval
 */
 /*!
   \def mln_eiter_(T)
-  \brief Shortcuts to access the element-iterator type associated to T.
+  \brief Shortcut to access the element-iterator type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrositerval
@@ -331,14 +358,14 @@
 
 /*!
   \def mln_graph(T)
-  \brief Shortcuts to access the graph type associated to T.
+  \brief Shortcut to access the graph type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_graph_(T)
-  \brief Shortcuts to access the graph type associated to T.
+  \brief Shortcut to access the graph type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -351,7 +378,7 @@
 
 /*!
   \def mln_element(T)
-  \brief Shortcuts to access the element type associated to T.
+  \brief Shortcut to access the element type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
@@ -359,7 +386,7 @@
 */
 /*!
   \def mln_element_(T)
-  \brief Shortcuts to access the element type associated to T.
+  \brief Shortcut to access the element type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -373,14 +400,14 @@
 
 /*!
   \def mln_graph_element(T)
-  \brief Shortcuts to access the graph_element type associated to T.
+  \brief Shortcut to access the graph_element type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_graph_element_(T)
-  \brief Shortcuts to access the graph_element type associated to T.
+  \brief Shortcut to access the graph_element type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -393,7 +420,7 @@
 
 /*!
   \def mln_enc(T)
-  \brief Shortcuts to access the encoding type associated to T.
+  \brief Shortcut to access the encoding type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosval
@@ -401,7 +428,7 @@
 */
 /*!
   \def mln_enc_(T)
-  \brief Shortcuts to access the encoding type associated to T.
+  \brief Shortcut to access the encoding type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosval
@@ -415,7 +442,7 @@
 
 /*!
   \def mln_equiv(T)
-  \brief Shortcuts to access the equivalent type associated to T.
+  \brief Shortcut to access the equivalent type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosval
@@ -423,7 +450,7 @@
 */
 /*!
   \def mln_equiv_(T)
-  \brief Shortcuts to access the equivalent type associated to T.
+  \brief Shortcut to access the equivalent type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosval
@@ -440,7 +467,7 @@
 
 /*!
   \def mln_fwd_eiter(T)
-  \brief Shortcuts to access the element-forward-iterator type
+  \brief Shortcut to access the element-forward-iterator type
   associated to T.
 
   To be used in templated functions only.
@@ -448,7 +475,7 @@
 */
 /*!
   \def mln_fwd_eiter_(T)
-  \brief Shortcuts to access the element-forward-iterator type
+  \brief Shortcut to access the element-forward-iterator type
   associated to T.
 
   To be used in non-templated functions only.
@@ -463,7 +490,11 @@
 
 /*!
   \def mln_fwd_niter(T)
-  \brief Shortcuts to access the fwd_niter type associated to T.
+
+  \brief Shortcut to access the forward neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in templated functions only.
   \ingroup macrositernbh
@@ -471,13 +502,18 @@
 */
 /*!
   \def mln_fwd_niter_(T)
-  \brief Shortcuts to access the fwd_niter type associated to T.
+
+  \brief Shortcut to access the forward neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in non-templated functions only.
   \ingroup macrositernbh
   \relates mln::Neighborhood
 */
-/// Shortcuts to access the fwd_niter type associated to T.
+/// Shortcuts to access the forward neighbor iterator type associated
+/// to a neighborhood of type T.
 /// \{
 # define mln_fwd_niter(T)  typename T::fwd_niter
 # define mln_fwd_niter_(T)          T::fwd_niter
@@ -485,7 +521,12 @@
 
 /*!
   \def mln_fwd_piter(T)
-  \brief Shortcuts to access the fwd_piter type associated to T.
+
+  \brief Shortcut to access the forward site iterator type associated
+  to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in templated functions only.
   \ingroup macrositerima
@@ -493,13 +534,19 @@
 */
 /*!
   \def mln_fwd_piter_(T)
-  \brief Shortcuts to access the fwd_piter type associated to T.
+
+  \brief Shortcut to access the forward site iterator type associated
+  to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in non-templated functions only.
   \ingroup macrositerima
   \relates mln::Image
 */
-/// Shortcuts to access the fwd_piter type associated to T.
+/// Shortcuts to access the forward site iterator type associated to
+/// T.
 /// \{
 # define mln_fwd_piter(T)  typename T::fwd_piter
 # define mln_fwd_piter_(T)          T::fwd_piter
@@ -507,7 +554,11 @@
 
 /*!
   \def mln_fwd_qiter(T)
-  \brief Shortcuts to access the fwd_qiter type associated to T.
+
+  \brief Shortcut to access the forward neighbor iterator type
+  associated to a window of type T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in templated functions only.
   \ingroup macrositerwin
@@ -515,13 +566,18 @@
 */
 /*!
   \def mln_fwd_qiter_(T)
-  \brief Shortcuts to access the fwd_qiter type associated to T.
+
+  \brief Shortcut to access the forward neighbor iterator type
+  associated to a window of site T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
   \relates mln::Window mln::Weighted_Window
 */
-/// Shortcuts to access the fwd_qiter type associated to T.
+/// Shortcuts to access the forward neighbor iterator type associated
+/// to a window of site T.
 /// \{
 # define mln_fwd_qiter(T)  typename T::fwd_qiter
 # define mln_fwd_qiter_(T)          T::fwd_qiter
@@ -529,7 +585,7 @@
 
 /*!
   \def mln_fwd_viter(T)
-  \brief Shortcuts to access the fwd_viter type associated to T.
+  \brief Shortcut to access the fwd_viter type associated to T.
 
   To be used in templated functions only.
   \ingroup macrositerval
@@ -537,7 +593,7 @@
 */
 /*!
   \def mln_fwd_viter_(T)
-  \brief Shortcuts to access the fwd_viter type associated to T.
+  \brief Shortcut to access the fwd_viter type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrositerval
@@ -554,7 +610,7 @@
 
 /*!
   \def mln_geom(T)
-  \brief Shortcuts to access the geometry type associated to T.
+  \brief Shortcut to access the geometry type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
@@ -562,7 +618,7 @@
 */
 /*!
   \def mln_geom_(T)
-  \brief Shortcuts to access the geometry type associated to T.
+  \brief Shortcut to access the geometry type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -576,7 +632,7 @@
 
 /*!
   \def mln_grid(T)
-  \brief Shortcuts to access the grid type associated to T.
+  \brief Shortcut to access the grid type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
@@ -584,7 +640,7 @@
 */
 /*!
   \def mln_grid_(T)
-  \brief Shortcuts to access the grid type associated to T.
+  \brief Shortcut to access the grid type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -601,7 +657,7 @@
 
 /*!
   \def mln_i_element(T)
-  \brief Shortcuts to access the insertion-element type associated to
+  \brief Shortcut to access the insertion-element type associated to
   T.
 
   To be used in templated functions only.
@@ -609,7 +665,7 @@
 */
 /*!
   \def mln_i_element_(T)
-  \brief Shortcuts to access the insertion-element type associated to
+  \brief Shortcut to access the insertion-element type associated to
   T.
 
   To be used in non-templated functions only.
@@ -623,7 +679,7 @@
 
 /*!
   \def mln_image(T)
-  \brief Shortcuts to access the image type associated to
+  \brief Shortcut to access the image type associated to
   T.
 
   To be used in templated functions only.
@@ -631,7 +687,7 @@
 */
 /*!
   \def mln_image_(T)
-  \brief Shortcuts to access the image type associated to
+  \brief Shortcut to access the image type associated to
   T.
 
   To be used in non-templated functions only.
@@ -645,7 +701,7 @@
 
 /*!
   \def mln_invert(T)
-  \brief Shortcuts to access the invert type associated to
+  \brief Shortcut to access the invert type associated to
   T.
 
   To be used in templated functions only.
@@ -654,7 +710,7 @@
 */
 /*!
   \def mln_invert_(T)
-  \brief Shortcuts to access the invert type associated to
+  \brief Shortcut to access the invert type associated to
   T.
 
   To be used in non-templated functions only.
@@ -672,7 +728,7 @@
 
 /*!
   \def mln_lvalue(T)
-  \brief Shortcuts to access the lvalue type associated to
+  \brief Shortcut to access the lvalue type associated to
   T.
 
   To be used in templated functions only.
@@ -681,7 +737,7 @@
 */
 /*!
   \def mln_lvalue_(T)
-  \brief Shortcuts to access the lvalue type associated to
+  \brief Shortcut to access the lvalue type associated to
   T.
 
   To be used in non-templated functions only.
@@ -699,7 +755,7 @@
 
 /*!
   \def mln_mesh(T)
-  \brief Shortcuts to access the mesh type associated to
+  \brief Shortcut to access the mesh type associated to
   T.
 
   To be used in templated functions only.
@@ -707,7 +763,7 @@
 */
 /*!
   \def mln_mesh_(T)
-  \brief Shortcuts to access the mesh type associated to
+  \brief Shortcut to access the mesh type associated to
   T.
 
   To be used in non-templated functions only.
@@ -724,8 +780,12 @@
 
 /*!
   \def mln_piter(T)
-  \brief Shortcuts to access the type of point iterator (piter)
-  associated to T.
+
+  \brief Shortcut to access the default site iterator type associated
+  to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in templated functions only.
   \ingroup macrositerima
@@ -733,14 +793,19 @@
 */
 /*!
   \def mln_piter_(T)
-  \brief Shortcuts to access the type of point iterator (piter)
-  associated to T.
+
+  \brief Shortcut to access the default site iterator type associated
+  to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in non-templated functions only.
   \ingroup macrositerima
   \relates mln::Image
 */
-/// Shortcuts to access the type of point iterator (piter) associated to T.
+/// Shortcuts to access the default site iterator type associated to
+/// T.
 /// \{
 # define mln_piter(T)      typename T::piter
 # define mln_piter_(T)              T::piter
@@ -748,8 +813,11 @@
 
 /*!
   \def mln_line_piter(T)
-  \brief Shortcuts to access the type of point by line iterator
+  \brief Shortcut to access the type of point by line iterator
   (line_piter) associated to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in templated functions only.
   \ingroup macrositerima
@@ -757,8 +825,11 @@
 */
 /*!
   \def mln_line_piter_(T)
-  \brief Shortcuts to access the type of point by line iterator
+  \brief Shortcut to access the type of point by line iterator
   (line_piter) associated to T.
+
+  \param T A type of a class inheriting from mln::Image or
+  mln::Site_set.
 
   To be used in non-templated functions only.
   \ingroup macrositerima
@@ -773,7 +844,7 @@
 
 /*!
   \def mln_domain(T)
-  \brief Shortcuts to access the domain type associated to T.
+  \brief Shortcut to access the domain type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -781,7 +852,7 @@
 */
 /*!
   \def mln_domain_(T)
-  \brief Shortcuts to access the domain type associated to T.
+  \brief Shortcut to access the domain type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -795,7 +866,7 @@
 
 /*!
   \def mln_pset(T)
-  \brief Shortcuts to access the type of point set (pset) associated
+  \brief Shortcut to access the type of point set (pset) associated
   to T.
 
   To be used in templated functions only.
@@ -804,7 +875,7 @@
 */
 /*!
   \def mln_pset_(T)
-  \brief Shortcuts to access the type of point set (pset) associated
+  \brief Shortcut to access the type of point set (pset) associated
   to T.
 
   To be used in non-templated functions only.
@@ -819,7 +890,7 @@
 
 /*!
   \def mln_psite(T)
-  \brief Shortcuts to access the type of point site (psite) associated
+  \brief Shortcut to access the type of point site (psite) associated
   to T.
 
   To be used in templated functions only.
@@ -828,7 +899,7 @@
 */
 /*!
   \def mln_psite_(T)
-  \brief Shortcuts to access the type of point site (psite) associated
+  \brief Shortcut to access the type of point site (psite) associated
   to T.
 
   To be used in non-templated functions only.
@@ -843,7 +914,7 @@
 
 /*!
   \def mln_point(T)
-  \brief Shortcuts to access the point type associated to T.
+  \brief Shortcut to access the point type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -851,7 +922,7 @@
 */
 /*!
   \def mln_point_(T)
-  \brief Shortcuts to access the point type associated to T.
+  \brief Shortcut to access the point type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -868,7 +939,7 @@
 
 /*!
   \def mln_qlf_value(T)
-  \brief Shortcuts to access the qualified (const or mutable) value
+  \brief Shortcut to access the qualified (const or mutable) value
   type associated to T.
 
   To be used in templated functions only.
@@ -877,7 +948,7 @@
 */
 /*!
   \def mln_qlf_value_(T)
-  \brief Shortcuts to access the qualified (const or mutable) value
+  \brief Shortcut to access the qualified (const or mutable) value
   type associated to T.
 
   To be used in non-templated functions only.
@@ -893,7 +964,11 @@
 
 /*!
   \def mln_qiter(T)
-  \brief Shortcuts to access the qiter type associated to T.
+
+  \brief Shortcut to access the default neighbor iterator type
+  associated to the window of type T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in templated functions only.
   \ingroup macrositerwin
@@ -901,13 +976,18 @@
 */
 /*!
   \def mln_qiter_(T)
-  \brief Shortcuts to access the qiter type associated to T.
+
+  \brief Shortcut to access the default neighbor iterator type
+  associated to the window of type T.
+
+  \param T A type of a class inheriting from mln::Window.
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
   \relates mln::Window mln::Weighted_Window
 */
-/// Shortcuts to access the qiter type associated to T.
+/// Shortcuts to access the default neighbor iterator type associated
+/// to the window of type T.
 /// \{
 # define mln_qiter(T)      typename T::fwd_qiter
 # define mln_qiter_(T)              T::fwd_qiter
@@ -915,7 +995,7 @@
 
 /*!
   \def mln_q_result(T)
-  \brief Shortcuts to access the qualified-result type associated to
+  \brief Shortcut to access the qualified-result type associated to
   T.
 
   To be used in templated functions only.
@@ -924,7 +1004,7 @@
 */
 /*!
   \def mln_q_result_(T)
-  \brief Shortcuts to access the qualified-result type associated to
+  \brief Shortcut to access the qualified-result type associated to
   T.
 
   To be used in non-templated functions only.
@@ -939,7 +1019,7 @@
 
 /*!
   \def mln_q_subject(T)
-  \brief Shortcuts to access the qualified-subject type associated to
+  \brief Shortcut to access the qualified-subject type associated to
   T.
 
   To be used in templated functions only.
@@ -947,7 +1027,7 @@
 */
 /*!
   \def mln_q_subject_(T)
-  \brief Shortcuts to access the qualified-subject type associated to
+  \brief Shortcut to access the qualified-subject type associated to
   T.
 
   To be used in non-templated functions only.
@@ -964,7 +1044,11 @@
 
 /*!
   \def mln_niter(T)
-  \brief Shortcuts to access the niter type associated to T.
+
+  \brief Shortcut to access the default neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in templated functions only.
   \ingroup macrositernbh
@@ -972,13 +1056,18 @@
 */
 /*!
   \def mln_niter_(T)
-  \brief Shortcuts to access the niter type associated to T.
+
+  \brief Shortcut to access the default neighbor iterator type
+  associated to a neighborhood of type T.
+
+  \param T A type of a class inheriting from mln::Neighborhood.
 
   To be used in non-templated functions only.
   \ingroup macrositernbh
   \relates mln::Neighborhood
 */
-/// Shortcuts to access the niter type associated to T.
+/// Shortcuts to access the default neighbor iterator type associated
+/// to a neighborhood of type T.
 /// \{
 # define mln_niter(T)      typename T::fwd_niter
 # define mln_niter_(T)              T::fwd_niter
@@ -989,14 +1078,14 @@
 
 /*!
   \def mln_r_element(T)
-  \brief Shortcuts to access the removal-element type associated to T.
+  \brief Shortcut to access the removal-element type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_r_element_(T)
-  \brief Shortcuts to access the removal-element type associated to T.
+  \brief Shortcut to access the removal-element type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -1009,14 +1098,14 @@
 
 /*!
   \def mln_regular(T)
-  \brief Shortcuts to access the regular type associated to T.
+  \brief Shortcut to access the regular type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_regular_(T)
-  \brief Shortcuts to access the regular type associated to T.
+  \brief Shortcut to access the regular type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -1029,7 +1118,7 @@
 
 /*!
   \def mln_result(T)
-  \brief Shortcuts to access the result type associated to T.
+  \brief Shortcut to access the result type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosfun
@@ -1037,7 +1126,7 @@
 */
 /*!
   \def mln_result_(T)
-  \brief Shortcuts to access the result type associated to T.
+  \brief Shortcut to access the result type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosfun
@@ -1051,7 +1140,7 @@
 
 /*!
   \def mln_rvalue(T)
-  \brief Shortcuts to access the value type associated to T.
+  \brief Shortcut to access the value type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosfun
@@ -1059,7 +1148,7 @@
 */
 /*!
   \def mln_rvalue_(T)
-  \brief Shortcuts to access the value type associated to T.
+  \brief Shortcut to access the value type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosfun
@@ -1076,7 +1165,7 @@
 
 /*!
   \def mln_site(T)
-  \brief Shortcuts to access the site type associated to T.
+  \brief Shortcut to access the site type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -1084,7 +1173,7 @@
 */
 /*!
   \def mln_site_(T)
-  \brief Shortcuts to access the site type associated to T.
+  \brief Shortcut to access the site type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -1107,14 +1196,14 @@
 
 /*!
   \def mln_target(T)
-  \brief Shortcuts to access the target type associated to T.
+  \brief Shortcut to access the target type associated to T.
 
   To be used in templated functions only.
   \ingroup mlnmacros
 */
 /*!
   \def mln_target_(T)
-  \brief Shortcuts to access the target type associated to T.
+  \brief Shortcut to access the target type associated to T.
 
   To be used in non-templated functions only.
   \ingroup mlnmacros
@@ -1131,7 +1220,7 @@
 
 /*!
   \def mln_unmorph(T)
-  \brief Shortcuts to access the unmorph type associated to T.
+  \brief Shortcut to access the unmorph type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -1139,7 +1228,7 @@
 */
 /*!
   \def mln_unmorph_(T)
-  \brief Shortcuts to access the unmorph type associated to T.
+  \brief Shortcut to access the unmorph type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -1157,7 +1246,7 @@
 
 /*!
   \def mln_value(T)
-  \brief Shortcuts to access the value type associated to T.
+  \brief Shortcut to access the value type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosima
@@ -1165,7 +1254,7 @@
 */
 /*!
   \def mln_value_(T)
-  \brief Shortcuts to access the value type associated to T.
+  \brief Shortcut to access the value type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosima
@@ -1179,7 +1268,7 @@
 
 /*!
   \def mln_vec(T)
-  \brief Shortcuts to access the algebra::vector (vec) type associated
+  \brief Shortcut to access the algebra::vector (vec) type associated
   to T.
 
   To be used in templated functions only.
@@ -1187,7 +1276,7 @@
 */
 /*!
   \def mln_vec_(T)
-  \brief Shortcuts to access the algebra::vector (vec) type associated
+  \brief Shortcut to access the algebra::vector (vec) type associated
   to T.
 
   To be used in non-templated functions only.
@@ -1201,7 +1290,7 @@
 
 /*!
   \def mln_vset(T)
-  \brief Shortcuts to access the type of value set (vset) associated
+  \brief Shortcut to access the type of value set (vset) associated
   to T.
 
   To be used in templated functions only.
@@ -1210,7 +1299,7 @@
 */
 /*!
   \def mln_vset_(T)
-  \brief Shortcuts to access the type of value set (vset) associated
+  \brief Shortcut to access the type of value set (vset) associated
   to T.
 
   To be used in non-templated functions only.
@@ -1225,7 +1314,7 @@
 
 /*!
   \def mln_viter(T)
-  \brief Shortcuts to access the viter type associated to T.
+  \brief Shortcut to access the viter type associated to T.
 
   To be used in templated functions only.
   \ingroup macrositerval
@@ -1233,7 +1322,7 @@
 */
 /*!
   \def mln_viter_(T)
-  \brief Shortcuts to access the viter type associated to T.
+  \brief Shortcut to access the viter type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrositerval
@@ -1250,7 +1339,7 @@
 
 /*!
   \def mln_weight(T)
-  \brief Shortcuts to access the weight type associated to T.
+  \brief Shortcut to access the weight type associated to T.
 
   To be used in templated functions only.
   \ingroup macroswin
@@ -1258,7 +1347,7 @@
 */
 /*!
   \def mln_weight_(T)
-  \brief Shortcuts to access the weight type associated to T.
+  \brief Shortcut to access the weight type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macroswin
@@ -1272,7 +1361,7 @@
 
 /*!
   \def mln_window(T)
-  \brief Shortcuts to access the window type associated to T.
+  \brief Shortcut to access the window type associated to T.
 
   To be used in templated functions only.
   \ingroup macrosnbh
@@ -1280,7 +1369,7 @@
 */
 /*!
   \def mln_window_(T)
-  \brief Shortcuts to access the window type associated to T.
+  \brief Shortcut to access the window type associated to T.
 
   To be used in non-templated functions only.
   \ingroup macrosnbh
@@ -1299,7 +1388,7 @@
 
 /*!
   \def mln_fwd_pixter(T)
-  \brief Shortcuts to access the fwd_pixter type associated to T.
+  \brief Shortcut to access the fwd_pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1309,7 +1398,7 @@
 */
 /*!
   \def mln_fwd_pixter_(T)
-  \brief Shortcuts to access the fwd_pixter type associated to T.
+  \brief Shortcut to access the fwd_pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1322,7 +1411,7 @@
 
 /*!
   \def mln_bkd_pixter(T)
-  \brief Shortcuts to access the bkd_pixter type associated to T.
+  \brief Shortcut to access the bkd_pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1332,7 +1421,7 @@
 */
 /*!
   \def mln_bkd_pixter_(T)
-  \brief Shortcuts to access the bkd_pixter type associated to T.
+  \brief Shortcut to access the bkd_pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1345,7 +1434,7 @@
 
 /*!
   \def mln_pixter(T)
-  \brief Shortcuts to access the pixter type associated to T.
+  \brief Shortcut to access the pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1355,7 +1444,7 @@
 */
 /*!
   \def mln_pixter_(T)
-  \brief Shortcuts to access the pixter type associated to T.
+  \brief Shortcut to access the pixter type associated to T.
 
   Iterator on image sites, to be used with concrete images only.
 
@@ -1368,7 +1457,7 @@
 
 /*!
   \def mln_fwd_qixter(T)
-  \brief Shortcuts to access the fwd_qixter type associated to T.
+  \brief Shortcut to access the fwd_qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1378,7 +1467,7 @@
 */
 /*!
   \def mln_fwd_qixter_(T)
-  \brief Shortcuts to access the fwd_qixter type associated to T.
+  \brief Shortcut to access the fwd_qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1391,7 +1480,7 @@
 
 /*!
   \def mln_bkd_qixter(T)
-  \brief Shortcuts to access the bkd_qixter type associated to T.
+  \brief Shortcut to access the bkd_qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1401,7 +1490,7 @@
 */
 /*!
   \def mln_bkd_qixter_(T)
-  \brief Shortcuts to access the bkd_qixter type associated to T.
+  \brief Shortcut to access the bkd_qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1415,7 +1504,7 @@
 
 /*!
   \def mln_qixter(T)
-  \brief Shortcuts to access the qixter type associated to T.
+  \brief Shortcut to access the qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1425,7 +1514,7 @@
 */
 /*!
   \def mln_qixter_(T)
-  \brief Shortcuts to access the qixter type associated to T.
+  \brief Shortcut to access the qixter type associated to T.
 
   Iterator on window elements, to be used with concrete images only.
 
@@ -1438,7 +1527,7 @@
 
 /*!
   \def mln_fwd_nixter(T)
-  \brief Shortcuts to access the fwd_nixter type associated to T.
+  \brief Shortcut to access the fwd_nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.
@@ -1449,7 +1538,7 @@
 */
 /*!
   \def mln_fwd_nixter_(T)
-  \brief Shortcuts to access the fwd_nixter type associated to T.
+  \brief Shortcut to access the fwd_nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.
@@ -1463,7 +1552,7 @@
 
 /*!
   \def mln_bkd_nixter(T)
-  \brief Shortcuts to access the bkd_nixter type associated to T.
+  \brief Shortcut to access the bkd_nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.
@@ -1474,7 +1563,7 @@
 */
 /*!
   \def mln_bkd_nixter_(T)
-  \brief Shortcuts to access the bkd_nixter type associated to T.
+  \brief Shortcut to access the bkd_nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.
@@ -1488,7 +1577,7 @@
 
 /*!
   \def mln_nixter(T)
-  \brief Shortcuts to access the nixter type associated to T.
+  \brief Shortcut to access the nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.
@@ -1499,7 +1588,7 @@
 */
 /*!
   \def mln_nixter_(T)
-  \brief Shortcuts to access the nixter type associated to T.
+  \brief Shortcut to access the nixter type associated to T.
 
   Iterator on neighborhood elements, to be used with concrete images
   only.

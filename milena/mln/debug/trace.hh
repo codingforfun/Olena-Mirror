@@ -36,10 +36,26 @@
 # include <ctime>
 # include <mln/core/contract.hh>
 
+/*!
+  \def mln_trace(S)
+  \brief Create a trace entry with S as name.
+
+  This macro must be called once at the beginning of a function.
+
+  \sa mln::debug::trace
+*/
 # define mln_trace(S)				\
   mln::debug::trace mln_trace_(S);		\
   (void) mln_trace_;
 
+/*!
+  \def mln_trace_warning(S)
+  \brief Create a warning entry with S as message.
+
+  This macro can be called anytime and anywhere.
+
+  \sa mln::debug::trace
+*/
 # define mln_trace_warning(S)			\
   mln::debug::trace::warning(S);
 
@@ -73,6 +89,8 @@ namespace mln
       \warning mln_trace() declares a named local variable, so do not
       use mln_trace twice in the same scope in order to avoid
       duplicate declarations.
+
+      \sa mln_trace mln_trace_warning
      */
     class trace
     {
