@@ -3,7 +3,9 @@
 
 namespace mln
 {
-  class box2d : public mln::box<mln::point2d>
+  class box2d
+	: public mln::box<mln::point2d>,
+	  public internal::box_impl_<2,C,E>
   {
   public:
     /// \brief Constructor without argument.

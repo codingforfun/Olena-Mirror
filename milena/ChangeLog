@@ -1,5 +1,14 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix missing parts of mln::box interface in documentation.
+
+	* doc/mln/core/alias/box1d.dox,
+	* doc/mln/core/alias/box2d.dox,
+	* doc/mln/core/alias/box2d_h.dox,
+	* doc/mln/core/alias/box3d.dox: Make class inherit from box_impl.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/var.hh: Document mln_VAR().
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
