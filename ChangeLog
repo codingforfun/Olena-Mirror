@@ -1,5 +1,9 @@
 2013-05-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* NEWS: Introduce new Docstrum algorithm.
+
+2013-05-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/doc.bib: Add reference to Docstrum algorithm related
 	article.
 
