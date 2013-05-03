@@ -89,11 +89,20 @@ namespace mln
   } // end of namespace mln::trait
 
 
+  /*!  \brief An image of which domain is transformed by a function.
 
-  /// Image having its domain restricted by a site set.
-  ///
-  /// \ingroup modimagedomainmorpher
-  //
+    This morpher can be used to modify the image domain through a
+    function.
+
+    This morpher expects the actual transformation for construction
+    but uses internally the inverted transformation.
+
+    Example (\link transformed_image.cc \endlink):
+    \snippet transformed_image.cc Translate image domain
+
+    \sa mln::transform_domain fun::p2p::translation_t fun::p2p::mirror fun::p2p::fold
+    \ingroup modimagedomainmorpher
+  */
   template <typename I, typename F>
   struct transformed_image : public internal::image_domain_morpher< I,
 								    p_transformed< mln_domain(I), F>,
@@ -134,10 +143,26 @@ namespace mln
 
   // Morpher creation.
 
+  /*!
+    \brief Creates a transformed image.
+
+    This routine is provided for convenience and can be considered as
+    a "factory" of mln::transformed_image images.
+
+    \relates transformed_image
+   */
   template <typename I, typename F>
   transformed_image<const I, F>
   transform_domain(const Image<I>& ima, const Function_v2v<F>& f);
 
+  /*!
+    \brief Creates a transformed image.
+
+    This routine is provided for convenience and can be considered as
+    a "factory" of mln::transformed_image images.
+
+    \relates transformed_image
+   */
   template <typename I, typename F>
   transformed_image<I, F>
   transform_domain(Image<I>& ima, const Function_v2v<F>& f);

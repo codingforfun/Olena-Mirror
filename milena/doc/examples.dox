@@ -8,7 +8,12 @@
 \li \link demos/inter_pixel/inter_pixel.cc Inter-pixel processings \endlink
 
 
+\section examplesmorpher Image Morphers
+\li \link doc/examples/transformed_image.cc Image domain translation. \endlink
+\li \link doc/examples/extended_image.cc Image domain extension/shrinking. \endlink
+
 \section examplesgraph Graphs
 \li \link demos/graph/region_adjacency_graph.cc Region Adjacency Graph \endlink
+
 
 */

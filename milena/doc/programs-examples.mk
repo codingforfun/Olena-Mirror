@@ -1,6 +1,7 @@
 ## Program as examples, generating images & outputs.  -*- Makefile-Automake -*-
 
-## Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+## Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+## (LRDE).
 ##
 ## This file is part of Olena.
 ##
@@ -32,6 +33,7 @@ PROGRAMS_examples =		\
   dpoint-1 			\
   estim-sites 			\
   extend 			\
+  extended_image		\
   extension-ignore 		\
   fill 				\
   fill-call-1			\
@@ -64,6 +66,7 @@ PROGRAMS_examples =		\
   paste-call-1 			\
   point-1 			\
   predicate-1 			\
+  transformed_image		\
   win-create-1 			\
   win-create-2
 
@@ -96,6 +99,7 @@ domain_display_SOURCES = examples/domain-display.cc
 dpoint_1_SOURCES = examples/dpoint-1.cc
 estim_sites_SOURCES = examples/estim-sites.cc
 extend_SOURCES = examples/extend.cc
+extended_image_SOURCES = examples/extended_image.cc
 extension_ignore_SOURCES = examples/extension-ignore.cc
 fill_SOURCES = examples/fill.cc
 fill_call_1_SOURCES = examples/fill-call-1.cc
@@ -128,6 +132,7 @@ paste_SOURCES = examples/paste.cc
 paste_call_1_SOURCES = examples/paste-call-1.cc
 point_1_SOURCES = examples/point-1.cc
 predicate_1_SOURCES = examples/predicate-1.cc
+transformed_image_SOURCES = examples/transformed_image.cc
 win_create_1_SOURCES = examples/win-create-1.cc
 win_create_2_SOURCES = examples/win-create-2.cc
 

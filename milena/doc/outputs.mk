@@ -8,6 +8,7 @@ OUTPUTS = \
   $(srcdir)/outputs/dpoint-1.txt \
   $(srcdir)/outputs/estim-sites.txt \
   $(srcdir)/outputs/extend.txt \
+  $(srcdir)/outputs/extended_image.txt \
   $(srcdir)/outputs/extension-ignore.txt \
   $(srcdir)/outputs/fill-call-1.txt \
   $(srcdir)/outputs/fill-imageif-cfun.txt \
@@ -40,6 +41,7 @@ OUTPUTS = \
   $(srcdir)/outputs/paste.txt \
   $(srcdir)/outputs/point-1.txt \
   $(srcdir)/outputs/predicate-1.txt \
+  $(srcdir)/outputs/transformed_image.txt \
   $(srcdir)/outputs/tuto2_first_image.txt \
   $(srcdir)/outputs/tuto3_colorize.txt \
   $(srcdir)/outputs/tuto3_first_routine.txt \

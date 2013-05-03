@@ -49,7 +49,7 @@ namespace mln
 	\brief Computes the translation of a given point w.r.t a
 	translation vector.
 
-	\sa data::transform
+	\sa data::transform mln::transformed_image
 	\ingroup funv2v
       */
       template <typename P>
@@ -68,6 +68,12 @@ namespace mln
       };
 
 
+      /*!
+	\brief Creates a translation function.
+
+	\relates mln::fun::p2p::translation_t
+	\ingroup funv2v
+      */
       template <typename D>
       translation_t<mln_site(D)>
       translation(const Gdpoint<D>& dp);

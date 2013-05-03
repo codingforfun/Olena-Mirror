@@ -47,7 +47,7 @@ namespace mln
       /*!
 	\brief Fold a domain into one direction.
 
-	\sa data::transform
+	\sa data::transform mln::transformed_image
 	\ingroup funv2v
       */
       template < typename P,

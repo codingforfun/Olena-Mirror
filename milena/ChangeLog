@@ -1,5 +1,31 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Document extended and transformed_image morphers.
+
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/outputs.mk: Regen.
+
+	* doc/examples.dox: Add link to new examples.
+
+	* doc/outputs/extended_image.txt,
+	* doc/outputs/transformed_image.txt,
+	* doc/examples/extended_image.cc,
+	* doc/examples/transformed_image.cc: New.
+
+	* doc/programs-examples.mk: Add new example programs.
+
+	* mln/core/image/dmorph/extended.hh,
+	* mln/core/image/dmorph/transformed_image.hh: Write documentation
+	and insert example code.
+
+	* mln/fun/p2p/fold.hh,
+	* mln/fun/p2p/mirror.hh,
+	* mln/fun/p2p/translation.hh: Make references to
+	transformed_image.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/site_set/box.hh: Add shrink() and to_smaller() members.
 
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
