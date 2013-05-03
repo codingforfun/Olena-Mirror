@@ -1,5 +1,4 @@
-# Copyright (C) 2013 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,6 +16,12 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS = xy_cut
+check_PROGRAMS = 		\
+  docstrum			\
+  xy_cut
+
+EXTRA_DIST =			\
+  docstrum-line.pgm		\
+  docstrum-paragraph.pgm
 
 TESTS = $(check_PROGRAMS)

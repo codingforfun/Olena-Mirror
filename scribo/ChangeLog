@@ -1,3 +1,29 @@
+2013-05-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Docstrum document layout analysis algorithm.
+
+	* scribo/layout/docstrum.hh,
+	* scribo/layout/internal/docstrum/all.hh,
+	* scribo/layout/internal/docstrum/bbox2d.hh,
+	* scribo/layout/internal/docstrum/between_closure.hh,
+	* scribo/layout/internal/docstrum/components_size.hh,
+	* scribo/layout/internal/docstrum/distances.hh,
+	* scribo/layout/internal/docstrum/extract_lines.hh,
+	* scribo/layout/internal/docstrum/extract_paragraphs.hh,
+	* scribo/layout/internal/docstrum/kd_hyperrect.hh,
+	* scribo/layout/internal/docstrum/kd_node.hh,
+	* scribo/layout/internal/docstrum/kd_tree.hh,
+	* scribo/layout/internal/docstrum/labeling.hh,
+	* scribo/layout/internal/docstrum/line.hh,
+	* scribo/layout/internal/docstrum/nearest_neighbors.hh,
+	* scribo/layout/internal/docstrum/paragraph.hh,
+	* scribo/layout/internal/docstrum/within_closure.hh,
+	* tests/layout/docstrum-line.pgm,
+	* tests/layout/docstrum-paragraph.pgm,
+	* tests/layout/docstrum.cc: New.
+
+	* tests/layout/Makefile.am: New target and extra dist files.
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.
