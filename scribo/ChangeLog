@@ -1,3 +1,10 @@
+2013-05-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen auto-generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Here.
+
 2013-05-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add Docstrum document layout analysis algorithm.
