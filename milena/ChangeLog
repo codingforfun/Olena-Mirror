@@ -1,5 +1,13 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cross reference algebra::vec and make::vec in their respective
+	documentation.
+
+	* mln/algebra/vec.hh,
+	* mln/make/vec.hh: Here.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Document extended and transformed_image morphers.
 
 	* doc/examples-outputs.mk,

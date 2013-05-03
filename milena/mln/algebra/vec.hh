@@ -33,6 +33,7 @@
 
 # include <iostream>
 # include <cmath>
+# include <vector>
 
 # include <mln/core/concept/object.hh>
 
@@ -179,6 +180,8 @@ namespace mln
 
 
     /*! \brief N-dimensional vector.
+
+      \sa mln::make::vec
       \ingroup mlnalgebratypes
      */
     template <unsigned n, typename T>
@@ -213,6 +216,8 @@ namespace mln
 
       template <typename U>
       vec(const vec<n, U>& rhs);
+
+      vec(const std::vector<T>& rhs);
 
       template <typename U>
       vec& operator=(const vec<n, U>& rhs);
@@ -593,6 +598,16 @@ namespace mln
       mlc_converts_to(U, T)::check();
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = static_cast<T>(rhs[i]);
+    }
+
+    template <unsigned n, typename T>
+    inline
+    vec<n,T>::vec(const std::vector<T>& rhs)
+      : super_()
+    {
+      mln_assertion(rhs.size() == n);
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
     }
 
     template <unsigned n, typename T>
