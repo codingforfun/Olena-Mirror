@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/site_set/box.hh: Add shrink() and to_smaller() members.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a module related to literals.
 
 	* doc/mln/literal/literal.dox: New.

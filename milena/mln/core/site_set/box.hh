@@ -144,6 +144,15 @@ namespace mln
     /// Give a larger box.
     box<P> to_larger(unsigned b) const;
 
+    /// Shrink the box with a border \p b.
+    void shrink(unsigned b);
+
+    /// Shrink the box with a border \p b for dimension \p dim.
+    void shrink(unsigned dim, unsigned b);
+
+    /// Give a smaller box.
+    box<P> to_smaller(unsigned b) const;
+
     /// Return the approximated central site of this box.
     P pcenter() const;
 
@@ -359,6 +368,31 @@ namespace mln
 
   template <typename P>
   inline
+  void
+  box<P>::shrink(unsigned b)
+  {
+    mln_precondition(is_valid());
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      pmin_[i] = static_cast<mln_coord(P)>(pmin_[i] + b);
+      pmax_[i] = static_cast<mln_coord(P)>(pmax_[i] - b);
+    }
+    mln_postcondition(is_valid());
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::shrink(unsigned dim, unsigned b)
+  {
+    mln_precondition(is_valid());
+    pmin_[dim] = static_cast<mln_coord(P)>(pmin_[dim] + b);
+    pmax_[dim] = static_cast<mln_coord(P)>(pmax_[dim] - b);
+    mln_postcondition(is_valid());
+  }
+
+  template <typename P>
+  inline
   box<P>
   larger_than(const box<P> a, const box<P> b)
   {
@@ -385,6 +419,23 @@ namespace mln
     {
       tmp.pmin_[i] = static_cast<mln_coord(P)>(tmp.pmin_[i] - b);
       tmp.pmax_[i] = static_cast<mln_coord(P)>(tmp.pmax_[i] + b);
+    }
+    mln_postcondition(tmp.is_valid());
+    return tmp;
+  }
+
+  template <typename P>
+  inline
+  box<P>
+  box<P>::to_smaller(unsigned b) const
+  {
+    mln_precondition(is_valid());
+    box<P> tmp(*this);
+
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      tmp.pmin_[i] = static_cast<mln_coord(P)>(tmp.pmin_[i] + b);
+      tmp.pmax_[i] = static_cast<mln_coord(P)>(tmp.pmax_[i] - b);
     }
     mln_postcondition(tmp.is_valid());
     return tmp;
