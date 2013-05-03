@@ -1,5 +1,9 @@
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/var.hh: Document mln_VAR().
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cross reference algebra::vec and make::vec in their respective
 	documentation.
 

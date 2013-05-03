@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,14 +36,31 @@
 
 # include <mln/core/macros.hh>
 
-/// Definition of the macro mln_VAR.
-/// Deduce the type of Expr, create a variable of that type and assign the
-/// result to it.
+/*!
+  \def mln_VAR(Var, Expr)
+  \brief Deduce the type of Expr, create a variable of that type and
+  assign the result to it.
+
+  \warning Theses macro rely on an extension of g++ (\c typeof) so it
+  is NOT standard C++.
+
+  \ingroup mlnmacros
+*/
 #define mln_VAR(Var, Expr)			\
 						\
   typeof(Expr) Var = Expr;			\
   typedef typeof(Expr) Var##_t
 
+/*!
+  \def mln_const VAR(Var, Expr)
+  \brief Deduce the type of Expr, create a const variable of that type
+  and assign the result to it.
+
+  \warning Theses macro rely on an extension of g++ (\c typeof) so it
+  is NOT standard C++.
+
+  \ingroup mlnmacros
+*/
 #define mln_const_VAR(Var, Expr)		\
 						\
   const typeof(Expr) Var = Expr;		\
