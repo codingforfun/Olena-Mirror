@@ -27,7 +27,7 @@
 #define MLN_UPSCALING_UPSCALE_BICUBIC_2X_HH
 
 #include <mln/core/image/image2d.hh>
-
+#include <cmath>
 
 /// \file
 ///
@@ -71,30 +71,31 @@ namespace mln {
                 mln_trace("upscaling::upscaling_bicubic_x2");
                 const I& in_image = exact(in_image_);
                 mln_precondition(in_image.is_valid());
-                mln_domain(I) ext_domain(in_image.domain().pmin() * 2,
-                        in_image.domain().pmax() * 2);
-                mln_concrete(I) output(ext_domain);
+                
+                mln_concrete(I) output(in_image.nrows()*2,in_image.ncols()*2);
+                
                 data::fill(output, 0);
 
                 mln_concrete(I) tmp;
                 initialize(tmp, in_image);
                 data::fill(tmp, 0);
 
-                int x, y, k, l;
-
-                for (def::coord row = 1; row < in_image.nrows(); ++row)
-                    for (def::coord col = 1; col < in_image.ncols(); ++col) {
+                for (def::coord row = geom::min_row(in_image); row <= geom::max_row(in_image) ; ++row)
+                    for (def::coord col = geom::min_col(in_image)+1; col < geom::max_col(in_image)-1; ++col) {
                         opt::at(tmp, row, col) = tl_bicubic_interpol(in_image(point2d(row, col - 1)), in_image(point2d(row, col)), in_image(point2d(row, col + 1)), in_image(point2d(row, col + 2)));
                     }
 
-                for (def::coord row = 1, k = 1; row < in_image.nrows(); row++, k += 2)
-                    for (def::coord col = 1, l = 1; col < in_image.ncols(); col++, l += 2) {
+                for (def::coord row = geom::min_row(in_image)+1, k = 1; row < geom::max_row(in_image)-1; row++, k += 2)
+                    for (def::coord col = geom::min_col(in_image)+1, l = 1; col < geom::max_col(in_image); col++, l += 2) {
                         opt::at(output, k, l) = in_image(point2d(row, col));
-                        opt::at(output, k + 1, l) = tmp(point2d(row, col));
-                        opt::at(output, k, l + 1) = tl_bicubic_interpol(in_image(point2d(row - 1, col)), in_image(point2d(row, col)), in_image(point2d(row + 1, col)), in_image(point2d(row + 2, col)));
+                        opt::at(output, k , l +1 ) = tmp(point2d(row, col));
+                        opt::at(output, k +1 , l ) = tl_bicubic_interpol(in_image(point2d(row - 1, col)), in_image(point2d(row, col)), in_image(point2d(row + 1, col)), in_image(point2d(row + 2, col)));
                         opt::at(output, k + 1, l + 1) = tl_bicubic_interpol(tmp(point2d(row - 1, col)), tmp(point2d(row, col)), tmp(point2d(row + 1, col)), tmp(point2d(row + 2, col)));
                     }
 
+		//                io::magick::save(output,"upscale.tiff");
+                
+                
                 return output;
             }
 
