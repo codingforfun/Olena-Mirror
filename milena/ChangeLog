@@ -1,5 +1,10 @@
 2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/ref-guide.tex: Mention *_without_localization routines in
+	reference guide.
+
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Document sub_image morpher.
 
 	* doc/examples-outputs.mk,
