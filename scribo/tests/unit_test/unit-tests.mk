@@ -324,6 +324,12 @@ scribo_io_xml_internal_print_image_coords \
 scribo_io_xml_internal_time_info \
 scribo_layout_internal_hist_info \
 scribo_layout_internal_node \
+scribo_layout_internal_smearing_bbox2d \
+scribo_layout_internal_smearing_classification \
+scribo_layout_internal_smearing_crla \
+scribo_layout_internal_smearing_draw_region \
+scribo_layout_internal_smearing_labeling \
+scribo_layout_smearing \
 scribo_layout_xy_cut \
 scribo_make_all \
 scribo_make_debug_filename \

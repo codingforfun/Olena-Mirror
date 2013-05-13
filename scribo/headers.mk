@@ -167,6 +167,12 @@ scribo/io/xml/load.hh \
 scribo/io/xml/save.hh \
 scribo/layout/internal/hist_info.hh \
 scribo/layout/internal/node.hh \
+scribo/layout/internal/smearing/bbox2d.hh \
+scribo/layout/internal/smearing/classification.hh \
+scribo/layout/internal/smearing/crla.hh \
+scribo/layout/internal/smearing/draw_region.hh \
+scribo/layout/internal/smearing/labeling.hh \
+scribo/layout/smearing.hh \
 scribo/layout/xy_cut.hh \
 scribo/make/all.hh \
 scribo/make/debug_filename.hh \

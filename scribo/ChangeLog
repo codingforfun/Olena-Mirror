@@ -1,5 +1,12 @@
 2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regenerate auto-generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Smearing layout analysis algorithm.
 
 	* scribo/layout/internal/smearing/bbox2d.hh,
