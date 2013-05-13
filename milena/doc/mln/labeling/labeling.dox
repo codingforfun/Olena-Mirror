@@ -1,6 +1,35 @@
 /*! \defgroup labeling Image Labeling
- *
- * \brief All labeling routines provided in Milena.
- *
- * \ingroup modroutines
- */
+
+    \brief All labeling-related routines provided in Milena.
+
+    Olena provides both labeling routines and routines working on
+    labeled image to massively process each label.
+
+    labeling::blobs(), labeling::value(), labeling::foreground(),
+    labeling::flat_zones(), and labeling::background() can be used to
+    label binary or gray-level images.  Labeled images produced by
+    these algorithms are made of a continuous labeling starting from
+    index 1. Output image may contain value '0' which is considered in
+    Milena as a non-label and is usually used for background.
+
+    \warning In all labeling functions returning the number of labels,
+    (usually named as \c nlabels), the number of label only refers to
+    the labels different from '0' (which is considered as no-label
+    value). A labeled image may contain \c nlabels + 1 different
+    values.
+
+    labeling::compute_image(), labeling::compute(),
+    labeling::mean_colors, massively compute attribute on labeled
+    image.
+
+    labeling::pack and labeling::relabel() relabel already labeled
+    images with respect to specific rules.
+
+    labeling::value_and_compute() performs both labeling and attribute
+    computation at the same time.
+
+    labeling::wrap(), labeling::superpose(), and labeling::colorize()
+    are usually used for debugging purpose to output labeled images.
+
+    \ingroup modroutines
+*/
