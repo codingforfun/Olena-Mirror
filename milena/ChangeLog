@@ -1,3 +1,8 @@
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/values.hh: Labeling algorithm for gray-level
+	images.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.
