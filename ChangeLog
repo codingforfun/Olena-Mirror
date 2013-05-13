@@ -1,5 +1,9 @@
 2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* NEWS: Notify new Smearing algorithm.
+
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/doc.bib: Add a reference for Smearing layout analysis.
 
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
