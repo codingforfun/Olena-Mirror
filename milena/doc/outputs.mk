@@ -41,6 +41,7 @@ OUTPUTS = \
   $(srcdir)/outputs/paste.txt \
   $(srcdir)/outputs/point-1.txt \
   $(srcdir)/outputs/predicate-1.txt \
+  $(srcdir)/outputs/sub_image.txt \
   $(srcdir)/outputs/transformed_image.txt \
   $(srcdir)/outputs/tuto2_first_image.txt \
   $(srcdir)/outputs/tuto3_colorize.txt \

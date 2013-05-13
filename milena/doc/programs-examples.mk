@@ -66,6 +66,7 @@ PROGRAMS_examples =		\
   paste-call-1 			\
   point-1 			\
   predicate-1 			\
+  sub_image			\
   transformed_image		\
   win-create-1 			\
   win-create-2
@@ -132,6 +133,7 @@ paste_SOURCES = examples/paste.cc
 paste_call_1_SOURCES = examples/paste-call-1.cc
 point_1_SOURCES = examples/point-1.cc
 predicate_1_SOURCES = examples/predicate-1.cc
+sub_image_SOURCES = examples/sub_image.cc
 transformed_image_SOURCES = examples/transformed_image.cc
 win_create_1_SOURCES = examples/win-create-1.cc
 win_create_2_SOURCES = examples/win-create-2.cc

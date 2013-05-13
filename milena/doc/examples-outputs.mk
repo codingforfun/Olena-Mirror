@@ -721,6 +721,24 @@ $(srcdir)/outputs/predicate-1.txt: $(srcdir)/examples/predicate-1.stamp
 	fi
 
 
+$(srcdir)/examples/sub_image.stamp: examples/sub_image.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) sub_image$(EXEEXT)
+	./sub_image$(EXEEXT) >$(srcdir)/outputs/sub_image.txt.tmp
+	mv $(srcdir)/outputs/sub_image.txt.tmp $(srcdir)/outputs/sub_image.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/sub_image.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/sub_image.stamp
+
+$(srcdir)/outputs/sub_image.txt: $(srcdir)/examples/sub_image.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
 $(srcdir)/examples/transformed_image.stamp: examples/transformed_image.cc
 	@rm -f $@.tmp
 	@touch $@.tmp

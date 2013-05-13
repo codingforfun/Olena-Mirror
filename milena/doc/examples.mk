@@ -41,6 +41,7 @@ EXAMPLES = \
   $(srcdir)/examples/paste.cc \
   $(srcdir)/examples/point-1.cc \
   $(srcdir)/examples/predicate-1.cc \
+  $(srcdir)/examples/sub_image.cc \
   $(srcdir)/examples/transformed_image.cc \
   $(srcdir)/examples/trash/accu.cc \
   $(srcdir)/examples/trash/box.cc \

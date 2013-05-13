@@ -1,3 +1,23 @@
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Document sub_image morpher.
+
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/figures.mk,
+	* doc/outputs.mk,
+	* doc/programs-examples.mk: Regen.
+
+	* doc/examples.dox: Revamp layout and add link to the new sub_image
+	example.
+
+	* doc/examples/sub_image.cc,
+	* doc/outputs/sub_image.txt,
+	* doc/figures/sub_image-1.pbm,
+	* doc/figures/sub_image-2.pbm: New.
+
+	* mln/core/image/dmorph/sub_image.hh: Write documentation.
+
 2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/routine/duplicate.hh: Document this routine.
