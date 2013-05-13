@@ -66,7 +66,7 @@ namespace mln
     \see mln::doc::Site_Set for a complete documentation of this
     class contents.
 
-    \ingroup modconcepts
+    \ingroup modconcepts modsiteset
   */
   template <typename E>
   struct Site_Set : public Object<E>

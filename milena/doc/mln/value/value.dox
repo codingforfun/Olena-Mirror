@@ -1,8 +1,22 @@
 /*! \defgroup valuegroup Values
- *
- * \brief All supported value types.
- *
- * \ingroup modtypes
+
+  \brief All supported value types.
+
+  Milena provides several kinds of value types detailled in this
+  section. Built-in types can also be used which includes:
+
+  \li bool
+  \li char
+  \li short int
+  \li int
+  \li long
+  \li unsigned short
+  \li unsigned int
+  \li unsigned long
+  \li float
+  \li double
+
+  \ingroup modtypes
  */
 
 

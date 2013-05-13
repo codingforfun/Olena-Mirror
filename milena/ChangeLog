@@ -1,3 +1,208 @@
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/labeling/labeling.dox: Write general documentation on
+	labeling.
+
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/ref-guide.tex: Mention *_without_localization routines in
+	reference guide.
+
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Document sub_image morpher.
+
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/figures.mk,
+	* doc/outputs.mk,
+	* doc/programs-examples.mk: Regen.
+
+	* doc/examples.dox: Revamp layout and add link to the new sub_image
+	example.
+
+	* doc/examples/sub_image.cc,
+	* doc/outputs/sub_image.txt,
+	* doc/figures/sub_image-1.pbm,
+	* doc/figures/sub_image-2.pbm: New.
+
+	* mln/core/image/dmorph/sub_image.hh: Write documentation.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/routine/duplicate.hh: Document this routine.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in documentation.
+
+	* doc/mln/core/image/morphers.dox: Add a reference to duplicate().
+
+	* mln/core/pixter1d.hh: Remove \internal commands.
+
+	* mln/data/transform.hh: Improve layout of pseudo-code.
+
+	* mln/io/pdf/load.hh: Remove duplicate '*' in comments.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation of several macros.
+
+	* mln/core/concept/iterator.hh: Document arguments.
+
+	* mln/core/macros.hh: Add more documentation details for iterator
+	related macros.
+
+	* mln/core/var.hh: Fix typos.
+
+	* mln/debug/trace.hh: Add documentation to mln_trace and
+	mln_trace_warning.
+
+	* mln/trait/value_.hh: Add documentation to several common macros.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix missing parts of mln::box interface in documentation.
+
+	* doc/mln/core/alias/box1d.dox,
+	* doc/mln/core/alias/box2d.dox,
+	* doc/mln/core/alias/box2d_h.dox,
+	* doc/mln/core/alias/box3d.dox: Make class inherit from box_impl.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/var.hh: Document mln_VAR().
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cross reference algebra::vec and make::vec in their respective
+	documentation.
+
+	* mln/algebra/vec.hh,
+	* mln/make/vec.hh: Here.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Document extended and transformed_image morphers.
+
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/outputs.mk: Regen.
+
+	* doc/examples.dox: Add link to new examples.
+
+	* doc/outputs/extended_image.txt,
+	* doc/outputs/transformed_image.txt,
+	* doc/examples/extended_image.cc,
+	* doc/examples/transformed_image.cc: New.
+
+	* doc/programs-examples.mk: Add new example programs.
+
+	* mln/core/image/dmorph/extended.hh,
+	* mln/core/image/dmorph/transformed_image.hh: Write documentation
+	and insert example code.
+
+	* mln/fun/p2p/fold.hh,
+	* mln/fun/p2p/mirror.hh,
+	* mln/fun/p2p/translation.hh: Make references to
+	transformed_image.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/site_set/box.hh: Add shrink() and to_smaller() members.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a module related to literals.
+
+	* doc/mln/literal/literal.dox: New.
+
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/identity.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* mln/literal/zero.hh: Move to literal module.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in existing documentation.
+
+	* mln/data/convert.hh: Remove a duplicate \overload.
+
+	* mln/core/macros.hh: Fix definitions.
+
+	* mln/value/qt/rgb32.hh: Fix invalid cross reference.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/concept/iterator.hh: Document iterator macros.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move concepts in their related type module.
+
+	* mln/core/concept/image.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/window.hh: Here.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Hide 'It' symbol.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/core/image/images.dox: Document generic image interface.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/main.dox: Set macro module as top level entry.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/concept/image.hh: Document Image concept.
+
+2013-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/value/value/dox: Specify that built-in types can be
+	used.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce a new module for useful macros.
+
+	* doc/mln/core/macros.dox: New.
+
+	* doc/mln/main.dox: New module.
+
+	* mln/core/macros.hh: Add comments.
+
+2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation in fun::p2b, fun::p2p, fun::p2v and
+	fun::x2v.
+
+	* mln/fun/p2b/antilogy.hh,
+	* mln/fun/p2b/big_chess.hh,
+	* mln/fun/p2b/chess.hh,
+	* mln/fun/p2b/has.hh,
+	* mln/fun/p2b/tautology.hh,
+	* mln/fun/p2p/fold.hh,
+	* mln/fun/p2p/mirror.hh,
+	* mln/fun/p2p/translation.hh,
+	* mln/fun/p2v/elifs.hh,
+	* mln/fun/p2v/iota.hh,
+	* mln/fun/p2v/ternary.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/l1_norm.hh,
+	* mln/fun/x2v/nneighbor.hh,
+	* mln/fun/x2v/trilinear.hh: Here.
+
 2013-04-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle 16 bits value types with io::magick.

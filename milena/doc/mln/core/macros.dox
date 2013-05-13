@@ -1,0 +1,79 @@
+/*! \defgroup macrositerima Image Iterators
+ *
+ * \brief All the macros to extract Image iterator types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrositerwin Window Iterators
+ *
+ * \brief All the macros to extract window iterator types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrositernbh Neighborhood Iterators
+ *
+ * \brief All the macros to extract window iterator types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrositerelt Element Iterators
+ *
+ * \brief All the macros to extract element iterator types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrositerval Value Iterators
+ *
+ * \brief All the macros to extract value iterator types.
+ *
+ * \ingroup mlnmacros
+ */
+
+
+
+
+/*! \defgroup macrosima Image Specific types
+ *
+ * \brief All the macros to extract image specific types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrosfun Function Specific types
+ *
+ * \brief All the macros to extract function specific types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrosval Value Specific types
+ *
+ * \brief All the macros to extract value specific types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrossite Site Specific types
+ *
+ * \brief All the macros to extract site specific types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macroswin Window Specific types
+ *
+ * \brief All the macros to extract window specific types.
+ *
+ * \ingroup mlnmacros
+ */
+
+/*! \defgroup macrosnbh Neighborhood Specific types
+ *
+ * \brief All the macros to extract neighborhood specific types.
+ *
+ * \ingroup mlnmacros
+ */

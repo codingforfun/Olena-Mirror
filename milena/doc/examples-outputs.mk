@@ -127,6 +127,24 @@ $(srcdir)/outputs/extend.txt: $(srcdir)/examples/extend.stamp
 	fi
 
 
+$(srcdir)/examples/extended_image.stamp: examples/extended_image.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) extended_image$(EXEEXT)
+	./extended_image$(EXEEXT) >$(srcdir)/outputs/extended_image.txt.tmp
+	mv $(srcdir)/outputs/extended_image.txt.tmp $(srcdir)/outputs/extended_image.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/extended_image.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/extended_image.stamp
+
+$(srcdir)/outputs/extended_image.txt: $(srcdir)/examples/extended_image.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
 $(srcdir)/examples/extension-ignore.stamp: examples/extension-ignore.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
@@ -696,6 +714,42 @@ EXTRA_DIST += $(srcdir)/examples/predicate-1.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/predicate-1.stamp
 
 $(srcdir)/outputs/predicate-1.txt: $(srcdir)/examples/predicate-1.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
+$(srcdir)/examples/sub_image.stamp: examples/sub_image.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) sub_image$(EXEEXT)
+	./sub_image$(EXEEXT) >$(srcdir)/outputs/sub_image.txt.tmp
+	mv $(srcdir)/outputs/sub_image.txt.tmp $(srcdir)/outputs/sub_image.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/sub_image.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/sub_image.stamp
+
+$(srcdir)/outputs/sub_image.txt: $(srcdir)/examples/sub_image.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
+$(srcdir)/examples/transformed_image.stamp: examples/transformed_image.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) transformed_image$(EXEEXT)
+	./transformed_image$(EXEEXT) >$(srcdir)/outputs/transformed_image.txt.tmp
+	mv $(srcdir)/outputs/transformed_image.txt.tmp $(srcdir)/outputs/transformed_image.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/transformed_image.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/transformed_image.stamp
+
+$(srcdir)/outputs/transformed_image.txt: $(srcdir)/examples/transformed_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \

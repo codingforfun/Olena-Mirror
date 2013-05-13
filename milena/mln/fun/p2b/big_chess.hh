@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,10 +27,10 @@
 #ifndef MLN_FUN_P2B_BIG_CHESS_HH
 # define MLN_FUN_P2B_BIG_CHESS_HH
 
-/*! \file
- *
- * \brief FIXME.
- */
+/// \file
+///
+/// \brief Generates a boolean image looking like chess-boards
+/// (alternate True/False).
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/alias/point2d.hh>
@@ -44,7 +45,24 @@ namespace mln
     namespace p2b
     {
 
-      // FIXME: Doc!
+      /* \brief Generates a boolean image based on a chess-board
+	 canvas (alternate True/False).
+
+	 This function allows to specify how large are the square in
+	 the chess-board canvas.
+
+	 \verbatim
+	 | | - - | |
+	 | | - - | |
+	 - - | | - -
+	 - - | | - -
+	 | | - - | |
+	 | | - - | |
+	 \endverbatim
+
+	 \sa data::transform
+	 \ingroup funv2v
+      */
       template <typename B>
       struct big_chess : public Function_v2b< big_chess<B> >
       {

@@ -69,20 +69,31 @@ namespace mln
 
 
   /*!
+    \headerfile <>
     \brief Base class for implementation of image classes.
-    \ingroup modconcepts
-   */
-  template <typename E>
-  struct Image : public Object<E>
-  {
-    typedef Image<void> category;
 
-    template <typename J>
-    Image<E>& operator=(const J& rhs);
+    In Milena, every image is considered as a composition of both:
+    \li A function \f$F\f$
+    \f$
+    ima : \left\{
+    \begin{array}{lll}
+    Site &\rightarrow & Value \\
+    p & \mapsto & ima(p)
+    \end{array}
+    \right.
+    \f$
+    \li A domain of definition \f$D\f$.
 
-    /*
-      // provided by internal::image_base:
+    A domain \f$D\f$ is represented as a mln::Site_Set which provides
+    the set of sites (localization information) on which the image is
+    defined.
+    The function \f$F\f$ returns a value for a given site.
 
+    mln::Image is a concept class. It is not meant to be instantiated
+    directly. All image classes in Milena inherit from it and
+    provide the following methods and typedefs:
+
+    \code
       typedef domain_t;
       typedef site;
       typedef psite;
@@ -92,7 +103,6 @@ namespace mln
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      unsigned nsites() const; // If relevant.
 
       bool is_valid() const;
 
@@ -104,11 +114,6 @@ namespace mln
 
       typedef value;
 
-      // to be provided in concrete image classes:
-
-      typedef vset;
-      const vset& values() const;
-
       typedef rvalue;
       typedef lvalue;
       rvalue operator()(const psite& p) const;
@@ -117,7 +122,27 @@ namespace mln
       const domain_t& domain() const;
 
       typedef skeleton;
-     */
+    \endcode
+
+    More explanations and documentation of each typedefs/methods are
+    provided in the inherited classes. A list of images is available
+    in module \ref modimage. Image types are divided into two main
+    categories: \ref modimageconcrete and \ref modimagemorpher.
+
+    A list of features provided in image classes is detailed in module
+    \ref modimage.
+
+    \ingroup modconcepts modimage
+   */
+  template <typename E>
+  struct Image : public Object<E>
+  {
+    typedef Image<void> category;
+
+    template <typename J>
+    Image<E>& operator=(const J& rhs);
+
+    // Required interface is provided by internal::image_base:
 
   protected:
     Image();

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,8 @@
 
 /// \file
 ///
-/// FIXME: doc
+/// \brief For sites outside a given domain it returns the
+/// corresponding mirror site in the domain,
 
 # include <mln/core/concept/function.hh>
 
@@ -41,6 +43,29 @@ namespace mln
     namespace p2p
     {
 
+      /*!  \brief For sites outside a given domain it returns the
+       *   corresponding mirror site in the domain,
+
+       Example:
+
+       \verbatim
+       (0,0)
+         x -------- x
+	 |          |
+	 |          |
+	 x -------- x
+	          (3,3)
+       \endverbatim
+
+       \code
+       fun::p2p::mirror<box2d> f_mirror(box2d(4,4));
+       point2d p = f_mirror(point2d(0, 6));
+       // p == (0, 1);
+       \endcode
+
+       \sa data::transform mln::transformed_image
+       \ingroup funv2v
+      */
       template <typename B>
       struct mirror : public Function_v2v< mirror<B> >
       {

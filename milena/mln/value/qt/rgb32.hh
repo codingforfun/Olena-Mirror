@@ -172,7 +172,7 @@ namespace mln
 	QImage::Format_RGB32 or QImage::Format_ARGB32.
 
 	\ingroup valuergb
-	\sa to_qimage_nocopy_qt_rgb32
+	\sa to_qimage_nocopy to_qimage
       */
       struct rgb32
 	:

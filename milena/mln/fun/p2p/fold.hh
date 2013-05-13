@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// FIXME: Doc!
+/// \brief Fold a domain into one direction.
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/site_set/box.hh>
@@ -43,13 +44,12 @@ namespace mln
     namespace p2p
     {
 
-      // Forward declaration.
-      namespace internal {
-	template <typename F, typename P>
-	P do_fold(const P& p, const box<P>& b);
-      } 
+      /*!
+	\brief Fold a domain into one direction.
 
-
+	\sa data::transform mln::transformed_image
+	\ingroup funv2v
+      */
       template < typename P,
 		 int dir_0 = -1,
 		 int dir_1 = -1,

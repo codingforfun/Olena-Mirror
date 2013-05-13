@@ -1312,27 +1312,34 @@ logical::not\_inplace() & Point-wise "logical not" \\
 First, create an image:
 \doxycode[1]{fill-call-1}
 
-Memory has been allocated so data can be stored but site values
-have not been initialized yet.  So we fill \var{imga} with the value 'a':
+Memory has been allocated so data can be stored but site values have
+not been initialized yet.  So we fill \var{imga} with the value 'a':
 
 \doxycode[2]{fill-call-1}
 
-The \code{fill()} algorithm is located in the sub-namespace "\namespace{mln::data}" since this
-algorithm deals with the site values.
+data::fill() always preserves the location of the values while filling
+an image with another. If location does not matter, see
+data::fill\_without\_localization.
 
-The full name of this routine is \code{mln::data::fill()}.
-To access to a particular algorithm, the proper file shall be included.
-The file names of algorithms strictly map their C++ name; so
+The \code{fill()} algorithm is located in the sub-namespace
+"\namespace{mln::data}" since this algorithm deals with the site
+values.
+
+The full name of this routine is \code{mln::data::fill()}.  To access
+to a particular algorithm, the proper file shall be included.  The
+file names of algorithms strictly map their C++ name; so
 \namespace{mln::data::fill} is defined in the file \header{mln/data/fill.hh}.
 
 %----------------
 \subsection*{Note}
-Most algorithms in Olena are constructed following the classical scheme: "output
-algo(input)", where the input image is only read. However some few algorithms
-take an input image in order to modify it.  To enforce this particular feature,
-the user shall explicitly state that the image is provided so that its data is
-modified "read/write". The algorithm call shall be \code{data::fill(ima.rw(),
-val)}. When forgetting the \code{rw()} call, it does not compile.
+Most algorithms in Olena are constructed following the classical
+scheme: "output algo(input)", where the input image is only
+read. However some few algorithms take an input image in order to
+modify it.  To enforce this particular feature, the user shall
+explicitly state that the image is provided so that its data is
+modified "read/write". The algorithm call shall be
+\code{data::fill(ima.rw(), val)}. When forgetting the \code{rw()}
+call, it does not compile.
 
 \doxycode[3]{fill-call-1}
 
@@ -1344,6 +1351,10 @@ data for the sites (5, 5) to (14, 14) (so it has 100 sites).
 \doxycode{paste-call-1}
 Output:
 \doxyoutput{paste-call-1}
+
+data::paste() always preserves the location of the values while
+pasting an image into another. If location does not matter, see
+data::paste\_without\_localization.
 
 %Before pasting, the couple of images looked like:
 

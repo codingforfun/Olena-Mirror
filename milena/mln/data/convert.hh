@@ -72,7 +72,6 @@ namespace mln
 
     /*! \overload
       \brief Convert the image \p input by changing the value type.
-      \overload
 
       This overload allows to specify a specific conversion function
       thanks to parameter \p convert_function.

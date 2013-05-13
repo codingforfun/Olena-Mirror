@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,13 +39,20 @@
 namespace mln
 {
 
-  /// Duplicate the image \p model with the values of the image \p
-  /// data.
-  ///
-  /// \param[in] model The image to be duplicated.
-  /// \result The duplicate.
-  ///
-  /// \pre model.is_valid
+  /*!
+    \brief Duplicate the image \p model with the values of the image
+    \p data.
+
+    \param[in] model The image to be duplicated.
+    \result The duplicate.
+
+    This routine performs a deep copy (create new data) of an image.
+    It can be used to copy an image or to create a concrete image
+    (\ref modimageconcrete) from a morphed image (\ref
+    modimagemorpher).
+
+    \pre model.is_valid
+  */
   template <typename I>
   mln_concrete(I) duplicate(const Image<I>& model);
 

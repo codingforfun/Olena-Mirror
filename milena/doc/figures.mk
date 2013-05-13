@@ -87,6 +87,16 @@ $(LOGICAL_NOT_FIGURES): $(srcdir)/examples/logical-not.stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
+SUB_IMAGE_FIGURES = \
+  $(srcdir)/figures/sub_image-1.pbm \
+  $(srcdir)/figures/sub_image-2.pbm
+$(SUB_IMAGE_FIGURES): $(srcdir)/examples/sub_image.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
 TUTO2_FIRST_IMAGE_FIGURES = \
   $(srcdir)/figures/tuto2_first_image-1.pbm
 $(TUTO2_FIRST_IMAGE_FIGURES): $(srcdir)/examples/tuto2_first_image.stamp
@@ -141,6 +151,7 @@ FIGURES = \
   $(IMA2D_ROT_FIGURES) \
   $(LABELING_COMPUTE_FIGURES) \
   $(LOGICAL_NOT_FIGURES) \
+  $(SUB_IMAGE_FIGURES) \
   $(TUTO2_FIRST_IMAGE_FIGURES) \
   $(TUTO3_COLORIZE_FIGURES) \
   $(TUTO3_RW_IMAGE_FIGURES) \
@@ -154,6 +165,8 @@ PBM_FIGURES = \
   $(srcdir)/figures/logical-not-1.pbm \
   $(srcdir)/figures/logical-not-2.pbm \
   $(srcdir)/figures/logical-not-3.pbm \
+  $(srcdir)/figures/sub_image-1.pbm \
+  $(srcdir)/figures/sub_image-2.pbm \
   $(srcdir)/figures/tuto2_first_image-1.pbm \
   $(srcdir)/figures/tuto4_genericity_and_algorithms-3.pbm
 

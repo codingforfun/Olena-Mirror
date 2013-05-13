@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,7 +53,11 @@ namespace mln
     };
 
 
-    /// Literal max.
+    /*!
+      \brief Literal max.
+      \ingroup modliteral
+      \relates mln::literal::max_t
+    */
     extern const max_t max;
 
 

@@ -42,7 +42,6 @@ namespace mln
   `------------------*/
 
   /*!
-    \internal
     \brief Forward pixel iterator on a 1-D image with border.
   */
   template <typename I>
@@ -71,7 +70,6 @@ namespace mln
   `------------------*/
 
   /*!
-    \internal
     \brief Backward pixel iterator on a 1-D image with border.
   */
   template <typename I>

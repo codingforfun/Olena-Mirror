@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,10 +27,9 @@
 #ifndef MLN_FUN_P2V_ELIFS_HH
 # define MLN_FUN_P2V_ELIFS_HH
 
-/*! \file
- *
- * \brief FIXME.
- */
+/// \file
+///
+/// \brief Construct a if-then-else canvas from functions.
 
 # include <mln/fun/p2v/ternary.hh>
 
@@ -43,6 +43,12 @@ namespace mln
     namespace p2v
     {
 
+      /*!
+	\brief Construct a if-then-else canvas from functions.
+
+	\sa data::transform
+	\ingroup funv2v
+      */
       template <typename T1, typename N1,
 		typename T2, typename N2,
 		typename O>

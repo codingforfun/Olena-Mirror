@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,7 +55,11 @@ namespace mln
     };
 
 
-    /// Literal one.
+    /*!
+      \brief Literal one.
+      \ingroup modliteral
+      \relates mln::literal::one_t mln::value::int_s mln::value::int_u_sat mln::value::sign
+    */
     extern const one_t one;
 
 

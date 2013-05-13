@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +48,11 @@ namespace mln
       identity_t();
     };
 
-    /// Literal identity.
+    /*!
+      \brief Literal identity.
+      \ingroup modliteral
+      \relates mln::literal::identity_t mln::algebra::mat
+    */
     extern const identity_t identity;
 
 # ifndef MLN_INCLUDE_ONLY

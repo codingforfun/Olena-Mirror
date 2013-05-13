@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +45,11 @@ namespace mln
     namespace x2v
     {
 
+      /*! \brief Define the L1-norm of an algebraic vector.
+
+	\sa data::transform
+	\ingroup funv2v
+       */
       template <typename V>
       struct l1_norm : public Function_v2v< l1_norm<V> >
       {

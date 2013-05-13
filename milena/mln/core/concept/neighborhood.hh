@@ -61,7 +61,7 @@ namespace mln
   /*!
     \brief Base class for implementation classes that are neighborhoods.
 
-    \ingroup modconcepts
+    \ingroup modconcepts modneighb
   */
   template <typename E>
   struct Neighborhood : public Object<E>

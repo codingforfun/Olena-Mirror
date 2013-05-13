@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,6 +43,26 @@ namespace mln
     namespace p2v
     {
 
+      /*!
+	\brief Iota function.
+
+	Example:
+
+	\code
+	image2d<int> ima(3,3);
+	data::transform(ima, fun::p2v::iota());
+	\endcode
+
+	\c ima values:
+	\verbatim
+	1 2 3
+	4 5 6
+	7 8 9
+	\endverbatim
+
+	\sa data::transform
+	\ingroup funv2v
+      */
       struct iota : public Function_v2v< iota >
       {
 	typedef unsigned result;

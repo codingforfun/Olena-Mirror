@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,7 +56,12 @@ namespace mln
       operator const T () const;
     };
 
-    /// Literal zero.
+    /*!
+      \brief Literal zero.
+      \relates mln::literal::zero_t mln::algebra::vec mln::value::int_s mln::value::int_u_sat mln::value::qt::rgb32 mln::value::rgb mln::value::sign
+
+      \ingroup modliteral
+    */
     extern const zero_t zero;
 
 # ifndef MLN_INCLUDE_ONLY

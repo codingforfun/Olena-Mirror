@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,7 +53,11 @@ namespace mln
     };
 
 
-    /// Literal black.
+    /*!
+      \brief Literal black.
+      \relates mln::literal::black_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+      \ingroup literalcolors valuergb
+    */
     extern const black_t black;
 
 

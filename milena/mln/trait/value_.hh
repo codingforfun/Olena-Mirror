@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,18 +51,79 @@
 # define mln_trait_value_quant_(V)          mln::trait::value_< V >::quant
 
 
+/*!  \def mln_card(V)
+  \brief Returns the cardinality (number of possible values) of type
+  V.
+
+  \ingroup macrosval
+*/
 # define mln_card(V)     mln::trait::value_< V >::card
+
+/*!
+  \def mln_dim(V)
+  \brief Returns the dimension of the values of type V.
+
+  \ingroup macrosval
+*/
 # define mln_dim(V)      mln::trait::value_< V >::dim
+
+/*!
+  \def mln_epsilon(V)
+  \brief Returns the closest value to 0 of the type V.
+
+  \ingroup macrosval
+*/
 # define mln_epsilon(V)  mln::trait::value_< V >::epsilon()
+
+/*!
+  \def mln_max(V)
+  \brief Returns the maximum value the type V.
+
+  \ingroup macrosval
+*/
 # define mln_max(V)      mln::trait::value_< V >::max()
+
+/*!
+  \def mln_min(V)
+  \brief Returns the minimum value the type V.
+
+  \ingroup macrosval
+*/
 # define mln_min(V)      mln::trait::value_< V >::min()
+
+/*!
+  \def mln_min(V)
+  \brief Returns the number of bits used to encode values of type V.
+
+  \ingroup macrosval
+*/
 # define mln_nbits(V)    mln::trait::value_< V >::nbits
 
 
 /// Give the summation type for values of type \c T.
 # define mln_trait_value_sum(V)   typename mln::trait::value_< V >::sum
 # define mln_trait_value_sum_(V)           mln::trait::value_< V >::sum
+
+/*!
+  \def mln_sum(V)
+  \brief Returns the smallest type which can encode the sum of two
+  values of type V.
+
+  This macro must be used in templated functions only.
+
+  \ingroup macrosval
+*/
 # define mln_sum(V)  mln_trait_value_sum(V)
+
+/*!
+  \def mln_sum_(V)
+  \brief Returns the smallest type which can encode the sum of two
+  values of type V.
+
+  This macro must be used in non-templated functions only.
+
+  \ingroup macrosval
+*/
 # define mln_sum_(V) mln_trait_value_sum_(V)
 
 /// Give the value type name
@@ -76,12 +138,23 @@
 	 mln::trait::value::quant::low)
 
 
-/// Give the cardinality of the set of values having N bits.
-// 
-// Technical note:
-// This macro might seem weird, yet it is NOT.  We have to change the value
-// of N, even when N is less than the low quant threshold, because otherwise
-// the call to mlc_pow_int would lead to compilation errors.
+/*!
+  \def mln_value_card_from_(N)
+  \brief Give the cardinality of the set of values having N bits.
+
+  \param[in] N An unsigned corresponding to a number of bits.
+
+  \ingroup macrosval
+
+  \internal
+
+  Technical note:
+  This macro might seem weird, yet it is NOT.  We have to change the value
+  of N, even when N is less than the low quant threshold, because otherwise
+  the call to mlc_pow_int would lead to compilation errors.
+
+  \endinternal
+*/
 # define mln_value_card_from_(N)		\
   (int(N) <= int(mln::def::low_quant_nbits)	\
    ? mlc_pow_int((N <= 16 ? 2 : 1),		\

@@ -4,6 +4,12 @@
  *
  */
 
+/*! \defgroup mlnmacros Useful Macro Functions
+ *
+ * \brief All useful macro functions.
+ *
+ */
+
 /*! \defgroup modroutines Routines
  *
  * \brief All algorithms/routines provided in Milena.

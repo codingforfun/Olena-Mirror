@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,10 +44,15 @@ namespace mln
     {
 
 
-      /// \brief A p2b function always returning \c false.
-      ///
-      /// A simpler name would be `false', but this is not a valid C++
-      /// identifier, as \c false is a keyword of the language.
+      /*!
+	\brief A function always returning \c false.
+
+	A simpler name would be `false', but this is not a valid C++
+	identifier, as \c false is a keyword of the language.
+
+	\sa data::transform
+	\ingroup funv2v
+      */
       struct antilogy : public Function_v2b< antilogy >
       {
 	typedef bool result;

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,9 @@
 
 /// \file
 ///
-/// FIXME.
+/// \brief Generates a boolean image based on a chess-board canvas
+/// (alternate True/False).
+
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/alias/point2d.hh>
@@ -43,8 +46,21 @@ namespace mln
     namespace p2b
     {
 
-      // FIXME: Doc!
+      /* \brief Generates a boolean image based on a chess-board
+	 canvas (alternate True/False).
 
+	 This function allows to specify how large are the square in
+	 the chess-board canvas.
+
+	 \verbatim
+	 | - | - | -
+	 - | - | - |
+	 | - | - | -
+	 \endverbatim
+
+	 \sa data::transform
+	 \ingroup funv2v
+      */
       struct chess : public Function_v2b< chess >
       {
 	typedef bool result;

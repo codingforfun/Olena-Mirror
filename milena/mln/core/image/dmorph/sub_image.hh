@@ -96,14 +96,32 @@ namespace mln
 
 
 
-  /// Image having its domain restricted by a site set.
-  ///
-  /// \ingroup modimagedomainmorpher
-  //
+  /*! Image having its domain restricted by a site set.
+
+    <table border=0>
+    <tr>
+    <td> \image html sub_image-1.png "Input"</td>
+    <td> \f$\rightarrow\f$ </td>
+    <td> \image html sub_image-2.png "Sub image considered from input." </td>
+    </tr>
+    </table>
+
+    Considering the following sub domain in input image:
+    \snippet sub_image.cc Sub domain
+
+    The output image can be obtained using the two following ways:
+    \snippet sub_image.cc Operator pipe
+    \snippet sub_image.cc Sub_image constructor
+
+    A full example is available in \ref examples section or directly
+    \link doc/examples/sub_image.cc here \endlink.
+
+    \ingroup modimagedomainmorpher
+  */
   template <typename I, typename S>
   class sub_image : public internal::image_domain_morpher< I,
-							    S,
-							    sub_image<I,S> >
+							   S,
+							   sub_image<I,S> >
   {
   public:
     /// Skeleton.
@@ -130,12 +148,17 @@ namespace mln
 
 
 
-
+  /*! \brief Shortcut to create an image restricted by a site set.
+    \relates mln::sub_image
+   */
   template <typename I, typename S>
   sub_image<const I, S>
   operator|(const Image<I>& ima, const Site_Set<S>& pset);
 
 
+  /*! \brief Shortcut to create an image restricted by a site set.
+    \relates mln::sub_image
+   */
   template <typename I, typename S>
   sub_image<I, S>
   operator|(Image<I>& ima, const Site_Set<S>& pset);

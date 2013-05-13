@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009  EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,6 +47,7 @@ namespace mln
      * \param[in] v_0 First coordinate.
      *
      * \return A 1D vector.
+     * \sa mln::algebra::vec
      */
     template <typename T>
     algebra::vec<1, T> vec(const T& v_0);
@@ -56,6 +58,7 @@ namespace mln
      * \param[in] v_1 Second coordinate.
      *
      * \return A 2D vector.
+     * \sa mln::algebra::vec
      */
     template <typename T>
     algebra::vec<2, T> vec(const T& v_0, const T& v_1);
@@ -67,6 +70,7 @@ namespace mln
      * \param[in] v_2 Third coordinate.
      *
      * \return A 3D vector.
+     * \sa mln::algebra::vec
      */
     template <typename T>
     algebra::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2);
@@ -79,6 +83,7 @@ namespace mln
      * \param[in] v_3 Fourth coordinate.
      *
      * \return A 4D vector.
+     * \sa mln::algebra::vec
      */
     template <typename T>
     algebra::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3);

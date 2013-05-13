@@ -86,11 +86,28 @@ namespace mln
   } // end of namespace mln::trait
 
 
+  /*!  \brief An image of which domain is extended/shrunk.
 
-  /// Makes an image become restricted by a point set.
-  ///
-  /// \ingroup modimagedomainmorpher
-  //
+    This morpher can be used to alter the current domain of an image
+    by extending or shrinking the existing domain.
+
+    \warning Altering the domain may require that values are available
+    for every sites. While extending outside the original domain, this
+    routine relies on the image border. Therefore, be sure it is large
+    enough to handle the new domain.
+
+    Input used in the following example:
+    \snippet extended_image.cc Input initialization
+
+    Example on how to extend the domain:
+    \snippet extended_image.cc Extend image domain
+
+    Example on how to shrink the domain:
+    \snippet extended_image.cc Extend image domain
+
+    \sa extended_to mln::extend mln::extension_ima mln::extension_fun mln::extension_val
+    \ingroup modimagedomainmorpher
+  */
   template <typename I>
   struct extended : public internal::image_domain_morpher< I,
 							   box<mln_site(I)>,
@@ -126,10 +143,26 @@ namespace mln
   /// \endcond
 
 
+  /*!
+    \brief Creates an extended image.
+
+    This routine is provided for convenience and can be considered as
+    a "factory" of mln::extended image.
+
+    \relates mln::extended
+   */
   template <typename I, typename B>
   extended<const I>
   extended_to(const Image<I>& ima, const Box<B>& b);
 
+  /*!
+    \brief Creates an extended image.
+
+    This routine is provided for convenience and can be considered as
+    a "factory" of mln::extended images.
+
+    \relates mln::extended
+   */
   template <typename I, typename B>
   extended<I>
   extended_to(Image<I>& ima, const Box<B>& b);
