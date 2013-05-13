@@ -1,3 +1,19 @@
+2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Smearing layout analysis algorithm.
+
+	* scribo/layout/internal/smearing/bbox2d.hh,
+	* scribo/layout/internal/smearing/classification.hh,
+	* scribo/layout/internal/smearing/crla.hh,
+	* scribo/layout/internal/smearing/draw_region.hh,
+	* scribo/layout/internal/smearing/labeling.hh,
+	* scribo/layout/smearing.hh,
+	* tests/layout/smearing-nontext.pbm,
+	* tests/layout/smearing-text.pbm,
+	* tests/layout/smearing.cc: New.
+
+	* tests/layout/Makefile.am: New target.
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.
