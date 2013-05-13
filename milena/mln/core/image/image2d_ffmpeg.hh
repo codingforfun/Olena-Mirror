@@ -37,7 +37,6 @@
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
-# include <mln/fun/i2v/all_to.hh>
 
 
 
@@ -68,7 +67,8 @@ namespace mln
 
       box2d b_;  // theoretical box
 
-       void deallocate_();
+      void deallocate_();
+
       // FIXME: we would like to get border information from ffmpeg.
       //box2d vb_;
     };
@@ -108,6 +108,20 @@ namespace mln
       typedef trait::image::ext_value::irrelevant    ext_value;
       typedef trait::image::ext_io::irrelevant     ext_io;
     };
+
+
+
+    // ch_value trait
+
+    namespace impl
+    {
+      template < typename V, typename V2>
+      struct ch_value_< image2d_ffmpeg<tag::value_<V> >, V2>
+      {
+	typedef image2d<V2> ret;
+      };
+
+    }
 
   } // end of namespace mln::trait
 
@@ -241,9 +255,8 @@ namespace mln
   inline
   void init_(tag::image_t, image2d_ffmpeg<V>& target, const J& model)
   {
-    box2d b;
-    init_(tag::bbox, b, model);
-    target.init_(b);
+    std::cerr << "Not implemented" << std::endl;
+    abort();
   }
 
 
@@ -256,21 +269,29 @@ namespace mln
     data< image2d_ffmpeg<V> >::data(AVFrame *frame)
       : frame_(frame)
     {
-      b_ = make::box2d(frame->height, frame->linesize[0]); // frame->width ?
-
+       b_ = make::box2d(frame->height, frame->width); // frame->width ?
       unsigned
 	nr = frame->height,
 	nc = frame->width;
- 
+      (void) nc;
       array_ = new V*[nr];
       buffer_ = static_cast<V*>((void *)frame->data[0]);
       V* buf = static_cast<V*>((void *)frame->data[0]);
       for (unsigned i = 0; i < nr; ++i)
- 
+
 	{
 	  array_[i] = buf;
-	  buf = frame->linesize;
+	  buf += frame->linesize[0] / 3;
 	}
+
+      // FIXME: Not supporting padding for the moment!
+      int padding = frame->linesize[0] / 3 % frame->width;
+      if (padding)
+      {
+	std::cout << "This frame uses padding for memory alignment... "
+		  << "Not supported for the moment!" <<  << std::endl;
+	abort();
+      }
     }
 
     template <typename V>
@@ -288,7 +309,6 @@ namespace mln
     {
       if (array_)
 	{
-	  array_ = b_.pmin().row();
 	  delete[] array_;
 	  array_ = 0;
 	}
@@ -310,6 +330,14 @@ namespace mln
   image2d_ffmpeg<V>::image2d_ffmpeg(AVFrame *frame)
   {
     this->data_ = new internal::data< image2d_ffmpeg<V> >(frame);
+  }
+
+  template <typename V>
+  inline
+  void
+  image2d_ffmpeg<V>::init_(const box2d&)
+  {
+    abort();
   }
 
   template <typename V>
@@ -432,7 +460,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i) const
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_[i]);
+    return this->data_->buffer_[i];
   }
 
   template <typename V>
@@ -441,7 +469,7 @@ namespace mln
   image2d_ffmpeg<V>::element(unsigned i)
   {
     mln_precondition(i < nelements());
-    return *(this->data_->buffer_[i]);
+    return this->data_->buffer_[i];
   }
 
   template <typename V>
@@ -461,14 +489,14 @@ namespace mln
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
- 
+
   template <typename V>
   inline
   int
   image2d_ffmpeg<V>::delta_offset(const dpoint2d& dp) const
   {
     mln_precondition(this->is_valid());
-    int o = dp[0] * this->data_->frame->linesize + dp[1];
+    int o = dp[0] * this->data_->frame_->linesize[0] / 3 + dp[1];
     return o;
   }
 
@@ -486,7 +514,7 @@ namespace mln
     return p;
   }
 
- 
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
