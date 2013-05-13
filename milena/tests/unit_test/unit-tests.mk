@@ -801,6 +801,7 @@ mln_labeling_relabel \
 mln_labeling_superpose \
 mln_labeling_value \
 mln_labeling_value_and_compute \
+mln_labeling_values \
 mln_labeling_wrap \
 mln_linear_all \
 mln_linear_ch_convolve \

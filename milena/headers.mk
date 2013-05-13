@@ -758,6 +758,7 @@ mln/labeling/superpose.hh \
 mln/labeling/value.hh \
 mln/labeling/value.spe.hh \
 mln/labeling/value_and_compute.hh \
+mln/labeling/values.hh \
 mln/labeling/wrap.hh \
 mln/linear/all.hh \
 mln/linear/ch_convolve.hh \
