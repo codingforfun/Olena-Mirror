@@ -34,7 +34,7 @@
 
 using namespace mln;
 
-int main(int argc, char** argv)
+int main()
 {
 
   image2d<bool> input;

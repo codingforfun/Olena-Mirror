@@ -1,3 +1,7 @@
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/layout/xy_cut.cc: Remove useless arguments in main().
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.
