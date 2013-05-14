@@ -1,3 +1,7 @@
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Notify new algorithm.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove unstable viewer.
