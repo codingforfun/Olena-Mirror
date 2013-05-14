@@ -1,3 +1,7 @@
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mainpage.dox: Update demo URL.
+
 2013-04-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* NEWS: Notify changes in data::convert prototype.
