@@ -1,3 +1,20 @@
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Voronoi layout analysis algorithm.
+
+	* scribo/layout/internal/voronoi/bbox2d.hh,
+	* scribo/layout/internal/voronoi/distance.hh,
+	* scribo/layout/internal/voronoi/distribution.hh,
+	* scribo/layout/internal/voronoi/filter.hh,
+	* scribo/layout/internal/voronoi/flooding.hh,
+	* scribo/layout/internal/voronoi/labeling.hh,
+	* scribo/layout/internal/voronoi/outline.hh,
+	* scribo/layout/internal/voronoi/sort.hh,
+	* scribo/layout/voronoi.hh,
+	* tests/layout/voronoi.cc: New.
+
+	* tests/layout/Makefile.am: Add new target.
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.

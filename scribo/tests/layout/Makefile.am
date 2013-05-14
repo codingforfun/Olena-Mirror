@@ -1,5 +1,4 @@
-# Copyright (C) 2013 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,6 +16,7 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS = xy_cut
+check_PROGRAMS = voronoi		\
+		 xy_cut
 
 TESTS = $(check_PROGRAMS)
