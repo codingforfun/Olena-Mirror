@@ -1,5 +1,12 @@
 2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen auto-generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Voronoi layout analysis algorithm.
 
 	* scribo/layout/internal/voronoi/bbox2d.hh,

@@ -324,6 +324,15 @@ scribo_io_xml_internal_print_image_coords \
 scribo_io_xml_internal_time_info \
 scribo_layout_internal_hist_info \
 scribo_layout_internal_node \
+scribo_layout_internal_voronoi_bbox2d \
+scribo_layout_internal_voronoi_distance \
+scribo_layout_internal_voronoi_distribution \
+scribo_layout_internal_voronoi_filter \
+scribo_layout_internal_voronoi_flooding \
+scribo_layout_internal_voronoi_labeling \
+scribo_layout_internal_voronoi_outline \
+scribo_layout_internal_voronoi_sort \
+scribo_layout_voronoi \
 scribo_layout_xy_cut \
 scribo_make_all \
 scribo_make_debug_filename \

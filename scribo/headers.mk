@@ -167,6 +167,15 @@ scribo/io/xml/load.hh \
 scribo/io/xml/save.hh \
 scribo/layout/internal/hist_info.hh \
 scribo/layout/internal/node.hh \
+scribo/layout/internal/voronoi/bbox2d.hh \
+scribo/layout/internal/voronoi/distance.hh \
+scribo/layout/internal/voronoi/distribution.hh \
+scribo/layout/internal/voronoi/filter.hh \
+scribo/layout/internal/voronoi/flooding.hh \
+scribo/layout/internal/voronoi/labeling.hh \
+scribo/layout/internal/voronoi/outline.hh \
+scribo/layout/internal/voronoi/sort.hh \
+scribo/layout/voronoi.hh \
 scribo/layout/xy_cut.hh \
 scribo/make/all.hh \
 scribo/make/debug_filename.hh \
