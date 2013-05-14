@@ -100,6 +100,8 @@ Students from Class 2012.
 
   - Fast implementation of the Hough transform.
   - Many improvements in SCRIBO layout analysis.
+  - Implementation of state-of-the-art document layout analysis
+    algorithms: XY-Cut, Voronoi, Docstrum and Smearing.
 
 =========================
 Students from Class 2011.
