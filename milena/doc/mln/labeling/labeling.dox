@@ -22,7 +22,7 @@
     labeling::mean_colors, massively compute attribute on labeled
     image.
 
-    labeling::pack and labeling::relabel() relabel already labeled
+    labeling::pack() and labeling::relabel() relabel already labeled
     images with respect to specific rules.
 
     labeling::value_and_compute() performs both labeling and attribute
