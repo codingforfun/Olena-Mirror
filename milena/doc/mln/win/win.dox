@@ -1,9 +1,38 @@
 /*! \defgroup modwin Windows
- *
- * \brief All the predefined generic windows.
- *
- * \ingroup modtypes
- */
+
+  \brief All the predefined generic windows.
+
+  In the following sections, the common interface of Milena window
+  types is detailed. Methods and routines detailed hereinafter are
+  considered as generic and work for any window.
+
+  \section docitereltwin Iterate over elements in a window
+
+  A window is always centered on a site. Sites parts of windows are
+  computed relatively from the window central site.
+
+  A generic way of iterating over window elements is to use
+  mln_qiter() macro to declare an iterator.
+
+  \snippet window_iterator.cc Iteration over a site
+
+  A window iterator is defined upon a window and its centeral
+  site. The central site may also be a site iterator.
+
+  \snippet window_iterator.cc Iteration over a domain
+
+  \c p is a site iterator over all the sites of the image \c ima. \c
+  q, being a window iterator centered on that iterator, is
+  automatically updated and centered to the current site pointed by \p
+  p.
+
+  A full example is available in \link window_iterator.cc
+  window_iterator.cc \endlink
+
+  \note In Milena, windows may include the central site.
+
+  \ingroup modtypes
+*/
 
 /*! \defgroup modwin1d 1D windows
  *

@@ -1,9 +1,40 @@
 /*! \defgroup modneighb Neighborhoods
- *
- * \brief All the predefined generic neighborhoods.
- *
- * \ingroup modtypes
- */
+
+  \brief All the predefined generic neighborhoods.
+
+  In the following sections, the common interface of Milena
+  neighborhood types is detailed. Methods and routines detailed
+  hereinafter are considered as generic and work for any
+  neighborhoods.
+
+  \section docitereltneighb Iterate over elements in a neighborhood
+
+  A neighborhood is always centered on a site. Sites parts of
+  neighborhoods are computed relatively from the neighborhood central
+  site.
+
+  A generic way of iterating over neighborhood elements is to use
+  mln_niter() macro to declare an iterator.
+
+  \snippet neighborhood_iterator.cc Iteration over a site
+
+  A neighborhood iterator is defined upon a neighborhood and its
+  centeral site. The central site may also be a site iterator.
+
+  \snippet neighborhood_iterator.cc Iteration over a domain
+
+  \c p is a site iterator over all the sites of the image \c ima. \c
+  q, being a neighborhood iterator centered on that iterator, is
+  automatically updated and centered to the current site pointed by \p
+  p.
+
+  A full example is available in \link neighborhood_iterator.cc
+  neighborhood_iterator.cc \endlink
+
+  \note In Milena, neighborhoods never include the central site.
+
+  \ingroup modtypes
+*/
 
 /*! \defgroup modneighb1d 1D neighborhoods
  *

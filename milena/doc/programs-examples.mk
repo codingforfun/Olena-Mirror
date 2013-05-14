@@ -60,6 +60,7 @@ PROGRAMS_examples =		\
   labeling-compute 		\
   logical-not 			\
   mln_var 			\
+  neighborhood_iterator		\
   parray-append 		\
   parray-bbox 			\
   paste 			\
@@ -68,6 +69,7 @@ PROGRAMS_examples =		\
   predicate-1 			\
   sub_image			\
   transformed_image		\
+  window_iterator		\
   win-create-1 			\
   win-create-2
 
@@ -127,6 +129,7 @@ ima_size_SOURCES = examples/ima-size.cc
 labeling_compute_SOURCES = examples/labeling-compute.cc
 logical_not_SOURCES = examples/logical-not.cc
 mln_var_SOURCES = examples/mln_var.cc
+neighborhood_iterator_SOURCES = examples/neighborhood_iterator.cc
 parray_append_SOURCES = examples/parray-append.cc
 parray_bbox_SOURCES = examples/parray-bbox.cc
 paste_SOURCES = examples/paste.cc
@@ -135,6 +138,7 @@ point_1_SOURCES = examples/point-1.cc
 predicate_1_SOURCES = examples/predicate-1.cc
 sub_image_SOURCES = examples/sub_image.cc
 transformed_image_SOURCES = examples/transformed_image.cc
+window_iterator_SOURCES = examples/window_iterator.cc
 win_create_1_SOURCES = examples/win-create-1.cc
 win_create_2_SOURCES = examples/win-create-2.cc
 

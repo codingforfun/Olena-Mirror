@@ -35,6 +35,7 @@ OUTPUTS = \
   $(srcdir)/outputs/labeling-compute.txt \
   $(srcdir)/outputs/logical-not.txt \
   $(srcdir)/outputs/mln_var.txt \
+  $(srcdir)/outputs/neighborhood_iterator.txt \
   $(srcdir)/outputs/parray-append.txt \
   $(srcdir)/outputs/parray-bbox.txt \
   $(srcdir)/outputs/paste-call-1.txt \
@@ -54,4 +55,5 @@ OUTPUTS = \
   $(srcdir)/outputs/tuto4_point2d.txt \
   $(srcdir)/outputs/tuto4_site_set_create.txt \
   $(srcdir)/outputs/win-create-1.txt \
-  $(srcdir)/outputs/win-create-2.txt
+  $(srcdir)/outputs/win-create-2.txt \
+  $(srcdir)/outputs/window_iterator.txt

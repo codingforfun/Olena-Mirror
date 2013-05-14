@@ -35,6 +35,7 @@ EXAMPLES = \
   $(srcdir)/examples/labeling-compute.cc \
   $(srcdir)/examples/logical-not.cc \
   $(srcdir)/examples/mln_var.cc \
+  $(srcdir)/examples/neighborhood_iterator.cc \
   $(srcdir)/examples/parray-append.cc \
   $(srcdir)/examples/parray-bbox.cc \
   $(srcdir)/examples/paste-call-1.cc \
@@ -85,4 +86,5 @@ EXAMPLES = \
   $(srcdir)/examples/tuto4/site_set_create.cc \
   $(srcdir)/examples/tuto4_genericity_and_algorithms.cc \
   $(srcdir)/examples/win-create-1.cc \
-  $(srcdir)/examples/win-create-2.cc
+  $(srcdir)/examples/win-create-2.cc \
+  $(srcdir)/examples/window_iterator.cc

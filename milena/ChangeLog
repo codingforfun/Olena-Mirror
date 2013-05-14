@@ -1,5 +1,24 @@
 2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add documentation about neighborhood and window iterators.
+
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/outputs.mk,
+	* doc/programs-examples.mk: Regen.
+
+	* doc/outputs/neighborhood_iterator.txt,
+	* doc/outputs/window_iterator.txt,
+	* doc/examples/neighborhood_iterator.cc,
+	* doc/examples/window_iterator.cc: New.
+
+	* doc/examples.dox: Add links to examples.
+
+	* doc/mln/core/neighb.dox,
+	* doc/mln/win/win.dox: Write documentation.
+
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/DoxygenLayout.xml: Update demo URL.
 
 2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -613,6 +613,24 @@ $(srcdir)/outputs/mln_var.txt: $(srcdir)/examples/mln_var.stamp
 	fi
 
 
+$(srcdir)/examples/neighborhood_iterator.stamp: examples/neighborhood_iterator.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) neighborhood_iterator$(EXEEXT)
+	./neighborhood_iterator$(EXEEXT) >$(srcdir)/outputs/neighborhood_iterator.txt.tmp
+	mv $(srcdir)/outputs/neighborhood_iterator.txt.tmp $(srcdir)/outputs/neighborhood_iterator.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/neighborhood_iterator.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/neighborhood_iterator.stamp
+
+$(srcdir)/outputs/neighborhood_iterator.txt: $(srcdir)/examples/neighborhood_iterator.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
 $(srcdir)/examples/parray-append.stamp: examples/parray-append.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
@@ -966,6 +984,24 @@ EXTRA_DIST += $(srcdir)/examples/win-create-2.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/win-create-2.stamp
 
 $(srcdir)/outputs/win-create-2.txt: $(srcdir)/examples/win-create-2.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+
+$(srcdir)/examples/window_iterator.stamp: examples/window_iterator.cc
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(MAKE) $(AM_MAKEFLAGS) window_iterator$(EXEEXT)
+	./window_iterator$(EXEEXT) >$(srcdir)/outputs/window_iterator.txt.tmp
+	mv $(srcdir)/outputs/window_iterator.txt.tmp $(srcdir)/outputs/window_iterator.txt
+	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/examples/window_iterator.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/window_iterator.stamp
+
+$(srcdir)/outputs/window_iterator.txt: $(srcdir)/examples/window_iterator.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
