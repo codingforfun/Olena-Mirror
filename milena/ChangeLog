@@ -1,3 +1,7 @@
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/DoxygenLayout.xml: Update demo URL.
+
 2013-05-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/labeling/labeling.dox: Write general documentation on
