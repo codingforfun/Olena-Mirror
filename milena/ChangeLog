@@ -1,5 +1,20 @@
 2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Do not move classes/functions in their related sections.
+
+	* mln/core/macros.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/identity.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* mln/literal/zero.hh: Use \relatesalso instead of \relates.
+
+2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add documentation about neighborhood and window iterators.
 
 	* doc/examples-outputs.mk,

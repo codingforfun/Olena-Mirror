@@ -58,7 +58,11 @@ namespace mln
     /*!
       \brief Literal one.
       \ingroup modliteral
-      \relates mln::literal::one_t mln::value::int_s mln::value::int_u_sat mln::value::sign
+
+      \relatesalso mln::literal::one_t
+      \relatesalso mln::value::int_s
+      \relatesalso mln::value::int_u_sat
+      \relatesalso mln::value::sign
     */
     extern const one_t one;
 

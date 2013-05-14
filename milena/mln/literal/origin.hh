@@ -52,7 +52,9 @@ namespace mln
     /*!
       \brief Literal origin.
       \ingroup modliteral
-      \relates mln::literal::origin_t mln::algebra::vec mln::point
+
+      \relatesalso mln::literal::origin_t
+      \relatesalso mln::algebra::vec mln::point
     */
     extern const origin_t origin;
 

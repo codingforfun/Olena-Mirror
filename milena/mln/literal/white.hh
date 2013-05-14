@@ -55,7 +55,12 @@ namespace mln
 
     /*!
       \brief Literal white.
-      \relates mln::literal::white_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::white_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const white_t white;

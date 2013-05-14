@@ -55,7 +55,9 @@ namespace mln
 
     /*!
       \brief Literal min.
-      \relates mln::literal::min_t
+
+      \relatesalso mln::literal::min_t
+
       \ingroup modliteral
     */
     extern const min_t min;

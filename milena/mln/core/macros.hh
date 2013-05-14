@@ -174,7 +174,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_bkd_qiter_(T)
@@ -186,7 +187,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /// Shortcuts to access the backward neighbor iterator type associated
 /// to a window of type T.
@@ -223,7 +225,8 @@
 
   To be used in templated functions only.
   \ingroup macrosima
-  \relates mln::Image mln::Site_Set
+  \relatesalso mln::Image
+  \relatesalso mln::Site_Set
 */
 /*!
   \def mln_box_(T)
@@ -231,7 +234,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrosima
-  \relates mln::Image mln::Site_Set
+  \relatesalso mln::Image
+  \relatesalso mln::Site_Set
 */
 /// Shortcuts to access the box type associated to T.
 /// \{
@@ -562,7 +566,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_fwd_qiter_(T)
@@ -574,7 +579,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /// Shortcuts to access the forward neighbor iterator type associated
 /// to a window of site T.
@@ -972,7 +978,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_qiter_(T)
@@ -984,7 +991,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /// Shortcuts to access the default neighbor iterator type associated
 /// to the window of type T.
@@ -1463,7 +1471,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_fwd_qixter_(T)
@@ -1473,7 +1482,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 # define mln_fwd_qixter(I, W) typename mln::trait::fwd_qixter< I, W >::ret
 # define mln_fwd_qixter_(I, W)         mln::trait::fwd_qixter< I, W >::ret
@@ -1486,7 +1496,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_bkd_qixter_(T)
@@ -1496,7 +1507,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 # define mln_bkd_qixter(I, W) typename mln::trait::bkd_qixter< I, W >::ret
 # define mln_bkd_qixter_(I, W)         mln::trait::bkd_qixter< I, W >::ret
@@ -1510,7 +1522,8 @@
 
   To be used in templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 /*!
   \def mln_qixter_(T)
@@ -1520,7 +1533,8 @@
 
   To be used in non-templated functions only.
   \ingroup macrositerwin
-  \relates mln::Window mln::Weighted_Window
+  \relatesalso mln::Window
+  \relatesalso mln::Weighted_Window
 */
 # define mln_qixter(I, W)  mln_fwd_qixter(I, W)
 # define mln_qixter_(I, W) mln_fwd_qixter_(I, W)

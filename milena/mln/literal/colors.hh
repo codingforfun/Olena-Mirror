@@ -154,98 +154,168 @@ namespace mln
 
     /*!
       \brief Literal red.
-      \relates mln::literal::red_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::red_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const red_t red;
 
     /*!
       \brief Literal green.
-      \relates mln::literal::green_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::green_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const green_t green;
 
     /*!
       \brief Literal blue.
-      \relates mln::literal::blue_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::blue_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const blue_t blue;
 
     /*!
       \brief Literal brown.
-      \relates mln::literal::brown_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::brown_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const brown_t brown;
 
     /*!
       \brief Literal lime.
-      \relates mln::literal::lime_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::lime_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const lime_t lime;
 
     /*!
       \brief Literal orange.
-      \relates mln::literal::orange_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::orange_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const orange_t orange;
 
     /*!
       \brief Literal pink.
-      \relates mln::literal::pink_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::pink_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const pink_t pink;
 
     /*!
       \brief Literal purple.
-      \relates mln::literal::purple_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::purple_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const purple_t purple;
 
     /*!
       \brief Literal teal.
-      \relates mln::literal::teal_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::teal_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const teal_t teal;
 
     /*!
       \brief Literal violet.
-      \relates mln::literal::violet_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::violet_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const violet_t violet;
 
     /*!
       \brief Literal cyan.
-      \relates mln::literal::cyan_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::cyan_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const cyan_t cyan;
 
     /*!
       \brief Literal magenta.
-      \relates mln::literal::magenta_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::magenta_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const magenta_t magenta;
 
     /*!
       \brief Literal yellow.
-      \relates mln::literal::yellow_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::yellow_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const yellow_t yellow;
 
     /*!
       \brief Literal olive.
-      \relates mln::literal::olive_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::olive_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const olive_t olive;

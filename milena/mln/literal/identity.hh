@@ -51,7 +51,9 @@ namespace mln
     /*!
       \brief Literal identity.
       \ingroup modliteral
-      \relates mln::literal::identity_t mln::algebra::mat
+
+      \relatesalso mln::literal::identity_t
+      \relatesalso mln::algebra::mat
     */
     extern const identity_t identity;
 

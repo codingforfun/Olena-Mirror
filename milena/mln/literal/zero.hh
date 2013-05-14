@@ -58,7 +58,14 @@ namespace mln
 
     /*!
       \brief Literal zero.
-      \relates mln::literal::zero_t mln::algebra::vec mln::value::int_s mln::value::int_u_sat mln::value::qt::rgb32 mln::value::rgb mln::value::sign
+
+      \relatesalso mln::literal::zero_t
+      \relatesalso mln::algebra::vec
+      \relatesalso mln::value::int_s
+      \relatesalso mln::value::int_u_sat
+      \relatesalso mln::value::qt::rgb32
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::sign
 
       \ingroup modliteral
     */

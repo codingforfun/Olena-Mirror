@@ -56,7 +56,8 @@ namespace mln
     /*!
       \brief Literal max.
       \ingroup modliteral
-      \relates mln::literal::max_t
+
+      \relatesalso mln::literal::max_t
     */
     extern const max_t max;
 

@@ -55,7 +55,12 @@ namespace mln
 
     /*!
       \brief Literal black.
-      \relates mln::literal::black_t mln::value::rgb mln::value::rgb8 mln::value::rgb16
+
+      \relatesalso mln::literal::black_t
+      \relatesalso mln::value::rgb
+      \relatesalso mln::value::rgb8
+      \relatesalso mln::value::rgb16
+
       \ingroup literalcolors valuergb
     */
     extern const black_t black;
