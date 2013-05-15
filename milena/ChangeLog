@@ -1,3 +1,8 @@
+2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/mln/io/io.dox: Move package dependencies documentation into
+	"note" environnement.
+
 2013-05-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/labeling/labeling.dox: Fix auto-link to functions.
