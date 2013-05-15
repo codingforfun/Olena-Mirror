@@ -26,7 +26,8 @@
   \c p is a site iterator over all the sites of the image \c ima. \c
   q, being a neighborhood iterator centered on that iterator, is
   automatically updated and centered to the current site pointed by \p
-  p.
+  p. The neighborhood iterator \c q points to a neighbor site of \c p
+  and can be considered as having the same interface than image sites.
 
   A full example is available in \link neighborhood_iterator.cc
   neighborhood_iterator.cc \endlink

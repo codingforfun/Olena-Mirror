@@ -35,7 +35,7 @@
 
   \subsection docaccvalpiter Site-Based Iterators
 
-  A generic way of iterating over the values of an image is to use
+  A generic way of iterating over the domain of an image is to use
   mln_piter() macro to declare an iterator.
 
   \code
@@ -48,12 +48,12 @@
   \endcode
 
   Note that iterator \c p must be first declared over the domain of
-  the target image \c ima. Then iterator \c p is moved over the image
-  thanks to the for_all() macro.  An iterator declared with
-  mln_piter() can be considered as having the same interface as a site
-  of the target image. Here, \c p can be considered as a mln::point2d
-  and thus can be passed to image2d::operator() to access the value of
-  the current point.
+  the target image \c ima. Then iterator \c p is moved over all the
+  image sites thanks to the for_all() macro.  An iterator declared
+  with mln_piter() can be considered as having the same interface as a
+  site of the target image. Here, \c p can be considered as a
+  mln::point2d and thus can be passed to image2d::operator() to access
+  the value of the current point.
 
   The for_all() is in charge of initializing the iterator and move it
   forward. It is safe to have two for_all() loops successively with

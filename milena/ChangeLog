@@ -1,5 +1,13 @@
 2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Be more precise about relationship between sites and iterators.
+
+	* doc/mln/core/image/images.dox,
+	* doc/mln/core/neighb.dox,
+	* doc/mln/win/win.dox: Here.
+
+2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/mln/io/io.dox: Move package dependencies documentation into
 	"note" environnement.
 

@@ -24,7 +24,8 @@
   \c p is a site iterator over all the sites of the image \c ima. \c
   q, being a window iterator centered on that iterator, is
   automatically updated and centered to the current site pointed by \p
-  p.
+  p. The window iterator \c q points to a neighbor site of \c p and
+  can be considered as having the same interface than image sites.
 
   A full example is available in \link window_iterator.cc
   window_iterator.cc \endlink
