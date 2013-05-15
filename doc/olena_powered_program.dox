@@ -1,0 +1,30 @@
+/*! \page olenapoweredprog Olena Powered Programs
+
+Olena is a mature platform which is used industrial projects. Here is
+a list of projects already using Olena.
+
+<table border="0" cellpadding="5">
+  <tr>
+    <td align="center"><h2><a href="http://www.nuxeo.com">Nuxeo</a></h2></td>
+    <td>An Open Source Content Management Platform.
+    <br>Olena is used in a specific module for extracting text from
+    document images. (https://github.com/nuxeo/nuxeo-platform-ocr)</td>
+  </tr>
+  <tr>
+    <td align="center"><h2><a href="http://www.xwiki.org">XWiki</a></h2></td>
+    <td>A professional wiki with a highly modular architecture.
+    <br>Olena is used in the scribo module of XWiki, a module for
+    making automatic annotation. It relies on the Scribo module of
+    Olena for extracting text from
+    pictures. (https://bitbucket.org/fmancinelli_xwiki/scribo)
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><h2><a href="http://www.wallix.com">Wallix Admin Bastion
+    (WAB)</a></h2></td>
+    <td>A Security solution for information systems.
+    <br>Olena is used as a dedicated OCR for reading window titles in
+    VNC videos streams.  </td>
+  </tr>
+</table>
+*/
