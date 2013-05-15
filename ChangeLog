@@ -1,5 +1,17 @@
 2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add more links into main documentation.
+
+	* doc/doxygen.css: Fix links boldness.
+
+	* doc/mainpage.dox: Add links.
+
+	* doc/modules_list.dox: Link to respective documentation.
+
+	* doc/online_resources.dox: Fix link to build farm.
+
+2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New page related to Olena powered programs.
 
 	* doc/mainpage.dox: Add link to Olena powered programs page.

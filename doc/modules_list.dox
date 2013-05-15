@@ -2,8 +2,8 @@
 
 As a platform, Olena is divided in several modules:
 
-\li Milena, a generic image processing library.
-\li Scribo, a framework for document image analysis.
+\li <a class="el" href="@relcommondocpath@../milena/doc/user-refman/html/index.html">Milena</a>, a generic image processing library.
+\li <a class="el" href="@relcommondocpath@../scribo/doc/user-refman/html/index.html">Scribo</a>, a framework for document image analysis.
 \li Swilena, Python bindings for Milena.
 
  */

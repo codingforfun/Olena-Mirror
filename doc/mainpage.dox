@@ -24,7 +24,7 @@
     	\li Swilena
       </td>
       <td>
-        \li Report Bugs and Make Suggestions
+        \li \htmlonly <a class="el" href="mailto:olena@lrde.epita.fr">Report Bugs and Make Suggestions</a>\endhtmlonly
 	\li \ref getsources
 	\li \ref onlineres
       </td>
@@ -38,14 +38,14 @@
     </tr>
     <tr>
       <td>
-	\li SCOOP 2
-        \li Genericity and Performance in Olena
+	\li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications/200807-MPOOL">SCOOP 2</a>
+        \li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications/201009-ICIP">Genericity and Performance in Olena</a>
       </td>
       <td>
-        \li Image Manipulation
-        \li Image Morphers
-	\li Mathematical Morphology
-	\li Document Image Analysis
+        \li <b>\ref imagemanip</b>
+        \li <b>\ref modimagemorpher</b>
+	\li <b>\ref mlnmorpho</b>
+	\li <b>\link grptoolchaindoc Document Image Analysis \endlink</b>
       </td>
       <td>
         \li <a class="el" href="http://olena.lrde.epita.fr/demos">Online Demos</a>

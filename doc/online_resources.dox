@@ -14,12 +14,15 @@ href="http://git.lrde.epita.fr/?p=olena.git">http://git.lrde.epita.fr/?p=olena.g
 
 It is also a way to keep an eye on current develop.
 
-\section BuildBot
+\section Build Farm
 
-During the development process, we need to be sure that changes don't
-break the whole code. To do so, we have a buildfarm running several
-architectures and compilers.  A monitoring interface is available here
-: <a href="https://buildfarm.lrde.org/buildfarm/oln/">https://buildfarm.lrde.org/buildfarm/oln/</a>
+Olena is built continuously (each time changes are pushed into the Git
+repository) on different architectures thanks to the TeamCity-powered
+build farm of the lab.
+
+\li <a href="http://teamcity.lrde.epita.fr/project.html?projectId=project2&tab=projectOverview&guest=1">Olena's build farm reports</a>
+
+
 
 \section Mailing-list
 
