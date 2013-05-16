@@ -122,14 +122,34 @@ namespace mln
 
 
 
-  /// Basic 2D image class.
-  ///
-  /// The parameter \c V is the type of pixel values.  This image class
-  /// stores data in memory and has a virtual border with constant
-  /// thickness around data.
-  ///
-  /// \ingroup modimageconcrete
-  //
+  /*! \brief Basic 2D image class.
+
+    The parameter \c V is the type of pixel values.
+
+    \note This image class stores data in memory and has a virtual
+    border with constant thickness around data.
+
+    <table class="doxtable typedeftable">
+      <tr><th>Type name</th><th>Class name</th></tr>
+      <tr><td>%box</td><td>mln::box2d</td></tr>
+      <tr><td>%bkd_piter</td><td>box_bkd_piter_&lt; mln::point2d &gt;</td></tr>
+      <tr><td>%bkd_pixter</td><td>mln::bkd_pixter2d&lt;image2d&lt;V&gt; &gt;</td></tr>
+      <tr><td>%Compatible neighborhoods</td><td>mln::neighb2d</td></tr>
+      <tr><td>%Compatible windows</td><td>mln::window2d</td></tr>
+      <tr><td>%Domain</td><td>mln::box2d</td></tr>
+      <tr><td>%Dpoint</td><td>mln::dpoint2d</td></tr>
+      <tr><td>%fwd_piter</td><td>box_fwd_piter_&lt; mln::point2d &gt;</td></tr>
+      <tr><td>%fwd_pixter</td><td>mln::fwd_pixter2d&lt;image2d&lt;V&gt; &gt;</td></tr>
+      <tr><td>%Grid</td><td>mln::grid::square</td></tr>
+      <tr><td>%Piter</td><td>box_fwd_piter_&lt; mln::point2d &gt;</td></tr>
+      <tr><td>%Pixter</td><td>mln::fwd_pixter2d&lt;image2d&lt;V&gt; &gt;</td></tr>
+      <tr><td>%PSite</td><td>mln::point2d</td></tr>
+      <tr><td>%Site</td><td>mln::point2d</td></tr>
+      <tr><td>%Value</td><td>V</td></tr>
+    </table>
+
+    \ingroup modimageconcrete
+  */
   template <typename V>
   class image2d : public internal::image_primary< V, mln::box2d, image2d<V> >
   {
