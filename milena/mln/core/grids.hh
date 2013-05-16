@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,24 +43,35 @@ namespace mln
   namespace grid
   {
 
+    /*! \brief Regular 1D grid (line).
+      \see mln::image1d
+     */
     struct tick : public Regular_Grid< tick >
     {
       typedef metal::true_ aligned;
       enum { dim = 1 };
     };
 
+    /*! \brief Regular square 2D grid (square).
+      \see mln::image2d
+     */
     struct square : public Regular_Grid< square >
     {
       typedef metal::true_ aligned;
       enum { dim = 2 };
     };
 
+    /*! \brief Regular hexagonal 2D grid (square).
+     */
     struct hexa : public Regular_Grid< hexa >
     {
       typedef metal::false_ aligned;
       enum { dim = 2 };
     };
 
+    /*! \brief Regular 3D grid (cube).
+      \see mln::image3d
+     */
     struct cube : public Regular_Grid< cube >
     {
       typedef metal::true_ aligned;

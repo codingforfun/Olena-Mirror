@@ -46,6 +46,7 @@ namespace mln
 
   /*!
     \brief Forward pixel iterator on a 3-D image with border.
+    \see mln::image3d
   */
   template <typename I>
   class fwd_pixter3d
@@ -102,6 +103,7 @@ namespace mln
 
   /*!
     \brief Backward pixel iterator on a 3-D image with border.
+    \see mln::image3d
   */
   template <typename I>
   class bkd_pixter3d

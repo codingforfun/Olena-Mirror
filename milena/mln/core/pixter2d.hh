@@ -44,8 +44,8 @@ namespace mln
   `------------------*/
 
   /*!
-    \internal
     \brief Forward pixel iterator on a 2-D image with border.
+    \see mln::image2d
   */
   template <typename I>
   class fwd_pixter2d
@@ -91,8 +91,8 @@ namespace mln
   `------------------*/
 
   /*!
-    \internal
     \brief Backward pixel iterator on a 2-D image with border.
+    \see mln::image2d
   */
   template <typename I>
   class bkd_pixter2d

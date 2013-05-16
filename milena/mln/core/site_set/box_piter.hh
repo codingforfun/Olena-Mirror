@@ -44,7 +44,7 @@ namespace mln
 
     The parameter \c P is the type of points.
 
-    \see mln::box
+    \see mln::box mln::image1d mln::image2d mln::image3d
   */
   template <typename P>
   class box_fwd_piter_ : public internal::site_set_iterator_base< box<P>,
@@ -93,7 +93,7 @@ namespace mln
 
     The parameter \c P is the type of points.
 
-    \see mln::box
+    \see mln::box mln::image1d mln::image2d mln::image3d
   */
   template <typename P>
   class box_bkd_piter_ : public internal::site_set_iterator_base< box<P>,

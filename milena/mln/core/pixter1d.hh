@@ -43,6 +43,7 @@ namespace mln
 
   /*!
     \brief Forward pixel iterator on a 1-D image with border.
+    \see mln::image1d
   */
   template <typename I>
   class fwd_pixter1d :
@@ -71,6 +72,7 @@ namespace mln
 
   /*!
     \brief Backward pixel iterator on a 1-D image with border.
+    \see mln::image1d
   */
   template <typename I>
   class bkd_pixter1d :

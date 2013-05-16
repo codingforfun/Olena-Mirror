@@ -68,7 +68,7 @@ namespace mln
     -----X--------X---------X-------->
     \endverbatim
 
-    \sa mln::make::box1d.
+    \sa mln::make::box1d mln::image1d mln::point1d
 
     \ingroup modsitesetbasic
   */

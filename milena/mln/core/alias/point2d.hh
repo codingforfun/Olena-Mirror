@@ -49,6 +49,8 @@ namespace mln
 
     \brief Point defined on the 2D square grid with integer
     coordinates.
+
+    \see mln::image2d mln::box2d
   */
   /// \cond ALIAS
   typedef point<mln::grid::square, mln::def::coord> point2d;
@@ -61,6 +63,8 @@ namespace mln
 
     \brief Point defined on the 2D square grid with floating-point
     coordinates.
+
+    \see mln::image2d mln::box2d
   */
   /// \cond ALIAS
   typedef point<mln::grid::square, mln::def::coordf> point2df;

@@ -48,6 +48,8 @@ namespace mln
 
     \brief Point defined on the 3D square grid with integer
     coordinates.
+
+    \see mln::image3d mln::box3d
   */
   /// \cond ALIAS
   typedef point<grid::cube, def::coord> point3d;
@@ -60,6 +62,8 @@ namespace mln
 
     \brief Point defined on the 3D square grid with floating-point
     coordinates.
+
+    \see mln::image3d mln::box3d
   */
   /// \cond ALIAS
   typedef point<grid::cube, def::coordf> point3df;

@@ -49,6 +49,8 @@ namespace mln
 
     \brief Point defined on the 1D ruler grid with integer
     coordinates.
+
+    \see mln::image1d mln::box1d
   */
   /// \cond ALIAS
   typedef point<grid::tick, def::coord> point1d;
@@ -60,6 +62,8 @@ namespace mln
 
     \brief Point defined on the 1D ruler grid with floating-point
     coordinates.
+
+    \see mln::image1d mln::box1d
   */
   /// \cond ALIAS
   typedef point<grid::tick, def::coordf> point1df;

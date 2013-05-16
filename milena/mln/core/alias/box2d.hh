@@ -75,7 +75,7 @@ namespace mln
       v
     \endverbatim
 
-    \sa mln::make::box2d.
+    \sa mln::make::box2d mln::image2d mln::point2d
 
     \ingroup modsitesetbasic
   */

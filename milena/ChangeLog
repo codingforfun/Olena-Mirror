@@ -1,3 +1,19 @@
+2013-05-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more "See also" references.
+
+	* mln/core/alias/box1d.hh,
+	* mln/core/alias/box2d.hh,
+	* mln/core/alias/box3d.hh,
+	* mln/core/alias/point1d.hh,
+	* mln/core/alias/point2d.hh,
+	* mln/core/alias/point3d.hh,
+	* mln/core/grids.hh,
+	* mln/core/pixter1d.hh,
+	* mln/core/pixter2d.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/site_set/box_piter.hh: Here.
+
 2013-05-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Be more precise about relationship between sites and iterators.

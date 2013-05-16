@@ -78,7 +78,7 @@ namespace mln
     \endverbatim
 
 
-    \sa mln::make::box3d.
+    \sa mln::make::box3d mln::image3d mln::point3d
 
     \ingroup modsitesetbasic
   */
