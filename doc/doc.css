@@ -25,3 +25,15 @@ table.itable
     width:850px;
     table-layout:fixed;
 }
+
+
+table.typedeftable td
+{
+    vertical-align: top;
+}
+
+table.typedeftable
+{
+    width:600px;
+    table-layout:fixed;
+}
