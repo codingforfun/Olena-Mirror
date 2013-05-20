@@ -1,11 +1,6 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
 #include <mln/data/all.hh>
 #include <mln/io/pgm/all.hh>
-#include <mln/literal/all.hh>
-#include <mln/value/all.hh>
-#include <mln/make/w_window2d.hh>
-#include <mln/core/alias/w_window2d_int.hh>
 
 #include <cmath>
 
@@ -72,7 +67,7 @@ void convolve(const I& original, I& filtered, double *kernel, unsigned t)
 
 // Blur the image thanks to a convolution matrix
 template<typename I>
-image2d<value::int_u8> blur(const I& original, unsigned t)
+I blur(const I& original, unsigned t)
 {
   I filtered;
   double *kernel = gaussian_kernel(t);
@@ -83,32 +78,97 @@ image2d<value::int_u8> blur(const I& original, unsigned t)
   return filtered;
 }
 
+// Downscale by 2 the image resolution
 template<typename I>
-void downscaleResolution(const I& original, I& toReduce)
+I downscaleResolution(const I& original)
 {
+  mln_piter(I) p(original.domain());
+  window2d win;
+  int index = 0;
+
+  // Initialize the rescaled image
+  box2d size(original.nrows() / 2, original.ncols() / 2);
+  I reduced(size);
+
+  // Set the 2x2 window matrix
+  for (int i = 0; i < 2; ++i)
+    for (int j = 0; j < 2; ++j)
+      win.insert(i, j);
+
+  // Iterate through all image sites
+  for_all(p)
+  {
+    // Get 1/4 of total pixels
+    if (index % 2 == 0)
+    {
+      int i = (index % original.ncols()) / 2;
+      int j = (index / original.ncols()) / 2;
+      int count = 0;
+      int sum = 0;
+      mln_qiter(window2d) q(win, p);
+
+      // Iterate through all window image sites
+      for_all(q)
+      {
+        if (original.has(q))
+        {
+          sum += original(q);
+          ++count;
+        }
+      }
+
+      if (reduced.has(point2d(j, i)))
+        opt::at(reduced, j, i) = sum / count;
+    }
+
+    ++index;
+  }
+
+  return reduced;
 }
 
-// MAIN ENTRY POINT
+// Build the n-th octave on b blur levels
+template<typename I>
+void buildOctave(const I& original, unsigned n, unsigned b)
+{
+  std::stringstream name;
+  I blured;
+  initialize(blured, original);
+
+  name << "output/o" << n << "b0.pgm";
+  io::pgm::save(original, name.str());
+
+  for(unsigned i = 1; i <= b; i *= 2)
+  {
+    blured = blur(original, i);
+    name.str("");
+    name << "output/o" << n << "b" << i << ".pgm";
+    io::pgm::save(blured, name.str());
+  }
+}
+
+// Main entry point
 int main(int argc, char** argv)
 {
   image2d<value::int_u8> original;
   io::pgm::load(original, "images/flower.pgm");
+  const unsigned blur_level = 4;
+  unsigned octave = 1;
 
-  image2d<value::int_u8> blur1, blur2, blur4;
-  initialize(blur1, original);
-  initialize(blur2, original);
-  initialize(blur4, original);
+  // 1st octave
+  buildOctave(original, octave++, blur_level);
 
-  io::pgm::save(original, "output/original.pgm");
+  // 2nd octave
+  image2d<value::int_u8> reduced = downscaleResolution(original);
+  buildOctave(reduced, octave++, blur_level);
 
-  blur1 = blur(original, 1);
-  io::pgm::save(blur1, "output/blur1.pgm");
+  // 3rd octave
+  reduced = downscaleResolution(reduced);
+  buildOctave(reduced, octave++, blur_level);
 
-  blur2 = blur(original, 2);
-  io::pgm::save(blur2, "output/blur2.pgm");
-
-  blur4 = blur(original, 4);
-  io::pgm::save(blur4, "output/blur4.pgm");
+  // 4th octave
+  reduced = downscaleResolution(reduced);
+  buildOctave(reduced, octave++, blur_level);
 
   return 0;
 }
