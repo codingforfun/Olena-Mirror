@@ -129,8 +129,12 @@ I downscaleResolution(const I& original)
 
 // Build the n-th octave on b blur levels
 template<typename I>
-void buildOctave(const I& original, unsigned n, unsigned b)
+void buildOctave(const I& original,
+                 unsigned n,
+                 unsigned b,
+                 std::vector< std::vector<I> >& scaleSpace)
 {
+  std::vector<I> octave;
   std::stringstream name;
   I blured;
   initialize(blured, original);
@@ -138,37 +142,57 @@ void buildOctave(const I& original, unsigned n, unsigned b)
   name << "output/o" << n << "b0.pgm";
   io::pgm::save(original, name.str());
 
+  octave.push_back(original);
+
   for(unsigned i = 1; i <= b; i *= 2)
   {
     blured = blur(original, i);
+    octave.push_back(blured);
+
     name.str("");
     name << "output/o" << n << "b" << i << ".pgm";
     io::pgm::save(blured, name.str());
+  }
+
+  scaleSpace.push_back(octave);
+}
+
+template<typename I>
+void buildScaleSpace(std::vector< std::vector<I> >& scaleSpace,
+                     const I& original,
+                     unsigned octave_level,
+                     unsigned blur_level)
+{
+  if (octave_level > 2)
+  {
+    // 1st octave
+    buildOctave(original, 1, blur_level, scaleSpace);
+
+    // 2nd octave
+    I reduced = downscaleResolution(original);
+    buildOctave(reduced, 2, blur_level, scaleSpace);
+
+    for (unsigned i = 3; i <= octave_level; ++i)
+    {
+      // i-th octave
+      reduced = downscaleResolution(reduced);
+      buildOctave(reduced, i, blur_level, scaleSpace);
+    }
   }
 }
 
 // Main entry point
 int main(int argc, char** argv)
 {
-  image2d<value::int_u8> original;
+  typedef image2d<value::int_u8> I;
+  const unsigned blur_level = 3;
+  const unsigned octave_level = 4;
+  std::vector< std::vector<I> > scaleSpace;
+  I original;
+
   io::pgm::load(original, "images/flower.pgm");
-  const unsigned blur_level = 4;
-  unsigned octave = 1;
 
-  // 1st octave
-  buildOctave(original, octave++, blur_level);
-
-  // 2nd octave
-  image2d<value::int_u8> reduced = downscaleResolution(original);
-  buildOctave(reduced, octave++, blur_level);
-
-  // 3rd octave
-  reduced = downscaleResolution(reduced);
-  buildOctave(reduced, octave++, blur_level);
-
-  // 4th octave
-  reduced = downscaleResolution(reduced);
-  buildOctave(reduced, octave++, blur_level);
+  buildScaleSpace(scaleSpace, original, octave_level, blur_level);
 
   return 0;
 }
