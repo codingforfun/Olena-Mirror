@@ -10,20 +10,20 @@
 
 using namespace mln;
 
-// Set the gaussian kernel of size (6 * t + 1)
-double *gaussian_kernel(unsigned t)
+// Set the gaussian kernel
+double *gaussian_kernel()
 {
-  int size = 6 * t + 1;
+  double variance = sqrt(2.0);
   unsigned index = 0;
-  double *kernel = new double[size * size];
+  double *kernel = new double[49];
   static const double pi = 4.0 * atan(1.0);
-  double div = (2.0 * pi * t * t);
+  double div = (2.0 * pi * variance);
 
-  for (int i = -(size / 2); i < (size / 2) + 1; ++i)
+  for (int i = -3; i < 4; ++i)
   {
-    for (int j = -(size / 2); j < (size / 2) + 1; ++j)
+    for (int j = -3; j < 4; ++j)
     {
-      double e = exp(- (i * i + j * j) / (2.0 * t * t) );
+      double e = exp(- (i*i + j*j) / (2.0 * variance) );
       kernel[index++] = e / div;
     }
   }
@@ -33,14 +33,13 @@ double *gaussian_kernel(unsigned t)
 
 // Apply the convolution of the image by the kernel
 template<typename I>
-void convolve(const I& original, I& filtered, double *kernel, unsigned t)
+void convolve(const I& original, I& filtered, double *kernel)
 {
   mln_piter(I) p(filtered.domain());
-  int size = 6 * t + 1;
   window2d win;
 
-  for (int i = -(size / 2); i < (size / 2) + 1; ++i)
-    for (int j = -(size / 2); j < (size / 2) + 1; ++j)
+  for (int i = -3; i < 4; ++i)
+    for (int j = -3; j < 4; ++j)
       win.insert(i, j);
 
   // Iterate through all image sites
@@ -66,20 +65,20 @@ void convolve(const I& original, I& filtered, double *kernel, unsigned t)
 
 // Blur the image thanks to a convolution matrix
 template<typename I>
-I blur(const I& original, unsigned t)
+I blur(const I& original)
 {
   I filtered;
-  double *kernel = gaussian_kernel(t);
+  double *kernel = gaussian_kernel();
 
   initialize(filtered, original);
-  convolve(original, filtered, kernel, t);
+  convolve(original, filtered, kernel);
 
   return filtered;
 }
 
 // Downscale by 2 the image resolution
 template<typename I>
-I downscaleResolution(const I& original)
+I downscaling2(const I& original)
 {
   mln_piter(I) p(original.domain());
   window2d win;
@@ -142,10 +141,11 @@ void buildOctave(const I& original,
   io::pgm::save(original, name.str());
 
   octave.push_back(original);
+  blured = duplicate(original);
 
   for(unsigned i = 1; i <= b; i *= 2)
   {
-    blured = blur(original, i);
+    blured = blur(blured);
     octave.push_back(blured);
 
     name.str("");
@@ -169,13 +169,13 @@ void buildScaleSpace(std::vector< std::vector<I> >& scaleSpace,
     buildOctave(original, 1, b, scaleSpace);
 
     // 2nd octave
-    I reduced = downscaleResolution(original);
+    I reduced = downscaling2(original);
     buildOctave(reduced, 2, b, scaleSpace);
 
     for (unsigned i = 3; i <= n; ++i)
     {
       // i-th octave
-      reduced = downscaleResolution(reduced);
+      reduced = downscaling2(reduced);
       buildOctave(reduced, i, b, scaleSpace);
     }
   }
@@ -209,7 +209,7 @@ void buildDifferenceOfGaussianSpace(std::vector< std::vector<I> >& scaleSpace,
 
       for_all(p)
       {
-        int diff = ((int) level2(p)) - ((int) level1(p));
+        int diff = ((int) level1(p)) - ((int) level2(p));
         dog(p) = (diff >= 0) ? diff : 0;
       }
 
@@ -238,7 +238,6 @@ void find_extremum(T& min, T& max, const I& current, N n)
 
 // Find the minimum value in the upper and lower layers around p
 template<typename T, typename I, typename P>
-//void find_min(T& min, const I& upper, const I& lower, const P& p)
 void find_min(T& min, const I& upper, const I& lower, const P& pUpper, const P& pLower)
 {
   mln_niter(neighb2d) nUpper(c8(), pUpper);
@@ -257,7 +256,6 @@ void find_min(T& min, const I& upper, const I& lower, const P& pUpper, const P& 
 
 // Find the maximum value in the upper and lower layers around p
 template<typename T, typename I, typename P>
-//void find_max(T& max, const I& upper, const I& lower, const P& p)
 void find_max(T& max, const I& upper, const I& lower, const P& pUpper, const P& pLower)
 {
   mln_niter(neighb2d) nUpper(c8(), pUpper);
@@ -281,12 +279,11 @@ void buildExtrema(C extrema,
                   std::vector< std::vector<I> >& dogSpace)
 {
   extrema = data::convert(value::rgb8(), original);
-  //initialize(extrema, original);
-  value::int_u8 min = 255;
-  value::int_u8 max = 0;
-  value::int_u8 center = 0;
+  //value::int_u8 min = 255;
+  //value::int_u8 max = 0;
+  //value::int_u8 center = 0;
 
-  const unsigned blur_level = dogSpace.at(0).size(); //TODO Reverse the vector
+  const unsigned blur_level = dogSpace.at(0).size();
 
   //unsigned i = 0;
   for (unsigned i = 0; i < blur_level; ++i)
@@ -301,6 +298,10 @@ void buildExtrema(C extrema,
 
       for_all(p)
       {
+        value::int_u8 min = 255;
+        value::int_u8 max = 0;
+        value::int_u8 center = 0;
+
         mln_niter(neighb2d) n(c8(), p);
         center = current(p);
 
@@ -313,19 +314,19 @@ void buildExtrema(C extrema,
         {
           find_min(min, upper, lower, pUpper, pLower);
 
-          if (center <= min)
+          if (center < min)
           {
-            mln_psite(I) pOriginal(p.row() * (j+1), p.col() * (j+1));
-            extrema(pOriginal) = literal::blue;
+            mln_psite(I) pOriginal(p.row() * pow(2, j), p.col() * pow(2, j));
+            extrema(pOriginal) = literal::red;
           }
         }
         else if (center >= max)
         {
-          find_max(min, upper, lower, pUpper, pLower);
+          find_max(max, upper, lower, pUpper, pLower);
 
-          if (center >= max)
+          if (center > max)
           {
-            mln_psite(I) pOriginal(p.row() * (j+1), p.col() * (j+1));
+            mln_psite(I) pOriginal(p.row() * pow(2, j), p.col() * pow(2, j));
             extrema(pOriginal) = literal::red;
           }
         }
@@ -342,14 +343,14 @@ int main(int argc, char** argv)
   typedef image2d<value::int_u8> I;
   typedef image2d<value::rgb8> C;
 
-  const unsigned blur_level = 4;
+  const unsigned blur_level = 5;
   const unsigned octave_level = 4;
   std::vector< std::vector<I> > scaleSpace;
   std::vector< std::vector<I> > dogSpace;
   I original;
   C extrema;
 
-  io::pgm::load(original, "images/keith512.pgm");
+  io::pgm::load(original, "images/lena.pgm");
 
   buildScaleSpace(scaleSpace, original, octave_level, blur_level);
   buildDifferenceOfGaussianSpace(scaleSpace, dogSpace);
