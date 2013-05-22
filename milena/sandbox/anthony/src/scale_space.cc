@@ -4,6 +4,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/literal/all.hh>
+#include <mln/value/int_s8.hh>
 
 #include <cmath>
 
@@ -207,7 +208,10 @@ void buildDifferenceOfGaussianSpace(std::vector< std::vector<I> >& scaleSpace,
       mln_piter(I) p(level1.domain());
 
       for_all(p)
-        dog(p) = level1(p) - level2(p);
+      {
+        int diff = ((int) level2(p)) - ((int) level1(p));
+        dog(p) = (diff >= 0) ? diff : 0;
+      }
 
       dogOctave.push_back(dog);
       name << "output/DoG_o" << i << "-" << j << ".pgm";
@@ -234,34 +238,40 @@ void find_extremum(T& min, T& max, const I& current, N n)
 
 // Find the minimum value in the upper and lower layers around p
 template<typename T, typename I, typename P>
-void find_min(T& min, const I& upper, const I& lower, const P& p)
+//void find_min(T& min, const I& upper, const I& lower, const P& p)
+void find_min(T& min, const I& upper, const I& lower, const P& pUpper, const P& pLower)
 {
-  mln_niter(neighb2d) n(c8(), p);
+  mln_niter(neighb2d) nUpper(c8(), pUpper);
+  mln_niter(neighb2d) nLower(c8(), pLower);
 
-  for_all(n)
-  {
-    if (lower(n) < min)
-      min = lower(n);
+  // Upper processing
+  for_all(nUpper)
+    if (upper(nUpper) < min)
+      min = upper(nUpper);
 
-    if (upper(n) < min)
-      min = upper(n);
-  }
+  // Lower processing
+  for_all(nLower)
+    if (lower(nLower) < min)
+      min = lower(nLower);
 }
 
 // Find the maximum value in the upper and lower layers around p
 template<typename T, typename I, typename P>
-void find_max(T& max, const I& upper, const I& lower, const P& p)
+//void find_max(T& max, const I& upper, const I& lower, const P& p)
+void find_max(T& max, const I& upper, const I& lower, const P& pUpper, const P& pLower)
 {
-  mln_niter(neighb2d) n(c8(), p);
+  mln_niter(neighb2d) nUpper(c8(), pUpper);
+  mln_niter(neighb2d) nLower(c8(), pLower);
 
-  for_all(n)
-  {
-    if (lower(n) > max)
-      max = lower(n);
+  // Upper processing
+  for_all(nUpper)
+    if (upper(nUpper) > max)
+      max = upper(nUpper);
 
-    if (upper(n) > max)
-      max = upper(n);
-  }
+  // Lower processing
+  for_all(nLower)
+    if (lower(nLower) > max)
+      max = lower(nLower);
 }
 
 // Build the extrema image
@@ -271,19 +281,21 @@ void buildExtrema(C extrema,
                   std::vector< std::vector<I> >& dogSpace)
 {
   extrema = data::convert(value::rgb8(), original);
+  //initialize(extrema, original);
   value::int_u8 min = 255;
   value::int_u8 max = 0;
   value::int_u8 center = 0;
 
-  for (unsigned i = 0; i < dogSpace.size(); ++i)
-  {
-    std::vector<I> octave = dogSpace.at(i);
+  const unsigned blur_level = dogSpace.at(0).size(); //TODO Reverse the vector
 
-    for (unsigned j = 1; j < octave.size() - 1; ++j)
+  //unsigned i = 0;
+  for (unsigned i = 0; i < blur_level; ++i)
+  {
+    for (unsigned j = 1; j < dogSpace.size() - 1; ++j)
     {
-      I current = octave.at(j);
-      I upper = octave.at(j+1);
-      I lower = octave.at(j-1);
+      I current = dogSpace.at(j).at(i);
+      I upper = dogSpace.at(j+1).at(i);
+      I lower = dogSpace.at(j-1).at(i);
 
       mln_piter(I) p(current.domain());
 
@@ -292,25 +304,35 @@ void buildExtrema(C extrema,
         mln_niter(neighb2d) n(c8(), p);
         center = current(p);
 
+        mln_psite(I) pUpper(p.row() / 2, p.col() / 2);
+        mln_psite(I) pLower(p.row() * 2, p.col() * 2);
+
         find_extremum(min, max, current, n);
 
         if (center <= min)
         {
-          find_min(min, upper, lower, p);
+          find_min(min, upper, lower, pUpper, pLower);
 
           if (center <= min)
-            extrema(p) = literal::blue;
+          {
+            mln_psite(I) pOriginal(p.row() * (j+1), p.col() * (j+1));
+            extrema(pOriginal) = literal::blue;
+          }
         }
         else if (center >= max)
         {
-          find_max(max, upper, lower, p);
+          find_max(min, upper, lower, pUpper, pLower);
 
           if (center >= max)
-            extrema(p) = literal::red;
+          {
+            mln_psite(I) pOriginal(p.row() * (j+1), p.col() * (j+1));
+            extrema(pOriginal) = literal::red;
+          }
         }
       }
     }
   }
+
   io::ppm::save(extrema, "output/extrema.ppm");
 }
 
