@@ -9,10 +9,10 @@ OUTPUT=a.out
 
 all: scale
 
-scale:
+scale: clean
 	$(CCACHE) $(CC) $(CFLAGS) -O3 -DNDEBUG $(CLIBS) $(SRC) -o $(OUTPUT)
 
-debug:
+debug: mrproper
 	$(CCACHE) $(CC) $(CFLAGS) -g -ggdb $(CLIBS) $(SRC) -o $(OUTPUT)
 
 clean:
