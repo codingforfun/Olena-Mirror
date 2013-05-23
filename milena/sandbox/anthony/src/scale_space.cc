@@ -11,19 +11,19 @@
 using namespace mln;
 
 // Set the gaussian kernel
-double *gaussian_kernel()
+float *gaussian_kernel()
 {
-  double variance = sqrt(2.0);
+  float variance = sqrt(2.0);
   unsigned index = 0;
-  double *kernel = new double[49];
-  static const double pi = 4.0 * atan(1.0);
-  double div = (2.0 * pi * variance);
+  float *kernel = new float[49];
+  static const float pi = 4.0 * atan(1.0);
+  float div = (2.0 * pi * variance);
 
   for (int i = -3; i < 4; ++i)
   {
     for (int j = -3; j < 4; ++j)
     {
-      double e = exp(- (i*i + j*j) / (2.0 * variance) );
+      float e = exp(- (i*i + j*j) / (2.0 * variance) );
       kernel[index++] = e / div;
     }
   }
@@ -33,7 +33,7 @@ double *gaussian_kernel()
 
 // Apply the convolution of the image by the kernel
 template<typename I>
-void convolve(const I& original, I& filtered, double *kernel)
+void convolve(const I& original, I& filtered, float *kernel)
 {
   mln_piter(I) p(filtered.domain());
   window2d win;
@@ -68,7 +68,7 @@ template<typename I>
 I blur(const I& original)
 {
   I filtered;
-  double *kernel = gaussian_kernel();
+  float *kernel = gaussian_kernel();
 
   initialize(filtered, original);
   convolve(original, filtered, kernel);
@@ -125,6 +125,160 @@ I downscaling2(const I& original)
   return reduced;
 }
 
+float *upscalingTL_kernel()
+{
+  const static float one = 1.0 / 8.0;
+  const static float two = 2.0 / 8.0;
+  const static float three = 2.0 / 8.0;
+  const static float four = 3.0 / 8.0;
+
+  float *kernel = new float[4];
+
+  kernel[0] = one;
+  kernel[1] = two;
+  kernel[2] = three;
+  kernel[3] = four;
+
+  return kernel;
+}
+
+float *upscalingTR_kernel()
+{
+  const static float one = 2.0 / 8.0;
+  const static float two = 1.0 / 8.0;
+  const static float three = 3.0 / 8.0;
+  const static float four = 2.0 / 8.0;
+
+  float *kernel = new float[4];
+
+  kernel[0] = one;
+  kernel[1] = two;
+  kernel[2] = three;
+  kernel[3] = four;
+
+  return kernel;
+}
+
+float *upscalingBL_kernel()
+{
+  const static float one = 2.0 / 8.0;
+  const static float two = 3.0 / 8.0;
+  const static float three = 1.0 / 8.0;
+  const static float four = 2.0 / 8.0;
+
+  float *kernel = new float[4];
+
+  kernel[0] = one;
+  kernel[1] = two;
+  kernel[2] = three;
+  kernel[3] = four;
+
+  return kernel;
+}
+
+float *upscalingBR_kernel()
+{
+  const static float one = 3.0 / 8.0;
+  const static float two = 2.0 / 8.0;
+  const static float three = 2.0 / 8.0;
+  const static float four = 1.0 / 8.0;
+
+  float *kernel = new float[4];
+
+  kernel[0] = one;
+  kernel[1] = two;
+  kernel[2] = three;
+  kernel[3] = four;
+
+  return kernel;
+}
+
+template<typename I>
+unsigned upscalePixel(const I& original, int i, int j, int type)
+{
+  float *kernel;
+  window2d win;
+  mln_psite(I) p(i, j);
+  float value = 0;
+  unsigned index = 0;
+  int iStart = 0;
+  int jStart = 0;
+
+  if (type == 0)
+  {
+    kernel = upscalingTL_kernel();
+    iStart = -1;
+    jStart = -1;
+  }
+  else if (type == 1)
+  {
+    kernel = upscalingTR_kernel();
+    iStart = 0;
+    jStart = -1;
+  }
+  else if (type == 2)
+  {
+    kernel = upscalingBL_kernel();
+    iStart = -1;
+    jStart = 0;
+  }
+  else
+  {
+    kernel = upscalingBR_kernel();
+    iStart = 0;
+    jStart = 0;
+  }
+
+  for (int ii = iStart; ii < iStart + 2; ++ii)
+    for (int jj = jStart; jj < jStart + 2; ++jj)
+      win.insert(ii, jj);
+
+  mln_qiter(window2d) q(win, p);
+
+  for_all(q)
+  {
+    if (original.has(q))
+    {
+      value += original(q) * kernel[index];
+    }
+
+    ++index;
+  }
+
+  return (static_cast<int>(value));
+}
+
+// Upscale by 2 the image resolution
+template<typename I>
+I upscaling2(const I& original)
+{
+  box2d size(original.nrows() * 2, original.ncols() * 2);
+  I upscaled(size);
+
+  mln_piter(I) p(upscaled.domain());
+  int index = 0;
+
+  for_all(p)
+  {
+    int i = p.col();
+    int j = p.row();
+
+    if (i % 2 == 0 && j % 2 == 0) // Top left
+      opt::at(upscaled, i, j) = upscalePixel(original, i / 2, j / 2, 0);
+    else if (i % 2 == 0) // Bottom left
+      opt::at(upscaled, i, j) = upscalePixel(original, i / 2, j / 2, 2);
+    else if (j % 2 == 0) // Top right
+      opt::at(upscaled, i, j) = upscalePixel(original, i / 2, j / 2, 1);
+    else // Bottom right
+      opt::at(upscaled, i, j) = upscalePixel(original, i / 2, j / 2, 3);
+
+    ++index;
+  }
+
+
+  return upscaled;
+}
+
 // Build the n-th octave on b blur levels
 template<typename I>
 void buildOctave(const I& original,
@@ -165,18 +319,22 @@ void buildScaleSpace(std::vector< std::vector<I> >& scaleSpace,
 {
   if (n > 2)
   {
+    // Upscaled octave
+    I upscaled = upscaling2(original);
+    buildOctave(upscaled, 0, b, scaleSpace);
+
     // 1st octave
     buildOctave(original, 1, b, scaleSpace);
 
     // 2nd octave
-    I reduced = downscaling2(original);
-    buildOctave(reduced, 2, b, scaleSpace);
+    I downscaled = downscaling2(original);
+    buildOctave(downscaled, 2, b, scaleSpace);
 
     for (unsigned i = 3; i <= n; ++i)
     {
       // i-th octave
-      reduced = downscaling2(reduced);
-      buildOctave(reduced, i, b, scaleSpace);
+      downscaled = downscaling2(downscaled);
+      buildOctave(downscaled, i, b, scaleSpace);
     }
   }
   else
@@ -279,9 +437,6 @@ void buildExtrema(C extrema,
                   std::vector< std::vector<I> >& dogSpace)
 {
   extrema = data::convert(value::rgb8(), original);
-  //value::int_u8 min = 255;
-  //value::int_u8 max = 0;
-  //value::int_u8 center = 0;
 
   const unsigned blur_level = dogSpace.at(0).size();
 
@@ -316,7 +471,8 @@ void buildExtrema(C extrema,
 
           if (center < min)
           {
-            mln_psite(I) pOriginal(p.row() * pow(2, j), p.col() * pow(2, j));
+            mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
+                                   p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::red;
           }
         }
@@ -326,7 +482,8 @@ void buildExtrema(C extrema,
 
           if (center > max)
           {
-            mln_psite(I) pOriginal(p.row() * pow(2, j), p.col() * pow(2, j));
+            mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
+                                   p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::red;
           }
         }
