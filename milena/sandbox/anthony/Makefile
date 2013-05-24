@@ -4,7 +4,7 @@ CFLAGS=-Wall -Werror
 CLIBS=-I../../
 CLEAN=*.o output/* log
 
-SRC=src/scale_space.cc
+SRC=src/main.cc src/keypoint.cc
 OUTPUT=a.out
 
 all: scale
