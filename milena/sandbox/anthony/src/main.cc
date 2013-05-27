@@ -9,6 +9,7 @@
 #include <cmath>
 
 #include "keypoint.hh"
+#include "matrix.hh"
 
 using namespace mln;
 
@@ -523,7 +524,7 @@ void buildExtrema(C extrema,
             mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
                 p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::green;
-            keypoints.push_back(Keypoint(p.row(), p.col(), j, i, false));
+            keypoints.push_back(Keypoint(p.row(), p.col(), i, j, false));
           }
         }
         else if (center >= max)
@@ -536,7 +537,7 @@ void buildExtrema(C extrema,
             mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
                 p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::red;
-            keypoints.push_back(Keypoint(p.row(), p.col(), j, i, true));
+            keypoints.push_back(Keypoint(p.row(), p.col(), i, j, true));
           }
         }
       }
@@ -546,12 +547,70 @@ void buildExtrema(C extrema,
   io::ppm::save(extrema, "output/extrema.ppm");
 }
 
+/*****************************************************************************/
+/*****************************************************************************/
+/*****************************************************************************/
+
 template<typename I>
-void discardEdgeResponses(std::vector< std::vector<I> >& dogSpace,
-                          std::vector<Keypoint>& keypoints)
+Matrix *computeFirstOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
+                               const Keypoint& k)
 {
-  // FIXME Move work from buildExtrema here
+  Matrix *matrix = new Matrix(3, 1);
+
+  return matrix;
 }
+
+template<typename I>
+Matrix *computeSecondOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
+                                const Keypoint& k)
+{
+  Matrix *matrix = new Matrix(3, 3);
+
+  return matrix;
+}
+
+bool isBetter(Matrix offset)
+{
+  return (offset.get(0, 0) > 0.5
+          || offset.get(0, 1) > 0.5
+          || offset.get(0, 2) > 0.5);
+}
+
+void changeKeypoint(Keypoint& k, Matrix& offset)
+{
+}
+
+// Discard low contrast keypoints thanks to taylor interpolation
+// See Brown and Lowe paper (2002)
+// FIXME Move to object representation (size-templated matrix maybe ?)
+template<typename I>
+void discardLowContrastKeypoints(const std::vector< std::vector<I> >& dogSpace,
+                                 std::vector<Keypoint>& keypoints)
+{
+  for (unsigned i = 0; i < keypoints.size(); ++i)
+  {
+    Keypoint k = keypoints.at(i);
+
+    Matrix *fom = computeFirstOrderMatrix(dogSpace, k);
+    Matrix *som = computeSecondOrderMatrix(dogSpace, k);
+    Matrix inversed(som->getHeight(), som->getWidth());
+    bool inversible = som->inverse(inversed);
+
+    if (inversible)
+    {
+      Matrix offset = (*fom) * (*som);
+      
+      if (isBetter(offset))
+      {
+        changeKeypoint(k, offset);
+      }
+    }
+  }
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+/*****************************************************************************/
 
 // Main entry point
 int main(int argc, char** argv)
@@ -569,15 +628,14 @@ int main(int argc, char** argv)
 
   io::pgm::load(original, "images/lena.pgm");
 
+  // Localization
   buildScaleSpace(scaleSpace, original, octave_level, blur_level);
   buildDifferenceOfGaussianSpace(scaleSpace, dogSpace);
   buildExtrema(extrema, original, dogSpace, keypoints);
-  // TODO Interpolation of nearby data for accurate position
-  // TODO Discard low-contrast keypoints
-  //discardEdgeResponses(dogSpace, keypoints);
+  //discardLowContrastKeypoints(dogSpace, keypoints);
 
-  std::cout << keypoints.size() << std::endl;
-
+  // Processing
+  // TODO
 
   return 0;
 }
