@@ -472,18 +472,11 @@ bool hasEdgeResponse(const I& dog, const P& p, const T& center)
 
 // Build the extrema image
 template<typename I, typename C>
-void buildExtrema(C extrema,
-                  I original,
+void buildExtrema(C& extrema,
+                  const I& original,
                   std::vector< std::vector<I> >& dogSpace,
                   std::vector<Keypoint>& keypoints)
 {
-  const bool black = false;
-
-  if (black)
-    initialize(extrema, original);
-  else
-    extrema = data::convert(value::rgb8(), original);
-
   // Number of scales (gaussian meaning)
   unsigned scales = dogSpace.at(0).size();
 
@@ -523,7 +516,7 @@ void buildExtrema(C extrema,
           {
             mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
                 p.col() * pow(2, (j-1)));
-            extrema(pOriginal) = literal::green;
+            extrema(pOriginal) = literal::red;
             keypoints.push_back(Keypoint(p.row(), p.col(), i, j, false));
           }
         }
@@ -543,74 +536,190 @@ void buildExtrema(C extrema,
       }
     }
   }
-
-  io::ppm::save(extrema, "output/extrema.ppm");
 }
 
-/*****************************************************************************/
-/*****************************************************************************/
-/*****************************************************************************/
-
+// Compute the first order matrix for interpolation
 template<typename I>
-Matrix *computeFirstOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
-                               const Keypoint& k)
+void computeFirstOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
+                             Keypoint& k,
+                             Matrix& matrix)
 {
-  Matrix *matrix = new Matrix(3, 1);
+  matrix.initialize();
 
-  return matrix;
+  std::vector<I> current = dogSpace.at(1);
+  std::vector<I> upper = dogSpace.at(2);
+  std::vector<I> lower = dogSpace.at(0);
+
+  /* Point naming convention
+   *      n1
+   *  n2  c   n3
+   *      n4
+   */
+  point2d c(k.getI(), k.getJ());
+
+  point2d n1(k.getI(), k.getJ() - 1);
+  point2d n2(k.getI() - 1, k.getJ());
+  point2d n3(k.getI() + 1, k.getJ());
+  point2d n4(k.getI(), k.getJ() + 1);
+
+  point2d cupper(c.row() / 2, c.col() / 2);
+  point2d clower(c.row() * 2, c.col() * 2);
+
+  // Compute partial x
+  matrix.set(0, 0, (current.at(0)(n3) - current.at(0)(n2)) / 2.0);
+
+  // Compute partial y
+  matrix.set(1, 0, (current.at(0)(n3) - current.at(0)(n2)) / 2.0);
+
+  // Compute partial scale
+  matrix.set(2, 0, (lower.at(0)(clower) - upper.at(0)(cupper)) / 2.0);
 }
 
+// Compute the inversed second order matrix for interpolation
 template<typename I>
-Matrix *computeSecondOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
-                                const Keypoint& k)
+void computeSecondOrderMatrix(const std::vector< std::vector<I> >& dogSpace,
+                              Keypoint& k,
+                              Matrix& matrix)
 {
-  Matrix *matrix = new Matrix(3, 3);
+  matrix.initialize();
 
-  return matrix;
-}
+  const static std::vector<I> current = dogSpace.at(1);
+  const static I upper = dogSpace.at(2).at(0);
+  const static I lower = dogSpace.at(0).at(0);
+  const static I main = current.at(0);
 
-bool isBetter(Matrix offset)
-{
-  return (offset.get(0, 0) > 0.5
-          || offset.get(0, 1) > 0.5
-          || offset.get(0, 2) > 0.5);
-}
+  /* Point naming convention
+   *  n5  n1  n6
+   *  n2  c   n3
+   *  n7  n4  n8
+   */
+  point2d c(k.getI(), k.getJ());
 
-void changeKeypoint(Keypoint& k, Matrix& offset)
-{
+  point2d n1(k.getI(), k.getJ() - 1);
+  point2d n2(k.getI() - 1, k.getJ());
+  point2d n3(k.getI() + 1, k.getJ());
+  point2d n4(k.getI(), k.getJ() + 1);
+
+  point2d n5(k.getI() - 1, k.getJ() - 1);
+  point2d n6(k.getI() + 1, k.getJ() - 1);
+  point2d n7(k.getI() + 1, k.getJ() + 1);
+  point2d n8(k.getI() - 1, k.getJ() + 1);
+
+  point2d cupper(c.row() / 2, c.col() / 2);
+  point2d n1upper(n1.row() / 2, n1.col() / 2);
+  point2d n2upper(n2.row() / 2, n3.col() / 2);
+  point2d n3upper(n3.row() / 2, n3.col() / 2);
+  point2d n4upper(n4.row() / 2, n4.col() / 2);
+
+  point2d clower(c.row() * 2, c.col() * 2);
+  point2d n1lower(n1.row() * 2, n1.col() * 2);
+  point2d n2lower(n2.row() * 2, n2.col() * 2);
+  point2d n3lower(n3.row() * 2, n3.col() * 2);
+  point2d n4lower(n4.row() * 2, n4.col() * 2);
+
+  float partial_xx, partial_yy, partial_ss, partial_xy, partial_xs, partial_ys;
+
+  // Compute partial xx
+  partial_xx = main(n3) - 2 * main(c) + main(n2);
+
+  // Compute partial yy
+  partial_yy = main(n4) - 2 * main(c) + main(n1);
+
+  // Compute partial ss
+  partial_ss = lower(clower) - 2 * main(c)
+    + upper(cupper);
+
+  // Compute partial xy
+  partial_xy = (main(n8) - main(n6) - main(n7) + main(n5)) / 4.0;
+
+  // Compute partial xs
+  partial_xs = (upper(n3upper) - lower(n3lower)
+      - upper(n2upper) + lower(n2lower)) / 4.0;
+
+  // Compute partial ys
+  partial_ys = (upper(n4upper) - lower(n4lower)
+      - upper(n1upper) + lower(n1lower)) / 4.0;
+
+  matrix.set(0, 0, partial_xx);
+  matrix.set(0, 1, partial_xy);
+  matrix.set(0, 2, partial_xs);
+
+  matrix.set(1, 0, partial_xy);
+  matrix.set(1, 1, partial_yy);
+  matrix.set(1, 2, partial_ys);
+
+  matrix.set(2, 0, partial_xs);
+  matrix.set(2, 1, partial_ys);
+  matrix.set(2, 2, partial_ss);
 }
 
 // Discard low contrast keypoints thanks to taylor interpolation
 // See Brown and Lowe paper (2002)
-// FIXME Move to object representation (size-templated matrix maybe ?)
-template<typename I>
+template<typename I, typename C>
 void discardLowContrastKeypoints(const std::vector< std::vector<I> >& dogSpace,
-                                 std::vector<Keypoint>& keypoints)
+                                 std::vector<Keypoint>& keypoints,
+                                 C& extrema)
 {
+  Keypoint k_old(0, 0, 0, 0, true);
+
   for (unsigned i = 0; i < keypoints.size(); ++i)
   {
     Keypoint k = keypoints.at(i);
 
-    Matrix *fom = computeFirstOrderMatrix(dogSpace, k);
-    Matrix *som = computeSecondOrderMatrix(dogSpace, k);
-    Matrix inversed(som->getHeight(), som->getWidth());
-    bool inversible = som->inverse(inversed);
+    Matrix firstOrder(3, 1);
+    Matrix secondOrder(3, 3);
+    Matrix inversed(secondOrder.getHeight(), secondOrder.getWidth());
 
-    if (inversible)
+    computeFirstOrderMatrix(dogSpace, k, firstOrder);
+    computeSecondOrderMatrix(dogSpace, k, secondOrder);
+    bool hasInversed = secondOrder.inverse(inversed);
+
+    if (hasInversed)
     {
-      Matrix offset = (*fom) * (*som);
-      
-      if (isBetter(offset))
+      Matrix x = inversed * firstOrder;
+      bool isMajorOffset = x.isMajorOffset();
+
+      if (isMajorOffset)
       {
-        changeKeypoint(k, offset);
+        std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+        std::cout << "First order matrix:" << std::endl;
+        firstOrder.print();
+
+        std::cout << "Second order matrix:" << std::endl;
+        secondOrder.print();
+
+        std::cout << "Offset: " << std::endl;
+        x.print();
+
+        std::cout << "k_old: " << k_old.getI() << " " << k_old.getJ() << std::endl;
+        std::cout << "k: " << k.getI() << " " << k.getJ() << std::endl;
+        bool hasMoved = k.add(x, k_old);
+        std::cout << "k++: " << k.getI() << " " << k.getJ()
+                  << "\thasMoved: " << hasMoved << std::endl;
+
+        point2d p(k.getI(), k.getJ());
+        std::cout << "Final point: " << extrema.domain() << "\t" << p << std::endl;
+
+        if (hasMoved && extrema.has(p)
+            && p.row() >= 0 && p.row() < geom::max_row(extrema)
+            && p.col() >= 0 && p.col() < geom::max_col(extrema))
+        {
+          std::cout << "VALID" << std::endl;
+          extrema(p) = literal::red;
+          k_old = keypoints.at(i);
+          keypoints.at(i--) = k;
+        }
+
+        std::cout << std::endl;
+      }
+      else
+      {
+        point2d p(k.getI(), k.getJ());
+        extrema(p) = literal::red;
       }
     }
   }
 }
-
-/*****************************************************************************/
-/*****************************************************************************/
-/*****************************************************************************/
 
 // Main entry point
 int main(int argc, char** argv)
@@ -624,18 +733,33 @@ int main(int argc, char** argv)
   std::vector< std::vector<I> > dogSpace;
   std::vector<Keypoint> keypoints;
   I original;
-  C extrema;
+  C extrema, improved;
+  bool black = true;
 
   io::pgm::load(original, "images/lena.pgm");
+
+  if (black)
+  {
+    initialize(extrema, original);
+    initialize(improved, original);
+  }
+  else
+  {
+    extrema = data::convert(value::rgb8(), original);
+    improved = data::convert(value::rgb8(), original);
+  }
 
   // Localization
   buildScaleSpace(scaleSpace, original, octave_level, blur_level);
   buildDifferenceOfGaussianSpace(scaleSpace, dogSpace);
   buildExtrema(extrema, original, dogSpace, keypoints);
-  //discardLowContrastKeypoints(dogSpace, keypoints);
+  discardLowContrastKeypoints(dogSpace, keypoints, improved);
 
   // Processing
   // TODO
+
+  io::ppm::save(extrema, "output/extrema.ppm");
+  io::ppm::save(improved, "output/extrema_improved.ppm");
 
   return 0;
 }

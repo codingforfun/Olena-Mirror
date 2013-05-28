@@ -1,26 +1,35 @@
 #ifndef KEYPOINT_HH
 # define KEYPOINT_HH
 
+//# include <mln/core/alias/point2d.hh>
 # include <ostream>
+# include "matrix.hh"
 
 class Keypoint
 {
   public:
     // Constructor
-    Keypoint(unsigned i, unsigned j,
-             unsigned scale, unsigned size, bool maximum);
+    Keypoint(int i, int j,
+             int scale, int size, bool maximum);
+
+    bool add(Matrix& k, Keypoint& old);
+    //mln::point2d getPoint();
     
     // Getters
-    unsigned getI();
-    unsigned getJ();
-    unsigned getScale();
-    unsigned getSize();
+    int getI();
+    int getJ();
+    int getScale();
+    int getSize();
+
+    void setI(int offsetI);
+    void setJ(int offsetJ);
+    void setScale(int offsetScale);
 
   private:
-    unsigned i;
-    unsigned j;
-    unsigned scale;
-    unsigned size;
+    int i;
+    int j;
+    int scale;
+    int size;
     bool maximum;
 };
 

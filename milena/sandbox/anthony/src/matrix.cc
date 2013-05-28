@@ -46,7 +46,6 @@ void Matrix::print()
   std::cout << std::endl;
 }
 
-
 float Matrix::determinant()
 {
   float d1 = m.at(0).at(0) * m.at(1).at(1) * m.at(2).at(2);
@@ -99,7 +98,6 @@ bool Matrix::inverse(Matrix& inversed)
       for (unsigned j = 0; j < comatrix.getHeight(); ++j)
         comatrix.set(i, j, comatrix.get(i,j) / det);
 
-    comatrix.print();
     inversed = comatrix;
 
     canInverse = true;
@@ -120,7 +118,33 @@ Matrix Matrix::operator*(Matrix& right)
         result.add(i, k, m.at(i).at(j) * right.get(j, k));
 
   return result;
-};
+}
+
+void Matrix::absolute()
+{
+  for (unsigned i = 0; i < height; ++i)
+    for (unsigned j = 0; j < width; ++j)
+      m.at(i).at(j) *= (m.at(i).at(j) >= 0) ? 1 : -1;
+}
+
+bool Matrix::isMajorOffset()
+{
+  unsigned i = 0;
+  unsigned j = 0;
+  bool isMajorOffset = false;
+
+  while (!isMajorOffset && i < height)
+  {
+    while (!isMajorOffset && j < width)
+    {
+      isMajorOffset = m.at(i).at(j) > 0.5 || - m.at(i).at(j) > 0.5;
+      ++j;
+    }
+    ++i;
+  }
+
+  return isMajorOffset;
+}
 
 // Getters and Setters
 unsigned Matrix::getHeight() { return height; }
