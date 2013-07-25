@@ -10,9 +10,10 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/literal/all.hh>
-#include <mln/value/int_s8.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_s16.hh>
 
-#include "vrac/vrac.hh"
+#include "vrac.hh"
 
 using namespace mln;
 
@@ -41,23 +42,22 @@ class ScaleSpace
       return pyramid[i];
     }
 
-
     void build(const I& original)
     {
       // Upscaled octave
-      I upscaled = vrac::upscaling2(original);
+      I upscaled = upscaling2(original);
       addOctave(upscaled);
 
       // 1st octave
       addOctave(original);
 
       // 2nd octave
-      I downscaled = vrac::downscaling2(original);
+      I downscaled = downscaling2(original);
       addOctave(downscaled);
 
       for (unsigned i = 3; i < o; ++i)
       {
-        downscaled = vrac::downscaling2(downscaled);
+        downscaled = downscaling2(downscaled);
         addOctave(downscaled);
       }
     }
@@ -79,22 +79,26 @@ class ScaleSpace
 
     inline unsigned octave_count() { return pyramid.size(); }
     inline unsigned gradient_count() { return pyramid[0].size(); }
+    const std::vector< std::vector<I> >& getPyramid() { return pyramid; }
     
-  private:
+  protected:
     unsigned o;
     unsigned g;
     std::vector< std::vector<I> > pyramid;
     
+    ScaleSpace()
+    {
+    }
+
     void addOctave(const I& original)
     {
       I blured;
       std::vector<I> octave;
-      //float variance = sqrt(2);
-      float variance = 0.84089642;
+      float variance = sqrt(2);
 
       for (unsigned i = 0; i < g; ++i)
       {
-        blured = vrac::blur(original, variance);
+        blured = blur(original, variance);
         variance *= sqrt(2);
         octave.push_back(blured);
       }

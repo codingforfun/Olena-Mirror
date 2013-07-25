@@ -403,6 +403,7 @@ void find_min(T& min, const I& upper, const I& lower, const P& pUpper, const P& 
 {
   mln_niter(neighb2d) nUpper(c8(), pUpper);
   mln_niter(neighb2d) nLower(c8(), pLower);
+  T tmp = min;
 
   // Upper processing
   for_all(nUpper)
@@ -413,6 +414,8 @@ void find_min(T& min, const I& upper, const I& lower, const P& pUpper, const P& 
   for_all(nLower)
     if (lower(nLower) < min)
       min = lower(nLower);
+
+  std::cout << tmp << " >= " << min << std::endl;
 }
 
 // Find the maximum value in the upper and lower layers around p
@@ -421,6 +424,7 @@ void find_max(T& max, const I& upper, const I& lower, const P& pUpper, const P& 
 {
   mln_niter(neighb2d) nUpper(c8(), pUpper);
   mln_niter(neighb2d) nLower(c8(), pLower);
+  T tmp = max;
 
   // Upper processing
   for_all(nUpper)
@@ -431,6 +435,8 @@ void find_max(T& max, const I& upper, const I& lower, const P& pUpper, const P& 
   for_all(nLower)
     if (lower(nLower) > max)
       max = lower(nLower);
+
+  std::cout << tmp << " >= " << max << std::endl;
 }
 
 template<typename T, typename I, typename P>
@@ -473,30 +479,44 @@ bool hasEdgeResponse(const I& dog, const P& p, const T& center)
 // Build the extrema image
 template<typename I, typename C>
 void buildExtrema(C& extrema,
-                  const I& original,
                   std::vector< std::vector<I> >& dogSpace,
                   std::vector<Keypoint>& keypoints)
 {
   // Number of scales (gaussian meaning)
   unsigned scales = dogSpace.at(0).size();
+  std::cout << "Scales: " << scales << std::endl
+	    << "Resolutions: " << dogSpace.size() << std::endl;
+
 
   // Iterates through all scales
-  for (unsigned i = 0; i < scales; ++i)
+  for (unsigned i = 0; i < scales - 2; ++i)
   {
+    std::cout << "scales ENTER" << std::endl;
+
     // Iterates through all resolutions
-    for (unsigned j = 1; j < dogSpace.size() - 1; ++j)
+    for (unsigned j = 1; j < dogSpace.size() - 2; ++j)
     {
+      std::cout << "resolutions ENTER" << std::endl;
       I current = dogSpace.at(j).at(i);
       I upper = dogSpace.at(j+1).at(i);
       I lower = dogSpace.at(j-1).at(i);
 
+      C debugDraw1 = data::convert(value::rgb8(), upper);
+      C debugDraw2 = data::convert(value::rgb8(), lower);
+
+
       mln_piter(I) p(current.domain());
+      int first = 0;
+      int bound = 1000;
+      unsigned threshold = 0;
+
 
       for_all(p)
       {
         value::int_u8 min = 255;
         value::int_u8 max = 0;
         value::int_u8 center = 0;
+	++first;
 
         mln_niter(neighb2d) n(c8(), p);
         center = current(p);
@@ -507,26 +527,47 @@ void buildExtrema(C& extrema,
         // Find the min and max in the current neighborhood (c8)
         find_extremum(min, max, current, n);
 
-        if (center <= min)
+        if ((unsigned) center + threshold < min)
         {
+
           // Find the min in other levels of the pyramid
           find_min(min, upper, lower, pUpper, pLower);
 
-          if (center < min && !hasEdgeResponse(current, p, center))
+          if ((unsigned) center + threshold < min && !hasEdgeResponse(current, p, center))
           {
+	    std::cout << center << " < " << min << std::endl;
+
+	    if (first > bound)
+	      {
+		debugDraw1(pUpper) = literal::yellow;
+		debugDraw2(pLower) = literal::yellow;
+
+
+		++first;
+	      }
             mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
                 p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::red;
             keypoints.push_back(Keypoint(p.row(), p.col(), i, j, false));
           }
         }
-        else if (center >= max)
+        else if (center > (unsigned) max + threshold)
         {
           // Find the max in other levels of the pyramid
           find_max(max, upper, lower, pUpper, pLower);
 
-          if (center > max && !hasEdgeResponse(current, p, center))
+          if (center > (unsigned) max + threshold && !hasEdgeResponse(current, p, center))
           {
+	    std::cout << center << " > " << max << std::endl;
+
+	    if (first > bound)
+	      {
+		debugDraw1(pUpper) = literal::yellow;
+		debugDraw2(pLower) = literal::yellow;
+
+		++first;
+	      }
+
             mln_psite(I) pOriginal(p.row() * pow(2, (j-1)),
                 p.col() * pow(2, (j-1)));
             extrema(pOriginal) = literal::red;
@@ -534,6 +575,8 @@ void buildExtrema(C& extrema,
           }
         }
       }
+      io::ppm::save(debugDraw1, "debug_upper.ppm");
+      io::ppm::save(debugDraw2, "debug_lower.ppm");
     }
   }
 }
@@ -661,6 +704,7 @@ void discardLowContrastKeypoints(const std::vector< std::vector<I> >& dogSpace,
                                  C& extrema)
 {
   Keypoint k_old(0, 0, 0, 0, true);
+  bool hasMoved = false;
 
   for (unsigned i = 0; i < keypoints.size(); ++i)
   {
@@ -681,48 +725,36 @@ void discardLowContrastKeypoints(const std::vector< std::vector<I> >& dogSpace,
 
       if (isMajorOffset)
       {
-        std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
-        std::cout << "First order matrix:" << std::endl;
-        firstOrder.print();
-
-        std::cout << "Second order matrix:" << std::endl;
-        secondOrder.print();
-
-        std::cout << "Offset: " << std::endl;
-        x.print();
-
-        std::cout << "k_old: " << k_old.getI() << " " << k_old.getJ() << std::endl;
-        std::cout << "k: " << k.getI() << " " << k.getJ() << std::endl;
-        bool hasMoved = k.add(x, k_old);
-        std::cout << "k++: " << k.getI() << " " << k.getJ()
-                  << "\thasMoved: " << hasMoved << std::endl;
+        hasMoved = k.add(x, k_old);
 
         point2d p(k.getI(), k.getJ());
-        std::cout << "Final point: " << extrema.domain() << "\t" << p << std::endl;
 
         if (hasMoved && extrema.has(p)
             && p.row() >= 0 && p.row() < geom::max_row(extrema)
             && p.col() >= 0 && p.col() < geom::max_col(extrema))
         {
-          std::cout << "VALID" << std::endl;
-          extrema(p) = literal::red;
+          // extrema(p) = literal::red;
           k_old = keypoints.at(i);
           keypoints.at(i--) = k;
         }
-
-        std::cout << std::endl;
       }
       else
       {
         point2d p(k.getI(), k.getJ());
-        extrema(p) = literal::red;
+
+	if (hasMoved)
+	  extrema(p) = literal::green;
+	else
+	  extrema(p) = literal::red;
+
+	hasMoved = false;
       }
     }
   }
 }
 
 // Main entry point
-int main(int argc, char** argv)
+int main(void)//int argc, char** argv)
 {
   typedef image2d<value::int_u8> I;
   typedef image2d<value::rgb8> C;
@@ -736,7 +768,7 @@ int main(int argc, char** argv)
   C extrema, improved;
   bool black = true;
 
-  io::pgm::load(original, "images/lena.pgm");
+  io::pgm::load(original, "images/keith.pbm");
 
   if (black)
   {
@@ -752,7 +784,7 @@ int main(int argc, char** argv)
   // Localization
   buildScaleSpace(scaleSpace, original, octave_level, blur_level);
   buildDifferenceOfGaussianSpace(scaleSpace, dogSpace);
-  buildExtrema(extrema, original, dogSpace, keypoints);
+  buildExtrema(extrema, dogSpace, keypoints);
   discardLowContrastKeypoints(dogSpace, keypoints, improved);
 
   // Processing

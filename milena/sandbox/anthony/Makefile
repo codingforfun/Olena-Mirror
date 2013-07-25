@@ -1,8 +1,8 @@
-CCACHE=ccache
+CCACHE=
 CC=g++
-CFLAGS=-Wall -Werror
+CFLAGS=-Wall -Wextra
 CLIBS=-I../../
-CLEAN=*.o output/* log
+CLEAN=*.o output/* log debug_*
 
 SRC=src/main.cc src/matrix.cc src/keypoint.cc
 OUTPUT=a.out
