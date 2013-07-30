@@ -10,7 +10,7 @@
 // MAIN ENTRY POINT
 int main(int argc, char* argv[])
 {
-  const cv::Mat input = cv::imread("keith.pbm");
+  const cv::Mat input = cv::imread("../images/keith.pbm");
   cv::SiftFeatureDetector detector;
   std::vector<cv::KeyPoint> keypoints;
   detector.detect(input, keypoints);
