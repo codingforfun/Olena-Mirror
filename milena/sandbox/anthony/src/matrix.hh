@@ -16,6 +16,7 @@ class Matrix
     bool inverse(Matrix& inversed);
     void absolute();
     bool isMajorOffset();
+    float determinant();
 
     // Operators
     Matrix operator*(Matrix& right);
@@ -31,8 +32,6 @@ class Matrix
     std::vector< std::vector<float> > m;
     unsigned height;
     unsigned width;
-
-    float determinant();
 };
 
 #endif /* ! MATRIX_HH */

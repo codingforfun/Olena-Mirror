@@ -1,36 +1,48 @@
 #ifndef KEYPOINT_HH
 # define KEYPOINT_HH
 
-//# include <mln/core/alias/point2d.hh>
 # include <ostream>
-# include "matrix.hh"
 
 class Keypoint
 {
   public:
-    // Constructor
-    Keypoint(int i, int j,
-             int scale, int size, bool maximum);
+    Keypoint(int _x, int _y,
+             unsigned _octave, unsigned _gradient,
+             bool _maximum)
+    {
+      x = _x;
+      y = _y;
+      octave = _octave;
+      gradient = _gradient;
+      maximum = _maximum;
+    }
 
-    bool add(Matrix& k, Keypoint& old);
-    //mln::point2d getPoint();
-    
-    // Getters
-    int getI();
-    int getJ();
-    int getScale();
-    int getSize();
+    inline int getX() const { return x; }
+    inline int getY() const { return y; }
+    inline unsigned getOctave() const { return octave; }
+    inline unsigned getGradient() const { return gradient; }
+    inline bool getType() const { return maximum; }
+    inline float getOrientation() const { return orientation; }
 
-    void setI(int offsetI);
-    void setJ(int offsetJ);
-    void setScale(int offsetScale);
+    inline void setX(int _x) { x = _x; }
+    inline void setY(int _y) { y = _y; }
+    inline void setOrientation(float _o) { orientation = _o; }
+
+    friend std::ostream& operator<< (std::ostream& stream, const Keypoint& k)
+    {
+      stream << "(" << k.getX() << "," << k.getY() << ")"
+             << " o:" << k.getOctave() << " g:" << k.getGradient();
+
+      return stream;
+    }
 
   private:
-    int i;
-    int j;
-    int scale;
-    int size;
-    bool maximum;
+      int       x;
+      int       y;
+      unsigned  octave;
+      unsigned  gradient;
+      bool      maximum;
+      float     orientation;
 };
 
 #endif /* ! KEYPOINT_HH */

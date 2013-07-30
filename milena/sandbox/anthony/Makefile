@@ -4,12 +4,12 @@ CFLAGS=-Wall -Wextra
 CLIBS=-I../../
 CLEAN=*.o output/* log debug_*
 
-SRC=src/main.cc src/matrix.cc src/keypoint.cc
+SRC=src/main.cc src/matrix.cc
 OUTPUT=a.out
 
-all: scale
+all: sift
 
-scale: clean
+sift: clean
 	$(CCACHE) $(CC) $(CFLAGS) -O3 -DNDEBUG $(CLIBS) $(SRC) -o $(OUTPUT)
 
 debug: mrproper
@@ -21,4 +21,4 @@ clean:
 mrproper: clean
 	rm -f $(OUTPUT)
 
-.PHONY: scale clean mrproper
+.PHONY: sift clean mrproper
