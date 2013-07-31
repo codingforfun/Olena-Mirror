@@ -2,7 +2,7 @@ CCACHE=
 CC=g++
 CFLAGS=-Wall -Wextra
 CLIBS=-I../../
-CLEAN=*.o output/* log debug_*
+CLEAN=*.o output/* log
 
 SRC=src/main.cc src/matrix.cc
 OUTPUT=a.out

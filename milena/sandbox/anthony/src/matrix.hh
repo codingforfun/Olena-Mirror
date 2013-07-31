@@ -17,6 +17,8 @@ class Matrix
     void absolute();
     bool isMajorOffset();
     float determinant();
+    Matrix* solve3x3(Matrix& b);
+    float dotProduct(Matrix* vec);
 
     // Operators
     Matrix operator*(Matrix& right);

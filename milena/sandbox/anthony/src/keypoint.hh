@@ -26,7 +26,9 @@ class Keypoint
 
     inline void setX(int _x) { x = _x; }
     inline void setY(int _y) { y = _y; }
+    inline void setGradient(int _gradient) { gradient = _gradient; }
     inline void setOrientation(float _o) { orientation = _o; }
+
 
     friend std::ostream& operator<< (std::ostream& stream, const Keypoint& k)
     {

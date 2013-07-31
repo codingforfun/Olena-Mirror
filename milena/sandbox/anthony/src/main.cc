@@ -55,10 +55,17 @@ int main(void)
 
   writeKeypoints(keypoints, extrema, extrema_b);
 
+  std::cout << "BEFORE: Low contrast discarding: " << keypoints.size() << std::endl;
   dogs->discardLowContrastKeypoints(keypoints);
-  dogs->eliminateEdgeResponses(keypoints);
+  std::cout << "AFTER: Low contrast discarding: " << keypoints.size() << std::endl;
+
+  std::cout << "BEFORE: Elimination of edge responses: " << keypoints.size() << std::endl;
+  //dogs->eliminateEdgeResponses(keypoints);
+  std::cout << "AFTER: Elimination of edge responses: " << keypoints.size() << std::endl;
 
   writeKeypoints(keypoints, extrema2, extrema2_b);
+
+  //writeKeypoints(keypoints, extrema2, extrema2_b);
 
   // Save
   io::ppm::save(extrema, "output/extrema.ppm");

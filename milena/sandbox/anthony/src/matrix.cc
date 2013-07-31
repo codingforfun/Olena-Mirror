@@ -106,6 +106,56 @@ bool Matrix::inverse(Matrix& inversed)
   return canInverse;
 }
 
+Matrix* Matrix::solve3x3(Matrix& b)
+{
+    Matrix* solution = NULL;
+    float det = determinant();
+
+    if (det > 0.1 || det < -0.1)
+    {
+        solution = new Matrix(3, 1);
+        solution->initialize();
+
+        float x = b.get(0, 0);
+        float y = b.get(1, 0);
+        float z = b.get(2, 0);
+
+        Matrix m1(3, 3);
+        m1.initialize();
+        m1.set(0, 0, x);    m1.set(0, 1, m[0][1]);  m1.set(0, 2, m[0][2]);
+        m1.set(1, 0, y);    m1.set(1, 1, m[1][1]);  m1.set(1, 2, m[1][2]);
+        m1.set(2, 0, z);    m1.set(2, 1, m[2][1]);  m1.set(2, 2, m[2][2]);
+        float d1 = m1.determinant();
+
+        Matrix m2(3, 3);
+        m2.initialize();
+        m2.set(0, 0, m[0][0]);  m2.set(0, 1, x);    m2.set(0, 2, m[0][2]);
+        m2.set(1, 0, m[1][0]);  m2.set(1, 1, y);    m2.set(1, 2, m[1][2]);
+        m2.set(2, 0, m[2][0]);  m2.set(2, 1, z);    m2.set(2, 2, m[2][2]);
+        float d2 = m2.determinant();
+
+        Matrix m3(3, 3);
+        m3.initialize();
+        m3.set(0, 0, m[0][0]);  m3.set(0, 1, m[0][1]);  m3.set(0, 2, x);
+        m3.set(1, 0, m[1][0]);  m3.set(1, 1, m[1][1]);  m3.set(1, 2, y);
+        m3.set(2, 0, m[2][0]);  m3.set(2, 1, m[2][1]);  m3.set(2, 2, z);
+        float d3 = m3.determinant();
+
+        solution->set(0, 0, d1 / det);
+        solution->set(1, 0, d2 / det);
+        solution->set(2, 0, d3 / det);
+    }
+
+    return solution;
+}
+
+float Matrix::dotProduct(Matrix* vec)
+{
+    return (m[0][0] * vec->get(0, 0)
+          + m[1][0] * vec->get(1, 0)
+          + m[2][0] * vec->get(2, 0));
+}
+
 // Operators
 Matrix Matrix::operator*(Matrix& right)
 {
