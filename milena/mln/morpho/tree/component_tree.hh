@@ -32,8 +32,10 @@
 #ifndef MLN_MORPHO_TREE_COMPONENT_TREE_HH
 # define MLN_MORPHO_TREE_COMPONENT_TREE_HH
 
-# include <mln/data/sort_psites.hh>
-# include <mln/morpho/tree/data.hh>
+# include <mln/tag/tree.hh>
+# include <mln/util/ctree/ctree.hh>
+# include <mln/morpho/tree/impl/union_find_fast.hh>
+# include <mln/morpho/tree/impl/hqueue_fast.hh>
 
 namespace mln
 {
@@ -53,7 +55,7 @@ namespace mln
       ///
       template <typename I, typename N>
       inline
-      data< I, p_array<mln_psite(I)> >
+      util::ctree::ctree<I>
       min_tree(const Image<I>& f, const Neighborhood<N>& nbh);
 
       /// Compute a canonized max-tree.
@@ -65,15 +67,73 @@ namespace mln
       ///
       template <typename I, typename N>
       inline
-      data< I, p_array<mln_psite(I)> >
+      util::ctree::ctree<I>
       max_tree(const Image<I>& f, const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+      namespace internal
+      {
+
+	template <typename I, typename N>
+	inline
+	util::ctree::ctree<I>
+	max_tree_dispatch(trait::image::quant::any,
+			  const I& f,
+			  const N& nbh)
+	{
+	  util::ctree::ctree<I> tree =
+	    morpho::tree::impl::generic::union_find_fast(tag::tree::max, f, nbh);
+
+	  return tree;
+	}
+
+	template <typename I, typename N>
+	inline
+	util::ctree::ctree<I>
+	min_tree_dispatch(trait::image::quant::any,
+			  const I& f,
+			  const N& nbh)
+	{
+	  util::ctree::ctree<I> tree =
+	    morpho::tree::impl::generic::union_find_fast(tag::tree::min, f, nbh);
+
+	  return tree;
+	}
+
+
+	template <typename I, typename N>
+	inline
+	util::ctree::ctree<I>
+	max_tree_dispatch(trait::image::quant::low,
+			  const I& f,
+			  const N& nbh)
+	{
+	  util::ctree::ctree<I> tree =
+	    morpho::tree::impl::hqueue_fast(tag::tree::max, f, nbh);
+
+	  return tree;
+	}
+
+	template <typename I, typename N>
+	inline
+	util::ctree::ctree<I>
+	min_tree_dispatch(trait::image::quant::low,
+			  const I& f,
+			  const N& nbh)
+	{
+	  util::ctree::ctree<I> tree =
+	    morpho::tree::impl::hqueue_fast(tag::tree::min, f, nbh);
+
+	  return tree;
+	}
+
+      }
+
       template <typename I, typename N>
       inline
-      data< I, p_array<mln_psite(I)> >
+      util::ctree::ctree<I>
       min_tree(const Image<I>& f_, const Neighborhood<N>& nbh_)
       {
 	mln_trace("morpho::tree::min_tree");
@@ -84,18 +144,15 @@ namespace mln
 	mln_precondition(f.is_valid());
 	mln_precondition(nbh.is_valid());
 
-	typedef p_array<mln_psite(I)> S;
-	typedef data<I,S> tree_t;
-
-	S s = mln::data::sort_psites_decreasing(f);
-	tree_t tree(f, s, nbh);
+	util::ctree::ctree<I> tree =
+	  internal::min_tree_dispatch(mln_trait_image_quant(I)(), f, nbh);
 
 	return tree;
       }
 
       template <typename I, typename N>
       inline
-      data< I, p_array<mln_psite(I)> >
+      util::ctree::ctree<I>
       max_tree(const Image<I>& f_, const Neighborhood<N>& nbh_)
       {
 	mln_trace("morpho::tree::max_tree");
@@ -106,11 +163,8 @@ namespace mln
 	mln_precondition(f.is_valid());
 	mln_precondition(nbh.is_valid());
 
-	typedef p_array<mln_psite(I)> S;
-	typedef data<I,S> tree_t;
-
-	S s = mln::data::sort_psites_increasing(f);
-	tree_t tree(f, s, nbh);
+	util::ctree::ctree<I> tree =
+	  internal::max_tree_dispatch(mln_trait_image_quant(I)(), f, nbh);
 
 	return tree;
       }

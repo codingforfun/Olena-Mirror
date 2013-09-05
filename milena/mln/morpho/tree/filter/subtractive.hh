@@ -27,10 +27,8 @@
 # define MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/ops.hh>
-
-# include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/propagate_if.hh>
+# include <mln/core/image/attribute_image.hh>
+# include <mln/morpho/tree/propagate_node.hh>
 
 /**
 ** \file   mln/morpho/tree/filter/subtractive.hh
@@ -57,44 +55,57 @@ namespace mln
 	** does not verify the predicate. The sub-components values
 	** are set to the value of the removed component.
 	**
-	** \param[in] tree Component tree.
-	** \param[out] f_ Image to filter.
+	** \param[in] ori The values as an attribute image.
 	** \param[in] pred_ Filtering criterion.
+	** \return A copy of \p ori filtered with the subtractive strategy.
 	*/
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename P>
 	inline
-	void
-	subtractive(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_);
-
-
+	attribute_image<T, V>
+	subtractive(const attribute_image<T,V>& ori, const Function_v2b<P>& pred_);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename F>
 	inline
-	void
-	subtractive(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_)
+	attribute_image<T, V>
+	subtractive(const attribute_image<T,V>& ori, const Function_v2b<F>& pred_)
 	{
-	  F& f = exact(f_);
-	  const P& pred = exact(pred_);
-
 	  mln_trace("mln::morpho::tree::filter::subtractive");
+	  typedef attribute_image<T,V> A;
 
-	  morpho::tree::propagate_if(tree, f, morpho::tree::desc_propagation (), !pred);
+	  const F& pred = exact(pred_);
+	  const T& tree = ori.tree();
 
-	  mln_up_node_piter(T) n(tree);
+	  mln_precondition(ori.is_valid());
+
+	  A f;
+	  initialize(f, ori);
+
+	  // Fixme: introduce mln_root_piter...
+	  // and traverse all roots, not just the first one.
+	  mln_psite(A) root = util::ctree::node<T>(tree, 0);
+	  f(root) = ori(root);
+
+	  mln_piter(A) n(ori.domain());
 	  for_all(n)
 	    if (!pred(n))
 	      f(n) = f(tree.parent(n));
+	    else
+	      f(n) = f(tree.parent(n)) + ori(n) - ori(tree.parent(n));
 
+	  return f;
 	}
 
 # endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::morpho::tree::filter
+
     } // end of namespace mln::morpho::tree
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 #endif // ! MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH

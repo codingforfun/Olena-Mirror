@@ -23,13 +23,13 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MORPHO_TREE_DUAL_INPUT_TREE_HH
-# define MLN_MORPHO_TREE_DUAL_INPUT_TREE_HH
+#ifndef MLN_MORPHO_TREE_LEAF_LAST_HH
+# define MLN_MORPHO_TREE_LEAF_LAST_HH
 
-# include <mln/tag/tree.hh>
+# include <mln/accu/stat/max.hh>
 # include <mln/util/ctree/ctree.hh>
-# include <mln/morpho/tree/impl/union_find_fast.hh>
-# include <mln/morpho/tree/impl/dual_hqueue.hh>
+# include <mln/morpho/tree/propagate_node.hh>
+# include <mln/convert/to_p_array.hh>
 
 namespace mln
 {
@@ -40,47 +40,65 @@ namespace mln
     namespace tree
     {
 
-      /// Compute the dual input max-tree using mask-based connectivity.
-      ///
-      /// \param[in] f The input image.
-      /// \param[in] m The mask image.
-      /// \param[in] nbh The neighborhood.
-      ///
-      /// \return The corresponding tree structure.
-      ///
-      template <typename I, typename N>
-      inline
-      util::ctree::ctree<I>
-      dual_input_max_tree(const Image<I>& f,
-			  const Image<I>& m,
-			  const Neighborhood<N>& nbh);
+      template <typename T, typename V>
+      util::array<typename T::node_t>
+      leaf_last(const attribute_image<T, V>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename N>
-      inline
-      util::ctree::ctree<I>
-      dual_input_max_tree(const Image<I>& f_,
-			  const Image<I>& m_,
-			  const Neighborhood<N>& nbh_)
+      namespace internal
       {
-	mln_trace("morpho::tree::dual_input_max_tree");
 
-	const I& f = exact(f_);
-	const I& m = exact(m_);
-	const N& nbh = exact(nbh_);
+	template <typename T, typename V>
+	struct less_
+	{
+	  typedef typename T::node_t node_t;
 
-	mln_precondition(f.is_valid());
-	mln_precondition(nbh.is_valid());
+	  less_(const attribute_image<T, V>& img) :
+	    f_ (img)
+	  {
+	  }
 
-	util::ctree::ctree<I> tree =
-	  morpho::tree::impl::dual_hqueue(tag::tree::max, f, m, nbh);
+	  bool operator() (const node_t& lhs, const node_t& rhs)
+	  {
+	    return f_(lhs)  > f_(rhs);
+	  }
 
-	tree_t tree = internal::dual_input_max_tree_dispatch(mln_trait_image_quant(I)(), f, m, nbh);
-	trace::exiting("morpho::tree::dual_input_max_tree");
-	return tree;
+	private:
+	  const attribute_image<T, V>& f_;
+	};
       }
 
+      template <typename T, typename V>
+      util::array<typename T::node_t>
+      leaf_last(const attribute_image<T, V>& ima)
+      {
+	typedef attribute_image<T, V> A;
+        typedef typename T::node_t node_t;
+
+        p_array<node_t> sorted_sites = convert::to_p_array(ima);
+        std::vector<node_t>& hook = sorted_sites.hook_std_vector_();
+	std::sort(hook.begin(), hook.end(), internal::less_<T, V> (ima));
+
+	mln_ch_value(A, char) deja_vu;
+	initialize(deja_vu, ima);
+	data::fill(deja_vu, 0);
+
+	util::array<node_t> result;
+
+        mln_piter(p_array<node_t>) n(sorted_sites);
+	for_all(n)
+	{
+	  if (deja_vu(n))
+	    continue;
+	  result.append(n);
+	  deja_vu(n) = true; // useless
+          propagate_node_to_descendants<T, char>(deja_vu, n, 1);
+          propagate_node_to_ancestors<T, char>(deja_vu, n, 1);
+	}
+
+	return result;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -90,4 +108,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_MORPHO_TREE_DUAL_INPUT_TREE_HH
+#endif // !MLN_MORPHO_TREE_LEAF_LAST_HH

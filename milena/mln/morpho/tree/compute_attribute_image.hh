@@ -24,22 +24,20 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MORPHO_TREE_COMPUTE_ATTRIBUTE_IMAGE_HH
-# define MLN_MORPHO_TREE_COMPUTE_ATTRIBUTE_IMAGE_HH
-
-/// \file
+#ifndef COMPUTE_ATTRIBUTE_IMAGE_HH
+# define COMPUTE_ATTRIBUTE_IMAGE_HH
 ///
-/// Compute a canonized tree from an image.
 ///
-/// \todo Specialize for low quant (and try fastest).
+/// \brief  Compute an attribute on a morphological tree.
+///
+/// \todo Specialize for fast image.
+///
 
-# include <mln/core/routine/duplicate.hh>
-# include <mln/core/concept/image.hh>
-# include <mln/morpho/tree/data.hh>
-# include <mln/trait/accumulators.hh>
-# include <mln/util/pix.hh>
+# include <mln/core/concept/tree.hh>
+# include <mln/core/concept/accumulator.hh>
+# include <mln/core/image/attribute_image.hh>
+
 # include <mln/data/fill.hh>
-
 
 namespace mln
 {
@@ -51,210 +49,140 @@ namespace mln
     {
 
       /**
-      ** Compute an attribute image using tree with a parent
-      ** relationship between sites. In the attribute image, the
-      ** resulting value at a node is the 'sum' of its sub-components
-      ** value + the attribute value at this node.
+      ** Compute an attribute over a tree.
       **
-      ** Warning: \p s translates the ordering related to the
-      ** "natural" childhood relationship.  The parenthood is thus
-      ** inverted w.r.t. to \p s.
       **
-      ** It is very convenient since all processing upon the parent
-      ** tree are performed following \p s (in the default "forward"
-      ** way).
+      ** \param[in] tree A morphological tree (typically a min or max tree)
+      ** \param[in] accu An accumulator
       **
-      ** FIXME: Put it more clearly...
-      **
-      ** The parent result image verifies: \n
-      ** - p is root iff parent(p) == p \n
-      ** - p is a node iff either p is root or f(parent(p)) != f(p).
-      **
-      ** \param[in] a Attribute.
-      ** \param[in] t Component tree.
-      ** \param[out] accu_image Optional argument used to store image
-      ** of attribute accumulator.
-      **
-      ** \return The attribute image.
       */
-      template <typename A, typename T>
-      mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image(const Accumulator<A>& a,
-			      const T& t,
-			      mln_ch_value(typename T::function, A)* accu_image = 0);
-
-
-
-      /** The same as compute_attribute_image but uses the values
-      ** stored by \p values image instead.
-      **
-      ** \param[in] a Attribute.
-      ** \param[in] t Component tree.
-      ** \param[in] values Value image.
-      ** \param[out] accu_image Optional argument used to store image.
-      **
-      ** \return
-      */
-      template <typename A, typename T, typename V>
-      mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image_from(const Accumulator<A>& a,
-				   const T& t,
-				   const Image<V>& values,
-				   mln_ch_value(typename T::function, A)* accu_image = 0);
+      template <typename T, typename A>
+      attribute_image<T, mln_result(A)>
+      compute_attribute_image(const Tree<T>& tree,
+			      const Accumulator<A>& accu);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
-      // Take_as_init specialization
 
       namespace internal
       {
-	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
-			   const I& input, const P& p)
-	{
-	  (void)input;
-	  (void)p;
-	  accu.take_as_init();
-	}
 
-	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_pix, A& accu,
-			   const I& input, const P& p)
-	{
-	  accu.take_as_init(make::pix(input, p));
-	}
-
-	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
-			   const I& input, const P& p)
-	{
-	  accu.take_as_init(input(p));
-	}
-
-	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
-			   const I& input, const P& p)
-	{
-	  (void) input;
-	  accu.take_as_init(p);
-	}
-
-
-	template <typename A, typename I, typename P>
-	void take_as_init (A& accu, const I& input, const P& p)
-	{
-	  take_as_init (mln_trait_accumulator_when_pix(A)(), accu, input, p);
-	}
-
-
-	template <typename A, typename T, typename V>
+	template <typename T, typename A>
 	inline
-	mln_ch_value(typename T::function, mln_result(A))
-	  compute_attribute_image(const A& a,
-				  const T& t,
-				  const V& values,
-				  mln_ch_value(typename T::function, A)* accu_image = 0)
+	void
+	take_as_init(trait::accumulator::when_pix::use_none,
+		     const T&, A& accu,
+		     const mln_psite(T)&)
+	{
+	  accu.take();
+	}
+
+	template <typename T, typename A>
+	inline
+	void
+	take_as_init(trait::accumulator::when_pix::use_pix,
+		     const T& tree, A& accu,
+		     const mln_psite(T)& p)
+	{
+	  accu.take(make::pix(p, tree.f(p)));
+	}
+
+
+	template <typename T, typename A>
+	inline
+	void
+	take_as_init(trait::accumulator::when_pix::use_v,
+		     const T& tree, A& accu,
+		     const mln_psite(T)& p)
+	{
+	  accu.take(tree.f(p));
+	}
+
+	template <typename T, typename A>
+	inline
+	void
+	take_as_init(trait::accumulator::when_pix::use_p,
+		     const T&, A& accu,
+		     const mln_psite(T)& p)
+	{
+	  accu.take(p);
+	}
+
+	template <typename T, typename A>
+	void
+	take_as_init(const T& tree, A& a, const mln_psite(T)& p)
+	{
+	  take_as_init(mln_trait_accumulator_when_pix(A)(), tree, a, p);
+	}
+
+      } // end of namespace namespace mln::morpho::tree::internal
+
+      namespace impl
+      {
+
+	namespace generic
 	{
 
-	  typedef typename T::function I;
-	  mln_ch_value(I, A) acc;
-	  initialize(acc, t.f());
-
+	  template <typename T, typename A>
+	  attribute_image<T, mln_result(A)>
+	  compute_attribute_image(const T& tree, const A& accu, attribute_image<T, A>* accu_img = 0)
 	  {
-	    // Transmit "dynamic data" (state) of 'a' to every values of
-	    // 'acc'.  It is usually a no-op (so useless) except for a
-	    // few accumulators, e.g., for accu::stat::rank which has the 'k'
-	    // attribute.
-	    mln::data::fill(acc, a);
+	    typedef attribute_image<T, A> I;
+	    attribute_image<T, A> a(tree);
+	    (void)  accu_img;
+
+	    // Transmit dynamic data of accumulator (ex: rank filter).
+	    data::fill(a, accu);
+
+	    // Initialize. Each node takes its content.
+	    {
+	      mln_fwd_piter(T::domain_t) p(tree.domain());
+	      for_all(p)
+		internal::take_as_init(tree, a.element(tree.node_at_(p)), p);
+	    }
+
+	    // Transmit to parent.
+	    for (unsigned i = tree.n_nodes() - 1; i > 0; --i)
+	      {
+	    	unsigned q = tree.parent_at_(i);
+	    	if (q != i) // The current node is not a root.
+	    	  a.element(q).take(a.element(i));
+	      }
+
+	    attribute_image<T, mln_result(A)> out(tree);
+	    for (int i = 0; i < tree.n_nodes(); i++)
+	      out.element(i) = a.element(i).to_result();
+
+	    return out;
 	  }
 
-	  {
-	    // Initialize every attribute with the corresponding pixel.
-	    mln_site_piter(T) p(t);
-	    for_all(p)
-	      take_as_init(acc(p), values, p);
-	  }
+	} // end of namespace mln::morpho::tree::impl::generic
 
-	  {
-	    mln_up_site_piter(T) p(t);
-	    // Propagate attribute from a site to its parent.
-	    for_all(p)
-	      if (! t.is_root(p))
-		acc(t.parent(p)).take(acc(p));
+      } // end of namespace mln::morpho::tree::impl
 
-	    // Back-propagate attribute from a node to sites of its
-	    // component.  Below, p is a non-node component site and
-	    // parent(p) is a node, that is, the site representative of
-	    // the component p belongs to.
-	    for_all(p)
-	      if (! t.is_a_node(p))
-		{
-		  mln_assertion(t.is_a_node(t.parent(p)));
-		  acc(p) = acc(t.parent(p));
-		}
-	  }
-
-
-	  // Store accumulator image.
-	  if (accu_image)
-	    *accu_image = duplicate(acc);
-
-	  typedef typename T::function I;
-	  mln_ch_value(I, mln_result(A)) output;
-	  initialize(output, acc);
-	  mln::data::fill(output, acc);
-
-	  return output;
-	}
-      }
-
-      // Facade.
-
-      template <typename A, typename T>
-      inline
-      mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image(const Accumulator<A>& a_,
-			      const T& t,
-			      mln_ch_value(typename T::function, A)* accu_image)
+      // Facades
+      template <typename T, typename A>
+      attribute_image<T, mln_result(A)>
+      compute_attribute_image(const Tree<T>& tree_, const Accumulator<A>& acc)
       {
-	mln_trace("morpho::tree::compute_attribute_image");
+	trace::entering("mln::morpho::tree::compute_attribute_image");
+	const T& tree = exact(tree_);
+	const A& accu = exact(acc);
 
-	mln_ch_value(typename T::function, mln_result(A)) output;
-	output = internal::compute_attribute_image(exact(a_), t, t.f(),
-						   accu_image);
+	mln_precondition(tree.is_valid());
 
-	return (output);
+        attribute_image<T, mln_result(A)> out = impl::generic::compute_attribute_image(tree, accu);
+	trace::exiting("mln::morpho::tree::compute_attribute_image");
+        return out;
       }
-
-      template <typename A, typename T, typename V>
-      inline
-      mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image_from(const Accumulator<A>& a_,
-				   const T& t,
-				   const Image<V>& values,
-				   mln_ch_value(typename T::function, A)* accu_image)
-      {
-	mln_trace("morpho::tree::compute_attribute_image_from");
-
-
-	mln_ch_value(typename T::function, mln_result(A)) output;
-	output = internal::compute_attribute_image(exact(a_), t, exact(values),
-						   accu_image);
-
-	return output;
-      }
-
-
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    }  // end of namespace mln::morpho::tree
+    } // end of namespace mln::morpho::tree
 
-  }  // end of namespace mln::morpho
+  } // end of namespace mln::morpho
 
-}  // end of namespace mln
+} // end of namespace mln
 
-
-#endif // ! MLN_MORPHO_TREE_COMPUTE_ATTRIBUTE_IMAGE_HH
+#endif // !COMPUTE_ATTRIBUTE_IMAGE_HH

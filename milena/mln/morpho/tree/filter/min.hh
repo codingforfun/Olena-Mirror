@@ -27,7 +27,8 @@
 # define MLN_MORPHO_TREE_FILTER_MIN_HH
 
 # include <mln/core/concept/function.hh>
-# include <mln/morpho/tree/data.hh>
+# include <mln/core/image/attribute_image.hh>
+# include <mln/morpho/tree/propagate_node.hh>
 
 
 /**
@@ -52,45 +53,55 @@ namespace mln
 
 
 	/**
-	** Min pruning strategy. A node is removed iif its parent is
+	** Min pruning strategy. A node is removed iff its parent is
 	** removed or if it does not verify the predicate \p pred_.
 	**
-	** \param[in] tree Component tree.
-	** \param[out] f_ Image to filter.
+	** \param[in,out] attr The attribute image.
 	** \param[in] pred_ Filtering criterion.
 	*/
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename F>
 	inline
 	void
-	min(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_);
+	min(attribute_image<T,V>& attr, const Function_v2b<F>& pred);
 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-		template <typename T, typename F, typename P>
+	template <typename T, typename V, typename F>
 	inline
 	void
-	min(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_)
+	min(attribute_image<T,V>& attr, const Function_v2b<F>& pred_)
 	{
-	  F& f = exact(f_);
-	  const P& pred = exact(pred_);
-
 	  mln_trace("mln::morpho::tree::filter::min");
 
-	  mln_ch_value(F, bool) mark;
-	  initialize(mark, f);
-	  mln::data::fill(mark, false);
+	  typedef attribute_image<T,V> A;
 
-	  mln_dn_node_piter(T) n(tree);
-	  for_all(n)
-	    if (mark(tree.parent(n)) || !pred(n))
-	      {
-		f(n) = f(tree.parent(n));
-		mark(n) = true;
-	      }
+	  const F& pred = exact(pred_);
+	  const T& tree = attr.tree();
 
+	  // Ce qui devrait être !
+	  // mln_fwd_piter(A) n(attr);
+	  // for_all(n)
+	  //   if (!pred(n))
+	  //     {
+	  // 	data::fill_with_value(attr | tree.desc(n), attr(n));
+	  //    n.go_to_brother();
+	  //     }
+
+	  // En attendant que le morpher subimage soit spécialisé,
+	  // on joue avec les indexes.
+	  for (int i = 0; i < tree.n_nodes(); ++i)
+	    {
+	      mln_invariant(tree.has_index(i));
+	      mln_psite(A) n(tree, i);
+	      if (!pred(n))
+		{
+		  attr(n) = attr(tree.parent(n));
+		  i += propagate_node_to_descendants(attr, n, attr(n));
+		}
+	    }
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

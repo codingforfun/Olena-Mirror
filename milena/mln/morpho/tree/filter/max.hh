@@ -27,14 +27,16 @@
 # define MLN_MORPHO_TREE_FILTER_MAX_HH
 
 # include <mln/core/concept/function.hh>
-# include <mln/morpho/tree/data.hh>
+# include <mln/core/image/attribute_image.hh>
+# include <mln/morpho/tree/propagate_node.hh>
 
 /**
 ** \file   mln/morpho/tree/filter/max.hh
 **
 ** \brief  Filtering with max strategy.
 **
-**
+** See comments in min filter documentation.
+** FIXME: it is possible to make it in one pass !
 */
 
 namespace mln
@@ -54,51 +56,59 @@ namespace mln
 	** children are removed or if it does not verify the predicate
 	** \p pred_.
 	**
-	** \param[in] tree Component tree.
-	** \param[out] f_ Image to filter.
+	** \param[in,out] attr The attribute image.
 	** \param[in] pred_ Filtering criterion.
 	*/
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename P>
 	inline
 	void
-	max(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_);
-
+	max(attribute_image<T,V>& attr, const Function_v2b<P>& pred_);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P>
+	template <typename T, typename V, typename P>
 	inline
 	void
-	max(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_)
+	max(attribute_image<T,V>& attr, const Function_v2b<P>& pred_)
 	{
-	  F& f = exact(f_);
-	  const P& pred = exact(pred_);
-
 	  mln_trace("mln::morpho::tree::filter::max");
 
-	  mln_ch_value(F, bool) mark;
-	  initialize(mark, f);
-	  mln::data::fill(mark, true);
+	  typedef attribute_image<T,V> A;
+	  const P& pred = exact(pred_);
+	  const T& tree = attr.tree();
 
+	  typedef mln_ch_value(A, char) M;
+	  M marker;
+	  initialize(marker, attr);
+	  mln::data::fill(marker, true);
+
+	  // 1st pass up.
 	  {
-	    mln_up_node_piter(T) n(tree);
-	    for_all(n)
-	      if (!mark(n))
-      		mark(tree.parent(n)) = false;
-	      else if (pred(n))
+	    mln_bkd_piter(M) node(marker.domain());
+	    for_all(node)
+	      if (!marker(node))
+		marker(tree.parent(node)) = false;
+	      else if (pred(node))
 		{
-		  mark(tree.parent(n)) = false;
-		  mark(n) = false;
+		  marker(tree.parent(node)) = false;
+		  marker(node) = false;
 		}
 	  }
 
+	  // 2nd pass down: propagation.
 	  {
-	    mln_dn_node_piter(T) n(tree);
-	    for_all(n)
-	      if (mark(n))
-		f(n) = f(tree.parent(n));
+	    for (int i = 0; i < tree.n_nodes(); ++i)
+	      {
+		mln_invariant(tree.has_index(i));
+		mln_psite(A) n(tree, i);
+		if (marker(n))
+		  {
+		    attr(n) = attr(tree.parent(n));
+		    i += propagate_node_to_descendants(attr, n, attr(n));
+		  }
+	      }
 	  }
 
 	}

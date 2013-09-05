@@ -44,6 +44,7 @@ namespace mln
     template <typename F> struct function_ { typedef F param; };
     template <typename G> struct graph_	   { typedef G param; };
     template <typename I> struct image_    { typedef I param; };
+    template <typename T> struct tree_	   { typedef T param; };
     template <typename N> struct neighb_   { typedef N param; };
     template <typename P> struct psite_    { typedef P param; };
     template <typename S> struct domain_   { typedef S param; };
