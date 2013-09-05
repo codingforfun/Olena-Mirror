@@ -50,7 +50,18 @@ namespace mln
     namespace binary_2d
     {
 
-      /// Subsample a Boolean image.
+      /// \brief Subsample a Boolean image.
+      ///
+      /// Subsample a binary image by a factor \p n and return a gray
+      /// level image by averaging.
+      ///
+      /// \[
+      /// out(p) = \frac{1}{n^2} \sum_{\epsilon=1}^n input(n.(p+pmin) +
+      /// \langle \epsilon, 1\rangle )
+      /// \]
+      ///
+      /// Note that even if the input image does not have its origin
+      /// at (0,0), the output image does so.
       ///
       /// \param[in] input A binary image.
       /// \param[in] n	   Linear subsampling coefficient.
@@ -75,30 +86,40 @@ namespace mln
 	if (n == 0)
 	  return data::convert(int_u8(), input);
 
-	const bool** ptr = new const bool*[n];
+
 	const unsigned nrows = input.nrows() / n;
 	const unsigned ncols = input.ncols() / n;
-	image2d<int_u8> output(nrows, ncols);
 
-	const unsigned delta_row = input.delta_offset(down);
+	algebra::vec<2, unsigned int> vmin;
+	algebra::vec<2, unsigned int> vmax;
+	vmin[0] = 0;
+	vmin[1] = 0;
+	vmax[0] = nrows - 1;
+	vmax[1] = ncols - 1;
+	point2d pmin(vmin);
+	point2d pmax(vmax);
 
-	for (unsigned row = 0; row < nrows; ++row)
+	image2d<int_u8> output(box<point2d>(pmin, pmax));
+	dpoint2d dp_row(1, 0);
+	const unsigned delta_row = input.delta_index(dp_row);
+
+	const bool* origin = &input(input.domain().pmin());
+	const bool* line_ptr = origin;
+	for (unsigned row = 0; row < nrows; ++row, line_ptr += delta_row * n)
 	{
-	  ptr[0] = & input(point2d(n * row, 0));
-	  for (unsigned i = 1; i < n; ++i)
-	    ptr[i] = ptr[i - 1] + delta_row;
-	  for (unsigned col = 0; col < ncols; ++col)
+	  const bool* ptr = line_ptr;
+	  for (unsigned col = 0; col < ncols; ++col, ptr += n)
 	  {
 	    unsigned count = 0;
 	    for (unsigned i = 0; i < n; ++i)
-	      for (unsigned j = 0; j < n; ++j, ++(ptr[i]))
-		if (*(ptr[i]))
+	      for (unsigned j = 0; j < n; ++j)
+	      {
+		if (ptr[delta_row * i + j])
 		  ++count;
-	    output(point2d(row, col)) = count * mln_max(int_u8) / n / n;
+	      }
+	    output.at_(row, col) = count * 255 / n / n;
 	  }
 	}
-
-	delete[] ptr;
 
 	return output;
       }

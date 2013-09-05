@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 2013-09-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add parentheses around complex operands of operator `|'.
@@ -4769,6 +4768,17 @@
 
 	* mln/geom/crop.hh,
 	* mln/geom/crop_without_localization.hh: New.
+
+2013-09-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix some shortcomings in binary subsampling. This function used to
+	memory leak and makes an unnecessary heap memory
+	allocation. Moreover, it makes some unnecessary assumptions about
+	the domain of the image (only worked for 2D images with a domain
+	starting at (0,0)).
+
+	* milena/mln/world/binary_2d/subsample.hh: Many fixes.
+
 
 2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
