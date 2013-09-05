@@ -29,15 +29,15 @@
 
 /// \file
 ///
-/// Meyer's Watershed Transform (WST) algorithm.
+/// \brief Meyer's Watershed Transform (WST) algorithm.
 ///
-///    The Watershed Transform algorithm from Meyer using a hierarchical
-///    queue.
+/// The Watershed Transform algorithm from Meyer using a hierarchical
+/// queue.
 ///
-///    Reference:
-///      Fernand Meyer.  Un algorithme optimal de ligne de partage des
-///      eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
-///      (1991), pages 847--859.
+/// Reference:
+///   Fernand Meyer.  Un algorithme optimal de ligne de partage des
+///   eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
+///   (1991), pages 847--859.
 
 # include <mln/trait/ch_value.hh>
 
@@ -132,9 +132,10 @@ namespace mln
 	    typedef mln_value(I) V;
 	    const V max = mln_max(V);
 
-	    // Initialize the output with the markers (minima components).
-	    mln_ch_value(I, marker) output =
-	      labeling::regional_minima (input, nbh, n_basins);
+	    // Initialize the output with the markers (minima
+	    // components).
+	    typedef mln_ch_value(I, L) O;
+	    O output = labeling::regional_minima(input, nbh, n_basins);
 
 	    typedef mln_psite(I) psite;
 
@@ -287,7 +288,7 @@ namespace mln
 	      for (unsigned i = 0; i < n_nbhs; ++i)
 		{
 		  unsigned n = p + dp[i];
-		  // In the border, output is unmarked so N is ignored.
+		  // In the border, OUTPUT is unmarked so N is ignored.
 		  if (output.element(n) != unmarked)
 		    {
 		      if (adjacent_marker == unmarked)
@@ -314,7 +315,7 @@ namespace mln
 		    {
 		      unsigned n = p + dp[i];
 		      if (output.element(n) == unmarked
-			  // In the border, in_queue is true so N is ignored.
+			  // In the border, IN_QUEUE is true so N is ignored.
 			  && ! in_queue.element(n))
 			{
 			  queue.push(max - input.element(n), n);

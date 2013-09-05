@@ -73,13 +73,15 @@ namespace mln
       {
       public:
 
-	/// Returned value types
-	/// @{
+	/// \name Returned value types
+	/// \{
+
 	typedef T result;
 	typedef typename std::vector<T>::reference mutable_result;
-	/// @}
 
-	/// Constructors
+	/// \}
+
+	/// \name Constructors
 	/// \{
 
 	/// Default.
@@ -95,6 +97,7 @@ namespace mln
 	/// Used in from_to(). Constructs that function from an std::vector.
 	/// Always prefer using from_to instead of this constructor.
 	array(const std::vector<T>& from);
+
 	/// \}
 
 

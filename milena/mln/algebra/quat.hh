@@ -469,12 +469,9 @@ namespace mln
     inline
     void quat::set_unit(float theta, const algebra::vec<3,T>& uv)
     {
-      static const float pi = 3.14159265358979323846f;
-
-      mln_precondition(theta > - pi - mln_epsilon(float)
-		       && theta < pi + mln_epsilon(float));
+      mln_precondition(theta > - float(math::pi) - mln_epsilon(float)
+		       && theta < float(math::pi) + mln_epsilon(float));
       mln_precondition(about_equal(norm::l2(uv), 1.f));
-      (void) pi;
 
       this->v_[0] = std::cos(theta);
       float sint = std::sin(theta);

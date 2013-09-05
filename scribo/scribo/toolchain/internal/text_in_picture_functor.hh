@@ -91,9 +91,9 @@
 
 # include <scribo/toolchain/internal/toolchain_functor.hh>
 
-# include <src/afp/components.hh>
-# include <src/afp/link.hh>
-# include <src/afp/regroup.hh>
+# include <scribo/afp/components.hh>
+# include <scribo/afp/link.hh>
+# include <scribo/afp/regroup.hh>
 
 
 namespace scribo
@@ -183,8 +183,11 @@ namespace scribo
 
       template <typename I>
       unsigned
-      text_in_picture_functor<I>::get_factor(const I& ima, unsigned max_dim_size)
+      text_in_picture_functor<I>::get_factor(const I& ima,
+					     unsigned max_dim_size)
       {
+	mln_precondition(max_dim_size != 0);
+
 	unsigned
 	  nrows = ima.nrows(),
 	  ncols = ima.ncols(),
@@ -234,27 +237,30 @@ namespace scribo
 	  std::cout << "Using lambda = " << lambda << std::endl;
 
 
-	on_new_progress_label("Resizing image if needed...");
-
+	mln_concrete(I) input_rgb;
 	if (max_dim_size != 0)
-	  max_dim_size = max_dim_size;
+	  {
+	    on_new_progress_label("Resizing image if needed...");
 
-	unsigned factor = get_factor(input_rgb_orig, max_dim_size);
+	    unsigned factor = get_factor(input_rgb_orig, max_dim_size);
 
-	if (verbose)
-	{
-	  std::cout << "Reduction Factor : " << factor << std::endl;
-	  std::cout << "Original domain: " << input_rgb_orig.domain() << std::endl;
-	}
+	    if (verbose)
+	      std::cout << "Reduction Factor : " << factor
+			<< std::endl
+			<< "Original domain: " << input_rgb_orig.domain()
+			<< std::endl;
 
-	mln_concrete(I)
-	  input_rgb = mln::subsampling::antialiased(input_rgb_orig, factor);
+	    mln_concrete(I)
+	      input_rgb = mln::subsampling::antialiased(input_rgb_orig, factor);
 
-	if (verbose)
-	  std::cout << "Resized domain: " << input_rgb.domain() << std::endl;
+	    if (verbose)
+	      std::cout << "Resized domain: " << input_rgb.domain()
+			<< std::endl;
+	  }
+	else
+	  input_rgb = input_rgb_orig;
 
 	on_progress();
-
 
 	mln_ch_value(I,value::int_u8) intensity_ima;
 	if (enable_bg_removal)

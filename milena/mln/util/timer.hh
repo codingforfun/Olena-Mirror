@@ -49,13 +49,6 @@ namespace mln
 
       timer();
 
-      // Explicit copy constructor (in most cases should not be
-      // used...).
-      explicit timer(const timer&);
-
-      // Without impl.
-      void operator=(const timer&);
-
       ~timer();
 
       void start();
@@ -73,15 +66,6 @@ namespace mln
 
       // As a proxy:
       float subj_();
-
-//       void print() const
-//       {
-// 	std::cout << running_ << ' '
-// 		  << start_ << ' '
-// 		  << std::clock() << ' '
-// 		  << float(std::clock()) / CLOCKS_PER_SEC << ' '
-// 		  << time_ << std::endl;
-//       }
 
       double ms() const
       {
@@ -102,14 +86,6 @@ namespace mln
     timer::timer()
     {
       reset();
-    }
-
-    inline
-    timer::timer(const timer& t)
-    {
-      running_ = t.running_;
-      start_ = t.start_;
-      time_ = t.time_;
     }
 
     inline

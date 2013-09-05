@@ -61,7 +61,7 @@ namespace mln
 
   namespace literal
   {
-    /// \{ Forward declarations.
+    // Forward declarations.
     struct black_t;
     struct white_t;
 
@@ -83,15 +83,15 @@ namespace mln
     struct magenta_t;
     struct yellow_t;
     struct olive_t;
-    /// \}
+    //
   }
 
 
-   // Forward declaration.
-   namespace value
-   {
-     template <typename H, typename S, typename L> class hsl_;
-   }
+  // Forward declaration.
+  namespace value
+  {
+    template <typename H, typename S, typename L> class hsl_;
+  }
 
   namespace trait
   {
@@ -217,7 +217,8 @@ namespace mln
       typedef int_u<n> green_t;
       typedef int_u<n> blue_t;
 
-      /// \{ Acces to red/green/blue component.
+      /// \name Access to red/green/blue component.
+      /// \{
       int_u<n>  red() const   { return this->v_[0]; }
       int_u<n>& red()         { return this->v_[0]; }
 
@@ -248,7 +249,8 @@ namespace mln
       // Conversion to the sum type.
       operator algebra::vec<3, float>() const { return this->v_; }
 
-      /// \{ Constructors with literals.
+      /// \name Constructors with literals.
+      /// \{
       rgb<n>(const mln::literal::white_t&);
       rgb<n>(const mln::literal::black_t&);
 
@@ -281,15 +283,21 @@ namespace mln
 
 
 
-    /// Print an rgb \p c into the output stream \p ostr.
+    /// Print an RGB \p c value on the output stream \p ostr.
     ///
     /// \param[in,out] ostr An output stream.
-    /// \param[in] c An rgb.
+    /// \param[in] c An RGB value.
     ///
     /// \return The modified output stream \p ostr.
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& c);
 
+    /// Get an RGB value \p c from the input stream \p istr.
+    ///
+    /// \param[in,out] istr An input stream.
+    /// \param[out] c An RGB value (destination).
+    ///
+    /// \return The modified input stream \p istr.
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, rgb<n>& c);
 
@@ -301,7 +309,7 @@ namespace mln
     /* FIXME: Cannot work for i negative; add traits! (2008-02-16,
        Roland: What does this comment mean?)  */
 
-    /// Addition.
+    /// \name Addition.
     /// {
     template <unsigned n>
     typename rgb<n>::interop
@@ -316,7 +324,7 @@ namespace mln
     operator+(const rgb<n>& lhs, const typename rgb<n>::interop& rhs);
     /// \}
 
-    /// Subtraction.
+    /// \name Subtraction.
     /// \{
     template <unsigned n>
     typename rgb<n>::interop
@@ -331,7 +339,7 @@ namespace mln
     operator-(const rgb<n>& lhs, const typename rgb<n>::interop& rhs);
     /// \}
 
-    /// Product.
+    /// \name Product.
     /// \{
     template <unsigned n, typename S>
     inline
@@ -344,7 +352,7 @@ namespace mln
     operator*(const mln::value::scalar_<S>& s, const rgb<n>& lhs);
     /// \}
 
-    /// Division.
+    /// \name Division.
     /// \{
     template <unsigned n, typename S>
     inline

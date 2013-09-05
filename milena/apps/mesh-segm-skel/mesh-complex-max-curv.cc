@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,10 +55,6 @@
 #include "misc.hh"
 
 
-// Doesn't C++ have a better way to express Pi?
-static const float pi = 4 * atanf(1);
-
-
 int main(int argc, char* argv[])
 {
   if (argc != 3)
@@ -83,16 +80,6 @@ int main(int argc, char* argv[])
 
   mln::bin_2complex_image3df input;
   mln::io::off::load(input, input_filename);
-
-//   // ------------------------------------------------------------
-//   // FIXME: TEST.
-//   mln::complex_image< 2, mln::space_2complex_geometry, mln::algebra::vec<3, float> >
-//     normal = mesh_normal(input.domain());
-//   mln::p_n_faces_fwd_piter<D, G> v_(normal.domain(), 0);
-//   for_all(v_)
-//     std::cout << normal(v_) << std::endl;
-//   std::exit(0);
-//   // ------------------------------------------------------------
 
   std::pair<ima_t, ima_t> curv = mln::geom::mesh_curvature(input.domain());
 

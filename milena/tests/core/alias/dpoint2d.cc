@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +41,7 @@ int main()
 
   mln_assertion(dp == q - p);
   mln_assertion(q == p + dp);
+  mln_assertion(p == q - dp);
 
   algebra::vec<2, float> v = dp;
   mln_assertion(v[0] / 2 == 1.5);

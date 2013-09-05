@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,7 +34,10 @@
 #include <mln/core/image/complex_image.hh>
 #include <mln/core/image/complex_neighborhoods.hh>
 
-#include <mln/core/site_set/p_set.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/image/dmorph/mutable_extension_ima.hh>
+#include <mln/core/routine/mutable_extend.hh>
+#include <mln/data/paste.hh>
 
 #include <mln/value/label_16.hh>
 
@@ -42,7 +46,7 @@
 
 #include <mln/topo/is_n_face.hh>
 #include <mln/topo/is_simple_cell.hh>
-#include <mln/topo/detach.hh>
+#include <mln/topo/detach_cell.hh>
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
 #include <mln/io/off/load.hh>
@@ -70,23 +74,37 @@ main(int argc, char* argv[])
   `----------------*/
 
   // Image type.
-  typedef mln::float_2complex_image3df ima_t;
+  typedef mln::float_2complex_image3df float_input_t;
   // Dimension of the image (and therefore of the complex).
-  static const unsigned D = ima_t::dim;
+  static const unsigned D = float_input_t::dim;
   // Geometry of the image.
-  typedef mln_geom_(ima_t) G;
+  typedef mln_geom_(float_input_t) G;
 
-  ima_t input;
-  mln::io::off::load(input, input_filename);
+  float_input_t float_input;
+  mln::io::off::load(float_input, input_filename);
+
+  // Convert the float image into an unsigned image because some
+  // algorithms do not handle float images well.
+  /* FIXME: This is bad: float images should be handled as-is.  At
+     least, we should use a decent conversion, using an optimal affine
+     transformation (stretching/shrinking) or any other kind of
+     interpolation.  */
+  typedef mln::unsigned_2complex_image3df ima_t;
+  ima_t input(float_input.domain());
+  // Process only triangles, as edges and vertices are set afterwards
+  // (see FIXME below).
+  mln::p_n_faces_fwd_piter<D, G> t(input.domain(), 2);
+  for_all(t)
+    input(t) = 1000 * float_input(t);
 
   /* FIXME: Workaround: Set maximal values on vertices and edges to
      exclude them from the set of minimal values.  */
   mln::p_n_faces_fwd_piter<D, G> v(input.domain(), 0);
   for_all(v)
-    input(v) = mln_max(float);
+    input(v) = mln_max(mln_value_(ima_t));
   mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);
   for_all(e)
-    input(e) = mln_max(float);
+    input(e) = mln_max(mln_value_(ima_t));
 
   /*-----------------.
   | Simplification.  |
@@ -124,7 +142,7 @@ main(int argc, char* argv[])
     for_all(adj_t)
       if (minima(adj_t) == mln::literal::zero)
 	{
-	  // If E is adjcent to a non-minimal triangle, then it must
+	  // If E is adjacent to a non-minimal triangle, then it must
 	  // not belong to a minima.
 	  ref_adj_minimum = mln::literal::zero;
 	  break;
@@ -150,7 +168,7 @@ main(int argc, char* argv[])
     for_all(adj_e)
       if (minima(adj_e) == mln::literal::zero)
 	{
-	  // If V is adjcent to a non-minimal triangle, then it must
+	  // If V is adjacent to a non-minimal triangle, then it must
 	  // not belong to a minima.
 	  ref_adj_minimum = mln::literal::zero;
 	  break;
@@ -172,6 +190,13 @@ main(int argc, char* argv[])
   | Initial binary image.  |
   `-----------------------*/
 
+  /* Careful: creating ``holes'' in the surface obviously changes its
+     topology, but it may also split a single connected component in
+     two or more components, resulting in a disconnected skeleton.  We
+     may want to improve this step either by forbidding any splitting,
+     or by incrementally ``digging'' a regional minima as long as no
+     splitting occurs.  */
+
   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
   bin_ima_t surface(minima.domain());
   mln::data::fill(surface, true);
@@ -186,28 +211,73 @@ main(int argc, char* argv[])
   | Skeleton.  |
   `-----------*/
 
-  mln::topo::is_simple_cell<bin_ima_t> is_simple_p;
-    /* FIXME: Cheat!  We'd like to iterate on cells of highest
-       dimension (2-cells) only, but we cannot constrain the domain of
-       the input using image_if (yet) like this
+  // ---------------- //
+  // Skeleton image.  //
+  // ---------------- //
 
-         breadth_first_thinning(surface | is_n_face<2>, nbh, is_simple_p);
+  // Predicate type: is a face a triangle (2-face)?
+  typedef mln::topo::is_n_face<mln_psite_(bin_ima_t), D> is_a_triangle_t;
+  is_a_triangle_t is_a_triangle;
+  // Surface image type, of which domain is restricted to triangles.
+  typedef mln::image_if<bin_ima_t, is_a_triangle_t> bin_triangle_only_ima_t;
+  // Surface image type, of which iteration (not domain) is restricted
+  // to triangles.
+  typedef mln::mutable_extension_ima<bin_triangle_only_ima_t, bin_ima_t>
+    bin_triangle_ima_t;
 
-       As a workaround, we use the constraint predicate of the
-       skeleton routine to restrict the iteration to 2-cells.  */
-  mln::topo::is_n_face<bin_ima_t::dim> constraint_p;
-  bin_ima_t skel =
-    mln::topo::skeleton::breadth_first_thinning(surface, nbh,
-						is_simple_p,
-						mln::topo::detach<D, G>,
-						constraint_p);
+  // ------------------------ //
+  // Simple point predicate.  //
+  // ------------------------ //
+
+  // Neighborhood type returning the set of (n-1)- and (n+1)-faces
+  // adjacent to a an n-face.
+  typedef mln::complex_lower_higher_neighborhood<D, G> adj_nbh_t;
+  // Neighborhood type returning the set of (n-1)-faces adjacent to a
+  // an n-face.
+  typedef mln::complex_lower_neighborhood<D, G> lower_adj_nbh_t;
+  // Neighborhood type returning the set of (n+1)-faces adjacent to a
+  // an n-face.
+  typedef mln::complex_higher_neighborhood<D, G> higher_adj_nbh_t;
+  // Predicate type: is a triangle (2-face) simple?
+  typedef mln::topo::is_simple_cell< bin_triangle_ima_t,
+                                     adj_nbh_t,
+                                     lower_adj_nbh_t,
+                                     higher_adj_nbh_t >
+    is_simple_triangle_t;
+  is_simple_triangle_t is_simple_triangle;
+
+  // ------------------------------- //
+  // Simple point detach procedure.  //
+  // ------------------------------- //
+
+  // Type of adjacency relationships between faces of immediately
+  // lower and higher dimensions.
+  adj_nbh_t adj_nbh;
+  // Functor detaching a cell.
+  mln::topo::detach_cell<bin_triangle_ima_t, adj_nbh_t> detach(adj_nbh);
+
+  mln_concrete_(bin_ima_t) skel;
+  mln::initialize(skel, surface);
+  mln::data::paste
+    (mln::topo::skeleton::breadth_first_thinning
+     (mln::mutable_extend((surface | is_a_triangle).rw(), surface),
+      nbh,
+      is_simple_triangle,
+      detach),
+     skel);
+
 
   /*---------.
   | Output.  |
   `---------*/
 
   /* FIXME: This does not work (yet).
-     Use workaround mln::io::off::save_bin_salt instead (bad!)  */
+     Use workaround mln::io::off::save_bin_alt instead (bad!)
+
+     Moreover, even if it worked, it would not have the same meaning
+     as mln::io::off::save_bin_alt.  Maybe the latter is useful, after
+     all.  But we need to factor it with the code of
+     mln::io::off::save, anyway.  */
 #if 0
   mln::io::off::save(skel | mln::pw::value(skel) == mln::pw::cst(true),
 		     output_filename);

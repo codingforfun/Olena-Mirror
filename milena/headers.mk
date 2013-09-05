@@ -282,6 +282,7 @@ mln/core/image/dmorph/hexa.hh \
 mln/core/image/dmorph/hexa_piter.hh \
 mln/core/image/dmorph/image2d_h.hh \
 mln/core/image/dmorph/image_if.hh \
+mln/core/image/dmorph/mutable_extension_ima.hh \
 mln/core/image/dmorph/p2p_image.hh \
 mln/core/image/dmorph/slice_image.hh \
 mln/core/image/dmorph/sub_image.hh \
@@ -376,6 +377,7 @@ mln/core/routine/extend.hh \
 mln/core/routine/init.hh \
 mln/core/routine/init.hxx \
 mln/core/routine/initialize.hh \
+mln/core/routine/mutable_extend.hh \
 mln/core/routine/ops.hh \
 mln/core/routine/primary.hh \
 mln/core/site_set/all.hh \
@@ -733,6 +735,9 @@ mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
+mln/io/vtk/all.hh \
+mln/io/vtk/load.hh \
+mln/io/vtk/save.hh \
 mln/labeling/all.hh \
 mln/labeling/background.hh \
 mln/labeling/blobs.hh \
@@ -1047,7 +1052,11 @@ mln/topo/center_only_iter.hh \
 mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
-mln/topo/detach.hh \
+mln/topo/connectivity_number_2d.hh \
+mln/topo/connectivity_number_3d.hh \
+mln/topo/detach_cell.hh \
+mln/topo/detach_pair.hh \
+mln/topo/detach_point.hh \
 mln/topo/essential.hh \
 mln/topo/face.hh \
 mln/topo/face_data.hh \
@@ -1058,14 +1067,21 @@ mln/topo/internal/complex_relative_iterator_sequence.hh \
 mln/topo/internal/complex_set_iterator_base.hh \
 mln/topo/is_facet.hh \
 mln/topo/is_n_face.hh \
+mln/topo/is_not_1d_isthmus.hh \
+mln/topo/is_not_end_point.hh \
 mln/topo/is_simple_2d.hh \
 mln/topo/is_simple_cell.hh \
+mln/topo/is_simple_pair.hh \
+mln/topo/is_simple_point2d.hh \
+mln/topo/is_simple_point3d.hh \
 mln/topo/n_face.hh \
 mln/topo/n_face_iter.hh \
 mln/topo/n_faces_set.hh \
+mln/topo/no_constraint.hh \
 mln/topo/skeleton/breadth_first_thinning.hh \
 mln/topo/skeleton/crest.hh \
 mln/topo/skeleton/is_simple_point.hh \
+mln/topo/skeleton/priority_driven_thinning.hh \
 mln/topo/static_n_face_iter.hh \
 mln/trait/accumulator/print.hh \
 mln/trait/accumulator/props.hh \
@@ -1138,6 +1154,7 @@ mln/transform/distance_and_influence_zone_geodesic.hh \
 mln/transform/distance_front.hh \
 mln/transform/distance_geodesic.hh \
 mln/transform/essential.hh \
+mln/transform/fft.hh \
 mln/transform/hough.hh \
 mln/transform/influence_zone_front.hh \
 mln/transform/influence_zone_geodesic.hh \
@@ -1237,6 +1254,7 @@ mln/value/int_s24.hh \
 mln/value/int_s32.hh \
 mln/value/int_s8.hh \
 mln/value/int_u.hh \
+mln/value/int_u.hxx \
 mln/value/int_u12.hh \
 mln/value/int_u16.hh \
 mln/value/int_u24.hh \

@@ -47,15 +47,11 @@ AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
 AM_SILENT_RULES([yes])
 
 # Package metadata.
+# Contrary to config.h, milena/mln/version.hh is meant to be installed.
+## FIXME: Consider generating milena/mln/version.hh with `make' instead
+## of `configure'.
 AC_CONFIG_FILES([milena/mln/version.hh])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
-                   [Package Full name.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
-                   [Bug report address.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_STRING], ["$PACKAGE_STRING"],
-                   [Full name and version.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
-                   [Package Version.])
+
 
 ## --------------------- ##
 ## C++ compiler set up.  ##
@@ -157,6 +153,38 @@ if test -z "$TESTS_CXXFLAGS_DEBUG"; then
   elif test "$ICPC" = yes; then
     TESTS_CXXFLAGS_DEBUG="-O0 -g $WARNINGS_CXXFLAGS -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
   fi
+fi
+
+
+## --------------- ##
+## Documentation.  ##
+## --------------- ##
+
+# Tools used to build the documentation.
+
+# rst2html can have many names, especially in the MacPorts, where
+# py-docutils binaries include their version numbers in their names.
+AC_ARG_VAR([RST2HTML], [reStructuredText-to-HTML translator])
+AC_CHECK_PROGS([RST2HTML],
+  m4_do([rst2html],
+        [ rst2html.py],
+        [ rst2html-3.3.py rst2html-3.2.py rst2html-3.1.py],
+        [ rst2html-2.7.py rst2html-2.6.py rst2html-2.5.py rst2html-2.4.py]))
+if test -z "$RST2HTML"; then
+  AC_MSG_WARN([rst2html not found, documentation rebuild will not be possible])
+fi
+
+AC_ARG_VAR([BIB2BIB], [BibTeX extracting tool])
+AC_CHECK_PROGS([BIB2BIB], [bib2bib])
+if test -z "$BIB2BIB"; then
+  AC_MSG_WARN([bib2bib not found, documentation rebuild will not be possible])
+fi
+
+AC_ARG_VAR([BIBTEX2HTML], [BibTeX-to-HTML translator])
+AC_CHECK_PROGS([BIBTEX2HTML], [bibtex2html])
+if test -z "$BIBTEX2HTML"; then
+  AC_MSG_WARN(m4_do([bibtex2html not found,],
+                    [ documentation rebuild will not be possible]))
 fi
 
 
@@ -283,6 +311,12 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
                    [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
                    [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
 
+# --------------- #
+# FFTW3 library.  #
+# --------------- #
+
+OLN_WITH_LIB([FFTW3], [fftw3.h], [fftw3], [fftw3], [FFTW3], [-lm])
+
 
 ## --------- ##
 ## Swilena.  ##
@@ -352,7 +386,7 @@ AC_CONFIG_FILES([
         scribo/src/primitive/extract/Makefile
         scribo/src/primitive/find/Makefile
         scribo/src/primitive/group/Makefile
-	scribo/src/primitive/remove/Makefile
+        scribo/src/primitive/remove/Makefile
       scribo/src/table/Makefile
       scribo/src/text/Makefile
       scribo/src/toolchain/Makefile
@@ -483,6 +517,7 @@ AC_CONFIG_FILES([
       milena/tests/io/ppm/Makefile
       milena/tests/io/ppms/Makefile
       milena/tests/io/tiff/Makefile
+      milena/tests/io/vtk/Makefile
     milena/tests/labeling/Makefile
     milena/tests/linear/Makefile
       milena/tests/linear/local/Makefile
@@ -545,13 +580,14 @@ AC_CONFIG_FILES([milena/apps/data.hh])
 
 AC_ARG_ENABLE([apps],
               [AS_HELP_STRING([--enable-apps],
-                              [enable application])])
+                              [enable applications])])
 AM_CONDITIONAL([ENABLE_APPS], [test "x$enable_apps" = "xyes"])
 
 # Ask for the creation of applications' Makefiles.
 AC_CONFIG_FILES([
   milena/apps/Makefile
     milena/apps/constrained-connectivity/Makefile
+    milena/apps/generic-skel/Makefile
     milena/apps/graph-morpho/Makefile
     milena/apps/mesh-segm-skel/Makefile
     milena/apps/morphers/Makefile
@@ -564,12 +600,20 @@ AC_CONFIG_FILES([
 # tests for the sake of speed.
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-pinv-curv-segm],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-pinv-curv-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-skel],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-skel])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-skel],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-skel])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-pinv-curv-skel],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-pinv-curv-skel])
 
 AC_CONFIG_FILES([milena/apps/constrained-connectivity/test-constrained-connectivity],
                 [chmod +x milena/apps/constrained-connectivity/test-constrained-connectivity])

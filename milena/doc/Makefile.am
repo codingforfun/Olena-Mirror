@@ -213,26 +213,27 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
-# Sed is used to generate Doxyfile from Doxyfile.in instead of
-# configure, because the former is way faster than the latter.
-#
-## FIXME: This is because, as in TC, we depend on $Id$ from the
-## ChangeLog.  Maybe we should depend from something less prone to
-## change.  See Bison's build system.
-edit = sed -e "s|@ID@|$$Id|"					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
-	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
-	   -e 's,@top_builddir\@,$(top_builddir),g'		\
-	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'			\
-	   -e 's,@boostcppflags\@,$(BOOST_CPPFLAGS),g'
+## FIXME: We used to depend on Subversion's $Id$ (extracted from
+## ChangeLog) before.  We should depend on something less prone to
+## change from now on.  The best is probably to use `git-version-gen'
+## from Gnulib (as Bison does).  For the moment, set ID to an empty
+## string.
+ID =
+# Use Make to generate Doxyfile instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed -e "s|@ID[@]|$(ID)|"					\
+	   -e 's,@PACKAGE_NAME[@],$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION[@],$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir[@],$(top_srcdir),g'		\
+	   -e 's,@abs_top_srcdir[@],$(abs_top_srcdir),g'	\
+	   -e 's,@top_builddir[@],$(top_builddir),g'		\
+	   -e 's,@srcdir[@],$(srcdir),g'			\
+	   -e 's,@builddir[@],$(builddir),g'			\
+	   -e 's,@boostcppflags[@],$(BOOST_CPPFLAGS),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@
+	$(edit) $< >$@
 MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -265,9 +266,10 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
-	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
-		`find $(USER_REFMAN).tmp -name '*.html'`
+	find $(USER_REFMAN).tmp -name '*.html' -exec			\
+	  perl -pi -e "s,@relcommondocpath[@],../../../../doc/,g;"	\
+	           -e "s,@userrefman[@],$(USER_REFMAN),g"		\
+	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -301,7 +303,7 @@ regen-devel-doc:
 DOXYFILE_DEVEL = Doxyfile_devel
 
 edit_devel = sed							      \
-  -e 's,OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp,OUTPUT_DIRECTORY       = @builddir@/devel-refman.tmp,' \
+  -e 's,OUTPUT_DIRECTORY       = \(.*\)/user-refman.tmp,OUTPUT_DIRECTORY       = \1/devel-refman.tmp,' \
   -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
   -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
   -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
@@ -312,14 +314,12 @@ edit_devel = sed							      \
   -e 's,HIDE_IN_BODY_DOCS      = YES,HIDE_IN_BODY_DOCS      = NO,'	      \
   -e 's,INTERNAL_DOCS          = NO,INTERNAL_DOCS          = YES,'	      \
   -e 's,GENERATE_TODOLIST      = NO,GENERATE_TODOLIST      = YES,'	      \
-  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \",'	 \
+  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \"Developer documentation ,' \
   -e 's,EXCLUDE_SYMBOLS	       = \*::internal\* \*_ mln::trait::\*,EXCLUDE_SYMBOLS	       =,'
 
 $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@.tmp
+	$(edit) $< >$@.tmp
 	$(edit_devel) $@.tmp >$@
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
@@ -352,8 +352,9 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
-		$(DEVEL_REFMAN).tmp/html/index.html
+	perl -pi \
+	     -e "s,@relcommondocpath[@],$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
+	  $(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
@@ -699,7 +700,6 @@ regen-split-outputs-mk:
 ## -------------- ##
 
 # Regen Make helpers.
-EXTRA_DIST += generate_dist_files.sh
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	$(MAKE) $(AM_MAKEFLAGS) regen-figures-mk
@@ -738,7 +738,6 @@ EXTRA_DIST +=					\
   img/small.png					\
   doxyfuns.sty					\
   milena.sty					\
-  tools/clearbanner.sh				\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh				\
@@ -780,8 +779,10 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	chmod -R u+w $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
-	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
-		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
+	find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html' -exec \
+	  perl -pi							      \
+	    -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
+	    {} \;
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			 \
 	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	 \
@@ -789,9 +790,10 @@ install-data-local:
 	done
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
-	chmod -R a+rX $(DESTDIR)$(htmldir)/milena/ || \
-	find $(DESTDIR)$(htmldir)/milena/ \( -type d -a -exec chmod a+rx {} \; \) \
-             -o -exec chmod a+r {} \;
+	chmod -R a+rX $(DESTDIR)$(htmldir)/milena/ ||	\
+	  find $(DESTDIR)$(htmldir)/milena		\
+	       \( -type d -a -exec chmod a+rx {} \; \)	\
+	       -o -exec chmod a+r {} \;
 
 uninstall-local:
 	for d in $(DATA_html_dirs_inst); do			\
@@ -806,5 +808,6 @@ uninstall-local:
 
 
 doc-teamcity:
-	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
-		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
+	find  $(srcdir)/$(USER_REFMAN) -name '*.html' -exec		     \
+	  perl -pi -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
+	    {} \;

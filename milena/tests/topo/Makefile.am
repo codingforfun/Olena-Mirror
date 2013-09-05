@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -19,8 +19,17 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS = skeleton
 
+## FIXME: Also add tests for is_simple_cell, detach_cell,
+## is_simple_point2d and detach_point.
+
 check_PROGRAMS =				\
-  complex
+  complex					\
+  connectivity_numbers_2d			\
+  detach_pair					\
+  is_facet					\
+  is_simple_pair
 
 
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES = detach_pair-out.vtk

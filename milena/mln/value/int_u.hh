@@ -29,7 +29,8 @@
 
 /// \file
 ///
-/// Define a generic class for unsigned integers.
+/// Declaration of mln::value::int_u, a generic class for unsigned
+/// integers.
 
 # include <mln/value/ops.hh>
 
@@ -38,7 +39,6 @@
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/trait/value_.hh>
-# include <mln/debug/format.hh>
 
 # include <mln/value/internal/make_generic_name.hh>
 
@@ -46,13 +46,17 @@
 namespace mln
 {
 
-  // Forward declarations.
-  namespace value {
-    namespace qt {
-      struct rgb32;
-    }
+  /// Forward declarations.
+  /// \{
+  namespace value
+  {
     template <unsigned n> struct int_u;
     template <unsigned n> struct rgb;
+
+    namespace qt
+    {
+      struct rgb32;
+    }
   }
 
   namespace literal
@@ -60,7 +64,8 @@ namespace mln
     struct zero_t;
     struct one_t;
   }
-  // End of forward declarations
+  /// \}
+
 
   namespace trait
   {
@@ -169,18 +174,22 @@ namespace mln
 
 
 
-    /// \brief Print an unsigned integer \p i into the output stream \p ostr.
+    /// \brief Print an unsigned integer \p i on the output stream \p ostr.
     ///
     /// \param[in,out] ostr An output stream.
     /// \param[in] i An unsigned integer.
     ///
     /// \return The modified output stream \p ostr.
-    ///
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i);
 
-
-    // FIXME: Doc!
+    /// \brief Get an unsigned integer \p i from the input stream \p istr.
+    ///
+    /// \param[in,out] istr An input stream.
+    /// \param[out] i An unsigned integer (destination).
+    ///
+    /// \return The modified input stream \p istr.
+    ///
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, int_u<n>& i);
 
@@ -217,8 +226,7 @@ namespace mln
       \ingroup fromto
     */
     template <unsigned n>
-    void
-    from_to_(const int_u<n>& from, double& to_);
+    void from_to_(const int_u<n>& from, double& to_);
 
     /*!
       \brief Conversion: Conversion: int_u -> rgb.
@@ -236,163 +244,17 @@ namespace mln
 
   } // end of namespace mln::value
 
-# ifndef MLN_INCLUDE_ONLY
-
-  namespace value
-  {
-
-    template <unsigned n>
-    inline
-    int_u<n>::int_u()
-    {
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>::int_u(int i)
-    {
-      mln_precondition(i >= 0);
-      mln_precondition(unsigned(i) <= mln_max(enc_));
-      this->v_ = static_cast<enc_>(i);
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>::int_u(const mln::literal::zero_t&)
-    {
-      this->v_ = 0;
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>&
-    int_u<n>::operator=(const mln::literal::zero_t&)
-    {
-      this->v_ = 0;
-      return *this;
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>::int_u(const mln::literal::one_t&)
-    {
-      this->v_ = 1;
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>&
-    int_u<n>::operator=(const mln::literal::one_t&)
-    {
-      this->v_ = 1;
-      return *this;
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>::operator unsigned() const
-    {
-      return this->v_;
-    }
-
-    template <unsigned n>
-    inline
-    int
-    int_u<n>::operator-() const
-    {
-      return - int(this->v_);
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>&
-    int_u<n>::operator=(int i)
-    {
-      mln_precondition(i >= 0);
-      mln_precondition(unsigned(i) <= mln_max(enc_));
-      this->v_ = static_cast<enc_>(i);
-      return *this;
-    }
-
-    template <unsigned n>
-    inline
-    int_u<n>
-    int_u<n>::next() const
-    {
-      return this->v_ + 1;
-    }
-
-    template <unsigned n>
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)
-    {
-      // FIXME: This code could be factored for almost every Value<*>...
-      return ostr << debug::format(i.to_equiv()); // FIXME: is to_equiv OK?
-    }
-
-    template <unsigned n>
-    inline
-    std::istream& operator>>(std::istream& istr, int_u<n>& i)
-    {
-      return istr >> i.handle_();
-    }
-
-
-    // Conversions
-
-    template <unsigned n>
-    inline
-    void
-    from_to_(const int_u<n>& from, unsigned& to_)
-    {
-      to_ = from;
-    }
-
-    template <unsigned n>
-    inline
-    void
-    from_to_(const int_u<n>& from, bool& to_)
-    {
-      to_ = (from != 0u);
-    }
-
-    template <unsigned n>
-    inline
-    void
-    from_to_(const int_u<n>& from, float& to_)
-    {
-      to_ = static_cast<float>(from);
-    }
-
-    template <unsigned n>
-    inline
-    void
-    from_to_(const int_u<n>& from, double& to_)
-    {
-      to_ = static_cast<double>(from);
-    }
-
-    template <unsigned m>
-    void
-    from_to_(const int_u<m>& from, qt::rgb32& to)
-    {
-      mlc_bool(m <= 8)::check();
-      to = qt::rgb32(from, from, from);
-    }
-
-    template <unsigned m>
-    void
-    from_to_(const int_u<m>& from, rgb<m>& to)
-    {
-      to = rgb<m>(from, from, from);
-    }
-
-  } // end of namespace mln::value
-
-# endif // ! MLN_INCLUDE_ONLY
-
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INT_U_HH
+// Required by mln::values::int_u's from_to_ routines.
+# include <mln/value/rgb.hh>
+# include <mln/value/qt/rgb32.hh>
 
+
+# ifndef MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hxx>
+# endif // ! MLN_INCLUDE_ONLY
+
+
+#endif // ! MLN_VALUE_INT_U_HH

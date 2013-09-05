@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +39,6 @@
 # include <mln/math/pi.hh>
 # include <mln/geom/rotate.hh>
 # include <mln/value/int_u8.hh>
-
-# define PI 3.1415926535897932384
 
 namespace scribo
 {
@@ -380,7 +378,7 @@ namespace scribo
 	      gx += -opt::at(gray, i - 1, j + 1) - 2 * opt::at(gray, i, j + 1) -
 		opt::at(gray, i + 1, j + 1);
 
-	      double tanv = (PI / 2.0 - atan(gy / gx)) * 180.0 / PI;
+	      double tanv = (math::pi / 2.0 - atan(gy / gx)) * 180.0 / math::pi;
 
 	      if (tanv <= 25.0 || tanv >= 155.0)
 	      {
@@ -416,7 +414,6 @@ namespace scribo
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
 
       double angle = internal::perform_deskew(input_gl);
-//      std::cout << angle << std::endl;
 
       mln_concrete(I) output = input_gl;
 

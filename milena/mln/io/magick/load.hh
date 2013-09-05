@@ -72,7 +72,8 @@ namespace mln
 	  \ingroup iomagick
       */
       template <typename I>
-      void load(Image<I>& ima, const std::string& filename);
+      void
+      load(Image<I>& ima, const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -224,7 +225,8 @@ namespace mln
 
       template <typename I>
       inline
-      void load(Image<I>& ima_, const std::string& filename)
+      void
+      load(Image<I>& ima_, const std::string& filename)
       {
 	mln_trace("mln::io::magick::load");
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -71,7 +71,6 @@ endif HAVE_TESSERACT
 
 
     utilexec_PROGRAMS	    	 += text_in_picture_dual
-    text_in_picture_dual_SOURCES  = text_in_picture_dual.cc
     text_in_picture_dual_CPPFLAGS = $(AM_CPPFLAGS) \
 				    $(MAGICKXX_CPPFLAGS)
     text_in_picture_dual_LDFLAGS  = $(AM_LDFLAGS) \
@@ -173,9 +172,3 @@ CLEANFILES = $(dist_bin_SCRIPTS)
 
 
 EXTRA_DIST = scribo-cli.in
-
-
-EXTRA_DIST += 		\
-  afp/components.hh 	\
-  afp/link.hh 		\
-  afp/regroup.hh

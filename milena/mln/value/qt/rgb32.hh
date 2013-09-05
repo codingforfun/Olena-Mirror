@@ -27,19 +27,35 @@
 #ifndef MLN_VALUE_QT_RGB32_HH
 # define MLN_VALUE_QT_RGB32_HH
 
-# include <cstring>
+/// \file
+///
+/// Definition of mln::value::qt::rgb32, a Qt-friendly 32-bit RGB
+/// color value class.
 
 # include <mln/value/ops.hh>
 
 # include <mln/value/concept/vectorial.hh>
-# include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
-
-# include <mln/value/rgb8.hh>
 
 # include <mln/literal/zero.hh>
 # include <mln/literal/black.hh>
 # include <mln/literal/white.hh>
+# include <mln/literal/grays.hh>
+# include <mln/literal/colors.hh>
+
+/* Because of mutual dependencies between the implementations of
+   mln::value::int_u and mln::value::qt::rgb32, we have to ensure that
+   only the interfaces of the required classes are included here.
+   Implementations are included later, at the bottom of this file.  */
+
+# ifdef MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hh>
+# else
+#  define MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hh>
+#  undef MLN_INCLUDE_ONLY
+# endif
+
 
 namespace mln
 {
@@ -458,27 +474,27 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::light_gray_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.75);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.75);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) * 3 / 4;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) * 3 / 4;
+	this->v_[2] = unsigned(mln_max(int_u<8>)) * 3 / 4;
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::medium_gray_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 2;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 2;
+	this->v_[2] = unsigned(mln_max(int_u<8>)) / 2;
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::dark_gray_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.25);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.25);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 4;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 4;
+	this->v_[2] = unsigned(mln_max(int_u<8>)) / 4;
       }
 
 
@@ -512,9 +528,9 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::brown_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 4;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 2;
+	this->v_[2] = unsigned(mln_max(int_u<8>)) * 3 / 4;
       }
 
 
@@ -523,7 +539,7 @@ namespace mln
       {
 	this->v_[0] = 0;
 	this->v_[1] = mln_max(int_u<8>);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[2] = unsigned(mln_max(int_u<8>)) * 3 / 4;
       }
 
 
@@ -531,7 +547,7 @@ namespace mln
       rgb32::rgb32(const mln::literal::orange_t&)
       {
 	this->v_[0] = 0;
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 2;
 	this->v_[2] = mln_max(int_u<8>);
       }
 
@@ -539,8 +555,8 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::pink_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.75);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) * 3 / 4;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) * 3 / 4;
 	this->v_[2] = mln_max(int_u<8>);
       }
 
@@ -548,17 +564,17 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::purple_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 4;
 	this->v_[1] = 0;
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[2] = unsigned(mln_max(int_u<8>)) * 3 / 4;
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::teal_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 2;
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 2;
 	this->v_[2] = 0;
       }
 
@@ -566,9 +582,9 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::violet_t&)
       {
-	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[0] = unsigned(mln_max(int_u<8>)) / 2;
 	this->v_[1] = 0;
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[2] = unsigned(mln_max(int_u<8>)) / 2;
       }
 
 
@@ -603,8 +619,8 @@ namespace mln
       rgb32::rgb32(const mln::literal::olive_t&)
       {
 	this->v_[0] = 0;
-	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
-	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[1] = unsigned(mln_max(int_u<8>)) / 2;
+	this->v_[2] = unsigned(mln_max(int_u<8>)) / 2;
       }
 
 
@@ -766,6 +782,12 @@ namespace mln
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
+
+
+// Delayed inclusion of mln::value::int_u_'s implementation.
+# ifndef MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hxx>
 # endif // ! MLN_INCLUDE_ONLY
 
 

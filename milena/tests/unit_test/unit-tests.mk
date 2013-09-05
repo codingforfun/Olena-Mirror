@@ -24,6 +24,15 @@ mln_io_fits_load_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
 endif HAVE_CFITSIO
 
 # Starting a conditional unit test list.
+if HAVE_FFTW3
+check_PROGRAMS +=  \
+mln_transform_fft
+
+mln_transform_fft_CPPFLAGS= ${FFTW3_CPPFLAGS} -DHAVE_FFTW3 ${AM_CPPFLAGS}
+mln_transform_fft_LDFLAGS= ${FFTW3_LDFLAGS}  ${AM_LDFLAGS}
+endif HAVE_FFTW3
+
+# Starting a conditional unit test list.
 if HAVE_GDCM
 check_PROGRAMS +=  \
 mln_io_dicom_all \
@@ -188,6 +197,8 @@ mln_binarization_binarization \
 mln_binarization_essential \
 mln_binarization_includes \
 mln_binarization_threshold \
+mln_binarization_tmms \
+mln_binarization_tmms_hysteresis \
 mln_border_adjust \
 mln_border_all \
 mln_border_duplicate \
@@ -349,6 +360,7 @@ mln_core_image_dmorph_hexa \
 mln_core_image_dmorph_hexa_piter \
 mln_core_image_dmorph_image2d_h \
 mln_core_image_dmorph_image_if \
+mln_core_image_dmorph_mutable_extension_ima \
 mln_core_image_dmorph_p2p_image \
 mln_core_image_dmorph_slice_image \
 mln_core_image_dmorph_sub_image \
@@ -368,6 +380,7 @@ mln_core_image_graph_window_if_piter \
 mln_core_image_graph_window_piter \
 mln_core_image_image1d \
 mln_core_image_image2d \
+mln_core_image_image2d_ffmpeg \
 mln_core_image_image3d \
 mln_core_image_imorph_all \
 mln_core_image_imorph_decorated_image \
@@ -442,6 +455,7 @@ mln_core_routine_exact \
 mln_core_routine_extend \
 mln_core_routine_init \
 mln_core_routine_initialize \
+mln_core_routine_mutable_extend \
 mln_core_routine_ops \
 mln_core_routine_primary \
 mln_core_site_set_all \
@@ -504,6 +518,7 @@ mln_data_fast_median \
 mln_data_fill \
 mln_data_fill_with_image \
 mln_data_fill_with_value \
+mln_data_fill_without_localization \
 mln_data_median \
 mln_data_memcpy_ \
 mln_data_memset_ \
@@ -518,6 +533,7 @@ mln_data_sort_offsets \
 mln_data_sort_psites \
 mln_data_split \
 mln_data_stretch \
+mln_data_stretch_inplace \
 mln_data_to_enc \
 mln_data_transform \
 mln_data_transform_inplace \
@@ -738,6 +754,7 @@ mln_io_fld_load_header \
 mln_io_fld_max_components \
 mln_io_fld_save \
 mln_io_fld_write_header \
+mln_io_magick_get_header \
 mln_io_off_all \
 mln_io_off_load \
 mln_io_off_save \
@@ -777,6 +794,9 @@ mln_io_raw_load \
 mln_io_raw_save \
 mln_io_txt_all \
 mln_io_txt_save \
+mln_io_vtk_all \
+mln_io_vtk_load \
+mln_io_vtk_save \
 mln_labeling_all \
 mln_labeling_background \
 mln_labeling_blobs \
@@ -797,6 +817,7 @@ mln_labeling_relabel \
 mln_labeling_superpose \
 mln_labeling_value \
 mln_labeling_value_and_compute \
+mln_labeling_values \
 mln_labeling_wrap \
 mln_linear_all \
 mln_linear_ch_convolve \
@@ -1088,7 +1109,11 @@ mln_topo_center_only_iter \
 mln_topo_centered_iter_adapter \
 mln_topo_complex \
 mln_topo_complex_iterators \
-mln_topo_detach \
+mln_topo_connectivity_number_2d \
+mln_topo_connectivity_number_3d \
+mln_topo_detach_cell \
+mln_topo_detach_pair \
+mln_topo_detach_point \
 mln_topo_essential \
 mln_topo_face \
 mln_topo_face_data \
@@ -1099,14 +1124,21 @@ mln_topo_internal_complex_relative_iterator_sequence \
 mln_topo_internal_complex_set_iterator_base \
 mln_topo_is_facet \
 mln_topo_is_n_face \
+mln_topo_is_not_1d_isthmus \
+mln_topo_is_not_end_point \
 mln_topo_is_simple_2d \
 mln_topo_is_simple_cell \
+mln_topo_is_simple_pair \
+mln_topo_is_simple_point2d \
+mln_topo_is_simple_point3d \
 mln_topo_n_face \
 mln_topo_n_face_iter \
 mln_topo_n_faces_set \
+mln_topo_no_constraint \
 mln_topo_skeleton_breadth_first_thinning \
 mln_topo_skeleton_crest \
 mln_topo_skeleton_is_simple_point \
+mln_topo_skeleton_priority_driven_thinning \
 mln_topo_static_n_face_iter \
 mln_trait_accumulator_print \
 mln_trait_accumulator_props \
@@ -1189,6 +1221,7 @@ mln_transform_internal_distance_functor \
 mln_transform_internal_influence_zone_functor \
 mln_upscaling_art_scale2x \
 mln_upscaling_art_scale3x \
+mln_upscaling_upscaling_bicubic_2x \
 mln_util_adjacency_matrix \
 mln_util_all \
 mln_util_array \

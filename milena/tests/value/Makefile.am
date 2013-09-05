@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
+# Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -33,13 +33,17 @@ check_PROGRAMS =				\
   label						\
   proxy						\
   rgb8						\
-  scalar					\
   set						\
   sign
+
+# FIXME: Disabled tests.
+#  int_u32					\
 #  float01				
 #  float01_bis			
 #  float01_f		
 #  graylevel_f					
+#
+## XFAIL_TESTS = int_u32
 
 
 # FIXME: Enable when make check_full works.

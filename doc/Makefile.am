@@ -86,25 +86,26 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 
 EXTRA_DIST += $(REFMAN_deps)
 
-# Sed is used to generate Doxyfile from Doxyfile.in instead of
-# configure, because the former is way faster than the latter.
-#
-## FIXME: This is because, as in TC, we depend on $Id$ from the
-## ChangeLog.  Maybe we should depend from something less prone to
-## change.  See Bison's build system.
-edit = sed -e "s|@ID@|$$Id|"					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
-	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
-	   -e 's,@top_builddir\@,$(top_builddir),g'		\
-	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
+## FIXME: We used to depend on Subversion's $Id$ (extracted from
+## ChangeLog) before.  We should depend on something less prone to
+## change from now on.  The best is probably to use `git-version-gen'
+## from Gnulib (as Bison does).  For the moment, set ID to an empty
+## string.
+ID =
+# Use Make to generate Doxyfile instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed -e "s|@ID[@]|$(ID)|"					\
+	   -e 's,@PACKAGE_NAME[@],$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION[@],$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir[@],$(top_srcdir),g'		\
+	   -e 's,@abs_top_srcdir[@],$(abs_top_srcdir),g'	\
+	   -e 's,@top_builddir[@],$(top_builddir),g'		\
+	   -e 's,@srcdir[@],$(srcdir),g'			\
+	   -e 's,@builddir[@],$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@
+	$(edit) $< >$@
 MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -121,9 +122,10 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	$(DOXYGEN) $(DOXYFILE_USER)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,../../,g" \
-	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
-		`find  $(USER_REFMAN).tmp/html -name '*.html'`
+	find $(USER_REFMAN).tmp/html -name '*.html' -exec	\
+	  perl -pi -e "s,@relcommondocpath[@],../../,g;"	\
+	           -e "s,@userrefman[@],$(USER_REFMAN),g"	\
+	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -148,9 +150,12 @@ EXTRA_DIST += $(USER_REFMAN)
 ## -------------- ##
 
 contributors.html: $(top_srcdir)/AUTHORS
-	rst2html --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet \
-		 --input-encoding=latin1 --output-encoding=latin1 \
-		 $(top_srcdir)/AUTHORS > contributors.html
+	@test -n "$(RST2HTML)"						\
+	  || { echo "error: rst2html not found during configure" >&2;	\
+	       exit 1; }
+	$(RST2HTML) --input-encoding=latin1 --output-encoding=latin1	\
+	  --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet	\
+	  $< >$@
 
 
 ## -------------- ##
@@ -158,15 +163,25 @@ contributors.html: $(top_srcdir)/AUTHORS
 ## -------------- ##
 
 # Warning: also generates lrde_olena.cite
-lrde_olena.bib:
-	bib2bib -s plain -oc lrde_olena.cite -ob lrde_olena.bib -c \
-		'project = "Image" or project = "Olena"' \
-		-s year -r $(srcdir)/lrde.bib
+lrde_olena.bib: $(srcdir)/lrde.bib
+	@test -n "$(BIB2BIB)"						\
+	  || { echo "error: bib2bib not found during configure" >&2;	\
+	       exit 1; }
+	$(BIB2BIB) -s plain -oc lrde_olena.cite -ob $@	\
+	  -c 'project = "Image" or project = "Olena"'	\
+	  -s year -r $<
 
 # Warning: also generates lrde_olena_bib.html
 lrde_olena.html: lrde_olena.bib
-	bibtex2html -s plain -nokeywords -citefile lrde_olena.cite \
-		-noabstract -nofooter -labelname -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
+	@test -n "$(BIBTEX2HTML)"					 \
+	  || { echo "error: bibtex2html not found during configure" >&2; \
+	       exit 1; }
+# Use the current directory for temporary files, as TeXlive (2012)
+# prevents bibtex2html from running bibtex in a temporary directory on
+# Mac OS X (see https://www.lri.fr/~filliatr/bibtex2html/).
+	env TMPDIR=. $(BIBTEX2HTML) -s plain -nokeywords		\
+	  -citefile lrde_olena.cite -noabstract -nofooter -labelname	\
+	  -nodoc -linebreak -nf urllrde PDF $<
 
 
 EXTRA_DIST += 				\
@@ -212,10 +227,11 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Fix documentation paths
 	chmod -R u+w $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	sed -i -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena/$(USER_REFMAN),g" \
-	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo/$(USER_REFMAN),g" \
-	       -e "s,../../$(USER_REFMAN)/html,../$(USER_REFMAN),g" \
-		`find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html'`
+	find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html' -exec \
+	  perl -pi -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena/$(USER_REFMAN),g;" \
+	           -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo/$(USER_REFMAN),g;" \
+	           -e "s,../../$(USER_REFMAN)/html,../$(USER_REFMAN),g" \
+	    {} \;
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
 	chmod -R a+rX $(DESTDIR)$(htmldir) || \
@@ -230,7 +246,9 @@ uninstall-local:
 
 
 doc-teamcity:
-	sed -i -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g" \
-	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc,g" \
-	       -e "s,../../$(USER_REFMAN)/html,../olena.doc,g" \
-		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
+	find  $(srcdir)/$(USER_REFMAN) -name '*.html' -exec		       \
+	  perl -pi							       \
+	       -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g;" \
+	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc,g;" \
+	       -e "s,../../$(USER_REFMAN)/html,../olena.doc,g"		       \
+	    {} \;

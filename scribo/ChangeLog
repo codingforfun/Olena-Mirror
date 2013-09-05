@@ -1,3 +1,219 @@
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify even more Scribo Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
+
+	* src/Makefile.am,
+	* src/binarization/Makefile.am:
+	Here.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix inclusion paths in Scribo.
+
+	* demo/viewer/Makefile.am: Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use mln::math::pi instead of a macro-based definition in Scribo.
+
+	* scribo/preprocessing/deskew.hh
+	(scribo::preprocessing::internal::perform_deskew): Here.
+	(PI): Remove macro.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not declare main()'s arguments if they are not used.
+
+	* tests/preprocessing/crop.cc,
+	* tests/preprocessing/crop_without_localization.cc,
+	* tests/preprocessing/deskew.cc,
+	* tests/preprocessing/rotate_90.cc:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove dead code in Scribo.
+
+	* scribo/afp/components.hh,
+	* scribo/estim/components_features.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/io/xml/load.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/non_text.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/text/clean_inplace.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh,
+	* scribo/text/merging.hh:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Display Scribo errors on std::cerr, not std::cout.
+
+	* scribo/scribo/text/merging.hh,
+	* scribo/scribo/text/recognition.hh:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove Scribo debug code making side effects on streams.
+
+	* scribo/core/line_set.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/paragraph_set.hh,
+	* scribo/preprocessing/deskew_crop.hh,
+	* scribo/primitive/extract/non_text_kmean.hh:
+	Here.
+
+2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the generation of Doxyfiles in Scribo.
+
+	* doc/Makefile.am (edit)
+	($(srcdir)/user-refman.stamp)
+	($(srcdir)/devel-refman.stamp):
+	Use `[@]' instead of `\@' for portability reasons.
+	(ID): New (empty).
+	(edit_devel): Prevent configure from expanding @builddir@.
+	Christen the product as ``Developer documentation''.
+	($(DOXYFILE_USER), $(DOXYFILE_DEVEL)): Do not depend on $Id$ from
+	ChangeLog.
+	* doc/Doxyfile.in (PROJECT_NUMBER): Reintegrate @ID@ to the
+	project number, even if it is not yet set.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Slightly improve Scribo's tests/primitive/extract/alignments.cc.
+
+	* tests/primitive/extract/alignments.cc (main): Pass an actual
+	literal float as second argument to
+	scribo::primitive::extract::alignments.
+	Add a Doxygen header.
+	Cosmetic changes.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	* scribo/primitive/extract/alignments.hh: Fix Doxygen comments.
+
+2013-07-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution of Scribo.
+
+	* src/Makefile.am (EXTRA_DIST): Remove afp/components.hh,
+	afp/link.hh and afp/regroup.hh.
+
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix resizing code in toolchain::internal::text_in_picture_functor.
+
+	* scribo/toolchain/internal/text_in_picture_functor.hh
+	(text_in_picture_functor<I>::get_factor): New precondition: ensure
+	argument `max_dim_size', used as denominator, is non null.
+	(text_in_picture_functor<I>::operator()): Do not resize the image
+	if `max_dim_size' is null.
+	Some cosmetic changes.
+
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing `mln' namespace qualifiers.
+
+	* scribo/filter/object_groups_with_holes.hh
+	(scribo::filter::impl::generic::object_groups_with_holes)
+	* scribo/primitive/regroup/from_single_left_link.hh
+	(regroup::from_single_left_link(const object_groups<L>&, unsigned)):
+	Here.
+
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move to-be-installed header files from src/ to scribo/.
+
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh:
+	Move files...
+	* scribo/afp/components.hh,
+	* scribo/afp/link.hh,
+	* scribo/afp/regroup.hh:
+	...here, as they are included by other files located under
+	scribo/, and therefore should be installed as well.
+	* scribo/toolchain/internal/text_in_picture_functor.hh,
+	* src/text_recognition_in_picture.cc:
+	Adjust.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
+2013-07-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Lift scribo::document's dependency on Magick++.
+
+	* scribo/core/document.hh [SCRIBO_NMAGICK]: Disable everything
+	related to mln::io::magick.
+
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Aesthetic changes.
+
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Restrict workaround-related locale changes to LC_NUMERIC.
+
+	* scribo/text/recognition.hh: Here.
+
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	More locale-related Tesseract workarounds.
+
+	* scribo/text/recognition.hh: Here.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide default arguments in function declarations only.
+
+	* scribo/core/line_info.hh (scribo::line_info<L>::update_text)
+	* scribo/text/recognition.hh (scribo::text::recognition):
+	Here.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable unused arguments.
+
+	* scribo/binarization/internal/local_threshold_core.hh
+	(scribo::binarization::internal::impl::generic::local_threshold_core)
+	* scribo/core/internal/doc_serializer.hh
+	(scribo::doc_serializer<E>::visit)
+	* scribo/filter/internal/component_aligned.hh
+	(scribo::filter::internal::component_aligned)
+	* scribo/filter/internal/compute.hh
+	(scribo::filter::internal::compute)
+	* scribo/primitive/link/internal/link_functor_base.hh
+	(internal::link_functor_base<L,E>::start_processing_object_)
+	* scribo/util/init_integral_image.hh
+	(scribo::util::impl::generic::init_integral_image):
+	Here.
+
+2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Shell-related portability fixes in Scribo's Makefiles.
+
+	* doc/Makefile.am: Rewrite patterns ``perl X `find Y''' as
+	``find Y -exec perl X {} \;'' to avoid long `perl' command lines and
+	please the shell.
+	Wrap some long lines.
+
+2013-06-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use `perl -pi' instead of `sed -i' in Scribo.
+
+	* doc/Makefile.am,
+	* doc/tools/todoxygen.sh:
+	Here, as `sed -i' (with no backup file) behaves differently on
+	GNU/Linux and Mac OS X.  For more information, see:
+	http://stackoverflow.com/questions/5694228/.
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.
@@ -9486,10 +9702,6 @@
 
 	* tests/unit_test/build_unit_test.sh: new.
 
-
-$Rev$
-$Id$
-$Date$
 
 Local Variables:
 ispell-local-dictionary: "american"

@@ -175,9 +175,9 @@ namespace mln
   };
 
 
-  /*----------------.
-  | Value -> bool.  |
-  `----------------*/
+  /*-------------------.
+  | Value -> Boolean.  |
+  `-------------------*/
 
   /// \cond INTERNAL_API
   template <>
@@ -267,9 +267,9 @@ namespace mln
   };
 
 
-  /*--------------------------.
-  | (Value, Value) -> Boolean.|
-  `--------------------------*/
+  /*----------------------------.
+  | (Value, Value) -> Boolean.  |
+  `----------------------------*/
 
   /// \cond INTERNAL_API
   template <>

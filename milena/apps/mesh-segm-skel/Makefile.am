@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -18,17 +18,54 @@
 include $(top_srcdir)/milena/common.mk
 
 # Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
+AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-bin_PROGRAMS =
-TESTS = 
+noinst_PROGRAMS =
+generated_checked_tests =
+generated_tests = $(generated_checked_tests)
+EXTRA_DIST =
+TESTS =
 MOSTLYCLEANFILES =
+
+# Use Make to generate tests instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'
+
+$(generated_tests): Makefile
+	rm -f $@ $@.tmp
+	srcdir=''; \
+	  test -f ./$@.in || srcdir=$(srcdir)/; \
+	  $(edit) $${srcdir}$@.in >$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
 
 # FIXME: Have program names embed the type of structure used (either
 # graph or complex).
+
+## --------------------------- ##
+## Graph-based applications.   ##
+## --------------------------- ##
+
+# FIXME: To be written (and factored, of course):
+#
+#  mesh-graph-{max,pinv}-curv
+#
+#  mesh-graph-segm
+#  mesh-graph-{max,pinv}-curv-segm
+#
+#  mesh-graph-skel
+#  mesh-graph-{max,pinv}-curv-skel
+#
+#  ...
 
 ## ---------------------------- ##
 ## Complex-based applications.  ##
@@ -36,27 +73,44 @@ MOSTLYCLEANFILES =
 
 # A Milena re-implementation of some features from Trimesh.  This code
 # is completely independent from the Trimesh library.
+# FIXME: Integrate this header into Milena.
 noinst_HEADERS = misc.hh
 
-## Segmentation.
-## ------------
+## Curvature computation.
+## ----------------------
 
 # A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
-bin_PROGRAMS += mesh-complex-max-curv
+noinst_PROGRAMS += mesh-complex-max-curv
 TESTS += test-mesh-complex-max-curv
 MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
-# FIXME: Write a program showing the local minima (and maxima) of
-# scalar-valued complex-based mesh (to see the curvature extrema).
-# ...
+# FIXME: Implement (and exercise) mesh-complex-pinv-curv.
 
-# Segmentation program working on precomputed meshes with curvatures data.
-bin_PROGRAMS += mesh-complex-segm
+# A program computing the max curvature at each (2-)face of the
+# surface of a triangle mesh and displaying its local minima
+# (in blue) and maxima (in red).
+noinst_PROGRAMS += mesh-complex-max-curv-extrema
+TESTS += test-mesh-complex-max-curv-extrema
+MOSTLYCLEANFILES +=				\
+  socket-complex-max-curv-extrema.off		\
+  teapot-complex-max-curv-extrema.off		\
+  bunny-holefilled-complex-max-curv-extrema.off
+
+# FIXME: Implement (and exercise) mesh-complex-pinv-curv-extrema.
+
+## Segmentation.
+## -------------
+
+# Segmentation program working on precomputed meshes with curvature
+# data.  Less accurate, since curvature is stored on triangles
+# (polygons), whereas the segmentation is performed on edges.
+noinst_PROGRAMS += mesh-complex-segm
 TESTS += test-mesh-complex-segm
 MOSTLYCLEANFILES +=				\
   socket-max-curv-segm.off			\
-  teapot-max-curv-segm.off
+  teapot-max-curv-segm.off			\
+  bunny-holefilled-pinv-curv-segm.off
 
 # Program computing the max curvature from a mesh, then segmenting it.
 # The advantage of this program over `mesh-complex-segm' is that the
@@ -64,24 +118,113 @@ MOSTLYCLEANFILES +=				\
 # vertices, then average values are computed on edges (in the case of
 # `mesh-complex-segm', data are read from polygons, which implies an
 # extra averaging step).
-bin_PROGRAMS += mesh-complex-max-curv-segm
+noinst_PROGRAMS += mesh-complex-max-curv-segm
 TESTS += test-mesh-complex-max-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-segm.off		\
-  teapot-complex-max-curv-segm.off
+  teapot-complex-max-curv-segm.off		\
+  bunny-holefilled-complex-max-curv-segm.off
 
-# FIXME: Implement `mesh-complex-pinv-curv-segm' (factor as much
-# code as possible with `mesh-complex-max-curv-segm'.
-# ...
+# Likewise, but using pseudo-inverse curvature.
+noinst_PROGRAMS += mesh-complex-pinv-curv-segm
+TESTS += test-mesh-complex-pinv-curv-segm
+MOSTLYCLEANFILES +=				\
+  socket-complex-pinv-curv-segm.off		\
+  teapot-complex-pinv-curv-segm.off		\
+  bunny-holefilled-complex-pinv-curv-segm.off
 
-## Skeletonization.
-## ----------------
+## Collapses.
+## ----------
+
+# Performing a 2-collapse on a pseudo-manifold.
+noinst_PROGRAMS += mesh-complex-2-collapse
+
+generated_checked_tests += test-mesh-complex-2-collapse
+EXTRA_DIST += test-mesh-complex-2-collapse.in
+test-mesh-complex-2-collapse: $(srcdir)/test-mesh-complex-2-collapse.in
+MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
+
+# Program computing the max curvature from a mesh, then performing a
+# 2-collapse on it.
+noinst_PROGRAMS += mesh-complex-max-curv-2-collapse
+
+generated_checked_tests += test-mesh-complex-max-curv-2-collapse
+EXTRA_DIST += test-mesh-complex-max-curv-2-collapse.in
+test-mesh-complex-max-curv-2-collapse: $(srcdir)/test-mesh-complex-max-curv-2-collapse.in
+MOSTLYCLEANFILES +=				\
+  teapot-max-curv-2-collapse.vtk		\
+  bunny-holefilled-max-curv-2-collapse.vtk
+
+# Program computing the max curvature from a mesh, then performing a
+# 1-collapse on it.
+noinst_PROGRAMS += mesh-complex-max-curv-1-collapse
+
+generated_checked_tests += test-mesh-complex-max-curv-1-collapse
+EXTRA_DIST += test-mesh-complex-max-curv-1-collapse.in
+test-mesh-complex-max-curv-1-collapse: $(srcdir)/test-mesh-complex-max-curv-1-collapse.in
+MOSTLYCLEANFILES +=				\
+  teapot-max-curv-1-collapse.vtk		\
+  bunny-holefilled-max-curv-1-collapse.vtk
+
+## More complex skeletonization chains.
+## ------------------------------------
 
 # Skeletonization program working on precomputed meshes with curvatures data.
-bin_PROGRAMS += mesh-complex-skel
+noinst_PROGRAMS += mesh-complex-skel
 mesh_complex_skel_SOURCES = mesh-complex-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-skel
 MOSTLYCLEANFILES +=				\
   socket-max-curv-skel.off			\
   teapot-max-curv-skel.off			\
-  three-triangles-skel.off
+  three-triangles-skel.off			\
+  bunny-holefilled-pinv-curv-skel.off
+
+noinst_PROGRAMS += mesh-complex-max-curv-skel
+mesh_complex_max_curv_skel_SOURCES =		\
+  mesh-complex-max-curv-skel.cc save_bin_alt.hh
+TESTS += test-mesh-complex-max-curv-skel
+MOSTLYCLEANFILES +=				\
+  socket-complex-max-curv-skel.off		\
+  teapot-complex-max-curv-skel.off		\
+  bunny-holefilled-complex-max-curv-skel.off
+
+noinst_PROGRAMS += mesh-complex-pinv-curv-skel
+mesh_complex_pinv_curv_skel_SOURCES =		\
+  mesh-complex-pinv-curv-skel.cc save_bin_alt.hh
+TESTS += test-mesh-complex-pinv-curv-skel
+MOSTLYCLEANFILES +=				\
+  socket-complex-pinv-curv-skel.off		\
+  teapot-complex-pinv-curv-skel.off		\
+  bunny-holefilled-complex-pinv-curv-skel.off
+
+## ------------------------- ##
+## Conversion applications.  ##
+## ------------------------- ##
+
+# Convert a binary OFF file (e.g. no value attached to faces) into a
+# VTK file.
+noinst_PROGRAMS += off-to-vtk-bin
+
+## ------------- ##
+## Mixed tests.  ##
+## ------------- ##
+
+# Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
+# paper.  Not part of the `check' target; triggered by the
+# `check-mixed' target.
+generated_tests += test-mixed
+EXTRA_DIST += test-mixed.in
+test-mixed: $(srcdir)/test-mixed.in
+.PHONY: check-mixed
+check-mixed: test-mixed $(noinst_PROGRAMS)
+	./test-mixed
+MOSTLYCLEANFILES +=						\
+  bunny-holefilled-complex-pinv-curv-skel-wadgmm-2010.off	\
+  bunny-holefilled-max-curv-2-collapse-wadgmm-2010.vtk		\
+  bunny-holefilled-max-curv-1-collapse-wadgmm-2010.vtk
+
+
+# Check tests from generated_checked_tests (which is a subset of
+# generated_tests).
+TESTS += $(generated_checked_tests)
+CLEANFILES = $(generated_tests)
