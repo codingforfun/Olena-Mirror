@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2013-09-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add parentheses around complex operands of operator `|'.
@@ -4769,6 +4770,13 @@
 	* mln/geom/crop.hh,
 	* mln/geom/crop_without_localization.hh: New.
 
+2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix issues with loading ascii ppm.
+
+	* io/pnm/load.hh: add specials cases to handle vectorial type when
+	loading from ascii ppms.
+
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/value/builtin/floatings.hh: Fix string name for builtin
@@ -6840,11 +6848,6 @@
 	(make::edge_image(const vertex_image<P,V,G>&, const Function_v2b<F>&)):
 	Actually use the predicate passed as second argument.
 	Remove debug code.
-=======
-	* mln/trait/ch_value.hh,
-	* mln/util/ctree/node.hh,
-	* mln/value/sign.hh : Add MLN_WO_GLOBAL_VARS define.
->>>>>>> Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be
 
 2010-05-04  edwin carlinet  <carlinet@lrde.epita.fr>
 
