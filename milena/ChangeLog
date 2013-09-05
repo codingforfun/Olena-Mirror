@@ -5384,6 +5384,16 @@
 	* mln/convert/impl/from_unsigned_to_value.hh,
 	* mln/value/label.hh: Here.
 
+2011-03-02  edwin carlinet  <carlinet@lrde.epita.fr>
+	Minor updates to make things compile.
+
+	* milena/mln/core/image/attribute_image.hh: add explicit
+	constructor.
+	* milena/mln/morpho/tree/leaf_last.hh: energy minimization instead
+	of maximization.
+	* milena/mln/util/ctree/ctree.hh: Copy the domain instead of
+	taking a reference that can be dangling.
+
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/labeling/fill_holes.hh: Improve speed.

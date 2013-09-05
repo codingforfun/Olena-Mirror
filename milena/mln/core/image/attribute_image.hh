@@ -160,7 +160,7 @@ namespace mln
     /// Constructor without argument.
     attribute_image();
     /// Allocate an attribute image respecting the size of the tree.
-    attribute_image(const Tree<T>& tree);
+    explicit attribute_image(const Tree<T>& tree);
     /// \}
 
     /// Initialize an empty image.

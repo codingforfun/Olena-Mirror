@@ -39,8 +39,10 @@
 # include <mln/core/concept/site_set.hh>
 # include <mln/util/ctree/internal/tree_base.hh>
 # include <mln/util/array.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/image/attribute_image.hh>
 # include <algorithm>
+
 
 # define mln_node(T) typename T::node_t
 
@@ -101,7 +103,7 @@ namespace mln
       std::vector<unsigned>	length_;
       std::vector<mln_value(I)> values_;
 
-      const mln_domain(I)&	domain_;
+      mln_domain(I)		domain_;
       int			nnodes;
     };
 
@@ -244,10 +246,13 @@ namespace mln
 	/// Equivalent to desc(tree.node_at(i)).nsites().
 	unsigned length_at_(index_t i) const;
 	unsigned& length_at_(index_t i);
+
 	rvalue f_at_(index_t i) const;
 	lvalue f_at_(index_t i);
+
 	index_t parent_at_(index_t i) const;
 	index_t& parent_at_(index_t i);
+
 	index_t node_at_(const psite& p) const;
 	index_t& node_at_(const psite& p);
 	/// \}
@@ -342,6 +347,7 @@ namespace mln
 	this->data_ = new mln::internal::data< ctree<I> >(f);
 
 	initialize(this->data_->map_, f);
+	this->data_->domain_ = f.domain();
 	this->data_->parent_.resize(nnodes);
 	this->data_->length_.resize(nnodes);
 	this->data_->values_.resize(nnodes);

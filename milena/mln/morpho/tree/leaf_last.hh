@@ -61,7 +61,7 @@ namespace mln
 
 	  bool operator() (const node_t& lhs, const node_t& rhs)
 	  {
-	    return f_(lhs)  > f_(rhs);
+	    return f_(lhs)  < f_(rhs);
 	  }
 
 	private:
@@ -77,6 +77,8 @@ namespace mln
         typedef typename T::node_t node_t;
 
         p_array<node_t> sorted_sites = convert::to_p_array(ima);
+	mln_invariant(sorted_sites.nsites() == ima.nsites());
+
         std::vector<node_t>& hook = sorted_sites.hook_std_vector_();
 	std::sort(hook.begin(), hook.end(), internal::less_<T, V> (ima));
 
