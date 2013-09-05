@@ -6111,17 +6111,6 @@
 	* mln/fun/x2x/translation.hh: Introduce data_t typedef passed to
 	x2x_linear_impl.
 
-2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Add some code in my sandbox.
-
-	* sandbox/lazzara/scribo/binarization_naive/main.cc,
-	* sandbox/lazzara/scribo/binarization_naive/toto.cc,
-	* sandbox/lazzara/scribo/fill_holes/main.cc,
-	* sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
-	* sandbox/lazzara/scribo/skeleton_crest/main.cc,
-	* sandbox/lazzara/skeleton_crest/main.cc: New.
-
 2010-05-21  edwin carlinet  <carlinet@lrde.epita.fr>
 
 	Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be
@@ -6841,6 +6830,11 @@
 	(make::edge_image(const vertex_image<P,V,G>&, const Function_v2b<F>&)):
 	Actually use the predicate passed as second argument.
 	Remove debug code.
+=======
+	* mln/trait/ch_value.hh,
+	* mln/util/ctree/node.hh,
+	* mln/value/sign.hh : Add MLN_WO_GLOBAL_VARS define.
+>>>>>>> Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be
 
 2010-05-04  edwin carlinet  <carlinet@lrde.epita.fr>
 
