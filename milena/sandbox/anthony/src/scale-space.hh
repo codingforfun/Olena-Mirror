@@ -10,6 +10,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/literal/all.hh>
+#include <mln/linear/gaussian.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_s16.hh>
 
@@ -62,7 +63,7 @@ class ScaleSpace
       }
     }
 
-    void save()
+    void save(std::string prefix = "ss-o")
     {
       std::stringstream name;
 
@@ -70,7 +71,7 @@ class ScaleSpace
       {
         for (unsigned j = 0; j < pyramid[i].size(); ++j)
         {
-          name << "output/ss-o" << i << "-" << j << ".pgm";
+          name << "output/" << prefix << i << "-" << j << ".pgm";
           io::pgm::save(pyramid[i][j], name.str());
           name.str("");
         }
@@ -92,15 +93,19 @@ class ScaleSpace
 
     void addOctave(const I& original)
     {
-      I blured;
       std::vector<I> octave;
-      float variance = sqrt(2);
+      float sigma = 1.6;
+      float k = pow(2., 1. / g);
 
-      for (unsigned i = 0; i < g; ++i)
+      octave.push_back(linear::gaussian(original, sigma));
+
+      for (unsigned i = 1; i < g + 3; ++i)
       {
-        blured = blur(original, variance);
-        variance *= sqrt(2);
-        octave.push_back(blured);
+        float sig_prev = pow(k, static_cast<float>(i-1)) * sigma;
+        float sig_total = sig_prev * k;
+        float variance = sqrt(sig_total * sig_total - sig_prev * sig_prev);
+
+        octave.push_back(linear::gaussian(original, variance));
       }
 
       pyramid.push_back(octave);

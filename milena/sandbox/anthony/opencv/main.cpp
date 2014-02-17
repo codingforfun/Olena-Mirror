@@ -10,14 +10,30 @@
 // MAIN ENTRY POINT
 int main(int argc, char* argv[])
 {
-  const cv::Mat input = cv::imread("../images/keith.pbm");
-  cv::SiftFeatureDetector detector;
-  std::vector<cv::KeyPoint> keypoints;
-  detector.detect(input, keypoints);
+  const cv::Mat input1 = cv::imread("../images/keith.pbm");
+  const cv::Mat input2 = cv::imread("../images/tshirt.pgm");
 
-  cv::Mat output;
-  cv::drawKeypoints(input, keypoints, output);
-  cv::imwrite("sift.jpg", output);
+  {
+    cv::SiftFeatureDetector detector;
+    std::vector<cv::KeyPoint> keypoints;
+    detector.detect(input1, keypoints);
+    std::cout << keypoints.size() << std::endl;
+
+    cv::Mat output;
+    cv::drawKeypoints(input1, keypoints, output);
+    cv::imwrite("sift1.jpg", output);
+  }
+
+  {
+    cv::SiftFeatureDetector detector;
+    std::vector<cv::KeyPoint> keypoints;
+    detector.detect(input2, keypoints);
+    std::cout << keypoints.size() << std::endl;
+
+    cv::Mat output;
+    cv::drawKeypoints(input2, keypoints, output);
+    cv::imwrite("sift2.jpg", output);
+  }
 
   return 0;
 

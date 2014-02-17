@@ -1,4 +1,4 @@
-CCACHE=
+CCACHE=ccache
 CC=g++
 CFLAGS=-Wall -Wextra
 CLIBS=-I../../
