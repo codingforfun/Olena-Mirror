@@ -78,6 +78,11 @@
       x1.is_valid();				\
       x1.next(), x2.next(), x3.next())
 
+# define for_all_5(x1, x2, x3, x4, x5)  \
+  for(x1.start(), x2.start(), x3.start(), x4.start(), x5.start(); \
+      x1.is_valid(); \
+      x1.next(), x2.next(), x3.next(), x4.next(), x5.next())
+
 
 /*
   \def for_all_remaining(x)
