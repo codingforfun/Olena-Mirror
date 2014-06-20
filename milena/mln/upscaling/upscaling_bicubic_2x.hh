@@ -80,9 +80,6 @@ namespace mln {
                 initialize(tmp, in_image);
                 data::fill(tmp, 0);
 
-                int k, l;
-
-
                 for (def::coord row = geom::min_row(in_image); row <= geom::max_row(in_image) ; ++row)
                     for (def::coord col = geom::min_col(in_image)+1; col < geom::max_col(in_image)-1; ++col) {
                         opt::at(tmp, row, col) = tl_bicubic_interpol(in_image(point2d(row, col - 1)), in_image(point2d(row, col)), in_image(point2d(row, col + 1)), in_image(point2d(row, col + 2)));
