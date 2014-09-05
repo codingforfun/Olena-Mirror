@@ -7,8 +7,18 @@
 \li \link demos/genericity/neighborhood/permissive.cc Custom neighborhoods \endlink
 \li \link demos/inter_pixel/inter_pixel.cc Inter-pixel processings \endlink
 
-
 \section examplesgraph Graphs
 \li \link demos/graph/region_adjacency_graph.cc Region Adjacency Graph \endlink
+ 
+\section examplesinterpixel Inter-pixel Processings
+\li \link demos/inter_pixel/inter_pixel.cc Watershed \endlink
+
+\section examplesconv Conversion of RGB Images
+\subsection Opencv
+\li \link doc/examples/mln_to_cv.cc Milena to Opencv. \endlink
+\li \link doc/examples/cv_to_mln.cc Opencv to Milena. \endlink
+\subsection FFmpeg
+\li \link doc/examples/mln_to_ffmpeg.cc Milena to FFmpeg. \endlink
+\li \link doc/examples/ffmpeg_to_mln.cc FFmpeg to Milena. \endlink
 
 */
