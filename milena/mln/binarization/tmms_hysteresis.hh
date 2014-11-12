@@ -37,6 +37,7 @@
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 #include <mln/labeling/blobs.hh>
+#include <mln/core/image/image2d.hh>
 
 
 namespace mln {
